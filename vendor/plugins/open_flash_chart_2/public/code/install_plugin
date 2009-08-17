@@ -1,5 +1,0 @@
-# in console
-# go to plugins directory, if you are windows user replace cd with dir command
-  cd vendor/plugins
-# clone git repo to open_flash_chart_2 directory
-  git clone git://github.com/korin/open_flash_chart_2_plugin.git open_flash_chart_2

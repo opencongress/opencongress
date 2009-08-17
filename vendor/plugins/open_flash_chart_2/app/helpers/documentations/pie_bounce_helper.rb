@@ -1,2 +1,0 @@
-module Documentations::PieBounceHelper
-end

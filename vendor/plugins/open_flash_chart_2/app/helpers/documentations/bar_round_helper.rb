@@ -1,2 +1,0 @@
-module Documentations::BarRoundHelper
-end

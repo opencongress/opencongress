@@ -1,0 +1,2 @@
+module Documentations::BarCylinderOutlineHelper
+end

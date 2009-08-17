@@ -1,0 +1,62 @@
+= link_to "class Graph", { :controller=>'/documentations/graph', :action => 'index'}
+%br
+%strong
+  x_axis
+%br
+%br
+To set this property use
+= link_to "OFC2:XAxis class", {:controller => '/documentations/x_axis', :action => :index}
+%br
+.tip.example
+  .header
+    graph without x_axis property
+  .desription
+    x axis will be generated with default style and scaled
+  .chart
+    = @no_xaxis
+  .code
+    - code = "title = OFC2::Title.new\n"
+    - code << "line_dot = OFC2::Line.new( :values => [6,5,4,2,1] )\n"
+    - code << "chart = OFC2::Graph.new(:title => title)\n"
+    - code << "chart << line_dot"
+    .code_example
+      %pre{:class => "brush: ruby;"}=code
+.tip.example
+  .header
+    empty x_axis
+  .desription
+    x axis will be generated with default style and scaled
+  .chart
+    = @empty_xaxis
+  .code
+    - code = "title = OFC2::Title.new\n"
+    - code << "line_dot = OFC2::Line.new( :values => [6,5,4,2,1] )\n"
+    - code << "x = OFC2::XAxis.new\n"
+    - code << "chart = OFC2::Graph.new(:title => title)\n"
+    - code << "chart.x_axis = x\n"
+    - code << "chart << line_dot"
+    .code_example
+      %pre{:class => "brush: ruby;"}=code
+.tip.example
+  .header
+    almost complete x_axis
+  .desription
+    To see all available propertis got to
+    = link_to "OFC2:XAxis class", {:controller => '/documentations/xaxis', :action => :index}
+  .chart
+    = @complete_xaxis
+  .code
+    - code = "title = OFC2::Title.new\n"
+    - code << "line_dot = OFC2::Line.new( :values => [6,5,4,2,1] )\n"
+    - code << "x = OFC2::XAxis.new(\n"
+    - code << "  :colour => '#D7E4A3',\n"
+    - code << "  :grid_colour => '#A7E4A3',\n"
+    - code << "  :offset => true,\n"
+    - code << "  :stroke => 10,\n"
+    - code << "  :tick_height => 20\n"
+    - code << ")\n"
+    - code << "chart = OFC2::Graph.new(:title => title)\n"
+    - code << "chart.x_axis = x\n"
+    - code << "chart << line_dot"
+    .code_example
+      %pre{:class => "brush: ruby;"}=code

@@ -1,0 +1,29 @@
+About
+=====================================
+open flash chart 2 plugin for rails applications
+
+This library was ported from the open flash chart project's php code to be used with Ruby on Rails.
+Visit the open flash chart project here - http://teethgrinder.co.uk/open-flash-chart-2/
+
+NOTE:
+sample application is using haml
+  gem install haml
+
+If You use rails older that 2.3  probably  you have to uncomment method to_json (vendor/plugins/open_flash_chart/lib/open_flash_chart.rb line 14)
+and add gem 'json' in enviroment.rb
+otherwise plugin will not work propertly
+
+
+Details
+=====================================
+Go to http://openflashchart2.sentor.pl for details
+
+
+Help
+=====================================
+Looking for help?
+try:
+home page: http://openflashchart2.sentor.pl/infos
+or email to me: lisukorin@gmail.com,
+  don't forget write 'open flash chart' in subject or my mail client will treat your message as spam.
+

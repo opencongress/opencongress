@@ -1,0 +1,2 @@
+module Documentations::XAxisLabelHelper
+end

@@ -1,0 +1,4 @@
+- url ||= {}
+- active_class = action_name == url[:action].to_s ? 'active' : ''
+.link{:class =>active_class }
+  = link_to name, url

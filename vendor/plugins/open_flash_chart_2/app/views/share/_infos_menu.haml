@@ -1,0 +1,9 @@
+.left_menu
+  .link.header
+    = link_to "Info", {:action => :index}
+  .elements
+    = render :partial => '/share/sublink', :locals => {:name => "Change&nbsp;log", :url => { :action => "changes" }}
+    = render :partial => '/share/sublink', :locals => {:name => "TODO", :url => { :action => "todo" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Related projects", :url => { :action => "related_project" }}
+    = render :partial => '/share/sublink', :locals => {:name => "How download / install", :url => { :action => "install" }}
+

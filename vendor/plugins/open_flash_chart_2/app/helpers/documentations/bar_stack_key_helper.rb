@@ -1,0 +1,2 @@
+module Documentations::BarStackKeyHelper
+end

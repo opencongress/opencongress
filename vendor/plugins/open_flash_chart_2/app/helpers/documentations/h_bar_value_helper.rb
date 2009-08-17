@@ -1,0 +1,2 @@
+module Documentations::HBarValueHelper
+end

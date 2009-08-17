@@ -1,0 +1,2 @@
+module Documentations::XLegendHelper
+end

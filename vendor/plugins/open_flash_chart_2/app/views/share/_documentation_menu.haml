@@ -1,0 +1,35 @@
+- ofc2_class_names = %w(main graph)
+.left_menu
+  .main.link.header{ :onclick => "activate_menu('.main');"}
+    = link_to "General information", { :controller=>'/documentations/main', :action => 'index'}
+  .main.elements
+    = render :partial => '/share/sublink', :locals => {:name => "About documentation", :url => { :controller=>'/documentations/main', :action => 'index'}}
+    = render :partial => '/share/sublink', :locals => {:name => "How its's works", :url => { :controller=>'/documentations/main', :action => 'how_it_works' }}
+
+  .graph.link.header{ :onclick => "activate_menu('.graph');"}
+    = link_to "Graph", { :controller=>'/documentations/graph', :action => 'index'}
+  .graph.elements
+    = render :partial => '/share/sublink', :locals => {:name => "add element", :url => { :controller => '/documentations/graph', :action => :add_element }}
+    = render :partial => '/share/sublink', :locals => {:name => "bg_colour", :url => { :controller => '/documentations/graph', :action => :bg_colour }}
+    = render :partial => '/share/sublink', :locals => {:name => "elements", :url => { :controller => '/documentations/graph', :action => :elements }}
+    = render :partial => '/share/sublink', :locals => {:name => "radar_axis", :url => { :controller => '/documentations/graph', :action => :radar_axis }}
+    = render :partial => '/share/sublink', :locals => {:name => "title", :url => { :controller => '/documentations/graph', :action => :title }}
+    = render :partial => '/share/sublink', :locals => {:name => "x_axis", :url => { :controller => '/documentations/graph', :action => :x_axis }}
+    = render :partial => '/share/sublink', :locals => {:name => "x_legend", :url => { :controller => '/documentations/graph', :action => :x_legend }}
+    = render :partial => '/share/sublink', :locals => {:name => "y_axis", :url => { :controller => '/documentations/graph', :action => :y_axis }}
+    = render :partial => '/share/sublink', :locals => {:name => "y_axis_right", :url => { :controller => '/documentations/graph', :action => :y_axis_right }}
+    = render :partial => '/share/sublink', :locals => {:name => "y_legend", :url => { :controller => '/documentations/graph', :action => :y_legend }}
+    = render :partial => '/share/sublink', :locals => {:name => "y2_legend", :url => { :controller => '/documentations/graph', :action => :y2_legend }}
+
+  - PLUGIN_CLASSES.sort.each do |ofc2_class_name, propertis|
+    - ofc2_class_names << ofc2_class_name
+    .link.header{ :class => ofc2_class_name, :onclick => "activate_menu('.#{ofc2_class_name}');"}
+      = link_to ofc2_class_name.humanize, { :controller=>'/documentations/'+ofc2_class_name, :action => 'index'}
+    //.elements{ :class => ofc2_class_name }
+    //  - propertis.sort.each do |property_name|
+    //    = render :partial => '/share/sublink', :locals => {:name => property_name, :url => { :controller=>'/documentations/'+ofc2_class_name, :action => property_name}}
+
+- pattern = ''
+- ofc2_class_names.each do |p|
+  - pattern = '.'+p if controller_name =~ /.*#{p}.*/
+= javascript_tag "activate_menu('#{pattern}');"

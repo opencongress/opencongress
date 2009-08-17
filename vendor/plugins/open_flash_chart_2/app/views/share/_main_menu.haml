@@ -1,0 +1,21 @@
+.top_menu
+  .header_text
+    OFC2 4 Rails
+  - active_class = controller_name =~ /.*infos.*/ ? 'active' : ''
+  .link_main{:class =>active_class }
+    = link_to "Info", { :controller=>'/infos'}
+
+  .link_main
+    = link_to "Grab it!", { :controller=>'/infos', :action => "install" }
+
+  - active_class = request.url =~ /.*documentations.*/ ? 'active' : ''
+  .link_main{:class => active_class }
+    = link_to "Documentation", { :controller=>'/documentations/main', :action => :index}
+
+  - active_class = controller_name =~ /.*chart_examples.*/ ? 'active' : ''
+  .link_main{:class => active_class }
+    = link_to "Charts", { :controller=>'/chart_examples', :action => :line}
+
+  - active_class = controller_name =~ /.*welcome.*/ ? 'active' : ''
+  .link_main{:class => active_class }
+    = link_to "Home", { :controller=>'/welcome'}

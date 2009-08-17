@@ -1,0 +1,2 @@
+module Documentations::StarHelper
+end

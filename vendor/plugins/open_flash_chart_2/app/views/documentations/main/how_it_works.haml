@@ -1,0 +1,120 @@
+Open Flash Chart 2 plugin use a swf and javascript file from
+= link_to "http://teethgrinder.co.uk/open-flash-chart-2", "http://teethgrinder.co.uk/open-flash-chart-2"
+\.
+%br
+%br
+It can works in two ways
+%ul
+  %li
+    generate flash chart on site and give it a link to request for data (in json format).
+  %li
+    generate flash chart on site and give it a javascipt function name which serving data in json format - inline charts.
+%br
+%b
+  First method
+%br
+1. use
+%b
+  ofc2
+method to generate flash object, and set it somewhere in view
+.code_example
+  - code = "# in controller\n"
+  - code += "@graph = ofc2(650,400, url_for( :controller => controller, :action =>action_name)\n"
+  - code += "# in view\n"
+  - code += "=@graph"
+  %pre{:class => "brush: ruby;"}= code
+Remember the url you set here should serving data in json format, otherwise flash object will display error.
+%br
+%br
+2. build a method to generate json data
+.code_example
+  - code = "def line\n"
+  - code += "  title = OFC2::Title.new( :text => action_name.humanize , :style => '{font-size: 14px; color: #b50F0F; text-align: center;}')\n"
+  - code += "  line_dot = OFC2::Line.new( :values => [9,8,7,6,5,4,3,2,1,12] )\n"
+  - code += "  chart = OFC2::Graph.new\n"
+  - code += "  chart.title= title\n"
+  - code += "  chart << line_dot\n"
+  - code += "  render :text => chart.render\n"
+  - code += "end\n"
+  %pre{:class => "brush: ruby;"}= code
+%br
+3. When you follow link data you chould see this:
+.code_example
+  - code = '{"title": {"text": "Line", "style": "{font-size: 14px; color: #b50F0F; text-align: center;}"},"elements": [{"text": "label text", "type": "line", "colour": "#00FF00", "values": [9, 8, 7, 6, 5, 4, 3, 2, 1, 12], "font-size": 10}]}'
+  %pre{:class => "brush: ruby;"}= code
+%br
+4. In a view: right click -> show source and you should see something like that (id and link may be different)
+.code_example
+  - code = '<object style="visibility: visible;" id="flashcontent_437604" data="/open-flash-chart.swf" type="application/x-shockwave-flash" height="400" width="650"><param value="data-file=http%3A%2F%2Fofc2%2Fcharts_ofc2%2Fline" name="flashvars"></object>'
+  - code += "\n"
+  - code += '<script type="text/javascript">'
+  - code += "\n"
+  - code += '  swfobject.embedSWF('
+  - code += "\n"
+  - code += '  "/open-flash-chart.swf","flashcontent_437604",'
+  - code += "\n"
+  - code += '  "650", "400", "9.0.0", "expressInstall.swf",'
+  - code += "\n"
+  - code += '  {"data-file":"http%3A%2F%2Fofc2%2Fcharts_ofc2%2Fline"} );'
+  - code += "\n"
+  - code += '</script>'
+  %pre{:class => "brush: html;"}= code
+%br
+%br
+%b
+  Seccond method (inline charts)
+%br
+In this method chart get name of javascript function, this function returns data in json format. That mean no extra controller (like was in first method) and no extra server request.
+%br
+1. write a code to generate json data in the same method: use
+%b
+  ofc2_inline
+method to generate flash object
+.code_example
+  - code = "def line\n"
+  - code += "  title = OFC2::Title.new( :text => action_name.humanize , :style => '{font-size: 14px; color: #b50F0F; text-align: center;}')\n"
+  - code += "  line_dot = OFC2::Line.new\n"
+  - code += "  line_dot.values= [9,8,7,6,5,4,3,2,1]\n"
+  - code += "  line_dot.colour = '#FFAAFF'\n"
+  - code += "  line_dot_2 = OFC2::Line.new\n"
+  - code += "  line_dot_2.values= [9,8,7,6,5,4,3,2,1].reverse\n"
+  - code += "  chart = OFC2::Graph.new\n"
+  - code += "  chart.title= title\n"
+  - code += "  chart << line_dot\n"
+  - code += "  chart << line_dot_2\n"
+  - code += "  #only one difference, use chart object instead url\n"
+  - code += "  @graph = ofc2_inline(650,300,chart,'inline_line')\n"
+  - code += "end\n"
+  %pre{:class => "brush: ruby;"}= code
+%br
+2. Use it somewhere in view
+.code_example
+  - code = "# in view\n"
+  - code += "=@graph"
+  %pre{:class => "brush: ruby;"}= code
+%br
+3. In a view: right click -> show source and you should see something like that (id may be different)
+.code_example
+  - code = "<object style='visibility: visible;' \n"
+  - code += "id='flashcontent_inline_line' \n"
+  - code += "data='\/open-flash-chart.swf' \n"
+  - code += "type='application/x-shockwave-flash' \n"
+  - code += "height='300' width='650'>\n"
+  - code += "<param value='get-data=flashcontent_inline_line_data' name='flashvars'>\n"
+  - code += "<\/object>\n"
+  - code += "  <script type='text\/javascript'>\n"
+  - code += "    function flashcontent_inline_line_data(){\n"
+  - code += "      return \'{'title': {'text': 'Inline line', 'style': '{font-size: 14px; color: #b50F0F; text-align: center;}'}, 'elements': [{'text': 'label text', 'type': 'line', 'colour': '#FFAAFF', 'values': [9, 8, 7, 6, 5, 4, 3, 2, 1], 'font-size': 10}, {'text': 'label text', 'type': 'line', 'colour': '#00FF00', 'values': [1, 2, 3, 4, 5, 6, 7, 8, 9], 'font-size': 10}]}\';\n"
+  - code += "    };\n"
+  - code += "    swfobject.embedSWF(\n"
+  - code += "      '/open-flash-chart.swf', 'flashcontent_inline_line',\n"
+  - code += "      '650', '300','9.0.0', 'expressInstall.swf',\n"
+  - code += "      {'get-data':'flashcontent_inline_line_data'} );\n"
+  - code += "  <\/script>"
+  %pre{:class => "brush: html;"}= code
+How you can see extra javascript function shows up. If you define id parameter in ofc2_inline function it will be used in function name. Otherwise id is autogenerated, so there will be no two function with the same name.
+%br
+%br
+Go to
+= link_to "charts section", { :controller=>'chart_examples', :action => :line}
+to see complex exmples.

@@ -1,0 +1,2 @@
+module Documentations::YAxisLabelsHelper
+end

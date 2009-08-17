@@ -1,0 +1,77 @@
+.left_menu
+  .line.link.header{ :onclick => "activate_menu('.line');"}
+    Line
+  .line.elements
+    = render :partial => '/share/sublink', :locals => {:name => 'Line', :url => { :controller=>'chart_examples', :action => "line" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Line with empty values", :url => { :controller=>'chart_examples', :action => "line_with_nills" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Dot styles", :url => { :controller=>'chart_examples', :action => "lines_with_any_dot_shape" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Line styles", :url => { :controller=>'chart_examples', :action => "lines_with_any_line_style" }}
+
+  .bar.link.header{ :onclick => "activate_menu('.bar');"}
+    Bar
+  .bar.elements
+    = render :partial => '/share/sublink', :locals => {:name => "Bar", :url => { :controller=>'chart_examples', :action => "bar" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Glass Bar", :url => { :controller=>'chart_examples', :action => "glass_bar" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Rounded Glass Bar", :url => { :controller=>'chart_examples', :action => "bar_round_glass" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Bar Round", :url => { :controller=>'chart_examples', :action => "bar_round" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Bar Dome", :url => { :controller=>'chart_examples', :action => "bar_dome" }}
+    = render :partial => '/share/sublink', :locals => {:name => "3D Bar", :url => { :controller=>'chart_examples', :action => "bar_3d" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Sketch Bar", :url => { :controller=>'chart_examples', :action => "sketch_bar" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Filled Bar", :url => { :controller=>'chart_examples', :action => "filled_bar" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Cylinder Bar", :url => { :controller=>'chart_examples', :action => "cylinder_bar" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Outline Cylinder Bar", :url => { :controller=>'chart_examples', :action => "outline_cylinder_bar" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Horizontal Bar", :url => { :controller=>'chart_examples', :action => "horizontal_bar" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Stacked Bar", :url => { :controller=>'chart_examples', :action => "stacked_bar" }}
+
+  .area.link.header{ :onclick => "activate_menu('.area');"}
+    Area
+  .area.elements
+    = render :partial => '/share/sublink', :locals => {:name => "Area", :url => { :controller=>'chart_examples', :action => "area" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Dot styles", :url => { :controller=>'chart_examples', :action => "area_with_any_dot_shape" }}
+
+  .pie.link.header{ :onclick => "activate_menu('.pie');"}
+    Pie
+  .pie.elements
+    = render :partial => '/share/sublink', :locals => {:name => "Pie", :url => { :controller=>'chart_examples', :action => "pie" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Large Pie", :url => { :controller=>'chart_examples', :action => "pie_large" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Without labels", :url => { :controller=>'chart_examples', :action => "pie_without_labels" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Custom tip", :url => { :controller=>'chart_examples', :action => "pie_tip" }}
+    = render :partial => '/share/sublink', :locals => {:name => "On click event", :url => { :controller=>'chart_examples', :action => "pie_on_click_event" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Radius", :url => { :controller=>'chart_examples', :action => "pie_radius" }}
+
+  .scatter.link.header{ :onclick => "activate_menu('.scatter');"}
+    Scatter
+  .scatter.elements
+    = render :partial => '/share/sublink', :locals => {:name => "Scatter", :url => { :controller=>'chart_examples', :action => "scatter" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Scatter line", :url => { :controller=>'chart_examples', :action => "scatter_line" }}
+
+  .radar.link.header{ :onclick => "activate_menu('.radar');"}
+    Radar
+  .radar.elements
+    = render :partial => '/share/sublink', :locals => {:name => "Area", :url => { :controller=>'chart_examples', :action => "radar" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Lines with labels", :url => { :controller=>'chart_examples', :action => "radar_lines" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Lines with stepped axis", :url => { :controller=>'chart_examples', :action => "radar_minimal_view" }}
+
+  .inline.link.header{ :onclick => "activate_menu('.inline');"}
+    Inline charts
+  .inline.elements
+    = render :partial => '/share/sublink', :locals => {:name => "Line", :url => { :controller=>'chart_examples', :action => "inline_line" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Many charts", :url => { :controller=>'chart_examples', :action => "inline_many_line" }}
+
+  .mix.link.header{ :onclick => "activate_menu('.mix');"}
+    Advanced charts
+  .mix.elements
+    = render :partial => '/share/sublink', :locals => {:name => "Line and Bar", :url => { :controller=>'chart_examples', :action => "mix_line_bar" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Tooltip", :url => { :controller=>'chart_examples', :action => "mix_advanced_tooltip" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Legends & Labels", :url => { :controller=>'chart_examples', :action => "mix_advanced_legends" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Y Axis", :url => { :controller=>'chart_examples', :action => "mix_line_with_y_axis" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Scaled axis", :url => { :controller=>'chart_examples', :action => "mix_advanced_scaled_axis" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Many Horizontal Bars", :url => { :controller=>'chart_examples', :action => "mix_advanced_many_hbar" }}
+    = render :partial => '/share/sublink', :locals => {:name => "Draw shape", :url => { :controller=>'chart_examples', :action => "mix_advanced_draw_shape" }}
+
+    //  = render :partial => '/share/sublink', :locals => {:name => "Draw shape and graph", :url => { :controller=>'chart_examples', :action => "mix_advanced_shapes" }}
+
+- pattern = ''
+- %w(line bar pie scatter area radar inline mix).each do |p|
+  - pattern = '.'+p if action_name =~ /.*#{p}.*/
+= javascript_tag "activate_menu('#{pattern}');"

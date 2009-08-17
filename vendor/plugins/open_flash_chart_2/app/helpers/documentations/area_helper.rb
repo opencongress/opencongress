@@ -1,0 +1,2 @@
+module Documentations::AreaHelper
+end

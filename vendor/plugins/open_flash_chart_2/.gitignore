@@ -1,0 +1,13 @@
+db/*.sqlite3
+data.dump
+db/data.yml
+config/database.yml
+log/*.log
+tmp/**/*
+doc/api
+doc/app
+.svn
+*.tmp
+*_bak
+*~
+nbproject

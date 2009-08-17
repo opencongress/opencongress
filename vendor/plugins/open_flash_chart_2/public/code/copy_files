@@ -1,0 +1,6 @@
+# install
+  rake open_flash_chart_2:install
+# uninstall
+  rake open_flash_chart_2:uninstall
+# reinstall
+  rake open_flash_chart_2:reinstall

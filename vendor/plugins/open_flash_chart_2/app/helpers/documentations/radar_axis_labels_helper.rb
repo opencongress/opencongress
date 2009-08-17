@@ -1,0 +1,2 @@
+module Documentations::RadarAxisLabelsHelper
+end

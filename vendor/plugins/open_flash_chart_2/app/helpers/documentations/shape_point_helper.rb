@@ -1,0 +1,2 @@
+module Documentations::ShapePointHelper
+end

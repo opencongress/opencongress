@@ -1,0 +1,2 @@
+module Documentations::ShapeHelper
+end

@@ -1,0 +1,147 @@
+8
+
+dir
+4838
+svn+ssh://svn.opencongress.org/var/svn/opencongress/branches/maple/vendor/plugins/open_flash_chart_2
+svn+ssh://svn.opencongress.org/var/svn/opencongress
+
+
+
+2009-05-06T05:31:27.093155Z
+3911
+agp
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+b3b261aa-951b-0410-bb93-ed926f8ead73
+
+test
+dir
+
+.git
+dir
+
+Rakefile
+file
+
+
+
+
+2009-05-17T00:46:36.000000Z
+a2728bc657b56d9edfbf997d2555a66a
+2009-05-05T22:44:56.042017Z
+3907
+agp
+has-props
+
+requirements
+dir
+
+tasks
+dir
+
+TODO
+file
+
+
+
+
+2009-05-17T00:46:36.000000Z
+d3c519cb31d5478970896e783722929a
+2009-05-05T22:44:56.042017Z
+3907
+agp
+has-props
+
+init.rb
+file
+
+
+
+
+2009-05-17T00:46:36.000000Z
+71be334849af142bbec0e1e153127679
+2009-05-05T22:44:56.042017Z
+3907
+agp
+has-props
+
+lib
+dir
+
+CHANGES
+file
+
+
+
+
+2009-05-17T00:46:36.000000Z
+6f12ffcaa099317db4fcddf1561280fd
+2009-05-05T22:44:56.042017Z
+3907
+agp
+has-props
+
+install.rb
+file
+
+
+
+
+2009-05-17T00:46:36.000000Z
+170756b735e6750723374a8f2986f20f
+2009-05-05T22:44:56.042017Z
+3907
+agp
+has-props
+
+MIT-LICENSE
+file
+
+
+
+
+2009-05-17T00:46:36.000000Z
+3fced11d6df719b47505837a51c16ae5
+2009-05-05T22:44:56.042017Z
+3907
+agp
+has-props
+
+uninstall.rb
+file
+
+
+
+
+2009-05-17T00:46:36.000000Z
+6ce46f91e51d590a70ffe975945ceb01
+2009-05-05T22:44:56.042017Z
+3907
+agp
+has-props
+
+README
+file
+
+
+
+
+2009-05-17T00:46:36.000000Z
+62ae3573e457eba25eb97da146a3e658
+2009-05-05T22:44:56.042017Z
+3907
+agp
+has-props
+

@@ -1,0 +1,41 @@
+8
+
+dir
+4838
+svn+ssh://svn.opencongress.org/var/svn/opencongress/branches/maple/vendor/plugins/open_flash_chart_2/tasks
+svn+ssh://svn.opencongress.org/var/svn/opencongress
+
+
+
+2009-05-05T22:44:56.042017Z
+3907
+agp
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+b3b261aa-951b-0410-bb93-ed926f8ead73
+
+open_flash_chart_tasks.rake
+file
+
+
+
+
+2009-05-17T00:46:36.000000Z
+20d7f679707d52fc2416382a7be817d6
+2009-05-05T22:44:56.042017Z
+3907
+agp
+has-props
+

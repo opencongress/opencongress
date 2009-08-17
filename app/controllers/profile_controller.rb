@@ -238,7 +238,10 @@ class ProfileController < ApplicationController
   end
   
   def remove_bookmark
-    current_user.bookmarks.destroy(params[:id])
+    book = current_user.bookmarks.find_by_id(params[:id])
+    if book
+      book.destroy
+    end
     redirect_back_or_default(:action => "index", :login => current_user.login)
   end
 
@@ -523,3 +526,4 @@ class ProfileController < ApplicationController
     end
   end
 end
+

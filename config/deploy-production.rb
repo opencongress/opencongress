@@ -3,8 +3,13 @@
 set :application, "opencongress"
 
 #set :repository, "svn+ssh://db.opencongress.org/var/svn/opencongress/trunk/"
-set :repository, "svn+ssh://db.opencongress.org/var/svn/opencongress/branches/maple"
+#set :repository, "svn+ssh://db.opencongress.org/var/svn/opencongress/branches/maple"
 #set :mongrel_conf, "#{current_path}/config/mongrel_cluster.yml"
+
+default_run_options[:pty] = true
+set :repository,  "git@github.com:opencongress/opencongress.git"
+set :scm, "git"
+
 
 # If you aren't deploying to /u/apps/#{application} on the target
 # servers (which is the default), you can specify the actual location

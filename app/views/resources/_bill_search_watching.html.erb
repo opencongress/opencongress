@@ -1,0 +1,19 @@
+<% if @bills and !@bills.empty? %>
+  Click on the bill to add it to your panel:<br />
+  <% @bills.each do |b| %>
+    <%= truncate(b.title_full_common, :length => 100) %> |
+    <a href="javascript:addWatchingBillId('<%= b.ident %>', true)">Pass</a> |  
+    <a href="javascript:addWatchingBillId('<%= b.ident %>', false)">Don't Pass</a> 
+    [<a href="/bill/<%= b.ident %>/show" target="_blank">view bill</a>]<br />
+  <% end %>
+<% else %>
+  No bills found with that bill number
+<% end %>
+
+<p><b>You can search for another bill by entering the number and pressing "Search >>"</b></p>
+
+<script type="text/javascript" language="javascript">
+    // <![CDATA[
+      new Effect.Highlight('watching_search_results', {duration: 3});
+    // ]]>
+</script>

@@ -1,0 +1,20 @@
+<h1>Editing state</h1>
+
+<% form_for(@state) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :abbreviation %><br />
+    <%= f.text_field :abbreviation %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @state %> |
+<%= link_to 'Back', states_path %>

@@ -1,0 +1,231 @@
+<div id="tertiary-content">
+
+	<% if object.class.to_s == "Bill" %>
+	<div id="user_content" class="bill">
+		<% if @bill_text %>
+		  <div id="bill-text" class="un">
+		    <%= link_to "View Bill Overview <span>Official info, comments, more</span>", {:action => 'show'}, :class => 'overview_button' %>
+		  </div>
+		<% else %>
+		  <% unless @bill.current_bill_text_version.nil? %>
+  		  <div id="bill-text" class="un">
+  		    <%= link_to "Official Bill Text <span>Comment on about #{number_with_delimiter(@bill.current_bill_text_version.pages)} Pages</span>", :action => 'text' %>
+  		  </div>
+  		<% end %>
+	  <% end %>
+
+		<script type="text/javascript">
+		$j().ready(function() {
+			$j('#learn').jqm({trigger:'a.learn_trigger'});
+		});
+		</script>
+  		
+		<%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
+		
+		<div id="vote">
+			<script type="text/javascript">
+			$j().ready(function() {
+				$j('#login_vote').jqm({ajax:'@href', trigger: 'a.vote_trigger'});
+			});
+			</script>	
+			<div class="results" id="vote_results_<%= @bill.id %>">
+			<%= draw_inline_user_bill_vote(@bill) %>
+			</div>
+			<div id="message-login">
+				<p id="vote_message_<%= @bill.id %>" style="display:none;border:2px solid #48A100;padding:3px;"></p>
+			</div>
+		</div>  
+<!--
+		<div id="learn" class="jqmWindow scrolling">
+			<h3>Learn More About this Bill</h3>
+			<div class="ie"><a href="#" class="jqmClose">Close</a></div>
+		</div>
+-->
+		<div class="uc-box-bottom">
+			<div class="uc-box">
+				<%= user_bill_result(@bill) %>
+				<% if logged_in? %>
+				<%= my_congresspeople_votes(@bill) %>
+				<% end %>
+			</div>
+		</div>
+
+
+		<% if @br_link %>
+		<div class="br_link small_box">
+		<div class="small_box_top">
+		<p><%= link_to "View this Bill's Popularity in Bill Battle", @br_link %></p>
+		</div>
+		</div>
+		
+		<% else %>
+		
+		
+		<% end %>
+		
+		<% if current_user != :false %>
+		  <% if object.is_house_bill? %>
+		    <% if current_user.my_reps[0] and current_user.my_reps[0].has_contact_webform? %>
+		      <%= render :partial => 'shared/write_rep_external', :locals => { :people => [current_user.my_reps[0]] } %>
+		    <% end %>
+		  <% else %>
+		    <%= render :partial => 'shared/write_rep_external', 
+		               :locals => { :people => current_user.my_sens.select{|p| p.has_contact_webform? } } %>
+      <% end %>
+    <% else %>
+      <script type="text/javascript">
+  		$j().ready(function() {
+  			$j('#login_writerep').jqm({ajax:'@href', trigger: 'a#login_writerep_trigger'});
+  		});
+  		</script>
+      <a href="<%= url_for :controller => "account", :action => "login", :modal => true, :login_action => 'writerep_external' %>" id="login_writerep_trigger" class="writeextrigger">
+        <div>
+        <span class="write">Write Your</span>
+        <span class="who"><%= object.is_house_bill? ? "Representative" : "Senators" %></span>
+        </div>
+      </a>
+      <div id="login_writerep" class="jqmWindow"></div>
+      
+		<% end %>
+
+		<div id="login_vote" class="jqmWindow">
+		</div>    
+	</div>
+	
+<% elsif object.class.to_s == "Person" %>
+  <div class="rep_info">
+  <% unless object.website.blank? %>
+    Official website: <a href="<%= object.website %>" target="_new"><%= object.website %></a><br />
+  <% end %>
+
+  <% unless object.congress_office.blank? %>
+  
+  	<div class="address">
+  		<strong>Address:</strong><br />
+  		<%= object.congress_office %><br />
+    	Washington, DC <%= object.senator? ? "20510" : "20515"%><br />
+  	</div>
+  <% end %>
+
+  <% unless object.phone.blank? and object.fax.blank? %>
+  	<div class="phone">
+    	<%= "<strong>Phone:</strong> #{object.phone}" unless object.phone.blank? %><br />
+    	<%= "<strong>Fax:</strong> #{object.fax}" unless object.fax.blank? %>
+    </div>
+    <br />
+  <% end %>
+
+  </div>
+  <%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
+
+  <div id="user_content" class="person">   	
+  	<div class="uc-box-bottom">
+  		<div class="uc-box">
+  		<%= render :partial => 'people/approval' %>
+  	</div>
+  </div> 
+
+  <% if object.has_contact_webform? %>
+    <%= render :partial => 'shared/write_rep_external', :locals => { :people => [object] } %>
+  <% end %>
+
+<% end %>
+
+
+<% if logged_in? %>
+	<% if object.bookmarks.find_by_user_id(current_user.id) == nil %>
+
+		<%= link_to_remote("<span id='b_myoc_txt'>Track With MyOC</span>", :url => {:controller => "profile", 
+			:action => "track", 
+			:id => object.id, 
+			:type => object.class.to_s},
+			:html => { :class => 'large_track', :id => "b_myoc"}) %>
+			<% else %>
+			<a href="<%= url_for :controller => "profile", :action => "remove_bill_bookmark", :login => current_user.login, :id => object.id %>" id='b_myoc' class='large_track tracking' onmouseover="this.firstChild.update('Stop Tracking');" onmouseout="this.firstChild.update('Tracking Now');"><span id='b_myoc_txt'>Tracking Now</span></a>
+			<% end %>
+			<% else %>
+			<script type="text/javascript">
+			$j().ready(function() {
+				$j('#login_track').jqm({ajax:'@href', trigger: 'a.track_trigger'});
+			});
+			</script>
+			<%= link_to("<span id='b_myoc_txt'>Track with MyOC</span>", {:controller => "account", :action => "login", :modal => true, :login_action => 'track'}, :class => 'large_track track_trigger', :id => "b_myoc" ) %>
+			<div id="login_track" class="jqmWindow"></div>
+	<% end %>
+
+
+				
+	<ul class="share_buttons small_box">
+		<div class="small_box_top">
+			<%= render :partial => 'shared/subscribe', :locals => { :message => "Subscribe To This #{object.display_object_name}", :subscribe_url => @atom['link'], :object => @bill} %>
+			<li><%= render :partial => 'mailing_list_items/add_to_alerts', :object => object %></li>
+		</div>
+		
+	</ul>
+	
+		
+		<ul class="share_buttons small_box">
+			<div class="small_box_top">
+				<li>
+					<%= render :partial => 'shared/share', 
+					:locals => { :message => "Share This #{object.display_object_name}", 
+					:url => url_for(:only_path => false, 
+					:controller => params[:controller], :action => 'show', 
+					:id => object.kind_of?(Bill) ? object.ident : object),
+					:title => "Title",
+					:item => object
+					} %>
+				</li>
+
+			</div>
+		</ul>
+
+
+
+		<ul class="share_buttons">
+			<%= render :partial => 'notebook_items/add_to_mypn', :object => object %>
+		</ul>
+		
+		<% if @bill %>
+			<ul>
+				<li><a href="/resources/bill_status?bill_id=<%= @bill.ident %>" class="bill_widget">Make A Bill Widget</a></li>
+			</ul>
+		<% end %>
+		
+
+	<script>
+	$j().ready(function() {
+		$j('#email_feedback').jqm({ajax:'@href',trigger:'a.feedback'});
+		});
+	</script>
+  
+<ul class="share_buttons">
+	<li>
+		<a href="/resources/email_feedback_form?subject=<%= request.url %>" class="feedback">Send us Feedback</a>
+	</li>
+</ul>
+
+<div id="email_feedback" class="jqmWindow">
+	<%# render :partial => 'shared/email_feedback_form' %>
+</div>
+	
+<% unless @top_comments.empty? %>
+<h3 class="small_comment_title">Top-Rated Comments</h3>
+
+<ul id="small_comments">
+<% @top_comments.each do |c| %>
+<li>
+	<a href="<%= url_for c.page_link %>" class="comment">
+		<span class="text">&#8220;<%= truncate(c.comment, :length => 75) %>&#8221;</span>
+		<span class="user"><%= c.user.nil? ? 'Anonymous' : c.user.login %></span>
+	</a>
+</li>
+<% end %>
+</ul>
+<% end %>
+	<!--
+	  <div id="small_comment">
+	    <%# render :partial => 'shared/comment_form2', :locals => {:object => object, :master_container => 'small_comment', :redirect => false } %>
+	  </div>
+  -->
+</div>

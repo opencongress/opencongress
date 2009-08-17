@@ -1,0 +1,88 @@
+
+
+<script type="text/javascript">
+
+function mycarousel_initCallback(carousel)
+{
+	// Disable autoscrolling if the user clicks the prev or next button.
+	carousel.buttonNext.bind('click', function() {
+		carousel.startAuto(0);
+	});
+
+	carousel.buttonPrev.bind('click', function() {
+		carousel.startAuto(0);
+	});
+
+	// Pause autoscrolling if the user moves with the cursor over the clip.
+	carousel.clip.hover(function() {
+		carousel.stopAuto();
+	}, function() {
+		carousel.startAuto();
+	});
+};
+
+$j(document).ready(function() {
+	$j('#bill_carousel').jcarousel({
+		auto: <%= @carousel[0].length %>,
+		wrap: 'last',
+		initCallback: mycarousel_initCallback
+	});
+});
+
+</script>
+
+
+<%# debugger %>
+
+<div class="carousel_wrap">
+<h3 class="carousel_title">Hot Bills at a Glance</h3>
+
+<ul id="bill_carousel" class="jcarousel-skin-bravo">
+
+  <% @carousel[0].each_with_index do |b, i| %>	
+	<li class="<%= bill_category(b) %>">
+
+	    <div class="category_track">
+				<div>
+					<span class="category_id"><%= b.hot_bill_category.name %></span>
+	     		<span class="slide_number"><%= (i + 1) %> of <%= @carousel[0].size %></span>
+				</div>
+	   		<%= render :partial => "shared/track_link", :locals => {:object => b, :button => "large_track"} %>
+
+	   	</div>
+
+    
+		<a class="icon_link" href="<%= url_for :controller => 'bill', :action => 'show', :id => b.ident %>">
+				
+		<div class="title">
+			<% unless b.title_popular_only.blank? %>
+			<span class="a"><%= "#{b.title_typenumber_only} - #{truncate(b.title_popular_only, :length => 103)}" %></span>
+			<% else %>                                 
+			<span class="a"><%= "#{b.title_typenumber_only}" %></span>
+			<% end %>
+
+			<% unless b.title_official.blank? %>
+			<p><%= b.title_official %></p>
+			<% end %>
+			       			
+		</div>
+
+		<span class="status">            
+			<span><%= temp_url_strip(b.status) %></span>
+			<span class="date"><%= b.last_action.formatted_date if b.last_action %></span>
+			<% unless b.session == DEFAULT_CONGRESS %>
+			<span>(<%= b.session.ordinalize %> congress)</span>
+			<% end %>
+			<div class="sponsor">
+		  <span>Sponsor</span>
+		  <span class="name"><%= b.sponsor.name %></span>
+		</div>
+		</span>
+		
+		
+		</a>
+	</li>
+	<% end %>
+	</ul>
+	
+	</div>

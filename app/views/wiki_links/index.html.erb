@@ -1,0 +1,26 @@
+<h1>Listing wiki_links</h1>
+
+<table>
+  <tr>
+    <th>Wikiable type</th>
+    <th>Wikiable</th>
+    <th>Name</th>
+    <th>Oc link</th>
+  </tr>
+
+<% for wiki_link in @wiki_links %>
+  <tr>
+    <td><%=h wiki_link.wikiable_type %></td>
+    <td><%=h wiki_link.wikiable_id %></td>
+    <td><%=h wiki_link.name %></td>
+    <td><%=h wiki_link.oc_link %></td>
+    <td><%= link_to 'Show', wiki_link %></td>
+    <td><%= link_to 'Edit', edit_wiki_link_path(wiki_link) %></td>
+    <td><%= link_to 'Destroy', wiki_link, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New wiki_link', new_wiki_link_path %>

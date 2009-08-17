@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <style>
+      body {
+      	font:80%/140% "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;
+      	background: #<%= @bgcolor %>;
+      	color: #<%= @textcolor %>;
+      }
+    
+      a {
+        color: #<%= @textcolor %>;
+      }
+      a:hover {
+        text-decoration: none;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+    
+      li {
+        margin: 0 5px 10px 5px;
+        height: 43px;
+        overflow: hidden;
+        line-height: 1.1em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="mypn_widget">
+      <div class="mypn_widget_items">		
+
+        <div style="font-weight: bold;line-height: 1.1em;text-align: center;margin-top:5px;font-size:1.1em;">
+          My Political Notebook
+        </div>
+        <br />
+        
+        <% if @items.empty? %>
+          There are no items in this political notebook, or sharing has been turned off.
+        <% else %>
+          <br />
+          <b style="color:#0A7C00;font-style:italic;margin-left:5px;"><%= @login %>'s Items</b>
+          <ul style="margin-left:10px;">
+            <% @items.each do |i| %>
+              <li><a href="<%= i.url %>" target="_top"><%= i.title %></a></li>
+            <% end %>
+            <div style="clear: both; height: 1px; overflow: hidden;">&nbsp;</div>
+          </ul>
+        <% end %>
+        
+        <div style="font-weight: bold; text-align: center; padding-bottom: 5px;">
+          <span style="font-size: 10px;">
+            Powered by <a href="/" target="_top">OpenCongress</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

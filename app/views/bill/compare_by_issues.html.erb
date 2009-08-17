@@ -1,0 +1,20 @@
+<% @subjects_hash.each do |term, value| %>
+  <% unless value.length == 0 %>
+<h3><%= term %></h3>
+<table style="width:100%;">
+<tr>
+  <th>Bill</th><th>Status</th><th>Roll Call</th><th><%= @person1.lastname %></th><th><%= @person2.lastname %></th><th>Users Tracking</th><th>Comments</th>
+</tr>
+<% value.sort_by(&:bill_id).group_by(&:bill_id).each do |v| %>
+  <% vo = v[1].first %>
+  <tr><td><%= link_to vo.bill.title_typenumber_only + ": " + vo.bill.title_short, :controller => :bill, :action => :show, :id => vo.bill.ident %></td>
+      <td><%= vo.bill.status %></td>
+      <td><%= link_to vo.number, :controller => :roll_call, :action => :show, :id => vo.id %></td>
+      <td><%= RollCallVote.find_by_roll_call_id_and_person_id(vo.id,@person1.id) %></td>
+      <td><%= RollCallVote.find_by_roll_call_id_and_person_id(vo.id,@person2.id) %></td>
+      <td><%= vo.bill.bookmarks.count %></td>
+      <td><%= vo.bill.comments.count %></td>
+  </tr>
+<% end %>
+<% end %>
+<% end %>

@@ -1,0 +1,16 @@
+<p>You may have some of the best information on what's really happening in Congress -- submit a tip to the open-submissions Congress Gossip Blog using the form below.</p>
+
+<p>Or, if you know of a helpful news article or blog post about Congress, send us a tip with your suggested link. You may submit your tip anonymously, using any e-mail of your choosing, or attributed to your own name and e-mail. All tips and links will be reviewed by OpenCongress site editors, and selected ones will be published on the Congress Gossip Blog. Not every tip may be published, and tips may be edited when re-published. Wherever possible, please provide links to relevant websites.</p>
+
+<p>The Congress Gossip Blog submit-a-tip form can be a tool for exposing corruption, putting a spotlight on wasteful spending, reporting a piece of news you learned from contacting a Member of Congress, or simply sharing a juicy political tidbit. If you're a political insider, this is an open public forum to get your tips out of the Beltway and into the public eye. Or, if you're a citizen journalist researching the legislative records of Members of Congress, you can use the form below to share what you've found. It's open to everyone, so send us a tip and help build public knowledge about Congress.</p>
+
+<table> 
+<% form_tag :action => "tip" do -%>
+<tr><td>Your name</td><td> <%= text_field 'tip', 'name' %></td></tr>
+<tr><td>Your email</td><td> <%= text_field 'tip', 'email' %></td></tr>
+<tr><td>Link (optional)</td><td> <%= text_field 'tip', 'link' %></td></tr>
+<tr><td>Text</td></tr>
+<tr><td colspan="2"> <%= text_area('tip', 'tip') %></td></tr>
+<tr class="right"><td colspan="2"><%= submit_tag "Submit" %></td></tr>
+<% end %>
+</table>

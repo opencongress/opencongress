@@ -1,0 +1,41 @@
+<div id="the-rolls">
+<% if rolls.size > 0 %>
+<ul class="rolls_list">
+	<li class="help"><p>The votes below were taken by roll call, a voting procedure that records a vote from every Senator or Representative on the bill under consideration. This Member of Congress may have voted on other bills by the process known as "voice vote", but these votes are not recorded.</p></li>
+	<% if header %><h3 class="darkline">Voting History</h3><% end %>
+		<% rolls.each do |roll| %>  
+		<li>
+			<span class="date"><%= roll.date.strftime("%B %d, %Y") %></span>
+			<span class="date"><%= roll.chamber %></span>
+			<div class="bill_title">
+			<% unless roll.bill.nil? %>
+				<% unless roll.bill.hot_bill_category.nil? %>
+				<img src="/images/icon-hot-bill.gif" class="noborder" style="line-height: .8em;" alt="hot bill" />
+				<% end %>
+				<%= link_to roll.bill.title_typenumber_only, :controller => 'bill', :action => "show", :id => roll.bill.ident %> <%= roll.bill.title_common %>
+				<% end %>
+			</div>
+			<em><%= roll.question %></em>
+			<% if can_blog? %>
+			<b>Make <%= roll.number %> a hot vote:</b>
+			<% form_for :roll_call, roll, :url => { :controller => :roll_call, :action => "make_hot", :id => roll.id } do |f| %>
+			Editorial Title: <%= f.text_field :title %>
+			<%= submit_tag "Make Hot Vote" %>
+			<% end %>
+			<% end %>
+			<%= roll.ayes %>
+			<%= roll.nays %>
+			<%= roll.result %>
+			<b><%= link_to 'See Vote', { :controller => 'roll_call', 
+				:action => 'show', :id => roll.id } %></b>
+		 </li>
+		<% end %>
+		<% else %>
+		<% if params[:controller] == 'roll_call' and params[:action] == 'search'%>
+		Your search returned zero results.
+		<% else %>
+		No votes on this bill.
+		<% end %>
+	</ul>
+	<% end %>
+</div>

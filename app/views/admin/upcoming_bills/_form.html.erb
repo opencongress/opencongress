@@ -1,0 +1,19 @@
+<%= error_messages_for 'upcoming_bill' %>
+
+<!--[form:upcoming_bill]-->
+<p><label for="upcoming_bill_title">Title</label><br/>
+<%= text_area 'upcoming_bill', 'title'  %></p>
+
+<p><label for="upcoming_bill_summary">Summary</label><br/>
+<%= text_area 'upcoming_bill', 'summary'  %></p>
+
+<p><label for="upcoming_bill_created_at">Created at</label><br/>
+<%= datetime_select 'upcoming_bill', 'created_at'  %></p>
+
+<p><label for="upcoming_bill_updated_at">Updated at</label><br/>
+<%= datetime_select 'upcoming_bill', 'updated_at'  %></p>
+
+<p><label for="upcoming_bill_fti_names">Fti names</label><br/>
+</p>
+<!--[eoform:upcoming_bill]-->
+

@@ -1,0 +1,20 @@
+<h1>Change the Thunderdome</h1>
+<% if @current_bill_battle %>
+<h4>Current Thunderdome: <%= @current_bill_battle.first_bill.ident %> vs <%= @current_bill_battle.second_bill.ident %></h4>
+<% end %>
+<p>
+Fill in the form below to create and make-live a new thunderdome.
+</p>
+<p>
+<em>Enter bill ID as it appears in URL (ie, "110-h512")
+</em>
+</p>
+<% form_tag do %>
+Bill 1:
+<%= text_field_tag "bill_1" %>
+
+Bill 2:
+<%= text_field_tag "bill_2" %>
+
+<%= submit_tag "Set Thunderdome" %>
+<% end %>

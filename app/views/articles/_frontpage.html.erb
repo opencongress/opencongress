@@ -1,0 +1,41 @@
+<div id="blog">
+<h2>
+<a href="/blog" class="text">OpenCongress Blog</a> <a class="feed" href="http://feeds.feedburner.com/OpenCongressCongressGossipBlog">Feed</a>
+</h2>
+<div class="back">
+<% if most_recent = articles.delete_at(0) %>
+  <h3 class="line2">
+    <strong class="gossip"><%= link_to most_recent.title, :controller => 'articles', :action => 'view', :id => most_recent %></strong>
+    <em class="date"><%= most_recent.formatted_date %></em>
+  </h3>
+
+    <% unless (most_recent.frontpage_image_url.nil? || most_recent.frontpage_image_url.empty?) %>
+    <% end %>
+    <p>
+          <img class="frontpage-blog-image" src="<%= most_recent.frontpage_image_url %>">
+
+    <%= truncate(most_recent.excerpt, :length => 398) %>
+    <%= link_to('More...', { :controller => 'articles', :action => 'view', :id => most_recent }, :class => 'arrow biglinks') %>
+   </p>
+<% end %>
+
+
+<h3 class="recent">Recent Blog Posts</h3>
+<ul class="indent">
+  <% articles.each_with_index do |g, i| -%>
+    <li class="<%= (i.modulo(2) == 0) ? 'light' : 'dark' %>">
+      <%= link_to "<span class='blog_headline'>#{g.title}</span><span class='datedark'>#{short_date g.created_at}</span>", 
+          { :controller => 'articles', :action => 'view', :id => g }  %>
+   </li>
+  <% end -%>
+</ul>
+
+</div>
+<div class="clear">&nbsp;</div>
+
+</div>
+
+<div class="blog_buttons">
+	<a href="/blog" class="med_button"><span>All Blog Posts</span></a>
+	<a href="/gossip/submit" class="med_button"><span>Send Us a Tip or Suggest a Link</span></a>
+</div>

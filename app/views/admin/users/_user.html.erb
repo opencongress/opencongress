@@ -1,0 +1,30 @@
+<div class="user" style="float: left; padding: 10px; border: 1px solid #aaa; margin: 5px;height:200px;width:200px;">
+<h3><%= user.login %></h3>
+<span style="font-size:10px;"><%= mail_to user.email, user.email %>
+</span>
+<table style="font-size:11px;">
+<tr><td>Activated :</td><td><%= user.activated_at.nil? ? "Never" : user.activated_at.to_s(:short) %></td></tr>
+<tr><td>Role :</td><td><%= user.user_role.name %></td></tr>
+<tr><td>Enabled?:</td><td><%= user.enabled %></td></tr>
+<tr><td>Full Name:</td><td><%= user.full_name %></td></tr>
+<% if user.definitive_district %>
+<tr><td>District:</td>
+    <td>
+      <%= District.find_by_id(user.definitive_district).state.abbreviation %>-
+      <%= District.find_by_id(user.definitive_district).district_number %>
+    </td>
+</tr>
+<% if user.definitive_district_object.current_watch_dog && user.definitive_district_object.current_watch_dog.user == user %>
+<tr>
+  <td colspan="2"><b>WATCHDOG</b>
+  </td>
+</tr>  
+<% end %>
+<% end %>
+</table>
+
+<hr/>
+<%= link_to 'Show', :action => 'show', :id => user %> | 
+<%= link_to 'Edit', :action => 'edit', :id => user %> | 
+<%= link_to 'Destroy', { :action => 'destroy', :id => user }, :confirm => 'Are you sure?', :method => "post" %><br/>
+</div>

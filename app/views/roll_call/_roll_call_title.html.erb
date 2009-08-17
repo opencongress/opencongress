@@ -1,0 +1,14 @@
+<div id='heading'>
+  <% if @roll_call.bill %>
+    <% if @roll_call.amendment %>
+      <h2>
+        Amendment (<%= @roll_call.amendment.display_number %>) to <%= link_to @roll_call.bill.title_typenumber_only, { :controller => 'bill', :action => 'show', :id => @roll_call.bill.ident } %>: 
+      <%= @roll_call.bill.title_official %>
+      </h2>
+    <% else %>
+      <h2><%= @roll_call.bill.title_typenumber_only %>: <span><%= @roll_call.bill.title_official %></span></h2>
+    <% end %>
+  <% else%>
+    <h2><%= @roll_call.question %></h2>
+  <% end %>
+</div>

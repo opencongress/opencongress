@@ -1,0 +1,13 @@
+
+<div class="explain_box">
+This is a list of all the users tracking <%= @committee.name %> who have made their pages of Tracked Items public. Some users may be tracking <%= @committee.name %>, but have made their pages private or friends-only. For more info, click on the usernames below and view their profile pages of Actions. You may find people with expertise in your interests or opinions that you value. Invite them to be your friend, and their latest actions will appear in your profile's page of Friends.  
+</div>
+
+<% if @users.empty? %>
+  <p>Nobody is tracking that Committee</p>
+<% else %>
+
+  <%= render :partial => "tracking_tables" %>
+
+<% end %>
+  

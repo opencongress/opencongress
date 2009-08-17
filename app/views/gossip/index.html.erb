@@ -1,0 +1,20 @@
+<div id="heading">
+
+<h2>Congress Gossip</h2>
+
+</div>
+<div class="padding">
+
+<p>This page compiles the tips submitted from the public and readers of the OpenCongress Blog. Anyone can <a href="/gossip/submit">submit a tip</a>, either anonymously or attributed to their preferred name and e-mail address. Tips will be reviewed by Open Congress site editors, and selected tips will be published on the Congress Gossip Blog. Not all tips submitted will be published, and tips may be edited for content.</p>
+
+<p>If you're a political insider, you can use this tool to expose closed-doors political dealings, share a juicy piece of news, or to blow the whistle on corruption. Submitting a tip to the Congress Gossip Blog can also work as distributed citizen journalism to get the story behind what's really happening in Congress. For example, if you have contacted your Member of Congress about, say, a close upcoming vote, and you received an answer from her office about which way she is voting, you can share the news publicly on this tips page.</p>
+
+<p>We encourage you to subscribe to this page's <a href="http://www.opencongress.org/gossip/atom">RSS feed</a> to follow the latest in Congressional tips, as well as the <a href="http://www.opencongress.org/articles/atom">RSS feed</a> for posts on the Congress Gossip Blog.</p> 
+<p>
+  <a href="/gossip/submit" class="med_button"><span>Submit a tip</span></a>
+</p>
+
+<h4 class="clear">Latest Tips</h4>
+
+<%= render :partial => "gossip_list", :collection => @gossip %>
+</div>

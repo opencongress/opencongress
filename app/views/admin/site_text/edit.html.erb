@@ -1,0 +1,9 @@
+<h1>Editing site_text</h1>
+
+<% form_tag :action => 'update', :id => @site_text do -%>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Edit' %>
+<% end %>
+
+<%= link_to 'Show', :action => 'show', :id => @site_text %> |
+<%= link_to 'Back', :action => 'list' %>

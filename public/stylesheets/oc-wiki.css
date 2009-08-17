@@ -1,0 +1,576 @@
+ol, ul {
+list-style-position:inside;
+list-style-type:circle;
+}
+#bodyContent ul {
+margin-bottom:1em;
+}
+
+#tabs {
+  padding:24px 0 0 30px !important;
+  clear:both !important;
+  border-bottom:1px solid #dfdfdf !important;
+
+}
+
+#tabs ul li {
+  line-height:33px !important;
+margin-right: 5px !important;
+  display:inline !important;
+overflow: hidden !important;
+  padding:10px 0 11px 4px !important;
+  background: url('img/topic-tab-left.png') no-repeat left -9999px !important;
+}               
+#tabs ul li span {
+  padding:10px 4px 11px 0 !important;
+  background: url('img/topic-tab-right.png') no-repeat right -9999px !important;
+}
+#tabs ul li span a,
+#tabs ul li span span.a  {
+  padding:10px 12px 11px 13px !important;
+text-decoration: none !important;
+color: #555 !important;
+  background: url('img/topic-tab-bg.png') repeat-x left -9999px !important;
+}
+#tabs ul li:hover,
+#tabs ul li.here,
+#tabs ul li.here span a,
+#tabs ul li.here span span.a,
+#tabs ul li:hover span a {
+  background-position:left top !important;
+}                             
+#tabs ul li:hover span,
+#tabs ul li.here span {
+  background-position:right top !important;
+}
+
+.bookmark {
+	float:right;
+	position:relative;
+	top:-60px;
+}
+td#wiki_nav a {
+	position:relative;
+}
+
+td#wiki_nav .beta {
+	background:transparent url(i/beta.png) no-repeat left top; 
+	position:absolute;
+	width:0px;
+	overflow:hidden;
+	padding-left:31px;
+	left:13px;
+	top:20px;
+}
+#toc {
+margin: 6px 0px 10px 0;
+border: 1px solid #ddd;
+background: #fff;
+padding: 20px !important;
+font-size: 11px;
+}
+
+#toc tr td{
+margin: 6px 0px 10px 0;
+border: 1px solid #ddd;
+background: #fff;
+padding: 20px !important;
+font-size: 11px;
+}
+
+
+#toolbox {
+border: 1px solid #ddd;
+padding: 0 20px 20px;
+background: #fff;
+margin-top: 20px;
+}
+#toolbox h5 {
+padding: 0 ;
+margin: 20px 0 0 0;
+}
+
+#toc h2#toctitle {
+font-size: 16px;
+margin: 0 16px 10px 0;
+padding-bottom: 0px;
+border: none;
+float:left;
+}
+
+#toc ul ul {
+margin-left: 10px;
+}
+
+#toc li {
+padding: 1px;
+}
+
+#toc a {
+text-decoration: none;
+color: #333;
+}
+
+#toc a:hover {
+text-decoration: underline;
+}
+
+.toctoggle {
+float:right;
+padding-top:5px;
+}
+.tocnumber {
+color: #333;
+font-weight: bold;
+}
+#toctitle:after {
+	display:block;
+	visibility:hidden;
+	clear:both;
+	height:0;
+	content:".";
+} 
+/*	
+dl {
+margin: 0 0 30px 0;
+}
+dt, dd {
+margin: 0 !important;
+padding: 0 !important;
+}
+*/   
+.infobox {
+	position:relative;
+	background:url(i/infobox.gif) repeat-y right top;
+	padding-right:5px;
+	right:-10px;
+	width:auto;
+	float:right;
+	z-index:5;
+	
+}            
+dl {
+	margin-bottom:1em;
+}
+.mw-headline {
+float: none !important;
+}
+
+h2 {
+margin-top: 40px;
+border-bottom: 1px solid;
+color:#424f7f;
+padding-bottom:15px;
+}
+                                                                 
+#bodyContent h2 {
+	border:none;
+	position:relative;
+	margin-bottom:0;
+	padding-bottom:10px;
+	height:36px;   
+	width:auto;
+
+}
+#bodyContent table h2, #bodyContent table h2 .mw-headline {
+	background:none;
+	position:static;
+	width:auto;
+	height:auto;
+	padding:0;
+}   
+#bodyContent table h2 {
+	padding:10px 0;
+}	                   
+	
+#bodyContent h2 .mw-headline {
+	background:transparent url(i/h2-bg.png) no-repeat left top; 
+  _background:none;
+	overflow:visible;
+	position:absolute;
+  _position:static;
+	width:962px;  
+  _width:auto;
+	padding:9px 0 0 10px; 
+	_padding-left:0;
+	height:101px;
+  _height:25px;
+	z-index:1;
+
+}
+#bodyContent h2+*,#bodyContent h2+*+* {
+	position:relative;
+	z-index:2;
+}
+
+
+#bodyContent h2 span.mw-headline,
+#toc h2 {
+padding: 5px 0 0px 31px !important;
+background: url(i/main_section.png) 5px 2px no-repeat !important; 
+ _background: url(i/main_section.png.gif) 0px 2px no-repeat !important;
+width:auto;
+}
+
+h3 {
+margin:20px 0 0 0;
+height: 30px;
+display: block;
+}
+#bodyContent h3 span.mw-headline,
+#bodyContent h4 span.mw-headline,
+#bodyContent h5 span.mw-headline,
+#bodyContent h6 span.mw-headline {
+position:relative;
+z-index:2;
+
+}    
+h4 {
+	margin-top:15px;
+}                 
+h5,h6 {
+	margin-top:10px;
+}
+
+h1 .editsection,
+h2 .editsection,
+h3 .editsection,
+h4 .editsection,
+h5 .editsection,
+h6 .editsection  {
+color: #999 !important;
+float: right;
+border: none;
+height: 30px !important;
+padding: 0 !important;
+margin: -3px 7px 0 0;
+}        
+h2 .editsection {
+	margin:0;
+	position:relative;
+	top:5px;
+	z-index:2;
+}
+h1 .editsection a,
+h2 .editsection a,
+h3 .editsection a,
+h4 .editsection a,
+h5 .editsection a,
+h6 .editsection a  {
+color: #666 !important;
+font-size: 12px;
+display: block;
+width: 73px;
+height: 0px;
+margin: 0 !important;
+padding-top: 28px;
+background: url(i/edit_button.png) 1px 2px no-repeat; 
+ _background: url(i/edit_button.png.gif) 1px 2px no-repeat;
+overflow: hidden;
+border:none !important;
+}
+
+h1 .editsection a:hover,
+h2 .editsection a:hover,
+h3 .editsection a:hover,
+h4 .editsection a:hover,
+h5 .editsection a:hover,
+h6 .editsection a:hover  {
+background: url(i/edit_button.png) 1px -28px no-repeat; 
+ _background: url(i/edit_button.png.gif) 1px -28px no-repeat;
+}
+
+.topic {
+padding-bottom: 15px;
+}
+.topic p {
+padding: 10px 10px 0px;
+}
+.topic:hover {
+background: #eee;
+}
+.topic:hover h3 {
+background: #aaa url(i/sub_section.png) 10px 11px no-repeat !important; 
+ _background: #aaa url(i/sub_section.png.gif) 10px 11px no-repeat !important;
+}
+
+h3 .mw-headline {
+padding-top: 1px;
+border: none;
+}
+.prettytable {
+border: 1px solid;
+float: left;
+width: 450px;
+margin:0 10px 10px 0 !important;
+position:relative;
+z-index:3;
+}          
+.prettytable.nf {
+	width:100%;
+	float:none;
+}
+.prettytable td {
+border: 1px solid #ccc;
+padding: 5px;
+}
+
+.prettytable .topth {
+background: #999;
+color: #fff;
+padding: 8px;
+text-align: center;
+}
+.prettytable th {
+background: #ccc;
+color: #444;
+padding: 4px;
+}
+
+
+.prettytable p {
+
+}
+.prettytable+.prettytable+p:before,
+.prettytable+.prettytable+ul:before,
+.prettytable+.prettytable+ol:before,
+.prettytable+.prettytable+div:before,
+.prettytable+.prettytable+h1:before,
+.prettytable+.prettytable+h2:before,
+.prettytable+.prettytable+h3:before {
+	display:block;
+	visibility:hidden;
+	clear:both;
+	height:10px;
+	content:".";
+}
+.right_panel {
+border: 1px solid #aaa; 
+margin: 50px 0pt 0.5em 1em; 
+padding: 20px; 
+background-color: rgb(254, 252, 236); 
+color: black; 
+float: right; 
+clear: right; 
+width: 210px; 
+font-size: 90%;
+}
+.right_panel h3 {
+padding: 0;
+margin-top: 10px;
+background: none !important;
+}
+
+
+
+.money_table {
+padding: 15px !important;
+background: #e6ffe6;
+margin: 30px 0 0;
+border: 1px solid #aaa !important;
+}
+
+.money_table h2 {
+margin: 0 0 15px !important;
+}
+
+.contact p {
+float: left;
+padding: 12px 40px 0 0;
+}
+
+.contact p b {
+font-size: 17px;
+font-weight: normal;
+color: #000;
+margin: 0 !important;
+line-height: 2em;
+}
+
+.note {
+background: #eee;
+padding: 20px;
+}
+.source {
+font-size: 11px;
+padding: 10px 10px 0;
+}
+#jump-to-nav {
+display: none !important;	
+}
+blockquote {
+padding: 0 60px 10px;
+font-size: 11px;
+font-style: italic;
+}
+
+.clear {
+clear: both;	
+}
+.topic ul {
+padding-left: 20px;
+}
+
+.topic ul li {
+padding: 3px;
+}
+.contact .topic {
+padding-left: 10px;
+}
+.comm_table {
+	border:1px solid gray;
+	margin:0 0 15px 8px;
+	width:auto;
+}
+.comm_table th.top {
+	border-bottom: 1px solid gray; background:#eee;
+}
+.comm_table td.dems {
+border-right: 1px solid gray; background:#CCE; color:#00A; width: 50%;	
+}
+.comm_table td.dems-cell {
+	border-right:1px solid gray; background:#EEF;
+}
+.comm_table td.reps {
+color:#A10; width:50%; background:#ECB;	
+}
+.comm_table td.reps-cell {
+	background:#FED;      
+}
+#bodyContent {
+	background:none !important;
+}                 
+
+#throw_away{
+width: 950px;
+margin: 0 auto;
+}
+#throw_away a:visited {
+	color:#1B79DF;
+}
+#how_it_works, #hot, #participate{
+float: left;
+}
+
+#how_it_works{
+width: 240px;
+text-align: center;
+background: url(i/hammer.gif) center 50px no-repeat;
+}
+
+#how_it_works ul{
+line-height: 2em;
+margin-bottom: 30px;
+}
+
+#throw_away ul{
+padding: 0;
+margin: 0;
+}
+
+#throw_away li{
+list-style: none;
+}
+          
+#throw_away .editsection {
+	display:none;
+}
+#hot{
+width: 453px;
+}
+
+
+#hot ul li a{
+display: block;
+height: 30px;
+margin-bottom: 10px;
+text-decoration: none;
+padding: 13px 0 0 15px;
+text-align: center;
+background: url(i/blue_button.png) center 0px no-repeat; 
+ _background: url(i/blue_button.png.gif) center 0px no-repeat;
+}
+
+
+#hot h3{
+color: #886231;
+font-size: 30px;
+padding: 0;
+margin: 10px 0 20px 0;
+}
+
+
+
+#hot ul li a:hover{
+background: url(i/blue_button.png) center -51px no-repeat; 
+ _background: url(i/blue_button.png.gif) center -51px no-repeat;
+}
+
+
+#participate{
+width: 254px;
+text-align: center;
+background: url(i/edit_fade.gif) center 60px no-repeat;
+}
+
+
+#participate h3{
+margin-bottom: 170px;
+}
+
+
+
+#throw_away h3{
+text-align: center;
+}
+
+
+span.small_blue_button a {
+display: block;
+height: 23px;
+margin-bottom: 10px;
+text-decoration: none;
+padding: 12px 0 0 0px;
+text-align: center;
+background: url(i/small_blue_button.png) center 0px no-repeat; 
+ _background: url(i/small_blue_button.png.gif) center 0px no-repeat;
+font-size: 11px;
+width: 190px;
+margin: 0 auto;
+line-height:1em;
+}
+
+#bodyContent .oclink a.external {
+  display: block;
+  height: 34px;
+  text-decoration: none;
+  margin:0 auto;
+  text-align:center;
+  padding: 0px 0 0 18px; 
+  font-size: 11px; 
+  font-size:1em; 
+  background: url(i/link_left.png) no-repeat left top; 
+   _background: url(i/link_left.gif) no-repeat left top;  
+
+}             
+.oclink a span {
+  padding:0px 14px 0px 8px;
+  display:block;
+  line-height:34px;
+  background: url(i/link_right.png) no-repeat right top; 
+  _background: url(i/link_right.gif) no-repeat right top;  
+}
+#bodyContent .oclink a.external:hover {
+  background-position:left -41px;
+}
+.oclink a:hover span {
+background-position: right -41px; 
+}
+.oclink {
+  float:right;
+  position:relative;
+  top:-45px;
+/*  background:#EAEBFF;
+  padding:10px;
+  border:1px solid #A5AA93;*/
+}

@@ -1,0 +1,46 @@
+<% news_max = [limit || all_size, all_size].min %>
+<% top_url ||= nil %>
+<% short ||= false %>
+<% if all_size == 0 %>
+  <% if @sort == 'toprated' %>
+  
+    <p>There are currently not enough ranked news articles. Please help by ranking some news articles as "helpful".</p>
+  <% else %>
+    <p>Hmmmm, no news coverage found for this bill at this time. This means that this this bill has not yet been mentioned on a publicly-searchable news website by either its official number (for example, "H.R. 3200") or title (for example, "America's Affordable Health Choices Act of 2009"). As soon as that changes, our daily automated search across the Web will catch it and include it here. If this bill is of interest to you, you can write a letter to the editor referring to this bill by name, and if your letter is published on the Web, a link back your letter will appear here within about one day. Or, if you know of a news article about this bill to display here, email us the web address of this page and the web address of your suggested news article: <script type="text/javascript">m("writeus","opencongress","org","1");</script> Our editorial team will post relevant links as quickly as possible. Thanks for helping to build public knowledge about Congress. 
+    </p>
+    <p>
+  <% end %>
+<% else %>
+<p style="margin-bottom:25px;">
+<% if all_size > news_max %>
+  <a href="<%= url_for more_url %>" class="toggle">View All (<%= number_with_delimiter(all_size - limit) %>)</a>
+<% end %>
+<% unless top_url.nil? %>
+&nbsp;|&nbsp;
+  <a href="<%= url_for top_url %>" class="toggle">View Top Rated</a><br />
+<% end %>
+</p>
+
+<% end %>
+<% if @sort == 'toprated' %>
+  <% link = @bill.nil? ? url_for(:controller => 'people', :action => 'news', :id => @person.id) :
+                         url_for(:controller => 'bill', :action => 'news', :id => @bill.ident) %>
+  <div class='explain_box' style="margin: 10px 0 20px 0;">
+    This is a list of the news articles on this <%= @bill.nil? ? 'member of Congress': 'bill' %> rated most useful by the "My OpenCongress" community. You can help by clicking "Yes" or "No" next to each article where it reads, "Was this article useful?"
+  </div>
+<% end %>
+
+<% if admin_logged_in? %>
+  <form name="news_mass_delete_form" id="news_mass_delete_form" action="/admin/commentary/mass_delete">
+<% end %>
+<% news_max.times do |i| %>
+  <% n = news[i] %>
+  
+  <%= render :partial => 'shared/commentary', :object => n, :locals => { :default_title => default_title, :short => short} %>
+<% end %>
+<% if admin_logged_in? %></form><% end %>
+
+
+<div class="credit_buttons daylife">
+  <%= daylife_button %>
+</div>

@@ -1,0 +1,103 @@
+<div>
+
+dsfsdddsf
+
+
+</div>
+
+  <% if @user == current_user %>
+		<h3 class="dark inline">Things I'm Tracking:</h3>
+		<%= toggler('things_im_tracking_whatsthis', image_tag('/images/question.png', :mouseover => '/images/question_hover.png', :alt => "What's This?", :title => "What's This?"), "(Close help)", show_link_class = "question", hide_link_class = "") %>
+		<div id="things_im_tracking_whatsthis" style="display: none;">Nearly every page on OpenCongress features a box to "Track This" item -- it's on pages for bills, Members of Congress, issue areas, and more. Simply click on the button to add that item to your "My OpenCongress" profile, and you'll have assembled a handy one-stop clearinghouse of everything you're following in Congress. You can get started by tracking your <a href="http://www.opencongress.org/people/senators">Senators</a>, your <a href="http://www.opencongress.org/people/representatives">Representative</a>, the <a href="http://www.opencongress.org/issue/by_most_viewed">issues</a> you care about, and any <a href="http://www.opencongress.org/gossip/hot">hot bills</a> that affect those issues.</div>
+	<% else %>
+				<h3 class="darkline">Things <%= @user.login %> is Tracking:</h3>
+	<% end %>
+	<div class="what-line"></div>
+  <h5><%= link_to "#{@bookmarks_bill.length} Bills", :controller => "profile", :action => "bills" %></h5>
+	<ul class="links_detailed">
+		<% @bookmarks_bill.each do |b| %>
+			<% bill = b.bill %>
+				<li>
+					<%= link_to(bill.title_typenumber_only, :controller => "bill", :action => "show", :id => bill.ident) %>
+					<ul class="updates">
+						<li><%= toggler("status_#{bill.ident}", 'status updates', 'status updates', 'off', 'on') %></li>
+						<li><%= toggler("news_#{bill.ident}", 'news updates', 'news updates', 'off', 'on') %></li>
+						<li><%= toggler("blog_#{bill.ident}", 'blog updates', 'blog updates', 'off', 'on') %></li>
+						<li><%= toggler("new_#{bill.ident}", 'new comments', 'new comments', 'off', 'on') %></li>
+					</ul>
+				</li>
+				<li>
+					<div id="status_<%= bill.ident %>" style="display:none;">
+							<%= render :partial => 'bill/action_list', :locals => { :actions => bill.actions.find(:all, :limit => 4) } %>
+					</div>
+					<div id="news_<%= bill.ident %>" style="display:none;">
+						<%=
+				        render :partial => 'shared/news', :object => bill.news.find(:all, :limit => 3),
+				          :locals => { :limit => 3, :all_size => bill.news.size, :default_title => bill.title_typenumber_only,
+				                       :more_url => { :controller => 'bill', :action => 'news', :id => bill.ident } }
+				      %>
+					</div>
+					<div id="blog_<%= bill.ident %>" style="display:none;">
+						<%=
+				        render :partial => 'shared/blogs', :object => bill.blogs.find(:all, :limit => 3),
+				          :locals => { :limit => 3, :all_size => bill.blogs.size, :default_title => bill.title_typenumber_only,
+				                       :more_url => { :controller => 'bill', :action => 'blogs', :id => bill.ident } }
+				      %>
+					</div>
+					<div id="new_<%= bill.ident %>" style="display:none;">
+						  <%= render :partial => 'shared/comments_embedded', :locals => {:object => bill }%>
+					</div>
+				</li>
+	<% end %>
+	</ul>
+  
+	<h5><%= link_to "#{@bookmarks_sen.length} Senators", :controller => "profile", :action => "person", :person_type => "senators" %></h5>
+	<ul class="links_detailed">
+		<% @bookmarks_sen.each do |b| %>
+		  <li><%= render :partial => "person_main_detail", :locals => {:b => b} %></li>
+		<% end %>
+	</ul>
+	
+  <h5><%= link_to "#{@bookmarks_rep.length} Representatives", :controller => "profile", :action => "person", :person_type => "representatives" %></h5>
+ 	<ul class="links_detailed">
+		<% @bookmarks_rep.each do |b| %>
+                  <li><%= render :partial => "person_main_detail", :locals => {:b => b} %></li>
+		<% end %>
+	</ul>
+
+	<% link_to "Committees", :controller => "accounts", :action => "committees" %>
+  <% link_to "Industries", :controller => "accounts", :action => "industries" %>
+  
+	<h5><%= link_to "#{@bookmarks_issue.length} Issues", :controller => "profile", :action => "issues" %></h5>
+	<ul class="links_detailed">
+		<% @bookmarks_issue.each do |b| %>
+		<li><%= link_to(b.subject.term, :controller => "issue", :action => "show", :id => b.subject.to_param) %>:
+				<ul class="updates">
+					<li><%= toggler("new_bills_#{b.subject.term}", 'new bills', 'new bills', 'off', 'on') %></li>
+					<li><%= toggler("new_comments_#{b.subject.term}", 'new comments', 'new comments', 'off', 'on') %></li>
+				</ul>
+			</li>
+			<li>
+				<div id="new_bills_<%= b.subject.term %>" style="display:none;">
+					new issue area bills here
+				</div>
+				<div id="new_comments_<%= b.subject.term %>" style="display:none;">
+					  <%= render :partial => 'shared/comments_embedded', :locals => {:object => b.subject }%>
+				</div>
+			</li>                    
+		<% end %>
+	</ul>
+
+<% link_to "Blogs", :controller => "accounts", :action => "blogs" %> <br/>
+
+<% if @user == current_user %>
+    <h3 class="darkline">Recent <%=link_to "Friends", friends_path(@user.login) %> History</h3>  
+	<h3 class="darkline">My History:</h3>
+<% else %>
+	<h3 class="darkline"><%= @user.login %>'s History</h3>
+<% end %>
+  <h5><%= link_to "My Votes", :controller => "profile", :action => "my_votes" %></h5>
+  <h5><%= link_to "My Comments", :controller => "profile", :action => "comments" %></h5>
+  <% link_to "My Tools", :controller => "accounts", :action => "blogs" %>
+  <% link_to "My Friends", :controller => "accounts", :action => "blogs" %>
+

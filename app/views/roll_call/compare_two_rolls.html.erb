@@ -1,0 +1,32 @@
+<div style="margin-bottom:10px">
+  <h3>First Vote</h3>
+  <%= @roll_call1.bill.title_full_common %><br />
+  <%= @roll_call1.question %><br />
+  <%= @roll_call1.date.strftime("%B %d, %Y") %>
+</div>
+
+<div style="margin-bottom:10px">
+  <h3>Second Vote</h3>
+  <%= @roll_call2.bill.title_full_common %><br />
+  <%= @roll_call2.question %><br />
+  <%= @roll_call2.date.strftime("%B %d, %Y") %>
+</div>
+
+<table border=1>
+  <tr>
+    <th><%= @roll_call1.where == 'house' ? 'Representative' : 'Senator' %></th>
+    <th>First Vote</th>
+    <th>Second Vote</th>
+  </tr>
+  <% @people.each do |p| %>
+    <tr>
+      <td><img src="/images/photos/thumbs_50/<%= p.id %>.jpeg" height=50><%= link_to_person(p) %></td>
+      <td><%= vote_name(p.vote1) %></td>
+      <td><%= vote_name(p.vote2) %></td>
+      <td><%= link_to 'News Coverage', {:controller => 'people', :action => 'news', :id => p}, :class => 'arrow' %></td>
+      <td><%= link_to 'Blog Coverage', {:controller => 'people', :action => 'blogs', :id => p}, :class => 'arrow' %></td>
+      <td><%= link_to 'Comments', {:controller => 'people', :action => 'show', :id => p, :navtab => 'comments'}, :class => 'arrow' %></td>
+    </tr>
+  <% end %>
+</table>
+    

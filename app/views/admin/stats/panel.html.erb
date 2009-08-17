@@ -1,0 +1,15 @@
+<table class='simple-table'>
+  <tr>
+    <th>Top Referring Pages</th>
+    <th>Panel Type</th>
+    <th>Count</th>
+  </tr>
+
+  <% @referrers.each do |r| %>
+  <tr>
+    <td><a href="<%= r.referrer_url %>"><%= truncate(r.referrer_url, :length => 80) %></a></td>
+    <td><%= r.panel_type %></td>
+    <td><%= r.views %></td>
+  </tr>
+  <% end %>
+</table>

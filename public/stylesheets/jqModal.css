@@ -1,0 +1,160 @@
+/* jqModal base Styling courtesy of;
+	Brice Burgess <bhb@iceburg.net> */
+
+/* The Window's CSS z-index value is respected (takes priority). If none is supplied,
+	the Window's z-index value will be set to 3000 by default (via jqModal.js). */
+	
+.jqmWindow {
+    display: none;
+    position: fixed;
+    top: 17%;
+    left: 50%;
+    margin-left: -385px;
+    /*width: 600px;*/
+    width:auto;
+    background-color: #fefefe;
+    color: #333;
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    border-left: 1px solid #c9c9c9;
+    padding: 30px;
+} 
+.jqmWindow.closer {
+  position:absolute;
+  top:inherit;
+  left:inherit;
+  margin-left:0px;
+}
+.jqmWindow.scrolling {
+  max-height:60%;
+  overflow:auto;
+  width:700px;
+}
+
+.jqmClose{
+display: block;
+width: 23px;
+height: 0;
+background: url('img/sprites.png') -61px -156px no-repeat ;
+   _background: url('img/sprites.gif') -61px -156px no-repeat ;
+padding-top: 21px;
+overflow: hidden;
+position: absolute;
+top: 10px;
+right: 10px;
+z-index: 56789;
+}
+
+.jqmClose:hover{
+background-position: -84px -156px;
+
+}
+
+.jqmClose:active{
+background-position: -107px -156px;
+
+}
+
+
+
+
+.jqmOverlay { 
+background: #fff url('img/overlay.png');
+   _background: #fff url('img/overlay.gif');
+}
+
+/* Background iframe styling for IE6. Prevents ActiveX bleed-through (<select> form elements, etc.) */
+* iframe.jqm {position:absolute;top:0;left:0;z-index:-1;
+	width: expression(this.parentNode.offsetWidth+'px');
+	height: expression(this.parentNode.offsetHeight+'px');
+}
+
+/* Fixed posistioning emulation for IE6
+     Star selector used to hide definition from browsers other than IE6
+     For valid CSS, use a conditional include instead */
+* html .jqmWindow {
+     position: absolute;
+     top: expression((document.documentElement.scrollTop || document.body.scrollTop) + Math.round(17 * (document.documentElement.offsetHeight || document.body.clientHeight) / 100) + 'px');
+}
+
+div.jqmNotice img.jqResize {position: absolute; right: 2px; bottom: 2px;}
+
+/* Notice CSS courtesy of;
+   Alexandre Plennevaux <alexandre@pixeline.be>,
+   Brice Burgess <bhb@iceburg.net> */
+
+div.jqmNotice {
+    display: none;
+    position: relative;
+    border: 1px solid #999 !important;
+    padding: 0 !important;
+    width: 320px;
+    background:#fff url(notice/note_icon.png) 5px 5px no-repeat;
+   _background:#fff url(notice/note_icon.gif) 5px 5px no-repeat;
+    border: 1px solid #000;
+    padding: 0;
+}
+
+.jqmnTitle{margin: 0 25px;}
+  
+.jqmnTitle h1{
+  margin: 5px 0;
+  padding-left:5px;
+  width: 100%;
+  
+  font-size:10px;
+  color:#FFFFCC;
+  background-color:#505050;
+}
+
+div.jqmNotice .jqmClose {
+float:right;}
+
+.jqmnContent{
+  border-top:1px;
+  color:#000;
+  font:12px/18pt Comic Sans, Comic Sans MS, cursive;
+  padding:0 20px 5px;
+}
+div.jqDrag {cursor: move;}
+
+
+
+
+.jqmNotice{
+
+}
+
+.jqmNotice div.jqmnTitle{
+border-bottom: 1px solid #999 !important;
+padding: 0px !important;
+margin: 0 !important;
+background: #ccc url();
+}
+
+
+.jqmNotice h1{
+padding: 5px !important;
+background: none !important;
+margin: 0 !important;
+font-size: 12px !important;
+color: #333 !important;
+width: inherit !important;
+
+}
+
+.jqmnContent p{
+font-family: Arial, Helvetica, sans-serif !important;
+padding: 10px;
+}
+
+
+.jqmnContent{
+
+padding: 5px !important;
+margin: 0 !important;
+}
+
+
+

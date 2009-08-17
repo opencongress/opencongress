@@ -1,0 +1,24 @@
+<h1>Editing mailing_list_item</h1>
+
+<% form_for(@mailing_list_item) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :mailable_type %><br />
+    <%= f.text_field :mailable_type %>
+  </p>
+  <p>
+    <%= f.label :mailable_id %><br />
+    <%= f.text_field :mailable_id %>
+  </p>
+  <p>
+    <%= f.label :user_mailing_list_id %><br />
+    <%= f.text_field :user_mailing_list_id %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @mailing_list_item %> |
+<%= link_to 'Back', mailing_list_items_path %>

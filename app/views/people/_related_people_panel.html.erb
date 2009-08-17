@@ -1,0 +1,20 @@
+<div id="tertiary-content">
+  <div class="col">
+    <div class="related-box">
+     <h2>Most Viewed</h2><span class="days">&#40;Past Seven Days&#41;</span>              
+      <% related_people.each do |p| %>
+      <div <% if related_people.last == p %>class="last"<% end %>>
+        <ul>
+          <li>
+            <p><%= link_to_person p %></p>
+			      <img src="/images/photos/<%= p.id -%>.jpeg" height="50" alt="person" /><br />
+			      <em>(<%= p.views(DEFAULT_COUNT_TIME) %> views)</em>
+          </li>
+        </ul>
+      </div>
+      <% end %>              
+    </div>
+    <!-- // related-box-->
+  </div>
+</div>
+<!-- // col  // tertiary-content -->

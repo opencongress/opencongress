@@ -1,0 +1,34 @@
+<h1>Listing twitter_configs</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Secret</th>
+    <th>Token</th>
+    <th>Tracking</th>
+    <th>Bill votes</th>
+    <th>Person approvals</th>
+    <th>New notebook items</th>
+    <th>Logins</th>
+  </tr>
+
+<% @twitter_configs.each do |twitter_config| %>
+  <tr>
+    <td><%=h twitter_config.user_id %></td>
+    <td><%=h twitter_config.secret %></td>
+    <td><%=h twitter_config.token %></td>
+    <td><%=h twitter_config.tracking %></td>
+    <td><%=h twitter_config.bill_votes %></td>
+    <td><%=h twitter_config.person_approvals %></td>
+    <td><%=h twitter_config.new_notebook_items %></td>
+    <td><%=h twitter_config.logins %></td>
+    <td><%= link_to 'Show', twitter_config %></td>
+    <td><%= link_to 'Edit', edit_twitter_config_path(twitter_config) %></td>
+    <td><%= link_to 'Destroy', twitter_config, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New twitter_config', new_twitter_config_path %>

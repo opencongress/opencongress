@@ -1,0 +1,15 @@
+<% g = gossip_list -%>
+
+<h3 class="line">
+  <em class="date"><%= g.formatted_date %></em>
+  <strong class="gossip">
+    <% unless g.title.empty? %>
+      <%= g.title %> 
+    <% else %>
+      Congress Gossip
+    <% end %>
+  </strong>
+</h3>
+<%= g.tip_html.sub /^<p/, '<p class="line"' %>
+
+

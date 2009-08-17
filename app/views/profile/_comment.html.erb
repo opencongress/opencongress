@@ -1,0 +1,15 @@
+<div class="comment" style="float:none;">
+  <p class="comment_desc" style=""> 
+    <% comm_object = Object.const_get(comment.commentable_type).find_by_id(comment.commentable_id) %>
+    <% comm_title = comm_object.title_typenumber_only if comm_object.type.to_s == "Bill" %>
+    <% comm_title = comm_object.name if comm_object.type.to_s == "Person" %>
+    <% comm_title = comm_object.term if comm_object.type.to_s == "Subject" %>
+    <% comm_title = comm_object.type.to_s + " " + comm_object.id.to_s if comm_object.type.to_s == "Article" %>
+    <%= link_to comm_title, comment.commentable_link %> <br /><em> <%= long_date comment.created_at %> 
+    (<%= time_ago_in_words comment.created_at %> ago) | 
+    Overall Score: <%=h number_with_precision(comment.average_rating,1) %> | 
+    Replies: <%=h comment.children.length %> 
+  </em></p>
+  <p style="margin-left:30px;clear:both;"><%=h comment.comment %> </p>
+
+</div>

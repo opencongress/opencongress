@@ -1,0 +1,13 @@
+<% @sort ||= "" %>
+<ul id="timeframe_select" class="<%= @sort %>">
+	<li class="<%= @days == 7.days ? "selected" : "" %>">
+		<%= link_to "7 days", :days => 7, :sort => @sort %>
+	</li>
+	<li class="<%= @days == 14.days ? "selected" : "" %>">
+		<%= link_to "14 days", :days => 14, :sort => @sort %>	
+	</li>
+	<li class="<%= @days == 30.days ? "selected" : "" %>">
+		<%= link_to "30 days", :days => 30, :sort => @sort %>
+	</li>
+</ul>
+<!-- // timeframe-->

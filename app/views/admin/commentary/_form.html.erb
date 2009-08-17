@@ -1,0 +1,43 @@
+<%= error_messages_for 'commentary' %>
+
+<!--[form:commentary]-->
+<p><label for="commentary_commentary_type">News article? (true=news, false=blog)</label><br/>
+<%= select 'commentary', 'is_news', [true, false] %></p>
+
+<% if @commentary.commentariable_type == 'Person' %>
+  <p><label for="commentary_person">Associated Person:</label> <%= @commentary.commentariable.name %><br/>
+<% end %>
+
+<% if @commentary.commentariable_type == 'Bill' %>
+  <p><label for="commentary_bill">Associated Bill:</label> <%= @commentary.commentariable.title_typenumber_only %><br/>
+<% end %>
+
+<% if @commentary.commentariable_type == 'UpcomingBill' %>
+  <p><label for="commentary_bill">Associated Upcoming Bill:</label> <%= @commentary.commentariable.title %><br/>
+<% end %>
+
+<%= hidden_field 'commentary', 'commentariable_id' %>
+<%= hidden_field 'commentary', 'commentariable_type' %>
+
+<p><label for="commentary_title">Title</label><br/>
+<%= text_field 'commentary', 'title'  %></p>
+
+<p><label for="commentary_url">Url</label><br/>
+<%= text_field 'commentary', 'url'  %></p>
+
+<p><label for="commentary_excerpt">Excerpt</label><br/>
+<%= text_area 'commentary', 'excerpt'  %></p>
+
+<p><label for="commentary_date">Date</label><br/>
+<%= datetime_select 'commentary', 'date'  %></p>
+
+<p><label for="commentary_source">Source</label><br/>
+<%= text_field 'commentary', 'source'  %></p>
+
+<p><label for="commentary_source_url">Source url</label><br/>
+<%= text_field 'commentary', 'source_url'  %></p>
+
+<p><label for="commentary_weight">Weight</label><br/>
+<%= text_field 'commentary', 'weight'  %></p>
+<!--[eoform:commentary]-->
+

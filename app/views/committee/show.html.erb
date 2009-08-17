@@ -1,0 +1,99 @@
+<div id="heading">
+
+  <h2><%= @committee.name %><% unless @committee.subcommittee_name.nil? %><%= ": #{@committee.subcommittee_name}" %><% end %></h2>
+
+
+  <h3>Members</h3>
+
+  <% if @committee.homepage -%>
+  <div class="homepage">Homepage: <a href="<%= @committee.homepage %>"><%= @committee.homepage %></a></div>
+  <% end -%>
+
+
+  <% if @committee.members.length > 0 %>
+  <div class="com_carousel">
+
+    <a class="prev" onclick="new Effect.ScrollToEnd('kthxbye2');; return false;" href="#"><span>Previous</span></a>
+    <a class="next" onclick="new Effect.ScrollToBeg('kthxbye2');; return false;" href="#"/><span>Next</span></a>
+
+    <div class="carousel_wrapper">
+      <div class="carousel_inner">
+        <div id="kthxbye2" style="width:<%= 118 * @committee.members.length %>px;">
+          <% conditions = "" %>
+          <% if @chair %>
+          <% conditions += "people.id != #{@chair.id}" %>
+          <div class="graph_item">
+            <a href="<%= url_for({:controller => "people", :action => "show", :id => @chair.ident}) %>">
+              <image src="/images/photos/thumbs_125/<%= @chair.id %>.jpeg" width="102px" height="125px"/></a>
+
+                <span class="name"><%= @chair.full_name %></span>
+                <em>Chair</em>
+              </div>
+              <% end %>
+              <% if @vice_chair %>
+              <% if conditions.blank? %>
+              <% conditions += "people.id != #{@vice_chair.id}" %>
+              <% else %>
+              <% conditions += " AND people.id != #{@vice_chair.id}" %>
+              <% end %>  
+              <div class="graph_item">
+                <a href="<%= url_for({:controller => "people", :action => "show", :id => @vice_chair.ident}) %>"><image src="/images/photos/thumbs_125/<%= @vice_chair.id %>.jpeg" width="102px" height="125px"/></a>
+                  <span class="name"><%= @vice_chair.full_name %></span>
+                  <em>Vice Chair</em>
+                </div>
+                <% end %>
+                <% if @ranking_member %>
+                <% if conditions.blank? %>
+                <% conditions += "people.id != #{@ranking_member.id}" %>
+                <% else %>
+                <% conditions += " AND people.id != #{@ranking_member.id}" %>
+                <% end %>  
+                <div class="graph_item">
+                  <a href="<%= url_for({:controller => "people", :action => "show", :id => @ranking_member.ident}) %>"><image src="/images/photos/thumbs_125/<%= @ranking_member.id %>.jpeg" width="102px" height="125px"/></a>
+                    <span class="name"><%= @ranking_member.full_name %></span>
+                    <em>Ranking Member</em>
+                  </div>
+                  <% end %>
+
+                  <% @committee.members.find(:all, :conditions => conditions, :order => "people.lastname asc").each do |m| %>
+                  <div class="graph_item">
+                    <a href="<%= url_for({:controller => "people", :action => "show", :id => m.ident}) %>"><image src="/images/photos/thumbs_125/<%= m.id %>.jpeg" width="102px" height="125px"/></a>
+                      <span class="name"><%= m.full_name %></span>
+                    </div>
+                    <% end %>
+                  </div>
+
+
+                </div>
+                <br style="clear:both;" />
+
+              </div>
+
+            </div>
+            <% else %>
+              <div class="padding" style="clear: both;">Sorry, membership data for House sub-committees is not available at this time on OpenCongress, though it's coming soon in August 2009 -- in the meantime, we're afraid we have to refer you to the official websites of the <a href="http://www.house.gov/" target="_blank">House of Representatives</a>.</div>
+            <% end %>
+          </div>
+
+
+          <div class="columns">
+
+            <div class="col1">
+
+            <% if @committee.subcommittee_name.nil? %>
+              <%= render(:partial => 'subcommittee_links', :locals => {:subcommittee_links => @committee.subcommittees, :main => @main}) unless @committee.subcommittees.empty?%>
+            <% end %>
+
+              <div class="committee_reports">
+                <%= render :partial => 'reports' %>
+              </div>
+
+              <%= render :partial => 'calendar_schedule', :locals => {:committee => @committee} %>
+
+            </div>
+
+            <div class="col2">
+            <%= render :partial => 'bill/related_bills_list', :locals => {:related_bills_list => @bills_sponsored } %>
+          </div>
+
+        </div>

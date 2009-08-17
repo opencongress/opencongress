@@ -1,0 +1,48 @@
+<%= render :partial => 'roll_call_title' %>
+
+            <% if can_blog? %>
+            <p style="text-align:center;">
+               <% form_for :roll_call, @roll_call, :url => { :controller => :roll_call, :action => "make_hot", :id => @roll_call.id } do |f| %>
+                <b>Make <%= @roll_call.number %> a hot vote</b>: 
+                Editorial Title: <%= f.text_field :title, :size => 80 %>
+                <%= submit_tag "Make Hot Vote" %>
+               <% end %>
+            </p>
+            <% end %>
+
+<% if @roll_call.bill %>
+  <p><a href="/bill/<%= @roll_call.bill.ident %>/show" class="arrow-left"><b>Back to Main Bill Page</b></a></p>
+<% end %>
+
+
+
+
+<div id="roll_call_details">
+  
+  <%= render :partial => 'roll_call_details_header'%>
+  
+  <div class="cols-box clearfix">
+    <div class="col1">
+      <h3 class="darkline">Votes by <%= person_type %></h3>
+      <%= render :partial => 'person_votes', :locals => { :votes => @roll_call.roll_call_votes } %>
+      <p>** Because of incomplete data from newly elected Representatives, party breakdown visualizations may be inaccurate by one or two votes.</p>
+    </div>
+    <div class="col2">
+      <h3 class="darkline">Vote Result</h3>
+      <%= roll_call_master_sublists(person_type) %>
+      <div id='roll_call_All_chart'><%= @master_chart %></div>
+
+      <h3 class="darkline">Votes by Party</h3>
+      
+      <%= roll_call_sublists_by_vote_type('+', @roll_call) %>
+      <div id='roll_call_Aye_chart'><%= @aye_chart %></div>
+
+      <%= roll_call_sublists_by_vote_type('-', @roll_call) %>
+      <div id='roll_call_Nay_chart'><%= @nay_chart %></div>
+
+      <%= roll_call_sublists_by_vote_type('0', @roll_call) %>
+      <div id='roll_call_Abstain_chart'><%= @abstain_chart %></div>
+    </div>
+  </div>
+</div>
+  

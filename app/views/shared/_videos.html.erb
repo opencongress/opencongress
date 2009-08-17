@@ -1,0 +1,29 @@
+<% more_url ||= nil %>
+
+<% if videos.empty? %>
+  <div class="clear padding">
+    Hmmm, no video coverage of this topic at this time.
+    If you know of a relevant video to display here, send us an email with the
+    URL of this page and the URL of your suggested video: <script
+    type="text/javascript">m("writeus","opencongress","org","1");</script>.
+    The OpenCongress editorial team will review and post relevant videos as
+    quickly as possible.
+  </div>
+<% else %>
+  <div class="videos">
+    <%= render :partial => 'shared/video', :collection => videos %>
+  </div>
+<% end %>
+
+<br style="clear: both;" />
+
+<%= "<p style='margin-top:18px;'>#{more_url}</p>" unless more_url.nil? %>
+<% unless videos.empty? %>
+  <div class="padding"><%= will_paginate videos if videos.kind_of? WillPaginate::Collection %></div>
+<% end %>
+
+<div class="padding clear" style="padding-top: 0;"><p>Video footage of Congress made available by <a
+href="http://www.http://metavid.org/wiki/">Metavid</a> and by the YouTube
+<a href="http://www.youtube.com/senatehub">Senate</a> and <a
+href="http://www.youtube.com/househub">House</a> hubs (via <a
+href="http://www.govtrack.us/">GovTrack</a>).</p></div>

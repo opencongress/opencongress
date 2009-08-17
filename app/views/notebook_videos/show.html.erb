@@ -1,0 +1,28 @@
+<p>
+  <b>Political notebook:</b>
+  <%=h @notebook_video.political_notebook_id %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%=h @notebook_video.title %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%=h @notebook_video.url %>
+</p>
+
+<p>
+  <b>Embed:</b>
+  <%=h @notebook_video.embed %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @notebook_video.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_notebook_video_path(@notebook_video) %> |
+<%= link_to 'Back', notebook_videos_path %>

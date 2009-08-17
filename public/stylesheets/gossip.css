@@ -1,0 +1,30 @@
+#heading{
+min-height: 45px;
+}
+
+.inner h3{
+display: block;
+clear: both;
+margin: 20px 0 10px;
+float: left;
+width: 100%;
+}
+
+.inner h3 strong{
+float: left;
+}
+
+.inner h3 em{
+float: right;
+}
+
+.inner p{
+margin-bottom: 10px;
+clear: both;
+}
+
+.inner h4.clear{
+margin: 0;
+padding: 35px 0 0;
+font-size: 14px;
+}

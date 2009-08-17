@@ -1,0 +1,18 @@
+<div id="committees_panel">
+<h2>Most Viewed <span class="days">&#40;Past Seven Days&#41;</span></h2>
+ <% related_committees.each do |c| %>
+ <div <% if related_committees.last == c %>class="last"<% end %>>
+   <ul>
+     <li>
+       <p><%= link_to_item c, :proper_name, :show %> <em>(<%= c.views(DEFAULT_COUNT_TIME)%> views)</em></p>
+     <% unless c.chair.nil? -%>
+      <p>Chair: <%= link_to_person c.chair %></p>
+    <% end -%>
+    <% unless c.ranking_member.nil? -%>
+      <p>Ranking Member: <%= link_to_person c.ranking_member %></p>
+    <% end -%>
+     </li>
+   </ul>
+ </div>
+ <% end %>              
+</div>

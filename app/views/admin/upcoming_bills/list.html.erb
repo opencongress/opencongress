@@ -1,0 +1,25 @@
+<h1>Listing upcoming_bills</h1>
+
+<table>
+  <tr>
+  <% for column in UpcomingBill.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for upcoming_bill in @upcoming_bills %>
+  <tr>
+  <% for column in UpcomingBill.content_columns %>
+    <td><%=h upcoming_bill.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :controller => '/bill', :action => 'upcoming', :id => upcoming_bill %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => upcoming_bill %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => upcoming_bill }, :confirm => 'Are you sure?', :method => :post %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= will_paginate @upcoming_bills %>
+<br />
+
+<%= link_to 'New upcoming_bill', :action => 'new' %>

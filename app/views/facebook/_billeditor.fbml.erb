@@ -1,0 +1,25 @@
+<%= render :partial => 'facebook/flash' %>
+
+<% unless @facebook_user.facebook_user_bills.empty? %>
+  <h2>Bills You Are Tracking</h2>
+  <% @facebook_user.facebook_user_bills.each do |fub| %>
+    <div class="removebill_row">
+      <div class="removebill_cell" style="width: 345px;"><%= fub.bill.title_full_common %></div>
+      <div class="removebill_cell" style="width: 50px; margin-top: 7px">
+        <form id="editbillform_<%= fub.id %>">
+          <span class="fakebutton">
+            <a clickrewriteurl='<%= url_for :only_path => false, :canvas => false, :controller => 'facebook', :action => 'removebill', :id => fub %>' clickrewriteform='editbillform_<%= fub.id %>' clickrewriteid='billedit_editor' clicktoshow="billedit_edit_spinner">Remove</a>
+          </span>
+        </form>
+      </div>
+    </div>
+  <% end %>
+
+  <br style="clear: both; margin-bottom: 10px" /><br />
+  <%= editbill_spinner %><br />
+  <span class="fakebutton" style="margin-top: 10px;">
+    <a style="font-size: 14px" href="http://www.facebook.com/profile.php?id=<%= @facebook_user.facebook_uid %>" target="_blank">View Profile</a>
+  </span>
+<% else %>
+  <%= editbill_spinner %>
+<% end %>

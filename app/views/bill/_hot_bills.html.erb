@@ -1,0 +1,8 @@
+<ul class="stars-inline clearfix">
+	<% @hot_bill_categories.each do |c| %>
+    <li><a href="#<%= c.name %>"><%= c.name %></a></li>
+  <% end %>
+</ul>
+<div class="hot_bill_collection">
+<%= render :partial => 'hot_bill_category', :collection => @hot_bill_categories %>
+</div>

@@ -1,0 +1,36 @@
+<div class="memo">
+    <h2 style="padding-top:0.3em;padding-bottom:0.6em;">Welcome</h2>
+<p>
+  Thanks for registering! Your "My OpenCongress" account allows you to track your interests in Congress, network with other users, comment and vote on bills, and more. Here's how to get started.
+</p>
+
+<p>
+  First, click on the button to "Track This" next to your Senators and
+  Representative below, and they will be added to your profile's page of "tracked items".
+</p>
+<% if @senators%>
+<h3 style="margin-top:1em;" class="darkline">Senators Representing Your State</h3>
+<p><%= render :partial => 'people/people_list', :locals => { :people => @senators, :show_contact => true }%></p>
+<% end %>
+
+<% if @reps %>
+<br />
+<h3 class="darkline">Representatives Representing Your Zipcode</h3>
+<% if @reps.size > 1 %>
+<p>
+	We found multiple representatives serving your zipcode. No problem - you can easily identify your specific representative on later pages.
+</p>
+<% end %>
+
+<p><%= render :partial => 'people/people_list', :locals => { :people => @reps, :show_contact => true }%></p>
+<% end %>
+
+<p>
+  Next, pick out a few of the "Hot Bills" listed below and add them to your tracked items. (Don't worry, this isn't required, it's just to help you get started building your profile.) Once you're done, follow the link at the bottom of the page to explore more.</p>
+<h3 class="dark" style="margin-top:2em;">Hot Bills</h3>
+
+<%= render :partial => "bill/related_bills_list", :locals => {:related_bills_list => @most_viewed_bills, :show_track_link => true} %>
+
+<br />
+<p class="bigger">Visit <%= link_to "My OpenCongress Profile", {:controller => "profile", :login => current_user.login, :action => "items_tracked"}, :class => 'arrow' %></p>
+</div>

@@ -1,0 +1,32 @@
+first:
+    result: 
+    where: 
+    bill_id: "56724"
+    text: 
+    amendment_id: 
+    date: "1238644800"
+    roll_call_id: 
+    type: BillAction
+    vote_type: 
+    how: 
+    id: "190904"
+    action_type: introduced
+    roll_call_number: 
+    datetime: 2009-04-02 00:00:00
+
+second:
+    result: 
+    where: 
+    bill_id: "56724"
+    text: Read twice and referred to the Committee on Health, Education, Labor, and Pensions.
+    amendment_id: 
+    date: "1238644800"
+    roll_call_id: 
+    type: BillAction
+    vote_type: 
+    how: 
+    id: "190905"
+    action_type: action
+    roll_call_number: 
+    datetime: 2009-04-02 00:00:00
+

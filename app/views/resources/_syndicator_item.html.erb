@@ -1,0 +1,31 @@
+<li>
+  <% if syndicator_item.kind_of? Bill %>
+    <a href="<%= url_for(:only_path => false, :controller => 'bill', :action => 'show', :id => syndicator_item.ident) %>"
+      target="_top">
+    <%= truncate(syndicator_item.title_full_common, :length => 60) %></a> 
+  <% elsif syndicator_item.kind_of? Person %>
+    <a href="<%= url_for(:only_path => false, :controller => 'people', :action => 'show', :id => syndicator_item) %>"
+      target="_top">
+    <%=  syndicator_item.name %></a><br />
+  <% elsif syndicator_item.kind_of? Committee %>
+    <a href="<%= url_for(:only_path => false, :controller => 'committee', :action => 'show', :id => syndicator_item) %>"
+      target="_top">
+    <%=  syndicator_item.subcommittee_name ? syndicator_item.subcommittee_name : syndicator_item.name %></a><br />
+    <% elsif syndicator_item.kind_of? Subject %>
+      <a href="<%= url_for(:only_path => false, :controller => 'issue', :action => 'show', :id => syndicator_item) %>"
+        target="_top">
+      <%=  syndicator_item.term %></a><br />
+  <% elsif syndicator_item.kind_of? Search %>
+    <%= search_link(syndicator_item.text) %> 
+  <% end %>
+
+  <% if show_views %>
+    <% if @stat_type == 'blog' || @stat_type == 'news' %>
+      [<%= syndicator_item.commentary_count %> articles]
+    <% elsif @stat_type == 'topsearches' %>
+      [<%= syndicator_item.count %> searches]
+    <% else %>
+      [<%= syndicator_item.views %> views]
+    <% end %>
+  <% end %>
+</li>

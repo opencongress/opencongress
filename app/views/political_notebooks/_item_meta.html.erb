@@ -1,0 +1,57 @@
+<% item = item_meta %>
+<span>Added <%= time_ago_in_words item.created_at %> ago -
+	<% if item.count_times_bookmarked > 1 %>
+	<script>
+	$j().ready(function() {
+		$j('#other-bookmarked-<%= item.id %>').jqm({trigger: '.meta-info-<%= item.id %>'});
+	});
+  </script>
+	Added by <a href="#" class="meta-info-<%= item.id %>"><%= item.count_times_bookmarked - 1 %> other users</a>.
+  	<div id="other-bookmarked-<%= item.id %>" class="notebook-form-div" style="display:none">
+  	  <h3>Other Users that have bookmarked "<%= item.title %>"</h3>
+  	  <% item.other_users_bookmarked.each do |u| %>
+  	    <%= link_to h(u.login), user_profile_path(u.login) %><br />
+  	  <% end %>
+    </div>
+	<% end %>
+	<% if item.tags.any? %>
+	Tagged with 
+		<% item.tags.each do |tag| %>
+			<%= link_to h(tag.name), political_notebook_path({:login => item.political_notebook.user.login, :tag=> tag.name, :type => item.type}) %>&nbsp;-
+		<% end %>
+	<% end %>
+	<% if item.hot_bill_category %>
+	  Issue area of <%= item.hot_bill_category.name %>
+	  (<a href="/bill/hot#<%= item.hot_bill_category.name %>">View hot bills</a>)&nbsp;-
+	<% end %>
+	<% if( !item.notebookable.blank?) && (item.notebookable.is_a? Commentary )%>
+
+		<% commentary = item.notebookable%>
+	    <% if commentary.source_url %>
+	      <% if commentary.source %>      
+	        Source: <a href="<%= commentary.source_url %>" target="_blank"><%= strip_tags(commentary.source) %></a>
+	      <% else %>
+	        Source: <a href="<%= commentary.source_url %>" target="_blank"><%= commentary.source_url %></a></p>
+	      <% end %>
+	    <% else %>
+	      <% if commentary.source %>
+	        Source: <%= commentary.source %>
+	      <% end %>
+	    <% end %>
+      &nbsp;-
+	<% end %>
+	<% if current_user == item.political_notebook.user %>
+		<script>
+		$j().ready(function() {
+			$j('#edit-link-<%= item.id %>').jqm({trigger: '.meta-edit-<%= item.id %>'});
+		});
+		</script>
+	  <span style="font-style: normal;">
+	    <a href="#edit-link-<%= item.id %>" class="meta-edit-<%= item.id %>">Edit</a> / 
+	    <%= link_to "Delete", { :controller => 'notebook_items', :action => 'remove_item', :id => item, :page => @page }, { :confirm => "Are you sure you want to delete this item?" } %></span>
+	<% end %>
+	<div id="edit-link-<%= item.id %>" class="notebook-form-div jqmWindow" style="display:none">
+	  <% @notebook_item = item %>
+  	<%= render :partial => "#{item.class.to_s.tableize}/inline_edit_form"  %>
+  </div>
+</span>

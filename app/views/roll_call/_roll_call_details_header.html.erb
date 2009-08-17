@@ -1,0 +1,56 @@
+<div class="roll_call_details_info">
+  
+<div>
+   <div> <span class="date roll"><%= @roll_call.date.strftime("%B %d, %Y") %></span>  
+    
+    Roll call number <strong><%= @roll_call.number %></strong> 
+    
+    <% if @roll_call.amendment %>
+	    (Amendment number <%= @roll_call.amendment.display_number %>) 
+    <% end %> 
+    
+    in the <%= @roll_call.chamber %>
+    </div>
+  <div>
+    <strong>Question<strong>
+    <em class="fontweightnormal"><%= @roll_call.question %></em>
+
+    
+    <% if @roll_call.amendment %>
+		Amendment purpose
+		<%= @roll_call.amendment.purpose %>
+    <% end %>
+</div>
+</div>
+
+<div class="right">
+
+    <div><span class="ayes"></span><em class="aye roll">Ayes: </em><span class="fontweightnormal"><%= @roll_call.ayes %> <%= aye_breakdown %></span>  </div>  
+
+    <div><span class="nays"></span><em class="nay roll">Nays: </em><span class="fontweightnormal"><%= @roll_call.nays %> <%= nay_breakdown %></span> </div>   
+
+    <div><span class="abs"></span><em class="abs roll">Abstained: </em><span class="fontweightnormal"><%= @roll_call.abstains %> <%= abstain_breakdown %></span></div>
+
+
+    <% if @roll_call.presents > 0 %>
+      <div><em class="present roll">Present: </em> <span class="fontweightnormal"><%= @roll_call.presents %></span></div>
+    <% else %>
+
+      <% end %>
+  
+  
+     
+     <div><em>Required percentage of 'Aye' votes:</em> <%= @roll_call.required %> <span class="fontweightnormal"><%= numeric_percentage(@roll_call) %></span></div>
+     
+      <% if @roll_call.total_votes > 0 %>
+     
+     <div><em>Percentage of 'aye' votes:</em> <span class="fontweightnormal"><%= "%2d" % ((@roll_call.ayes.to_f / @roll_call.total_votes.to_f) * 100) %>%</span></div>
+    
+    
+    <% end %>
+   
+   <div><em>Result:</em> <span class="fontweightnormal"><%= @roll_call.result %></span> </div>
+  
+  </div>
+  
+ </div>

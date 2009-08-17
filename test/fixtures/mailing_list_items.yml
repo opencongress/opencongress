@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  mailable_type: MyString
+  mailable_id: MyString
+  user_mailing_list_id: 1
+
+two:
+  mailable_type: MyString
+  mailable_id: MyString
+  user_mailing_list_id: 1

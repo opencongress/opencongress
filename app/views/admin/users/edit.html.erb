@@ -1,0 +1,38 @@
+<h1>Editing User</h1>
+
+<%= link_to 'Show', :action => 'show', :id => @user %> |
+<%= link_to 'Back', :action => 'list' %>
+
+<% form_tag ({:action => 'update', :id => @user}, :multipart => true) do -%>
+  <br/>
+  Role: <select id="user_user_role_id" name="user[user_role_id]">
+    <%= options_from_collection_for_select(UserRole.find(:all), "id", "name", @user.user_role_id) %>
+  </select><br/>
+  Enabled? :<%= check_box 'user', 'enabled' %>
+  <br/>
+  District: 
+  <% if @user.definitive_district %><%= District.find_by_id(@user.definitive_district).state.abbreviation %>-<%= District.find_by_id(@user.definitive_district).district_number %>
+  <% end %>
+  <br/>
+  <br/>
+  <% if @user.definitive_district %>
+<% if @user.definitive_district_object.current_watch_dog && @user.definitive_district_object.current_watch_dog.user  == @user %>
+Is the watchdog for this district <%= @user.definitive_district_object.district_state_text %>
+<% else %>    
+    <%= link_to "Make WatchDog for #{District.find_by_id(@user.definitive_district).state.abbreviation}-#{District.find_by_id(@user.definitive_district).district_number}", :controller => "/admin/users", :action => "make_watch_dog", :id => @user.id %>
+<% end %>
+<br/><br/>
+  <% end %>
+<% if @user.activated_at.nil? %>
+  <%= link_to "Resend Account Confirmation", :controller => "/admin/users", :action => :resend_confirmation, :id => @user.id %>
+<br/>
+<br/>
+  <%= link_to "Activate User", :controller => "/admin/users", :action => :activate_user, :id => @user.id %>
+  <br/>
+  <br/>
+<% end %>
+  <br/>
+  <%= submit_tag 'Edit' %>
+<% end %>
+
+

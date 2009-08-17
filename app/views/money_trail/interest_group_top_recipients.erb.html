@@ -1,0 +1,26 @@
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Amount Received</th>
+    <% if @bill %><th>Vote On Passage</th><% end %>
+  </tr>
+  <% @top_recipients.each do |r| %>
+    <tr>
+      <td><%= link_to_person(r) %></td>
+      <td>$<%= number_with_delimiter(r.contrib_total) %></td>
+      <% if @bill %><td><%= @bill.originating_chamber_vote.roll_call.vote_for_person(r) %></td><% end %>
+    </tr>
+  <% end %>
+  
+  <% if @top_recipients_other %>
+    <tr><td>&nbsp;</td></tr>
+    <% @top_recipients_other.each do |r| %>
+      <tr>
+        <td><%= link_to_person(r) %></td>
+        <td>$<%= number_with_delimiter(r.contrib_total) %></td>
+        <% if @bill %><td><%= @bill.other_chamber_vote.roll_call.vote_for_person(r) %></td><% end %>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+<a href="#" class="x_close" onclick="Element.hide('top_recipients_<%= @group.id %>'); Element.hide('ig_close_<%= @group.id %>'); Element.show('ig_open_<%= @group.id %>'); return false;">(close)</a>  

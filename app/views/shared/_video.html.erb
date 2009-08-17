@@ -1,0 +1,12 @@
+<div class="<%= cycle('video1','video2') %>">
+  <div class="video_embed"><%= video.embed %></div>
+  <ul class="video_meta ui-corner-all">
+    <li><h4><%= video.url.blank? ? video.title : link_to(video.title, video.url, { :target => '_new'}) %></h4></li>
+    <% if video.person %>
+      <li><strong><%= link_to_person(video.person) %></strong><br />
+      (<%= link_to 'View All Videos', :controller => 'people', :action => 'videos', :id => video.person %>)</li>
+    <% end %>
+    <li><br /><%= video.video_date.strftime("%B %d, %Y") %></li>
+    <li><%= distance_of_time_in_words(0, video.length, true) %></li>
+  </ul>
+</div>

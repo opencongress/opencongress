@@ -1,0 +1,40 @@
+.rep_list{
+
+}
+
+.person_box{
+float: left;
+width: 165px;
+margin: 10px;
+padding: 0;
+font-size: 11px;
+height: 98px;
+}
+
+.person_box h3{
+margin: 0;
+padding: 4px 8px;
+font-size: 12px;
+background: #eee;
+}
+
+
+.person_box p{
+padding: 4px;
+}
+
+
+.person_box img{
+padding: 10px;
+}
+
+
+.person_box:hover{
+cursor: pointer;
+background: #fff !important;
+}
+
+
+#heading{
+height: 45px;
+}

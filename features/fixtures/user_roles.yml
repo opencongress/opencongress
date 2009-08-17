@@ -1,0 +1,40 @@
+user:
+    name: User
+    can_manage_text: f
+    can_moderate_articles: f
+    can_administer_users: f
+    can_edit_blog_tags: f
+    id: "0"
+    can_see_stats: f
+    can_blog: f
+
+blogger:
+    name: Blogger
+    can_manage_text: f
+    can_moderate_articles: f
+    can_administer_users: f
+    can_edit_blog_tags: t
+    id: "1"
+    can_see_stats: f
+    can_blog: t
+
+admin:
+    name: Administrator
+    can_manage_text: t
+    can_moderate_articles: t
+    can_administer_users: t
+    can_edit_blog_tags: t
+    id: "2"
+    can_see_stats: t
+    can_blog: t
+
+stats:
+    name: Stats Viewer
+    can_manage_text: f
+    can_moderate_articles: f
+    can_administer_users: f
+    can_edit_blog_tags: f
+    id: "3"
+    can_see_stats: t
+    can_blog: f
+

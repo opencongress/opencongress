@@ -1,0 +1,5 @@
+<% @content_for_sortby = render :partial => 'sort_bills' %>
+<% cache("bill_#{@types}_index") do %>
+  <!-- cached: bill_all_index // <%= Time.now %> -->
+  <%= render :partial => 'bills_by_type', :locals => { :bills => @bills, :bill_counts => @bill_counts } %>
+<% end %>

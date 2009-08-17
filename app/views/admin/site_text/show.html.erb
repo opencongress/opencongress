@@ -1,0 +1,8 @@
+<% for column in SiteText.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @site_text.send(column.name) %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', :action => 'edit', :id => @site_text %> |
+<%= link_to 'Back', :action => 'list' %>

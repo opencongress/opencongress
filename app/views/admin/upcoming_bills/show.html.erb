@@ -1,0 +1,8 @@
+<% for column in UpcomingBill.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @upcoming_bill.send(column.name) %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', :action => 'edit', :id => @upcoming_bill %> |
+<%= link_to 'Back', :action => 'list' %>

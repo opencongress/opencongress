@@ -1,0 +1,12 @@
+<%= error_messages_for 'featured_person' %>
+
+<!--[form:featured_person]-->
+
+<p><label for="featured_person_text">Person</label><br/>
+<%= select 'featured_person', 'person_id', Person.all_sitting.collect {|s| [ s.name, s.id ] }, { :include_blank => true }  %></p>
+
+<p><label for="featured_person_text">Text</label><br/>
+<%= text_area 'featured_person', 'text'  %></p>
+
+<!--[eoform:featured_person]-->
+

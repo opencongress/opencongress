@@ -1,0 +1,76 @@
+<%= javascript_include_tag 'panel_generator' %>
+
+<div id="heading">
+  <h2>Make a "Bill Status" Widget</h2>
+</div>
+<div class="padding">
+  <p>
+    <% if @bill %>
+  Here is a widget for the bill that you've selected. Now, just customize the appearance of your widget, then simply copy-and-paste the HTML into your blog or website. Now your community will have an easy, up-to-date way to track the status of this bill in Congress.
+    <% else %>
+  Use this page to make a widget for your web-page or blog that will display the status of a bill on OpenCongress. First, select the bill that you want to track by entering it into the text field or selecting a popular bill from the drop-down menu. If you're not sure the number of the bill you would like to track, there are a number of ways to find it here on OpenCongress: by going to the <a href="/bill/all">Bills</a> page and using the options in the "sort by" drop-down box at the top of the page, or by <a href="/search">searching</a> for it. Next, use the form below to custom-tailor your widget to match your web-page. Then, copy and paste the HTML chunk into your web-page. It's an easy way for you and your community to track the bills in Congress that affect the issues you care about. For an example of how it looks, please see our <a href="http://participatorypolitics.org/tools_bill_status.html">sample</a>.<br /><br />
+    <% end %>
+  </p>
+
+  <dl class="tool_form bill_status">
+
+    <% if @bill %>
+      <dt><label>Bill:</label></dt>
+      <dd style="font-size:1em;padding-top:3px;width:535px;display:block;"><%= @bill.title_full_common %></dd>
+      <%= hidden_field 'panel', 'bill_id', { :value => @bill.ident } %>
+    <% else %>
+      <% form_remote_tag(:url => { :controller => 'resources', :action => 'bill_number_search' }, 
+                                    :before => "onSearch()",
+                                    :complete => "onSearchComplete()",
+                                    :update => "search_results"
+                         ) do -%>
+      <dt><label for="post_info_url">Enter the number of the bill:</label></dt> 
+      <dd><%= text_field 'bill_status', 'bill_number', { :size => '6', :maxlength => '6', :value => "" } %>
+        <%= submit_tag "Search >>" %>
+        <img alt="Indicator" class="noborder" height="5" id="search_spinner" src="/images/indicator.gif" style="display: none; vertical-align: middle" width="21" />
+        <div class="form_note">(ie, for "H.R.6", enter "6")</div>
+        <div id="search_results">
+        </div>
+      </dd>
+      <%= hidden_field 'bill_status', 'partial', { :value => 'bill_search_bill_status' } %>
+    
+      <% end %>
+
+      <dt><label for="post_info_url">OR, select a popular bill:</label></dt>
+
+      <dd>
+        <%= select("panel", "bill_id_select", @most_viewed_bills.collect {|b| [ b.title_full_common, b.ident ] }, { :include_blank => true }, { :onChange => "setBillStatusBillId(document.getElementById('panel_bill_id_select').value);" } ) %>
+      </dd>
+      <%= hidden_field 'panel', 'bill_id' %>
+    <% end %>
+
+  <%= render :partial => 'resources/panel_colors_form', :locals => { :update_function => 'updateBillStatusFields' }  %>
+
+  <%= submit_tag "Update Panel Preview >> ", { :onClick => 'updateBillStatusFields();' } %>
+
+  <%= hidden_field 'panel', 'bill_id' %>
+  <%= hidden_field 'panel', 'path', { :value =>  "/resources/bill_status_panel" } %>
+  <%= hidden_field 'panel', 'hostname', { :value => url_for(:only_path => false, :controller => 'index') } %>
+
+  </dl>
+
+  <div id="preview_container">
+  
+  <div id="preview_bill_status_preview">
+  How the panel will look:<br>
+  <iframe id="bill_status_panel" name="oc_bill_status_frame" width="250" scrolling="no" frameborder="0" style="border: 1px solid #999;" allowtransparency="true" hspace="0" vspace="0" marginheight="0" marginwidth="0" src="/resources/bill_status_panel?bg_color=ffffff&textcolor=333333&bill_id=<%= DEFAULT_CONGRESS %>-h1"></iframe>
+  </div>
+
+  <div id="preview_bill_status_code">
+  Copy and paste this code into your webpage:<br>
+
+  <%= text_area 'panel', 'code', "cols" => 68, "rows" => 20 %>
+
+  </div>
+
+  </div>
+
+  <!-- The following image forces the fields to update on the initial load of the page -->
+  <img src="/images/blank.gif" class="noborder" width="0" height="0" onLoad="updateBillStatusFields();">
+  <br />
+</div>

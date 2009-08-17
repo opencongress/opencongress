@@ -1,0 +1,19 @@
+<% show_zip4 ||= false %>
+<form name="zipcodesearch" method="post" action="/people/zipcodelookup" style="margin-top:12px">
+  <table cellspacing=2 border=0>
+    <tr valign="top">
+      <td>Address:</td>
+      <td colspan="2">
+        <input type="text" size=20 maxlength=50 name="address" />&nbsp;<em>(optional)</em>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td>Zipcode:</td>
+      <td width=40><input type="text" size=5 maxlength=5 name="zip5"><br /><em>(required)</em></td>
+      <% if show_zip4 %><td>&nbsp;-&nbsp;<input type="text" size=4 maxlength=4 name="zip4"><br />&nbsp;&nbsp;<em>(optional)</em></td><% end %>
+		</tr>
+     <tr>
+ <td><input type="image" src="/stylesheets/img/show_me.png" value="submit" /></td>
+    </tr>
+  </table>
+</form>

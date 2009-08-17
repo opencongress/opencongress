@@ -1,0 +1,23 @@
+<% form_id = "form_emailalert_#{object.class}_#{object.id}" %>
+<% if logged_in? %>
+<li id="emailalert_<%= object.class %>_<%= object.id %>">
+	 
+        <% if UserMailingList.find_or_create_from_user(current_user).already_contains?(object) %>
+                Added to EmailAlerts
+        <% else %>
+                <% form_remote_for(MailingListItem.new, :update => "emailalert_#{object.class}_#{object.id}", :html => {:id => form_id}) do |f| %>
+                  <%= f.hidden_field :mailable_type, :value => object.class.to_s %>
+                  <%= f.hidden_field :mailable_id, :value => object.id %>
+                  <%= link_to_function("Get Email Alerts",
+ "if(document.forms['#{form_id}'].onsubmit()){document.forms['#{form_id}'].submit()};") %>
+                <% end %>
+         <% end %>
+
+
+
+<% else %>
+        <li>
+                <%= link_to "Get Email Alerts", { :controller => "account", :action => "login" }, :class => 'new_mailing_list_item'%>
+<% end %>
+</li>
+

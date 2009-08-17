@@ -1,0 +1,13 @@
+Hi <%=h @friend.user.login %>,
+
+Your friendship with <%=h @friend.friend.login %> has been canceled. 
+
+You can find and invite new friends by visiting your Friends page:
+
+<%= BASE_URL %>users/<%=h @friend.user.login %>/profile/friends
+
+Thanks,
+
+The OpenCongress Team
+
+http://www.opencongress.org/

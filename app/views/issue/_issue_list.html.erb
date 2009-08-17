@@ -1,0 +1,15 @@
+<ul id="issue_list" class="listed">
+  <% subjects.each do |s| -%>
+  <% 
+    if @sort == :by_most_viewed
+      link_text = "<span class='floatleft'>#{s.term}</span><span class='floatright'>(#{s.views(DEFAULT_COUNT_TIME)} views)</span>"
+    else
+      link_text = "<span class='floatleft'>#{s.term}</span><span class='floatright'>(#{s.bill_count} bills)</span>"
+    end
+  %>
+  <li>
+    <%= link_to link_text, :controller => 'issue', :action => :show, :id => s %> 
+    <br />
+  </li>
+<% end -%>
+</ul>

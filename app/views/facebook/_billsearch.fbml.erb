@@ -1,0 +1,22 @@
+<div id="billedit_search">
+  <h2>Add a New Bill</h2>
+  <p>
+    To add a bill to your profile, start by searching for the bill on OpenCongress. You can search for 
+    bills by bill number (e.g., "H.R. 3648"), by title ("Mortgage Forgiveness Debt Relief Act of 2007"), 
+    by keyword ("debt"). You can also browse the Most-Viewed Bills on OpenCongress, or a list of Hot Bills 
+    by Issue Area.
+  </p>
+  <form id="billedit_search_form" onsubmit="return false;">
+    <%= text_field 'facebook', 'bill_search', { :size => '40', :maxlength => '255', :value => "" } %>
+    <span class="fakebutton" style="margin-left: 5px;">
+      <a clickrewriteurl='<%= url_for :only_path => false, :canvas => false, :controller => 'facebook', :action => 'bill_search' %>' clickrewriteform='billedit_search_form' clickrewriteid='billedit_search_results' clicktoshow="billedit_search_spinner">Search</a>
+    </span>
+    <p>
+      Or, browse: 
+      <span class="fakebutton"><a clickrewriteurl='<%= url_for :only_path => false, :canvas => false, :controller => 'facebook', :action => 'hotbills' %>' clickrewriteform='billedit_search_form' clickrewriteid='billedit_search_results' clicktoshow="billedit_search_spinner">Hot Bills</a></span>
+      <span class="fakebutton" style="margin-left: 10px;"><a clickrewriteurl='<%= url_for :only_path => false, :canvas => false, :controller => 'facebook', :action => 'mostviewedbills' %>' clickrewriteform='billedit_search_form' clickrewriteid='billedit_search_results' clicktoshow="billedit_search_spinner">Most Viewed Bills</a></span>
+  </form>
+  <div id="billedit_search_results">
+    <%= billsearch_spinner %>
+  </div>
+</div>

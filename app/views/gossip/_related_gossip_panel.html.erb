@@ -1,0 +1,73 @@
+<div id="tertiary-content">
+  <div class="col">
+    <div class="related-box">
+      <div>
+      <h3>Subscribe to Blog Updates</h3>
+        <p>Want to get each blog update sent to you by email?</p>
+
+        <form action="http://www.feedburner.com/fb/a/emailverify" method="post" target="popupwindow" onsubmit="window.open('http://www.feedburner.com', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
+        <p>Enter your email address:</p>
+        <p><input type="text" class="add_to_emails" name="email"/></p>
+        <input type="hidden" value="http://feeds.feedburner.com/~e?ffid=750050" name="url"/>
+        <input type="hidden" value="Open Congress : Congress Gossip Blog" name="title"/>
+        <input class="floatright" type="image" value="Subscribe" src="/stylesheets/img/subscribe.png" />
+        <p class="floatleft small">Delivered by <a href="http://www.feedburner.com" target="_blank">FeedBurner</a></p>
+        </form> 
+
+      </div>
+      <div class="margintop">
+        <h3>Subscribe via RSS</h3>
+        <p>
+          <ul class="blue-arrow">
+            <li>Blog: <a href="http://feeds.feedburner.com/OpenCongressCongressGossipBlog" class="feed">Feed</a></li> 
+            <li>All Blog Comments: <a href="/articles/all_comments_atom" class="feed">Feed</a></li>  
+          </ul>
+        </p>
+        <p class="small"><a href="/about/rss">Read more</a> about RSS.</p>
+      </div>
+      <div class="clearfix margintop">
+			<a class="med_button" href="http://twitter.com/opencongress"><span>Follow us on <img src="/img/twitter_logo.png" alt="twitter"></span></a>
+			<br /><br />
+			<a class="med_button clear" href="http://www.facebook.com/OpenCongress"><span><img src="/img/facebook_badge.png" alt="Find us on Facebook" style="position:relative;top:-2px;"/></span></a>			
+      </div>
+      
+      <h3>Send Us a Tip</h3>              
+      <% related_gossip.each do |g| %>
+      <div>
+        <ul>
+          <li>
+            <p><%= link_to (truncate g.tip), :controller => 'gossip' %></p>
+            <p class="small bold">Submitted by <%= g.name %> on <%= short_date g.created_at %>
+            </li>
+          </ul>
+        </div>
+        <% end %> 
+        
+        
+        <div class=""highlights>
+          <!-- ///// This stuff needs to go above the articles /////
+          
+          <p>OpenCongress brings together official government data with news and blog coverage to give you the real story behind each bill. <a href="/about">Read more</a> about OpenCongress.</p>
+          <p>The OpenCongress blog highlights useful news and blog coverage from around the web in order to give you the real story behind what's happening in Congress. <a href="/about/blog">Read more</a> about the OpenCongress blog.</p>
+          <p>You may have some of the best information on Congress. Anyone can submit a tip to the OpenCongress blog using this form:</p>
+         -->
+         
+         <p><%= link_to '<span>Submit a tip</span>', { :controller => 'gossip', :action => 'submit' }, :class => 'med_button' %></p><br /><br /><br />
+          <p class="small clear">You can submit a tip anonymously, or attributed to your own name and e-mail, whichever you prefer. <a href="/gossip">Read more</a> about submitting a tip.</p>    
+        </div>
+       
+      <%= render :partial => 'articles/archives' %>
+       
+       
+       <h3>Blogroll</h3>            
+        <div class="last">
+          <ul class="star">
+            <%= @blogroll.article %>
+          </ul>
+        </div>
+        
+      </div>
+    <!-- // related-box-->
+  </div>
+</div>
+<!-- // col  // tertiary-content -->

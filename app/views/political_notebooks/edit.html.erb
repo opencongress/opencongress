@@ -1,0 +1,17 @@
+<h1>Editing political_notebook</h1>
+
+<%= error_messages_for :political_notebook %>
+
+<% form_for(@political_notebook) do |f| %>
+  <p>
+    <b>User</b><br />
+    <%= f.text_field :user_id %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @political_notebook %> |
+<%= link_to 'Back', political_notebooks_path %>

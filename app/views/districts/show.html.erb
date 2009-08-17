@@ -1,0 +1,96 @@
+<div id="heading">
+
+<h2><%= @state.name %>'s <%= @district.ordinalized_number %> Congressional District</h2>
+
+</div>
+
+
+<div class="padding">
+
+<div style="float:right;">
+  <p style="text-align:center;margin:0;font-weight:bold;"><%= @state.name %>'s <%= @district.ordinalized_number %><br/> Congressional District Map</p>
+  <img src="<%= @district.m_thumb_path %>"/>
+</div>
+
+<p><%= @district.freebase_description %> <em>(More from <%= link_to "Freebase", @state.freebase_link %>)</em></p>
+
+<p style="font-weight:bold;">There are <%= @district.user_count %> OpenCongress users in this district.</p>
+
+<% unless @users.results.compact.empty? || @users.results.compact.first.last_login.nil? %>
+  <h3 class="dark">Recently Active Users In This District</h3>
+  <ul style="margin-left:20px;">
+  <% @users.results.compact.each do |u| %>
+    <% if u.last_login %>
+    <li><%= link_to u.login, user_profile_path(u.login) %> last logged in <%= time_ago_in_words(u.last_login) %> ago.</li>
+    <% end %>
+  <% end %>    
+  </ul>
+  <br/>  
+<% end %>
+
+<% unless @tracking_suggestions.last[:my_bills_tracked_facet].first[:trackers] == 0 %>
+  <h3 class="dark">The top bills tracked by users in this district are:</h3>
+  <ul style="margin-left:20px;">
+    <% @tracking_suggestions.last[:my_bills_tracked_facet].each do |bt| %>
+      <% unless bt[:trackers] == 0 %>
+      <li><%= link_to bt[:object].title_typenumber_only, :controller => :bill, :action => :show, :id => bt[:object].ident %> 
+           - <%= truncate(bt[:object].title_common, :length => 70) %> <em>(<%= bt[:trackers] %> users tracking)</em></li>
+      <% end %>
+    <% end %>
+  </ul>
+  <br/>
+<% end %>
+
+<% unless @tracking_suggestions.last[:my_people_tracked_facet].first[:trackers] == 0 %>
+  <h3 class="dark">The top people tracked by users in this district are:</h3>
+  <ul style="margin-left:20px;">
+    <% @tracking_suggestions.last[:my_people_tracked_facet].each do |bt| %>
+      <% unless bt[:trackers] == 0 %>
+      <li><%= link_to bt[:object].title_full_name_party_state, :controller => :people, :action => :show, :id => bt[:object].ident %> 
+          <em>(<%= bt[:trackers] %> users tracking)</em></li>
+      <% end %>
+    <% end %>
+  </ul>
+  <br/>
+<% end %>
+
+<% unless @tracking_suggestions.last[:my_bills_supported_facet].first[:trackers] == 0 %>
+  <h3 class="dark">The top bills supported by users in this district are:</h3>
+  <ul style="margin-left:20px;">
+    <% @tracking_suggestions.last[:my_bills_supported_facet].each do |bt| %>
+      <% unless bt[:trackers] == 0 %>
+      <li><%= link_to bt[:object].title_typenumber_only, :controller => :bill, :action => :show, :id => bt[:object].ident %> 
+           - <%= truncate(bt[:object].title_common, :length => 70) %> <em>(<%= bt[:trackers] %> users supporting)</em></li>
+      <% end %>
+    <% end %>
+  </ul>
+  <br/>
+<% end %>
+
+<% unless @tracking_suggestions.last[:my_bills_opposed_facet].first[:trackers] == 0 %>
+  <h3 class="dark">The top bills opposed by users in this district are:</h3>
+  <ul style="margin-left:20px;">
+    <% @tracking_suggestions.last[:my_bills_opposed_facet].each do |bt| %>
+      <% unless bt[:trackers] == 0 %>
+      <li><%= link_to bt[:object].title_typenumber_only, :controller => :bill, :action => :show, :id => bt[:object].ident %> 
+           - <%= truncate(bt[:object].title_common, :length => 70) %> <em>(<%= bt[:trackers] %> users opposing)</em></li>
+      <% end %>
+    <% end %>
+  </ul>
+  <br/>
+<% end %>
+
+
+<p>
+  <b>District number:</b>
+  <%=h @district.district_number %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%=h @district.state_id %>
+</p>
+
+
+<%= link_to 'Back', state_path(@state.abbreviation) %>
+</div>

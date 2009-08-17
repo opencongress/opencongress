@@ -1,0 +1,19 @@
+
+  <% unless @supporting_suggestions[0] == 0 %>
+    <%= render :partial => "shared/support_oppose_tables",
+              :locals => {:object => @bill,
+                          :title => @bill.title_typenumber_only,
+                          :action => "supporting_bill",
+                          :stance => "supporting",
+                          :tracking_suggestions => @supporting_suggestions} %>
+  <% end %>
+  <br/>
+  <% unless @opposing_suggestions[0] == 0 %>
+    <%= render :partial => "shared/support_oppose_tables",
+              :locals => {:object => @bill,
+                          :title => @bill.title_typenumber_only,
+                          :action => "opposing_bill",
+                          :stance => "opposing",
+                          :tracking_suggestions => @opposing_suggestions} %>
+  
+  <% end %> 

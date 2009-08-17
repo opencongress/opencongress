@@ -1,0 +1,13 @@
+<% person_type ||= nil %>
+
+<div id="sortby">
+	<label for="sort-by">Sort by</label>
+	<select name="selectedPage" id="people_sort" onchange="changePage('people_sort'); return false;">
+	  <% @person_types.each do |p_type| %>
+	    <% @allowed_rankbys.each do |rankby| %>
+	      <option value="/people/ranking/<%= rankby %>?person_type=<%= p_type %>" <% if sort == rankby && @person_type_display == p_type %>selected<% end %>><%= p_type %> by <%= rankby.humanize.downcase %></option>
+	    <% end %>
+	  <% end %>
+	</select>
+</div>
+<!-- // sortby-->

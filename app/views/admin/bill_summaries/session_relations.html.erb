@@ -1,0 +1,16 @@
+<h1>Add new bill relation</h1>
+<% form_tag :action => 'session_relations_add' do -%>
+  <p>Original bill: <%= text_field 'relation', 'bill_ident', :value => params[:bill_id] %></p>
+  <p>Related bill (enter opencongress ID): <%= text_field 'relation', 'related_bill_ident' %></p>
+  
+  <p><%= submit_tag 'add' %></p>
+<% end %>
+
+<h1>Current Relationships</h1>
+<% @relations.each do |r| %>
+  <%= r.bill.session %> / <%= r.bill.title_typenumber_only %> -->
+  <%= r.related_bill.session %> / <%= r.related_bill.title_typenumber_only %>
+  [<%= link_to "delete", :controller => 'admin/bill_summaries', :action => 'session_relations_delete', :id => r %>]
+<% end %>
+    
+

@@ -1,0 +1,10 @@
+   <%= render :partial => "/profile/logged_in_profile_nav" %>
+<h1>Friends Invited</h1>
+<p>Your friends have been invited.  They should be receiving an invitation email shortly.  Once they accept your invitation, you will automatically be "OpenCongress Friends".
+  </p>
+  <h3>Invited:</h3>
+  <ul>
+  <% @results.each do |r| %>
+    <li><%= r %></li>
+  <% end %>
+  </ul>

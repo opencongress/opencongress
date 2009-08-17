@@ -1,0 +1,54 @@
+<div id="sort_nav">
+
+<div id="heading">
+
+<h2>All Legislation in Congress</h2>
+
+	<ul id="in" class="clearfix">
+	   <li id="all" class="<%=  @types == "all" ? "active" : "" %>">
+			<%= link_to "<span>All Congress</span>", :types => 'all' %>
+		</li>
+		<li id="senate" class="<%= @types == 'senate' ? "active" : "" %>">
+			<%= link_to "<span>Senate Bills</span>", :types => 'senate' %>
+		</li>
+		<li id="house" class="<%= @types == 'house' ? "active" : "" %>">
+			<%= link_to "<span>House Bills</span>", :types => 'house' %>
+		</li>
+	</ul>
+
+
+</div>
+
+  <%= render :partial => 'carousel' unless @sort == 'hot' %>    
+
+ <ul id="sort">
+ <h4>Sort By</h4>
+		<li id="all" class="<%= @sort == 'all' ? "active" : "" %>">
+			<%= link_to "<span>All Bills - By Date Introduced</span>", :action => 'all', :types => @types %>
+	 	</li>
+ 		<li id="popular" class="<%= @sort == 'popular' ? "active" : "" %>">
+			<%= link_to "<span>Top Bills</span>", :action => 'popular', :types => @types %>
+		</li>
+		<li id="news" class="<%= @sort == 'news' ? "active" : "" %>">
+			<%= link_to "<span>Most in the News</span>", :action => 'most_commentary', :type => 'news', :types => @types %>
+		</li>
+		<li id="blog" class="<%= @sort == 'blog' ? "active" : "" %>">
+			<%= link_to "<span>Most on Blogs</span>", :action => 'most_commentary', :type => 'blog', :types => @types %>
+		</li>
+		<li id="hot" class="<%= @sort == 'hot' ? "active" : "" %>">
+			<%= link_to "<span>Hot Bills by Issue</span>", :action => 'hot', :types => @types %>
+		</li>
+		<li id="pending" class="<%= @sort == 'pending' ? "active" : "" %>">
+			<%= link_to "<span>Pending (Recent Action)</span>", :action => 'pending', :types => @types %>
+		</li>
+		<li id="gpo" class="<%= @sort == 'gpo' ? "active" : "" %>">
+			<%= link_to "<span>Rushed Bills</span>", :action => 'readthebill', :types => @types %>
+		</li>
+	</ul>
+
+	<div id="timeframe">
+	<%= render :partial => 'shared/timeframe_select' if @days %>
+	</div>
+
+</div>  
+

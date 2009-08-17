@@ -1,0 +1,6 @@
+if @success
+  page.insert_html(:top, "notebook-items", :partial => "#{@item.class.to_s.tableize}/listitem", :object => @item)
+  page << "NotebookForm.hideAllForms();"
+else
+  page.alert("All fields marked with an * are required.")
+end

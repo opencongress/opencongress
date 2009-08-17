@@ -1,0 +1,24 @@
+<h3 class='dark'>Recent Posts</h3>
+<ul class="star">
+  <% Article.recent_articles(5, (params[:page].nil? || params[:page] == 1) ? 8 : 0).each do |p| %>
+    <li><a href="/articles/view/<%= p.to_param %>"><%= p.title %></a>, <%= p.created_at.strftime("%B %d, %Y")%></li>
+  <% end %>
+</ul>
+
+<h3 class='dark'>Archives</h3>
+<ul class="star">
+  <% Article.archive_months(5, 0).each do |m| %>
+    <li><a href="/articles/list?month=<%= m.month %>-<%= m.year %>"><%= m.display_month %></a></li>
+  <% end %>
+</ul>
+<%= toggler("all_archives", "See All Archives", "Hide Archives", "arrow", "arrow-hide")%>
+<br /><br />
+<div id="all_archives" style="display:none;">
+<ul class="star">
+  <% Article.archive_months(99999, 5).each do |m| %>
+    <li><a href="/articles/list?month=<%= m.month %>-<%= m.year %>"><%= m.display_month %></a></li>
+  <% end %>
+</ul>
+</div>
+
+  

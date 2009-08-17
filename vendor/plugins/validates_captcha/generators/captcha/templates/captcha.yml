@@ -1,0 +1,63 @@
+--- 
+
+# Web server must be restarted for changes to take effect!
+
+#Time to live, in seconds
+default_ttl: 1200
+
+#Where to store the PStore file
+store: var/data/captchas.pstore
+
+#The validation will by default always pass when in
+#test mode. Change this to true if you want to test
+#it yourself.
+i_will_test_validation_myself_thank_you_very_much: false
+
+#You can set a default message to be displayed
+#when the validation does not pass.
+default_message: "CAPTCHA validation did not match."
+
+
+
+#Image challenge specific options
+
+#Change to true to disable image recognition challenges
+#RMagick will not be loaded if set to true
+#Be aware that you will get errors if you have previously
+#used image challenges that are still in the storage
+disable_image_challenges: false
+
+#Where to store images, relative to public/images
+default_dir: captcha
+
+#Which file type (extension) to give generated files
+default_filetype: jpg
+
+#Default font to use. Can be a font name or the full
+#path to a font file. If not specified, RMagick will
+#choose one for you.
+font: null
+
+#Words to use when generating images. Case doesn't matter when matching.
+words: 
+  - hugh grant
+  - superman
+  - darth vader
+  - loose fit
+  - whale blubber
+  - et cetera
+
+
+
+#Question challenge specific options
+
+#Questions and their answers to be used with the question challenge.
+#Each pair is an array with the question as the first element
+#and its answer as the second. The question is always a string,
+#but the answer can be a single string, a regular expression
+#or an array of mixed strings and regexes if there is more than one
+#right answer.
+questions:
+  - ['What is 2+2?', '4']
+  - ['Peter has two apples. How many apples does Peter have?', ['2', 'two']]
+  - ['Which metal has the atomic symbol Al?', !ruby/regexp '/alumini?um/']

@@ -1,0 +1,14 @@
+<div id="heading">
+  <h2>Most Viewed Committees</h2>
+</div>
+
+<%= render :partial => 'sort_committees', :locals => { :sort => :popular} %>
+<%= render :partial => 'shared/timeframe_select' %>
+
+<div class="padding">
+<div id="committee_summary">
+  <ul class="list">
+    <%= render(:partial =>'committees_list_most_viewed', :collection => @committees ) %>
+  </ul>
+</div>
+</div>

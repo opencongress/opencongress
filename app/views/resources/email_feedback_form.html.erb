@@ -1,0 +1,67 @@
+<script type="text/javascript"><!--
+function onABCommComplete() {
+  // OPTIONAL: do something here after the new data has been populated in your text area
+}
+
+function onEmailSend()
+{
+  Element.show('feedbackindicator');
+  Element.show('feedbacksendresults');
+  return false;
+}
+
+function onEmailSendComplete()
+{
+  Element.hide('feedbackindicator');
+  Effect.BlindUp('feedback');
+}
+function isValidEmailAddress(addr)
+{
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(addr))
+    return true;
+  else
+    return false;
+}
+function verifyEmailForm()
+{
+  if ($('feedback_cc_me').checked) 
+	{
+	if (!isValidEmailAddress(document.getElementById('feedback_email').value))
+  {
+    alert("To send a copy to yourself you must enter a valid email address for 'Your Email'!");
+    return false;    
+  }
+  }  
+  return true;
+}
+//-->
+</script>
+
+<div id="feedbacksendresults" style="display:none;">
+</div>
+
+<div id="feedback">
+  <% form_remote_tag(:url => {:controller => 'resources', :action => 'email_feedback' }, 
+                                :condition => "verifyEmailForm()",                                
+																:before => "onEmailSend()",
+                                :complete => "onEmailSendComplete()",
+                                :update => "feedbacksendresults"
+                     ) do %> 
+    <br style="clear:both;" />
+    <dl>
+    <dt><label>Your Email:</label></dt>
+    <dd><%= text_field 'feedback', 'email', 'value' => @email_from %></dd>
+    <dt><label>Subject</label></dt>
+		<dd><%= text_field 'feedback','subject', 'value' => "RE: #{@subject}" %>
+		<dt><label>Message:</label></dt>
+    <dd>
+      <textarea rows="5" cols="30" id="feedback_message" name="feedback[message]"></textarea>
+    </dd>
+    <dt>&nbsp;</dt><dd><%= check_box('feedback', 'cc_me' ) %> Send me a copy</dd>
+    <dt>&nbsp;</dt><dd><%= show_simple_captcha(:image_style => 'all_black', :distortion => 'high') %>
+    <dt>&nbsp;</dt><dd><%= submit_tag "Send >>" %> 
+      <img alt="Indicator" class="noborder" id="feedbackindicator" src="/images/spinner.gif" style="display: none; vertical-align: middle; height: 20px;" />
+    </dd>
+    </dl>
+  <% end %>
+</div>

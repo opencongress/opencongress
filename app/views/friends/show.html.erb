@@ -1,0 +1,36 @@
+<% if logged_in? %>
+   <%= render :partial => "/profile/logged_in_profile_nav" %>
+<% end %>
+<p>
+  <b>User:</b>
+  <%=h @friend.user_id %>
+</p>
+
+<p>
+  <b>Friend:</b>
+  <%=h @friend.friend_id %>
+</p>
+
+<p>
+  <b>Confirmed:</b>
+  <%=h @friend.confirmed %>
+</p>
+
+<p>
+  <b>Created at:</b>
+  <%=h @friend.created_at %>
+</p>
+
+<p>
+  <b>Updated at:</b>
+  <%=h @friend.updated_at %>
+</p>
+
+<p>
+  <b>Confirmed at:</b>
+  <%=h @friend.confirmed_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_friend_path(@user.login,@friend) %> |
+<%= link_to 'Back', friends_path(@user.login) %>

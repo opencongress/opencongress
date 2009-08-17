@@ -1,0 +1,30 @@
+<p>You have successfully authenticated via OpenID, however, to create your OpenCongress account, the following information is also required:</p>
+
+<% form_for :user do |f| %>
+
+<div title="Account signup" id="signupform" class="form">
+  <%= error_messages_for 'user' %><br />
+  <table cellspacing="0" cellpadding="0">
+                <tr>
+                <td><label for="user_login">Login</label></td>
+                <td><%= f.text_field "login", :size => 30 %></td>
+        </tr>
+                        <td><label for="user_email">Email</label></td>
+                <td><%= f.text_field "email", :size => 30 %></td>
+                </tr>
+                <tr>
+                <td><label for="user_zipcode">Zip Code</label></td>
+                <td><%= f.text_field "zipcode", :size => 5 %><br /> <em>(required, for tracking your Members of Congress)</em></td>
+                </tr>
+        <tr>
+                        <td><%= f.check_box "mailing" %></td>
+                        <td><label for="user_mailling">Send me email updates about OpenCongress <em>(optional, major announcements only)</em></label></td>
+                </tr>
+        </table>
+        <br />
+<input type="submit" value="Signup &#187;" class="primary bigger" /><br/><br/>
+<em>We will not share your email address with anyone for any reason.</em>
+</div>
+
+<% end %>
+

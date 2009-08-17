@@ -1,0 +1,7 @@
+<%= render :partial => 'sort_issues', :locals => { :sort => @sort }  %>
+<%= render :partial => 'shared/timeframe_select' if @sort == :by_most_viewed %>
+<%= will_paginate @subjects %>
+</div> <!-- // sort_nav -->
+<%= render :partial => 'issue_list', :locals => {:subjects => @subjects } %>
+<%= will_paginate @subjects %>
+</div> <!-- // views -->

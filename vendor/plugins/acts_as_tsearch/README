@@ -1,0 +1,40 @@
+ActsAsTsearch
+=============
+
+Acts_as_tsearch is a plugin for Ruby on Rails which makes it simple to implement scalable, full text search for Rails if you're using PostgreSQL as your database. It wraps the built-in full text search engine of PostgreSQL with a familiar 'acts_as' implementation.
+
+Home page: http://code.google.com/p/acts-as-tsearch/
+
+Quick Start
+-----------
+
+* Preparing your PostgreSQL database
+
+Add a text search configuration 'default':
+
+  CREATE TEXT SEARCH CONFIGURATION public.default ( COPY = pg_catalog.english )
+
+For Postgres 8.2 and older follow http://code.google.com/p/acts-as-tsearch/wiki/PreparingYourPostgreSQLDatabase
+
+* Adding the plugin:
+
+  ruby script/plugin install git://github.com/pka/acts_as_tsearch.git
+
+* Add acts_as_tsearch to a model
+
+  class BlogEntry < ActiveRecord::Base
+     acts_as_tsearch :fields => ["title","description"]
+  end
+
+* Do a search
+
+  blog_entries = BlogEntry.find_by_tsearch("bob")
+  puts blog_entries.tsearch_rank
+  puts blog_entries.size
+  puts blog_entries[0].title
+  ...etc...
+
+or using scopes:
+
+  blog_entry = BlogEntry.scoped_by_tsearch("bob").find(:first)
+

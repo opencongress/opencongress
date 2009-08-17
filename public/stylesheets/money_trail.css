@@ -1,0 +1,120 @@
+.inner ul{
+padding: 0px 0 0px 0px;
+margin-bottom: 10px;
+}
+
+.inner ul li li{
+border-left: 1px solid #eee;
+padding-left: 17px;
+}
+
+.inner ul li li li{
+font-weight: bold;
+border-left: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
+padding: 0px 0 0 0;
+}
+
+#heading{
+height: 45px;
+background: url('img/money_trail_heading.png');
+   _background: url('img/money_trail_heading.gif');
+border-bottom: 1px solid #b0dd88;
+}
+#heading p{
+color: #333;
+float: right;
+padding-top: 7px;
+clear: none;}
+
+#heading h2{
+float: left;
+}
+
+.inner ul li li table{
+margin: 10px;
+}
+
+.inner ul li li table a{
+padding: 1px 0;;
+}
+
+.inner ul li span{
+display: block;
+font-weight: bold;
+padding: 4px 0 4px;
+}
+
+.inner{
+background: url(img/sen-sort.png) left 85px repeat-x;
+   _background: url(img/sen-sort.gif) left 85px repeat-x;
+}
+
+.inner ul li a{
+padding: 0px;
+display: block;
+padding: 6px 13px;
+font-weight: normal;
+color: #666;
+}
+
+#money_trail ul li ul li ul li a.expand{
+background: url('img/arrows.png') 11px -38px no-repeat;
+   _background: url('img/arrows.gif') 11px -38px no-repeat;
+padding-left: 22px;
+text-decoration: none;
+
+}
+
+#money_trail ul li ul li ul li a.expand:hover{
+background: #f9f9f9 url('img/arrows.png') 9px -13px no-repeat;
+   _background: #f9f9f9 url('img/arrows.gif') 9px -13px no-repeat;
+text-decoration: none;
+color: #000;
+}
+
+#money_trail ul li ul li ul li a.collapse{
+background: #f9f9f9 url('img/arrows.png') 9px -13px no-repeat;
+   _background: #f9f9f9 url('img/arrows.gif') 9px -13px no-repeat;
+text-decoration: none;
+color: #000;
+padding-left: 22px;
+}
+
+#money_trail ul li ul li ul li a.collapse:hover{
+background: #f9f9f9 url('img/arrows.png') 11px -38px no-repeat;
+   _background: #f9f9f9 url('img/arrows.gif') 11px -38px no-repeat;
+text-decoration: none;
+color: #000;
+}
+
+ul ul ul div{
+border-left: 1px solid #eee !important;
+padding-left: 20px;
+}
+
+th{
+text-align: left;
+}
+
+td{
+padding: 2px 0;
+}
+
+td a{
+display: block;
+width: 250px;
+}
+
+.page_description{
+padding: 35px;
+}
+
+.floatleft{
+margin-left: 35px;
+width: 420px;
+}
+
+.floatleft.right{
+margin-left: 55px;
+}

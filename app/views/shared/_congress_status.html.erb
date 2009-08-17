@@ -1,0 +1,10 @@
+<div id="status-container">
+	<div class="statusbox">
+		<h2 class="dateline"><%= Time.now.strftime("%B %d, %Y") %></h2>
+		<ul>  
+			<li><em>House:</em> <%= ' Not ' unless CongressSession.house_today? %> In Session</li>
+			<li><em>Senate:</em> <%= ' Not ' unless CongressSession.senate_today? %> In Session</li>
+		</ul> 
+		</div>
+</div>
+<!-- // status box -->

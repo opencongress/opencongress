@@ -1,0 +1,54 @@
+<div id="the-bills">
+	<% if @types == 'all' %>
+	<div class="senate">
+	<% @types_from_params[0..3].each do |bill_type| %>
+		<% if bills[bill_type].size > 0 %>
+		<h2 class="icon"><%= bill_type_name(bill_type) %><%= dbox_trigger(bill_type) %></h2>
+		<div class="dboxed">
+		<%= dbox_content(bill_type) %>
+	</div>
+	<%= render(:partial => "bill/related_bills_list", :locals => { :related_bills_list => bills[bill_type] } ) %>
+
+	<% if bill_counts[bill_type] > 5 %>
+	<%= link_to "<span>and #{number_with_delimiter(bill_counts[bill_type] - 5)} more...</span>", 
+	{ :action => "list_bill_type", :bill_type => bill_type }, :class => 'med_button med_arrow' %>
+<% end %>
+<% end %>
+<% end %>   
+</div>
+<div class="house">
+<% @types_from_params[4..7].each do |bill_type| %>
+	<% if bills[bill_type].size > 0 %>
+	<h2 class="icon"><%= bill_type_name(bill_type) %><%= dbox_trigger(bill_type) %></h2>
+	<div class="dboxed">
+	<%= dbox_content(bill_type) %>
+</div>
+<%= render(:partial => "bill/related_bills_list", :locals => { :related_bills_list => bills[bill_type] } ) %>
+
+<% if bill_counts[bill_type] > 5 %>
+<%= link_to "<span>#{number_with_delimiter(bill_counts[bill_type] - 5)} more...</span>", 
+{ :action => "list_bill_type", :bill_type => bill_type }, :class => 'med_button med_arrow' %>
+<% end %>
+<% end %>
+<% end %>		        
+</div>
+<% else %>
+<div class="single">  
+<% @types_from_params.each do |bill_type| %>
+	<% if bills[bill_type].size > 0 %>
+	<h2 class="icon"><%= bill_type_name(bill_type) %><%= dbox_trigger(bill_type) %></h2>
+	<div class="dboxed">
+	<%= dbox_content(bill_type) %>
+</div>
+<%= render(:partial => "bill/related_bills_list", :locals => { :related_bills_list => bills[bill_type] } ) %>
+
+<% if bill_counts[bill_type] > 5 %>
+<p class="test">and <%= link_to "#{number_with_delimiter(bill_counts[bill_type] - 5)} more...", 
+{ :action => "list_bill_type", :bill_type => bill_type }, :class => 'arrow' %>
+</p>	 
+<% end %>
+<% end %>
+<% end %>
+</div>
+<% end %>
+</div>

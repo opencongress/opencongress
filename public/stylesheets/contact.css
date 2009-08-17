@@ -1,0 +1,22 @@
+#contact .inner{
+
+}
+
+p, h3{
+margin: 0 35px 10px 35px;
+}
+
+.inner ul{
+margin: 0 35px 10px 55px;
+}
+
+
+p.big{
+font-size: 16px;
+margin: 30px 35px;
+line-height: 1.5em;
+}
+
+#heading{
+height: 45px;
+}

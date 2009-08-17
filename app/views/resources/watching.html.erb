@@ -1,0 +1,69 @@
+<div id="heading">
+
+<h2>Make a "Congress, I'm Watching" Widget</h2>
+
+</div>
+<div class="padding">
+<%= javascript_include_tag 'panel_generator' %>
+<p class="behave">
+Use this page to create a widget for your website that displays info about
+bills you support, oppose, or both. It's a perfect way to let Congress
+know where you stand and to keep your community up-to-date on the bills
+that are important to you. 
+</p>
+<p class="behave">Simply input the numbers of the bills you
+support or oppose, then customize the appearance of the widget and copy-
+and-paste the HTML into your website (see our <a
+href="http://participatorypolitics.org/tools_watching.html">sample</a>).
+</p>
+<p class="behave">Here are a few easy ways to find the bill you're looking for (even if you don't know its official number offhand). First, visit our new page of "<a href="/bill/hot">Hot Bills</a>, where you can browse the most newsworthy, most contentious bills in Congress by subject area and description. Second, visit our page of <a href="/bill/most/viewed">most-viewed</a> bills on OpenCongress. Third, use our <a href="/search">search</a> page to search for keywords.
+</p>
+
+<dl class="tool_form watching">
+
+  <% form_remote_tag(:url => { :controller => 'resources', :action => 'bill_number_search' }, 
+                                :before => "onSearch()",
+                                :complete => "onSearchComplete()",
+                                :update => "watching_search_results"
+                     ) do -%>
+  <dt><label for="post_info_url">Enter the number of the bill:</label></dt> 
+  <dd><%= text_field 'bill_status', 'bill_number', { :size => '6', :maxlength => '6', :value => "" } %>
+    <%= submit_tag "Search >>" %>
+    <img alt="Indicator" class="noborder" height="5" id="search_spinner" src="/images/indicator.gif" style="display: none; vertical-align: middle" width="21" />
+    <div class="form_note">(ie, for "H.R.6", enter "6")</div>
+    <div id="watching_search_results">
+    </div>
+    <a href="javascript:clearWatching()">Start Over</a> 
+  </dd>
+  <%= hidden_field 'bill_status', 'partial', { :value => 'bill_search_watching' } %>
+  <% end %>
+</dd>
+
+<%= render :partial => 'resources/panel_colors_form', :locals => { :update_function => 'updateWatchingFields' } %>
+
+<%= submit_tag "Update Panel Preview >> ", { :onClick => 'updateWatchingFields();' } %>
+
+<%= hidden_field 'panel', 'path', { :value =>  "/resources/watching_panel"}%>
+<%= hidden_field 'panel', 'hostname', { :value => url_for(:only_path => false, :controller => 'index') } %>
+
+</dl>
+
+<div id="preview_container">
+  
+<div id="preview_syndicator_preview">
+How the panel will look:<br>
+<iframe id="watching_panel" name="oc_watching_frame" width="176" height="392" scrolling="no" frameborder="0" style="border: 1px solid #999;" allowtransparency="true" hspace="0" vspace="0" marginheight="0" marginwidth="0" src="/resources/watching_panel?bg_color=ffffff&textcolor=333333&pass_bills=110-h1,110-h2&dont_pass_bills=110-h1"></iframe>
+</div>
+
+<div id="preview_syndicator_code">
+Copy and paste this code into your webpage:<br>
+
+<%= text_area 'panel', 'code', "cols" => 68, "rows" => 20 %>
+
+</div>
+
+</div>
+
+<!-- The following image forces the fields to update on the initial load of the page -->
+<img src="/images/blank.gif" class="noborder" width="0" height="0" onLoad="updateWatchingFields();">
+</div>

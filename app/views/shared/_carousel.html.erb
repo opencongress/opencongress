@@ -1,0 +1,123 @@
+<script type="text/javascript">
+
+function mycarousel_initCallback(carousel)
+{
+	// Disable autoscrolling if the user clicks the prev or next button.
+	carousel.buttonNext.bind('click', function() {
+		carousel.startAuto(0);
+	});
+
+	carousel.buttonPrev.bind('click', function() {
+		carousel.startAuto(0);
+	});
+
+	// Pause autoscrolling if the user moves with the cursor over the clip.
+	carousel.clip.hover(function() {
+		carousel.stopAuto();
+	}, function() {
+		carousel.startAuto();
+	});
+};
+
+$j(document).ready(function() {
+	$j('#mycarousel').jcarousel({
+		auto: 4,
+		wrap: 'last',
+		initCallback: mycarousel_initCallback
+	});
+});
+
+</script>
+
+
+
+<ul id="mycarousel" class="jcarousel-skin-tango">
+<% if controller.controller_name.to_s == 'people' %>
+	<% @carousel[0..1].each do |item| %>
+		<% unless item[1].nil? %>
+		<li>
+			<h3><%= @person_type.to_s.capitalize %> in the <%= item[1].is_news ? "News" : "Blogs" %></h3>
+
+			<div class="slide">
+
+				<div class="title">
+					<% unless item[1].title %>
+					<h4><a href="<%= item[1].url %>" target="_blank">RE: <%= truncate(default_title, :length => 37) %></a></h4>
+					<% else %>
+					<h4><a href="<%= item[1].url %>" target="_blank"><%= truncate(item[1].title, :length => 40) %></a></h4>
+					<% end %>  
+				</div>
+
+				<span><b>
+					<% if item[1].source_url %>
+					<% if item[1].source %>
+					<a href="<%= item[1].source_url %>" target="_blank"><%= strip_tags(item[1].source) %></a>
+					<% else %>
+					<a href="<%= item[1].source_url %>" target="_blank"><%= item[1].source_url %></a>      		
+					<% end %>
+					<% else %>
+					<% if item[1].source %>
+					<%= item[1].source %>
+					<% end %>
+					<% end %>
+				</b></span>
+				<span><%= item[1].date.to_time.strftime("%m/%d/%y") %></span>
+				<p><%= strip_unclosed_tag(strip_tags(item[1].excerpt)) %></p> 		
+
+			</div>
+			<div id="reference">
+				<a href="#p<%= item[0].id.to_s %>" onclick="new Effect.Highlight('p<%= item[0].id.to_s %>', {duration: 1} );"><div><%= item[0].title_full_name %> was found in this article</div><span>Highlight <%= @person_type.to_s.capitalize.singularize %></span></a>
+			</div>       
+
+
+		</li>
+		<% end %>
+
+		<% end %>
+
+		<% unless @carousel[2].nil?%>
+		<li>
+			<h3>Most Viewed <%= @person_type.to_s.capitalize %></h3>
+			<!-- <a class="feed" href="#">Feed</a> -->
+
+			<div class="slide">
+
+				<ul>
+					<% @carousel[2].each do |person| %>
+					<li><a href="#p<%= person.id.to_s %>" onclick="new Effect.Highlight('p<%= person.id.to_s %>', {duration: 1} );"><span class='name'><%= person.name %></span><span class='views'><%= person.views(DEFAULT_COUNT_TIME)  %> views</span></a></li>
+					<% end %>                  
+				</ul>
+			</div>
+		<div class="cap"></div>
+		</li>
+		<% end %>
+
+<% elsif controller.controller_name.to_s == 'issue' %>
+		<% unless @carousel[0].nil?%>
+		<li>
+			<h3>Most Viewed Issues this Week</h3>
+		<div class="slide">
+			<ul>
+				<% @carousel[0].each do |issue| %>
+				<li><span class='name'><%= link_to_item issue, :term, :show %></span><span class='views'><%= issue.views(DEFAULT_COUNT_TIME) %> views</span></li>
+				<% end %>
+			</ul>
+		</div> 
+		<div class="cap"></div>
+		</li>
+		<% end %>
+		
+<% elsif controller.controller_name.to_s == 'roll_call' %>
+		<li>
+			<h3>Most Viewed Roll Calls this Week</h3>
+		<div class="slide">
+			<ul>
+				<% @carousel[0].each do |roll| %>
+				<li><span class='name'><%= link_to roll.question, :action => 'show', :id => roll.id %></span><span class='views'><%= roll.views(DEFAULT_COUNT_TIME) %> views</span></li>
+				<% end %>
+			</ul>
+		</div> 
+		<div class="cap"></div>
+		</li>       
+<% end %>
+	</ul>

@@ -1,0 +1,8 @@
+page.replace_html 'bill_titles', bill_titles_html
+#page.replace_html "bill_title_link", 'Hide Bill Titles'
+page.replace_html "bill_title_link", link_to_remote_bill_titles(
+  'Hide Bill Titles', "hide_titles")
+page.replace_html 'flash', flash[:notice] if flash[:notice]
+page.show 'bill_titles'
+#page.toggle 'bill_titles', :effect => :blind
+#page.toggle 'bill_titles', :effect => :blind if flash[:notice]

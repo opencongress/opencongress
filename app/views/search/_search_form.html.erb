@@ -1,0 +1,24 @@
+<div id="search">
+	<form action="/search/result" id="form-search" method="get">
+		<div>
+			<label for="search-field">
+				<span class="default">Search</span>
+				<div class="search">	
+					<span class="left"></span>
+					<input name="q" autocomplete="off" id="search-field" type="search" value="<%= @query ||= "Search" %>" onfocus="this.value = '';" onblur="if (this.value == ''){this.value = 'Search'};"/>
+					<input id="search_congress_<%= DEFAULT_CONGRESS %>" name="search_congress[<%= DEFAULT_CONGRESS %>]" type="hidden" value="<%= DEFAULT_CONGRESS %>" /> 
+					<%= hidden_field_tag "search_bills", "1" %>
+					<%= hidden_field_tag "search_people", "1" %>
+					<%= hidden_field_tag "search_committees", "1" %>
+					<%= hidden_field_tag "search_industries", "1" %>
+					<%= hidden_field_tag "search_issues", "1" %>
+					<%= hidden_field_tag "search_comments", "1" %>
+					<%#= hidden_field_tag "search_commentary", "0" %>
+					<%= hidden_field_tag "search_gossip_blog", "0" %>
+					<span class="right" />
+				</div>  
+			</label>
+		</div>
+	</form>
+</div>
+

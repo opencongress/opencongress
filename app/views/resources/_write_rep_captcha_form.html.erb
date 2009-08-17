@@ -1,0 +1,19 @@
+Some of the members of Congress you are writing require a spam check.  Please enter the text of the images into the fields below.
+<br /><br />
+<% remote_form_for :write_rep_email, :url => { :controller => 'resources', :action => 'write_rep_send' }, 302 => "document.location=request.getResponseHeader('location')" do |f| %>
+  
+  <input type="hidden" name="write_rep_email_id" value="<%= @write_rep_email.id %>" />
+  
+  <% @captchas.keys.each do |c| %>
+    <div style='margin-bottom: 20px;'>
+      Spam check for <%= c.titleize %>
+      <img src="<%= @captchas[c] %>" />
+      <input type="text" name="captcha_values[<%= c %>]" />
+    </div>
+  <% end %>
+
+  <input type="hidden" name="write_rep_env" value="<%= @write_rep_env %>" />
+  
+  <input type="submit" value="Send" />
+<% end %>
+  

@@ -1,0 +1,18 @@
+<ul>
+  <li id="notebook_item_<%= listitem.id %>">
+    <img class="mypn-icon" src="/images/mypn-video.png" alt="Video" title="Video" />	
+    <%= link_to h(listitem.title), listitem.url %>
+    <br />
+    <% unless listitem.description.blank? %>
+    <%= h listitem.description %><br />
+    <% end %>
+    <% unless listitem.embed.blank? %>
+    <div style="height:<%= div_height(listitem.height) %>px;">
+
+      <%= listitem.embed %><br />
+    </div>
+    <% end %>
+
+    <%= render :partial => 'political_notebooks/item_meta', :object => listitem %>
+  </li>
+</ul>

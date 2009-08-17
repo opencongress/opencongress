@@ -1,0 +1,18 @@
+  <% unless @supporting_suggestions[0] == 0 %>
+    <%= render :partial => "shared/support_oppose_tables",
+              :locals => {:object => @person,
+                          :title => @person.full_name,
+                          :action => "supporting_person",
+                          :stance => "supporting",
+                          :tracking_suggestions => @supporting_suggestions} %>
+  <% end %>
+  <br/>
+  <% unless @opposing_suggestions[0] == 0 %>
+    <%= render :partial => "shared/support_oppose_tables",
+              :locals => {:object => @person,
+                          :title => @person.full_name,
+                          :action => "opposing_person",
+                          :stance => "opposing",
+                          :tracking_suggestions => @opposing_suggestions} %>
+  
+  <% end %> 

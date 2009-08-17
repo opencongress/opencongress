@@ -1,0 +1,14 @@
+<dt><label for="post_info_url">Background color:</label></dt>
+<dd><%= select("panel", "bgcolor_select", available_colors, { :selected => "ffffff" }, { :onChange => "#{update_function}('panel_bgcolor');" }) %><br>
+    <div class="form_note">Or, enter the six-digit hex code:
+<%= text_field 'panel', 'bgcolor', { :size => '6', :maxlength => '6', :value => "ffffff" } %></div></dd>
+
+<dt><label for="post_info_url">Border color:</label></dt>
+<dd><%= select("panel", "bordercolor_select", available_colors, { :selected => "999999" }, { :onChange => "#{update_function}('panel_bordercolor');" }) %><br>
+    <div class="form_note">Or, enter the six-digit hex code:
+<%= text_field 'panel', 'bordercolor', { :size => '6', :maxlength => '6', :value => "999999" } %></div></dd>
+
+<dt><label for="post_info_url">Text color:</label></dt>
+<dd><%= select("panel", "textcolor_select", available_colors, { :selected => "333333" }, { :onChange => "#{update_function}('panel_textcolor');" }) %><br>
+    <div class="form_note">Or, enter the six-digit hex code:
+<%= text_field 'panel', 'textcolor', { :size => '6', :maxlength => '6', :value => "333333" } %></div></dd>

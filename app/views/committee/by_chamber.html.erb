@@ -1,0 +1,7 @@
+<% @content_for_sortby = render :partial => 'sort_committees', :locals => { :sort => @sort } %>
+
+<div id="committee_summary">
+  <ul class="list">
+    <%= render(:partial =>'committees_list', :locals => {:committees => @committees}, :collection => @major ) %>
+  </ul>
+</div>

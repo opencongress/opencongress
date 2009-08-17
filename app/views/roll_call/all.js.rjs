@@ -1,0 +1,7 @@
+page.replace_html "the-rolls", :partial => 'roll_calls_summary', :locals => { :rolls => @rolls, :header => false}
+page.select('#sort li.active').each do |element|
+	element.remove_class_name 'active'             
+end  
+page.select("#sort ##{@sort}").each do |element|
+	element.add_class_name 'active'
+end

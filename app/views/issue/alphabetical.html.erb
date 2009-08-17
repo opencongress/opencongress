@@ -1,0 +1,14 @@
+<%= render :partial => 'sort_issues', :locals => { :sort => :alphabetical } %>
+
+<ul id="jump">
+ <h4>Jump</h4>
+		<% ('A'..'Z').each do |letter| %>
+			<li><%= link_to_letter(letter) %></li>
+		<% end %>
+ </ul>
+
+</div> <!-- // sort_nav -->
+  <div id='issue_list'>
+    <%= render :partial => 'issue_list', :locals => {:subjects => @subjects } %>
+  </div>
+</div> <!-- // views -->

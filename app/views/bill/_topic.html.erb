@@ -1,0 +1,113 @@
+<div class="title">
+
+<h1><span><%= @bill.title_typenumber_only %></span> - <%= @bill.title_common %></h1>
+
+<% unless @bill.title_popular_only.blank? %>
+	<p><%= official_title %>
+<% end %> 
+
+	<script>
+	$j().ready(function() {
+		$j('#bill_titles').jqm({trigger:'a.titles_trigger'});
+	});
+	</script>
+	
+	<a href="#" class="titles_trigger more">view all titles (<%= @bill.bill_titles.size%>)</a></p>
+
+	<%# toggler('bill_titles', "view all titles", 'hide titles', 'more', 'less') %>
+</div>
+
+	<div id="bill_titles" class="jqmWindow scrolling">
+  		<div class="ie"><a href="#" class="jqmClose">Close</a></div>
+		<h3>All Bill Titles</h3>
+		
+		<ul class="list">
+  			<%= bill_titles_html %>
+  		</ul>
+
+	</div>
+		
+	<!-- <div class="box-wrap">
+
+		<span class="first"><strong><%= link_to "Latest Action", :action => 'actions_votes' %></strong> <%= @bill.actions[0].formatted_date_short %></span> - 
+	    <span><strong><%= link_to "Amendments", :action => 'actions_votes' %></strong> <%= @bill.amendments.size %></span> - 
+		<span><strong><%= link_to "Votes", :action => 'actions_votes' %></strong> <%= @bill.roll_calls.size %></span>
+
+	</div> -->
+		
+		
+<div class="cp">
+<% if can_blog? %>
+  <%= link_to "Add/Edit Plain Language Summary", :controller => 'admin/bill_summaries', :action => 'edit', :id => @bill.ident %>  
+  <%= link_to "Select Default Title",  :controller => 'admin/bill_summaries', :action => 'defaulttitle', :id => @bill.ident %>  
+  <%= link_to "Add Related Bill (Different Session)",  :controller => 'admin/bill_summaries', :action => 'session_relations', :bill_id => @bill.ident %>
+  <%= link_to @bill.is_frontpage_hot? ? "Remove from frontpage" : "Add to frontpage",  :controller => 'admin/bill_summaries', :action => 'toggle_frontpage_hot', :bill_id => @bill.ident %>
+  <br style="clear: both;"/>
+  <a href="#" onclick="Element.show('addtitle_form'); return false;">Add a Title</a>   
+  <a href="#" onclick="Element.show('hot_addbill_form'); return false;">Make/Edit "Hot"</a> 
+  <div id="addtitle_form" style="display: none; margin-bottom: 10px;">
+  	<form action="/admin/bill_summaries/addtitle">
+  		<b></b><br />
+  		<%= hidden_field "title", "bill_id", :value => @bill.id %>
+  		<%= hidden_field "title", "as", :value => 'introduced' %>
+  		Title: <%= text_field "title", "title" %>
+  		<%= select "title", "title_type", [ 'popular', 'short', 'official' ], { :include_blank => false } %>
+  		<%= submit_tag %>
+  	</form>
+  </div>
+  
+  
+  <div id="hot_addbill_form" style="display: none; margin-bottom: 10px;">
+  	<form action="/admin/hot_bills/addbill">
+  		<b>Select category for this bill's "hot"-ness:</b><br />
+  		<%= hidden_field "bill", "id" %>
+  		<% HotBillCategory.find(:all).each do |c| %>
+  		  <%= radio_button "bill", "hot_bill_category_id", c.id %> <%= c.name %><br />
+  		<% end %>
+  		<%= radio_button "bill", "hot_bill_category_id", "" %> Remove (not "Hot")<br />
+  		<%= radio_button "bill", "hot_bill_category_id", "new" %> New category:
+  		<%= text_field "hot_bill_category", "name" %><br />
+  		Summary:<br>
+  		<%= text_area "bill", "plain_language_summary", :rows => 4, :cols => 50 %><br />
+  		<%= submit_tag %>
+  	</form>
+  </div>
+<% end %>
+</div>
+
+<div id="tabs"> 
+	<ul class="un">
+	<%= make_tabs(@tabs) %>
+	</ul>
+</div>
+  
+	<% unless @wiki_url %>
+		<% if logged_in? %>
+	<div id="create_wiki_message" class="jqmWindow">
+	 <p>This Bill currently has no wiki entry. <a href="<%= @wiki_create_url %>" class="small_button" style="float:right;margin-left:8px;margin-top:-4px;"><span>Create Wiki Page</span></a></p>
+	</div>
+	<script type="text/javascript">
+	$j().ready(function() {
+		$j('#create_wiki_message').jqm({trigger:'#tabs ul li a.Wiki'});
+	})
+	</script>
+	<% else %>
+	<div id="login_wiki_message" class="jqmWindow">
+	<p>This Bill currently has no wiki content. If you would like to create a wiki entry for this bill, please <%= link_to 'Login', :controller => 'account', :action => 'login', :modal => true %>, and then select the wiki tab to create it.</p>
+	</div>
+	
+	<div id="login_wiki" class="jqmWindow">
+	</div>	
+	
+	<script type="text/javascript">
+		$j().ready(function() {
+			$j('#login_wiki_message').jqm({trigger: '#tabs ul li a.Wiki'});
+			$j('#login_wiki').jqm({ajax:'@href', trigger:'#login_wiki_message a'});
+			$j('#login_wiki_message')
+			.jqmAddClose('#login_wiki_message a')
+			.jqmAddTrigger('a.wiki_link')
+		});
+		
+	 </script>
+ <% end %>
+<% end %>

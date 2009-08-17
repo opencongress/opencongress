@@ -1,0 +1,27 @@
+<script type="text/javascript" src="http://www.plaxo.com/css/m/js/util.js"></script>
+<script type="text/javascript" src="http://www.plaxo.com/css/m/js/prototype.js"></script>
+<script type="text/javascript" src="http://www.plaxo.com/css/m/js/basic.js"></script>
+<script type="text/javascript" src="http://www.plaxo.com/css/m/js/abc_launcher.js"></script>
+<script type="text/javascript"><!--
+function onABCommComplete() {
+  // OPTIONAL: do something here after the new data has been populated in your text area
+}
+//-->
+</script>
+
+<dt><label>Your Email:</label></dt>
+<dd><%= text_field 'email', 'email', 'value' => @email_from %></dd>
+<dt><label>Friends' Emails:<br />(one per line)<br /><a href="#" onclick="showPlaxoABChooser('email_dest_emails', '/plaxo.html'); return false"><img class='noborder' src="http://www.plaxo.com/images/abc/buttons/add_button.gif" alt="Add from my address book" /></a></label></dt>
+<dd>
+<%= text_area 'email', 'dest_emails', "cols" => 30, "rows" => 7 %>
+</dd>
+<dt><label>Personal Message:<br />(optional)</label></dt>
+<dd>
+<%= text_area 'email', 'message', "cols" => 30, "rows" => 4 %>
+</dd>
+<dt>&nbsp;</dt>
+<dd><%= check_box('email', 'cc_me' ) %> Send me a copy</dd>
+<%= show_simple_captcha(:image_style => 'all_black', :distortion => 'high') %>
+<div style="padding-left: 220px; font-size: 15px;">
+<%= submit_tag "Send >>" %>
+</div>

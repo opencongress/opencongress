@@ -1,0 +1,13 @@
+<table class='simple-table'>
+  <tr>
+    <th>Search term</th>
+    <th>Count</th>
+  </tr>
+  
+  <% @searches.each do |s| %>
+    <tr>
+      <td><%= s.text %></td>
+      <td><%= s.count %></td>
+    </tr>
+  <% end %>
+</table>

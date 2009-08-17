@@ -1,0 +1,95 @@
+<% @page_title = "Login" -%>
+<style>
+div.form label {
+  width:100px;
+  float:left;
+}
+h1 { font-size:2em;}
+h3 { text-align:left;font-size:1.5em;}
+div.floatright {
+  .float:left !important;
+  _float:left !important;
+}        
+div.ie6_box {
+  _width:750px;
+}
+</style>
+<% if flash[:warning] %>
+<div style="width:300px;">
+  <p style="font-size:16px;font-weight:bold;color:white;padding:4px;text-align:center; background-color:red;">Login Failed</p>
+</div>
+<% end %>
+<div class="ie6_box" style="padding-top: 15px;">
+  <div class="floatleft paddingtopnone" style="padding-right:30px;width:300px;">
+    <h3>I have an account:</h3>
+    <% form_for :user do |f| %>
+    <div title="Account login" id="loginform" class="floatleft form">
+
+      <p><label for="user_login">Login:</label>
+        <%= f.text_field :login, :size => 30 %>
+      </p>
+      <p>
+        <label for="user_password">Password:</label>
+        <%= f.password_field :password, :size => 30 %>
+      </p>
+      <input type="image" value="Login" class="floatright margintop behave clear" src="/stylesheets/img/login2.png" />
+      <p class="margintop floatleft" style="margin-top: 10px;">
+        <%= link_to "Forgot Password?", :action => "forgot_password" %>
+      </p>
+    </div>
+
+    <% end %>
+    <% form_for :user do |f| %>
+    <div style="clear:left;" title="Account login" id="oid_loginform" class="form">
+      <h3 style="text-align:left;">Login with OpenID</h3> 
+      <p class="openidform"><label for="identity_url">OpenID URL:</label>
+        <%= text_field_tag :openid_url,nil, :size => 30 %>
+      </p>
+      <br />
+      <input type="image" value="Login with OpenID" class="floatright margintop behave clear" src="/stylesheets/img/login3.png" />
+    </div>
+    <% end %>
+  </div>
+  <div class="floatright paddingtopnone">
+    <h3 class="make_one">Make me one, right now!</h3>
+
+        <% form_for :user, User.new, :url => {:action => "signup"} do |f| %>
+
+    <div title="Account signup" id="signupform" class="form">
+      <%= error_messages_for 'user' %>
+
+      <label for="user_login">Choose a Username:</label>
+      <%= f.text_field "login", :size => 30 %>
+      <p class="small" style="padding: 0 0 10px 142px !important; margin: 0 !important;">(no spaces or special characters)</p>
+
+
+      <label for="user_password">Choose a Password:</label>
+      <%= f.password_field "password", :size => 30 %>
+
+      <label for="user_password_confirmation">Confirm Password</label>
+      <%= f.password_field "password_confirmation", :size => 30 %>
+
+      <label for="user_email">Email</label>
+      <%= f.text_field "email", :size => 30 %>
+
+      <label>Zip Code</label>
+      <%= f.text_field "zipcode", :size => 5 %>
+
+      <p class="zip_tell">(required, to find your Members of Congress)</p>
+
+      <div class="clear margintop floatleft behave">	<br/>
+        <%= f.check_box "mailing", :style => "margin-top:-6px;" %>
+        <label class="send" for="user_mailling">Send me major updates about OpenCongress <em>(optional, about one email per month)</em></label>
+      </div>	
+
+
+      <div class="clear margintop floatleft behave"><%= f.check_box "accept_tos" %>
+        <label class="toss" for "user_accept_tos" %>I agree to the <a href="/about/terms_of_service">Terms of Service</a> and <a href="/about/privacy_policy">Privacy Policy.</a></label>
+      </div>
+      <input type="image" value="Register" class="floatright margintop behave clear" src="/stylesheets/img/register.png" />
+      <div class="clear"><em>We will not share your email address with anyone for any reason.</em></div>
+    </div>
+    <% end %>
+    <div style="clear:both;margin-bottom:1em;"></div>
+
+  </div>

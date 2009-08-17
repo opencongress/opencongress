@@ -1,0 +1,38 @@
+
+<div class="explain_box">
+This is a list of all the users who approve of <%= @person.short_name %> who have made their pages of Actions public. Some users may be approving of <%= @person.short_name %>, but have made their pages private or friends-only. For more info, click on the usernames below and view their profile pages of Actions. You may find people with expertise in your interests or opinions that you value. Invite them to be your friend, and their latest actions will appear in your profile's page of Friends.  
+</div>
+<% if @users.empty? %>
+  <p>Nobody is supporting that Person</p>
+<% else %>
+
+<table style="border:2px solid #EEF2EB;background:#FEFCEC none repeat scroll 0%;width:100%;">
+<tr>
+  <% if @in_my_district_solr && @in_my_district_solr.total > 0 %>
+  <% approval = @in_my_district.collect{|u| !u['object_rating'].blank? ? u['object_rating'].to_i : next }.compact %>
+  <th>Users in My District Supporting <%= @person.short_name %>: <%= @in_my_district.length %>
+     <br/><span style="font-weight:normal;">(Average Approval: <%= approval.length > 0 ? ((approval.sum / approval.length) * 10) : '-' %>%, <%= @in_my_district.sum{|k| k['total_comments'].to_i} %> comments)</span>
+  </th>
+  <% end %>
+  <% if @in_my_state_solr && @in_my_state_solr.total > 0 %>
+  <% approval = @in_my_state.collect{|u| !u['object_rating'].blank? ? u['object_rating'].to_i : next }.compact %>
+  <th>Users in My State Supporting <%= @person.short_name %>: <%= @in_my_state.length %>
+     <br/><span style="font-weight:normal;">(Average Approval: <%= approval.length > 0 ? ((approval.sum / approval.length) * 10) : '-' %>%, <%= @in_my_state.sum{|k| k['total_comments'].to_i} %> comments)</span>
+  </th>
+  <% end %>
+<% if @users_solr && @users_solr.total > 0 %>
+  <% approval = @users.collect{|u| !u['object_rating'].blank? ? u['object_rating'].to_i : next }.compact %>
+  <% logger.info approval.to_yaml %>
+<th>All Users Supporting <%= @person.short_name %>: <%= @users.length %>
+   <br/><span style="font-weight:normal;">(Average Approval: <%= approval.length > 0 ? ((approval.sum / approval.length) * 10) : '-' %>%, <%= @users.sum{|k| k['total_comments'].to_i} %> comments)</span>
+</th>
+<% end %>
+
+</tr>
+</table>
+<br/>
+
+  <%= render :partial => "tracking_tables" %>
+
+<% end %>
+  

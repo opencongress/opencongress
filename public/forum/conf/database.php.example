@@ -1,0 +1,8 @@
+<?php
+// Database Configuration Settings
+$Configuration['DATABASE_HOST'] = 'localhost';
+$Configuration['DATABASE_NAME'] = 'opencongress_vanilla';
+$Configuration['DATABASE_USER'] = 'root';
+$Configuration['DATABASE_PASSWORD'] = '';
+$Configuration['DATABASE_CHARACTER_ENCODING'] = 'utf8';
+?>

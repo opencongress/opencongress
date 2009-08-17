@@ -1,0 +1,10 @@
+<table class="simple-table" style="margin-top:0.5em;">
+  <tbody>
+    <% psl = person_sector_list.select {|p| /^Sen/.match(p.person.name) || /^Rep/.match(p.person.name)}.sort_by {|ps| -ps.total} %>
+    <% top_count ||= psl.size %>
+    <% top_count = top_count > psl.size ? ps.size : top_count %>
+    <% psl[0...top_count].each do |ps| %>
+      <%= render(:partial => 'person_sector', :object => ps) %>
+    <% end %>
+  </tbody>
+</table>

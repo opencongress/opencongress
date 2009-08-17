@@ -1,0 +1,19 @@
+<div id="person_votes_list">
+  <table class="simple-table">
+    <tr><th>Name</th><th>Voted</th></tr>
+    
+    <% votes.each do |vote| %>
+      <tr>
+        <td>
+          <% if vote.person %>
+            <a href="/people/show/<%= vote.person.to_param %>"><%= vote.person.name %></a>
+          <% else %>
+            No Data*
+          <% end %>
+        </td>
+        <td><%= vote %></td>
+      </tr>
+    <% end %>
+  </table>
+  <p>* - Voters marked "No Data" are voters that THOMAS has not associated yet.</p>
+</div>

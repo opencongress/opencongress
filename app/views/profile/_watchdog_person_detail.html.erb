@@ -1,0 +1,81 @@
+<div class="watcheddog">
+  	<div id="personphoto">
+	    <img src="/images/photos/thumbs_125/<%= s.id %>.jpeg" />
+	    <div id="personphotolink">
+
+	    </div>
+	<div class="watchdog_actions">
+  <%= render :partial => "shared/track_link", :locals => {:object => s} %><br/>
+	  <% if s.br_link %>
+		  <%= link_to image_tag('/images/battle_royale_button_d.gif'), s.br_link %>
+		<% end %>  
+  </div>
+  	  </div>
+
+  <h3><%= link_to s.title_full_name_party_state, :controller => "people", :action => :show, :id => s %></h3>
+  There <%= pluralize_nn(s.users_tracking_from_state_count(@my_state.abbreviation), "is", "are") %> 
+  <%= pluralize(s.users_tracking_from_state_count(@my_state.abbreviation), "OpenCongress user", "OpenCongress users") %> in 
+  <%= @my_state.abbreviation %> tracking <%= s.full_name %>.<br/>
+  
+  The average approval rating by OpenCongress users in <%= @my_state.abbreviation %> of Sen. <%= s.lastname %> is approximately <%= s.average_approval_from_state(@my_state.abbreviation) %><br/><br/>
+  
+  <h3>Comments on <%= s.title_full_name %></h3>
+    Mine: <%= s.comments.count(:id, :conditions => ["user_id = ?", @user.id]) %> | 
+    <% if @user.friends.count > 0 %>
+      My Friends: <%= s.comments.uncensored.find_all_by_user_id(@user.friends.collect{|p| p.friend_id}).length %> <%= toggler("#{s.id}-my_friends", "(show)", "(hide)") unless s.comments.uncensored.find_all_by_user_id(@user.friends.collect{|p| p.friend_id}).length == 0 %> |
+    <% end %>
+    OC Users' in <%= @my_state.abbreviation %>:  <%= s.comments_from_state_count(@my_state.abbreviation) %> |
+    <%= toggler("#{s.id}-most_useful", "Show Most Useful", "Hide Most Useful") %>
+
+    <br/>
+    <div id="<%= s.id %>-most_useful" style="display:none;">
+        Top 3 most useful comments:<br/>
+        <% s.comments.uncensored.most_useful.each do |c| %>
+          <%= render :partial => "shared/comments_recursive", :locals => {:comment => c, :object => s, :myscores => @user.comment_scores} %>
+         <% end %>
+    </div>
+    <% if @user.friends.count > 0 %>
+    
+    <div id="<%= s.id %>-my_friends" style="display:none;">
+      My friends' comments on this Senator:
+      <% s.comments.uncensored.find_all_by_user_id(@user.friends.collect{|p| p.friend_id}).each do |fc| %>
+        <%= render :partial => "shared/comments_recursive", :locals => {:comment => fc, :object => s, :myscores => @user.comment_scores} %>
+      <% end %>
+      <br/>    
+    </div>  
+    <% end %>
+  <br/>
+  <% @no_show_name = Person.find_changes_since_for_senators_tracked(@user).select {|g| g == s} %>
+  <% unless @no_show_name.empty? %>
+    <h3>Changes since my last visit</h3>
+    <%= render :partial => "person_main_detail", :locals => {:show_updates => true, :people => [@no_show_name.first], :buttons_only => true } %><br/><br/>
+  <% end %>
+  <h3><%= s.title %> <%= s.full_name %>'s votes on my tracked items</h3>
+  <table>
+  <tr><th>Bill</th><th width="18">My Vote</th><th><%= s.title %> <%= s.full_name %></th></tr>
+  <% @bookmarked_bills.each do |b| %>
+      <tr>
+        <td><%= link_to truncate(b.title_full_common, :length => 100), bill_path(b) %></td>
+        <td><%= show_vote(@user,b) %></td>
+        <td><%= show_person_vote(s,b) %></td>
+      </tr>
+  <% end %>
+  </table>
+  <br/>
+  
+  <h3><%= s.title %> <%= s.full_name %>'s record on my bills I've voted on</h3>
+
+  <table>
+  <tr><th>Bill</th><th>My Vote</th><th><%= s.title %> <%= s.full_name %></th></tr>
+  <% @user.bill_votes.each do |b| %>
+      <tr>
+        <td><%= link_to truncate(b.bill.title_full_common, :length => 100), bill_path(b.bill) %></td>
+        <td><%= show_vote(@user,b.bill) %></td>
+        <td><%= show_person_vote(s,b.bill) %></td>
+      </tr>
+  <% end %>
+  </table>
+  
+  <br/>
+  <br/>
+</div>

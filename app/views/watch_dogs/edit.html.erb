@@ -1,0 +1,24 @@
+<h1>Editing watch_dog</h1>
+
+<% form_for(@watch_dog) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :district_id %><br />
+    <%= f.text_field :district_id %>
+  </p>
+  <p>
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_id %>
+  </p>
+  <p>
+    <%= f.label :is_active %><br />
+    <%= f.check_box :is_active %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @watch_dog %> |
+<%= link_to 'Back', watch_dogs_path %>

@@ -1,0 +1,7 @@
+<% form_tag :action => 'update', :id => @article do -%>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Edit' %>
+<% end %>
+
+<%= link_to 'Show', :action => 'show', :id => @article %> |
+<%= link_to 'Back', :action => 'list' %>

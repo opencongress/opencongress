@@ -1,0 +1,44 @@
+<div class="people_header clearfix" style=" background: url(/images/photos/thumbs_102/<%= @person.id %>.png) 610px bottom no-repeat;">
+  
+	<div id="name">
+    <h3><em><%= @person.title_common %> <%= @person.full_name %></em></h3>
+    <h5>
+      <%= @person.party %> &nbsp;&bull;&nbsp;
+      <%= "#{number_to_ordinal(@person.district)} District, " if (@person.representative? && @person.district != '0')%>
+      <%= Person.state_for_abbrev(@person.state) %> &nbsp;&bull;&nbsp;
+      <%= number_to_ordinal(@person.consecutive_roles.size) %> Term &nbsp;&bull;&nbsp;
+      Sworn In <%= @person.consecutive_roles.last.startdate.strftime("%Y") %>
+    </h5>
+  </div>
+  
+	<div id="term">
+		<em>Current Term  </em><b><%= "#{@person.roles_sorted.first.startdate.year} - #{@person.roles_sorted.first.enddate.year}" %></b>
+		<%  if @person.roles_sorted.size > 1 %>
+		<%= toggler("rolehistory_list", "View All", "Hide")%>
+		<ul id="rolehistory_list" style="display:none;"> 
+			<% @person.roles_sorted[1..@person.roles_sorted.size].each do |role| %>
+			<li><b><%= "#{role.startdate.year} - #{role.enddate.year}" %></b></li>
+			<% end %>
+  	</ul>
+<% end %>
+  </div>  
+
+<% unless @person.person_stats.nil? %>
+      <ul id="sponsor_stats" class="clearfix">
+        <%= sponsored_bill_stats %>
+      </ul>
+
+  <% end %>
+<% unless (voting_similarities_html = top_voting_similarities).empty? %>
+    <!-- Should be popup <%# site_text_explain('voting_similarities')%> -->
+
+        <%= voting_similarities_html %>
+  <% end %> 
+
+</div>
+
+<div id="tabs"> 
+	<ul class="un">
+	<%= make_tabs(@tabs) %>
+	</ul>
+</div>

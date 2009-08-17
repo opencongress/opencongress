@@ -1,0 +1,13 @@
+<%= error_messages_for 'site_text' %>
+
+<!--[form:site_text]-->
+<p><label for="site_text_text_type">Text type</label><br/>
+<%= text_field 'site_text', 'text_type'  %></p>
+
+<p><label for="site_text_text">Text</label><br/>
+<%= text_area 'site_text', 'text'  %></p>
+
+<p><label for="site_text_updated_at">Updated at</label><br/>
+<%= datetime_select 'site_text', 'updated_at'  %></p>
+<!--[eoform:site_text]-->
+

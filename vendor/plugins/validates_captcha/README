@@ -1,0 +1,134 @@
+= CAPTCHA validation
+
+This plugin adds the ability to require CAPTCHA[http://en.wikipedia.org/wiki/Captcha]
+validation in your model. It depends on RMagick[http://rmagick.rubyforge.org/] to generate
+images.
+
+Right now there are two different challenges in this plugin. There's the familiar, but
+inaccessible image with embedded text, and then there's another type of challenge
+which involves asking the user a (simple) question to prove he is not a robot. The
+latter type is also passable by people with vision impairments, and as a bonus it is
+also more lightweight.
+
+
+= Usage
+
+How to use in your Rails application.
+
+
+== Install
+
+Put this plugin in your application's <tt>vendor/plugins</tt> directory. This can be done
+easily using the <tt>script/plugin</tt> script in your application:
+
+  script/plugin install http://svn.2750flesk.com/plugins/trunk/validates_captcha
+
+If your app is in Subversion you may want to include an -x to associate the plugin with
+its original repository so you can <tt>svn up</tt> it later. Also, <strong>note the changed
+address for the repository</strong> if you have previously used this plugin.
+
+
+== Prepare
+
+This plugin assumes it has write access to a directory where a PStore file with the generated
+CAPTCHA challenges is stored. This is by default <tt>var/data</tt>. You can create this directory
+by running <tt>script/generate captcha store_directory</tt> in your application's root folder.
+You should check that your web server's user has write access to this directory.
+
+If you plan to use the image challenges, these will also need to be stored in a server-writable
+directory. This is by default <tt>public/images/captcha</tt>. You can create this
+directory by running <tt>script/generate captcha image_directory</tt> in your application's
+root directory.
+
+Both of these locations can be changed. See FleskPlugins::CaptchaConfig for details.
+
+
+== Update Model
+
+This step is not necessary if you want to validate the challenge
+in your controller. Instructions on how to do that are further down
+on the page.
+
+  class MySuperModel < ActiveRecord::Base
+    validates_captcha
+  end
+
+
+== Update View
+
+In your view, put this inside the form for the model that requires CAPTCHA validation:
+
+  <% c = prepare_captcha :type => :image -%>
+  <%= captcha_hidden_field c, 'my_super_model' %>
+  <%= captcha_image_tag c %>
+  <%= captcha_label 'my_super_model', 'Type in the text from the image above' %>
+  <%= captcha_text_field 'my_super_model' %>
+
+To use the question challenge instead, do this:
+
+  <% c = prepare_captcha :type => :question -%>
+  <%= captcha_hidden_field c, 'my_super_model' %>
+  <%= captcha_question_as_label c, 'my_super_model' %>
+  <%= captcha_text_field 'my_super_model' %>
+
+See FleskPlugins::Captcha::Helpers for how to customise your view.
+
+== Update Controller
+
+If you want to validate the challenge in your controller, you can
+use the +captcha_valid?+ method:
+
+  def save
+  	supermodel = MySuperModel.find(params[:id])
+  	supermodel.attributes = params[:my_super_model]
+  	
+  	if captcha_valid?(params[:my_super_model][:captcha_id], params[:my_super_model][:captcha_validation])
+  		supermodel.save
+  	else
+  	  flash[:error] = "Are you sure you're human?"
+  	  redirect_or_something
+  	end
+  end
+
+If you want to let the model handle the validation, you need to assign the values from
+your form to your model. If you're using some form of mass-assignment, this will
+happen automatically:
+
+  def save
+    @supermodel = MySuperModel.find(params[:id])
+    @supermodel.attributes = params[:my_super_model]
+    @supermodel.save
+  end
+
+The virtual attributes, +captcha_id+ and +captcha_validation+, are accessible to mass-assignment.
+If you're assigning each attribute seperately, you will also have to assign these virtual attributes:
+
+  def save
+    @supermodel = MySuperModel.find(params[:id])
+    @supermodel.name = params[:my_super_model][:name]
+    @supermodel.description params[:my_super_model][:description]
+    @supermodel.captcha_id = params[:my_super_model][:captcha_id]
+    @supermodel.captcha_validation = params[:my_super_model][:captcha_validation]
+  end
+
+== Restart server
+
+For Rails to use the newly installed plugin, you have to restart the server, even in
+development mode. You only have to do this once.
+
+== Contact
+
+You can contact me at toredarell att gmail doot com
+
+== Contributors
+
+* Serge Sozonoff
+* Blake Watters
+* Manik Juneja
+* Joscha Diehl
+* Mark Lussier
+* Bradford Folkens
+
+== Licence
+
+See MIT-LICENCE (same as Rails; use however you want; if your computer explodes it's not my fault)

@@ -1,0 +1,21 @@
+<%= render :partial => 'roll_call_title' %>
+
+<% if @roll_call.bill %>
+  <p>
+    <a href="/bill/<%= @roll_call.bill.ident %>/show" class="arrow-left"><b>Back to Main Bill Page</b></a><br/>
+    <a href="/roll_call/show/<%= @roll_call.id %>" class="arrow-left"><b>Back to Roll Call Details</b></a>
+  </p>
+<% end %>
+
+<div id="roll_call_details">
+  
+  <%= render :partial => 'roll_call_details_header'%>
+  
+  <div class="cols-box clearfix">
+    <div class="col1">
+      <h3 class="darkline"><%= @party %>s Voting '<%= @vote %>'</h3>
+      <%= render :partial => 'person_votes', :locals => { :votes => @votes } %>
+      <p>** Because of incomplete data from newly elected Representatives, party breakdown visualizations may be inaccurate by one or two votes.</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<h1>Listing notebook_videos</h1>
+
+<table>
+  <tr>
+    <th>Political notebook</th>
+    <th>Title</th>
+    <th>Url</th>
+    <th>Embed</th>
+    <th>Description</th>
+  </tr>
+
+<% for notebook_video in @notebook_videos %>
+  <tr>
+    <td><%=h notebook_video.political_notebook_id %></td>
+    <td><%=h notebook_video.title %></td>
+    <td><%=h notebook_video.url %></td>
+    <td><%=h notebook_video.embed %></td>
+    <td><%=h notebook_video.description %></td>
+    <td><%= link_to 'Show', notebook_video %></td>
+    <td><%= link_to 'Edit', edit_notebook_video_path(notebook_video) %></td>
+    <td><%= link_to 'Destroy', notebook_video, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New notebook_video', new_notebook_video_path %>

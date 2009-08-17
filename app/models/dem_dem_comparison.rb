@@ -1,0 +1,3 @@
+class DemDemComparison < Comparison
+  
+end

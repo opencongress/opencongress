@@ -1,0 +1,40 @@
+<script>
+$j().ready(function() {
+	$j('#add-link').jqm({trigger: '#toggle-link-link'});
+	$j('#add-video').jqm({trigger: '#toggle-video-link'});
+	$j('#add-note').jqm({trigger: '#toggle-note-link'});
+	$j('#add-file').jqm({trigger: '#toggle-file-link'});	
+});
+</script>
+<ul id="notebook-add-links">
+	<li>Add a</li>
+	<li><a href="#" id="toggle-link-link"  class="toolbar-add-link"><img src="/images/mypn-link.png" alt="" />Link</a></li>
+	<li><a href="#" id="toggle-video-link" class="toolbar-add-link"><img src="/images/mypn-video.png" alt="" />Video</a></li>
+	<li><a href="#"  id="toggle-note-link"  class="toolbar-add-link"><img src="/images/mypn-note.png" alt="" />Note</a></li>
+	<li><a href="#"  id="toggle-file-link"  class="toolbar-add-link"><img src="/images/mypn-file.png" alt="" />File</a></li>
+  
+<!--		
+	<li><a href="javascript:void(0);" onclick="NotebookForm.toggleForm('link');return false;"  id="toggle-link-link"  class="toolbar-add-link">Link</a></li>
+	<li><a href="javascript:void(0);" onclick="NotebookForm.toggleForm('video');return false;" id="toggle-video-link" class="toolbar-add-link">Video</a></li>
+	<li><a href="javascript:void(0);" onclick="NotebookForm.toggleForm('note');return false;"  id="toggle-note-link"  class="toolbar-add-link">Note</a></li>
+	<li><a href="javascript:void(0);" onclick="NotebookForm.toggleForm('file');return false;"  id="toggle-file-link"  class="toolbar-add-link">File</a></li>		
+-->	
+</ul>
+<br style="clear:both" />
+
+
+<div id="add-link" class="notebook-form-div jqmWindow" style="display:none">
+	<%= render :partial => "notebook_links/inline_form" %>
+</div>
+
+<div id="add-video" class="notebook-form-div jqmWindow" style="display:none">
+	<%= render :partial => "notebook_videos/inline_form" %>
+</div>
+
+<div id="add-note" class="notebook-form-div jqmWindow" style="display:none">
+	<%= render :partial => "notebook_notes/inline_form" %>
+</div>
+
+<div id="add-file" class="notebook-form-div jqmWindow" style="display:none">
+	<%= render :partial => "notebook_files/inline_form" %>
+</div>

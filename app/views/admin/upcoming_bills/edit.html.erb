@@ -1,0 +1,9 @@
+<h1>Editing upcoming_bill</h1>
+
+<% form_tag :action => 'update', :id => @upcoming_bill do %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Edit' %>
+<% end %>
+
+<%= link_to 'Show', :action => 'show', :id => @upcoming_bill %> |
+<%= link_to 'Back', :action => 'list' %>

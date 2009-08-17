@@ -1,0 +1,35 @@
+<div class="blog-title">
+  <h3>
+    <strong class="gossip">
+      <% unless article.title.empty? %>
+        <%= article.title %> 
+      <% else %>
+       OpenCongress Blog
+      <% end %>
+    </strong>
+  </h3>
+  <span class="blog-date"><b><%= article.formatted_date %></b> - by <%= article.user.full_name %></span>
+</div>
+
+<div class="blog-body">
+  <%= article.content_rendered %>
+
+  <% if article.tags.size > 0 %>
+    <p class="article_tags">
+  	  Article Tags: 
+  	  <% article.tags.each do |tag| %>
+  		  <%= link_to tag.name, :action => 'list', :tag => CGI::escape(tag.name) %></li>
+  	  <% end rescue nil %>
+    </p>
+  <% end %>
+  
+  <div class="blog_buttons">
+    <%= link_to '<span>Permalink</span>', { :action => 'view', :id => article }, :class => 'med_button' %>
+  </div>
+  <div class="clear">&nbsp;</div>
+</div>
+
+
+
+
+

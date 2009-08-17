@@ -1,0 +1,32 @@
+@import url("profile.css");
+
+ul#notebook-add-links{
+	display:inline;
+	margin-left:20px;
+}
+
+ul#notebook-add-links li{
+	display:inline;
+	font-size:14px;
+	font-weight:bold;
+}
+
+ul#notebook-add-links li a{
+	margin-left:3px;
+}
+
+form.notebook-form{
+	
+}
+
+form.notebook-form label{
+	font-weight:bold;
+	font-size:15px;
+}
+
+form.notebook-form input[type="text"],textarea{
+	font-size:14px;
+	padding:3px;
+	display:block;
+	width:600px;
+}

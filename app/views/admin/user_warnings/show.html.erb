@@ -1,0 +1,23 @@
+<h1><%= @user.login %></h1>
+<table>
+  <tr>
+    <th>Date</th><th>Warning</th><th>Warned By</th>
+  <% @user.user_warnings.each do |u| %>
+    <tr>
+    <td style="border:1px solid #CCCCCC;margin:2px;"><%= u.created_at %></td>
+    <td style="border:1px solid #CCCCCC;margin:2px;">
+    <% if u.warning_message =~ /Comment Warning for Comment (.*)/ %>
+    <% comment = Comment.find_by_id($1) %>
+      <% if comment %>
+      Warning for Comment <%= link_to comment.id, comment.page_link %>
+      <% else %>
+       Deleted Comment <%= $1 %>
+      <% end %>
+    <% else %>
+      <%= u.warning_message %>
+    <% end %>
+    </td>
+    <td style="border:1px solid #CCCCCC;margin:2px;"><%= u.admin.login %></td>
+    </tr>
+  <% end %>
+</table>

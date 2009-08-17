@@ -1,0 +1,28 @@
+<div style="padding:20px;">
+  
+  <% if @districts.nil? %>
+     We could not associate that address with a district.  Please be more specific.
+  <% elsif @districts.length == 1 %>
+    Your address is in the <%= @districts[0].state + "-" + @districts[0].district.to_s %> district.
+    This district's volunteer Watchdog is [link to user's MyOC tab]. Visit their profile to view everything 
+    they're tracking in Congress, news about your district, and to give them your input. To see users near
+    you and get started as a watchdog yourself, <a href="/login">login</a> or <a href="/register">join</a> 
+    OpenCongress, it's free and easy.    
+  <% elsif @districts.length > 1 %>
+    We found multiple Watchdogs in your zip code. If you know your district, you can select it below, 
+    or you can find it by entering a more detailed address (including 5 digit zip + 4 digit extention). 
+    If you don't know your extension, you can look it up by your address on the 
+    <a href="http://zip4.usps.com/zip4/welcome.jsp" target="_blank">U.S. Postal Service site</a>.
+    <ul>
+      <% @districts.each do |d| %>
+        <li>Your address may be in the <%= d.state + "-" + d.district.to_s %> district.  This district's volunteer Watchdog is [link to user's MyOC tab].</li>
+      <% end %>
+    </ul>
+     Visit their profile to view everything 
+    they're tracking in Congress, news about your district, and to give them your input. To see users near
+    you and get started as a watchdog yourself, <a href="/login">login</a> or <a href="/register">join</a> 
+    OpenCongress, it's free and easy.    
+  <% else %>
+     We could not associate that address with a district.
+  <% end %>
+</div>

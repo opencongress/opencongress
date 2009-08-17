@@ -1,0 +1,16 @@
+<% sectors = industry_contributions %>
+<% if sectors.size > 0 %>
+  <% total_contrib = 0 %>
+  <% sectors.each { |s| total_contrib += s.total.to_i } %>
+  <table class="simple-table" width="50%">
+    <tr><th>Industry</th><th>Donation</th><th>% of total</th></tr>
+    <% sectors.each do |sector| %>
+      <tr>
+        <td><%= sector.name %></td>
+        <td><%= number_to_currency(sector.total, :precision => 0) %></td>
+        <td><%= "%.1f" % ((sector.total.to_f / total_contrib.to_f) * 100) %> % </td>
+      </tr>
+    <% end %>
+    <tr><td><b>Total:</b></td><td><b><%= number_to_currency(total_contrib, :precision => 0) %></b></td></tr>
+  </table>
+<% end %>

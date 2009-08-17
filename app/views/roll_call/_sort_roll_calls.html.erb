@@ -1,0 +1,57 @@
+<div id="heading">
+	<h2>Votes</h2>
+	<p>This is a list of all roll call votes to date in the current 111th U.S. Congress. (A roll call records a vote from every Member on the question at hand.)</p>
+	<a href="#" id="view_button"><span>Change View</span></a> 
+	<script type="text/javascript">
+	$j(document).ready(function(){
+
+		$j("#view_button").toggle(function(){
+			$j(this).addClass("swap");
+			$j("#views").fadeOut("fast", function() {
+				$j(this).fadeIn("fast").addClass("wide");
+			});
+		}, function () {
+			$j(this).removeClass("swap");
+			$j("#views").fadeOut("fast", function() {
+				$j(this).fadeIn("fast").removeClass("wide");
+			});
+		});
+
+	});              
+	</script>
+</div>
+<div id="views">
+	<div class="sidebar">
+		<div id="zipcode_lookup">
+		<%= render :partial => 'search_form' %>
+		</div>
+	<%= render :partial => 'shared/carousel' if @carousel %>	
+
+
+	
+	<script>
+	$j().ready(function() {
+		$j('#roll_call_examples').jqm();
+	});
+	</script>
+	<a href="#" class="jqModal view_examples"><span>View Examples</span></a>
+
+	<div id="roll_call_examples" class="jqmWindow" style="display:none;">
+	  <div style="width: 600px;">
+    <p class="behave">Search by bill number (for example, "H.R. 3200"), bill name ("America's Affordable Health Choices Act of 2009"), issue area ("health care"), or keyword ("Medicare"). Click the button to the right for "Hot Bills" to see only the most newsworthy votes in Congress.</p>
+
+    <p class="behave">Full voting records for every Member of Congress are best found off the <a href="/person/senators">Senators</a> and <a href="/person/representatives">Representatives</a> listings.</p>
+    </div>
+		<div class="ie"><a href="#" class="jqmClose">Close</a></div>
+	</div>
+
+	</div>
+	<div id="sort_nav">
+		<ul id="sort">
+			<h4>Sort By</h4>
+			<li id="newest" class="<%= sort == 'newest' ? 'active' : '' %>"><%= link_to "<span>Newest</span>", :sort => 'newest' %></li> 
+			<li id="oldest" class="<%= sort == 'oldest' ? 'active' : '' %>"><%= link_to "<span>Oldest</span>", :sort => 'oldest' %></li> 
+			<li id="hotbills" class="<%= sort == 'hotbils' ? 'active' : '' %>"><%= link_to "<span>Hot Bills</span>", :sort => 'hotbills' %></li> 
+		</ul>
+		<%= will_paginate @rolls %>
+	</div>

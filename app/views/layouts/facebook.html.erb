@@ -1,0 +1,117 @@
+<style>
+a {
+  cursor: pointer;
+}
+h3 {
+  font-size: 16px;
+  font-weight: bold;
+}
+dd {
+  padding: 5px;
+}
+
+.explain {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.explain-mid {
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.alert_box {
+  background:#FFEBE8 none repeat scroll 0%; 
+  border:1px solid #DD3C10; 
+  padding:3px; 
+  margin-bottom: 5px;
+}
+.message_box {
+  background:#D8DFEA none repeat scroll 0%; 
+  border:1px solid #3B5998; 
+  padding:3px; 
+  margin-bottom: 5px;
+}
+
+.errorExplanation {
+  background:#FFEBE8 none repeat scroll 0%; 
+  border:1px solid #DD3C10; 
+  padding:5px; 
+  margin: 5px;
+}
+.errorExplanation h2 {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+#billedit_editor {
+  margin-bottom: 15px;
+}
+.addbill_row {
+  position: relative;
+  float: left;
+  width: 600px; 
+  clear: right; 
+  margin: 5px;
+  padding: 5px;
+  background:#D8DFEA none repeat scroll 0%; 
+}
+
+.addbill_cell {
+  position: relative; 
+  float: left; 
+  margin-right: 3px;
+  height: 100%;
+}
+
+.removebill_row {
+  position: relative;
+  float: left;
+  width: 410px; 
+  clear: right; 
+  margin: 3px;
+  padding: 5px;
+  background:#FFF9D7 none repeat scroll 0%;
+}
+
+.removebill_cell {
+  position: relative; 
+  float: left; 
+  margin-right: 3px;
+  height: 100%;
+}
+
+
+.fakebutton {
+  width: auto; 
+  background:#3B5998 none repeat scroll 0%; 
+  padding: 3px;
+}
+.fakebutton a {
+  color: #fff;
+  font-weight: bold;
+}
+</style>
+
+<fb:header>OpenCongress</fb:header>
+
+<%= render :partial => 'facebook/flash' %>
+
+<div style="padding: 0 15px 10px 20px;">
+  <%= yield %>
+</div>
+
+<script type="javascript">
+  function do_submit(form, posturl, rewriteid) {
+      div_id = document.getElementById(rewriteid);
+      //form = document.getElementById(formname);
+      ajax = new Ajax();
+      ajax.responseType = Ajax.FBML;
+      ajax.requireLogin = true;
+      ajax.ondone = function(data) {
+          div_id.setInnerFBML(data);
+      }
+      formdata = form.serialize();
+      ajax.post(posturl, formdata);
+  }
+</script>

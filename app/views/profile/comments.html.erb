@@ -1,0 +1,11 @@
+
+<div id="linkcontent" style="clear:both;padding-top:10px;width:100%;">
+
+
+<h3>My Comments</h3>
+<p style="text-align:center;">Page : <%= paginating_links(@comments) %></p>
+<% @comments.each do |com| %>
+<%= render :partial => "comment", :locals => {:comment => com} %>
+<% end %>
+
+</div>

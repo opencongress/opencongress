@@ -1,0 +1,52 @@
+<div id="watchdog_main">
+
+  <div id="find">
+
+<p class="find">To find your district's Watchdog, enter your address (we don't store it):</p>
+
+  <% form_remote_tag :url => '/watchdogs/find', :update => "find" do -%>
+    <%= text_field_tag :address, nil, :size => 50 %> <%= submit_tag 'Find My Watchdog' %>
+  <% end -%>
+
+  </div>
+
+
+<p>You're your own best watchdog, but you're not alone. Here you can find 435 volunteer online Watchdogs, one in each congressional district, who are tracking how Congress affects your local area.</p>
+
+<p>To get started as a Watchdog yourself,<a href="/login">login</a> or <a href="/register">join</a> OpenCongress, it's free and easy.</p>
+
+<div class="watchdog_list">
+
+  <h3 style="text-align:center;">The WatchDogs</h3>
+  <ul>
+    <% @watchdogs.each do |wa| %>
+      <li><%= link_to wa.login_district, user_watchdog_path(wa.user.login) %></li>
+    <% end %>
+  </ul>
+</div>
+<h3 style="width:300px;">Recent Watchdog Activity</h3>
+
+				<ul id="notebook-items" class="notebook_items">
+					<% @items.each do |item| %>
+					<li>
+					  <% if item.class.to_s == "Comment" %>
+					    
+  					  <p class="heading">
+
+    					  <%= link_to item.user.login, user_watchdog_path(item.user.login) %>, the WatchDog for district 
+    					  (<%= link_to item.user.watch_dog.district.district_state_text, state_district_path(item.user.watch_dog.district.state.abbreviation, item.user.watch_dog.district.district_number) %>) 
+    					  posted this Comment on 
+    					    <%= link_to item.commentable_title, item.commentable_link %> <%= time_ago_in_words item.created_at %> ago:
+    					</p>
+  					  <p><%= simple_format(h(item.comment)) %></p>
+  					<% else %>
+  					  <p class="heading">
+  					  <%= link_to item.political_notebook.user.login, user_watchdog_path(item.political_notebook.user.login) %>, the WatchDog for district 
+  					  (<%= link_to item.political_notebook.user.watch_dog.district.district_state_text, state_district_path(item.political_notebook.user.watch_dog.district.state, item.political_notebook.user.watch_dog.district.district_number) %>) 
+  					  posted this <%= item.type_in_words %> <%= time_ago_in_words item.created_at %> ago:
+  					  </p> 
+  					  <%= render :partial => "#{item.class.to_s.tableize}/listitem", :object => item %></li>
+					  <% end %>
+					<% end %>		
+				</ul> 
+</div>

@@ -1,0 +1,66 @@
+<div id="heading">
+	<h2>Battle Royale</h2>
+	
+	<div class="explain_box">
+		<%= dbox_trigger('battle') %>
+
+	<p>A one-of-a-kind roundup of what's popular in Congress -- and what's not.</p>
+	
+	<p>This sortable list aggregates all the actions taken by users (votes, approval ratings, comments, tracking) on everything in Congress (bills, issues, and people).</p>
+</div>
+	
+</div>
+
+
+<div class="dboxed">
+<%= dbox_content("battle") %>
+</div>
+
+<div id="objects">
+
+<h3 class="battle <%= @p_title_class %>"><%= @p_title %><br /><em><%= @p_subtitle %></em></h3>
+
+<form id="search" action="" method="get">
+  <%= hidden_field_tag :timeframe, params[:timeframe] %>
+  <%= hidden_field_tag :page, 1 %>
+  <span><%= text_field_tag :q, h(params[:q]) %></span>
+  <%= submit_tag "Search" %>
+</form>  
+
+
+
+  <div id="sortby">
+  
+  <form id="timeframe_select" action="" method="get">
+  <label for="sort-by">Timeframe</label>
+  <select name="timeframe" onchange="submit();">
+  <%= options_for_select(@time_collection, params[:timeframe]) %>
+  </select>
+  </form>
+  
+  
+  
+    <form id="view" action="" method="get">
+    <label>View</label>
+    <select id="battle_type" onchange="changePage('battle_type'); return false;">
+    <option value="/battle_royale?timeframe=<%= params[:timeframe] %>" <% if im_here('battle_royale','') %>selected<% end %>>Bills</option>
+    <option value="/battle_royale/senators?timeframe=<%= params[:timeframe] %>" <% if im_here('battle_royale','senators') %>selected<% end %>>Senators</option>
+    <option value="/battle_royale/representatives?timeframe=<%= params[:timeframe] %>" <% if im_here('battle_royale','representatives') %>selected<% end %>>Representatives</option>
+    <option value="/battle_royale/issues?timeframe=<%= params[:timeframe] %>" <% if im_here('battle_royale','issues') %>selected<% end %>>Issues</option>
+    </select>
+    </form>
+    <%= link_to (image_tag "/images/xml-trans.png", :style => "vertical-align:top;margin-top:2px;"), params.merge(:format => "xml"), :target => "_blank" %>
+
+  </div>
+
+  
+</div>
+
+
+<% unless params[:order] && params[:order] == "asc" %>
+<% link_to "Show Ascending", :order => "asc" %>
+<% else %>
+<% link_to "Show Descending", :order => "desc" %>
+<% end %>
+
+

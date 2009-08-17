@@ -1,0 +1,46 @@
+<table class='simple-table'>
+  <tr>
+    <th>Top Referring Pages</th>
+    <th>Count</th>
+  </tr>
+
+  <% @top_referrers.each do |r| %>
+  <tr>
+    <td><a href="<%= r.referrer %>"><%= truncate(r.referrer, :length => 60) %></a></td>
+    <td><%= r.count %></td>
+  </tr>
+  <% end %>
+</table>
+
+
+
+<table class='simple-table'>
+  <tr>
+    <th>Most Referred Bills</th>
+    <th>Count</th>
+  </tr>
+
+  <% @referred_bills.each do |b| %>
+  <tr>
+    <td>
+      <%= link_to b.bill.title_full_common, { :controller => '/bill', :action => 'show', :id => b.bill.ident } %>
+    </td>
+    <td><%= b.count %></td>
+  </tr>
+  <% end %>
+</table>
+
+
+<table class='simple-table'>
+  <tr>
+    <th>Most Referred Members of Congress</th>
+    <th>Count</th>
+  </tr>
+  <% @referred_people.each do |p| %>
+  <tr>
+    <td><%= link_to p.person.name, { :controller => '/people', :action => 'show', :id => p.person } %></td>
+    <td><%= p.count %></td>
+  </tr>
+  <% end %>
+
+</table>

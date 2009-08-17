@@ -1,0 +1,27 @@
+<div>
+  <% if @message %>
+    <div style="color: red;">
+      <%= @message %>
+    </div>
+
+    <h3>Invite More Friends</h3>
+  <% else %>
+    <h3>Invite a Friend</h3>
+  <% end %>
+<% form_remote_tag(:url => "/users/#{@user.login}/profile/friends/invite", 
+                              :before => "Element.show('emailindicator')",
+                              :update => "invite_form"
+                   ) do -%>
+
+	<p>
+	  <label>Friend's Email Addresses (separate with a comma):</label><br />
+	  <textarea name="email" rows="2" cols="30"></textarea>
+	</p>
+	<p><label>Message Text:</label><br/>
+	<textarea name="message" rows="14" cols="50">Hi, I wanted to encourage you to join OpenCongress so that we can share information about bills and issues in Congress.</textarea>
+</p>
+<p><label>&nbsp;</label>
+<%= submit_tag "Invite Friend" %>
+<img alt="Indicator" class="noborder" id="emailindicator" src="/images/spinner.gif" style="display: none; vertical-align: middle; height: 20px;" /></p>
+<% end %>
+</div>

@@ -1,0 +1,21 @@
+<% action = controller.params['action'] -%>
+
+<% if action.match(/representative/) || (!assigns['person'].nil? && assigns['person'].representative? )%>
+
+The House of Representatives has 435 members, each of which holds a two-year term. The number of Representatives from each state is based on the size of that state's population.
+
+The intention of the U.S. Constitution in establishing a bicameral Congress was that each chamber would serve as a check on the other. The larger and more frequently elected House of Representatives would more directly reflect changing public opinion, while the smaller Senate, whose members serve longer terms, would serve as a more level-headed and deliberative body. At the same time, the House's rules and procedures for introducing and debating bills are much more strict than those of the Senate. Although it is often thought of as the lower chamber of Congress, the House has some powers that the Senate doesn't. For example, all appropriations bills must originate in the House. In addition, the House can impeach officials, and has the power to elect the President in the case of a tie in the electoral college.
+
+
+<% elsif action.match(/senator/) || (!assigns['person'].nil? && assigns['person'].representative? )%>
+
+The Senate is the smaller chamber of Congress and is frequently considered to be the more deliberative chamber. Each of the 50 states has two Senators who serve staggered six-year terms, for a total Senate membership of 100.
+
+The intention of the U.S. Constitution in establishing a bicameral Congress was that each chamber would serve as a check on the other. The larger and more frequently elected House of Representatives would more directly reflect changing public opinion, while the smaller Senate, whose members serve longer terms, would serve as a more level-headed and deliberative body. As a result, the Senate is considered the more collegial chamber of Congress, a tradition-bound institution that frequently defers to seniority and whose rules allow for lengthy debate. The Senate has considerable power over the President because the President needs the Senate's approval to make appointments for some high-level positions and to ratify treaties. In the event of a tie in the 100-person Senate, the Vice President, acting as President of the Senate, has the power to cast the deciding vote.
+
+<% else -%>
+The Senate is the smaller chamber of Congress and is frequently considered to be the more deliberative chamber. Each of the 50 states has two Senators who serve staggered six-year terms, for a total Senate membership of 100.
+
+The House of Representatives is more than 4 times as large as the Senate. The amount of Representatives from each state has is based on the size of its population. Representatives hold two-year terms. The original idea was for the House to be a "house of the people," and it is actually more sensitive to public opinion than the Senate. Although it is often thought of as the lower chamber of Congress, the House does have some powers that the Senate doesn't. The House can impeach officials, and has the power to elect the President in the case of a tie in the electoral college.
+
+<% end -%>

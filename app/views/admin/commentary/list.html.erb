@@ -1,0 +1,27 @@
+<h1>Listing commentaries</h1>
+
+<table>
+  <tr>
+  <% for column in Commentary.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for commentary in @commentaries %>
+  <tr>
+  <% for column in Commentary.content_columns %>
+    <td><%=h commentary.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => commentary %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => commentary %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => commentary }, :confirm => 'Are you sure?', :method => "post" %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @commentary_pages.current.previous } if @commentary_pages.current.previous %>
+<%= link_to 'Next page', { :page => @commentary_pages.current.next } if @commentary_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New commentary', :action => 'new' %>

@@ -1,0 +1,163 @@
+body {
+  color:#333;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size:12px;
+  line-height:18px;
+}
+a {
+  color: inherit;
+}
+a:visited {
+  color: #777;
+}
+a:hover {
+  color:#181818;
+  text-decoration: underline;
+}
+*.un a:hover, a.un:hover {
+  text-decoration:none;
+}
+b.light {
+	color:#909090;
+}
+h1, h2, h3, h4, h5 {
+  font-weight:bold;
+}
+h1 {
+  color:#000;
+  font-size:18px;
+  margin-bottom:14px;
+}               
+h2 {
+  color:#333;
+  font-size:17px;
+  margin-bottom:13px;
+}                
+h3 {
+  font-size:15px;
+  margin-bottom:11.5px;
+}                
+h4 {
+  font-size:13px;      
+  margin-bottom:10px;
+}
+h5 {
+  font-size:12px;
+  margin-bottom:9px;
+}            
+h5.gray {
+  color:#666;
+}
+h5.short {
+	margin-bottom:0;
+}
+#header,
+#footer,
+#subfoot,
+#topic,
+#vote,
+#user_content .uc-box h3,
+.uc-box font  {
+  font-family:Arial, sans-serif;
+}
+#header .center {
+  color:#494949;
+  font-size:12px;
+  font-weight:bold;
+}
+#nav ul li a {
+  color:#3a3a3a;
+  font-weight:bold;
+  font-size:12px;
+    text-decoration: none;
+
+}
+#nav ul li.sub a {
+  font-size:11px;
+}
+#topic p {
+  color:#454545;
+}    
+
+/*
+          
+#topic .more {
+  text-transform:uppercase;
+  font-size:8px;
+  color:#707070;
+}
+
+*/
+
+#tabs {
+  font-size:11px;
+  color:#6d6d6d;
+}
+#user_content h2, #user_content h3 {
+  text-align:center;
+}
+
+#user_content .uc-box h3 {
+  text-align:left;
+  float:left;
+  margin-right:5px;
+  margin-bottom:0px;
+}          
+#user_content .jqmWindow h3 {
+  text-align:left;
+} 
+.c_item {/*
+ 	line-height:16px;
+	color:#666;
+*/}
+
+.uc-box {
+  font-size:10px;
+  line-height:14px;
+}
+font {
+  color:#8d8d84;
+}
+.Aye {
+  color:#44a155;
+}              
+.Nay {
+  color:#c04c4c;
+}
+
+#user_content .uc-box h3,
+#user_content .uc-box h4 {
+  line-height:15px;
+}
+#user_content .uc-box h4 {
+  margin-bottom:0px;
+}                                 
+#user_content h2 {
+  font-size:13px;
+  color:#252525;
+  padding-top:24px;
+}
+.button-gray a  {
+  color:#4f4f4f;
+} 
+a.toggle {
+  font-family:Arial, sans-serif;
+  font-size:11px;
+  color:#a7a7a7;
+}
+a.feed {
+	font-size:10px;
+	color:#adadad;
+}
+#footer {
+  color:#000;
+}
+.footlist {
+  font-size:11px;
+}       
+#subfoot {
+  color:#acacac;
+  letter-spacing:0.4px;
+  font-size:10px;
+  font-weight:bold;
+}

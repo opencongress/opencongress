@@ -1,0 +1,33 @@
+<% @page_title = 'OpenCongress Blog Posts' %>
+
+<%= link_to 'New Article', { :action => 'new' }, :class => 'bigger' %>
+
+<table width="100%" cellpadding="5px">
+  <tr>
+	<th>Title</th>
+	<th>Article</th>
+	<th>Date</th>
+	<th>Published</th>
+	<th>Frontpage</th>
+	<th>Author</th>
+  </tr>
+  
+<% for article in @articles %>
+  <tr>
+    <td><%= link_to (article.title || 'blank'), :action => 'edit', :id => article %></td>
+  	<td><%= truncate article.html_stripped %></td>
+  	<td><%= article.created_at.to_formatted_s(:short) %></td>
+  	<td><%= article.published_flag %></td>
+  	<td><%= article.frontpage %></td>
+  	<td><%= article.user.login rescue nil %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => article %> | 
+      <%= link_to 'Delete', { :action => 'destroy', :id => article }, :confirm => 'Are you sure?', :method => "post" %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= will_paginate @articles %>
+
+<br /><br />
+
+<%= link_to 'New Article', { :action => 'new' }, :class => 'bigger' %>

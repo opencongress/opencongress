@@ -1,0 +1,10 @@
+<div id="related_bills_list">
+
+<table>
+<tr><th>Bill</th><th>Status</th><th>Last Action</th></tr>
+<% related_bills_list.each do |bill| -%>
+<tr><td><%= link_to bill.title_typenumber_only, :controller => 'bill', :action => "show", :id => bill %> <%= bill.title_common %></td><td><%=bill.status %></td><td><%= bill.last_action.formatted_date %></td></tr>
+<% end -%>
+</table>
+
+</div>

@@ -1,0 +1,50 @@
+<% @page_title = "Open Congress Admin" %>
+<div class="padding">
+  <ul>
+  <% if current_user.user_role.can_blog %>
+    <br/>
+    <h3> Blog </h3>
+    <li><%= link_to 'Manage Upcoming Bills', :controller => 'upcoming_bills', :action => :list  %> </li> 
+    <li><%= link_to 'Blog', :controller => 'articles', :action => :list  %> </li> 
+    <li><%= link_to 'Edit Blogroll', :controller => 'articles', :action => 'edit_blogroll'  %> </li> 
+    <li><%= link_to 'Thunderdome', :controller => 'thunderdome', :action => 'index' %></li>
+  <% end %>
+  <% if current_user.user_role.can_edit_blog_tags %>
+    <li><%= link_to 'Blog Tags', :controller => 'tags', :action => :list  %></li>  
+  <% end %>
+  <% if current_user.user_role.can_administer_users %>
+    <br/>
+    <h3> Users </h3>
+    <li><%= link_to 'Users', :controller => 'users', :action => :list  %></li>
+    <li><%= link_to 'User Roles', :controller => 'user.user_role.', :action => :list %></li>
+  <% end %>
+  <% if current_user.user_role.can_manage_text %>
+    <br/>
+    <h3> Site Text </h3>
+    <li><%= link_to 'Add a new bill', :controller => 'bill_summaries', :action => 'new_bill' %></li>
+    <li><%= link_to 'Edit Bill Plain Language Summaries', :controller => 'bill_summaries' %></li>
+    <li><%= link_to 'Manage Site Text', :controller => 'site_text', :action => :list  %></li>  
+    <li><%= link_to 'Manage Sidebars', :controller => 'sidebars', :action => :list  %></li>  
+    <li><%= link_to 'Manage Frontpage Featured People', :controller => 'featured_people'  %></li>  
+    <li><%= link_to 'Manage Gossip', '/gossip/admin'  %></li>  
+  <% end %>
+  <% if current_user.user_role.can_moderate_articles %>
+    <br/>
+    <h3> Comments </h3>
+    <li><%= link_to 'Bulk Comments Search / Deletion', :controller => "/admin/comments", :action => "comments_search" %></li>
+    <li><%= link_to 'Approve/Reject Questionable Blog/News Articles', :controller => 'commentary', :action => 'pending'  %></li>
+    <li><%= link_to 'Approve/Reject User Comments', :controller => '/admin/comments', :action => 'index'  %></li>
+    <li><%= link_to 'Moderate Flagged Comments', :controller => '/admin/comments', :action => 'index', :flagged_only => true %></li>
+    <li><%= link_to 'Clear Cache', :controller => '/admin/commentary', :action => 'clear_cache' %></li>
+  <% end %>
+  <% if current_user.user_role.can_see_stats %>
+    <br />
+    <h3>Stats</h3>
+    <li><%= link_to 'Most Common Search Terms', '/admin/stats/searches'  %></li>  
+    <li><%= link_to 'Referrer Stats', '/admin/stats/referrers'  %></li>
+    <li><%= link_to 'Syndication Panel Pages', '/admin/stats/panel'  %></li>
+    <li><%= link_to 'User Login Stats', '/admin/stats/userstats' %></li> 
+    <li><%= link_to 'Data Stats', '/admin/stats/data' %></li> 
+  <% end %>
+  </ul>
+</div>

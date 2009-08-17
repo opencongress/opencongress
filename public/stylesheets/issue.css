@@ -1,0 +1,123 @@
+@import url('people.css');
+
+#issue_list{
+background: url(img/zip_arrow.png) 0 -74px no-repeat;
+   _background: url(img/zip_arrow.gif) 0 -74px no-repeat;
+height: 550px;
+float: right;
+width: 618px;
+}
+
+.contain_list .listed li{
+display: block;
+}
+
+
+.contain_list .listed li a{
+border-bottom: 1px solid #eee;
+padding: 0 0 0 20px;
+margin: 0;
+display: block;
+float: left;
+line-height: 2.5em;
+width: 540px;
+}
+
+
+#issue_list.listed a{
+padding: 7px 33px;
+}
+
+.sidebar{
+background: url(img/map_right.png) right 20px no-repeat;
+   _background: url(img/map_right.gif) right 20px no-repeat;
+}
+
+.bills_list{
+clear: both;
+padding-top: 30px;
+}
+
+
+.contain_list .listed li a:hover{
+background: #fdfdfd;
+}
+
+#issue.show .inner{
+float: left;
+width: 1002px;
+background: url(img/issue_bg.png) right 0px repeat-y;
+   _background: url(img/issue_bg.gif) right 0px repeat-y;
+}
+
+#issue.alphabetical .inner, #issue.by_most_viewed .inner, #issue.by_bill_count .inner {
+padding: 0px;
+}
+
+#content-main{
+width: 744px;
+float: left;
+overflow: hidden;
+}
+
+#tertiary-content{
+width: 257px;
+padding-top: 30px;
+float: right;
+}
+
+
+.issue_widget_link{
+background: url(img/map_buttons.png) 0 -103px no-repeat;
+   _background: url(img/map_buttons.gif) 0 -103px no-repeat;
+display: block;
+padding-top: 52px;
+overflow: hidden;
+height: 0px;
+margin: 15px 20px 13px;
+}
+
+.issue_widget_link:hover{
+background: url(img/map_buttons.png) 0 -155px no-repeat;
+   _background: url(img/map_buttons.gif) 0 -155px no-repeat;
+}
+
+#heading{
+height: 45px;
+border-bottom: 1px solid #cfebed;
+background: url(img/issues_heading.png);
+   _background: url(img/issues_heading.gif);
+}
+
+#zipcode_lookup #q{
+border: none;
+float: left;
+width: 111px;
+margin-right: 16px;
+height: 21px;
+padding: 7px 0 0 0px;
+text-align: center;
+background: none;
+background: url(img/forms.png) 0 0px no-repeat;
+   _background: url(img/forms.gif) 0 0px no-repeat;
+}
+
+#zip_sort{
+height: 83px;
+}
+
+#sort_nav{
+height: 83px;
+width: 617px;
+float: left;
+
+/*
+background: url(img/sorting_bg.png) no-repeat;
+   _background: url(img/sorting_bg.gif) no-repeat;
+*/
+background: url(img/zip_arrow.png) 0 11px no-repeat;
+   _background: url(img/zip_arrow.gif) 0 11px no-repeat;
+}
+
+
+

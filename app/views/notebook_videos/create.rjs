@@ -1,0 +1,10 @@
+if @success 
+  page.insert_html(:top, "notebook-items", :partial => "#{@item.class.to_s.tableize}/listitem", :object => @item)
+  if @from_bookmarklet
+    page << "new Effect.BlindUp('add-link-bookmarklet');"
+  else
+    page << "NotebookForm.hideAllForms();"
+  end
+else
+  page.alert("All fields marked with an * are required.")
+end

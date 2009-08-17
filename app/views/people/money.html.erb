@@ -1,0 +1,10 @@
+<div id="money_trail">
+  <p>This is a list of the top 25 interest groups giving campaign contributions to this Member of Congress in 2008, the most recent year for which we have a full data set.</p>
+  
+  <table>
+    <tr><th>Interest Group</th><th>Amount Received</th></tr>
+    <% @igs.each do |ig| %>
+      <tr><td><%= ig.name %></td><td>$<%= number_with_delimiter(ig.contrib_total) %></td></tr>
+    <% end %>
+  </table>
+</div>

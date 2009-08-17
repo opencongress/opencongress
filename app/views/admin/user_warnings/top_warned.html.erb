@@ -1,0 +1,10 @@
+<table>
+  <tr><th>User</th><th>Number of Warnings</th></tr>
+
+  <% @top_warned.each do |u| %>
+  <tr>
+  <td style="border:1px solid #CCCCCC;margin:2px;"><%= User.find_by_id(u[0]).login %></td>
+  <td style="border:1px solid #CCCCCC;margin:2px;"><%= link_to u[1], :action => "show", :id => u[0] %></td>
+  </tr>
+  <% end %>
+</table>

@@ -1,0 +1,41 @@
+<br style="line-height:6px;" />
+<div class='explain_box bill' style="margin-top:0;">
+	<b>OpenCongress Summary:</b><br />
+	<%= @upcoming_bill.summary %>
+</div>
+
+<br />
+<h2>In the News</h2>
+<br />
+<div id="news_list">
+<a name="news"></a>
+
+<%=
+    render :partial => 'shared/news', :object => @upcoming_bill.news,
+      :locals => { :limit => nil, :all_size => @upcoming_bill.news.size, :default_title => @upcoming_bill.title,
+                   :more_url => { :controller => 'bill', :action => 'news', :id => @upcoming_bill.id } }
+  %>
+  
+
+</div>
+<h2>Blog Coverage</h2>      
+<br />
+<div id="box04" class="blogs_list">
+  <a name="blogs"></a>
+
+  <%=
+    render :partial => 'shared/blogs', :object => @upcoming_bill.blogs,
+      :locals => { :limit => nil, :all_size => @upcoming_bill.blogs.size, :default_title => @upcoming_bill.title,
+                  :more_url => { :controller => 'bill', :action => 'blogs', :id => @upcoming_bill } }
+  %>
+
+
+
+  
+</div>
+
+<!--
+  <div id="cwrap">
+
+</div>
+-->

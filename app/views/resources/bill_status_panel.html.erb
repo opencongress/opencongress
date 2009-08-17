@@ -1,0 +1,86 @@
+<html>
+  <head>
+    <style>
+      html { font-size:100.01%; /* fixes some browser bugs */ }
+      
+      body {
+      	font:1em "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;
+      	background: #<%= @bgcolor %>;
+      	color: #<%= @textcolor %>;
+      }
+    
+      #bill_status {
+        font-size: 12px;
+      }
+#bill_status ul {
+	margin-bottom:10px;
+}
+#title, #links, #powered {
+	text-align:center;
+	line-height:1.1em;
+}
+#title h1 {
+	font-size:14px;
+	font-weight:bold;
+	margin:5px 5px 0 5px;
+}
+#title p {
+	margin-top:4px;
+}
+#links {
+	margin-bottom:5px;
+}
+#powered {
+	font-size:10px;
+	margin-bottom:3px;
+}
+	a {
+        color: #<%= @textcolor %>;
+      }
+      a:hover {
+        text-decoration: none;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+    
+      li {
+        margin: 0 5px 2px 5px;
+        line-height: 14px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <% if @bill %>
+      <div id="bill_status">
+        <div class="syndicator_items">		
+			<div id="title">
+            	<h1><%= @bill.title_typenumber_only %> <a href="/bill/<%= @bill.ident %>/atom" target="_top"><img src="/images/feed-icon-10x10.png" border=0></a></h1>
+
+				<p><%= @bill.title_common %></p>
+			</div>
+	        	<ul>
+	            <li><strong>Introduced:</strong> <%= Time.at(@bill.introduced).strftime("%B %d, %Y") %></li>
+	            <li><strong>Status:</strong> <%= @bill.status %></li>
+	            <% if @bill.next_step %><li><strong>Next step:</strong> <%= @bill.next_step %></li><% end %>
+	            <li><strong>Latest action:</strong> <%= @bill.last_action.text %></li>
+	            <li><strong>Sponsor:</strong> <%= @bill.sponsor.name %></li>
+	      		</ul>
+			<div id="links">
+            	<a href="/bill/<%= @bill.ident%>/show" target="_top">View Bill >></a><br />
+	            <a href="/bill/<%= @bill.ident%>/news" target="_top">News Coverage</a> | 
+	            <a href="/bill/<%= @bill.ident%>/blogs" target="_top">Blog Coverage</a>
+			</div>
+			<div id="powered">
+	            	<span>Powered by <a href="/" target="_top">OpenCongress</a></span>
+			</div>
+      	</div>
+	</div>
+    <% else %>
+      There is an error.
+    <% end %>
+  </body>
+</html>

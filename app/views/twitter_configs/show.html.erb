@@ -1,0 +1,43 @@
+<p>
+  <b>User:</b>
+  <%=h @twitter_config.user_id %>
+</p>
+
+<p>
+  <b>Secret:</b>
+  <%=h @twitter_config.secret %>
+</p>
+
+<p>
+  <b>Token:</b>
+  <%=h @twitter_config.token %>
+</p>
+
+<p>
+  <b>Tracking:</b>
+  <%=h @twitter_config.tracking %>
+</p>
+
+<p>
+  <b>Bill votes:</b>
+  <%=h @twitter_config.bill_votes %>
+</p>
+
+<p>
+  <b>Person approvals:</b>
+  <%=h @twitter_config.person_approvals %>
+</p>
+
+<p>
+  <b>New notebook items:</b>
+  <%=h @twitter_config.new_notebook_items %>
+</p>
+
+<p>
+  <b>Logins:</b>
+  <%=h @twitter_config.logins %>
+</p>
+
+
+<%= link_to 'Edit', edit_twitter_config_path(current_user.login,@twitter_config) %> |
+<%= link_to 'Back', twitter_configs_path %>

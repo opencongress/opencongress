@@ -1,0 +1,177 @@
+
+#heading{
+min-height: 45px;
+}
+
+#yield{
+padding: 10px;
+}
+
+#wrapper{
+}
+
+h3{
+margin: 0 !important;
+padding: 20px;
+}w
+
+dl{
+
+}
+
+
+dt{
+font-weight: bold;
+padding-left: 20px;
+margin-bottom: 10px;
+}
+
+#find{
+margin: 0;
+clear: both;
+padding: 27px 0px 23px 35px;
+background: url(img/find_rep.png) 0px 0px no-repeat;
+float: left;
+width: 909px;
+font-size: 16px;
+}
+
+
+#find strong{
+font-weight: bold;
+}
+
+#find .med_button{
+float: right;
+margin: -8px 17px 0 0;
+}
+
+
+#find .med_button span{
+
+padding-top: 6px;
+padding-bottom: 7px;
+}
+
+
+
+dd{
+font-size: 11px;
+padding: 10px;
+background: #eee;
+border: 1px solid #ddd;
+margin: 5px 20px 20px 20px;
+}
+
+dd a{
+display: block;
+padding: 10px;
+font-size: 12px;
+background: #ddd;
+border-top: 1px solid #ccc;
+margin: 10px -10px -10px -10px;
+}
+
+dd a:hover{
+background: #fff;
+color: #333;
+}
+
+
+.people_section p, .bills_section p, .br_section p{
+padding: 0 20px;
+margin-top: 0;
+}
+
+.people_section{
+background: #fefefe;
+border: 1px solid #dedede;
+margin: 35px;
+}
+
+.bills_section, .semantic_wiki, .rollcall_section, .issues_section, .br_section, .dev_resources{
+border: 1px solid #dedede;
+margin: 0 35px 35px;
+background: #fefefe;
+}
+
+
+
+.br_section table{
+border: 1px solid #ccc;
+width: 600px;
+margin-left: 20px;
+}
+
+.br_section table table{
+width: 100%;
+border: none;
+margin-left: 0px;
+}
+
+
+.br_section table td {
+padding: 5px;
+}
+
+
+.br_section table td span{
+padding: 5px 10px 5px 5px;
+display: block;
+}
+
+
+.br_section table th{
+border-bottom: 1px solid #aaa;
+padding: 10px;
+text-align: left;
+}
+
+
+
+.br_section table table th{
+border-bottom: 1px solid #aaa;
+padding: 5px;
+text-align: left;
+}
+
+.br_section table th.border-right{
+border-right: 1px solid #aaa;
+}
+
+
+.br_section p{
+margin: 0px 0 10px;
+}
+
+
+
+.odd{
+background: #efefef;	
+}
+
+.key{
+padding: 25px;
+background: #ffe6e6;
+}
+
+
+.key p{
+clear: both;
+padding: 10px 20px 10px;
+
+
+}
+
+
+.star{
+margin-left: 30px;
+}
+
+
+
+
+
+
+
+

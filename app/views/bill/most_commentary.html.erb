@@ -1,0 +1,6 @@
+<% @content_for_sortby = render :partial => 'sort_bills' %>
+<% cache("bill_meta_most_#{@commentary_type}_#{@days}") do %>
+  <!-- cached: <%= "#bill_meta_most_#{@commentary_type}_#{@days}" %> // <%= Time.now %> -->
+  <%= render(:partial => "bill/related_bills_list", 
+             :locals => { :related_bills_list => @bills, :commentary_type => @commentary_type } ) %>
+<% end %>

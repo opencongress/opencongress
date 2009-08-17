@@ -1,0 +1,25 @@
+<h1>Featured People</h1>
+
+<table>
+  <tr>
+    <th>Person</th>
+    <th>Text</th>
+  </tr>
+  
+<% for featured_person in @featured_people %>
+  <tr>
+    <td><%= featured_person.person.name %></td>
+    <td><%= truncate(featured_person.text, :length => 70) %></td>
+
+    <td><%= link_to 'Show', :action => 'show', :id => featured_person %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => featured_person %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => featured_person }, :confirm => 'Are you sure?', :method => "post" %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= will_paginate(@featured_people)%>
+
+<br />
+
+<%= link_to 'New featured_person', :action => 'new' %>

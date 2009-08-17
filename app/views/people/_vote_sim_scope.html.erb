@@ -1,0 +1,16 @@
+<% if ( person1.party == "Republican" && person2.party == "Democrat") || ( person2.party == "Republican" && person1.party == "Democrat") %>
+
+<img src="<%= RepDemComparison.latest(person1.title == "Sen." ? "senate" : "house").graph_link(vote_together) %>" style="float:right;margin:5px;" />
+<p>The graph to the right shows the voting similarties of <%= person1.title == 'Sen.' ? "senators" : "representatives" %> in different parties.  The line indicates where <%= person1.full_name %> and <%= person2.full_name %> fall with their calculated voting similarity of <%= vote_together %>%.  Democrat and Republican <%= person1.title == 'Sen.' ? "senators" : "representatives" %> average <%= RepDemComparison.latest(person1.title == "Sen." ? "senate" : "house").average_value %>% voting similarity.</p>
+  
+<% elsif (person1.party == "Democrat" && person2.party == "Democrat" ) %>
+
+<img src="<%= DemDemComparison.latest(person1.title == "Sen." ? "senate" : "house").graph_link(vote_together) %>" style="float:right;margin:5px;" />
+<p>The graph to the right shows the voting similarties of <%= person1.title == 'Sen.' ? "senators" : "representatives" %> in the democratic party.  The line indicates where <%= person1.full_name %> and <%= person2.full_name %> fall with their calculated voting similarity of <%= vote_together %>%.  Democrat <%= person1.title == 'Sen.' ? "senators" : "representatives" %>  average <%= DemDemComparison.latest(person1.title == "Sen." ? "senate" : "house").average_value %>% voting similarity.</p>
+
+<% elsif (person1.party == "Republican" && person2.party == "Republican") %>
+
+<img src="<%= RepRepComparison.latest(person1.title == "Sen." ? "senate" : "house").graph_link(vote_together) %>" style="float:right;margin:5px;" />
+<p>The graph to the right shows the voting similarties of <%= person1.title == 'Sen.' ? "senators" : "representatives" %> in the republican party.  The line indicates where <%= person1.full_name %> and <%= person2.full_name %> fall with their calculated voting similarity of <%= vote_together %>%.  Republican <%= person1.title == 'Sen.' ? "senators" : "representatives" %> average <%= RepRepComparison.latest(person1.title == "Sen." ? "senate" : "house").average_value %>% voting similarity.</p>
+
+<% end %>

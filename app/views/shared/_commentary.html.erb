@@ -1,0 +1,105 @@
+<div class="c_item">
+
+<span class="date"><%= commentary.date.to_time.strftime("%m/%d/%y") %></span>
+
+<h5 class="short">
+  <% if commentary.title.blank? %>
+    <a href="<%= commentary.url %>" target="_blank">RE: <%= short ? truncate(default_title, :length => 37) : default_title %></a>
+  <% else %>
+    <a href="<%= commentary.url %>" target="_blank"><%= short ? truncate(commentary.title_d, :length => 37) : commentary.title_d %></a>
+  <% end %>  
+</h5>
+
+<p><%= short ? truncate(strip_unclosed_tag(strip_tags(commentary.excerpt_d)), :length => 140) : strip_unclosed_tag(strip_tags(commentary.excerpt_d)) %></p>
+
+<div class="source"><em>Source:
+	<% if commentary.source_url %>
+    <% if commentary.source %>
+			<a href="<%= commentary.source_url %>" target="_blank"><%= strip_tags(commentary.source) %></a>
+    <% else %>
+			<a href="<%= commentary.source_url %>" target="_blank"><%= commentary.source_url %></a>      		
+		<% end %>
+  <% else %>
+    <% if commentary.source %>
+			<%= commentary.source %>
+    <% end %>
+  <% end %>
+</em></div> 
+
+<table class="combox" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="left"></td>
+		<td class="mypnz_img">
+			<img src="/img/mypn-small.png" alt="Add to My Political Notebook"/> 			
+		</td>
+		<td class="mypnz_txt">
+		<% if logged_in? %>
+						<% if PoliticalNotebook.find_or_create_from_user(current_user).already_contains? commentary %>
+							<span>Saved</span>
+						<% else %>
+						<script>
+						$j().ready(function() {
+						  $j('#faceform_<%= commentary.id.to_s %>').jqm({ajax: '/users/<%= current_user.login %>/profile/political_notebook/notebook_links/faceform?id=<%= commentary.id %>&type=<%= commentary.class %>', trigger: 'a.trigger_<%= commentary.id.to_s %>'});
+						});
+						</script>     
+						<span id="addmypn_<%= object.class %>_<%= object.id %>"><a href="#" class="trigger_<%= commentary.id.to_s %>" >Save</a></span>
+						<div class="jqmWindow" id="faceform_<%= commentary.id.to_s %>">
+						 <img src="/images/indicator.gif" class="noborder" /> 
+						</div>
+						<% end %>
+		 <% else %>
+			<span><%= link_to("Save to Notebook", :controller => "account", :action => "login") %></span>
+					<% end %>            
+		 </td>
+	<td class="center"></td>
+	<td class="ratez">
+		<span id="comm_rate_<%= commentary.id.to_s%>">
+		  <% if logged_in? %>
+			Rate
+			<% else %>
+		 <%= link_to("Rate", :controller => "account", :action => "login") %>
+		<% end %>
+	      <span id="comm_rate_ind_<%= commentary.id.to_s%>" style="display: none;">
+	        <img src="/images/indicator.gif" class="noborder" />
+	      </span>
+	    </span>
+	</td>
+	<td class="ratez_form">
+		<form id="rating_<%= commentary.id.to_s %>">  
+			<script type="text/javascript" language="javascript">
+			$j(function(){ 
+			 $j('.rate_<%= commentary.id.to_s %>').rating({
+				callback: function(value, link){
+					new Ajax.Updater('comm_rate_<%= commentary.id.to_s%>','/commentary/rate/<%= commentary.id %>?value=' + value, {asynchronous:true, evalScripts:true}); return false;
+					}
+			}); 
+			});
+			</script>
+			<% (1..10).each do |v| %>
+		<input class="rate_<%= commentary.id.to_s %> {split:2}" type="radio" name="rate_<%= commentary.id.to_s %>" value="<%= v %>" <%= "disabled='disabled'" unless logged_in? %><%= commentary.score == v ? "checked='checked'" : "" %> />
+	  <% end %>
+			</form>           
+		 </td>
+		<td class="right"></td>
+	</tr>
+</table>
+
+
+  <div id="about_commentary_ratings_<%= commentary.id.to_s %>" style="display: none; margin-bottom: 5px;">
+    Did you find this article useful? Your opinion counts - together, we're finding the very best news and blog coverage about Congress available on the web.
+  </div>
+
+<% if admin_logged_in? %>
+  <p class="small">
+    Scraped from: <%= commentary.scraped_from %> / Verification matched: <%= commentary.contains_term %>
+  </p>
+  <p class="small">
+    <%= link_to "Edit", :controller => 'admin/commentary', :action => 'edit', :id => commentary %> |
+    <%= link_to "Delete", { :controller => 'admin/commentary', :action => 'destroy', :id => commentary },
+                :confirm => 'Are you sure?', :method => "post" %> | 
+    Mass delete: <%= check_box_tag "mass_delete_ids[]", commentary.id %>
+    <%= submit_tag 'Execute mass delete' %>
+  </p>
+<% end %>
+</div>
+

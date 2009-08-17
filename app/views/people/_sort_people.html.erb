@@ -1,0 +1,42 @@
+<div id="sort_nav">
+
+  <a href="#" class="jqModal find_map"><span>Find <%= @person_type.to_s.capitalize %> by Map</span></a>
+
+  <ul id="sort">
+    <h4>Sort By</h4>
+    <li id="state" class="<%= @sort == :state ? "active" : "" %>">
+      <a href="/people/<%= person_type %>?sort=state"><span>State</span></a>		
+    </li>
+    <li id="name" class="<%= @sort == :name ? "active" : "" %>">
+      <a href="/people/<%= person_type %>?sort=name"><span>Name</span></a>		
+    </li>
+    <li id="popular" class="<%= @sort == :popular ? "active" : "" %>" >
+      <a href="/people/<%= person_type %>?sort=popular"><span>Most-Viewed</span></a>		
+
+    </li>
+
+    <li id="news" class="<%= @sort == "news" ? "active" : "" %>">
+      <a href="/people/<%= person_type %>/most/news"><span>Most in the News</span></a>		
+    </li> 
+    <li id="blog" class="<%= @sort == "blog" ? "active" : "" %>">
+      <a href="/people/<%= person_type %>/most/blogs"><span>Most on Blogs</span></a>							
+    </li>
+    <li id="approval" class="<%= @sort == :approval ? "active" : "" %>">
+      <a href="/people/<%= person_type %>?sort=approval"><span>Approval</span></a>		
+
+    </li>
+
+  </ul>
+
+  <ul id="jump" <%= "style='display:none;'" if @days %>>
+    <h4>Jump</h4>
+    <% ('a'..'z').each do |letter| %>
+    <li><a href='#<%= letter.upcase %>'><%=letter%></a></li>
+    <% end %>
+  </ul>
+
+  <div id="timeframe">
+  <%= render :partial => 'shared/timeframe_select' if @days %>                
+</div>
+
+</div>

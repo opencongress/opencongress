@@ -1,0 +1,14 @@
+<% g = admin_list -%>
+<% form_for :gossip, g, :url => {:action => 'update', :id => g.id} do |f| %>
+Name: <%= g.name %><br />
+Email: <%= g.email %><br />
+Link: <a href="<%= g.link %>"><%= g.link %></a><br />
+<date><%= g.formatted_date %></date>
+<%= approve_button(g) %> <span>|</span> 
+<%= frontpage_button(g) %><br />
+<%= submit_tag "delete" %><br />
+<%= title_field(g)%><br />
+<%= tip_field(g)%>
+<%= submit_tag "update" %>
+<% end -%>
+<hr/>

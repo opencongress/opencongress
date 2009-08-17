@@ -1,0 +1,5 @@
+<% if @subjects.nil? or @subjects.empty? %>
+  No issues found.
+<% else %>
+  <%= render :partial => 'issue_list', :locals => {:subjects => @subjects } %>
+<% end %>

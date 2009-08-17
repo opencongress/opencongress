@@ -1,0 +1,18 @@
+<div id="sortby">
+	<label for="sort-by">Sort by</label>
+	<select name="selectedPage" id="committee_sort" onchange="changePage('committee_sort'); return false;">
+	  <option value="/committee" <% if sort == :all %>selected<% end %>>Name</option>
+	  <option value="/committee/by_most_viewed" <% if sort == :popular %>selected<% end %>>Most Viewed</option>
+	  <option value="/committee/by_chamber?chamber=senate" <% if sort == :senate %>selected<% end %>>Senate Committees</option>
+	  <option value="/committee/by_chamber?chamber=house" <% if sort == :house %>selected<% end %>>House Committees</option>
+	</select>
+</div>
+
+<div id="sort_nav">	
+	<ul id="sort">
+		<h4>Sort By</h4>
+		<li id="name" class="<%= sort == :all ? 'active' : '' %>"><%= link_to "<span>Name</span>", :action => 'index'  %></li> 
+		<li id="mostviewed" class="<%= sort == :popular ? 'active' : '' %>"><%= link_to "<span>Most Views</span>", :action => 'by_most_viewed'  %></li> 		
+	</ul>
+</div>
+<!-- // sortby-->

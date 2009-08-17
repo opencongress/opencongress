@@ -1,0 +1,53 @@
+<% esc_url = CGI.escape(url) %>
+<script>
+$j().ready(function() {
+	$j('#email_friend').jqm({ajax:'@href', trigger:'a.email_trigger'});
+	$j('#share_more').jqm({trigger:'a.more_trigger'});
+});
+</script>
+<h4 class="share_title"><%= message %></h4>
+<ul class="share_icons">
+	
+	<li class="reddit">
+		<a href="http://reddit.com/submit?url=<%= esc_url %>&amp;title=<%= title %>">Reddit</a>
+	</li>
+	<li class="digg">
+		<a href="http://digg.com/submit?phase=2&amp;url=<%= esc_url %>&amp;title=<%= title %>">Digg</a>
+	</li>  
+	<li class="stumble">
+		<a href="http://www.stumbleupon.com/submit?url=<%= esc_url %>&amp;title=<%= title %>">Stumbleupon</a>
+	</li>  
+	<li class="facebook">
+		<a href="http://www.facebook.com/share.php?u=<%= url %>&amp;title=<%= title %>">Facebook</a>
+	</li>  
+	<li class="mixx">
+		<a href="http://www.mixx.com/submit?page_url=<%= url %>&title=<%= title %>">Mixx</a>
+	</li>  
+
+</ul>  
+		<a href="#" class="more_trigger more">More</a>
+
+<div id="share_more" class="jqmWindow closer">
+<div class="ie"><a href="#" class="jqmClose">Close</a></div>
+ <ul>
+	<li>
+		<a href="http://del.icio.us/post?url=<%= esc_url %>&amp;title=<%= title %>">
+			<img src="/images/share_icons/share-delicious.gif" alt="del.icio.us" /></a>
+	</li>
+	<li>
+		<a href="http://www.newsvine.com/_wine/save?popoff=0&amp;u=<%= esc_url %>&amp;h=<%= title %>"> 
+			<img src="/images/share_icons/share-newsvine.gif" alt="Newsvine" /></a>
+	</li>
+	<li>
+		<a href="http://co.mments.com/track?url=<%= esc_url %>">
+			<img src="/images/share_icons/share-comments.gif" alt="co.mments" /></a>
+	</li>
+	</ul>
+</div>
+
+
+	<a href="<%= url_for :controller => 'resources', :action => 'email_friend_form', 
+	                     :object_class => item.class, :object_id => item.id %>" class="email_trigger">Share via Email</a>
+
+<div id="email_friend" class="jqmWindow">
+</div>

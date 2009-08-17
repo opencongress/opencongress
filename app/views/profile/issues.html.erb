@@ -1,0 +1,29 @@
+<%= render :partial => "profile_nav" %>
+
+<div class="profile_content">
+	
+<div id="linkcontent" style="clear:both;padding-top:10px;width:100%;">
+<% unless @bookmarks.empty? %>
+<h3 class="line">Issues I'm Tracking</h3>
+<br />
+<ul class="list end">
+	<% @bookmarks.each do |b| %>
+	<li>	  
+		<div style="float:right;"><%= button_to("Remove", :action => "remove_bookmark", :id => b.id) if current_user == @user %></div>
+		<p><span style="font-size:16px;font-weight:bold;"><%= link_to(b.subject.term, :controller => "issue", :action => "show", :id => b.subject.to_param) %></span></p>
+
+		<% latest_bills = b.subject.latest_bills(5) %>
+		<%= render :partial => "bill/related_bills_list", :locals => {:related_bills_list => latest_bills, :subject => b.subject } -%>
+	</li>
+	<% end %>
+</ul>
+<p>Just click on the button under "Track This" at the top of any issue area page. You'll have assembled an up-to-date overview of all the issues you're following in Congress and their latest actions.</p>
+<p>To get started, you can track any issue you care about by browsing this list of over 4,000 issue areas <a href="http://www.opencongress.org/issue/alphabetical/A">alphabetically by name</a>, or on this list of the <a href="http://www.opencongress.org/issue/by_most_viewed">most-viewed</a> issues on OpenCongress, or by doing a <a href="http://www.opencongress.org/search">search</a> and checking only the box for "issues".</p>
+<% else %>
+<h3>No Issues Tracked Yet. Here's How To Get Started!</h3>
+<p>Just click on the button under "Track This" at the top of any issue area page. You'll have assembled an up-to-date overview of all the issues you're following in Congress and their latest actions.</p>
+<p>To get started, you can track any issue you care about by browsing this list of over 4,000 issue areas <a href="/issue/alphabetical/A">alphabetically by name</a>, or this list of the <a href="/issue/by_most_viewed">most-viewed</a> issues on OpenCongress, or by doing a <a href="/search">Search</a> and restricting your search to "issues".</p>
+<% end %>
+</div>
+
+</div>

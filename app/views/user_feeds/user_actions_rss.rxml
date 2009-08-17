@@ -1,0 +1,100 @@
+xml.instruct!
+
+xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
+
+  xml.title   "Open Congress : " + @user.login + "'s actions"
+  xml.updated @items.first.created_at.strftime("%Y-%m-%dT%H:%M:%SZ") if @items.any?
+  xml.author  { xml.name "opencongress.org" }
+
+  @items[0..20].each do |i|
+    xml.entry do
+      case i.class.name
+      when 'Bookmark'
+        case i.bookmarkable_type
+        when 'Person'
+          xml.title   'Tracking ' + i.bookmarkable.title_full_name_party_state
+          xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'people', :action => 'show', :id => i.bookmarkable.ident)
+          xml.id      i.bookmarkable.atom_id_as_entry
+          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.content "type" => "html" do
+            xml.text! "View profile for #{link_to i.bookmarkable.title_full_name_party_state, :controller => "people", :action => "show", :id => i.bookmarkable.ident}"
+          end
+        when 'Bill'
+          xml.title   'Tracking ' + i.bookmarkable.title_typenumber_only + (i.bookmarkable.title_short == i.bookmarkable.title_typenumber_only ? "" : ": " + i.bookmarkable.title_short)
+          xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'bill', :action => 'show', :id => i.bookmarkable.ident)
+          xml.id      i.bookmarkable.atom_id_as_entry
+          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.content "type" => "html" do
+            xml.text! i.bookmarkable.title_official + "<br/>View #{link_to "Bill", :controller => "bill", :action => "show", :id => i.bookmarkable.ident} on OpenCongress"
+          end
+        when 'Subject'
+          xml.title   'Tracking the Issue of ' + i.bookmarkable.term
+          xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'issue', :action => 'show', :id => i.bookmarkable.to_param)
+          xml.id      i.bookmarkable.atom_id_as_entry
+          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.content "type" => "html" do
+            xml.text! "View recent bills in issue area: #{link_to i.bookmarkable.term, :controller => "bill", :action => "show", :id => i.bookmarkable.to_param} on OpenCongress"
+          end
+        end
+      when 'Comment'
+        case i.commentable_type
+        when 'Person'
+          xml.title   'Commented on: ' + i.commentable.title_full_name_party_state
+          xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'people', :action => 'show', :id => i.commentable.ident)
+          xml.id      i.commentable.atom_id_as_entry
+          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.content "type" => "html" do
+            xml.text! "#{@user.login} wrote: #{i.comment}<br/>View #{link_to "Person", :controller => "people", :action => "show", :id => i.commentable.ident} on OpenCongress"
+          end
+        when 'Bill'
+          xml.title   'Commented on: ' + i.commentable.title_typenumber_only + (i.commentable.title_short == i.commentable.title_typenumber_only ? "" : ": " + i.commentable.title_short)
+          xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'bill', :action => 'show', :id => i.commentable.ident)
+          xml.id      i.commentable.atom_id_as_entry
+          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.content "type" => "html" do
+            xml.text! "#{@user.login} wrote: #{i.comment}<br/>View #{link_to "Bill", :controller => "bill", :action => "show", :id => i.commentable.ident} on OpenCongress"
+          end
+        when 'Subject'
+          xml.title   'Commented on the Issue of ' + i.commentable.term
+          xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'issue', :action => 'show', :id => i.commentable.to_param)
+          xml.id      i.commentable.atom_id_as_entry
+          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.content "type" => "html" do
+            xml.text! "#{@user.login} wrote: #{i.comment}<br/>View #{link_to "Issue", :controller => "issue", :action => "show", :id => i.commentable.to_param} on OpenCongress"
+          end
+        when 'Article'
+          xml.title   'Commented on Article: ' + i.commentable.title
+          xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'article', :action => 'show', :id => i.commentable.to_param)
+          xml.id      i.commentable.atom_id_as_entry
+          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.content "type" => "html" do
+            xml.text! "#{@user.login} wrote: #{i.comment}<br/>View #{link_to "Article", :controller => "article", :action => "show", :id => i.commentable.to_param} on OpenCongress"
+          end
+        end
+        when 'BillVote'
+          xml.title   "Voted #{i.support == 0 ? "Aye" : "Nay"} on: " + i.bill.title_typenumber_only + (i.bill.title_short == i.bill.title_typenumber_only ? "" : ": " + i.bill.title_short)
+          xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'bill', :action => 'show', :id => i.bill.ident)
+          xml.id      i.bill.atom_id_as_entry
+          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.content "type" => "html" do
+            xml.text! i.bill.title_official + "<br/>View #{link_to "Bill", :controller => "bill", :action => "show", :id => i.bill.ident} on OpenCongress"
+          end
+        when 'PersonApproval'
+          xml.title   "Gave " + i.person.title_full_name_party_state + " a #{i.rating * 10}% Approval Rating"
+          xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'people', :action => 'show', :id => i.person.ident)
+          xml.id      i.person.atom_id_as_entry
+          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.content "type" => "html" do
+            xml.text! i.person.title_full_name_party_state
+          end                   
+        when 'Friend'
+          xml.title   "Became Friends with " + i.friend.login
+          xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'profile', :action => 'profile', :login => i.friend.login)
+          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.content "type" => "html" do
+            xml.text! "View #{link_to i.friend.login + "'s Profile", :controller => 'profile', :login => i.friend.login, :action => 'profile'}"
+          end    
+      end
+    end
+  end
+end

@@ -1,0 +1,14 @@
+<div class="main">
+<%= render :partial => 'nbtabs' %>
+<%= render :partial => 'shared/sort_commentary', 
+                                :locals => { :object_type => 'people', :object_id => @person.id } %>
+
+<!--<p><a href="/people/show/<%= @person.id %>" class="arrow-left"><b>Back to <%= @person.popular_name %>'s Profile</b></a></p>-->
+<% cache("#{@person.fragment_cache_key}_news_#{@sort}_page_#{@page}") do %>
+  <!-- cached: <%= "#{@person.fragment_cache_key}_news_#{@sort}_page_#{@page}" %> // <%= Time.now %> -->
+  <p><%= will_paginate @news, :params => { :sort => @sort }  %></p>
+  <%= render :partial => 'shared/news', :object => @news,
+    :locals => { :limit => nil, :all_size => @news.size, :default_title => @person.full_name } %>
+  <p><%= will_paginate @news, :params => { :sort => @sort }  %></p>
+<% end %>
+</div>

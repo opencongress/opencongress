@@ -1,0 +1,6 @@
+<% form_tag :action => 'edit' do -%>
+  <p><label for="bill_summary">Enter bill ID as it appears in URL (ie, "110-h512")</label><br/>
+  <%= text_field_tag 'id' %></p> 
+  
+  <%= submit_tag 'Edit' %>
+<% end %>

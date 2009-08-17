@@ -1,0 +1,17 @@
+<% subs = subcommittee_links.sort_by {|s| [s.name, s.subcommittee_name] } -%>
+
+<div id="subcommittee_list">
+  <h3>Subcommittees</h3>
+  <!--  main committee is not a subcommittee, any reason for inclusion?
+  <% unless main.nil? -%>
+  <ul class="star">
+    <li>Main: <%= link_to main.proper_name, :action => "show", :id => main.id %></li>
+  </ul>
+  <% end -%>
+  -->
+  <ul class="list-links">
+    <% subs.each do |sub| -%>
+      <li><%= link_to sub.subcommittee_name, :action => "show", :id => sub %></li>
+    <% end -%>
+  </ul>
+</div>

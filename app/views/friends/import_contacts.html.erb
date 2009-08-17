@@ -1,0 +1,109 @@
+<%= render :partial => "profile/profile_nav" %>
+
+<div class="profile_content">
+
+
+<h2>Import Contacts</h2>
+<% if flash[:notice] %>
+<p style="color:red;"><%= flash[:notice] %></p>
+<% end %>
+<p>Use this form to find and invite friends on OpenCongress.  Note that we do not store, nor would we ever share your Google, Yahoo! or Hotmail account information.  It is processed and discarded immediately.</p>
+<div style="margin-right:auto;margin-left:auto;">
+<div style="float:left;padding:10px;">
+<h3>Import From Google</h3>
+<form action="<%= friends_import_contacts_path %>" method="POST">
+  <input type="hidden" name="from" value="google"/>
+  <table>
+    <tr>
+      <td>Google Login:</td><td><input name="glogin" type="text" size="12"/></td>
+    </tr>
+    <tr>
+      <td>Google Password:</td><td><input name="gpasswd" type="password" size="12"/></td>
+    </tr>
+    <tr>
+      <td></td><td><input type="submit" value="Find Contacts"/></td>
+    </tr>
+  </table>  
+</form>
+</div>
+<div style="float:left;padding:10px;">
+<h3>Import From Yahoo!</h3>
+<form action="<%= friends_import_contacts_path %>" method="POST">
+  <input type="hidden" name="from" value="yahoo"/>
+  <table>
+    <tr>
+      <td>Yahoo! Login:</td><td><input name="glogin" type="text" size="12"/></td>
+    </tr>
+    <tr>
+      <td>Yahoo! Password:</td><td><input name="gpasswd" type="password" size="12"/></td>
+    </tr>
+    <tr>
+      <td></td><td><input type="submit" value="Find Contacts"/></td>
+    </tr>
+  </table>  
+</form>
+</div>
+<div style="float:left;padding:10px;">
+<h3>Import From Hotmail</h3>
+<form action="<%= friends_import_contacts_path %>" method="POST">
+  <input type="hidden" name="from" value="hotmail"/>
+  <table>
+    <tr>
+      <td>Hotmail Login:</td><td><input name="glogin" type="text" size="12"/></td>
+    </tr>
+    <tr>
+      <td>Hotmail Password:</td><td><input name="gpasswd" type="password" size="12"/></td>
+    </tr>
+    <tr>
+      <td></td><td><input type="submit" value="Find Contacts"/></td>
+    </tr>
+  </table>  
+</form>
+</div>
+</div>
+<% if @results %>
+  <% unless @login_failed %>
+  <h3 style="clear:both;">Contacts Already Enrolled with OpenCongress</h3>
+  <% if @already.length > 0 %>
+  <table class="importtable">
+    <tr><th>Add Friend</th><th>Name</th><th>Email</th><th>Username</th></tr>
+    <% @already.each do |r| %>
+      <% unless r.id == current_user.id %>
+      <tr><td id="f_<%=r.login %>" class="itable"><%= add_friend_link_ajax(r, update_div = "f_#{r.login}") %></td><td><%= r.full_name && r.full_name.empty? ? r.full_name : "[none]" %></td><td><%= r.email %></td><td><%= link_to h(r.login), :controller => "profile", :login => r.login, :action => "profile" %></td></tr>
+    <% end %>
+    <% end %>
+  </table>
+  <% else %>
+    <p>None found</p>
+  <% end %>
+  <br/>
+  <h3 style="clear:both;">Contacts to Invite to OpenCongress</h3>
+  <% if @results.length > 0 %>
+  <form action="<%= friends_import_emails_path %>" method="POST">
+  <table class="importtable">
+    <tr><th>Invite?</th><th>Email</th><th>Name</th></tr>
+    <% @results.each do |r| %>
+    <% unless r[1].downcase == current_user.email.downcase %>
+      <tr><td><%= check_box_tag "addfriend[#{r[1]}]" %></td><td><%= r[1] %></td><td><%= r[0] && !r[0].empty? ? r[0] : "[none]" %></td></tr>
+    <% end %>
+    <% end %>
+  </table>
+  <br/>
+  <p style="font-weight:bold;">Your invitation message will read as follows:</p>
+  <p>Hi, I wanted to encourage you to join OpenCongress so that we can share information about bills and issues in Congress.</p>
+  <p>It's free to create your personal profile and takes only a minute, you can sign up here ::</p>
+  <p>The message will also include a link to join OpenCongress, and whatever personal message you enter below:</p>
+  <textarea name="message" rows="10" cols="60">Leave a personal note here</textarea>
+  <br/>
+                    <%= show_simple_captcha(:image_style => 'all_black', :distortion => 'high') %><br/>
+  <%= submit_tag "Invite Contacts" %>
+  </form>
+  <% end %>
+  
+  <% else %>
+  <h3 style="clear:both;color:red;">Error</h3>
+     <p>Login failed to <%= @login_failed.capitalize %></p>
+  <% end %>
+<% end %>
+
+</div>

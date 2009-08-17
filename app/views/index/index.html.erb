@@ -1,0 +1,276 @@
+<div id="content" class="clearfix">       
+       
+<%= render :partial => 'shared/notices' %>
+<%= render :partial => 'layouts/user_nav' %>
+
+<div class="inner">
+
+<div id="heading">
+<div id="inner_heading">
+  
+  
+	<div class="floatright congress_status">
+  	<h2>Today in Congress: <span><%= Date.today.strftime("%B %d, %Y") %></span></h2>
+  		<%= session_div('house', @sessions[:house_session]) %>
+  		<%= session_div('senate', @sessions[:senate_session])%>	
+  	</div>
+ 
+  
+	<div class="floatleft">	
+		<div class="myoc">
+			<h3 class="floatleft">Everyone can be an insider</h3>
+			<!--<p class="floatleft">OpenCongress helps you track and understand
+			what's really happening in Congress.</p>-->
+			<!--<p>Take advantage of <strong>every</strong> unique feature, it's free</p> -->
+			<a href="#pitch" class="small_button small_arrow floatleft"><span>Learn More</span></a> 
+		</div>	
+	</div>
+</div>
+</div>
+
+		
+	<div class="pop_bills">
+		
+		<div class="bill_top">
+		  <ul class="pop-tabs">
+		  		<li id="tslink" class="here"><%= link_to_function('<span>Hot Bills</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('ts');Element.addClassName('tslink','here');Element.removeClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('pslink','here');Element.removeClassName('prlink','here');Element.removeClassName('pislink','here');") %></li>
+				<li id="bvlink"><%= link_to_function('<span>Most-Viewed Bills</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('bv');Element.addClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('pslink','here');Element.removeClassName('prlink','here');Element.removeClassName('pislink','here');Element.removeClassName('tslink','here');") %></li>
+				<li id="bnlink"><%= link_to_function('<span>Newest Bills</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('bn');Element.addClassName('bnlink','here');Element.removeClassName('bvlink','here');Element.removeClassName('pslink','here');Element.removeClassName('prlink','here');Element.removeClassName('pislink','here');Element.removeClassName('tslink','here');") %></li>
+				<li id="pslink"><%= link_to_function('<span>Top Senators</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('ps');Element.addClassName('pslink','here');Element.removeClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('prlink','here');Element.removeClassName('pislink','here');Element.removeClassName('tslink','here');") %></li>
+				<li id="prlink"><%= link_to_function('<span>Top Reps</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('pr');Element.addClassName('prlink','here');Element.removeClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('pslink','here');Element.removeClassName('pislink','here');Element.removeClassName('tslink','here');") %></li>
+				<li id="pislink"><%= link_to_function('<span>Top Issues</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('pis');Element.addClassName('pislink','here');Element.removeClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('pslink','here');Element.removeClassName('prlink','here');Element.removeClassName('tslink','here');") %></li>
+			</ul>
+		</div>
+
+		<div class="back">
+			<div id="bv" style="display:none;">
+				<% cache("frontpage_bill_mostviewed", :expires_in => 3.hours) do %>
+				  <!-- frontpage_bill_mostviewed: <%= Time.now %> -->
+				  <%= render :partial => 'popular', :locals => {:object => @popular_bills, :type => "bv"} %>
+				  <!-- /frontpage_bill_mostviewed -->
+				<% end %>
+			</div>
+			<div id="bn" style="display:none;">
+				<% cache("frontpage_bill_newest", :expires_in => 3.hours) do %>
+	  			<!-- frontpage_bill_newest: <%= Time.now %> -->
+	  			<%= render :partial => 'popular', :locals => {:object => @newest_bills, :type => "bn"} %>
+	  			<!-- /frontpage_bill_newest -->
+				<% end %>
+			</div>
+			<div id="ps" style="display:none;">
+				<% cache("frontpage_person_topsenators", :expires_in => 3.hours) do %>
+	  			<!-- frontpage_person_topsenators: <%= Time.now %> -->
+	  			<%= render :partial => 'top_people', :object => @popular_senators, :locals => { :person_type => 'senators'} %>
+	  			<!-- /frontpage_person_topsenators -->
+				<% end %>
+			</div>
+			<div id="pr" style="display:none;">
+				<% cache("frontpage_person_topreps", :expires_in => 3.hours) do %>
+	  			<!-- frontpage_person_topreps: <%= Time.now %> -->
+	  			<%= render :partial => 'top_people', :object => @popular_reps, :locals => { :person_type => 'representatives'} %>
+	  			<!-- /frontpage_person_topreps -->
+				<% end %>
+			</div>
+			<div id="pis" style="display:none;">
+				<% cache("frontpage_issue_mostviewed", :expires_in => 3.hours) do %>
+	  			<!-- frontpage_issue_mostviewed: <%= Time.now %> -->
+	  			<%= render :partial => 'popular', :locals => {:object => @popular_issues, :type => "pis"} %>
+	  			<!-- /frontpage_issue_mostviewed -->
+				<% end %>
+			</div>
+			<div id="ts">
+				<% cache("frontpage_top_searches", :expires_in => 2.hours) do %>
+	  			<!-- frontpage_top_searches: <%= Time.now %> -->
+	  			<%= render :partial => 'popular', :locals => {:object => @popular_searches, :type => 'ts'} %>
+	  			<!-- /frontpage_top_searches -->
+				<% end %>
+			</div>
+		</div>
+	</div>
+      
+
+	
+		
+    <div class="blog_list">
+		<%= render :partial => 'articles/frontpage', :locals => { :articles => Article.frontpage_gossip } %>
+		<!-- // end of blog entries -->
+	</div>
+
+			
+	<div id="find">
+		<h2>Find Your Representatives</h2>
+	
+		<form id="find_rep" action="/person/zipcodelookup">
+			<input class="enter_zip" type="text" name="zip5" size='5' maxlength='5' value="Enter Your Zip" onfocus="this.value='';"/>
+			<input type="image" src="/stylesheets/img/show_me-trans.png" alt="Find My Reps" />
+			<p> OpenCongress helps you track all the actions by your elected officials and what people are saying about them. Subscribe to RSS feeds to stay in touch with their latest votes. </p>
+		</form>
+	</div>
+		
+		
+	
+	<div id="second_tier">
+		
+		<h3 class="darkline">Featured Members of Congress <a href="/people/atom/featured" class="feed">Feed</a></h3>
+			
+			<% cache("frontpage_featured_senator") do %>
+			<!--frontpage_featured_senator cached: <%= Time.now %> -->
+			<% if @popular_sen_text %>
+			
+			<div class="subcol1">
+				<h3>A Most-Viewed Senator</h3>
+				<div class="back"> 
+		
+					<p class="clearfix"><%= @popular_sen_text.text %></p>
+				
+					<a href="<%= url_for :controller => 'people', :action => 'show', :id => @popular_sen_text.person %>">
+						<img src="/images/photos/thumbs_73/<%= @popular_sen_text.person.id %>.png" alt="popular senator" />
+					</a>
+        
+        
+					<p class="right topline">					
+						<%= link_to "<span>#{@popular_sen_text.person.popular_name}'s Profile</span>", 
+						{ :controller => 'people', :action => 'show', :id => @popular_sen_text.person }, 
+						:class => 'med_button med_arrow' %>					
+						<%= link_to '<span>More Senators</span>', { :controller => 'people', :action => 'senators', :sort => 'popular' }, 
+						:class => 'med_button med_arrow' %>
+					</p>
+				</div>
+		  		<span class="cap"></span>
+			</div>
+			
+			
+			
+			<%- end %>	
+			<% end %>
+			<% cache("frontpage_featured_representative") do %>
+			<!--frontpage_featured_representative cached: <%= Time.now %> -->
+			
+			<% if @popular_rep_text %>
+			<div class="subcol2">		  
+				<h3>A Most-Viewed Representative</h3>
+				<div class="back"> 
+
+  				<p class="clearfix"><%= @popular_rep_text.text %></p>
+  			  	<a href="<%= url_for :controller => 'people', :action => 'show', :id => @popular_rep_text.person %>">
+					  <img src="/images/photos/thumbs_73/<%= @popular_rep_text.person.id %>.png" alt="popular representative" />
+				  </a>
+          
+				<p class="right topline">
+					<%= link_to "<span>#{@popular_rep_text.person.firstname} #{@popular_rep_text.person.lastname}'s Profile</span>", 
+					{ :controller => 'people', :action => 'show', :id => @popular_rep_text.person },
+					:class => 'med_button med_arrow' %><br />
+					<%= link_to '<span>More Representatives</span>', { :controller => 'people', :action => 'representatives', :sort => 'popular' },		     
+					:class => 'med_button med_arrow' %>
+				</p>
+			</div>
+			<span class="cap"></span>
+		</div>
+
+		<%-end %>
+		<% end %>
+		<!-- // end most viewed sen/rep -->
+		
+		
+		
+<div class="box01 clearfix">
+
+		<h3>Latest Votes</h3>
+		<div class="back"> 
+		<ul class="latest_votes">
+			<% RollCall.latest_votes_for_unique_bills(3).each do |r| %>
+			<li>
+				<a href="/roll_call/show/<%= r.id %>">
+				<span><%= truncate(r.bill.title_full_common, :length => 70) %></span><br />
+				<span class="type"><%= get_result_image(r.result) %> <%= r.roll_type %></span>
+				<span class="date"><%= r.date.strftime("%b %d, %Y") %></span>
+
+					<span class="aye">Ayes</span> <%= r.ayes %>&nbsp;&nbsp;&nbsp;<span class="nay">Nays</span> <%= r.nays %>
+					</a>
+				</li>
+				<% end %>
+			</ul>	
+			<%= link_to '<span>More Recent Votes</span>', { :controller => 'roll_call', :action => :all}, :class => 'med_button med_arrow' %>
+		</div>
+		<span class="cap"></span>
+		</div> <!-- // end status box -->
+
+		
+				</div>
+
+
+	
+	<div id="pitch">
+		<div id="home_pitch">
+			<ul id="why_carousel" class="jcarousel-skin-bravo">						
+				<li class="number1">
+					<h4>All the Best Info</h4>
+					<p>OpenCongress brings together all the best info about Congress in one place. When you link to OpenCongress pages, your readers have access to not only the official details of bills and votes, but also the big picture. Read more <a href="/about/howtouse" target_"blank">ways you can use OpenCongress</a>.</p>
+				</li>
+			
+				<li class="number2">
+					<h4>Track What's Happening</h4>
+					<p>Congress can be difficult to follow. OpenCongress provides easy ways to track all the things you care about. Subscribe to <a href="/about/rss">RSS feeds</a> or email alerts to automatically receive updates on bills, votes, issues, and more. Also, you can join "My OpenCongress" to create a profile page that tracks all your political interests in one place -- <a href="/register">join</a> or <a href="/login">login</a>, it's free and takes less than a minute.</p>
+				</li>
+			
+				<li class="number3">
+					<h4>Make Your Voice Heard</h4>
+					<p>All too often, Congress is closed-off from meaningful public input. OpenCongress gives you free tools to contact Congress and open a dialogue with your elected officials. With your free "My OpenCongress" account, you can vote "aye" or "nay" on bills, give personal approval ratings to Members of Congress, post comments in discussion forums, and write your Members of Congress directly from OpenCongress -- <a href="/register">join</a> or <a href="/login">login</a>.</p>
+				</li>
+			
+				<li class="number4">
+					<h4>Share Valuable Info</h4>
+					<p>Congress is complex. OpenCongress have built-in features to help you find the most useful info about your interests, then share it with your online communities. One click shares any page to Digg, Reddit, Facebook, e-mail a friend, and more. Social networking with "My OpenCongress" allows you to make friends with other users near and far, then follow all their comments and votes -- <a href="/register">join</a> or <a href="/login">login</a> to get started.</p>
+				</li>
+				
+				<li class="number5">
+					<h4>Watchdog Your Government</h4>
+					<p>OpenCongress gives you the ability to oversee your elected officials and all of our Members of Congress. Together, we can build effective accountability and transparency in Congress. "My OpenCongress" profiles have "Watchdog" tools that allow you to compare your votes on bills with your Senators' and Representative's votes, as well as what other constituents in your state and Congressional district support and oppose -- <a href="/register">join</a> or <a href="/login">login</a> to start Watchdogging and get local.</p>
+				</li>
+				
+			</ul> 
+		</div>
+	</div><!-- // end pitch -->
+		
+				
+		<div class="about_oc">
+		
+		<h3>About OpenCongress</h3>
+ 
+		<p>OpenCongress brings together official government data with news coverage, blog posts, public comments, and more to give you the real story behind what's happening in Congress. Small groups of political insiders and lobbyists already know what's really going on in Congress. Now, everyone can be an insider.</p>
+
+		<p>OpenCongress is a free, open-source, not-for-profit, and non-partisan web resource with a mission to make Congress more transparent and to encourage civic engagement. OpenCongress is a joint project of two 501c3 non-profit organizations, the <a href="http://participatorypolitics.org/" target="_blank">Participatory Politics Foundation</a> and the <a href="http://www.sunlightfoundation.com/" target="_blank">Sunlight Foundation</a>. To read more about our mission, our open data sources, and how Congress works, see <a href="/about" target="_blank">About OpenCongress</a>. To read more about how individuals and organizations can use this site to find and share valuable info about their political interests, see <a href="/about/howtouse" target="_blank">How To Use OpenCongress</a>.</p>
+		
+		<!--
+    <a style="float:right;" href="/about/screencast"><img class="noborder" src="/images/oc_whats.jpg" alt="OC screencast" /></a> 		
+		<p>Watch a video overview of OpenCongress, the information we offer, and ways you can use the site. This screencast was graciously created by Ryanne Hodson and Jay Dedman of <a href="http://ryanishungry.com/">RyanIsHungry.com</a> as a volunteer project.</p>
+		-->
+
+</div>
+
+		<div class="use_oc">
+
+		<h3>Get Updates with Our E-mail List</h3>
+		<p>Stay updated about major site developments: new data, new features, and new ways of interacting with Congress. We will only send you important e-mails and we won't share your email address with anyone.</p>
+
+		<form name="subscribeform" action="http://list.opencongress.org/?p=subscribe" method="post" onsubmit="return duplicateSubscribeEmail();">
+			<p>
+				<input type="text" name="email" size="20" class="email" />
+				<input type="hidden" name="emailconfirm" value="" />
+				<button type="submit" name="subscribe" class="med_button"><span>Subscribe</span></button>
+				<input type="hidden" name="htmlemail" value="1" />
+				<input type="hidden" name="list[6]" value="signup" />
+				<input type="hidden" name="listname[6]" value="Open Congress" />
+			</p>
+		</form>
+		
+		<br />
+
+
+		<h3>Contact Us</h3>
+		<p>We are always interested in hearing from you: How do you use the site? What would make it more useful?  Have you found a bug? Email us with feedback: <script type="text/javascript">m("writeus","opencongress","org","1");</script>. If you support the mission of OpenCongress and would like to help, volunteers are encouraged to join our open-source development team. Whether you're a web developer, a graphic designer, a political blogger, or a person with ideas about how to make Congress more open, <a href="/contact">contact us</a> anytime to get involved.</p>	
+</div>
+<div class="clear">&nbsp;</div>
+</div>
+
+</div> <!-- // content -->

@@ -1,0 +1,5 @@
+<% @content_for_sortby = render :partial => 'sort_people_ranking', :locals => { :sort => @rankby, :person_type => @person_type } %>
+
+<% @people.each do |p| %>
+  <%= p.person_stats.send("#{@rankby}_rank") %>. <%= link_to_person(p) %>: <%= p.person_stats.send(@rankby) %><br />
+<% end %>

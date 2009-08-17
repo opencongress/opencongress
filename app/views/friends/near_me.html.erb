@@ -1,0 +1,26 @@
+<%= render :partial => "profile/profile_nav" %>
+
+<div class="profile_content">
+
+
+
+<h1>Users in my State and Congressional District</h1>
+
+<p>Click on the name of a user below to view their profile and send them a friend invitation. (If your district doesn't appear below, simply head to your <%= link_to "About Me page", user_profile_path(@user.login) %> and fill in your zip+4 so that OpenCongress can determine your district and display other users who share it.) While you're over there, you may choose to make public your website or IM address so that other OpenCongress users in your state or district can get in touch with you!</p>
+
+<div style="padding:10px;">
+<h3>Users in my State (<%= @ziplookup.state %>)</h3>
+<% @in_state.uniq.each do |is| %>
+<%= link_to h(is.login), :controller => "profile", :action => "profile", :login => h(is.login) %><%= is == @in_state.uniq.last ? "" : ", " %>
+<% end %>
+</div>
+
+<div style="padding:10px;">
+<h3>Users in my Congressional District (<%= @ziplookup.state + "-" + @user_district.to_s %>)</h3>
+<% @in_state.uniq.each do |ucd_i| %>
+  <% next if ucd_i.district.to_s != @user_district.to_s %>
+  <%= link_to h(ucd_i.login), :controller => "profile", :action => "profile", :login => h(ucd_i.login) %>,&nbsp; 
+<% end %>
+</div>
+
+</div>

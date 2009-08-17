@@ -1,0 +1,15 @@
+<div class="main">
+<%= render :partial => 'shared/sort_commentary', 
+                                :locals => { :object_type => 'bill', :object_id => @bill.ident } %>
+<%= render :partial => 'nbtabs' %>
+<% cache("#{@bill.fragment_cache_key}_#{params[:action]}_#{@sort}_page_#{@page}") do %>
+  <!-- cached: <%= "#{@bill.fragment_cache_key}_#{params[:action]}_#{@sort}_page_#{@page}" %> // <%= Time.now %> -->
+  <div id="news_list">
+    <p><%= will_paginate @news, :params => { :sort => @sort } %></p>
+    <%= render :partial => 'shared/news', :object => @news,
+      :locals => { :limit => nil, :all_size => @news.size, :default_title => @bill.title_typenumber_only,
+                   :more_url => { :controller => 'bill', :action => 'news', :id => @bill.ident } } %>
+    <p><%= will_paginate @news, :params => { :sort => @sort } %></p>
+  </div>
+<% end %>
+</div>

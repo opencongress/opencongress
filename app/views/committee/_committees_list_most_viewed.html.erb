@@ -1,0 +1,5 @@
+<% name = committees_list_most_viewed.subcommittee_name ? 
+            committees_list_most_viewed.name + ' - ' + committees_list_most_viewed.subcommittee_name :
+            committees_list_most_viewed.name %>
+            
+<li class="committee"><%= link_to name, :controller => 'committee',  :action => "show", :id => committees_list_most_viewed %> (<%= committees_list_most_viewed.views(DEFAULT_COUNT_TIME) %> views)</li>

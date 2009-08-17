@@ -1,0 +1,87 @@
+<% show_views ||= true %>
+<% commentary_type ||= false %>
+<% show_track_link ||= false %>
+<% show_congress_session ||= false %>
+
+<ul class="bills_list">
+
+  <% if related_bills_list.size > 0 %>
+    <!-- <table class="simple-table2" cellspacing="0">
+      <tr>
+        <% if show_views or commentary_type %><th></th><% end %>
+        <th align="left" scope="col">Bill</th>
+        <th scope="col">Status</th>
+        <th scope="col">Last Action</th>     
+        <% if show_views %><th scope="col">Views</th><% end %>
+        <% if commentary_type %><th scope="col">Articles</th><% end %>
+        <% if show_track_link %><th scope="col">Track This</th><% end %>
+      </tr>
+     -->
+
+      <% related_bills_list.each_with_index do |bill, i| -%>
+        <% unless bill.title_common.blank? -%>
+         
+	<li class="<%= bill_category(bill) %>">
+		<a class="icon_link" href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>">
+            <% if commentary_type %>
+              <span class="list_count"><%= (i + 1) %></span>
+            <% else %>
+
+            <% end %>
+            
+            <div class="title">
+						<% unless bill.title_popular_only.blank? %>
+            <span class="a"><%= "#{bill.title_typenumber_only} - #{truncate(bill.title_popular_only, :length => 103)}" %></span>        
+						<% else %>                                 
+						<span class="a"><%= "#{bill.title_typenumber_only}" %></span>        
+         		<% end %>
+           
+           
+		<% unless bill.title_official.blank? %>
+			<p><%= truncate(bill.title_official, :length => 145) %></p>
+		<% end %>
+           
+             </div>
+
+			<span class="status">            
+            
+            <span><%= temp_url_strip(bill.status) %></span>
+            
+            <span class="date"><%= bill.last_action.formatted_date if bill.last_action %></span>
+            
+						<% unless bill.session == DEFAULT_CONGRESS %>
+              <span>(<%= bill.session.ordinalize %> congress)</span>
+            <% end %>
+
+			</span>
+
+
+						<% if show_views %>
+            <span class='session'><%= number_with_delimiter(bill.views(DEFAULT_COUNT_TIME)) %> Views</span>
+            <% end %>
+            
+                       
+            
+            <% if commentary_type %>
+              <span>
+                <%= bill.commentary_count(commentary_type, DEFAULT_COUNT_TIME) %>
+              </span>
+            <% end %>
+						</a>
+            <% if show_track_link %><span><%= render :partial => "shared/track_link", :locals => {:object => bill} %></span><% end %>
+
+        <% end %>
+        <!-- DEBUGGING
+        <% if bill.tmp_search_desc %>
+          <%= bill.tmp_search_desc %>
+        <% end %>
+        /DEBUGGING -->
+      
+       </li>
+      
+      <% end -%>
+   <!-- </table> -->
+  <% else %>
+    <h3>No Bills Found</h3>
+  <% end %>
+</ul>

@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <style>
+      body {
+      	font:80%/140% "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;
+      	background: #<%= @bgcolor %>;
+      	color: #<%= @textcolor %>;
+      }
+    
+      a {
+        color: #<%= @textcolor %>;
+      }
+      a:hover {
+        text-decoration: none;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+    
+      li {
+        margin: 0 5px 10px 5px;
+        height: 43px;
+        overflow: hidden;
+        line-height: 1.1em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="syndicator">
+      <div class="syndicator_items">		
+
+        <div style="font-weight: bold;line-height: 1.1em;text-align: center;margin-top:5px;font-size:1.1em;">
+          Congress, I'm Watching
+        </div>
+        <br />
+        <% unless @pass_bills.empty? %>
+          <b style="color:#0A7C00;font-style:italic;margin-left:5px;">You Better Pass:</b>
+          <ul style="margin-left:10px;">
+            <%= render :partial => 'syndicator_item', :collection => @pass_bills, :locals => { :show_views => false } %>
+            <div style="clear: both; height: 1px; overflow: hidden;">&nbsp;</div>
+          </ul>
+        <% end %>
+        <% unless @dont_pass_bills.empty? %>
+          <b style="color:#bc3a38;font-style:italic;margin-left:5px;">You Better Not Pass:</b>
+          <ul style="margin-left:10px;">
+            <%= render :partial => 'syndicator_item', :collection => @dont_pass_bills, :locals => { :show_views => false } %>
+            <div style="clear: both; height: 1px; overflow: hidden;">&nbsp;</div>
+          </ul>
+        <% end %>
+        
+        <div style="font-weight: bold; text-align: center; padding-bottom: 5px;">
+          <span style="font-size: 10px;">
+            Powered by <a href="/" target="_top">OpenCongress</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

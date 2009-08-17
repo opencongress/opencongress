@@ -1,0 +1,9 @@
+<%= render :partial => 'heading' %>
+<div id="views">                                                     
+	<%= render :partial => 'sidebar' %>
+	<div id="contain_peeps" class="contain_list">
+		<%= render :partial => 'sort_people', :locals => { :person_type => @person_type } %>
+		<!-- cached: <%= "person_meta_#{@person_type}_#{@sort}_#{@days}" %> // <%= Time.now %> -->
+		<%= render :partial => "people/people_list_special", :locals => { :people => @people} %>
+	</div> <!-- // end contain_peeps -->
+</div> <!-- // close views -->

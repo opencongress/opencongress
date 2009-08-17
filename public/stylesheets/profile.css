@@ -1,0 +1,443 @@
+#heading{
+height: 45px;
+border-bottom: 1px solid #cadced;
+}
+
+
+.profile_sidebar{
+width: 250px;
+float: left;
+}
+
+div.profile_content {
+	float:left;
+	width:730px;
+	padding-top:40px;
+	padding-bottom:50px;	
+}
+
+
+/* Profile */
+ul.profile_nav {
+	padding:30px 0 30px 30px;
+	width:189px;
+}
+
+ul.profile_nav li a {
+    display:block;
+	margin:10px 0 10px 4px;
+	padding-right: 17px;
+	font-size:13px;	
+	text-decoration: none;
+	  background: url('img/arrow_button_cap.png') right 0 no-repeat;
+   _background: url('img/arrow_button_cap.gif') right 0 no-repeat;
+}
+
+ul.profile_nav li a.active {
+font-weight: bold;
+color: #888;
+background: url('img/arrow_button_cap.png') right -34px no-repeat;
+   _background: url('img/arrow_button_cap.gif') right -34px no-repeat;
+}
+
+
+ul.profile_nav li a:hover {
+color: #888;
+text-decoration: none;
+background: url('img/arrow_button_cap.png') right -34px no-repeat;
+   _background: url('img/arrow_button_cap.gif') right -34px no-repeat;
+}
+
+ul.profile_nav li a:hover span {
+padding: 9px 16px 7px;
+display: block;
+background: url('img/arrow_button.png') left -34px repeat-x;
+   _background: url('img/arrow_button.gif') left -34px repeat-x;
+
+}
+
+ul.profile_nav li a span {
+padding: 9px 16px 7px;
+display: block;
+background: url('img/arrow_button.png') left 0 repeat-x;
+   _background: url('img/arrow_button.gif') left 0 repeat-x;
+
+}
+
+ul.profile_nav li a.active span {
+background: url('img/arrow_button.png') left -34px repeat-x;
+   _background: url('img/arrow_button.gif') left -34px repeat-x;
+}
+
+
+#profile #the-items, #friends .invites, #friends #the-items{
+/* float: right;
+width: 700px;
+*/
+}
+
+#friends .invites{
+background: #eee;
+padding: 20px;
+}
+
+#friends .invites a{
+display: block;
+padding: 4px;
+font-size: 15px;
+margin: 0px ;
+float: left;
+width: 100%;
+}
+
+#friends #the-items{
+padding-top: 20px;
+}
+
+ul#people_list{
+width: 617px;
+overflow: auto;
+float: left;
+_float: right;
+display: block;
+.margin-left: 380px;
+_margin-left: 0;
+_position: relative;
+_margin-top: -100px;
+}
+
+ul#people_list li{
+list-style: none;
+display: block;
+clear: both;
+overflow: hidden;
+}
+
+ul#people_list li.state{
+list-style: none;
+display: block;
+margin: 25px 0 10px 34px;
+font-size: 13px;
+}
+
+ul#people_list li.state div.label {
+display: block;
+height: 10px;
+border-bottom: #d1d7dc 1px solid;
+margin-right: 30px;
+}
+
+ul#people_list li.state b{
+display: inline;/*
+background: #f4faff;
+padding-right: 10px;*/
+float: left;
+}
+
+ul#people_list li.state span{
+display: none;
+
+}
+
+ul#people_list li.state a{
+float:right;
+background: #f4faff;
+color: #666;
+font-size: 10px;
+padding: 0 10px;
+}
+
+ul#people_list li.help p{
+padding: 30px 46px 5px;
+font-size: 11px !important;
+color: #999;
+}
+
+ul#people_list li.person{
+list-style: none;
+display: block;
+padding: 17px 0 17px 10px;
+}
+
+ul#people_list li.person img{
+display: block;
+float: left;
+margin: 0 20px 0 10px;
+}
+
+ul#people_list li.person a.name{
+display: block;
+font-weight: bold;
+font-size: 14px;
+margin: 7px 0 0 2px;
+}
+
+.person .stats {
+float:left;
+height:80px;
+margin-top:3px;
+width:170px;
+}
+
+.person .details {
+float:left;
+width:350px;
+}
+
+li.people {
+	margin-bottom:20px;
+}
+
+li.people ul li a {
+	text-decoration:underline;
+}
+
+#alerts{
+background: #f9f9f9;
+border: 1px solid #eee;
+padding: 0 20px 20px 20px;
+margin: 0 20px;
+}
+
+#alerts h3{
+margin: 15px 0px 5px;
+}
+
+
+table.simple-table2 th, table.simple-table2 td {
+	padding:5px;
+}
+
+
+
+.dog_senators{
+float: right;
+width: 710px;
+padding: 30px 30px 0 0;
+}
+
+
+.watcheddog{
+margin-bottom: 40px;
+border-bottom: 1px solid #ddd;
+}
+
+
+#personphoto img{
+width: 120px;
+}
+
+#picture_detail{
+float: right;
+}
+
+
+.profile_table{
+margin: 0px 0 20px;
+width: 450px;
+}
+
+
+.profile_table td{
+padding: 5px 0;
+}
+
+.profile_table td label{
+font-weight: bold;
+}
+
+#about_me{
+padding: 10px 0;
+clear: left;
+}
+
+#about_me label{
+font-weight: bold;
+padding-right: 90px;
+}
+
+.editable-content{
+border-top: 1px solid #999;
+border-bottom: 1px solid #eee;
+border-right: 1px solid #ccc;
+border-left: 1px solid #ccc;
+padding: 3px;
+}
+
+.profile_content h3{
+float: left;
+margin-top: 20px;
+margin-right: 10px;
+}
+
+#pshow{
+padding-top: 20px;
+float: left;
+}
+
+table.combox{
+}
+
+
+
+.update_text{
+clear: both;
+
+}
+
+
+.update_text a.toggle{
+float: right;
+margin-bottom: 20px;
+}
+
+
+.update_text li{
+border-bottom: 1px solid #ddd;
+padding: 15px 0;
+}
+
+.update_text div.c_item{
+border-bottom: 1px solid #ddd;
+clear: both;
+}
+
+
+a.med_button.on{
+background: url('img/med_button_cap.png') right -31px no-repeat;
+   _background: url('img/med_button_cap.gif') right -31px no-repeat;
+text-decoration: none;
+color: #999;
+}
+
+
+a.med_button.on span{
+background: url('img/med_button.png') left -31px no-repeat;
+   _background: url('img/med_button.gif') left -31px no-repeat;
+}
+
+
+
+.person .stats{
+width: 170px;
+float: right;
+height: 80px;
+margin: 3px 20px 0 0;
+}
+
+.person .stats li{
+line-height: 2.5em;
+padding-left: 25px;
+font-size: 11px;
+}
+
+#the-items div h3, #issues_tracked{
+clear: both;
+}
+
+
+.person .med_button{
+clear: none;
+
+float: left !important;
+}
+
+.c_item span.date{
+float: right;
+}
+
+#people_list{
+width: 730px !important;
+
+}
+
+.person .details{
+
+float: left;
+width: 380px;
+}
+.person img{
+width: 70px;
+}
+.person table img{
+width: inherit;
+}
+
+.person .details a.name{
+display: block !important;
+padding-bottom: 20px;}
+
+.stats{
+}
+
+.c_item p{
+min-height: inherit;
+}
+
+.my_left, .my_left p{
+clear: both !important;
+}
+
+.my_left h3{
+clear: both;
+}
+
+th{
+text-align: left;
+min-width: 120px;
+}
+
+.watcheddog{
+padding: 15px;
+border: 1px solid #ddd;
+}
+
+
+.watcheddog h3{
+
+}
+
+.watcheddog td, .watcheddog th{
+padding: 5px;
+}
+
+.watcheddog table{
+width: 690px;
+clear: both !important;
+}
+
+#profile.watchdog #personphoto{
+float: right;
+}
+
+#profile.watchdog #personphoto img{
+margin-bottom: 10px;
+}
+
+
+
+#profile.watchdog .left.details{
+margin: 0 !important;
+width: 600px;
+}
+
+
+#profile.watchdog .left.details .med_button{
+margin: 0 10px 0 0;
+
+}
+
+
+#profile.watchdog li.person{
+width: 490px;
+padding: 0; 
+float: left;
+margin: 0 0 20px 0 !important;
+}
+
+
+
+
+
+
+

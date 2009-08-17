@@ -1,0 +1,26 @@
+<h1>Listing sidebars</h1>
+
+<table>
+  <tr>
+  <% for column in Sidebar.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for sidebar in @sidebars %>
+  <tr>
+  <% for column in Sidebar.content_columns %>
+    <td><%=h sidebar.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Edit', :action => 'edit', :id => sidebar %></td>
+    <td><%= link_to 'Manage items', :controller => 'sidebar_items', :action => 'manage', :sidebar_id => sidebar %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => sidebar }, :confirm => 'Are you sure?', :method => "post" %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= will_paginate @sidebars %>
+
+<br />
+
+<%= link_to 'New sidebar', :action => 'new' %>

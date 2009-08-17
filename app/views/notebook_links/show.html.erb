@@ -1,0 +1,38 @@
+<p>
+  <b>Political notebook:</b>
+  <%=h @notebook_link.political_notebook_id %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%=h @notebook_link.url %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%=h @notebook_link.title %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%=h @notebook_link.date %>
+</p>
+
+<p>
+  <b>Source:</b>
+  <%=h @notebook_link.source %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @notebook_link.description %>
+</p>
+
+<p>
+  <b>Is internal:</b>
+  <%=h @notebook_link.is_internal %>
+</p>
+
+
+<%= link_to 'Edit', edit_notebook_link_path(@notebook_link) %> |
+<%= link_to 'Back', notebook_links_path %>

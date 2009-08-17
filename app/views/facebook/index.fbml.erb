@@ -1,0 +1,18 @@
+<p>With the OpenCongress Facebook app, you can put bills that interest you on your Facebook profile.
+  It's an easy way to tell your friends which pieces of legislation you think are important.  You can
+  also add a comment about why you think the bill is important.</p>
+  
+<% if @facebook_user.facebook_user_bills.size == 0 %>
+  <p>You are currently not tracking any bills.</p>
+  <span style="font-size: 2em; margin-top: 5px;"><%= link_to "Select Bills For Your Profile >>", :action => 'billedit' %><span>
+<% else %>  
+  <p>This is the way your profile box currently looks:</p>
+  <div style="width: 300px; border: 1px solid #000;padding: 7px;">
+    <%= render :partial => 'profile', :locals => { :user => @facebook_user, :is_preview => true } %>
+  </div>
+  <div style="font-size: 2em; margin-top: 10px;">
+    <%= link_to "Update Bills on Your Profile >>", :action => 'billedit' %><br />
+    <%= link_to "Invite Friends to Add OpenCongress >>", :action => 'invite' %><br />
+    
+  </div>
+<% end %>

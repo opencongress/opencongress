@@ -1,0 +1,40 @@
+<% form_tag :action => 'update_pending' do -%>
+
+<b><%= @total_commentaries %></b> pending articles need to be processed.
+<table class="simple-table">
+  <th>Bill</th>
+  <th>Article</th>
+  <th>Action</th>
+  
+  <% @commentaries.each do |c| %>
+    <tr>
+      <td>
+        <% if c.bill %>
+          <%= c.bill.title_full_common %>
+        <% elsif c.person %>
+          <%= c.person.name %>
+        <% end %>
+      </td>
+      <td>
+        <b><%= link_to c.title, c.url, :target => '_blank' %></b><br>
+        <%= c.excerpt %>
+        <% if c.status == 'PENDING' %>
+          <font color="red">MARKED QUESTIONABLE BY PARSER</font>
+        <% elsif c.status == 'FLAGGED' %>
+          <font color="red">FLAGGED BY USER</font>        
+        <% end %>
+      </td>
+      <td width="120">
+        <%= radio_button :commentary, c.id, "FALSE POSITIVE", { :checked => :checked } %>False positive<br />
+        <%= radio_button :commentary, c.id, "OK" %>OK<br />
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<% if @total_commentaries > 10 %>
+  <%= submit_tag 'Continue >>' %>
+<% else %>
+  <%= submit_tag 'Finish!' %>
+<% end %>
+<% end %>        

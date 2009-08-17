@@ -1,0 +1,30 @@
+
+<% if flash[:notice] %>
+  <div id="highlight" class="note" style="display: none">
+		<a href="#" onclick="new Effect.BlindUp('highlight');">close</a>
+  	<div><%= flash[:notice] %></div>  
+  </div> 
+  <script type="text/javascript">
+    new Effect.BlindDown('highlight');
+  </script>
+<% end %>
+
+<% if flash[:error] %>
+  <div id="highlight" class="note error" style="display: none">
+		<a href="#" onclick="new Effect.BlindUp('highlight');">close</a>  	
+		<div><%= flash[:error] %></div>          
+  </div>
+  <script type="text/javascript">
+    new Effect.BlindDown('highlight');
+  </script>
+<% end %>
+
+<% if flash[:warning] %>
+  <div id="highlight" class="note warning" style="display: none">
+		<a href="#" onclick="new Effect.BlindUp('highlight');">close</a>
+  	<div><%= flash[:warning] %></div>          
+  </div>
+  <script type="text/javascript">
+    new Effect.BlindDown('highlight');
+  </script>
+<% end %>

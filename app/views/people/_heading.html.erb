@@ -1,0 +1,30 @@
+<div id="heading">
+<% if @person_type == :senators %> 
+
+ <h2>Senators</h2>
+ <p>This is a list of all 100 members of the current U.S. Senate. Use the buttons below to sort this list in other ways, such as most-viewed.</p>
+<% else %>
+ <h2>Representatives</h2>
+ <p>This is a list of all 435 members of the current U.S. House of Representatives. Use the buttons below to sort this list by most-viewed and more.</p>
+<% end %>
+
+<a href="#" id="view_button"><span>Change View</span></a> 
+<script type="text/javascript">
+$j(document).ready(function(){
+
+ $j("#view_button").toggle(function(){
+ $j(this).addClass("swap");
+ $j("#views").fadeOut("fast", function() {
+ $j(this).fadeIn("fast").addClass("wide");
+ });
+ }, function () {
+ $j(this).removeClass("swap");
+ $j("#views").fadeOut("fast", function() {
+ $j(this).fadeIn("fast").removeClass("wide");
+ });
+ });
+
+});              
+</script>
+
+</div>

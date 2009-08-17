@@ -1,0 +1,12 @@
+<h1>Editing notebook_item</h1>
+
+<%= error_messages_for :notebook_item %>
+
+<% form_for(@notebook_item) do |f| %>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @notebook_item %> |
+<%= link_to 'Back', notebook_items_path %>

@@ -1,0 +1,78 @@
+<div id="heading"> 
+<h2>Issue: <%= @subject.term %></h2>
+</div>
+
+<div class="padding">
+
+<a href="/bill/hot" class="med_button floatright clearnone"><span>View Hot Bills By Issues Area</span></a>
+<a href="/issues" class="med_button floatleft clearnone"><span>Back to All Issues</span></a>
+
+<div style="float:right;">
+  <% if @br_link %>
+		<%= link_to image_tag('/images/battle_royale_button_d_issue.gif'), @br_link %>
+	<% end %>
+</div>
+
+<div id="issue_summary_text">
+<%= @subject.summary %>
+</div>
+
+<% if @related_subjects %>
+<h3>Related Issues</h3>
+
+<%= link_to_subjects @related_subjects %>
+<% end %>
+
+<% unless @latest_bills.empty? %>
+  <%= render :partial => "bill/related_bills_list", :locals => {:related_bills_list => @latest_bills, :subject => @subject } -%>
+<% else %>
+  <div class="padding">
+  <p class="behave">No bills at this time. The Congressional Research Service -- the official
+  non-partisan think tank for Congress -- has not tagged any bills in the
+  current 111th session of Congress with this issue area.</p>
+
+  <p class="behave">The CRS tags bills in Congress with varying numbers of issue areas --
+  sometimes just a couple, sometimes dozens. There are over 4,000 individual
+  issue areas maintained by CRS, some of which are closely related -- for
+  example, "environmental health", "environmental justice", "environmental
+  law enforcement", etc.</p>
+
+  <p class="behave">The CRS might yet tag bills with this issue area in the current session of
+  Congress, but the likelihood of this for any given issue cannot be
+  reliably predicted from the available data. In the future, we seek to work
+  with Congress and other invested parties in order to open up the CRS
+  process and help make their work more accessible in accordance with the <a
+  href="http://www.opengovdata.org/">8 Principles of Open Government
+  Data</a>.</p>
+
+  <p class="behave">To stay up to date with this issue area, sign up for updates using the
+  tools to the right: subscribe to RSS feeds, email alerts, or track this
+  topic and others on your free "My OpenCongress" profile.</p>
+  </div>
+<% end %>
+<br /><br />
+  <% unless @tracking_suggestions[0] == 0 %>
+    <%= render :partial => "shared/tracking_suggestions_table", 
+               :locals => {:object => @subject, 
+                           :title => @subject.term, 
+                           :action => "tracking_issue", 
+                           :tracking_suggestions => @tracking_suggestions} %>
+
+  <% end %>
+<br /><br />
+
+  <div class="syndicate">
+    <h3 class="dark inline">Make a Widget for this Issue By:</h3>
+    <a href="/resources/issue_bills?issue_id=<%= @subject.id %>&item_type=new-bill">Newest Bills</a>&nbsp;&middot;&nbsp;
+    <a href="/resources/issue_bills?issue_id=<%= @subject.id %>&item_type=viewed-bill">Most Viewed Bills</a>
+   
+		<%= link_to_function(image_tag('/images/question.png', :mouseover => '/images/question_hover.png', :alt => "What's This?", :title => "What's This?"), "Element.show('issue_bills_panel_whatsthis');", :class => 'question') %>
+		
+		<%= dbox_start("issue_bills_panel_whatsthis", 0, 0, 450) %>
+		 OpenCongress syndication panels allow you to display information about <a href="/resources/bill_status/">bills</a> and <a href="/resources/issue_bills/">issue areas</a> on your own website or blog. First, select which bill or issue you want to track, then customize the appearance of the panel, and finally paste a simple chunk of HTML into your site. Now your community will have an easy, up-to-date way to track the status of important bills and issues in Congress.  
+      <%= dbox_end %>
+
+  </div>
+  
+
+</div>

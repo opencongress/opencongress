@@ -1,0 +1,44 @@
+<% if logged_in? %>
+   <%= render :partial => "/profile/logged_in_profile_nav" %>
+<% end %>
+
+<%= error_messages_for :friend %>
+
+<% form_for(:friend, :url => friend_path(@friend), :html => { :method => :put }) do |f| %>
+  <p>
+    <b>User</b><br />
+    <%= f.text_field :user_id %>
+  </p>
+
+  <p>
+    <b>Friend</b><br />
+    <%= f.text_field :friend_id %>
+  </p>
+
+  <p>
+    <b>Confirmed</b><br />
+    <%= f.check_box :confirmed %>
+  </p>
+
+  <p>
+    <b>Created at</b><br />
+    <%= f.datetime_select :created_at %>
+  </p>
+
+  <p>
+    <b>Updated at</b><br />
+    <%= f.datetime_select :updated_at %>
+  </p>
+
+  <p>
+    <b>Confirmed at</b><br />
+    <%= f.datetime_select :confirmed_at %>
+  </p>
+
+  <p>
+    <%= submit_tag "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', friend_path(@friend) %> |
+<%= link_to 'Back', friends_path %>

@@ -1,0 +1,26 @@
+<%= error_messages_for 'bill' %>
+
+<!--[form:bill]-->
+<p><label for="bill_session">Session</label><br/>
+<%= select 'bill', 'session', AVAILABLE_CONGRESSES.collect{|c| [ c, c] }  %></p>
+
+<% bill_types = Bill.all_types %>
+<p><label for="bill_bill_type">Bill type</label><br/>
+<%= select 'bill', 'bill_type', bill_types.keys.collect{|k| [ bill_types[k], k] }  %></p>
+
+<p><label for="bill_number">Number</label><br/>
+<%= text_field 'bill', 'number'  %></p>
+
+<p><label for="bill_sponsor_id">Sponsor</label><br/>
+<%= select 'bill', 'sponsor_id', Person.all_sitting.collect {|s| [ s.name, s.id ] }, { :include_blank => true }  %></p>
+
+<p><label for="bill_open">Official Summary</label><br/>
+<%= text_area 'bill', 'summary'  %></p>
+
+<p><label for="bill_date">Introduced Date</label><br/>
+<%= datetime_select 'intro_action', 'datetime'  %></p>
+
+<p><label for="bill_open">Official Title</label><br/>
+<%= text_area 'title', 'title'  %></p>
+<!--[eoform:bill]-->
+

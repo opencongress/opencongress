@@ -1,0 +1,14 @@
+if @days
+  page.hide "jump"
+	page.replace_html "timeframe", :partial => 'shared/timeframe_select'
+else
+	page.replace_html "timeframe", ""
+  page.show "jump"
+end
+page.replace_html "the-people", :partial => 'people_list', :locals => { :show_contact => false, :people => @people}
+page.select('#sort li.active').each do |element|
+	element.remove_class_name 'active'             
+end  
+page.select("#sort ##{@sort}").each do |element|
+	element.add_class_name 'active'
+end

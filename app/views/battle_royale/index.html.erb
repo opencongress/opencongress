@@ -1,0 +1,95 @@
+<%= render :partial => "header" %>
+
+<table class="thunderdome" cellspacing="0" cellpadding="0">
+  <tr><th></th><th></th>
+                <th><%= th_sort("Votes", "vote_count_1", params[:order]) %></th>
+                <th><%= th_sort("Ayes", "current_support_pb", params[:order]) %></th>
+                <th><%= th_sort("Nays", "support_count_1", params[:order]) %></th>
+                <th><%= th_sort("Tracking", "bookmark_count_1", params[:order]) %></th>
+                <th><%= th_sort("Comments", "total_comments", params[:order]) %></th>
+                <th style="color:#9E005D;" class="">Vote!</th></tr>
+  <% count = 0 %>
+	<% (2..params[:page].to_i).each {|i| count += 20} %>
+  <% @results.each do |bill| %>
+      <% count += 1 %>
+    <tr valign="middle">
+	  <td><h1 class="count bill"><%= count %></h1></td>
+      <td id="<%= bill.ident %>">
+
+		<% if bill.is_vote_hot?(@perc_diff_in_days,bill.vote_count_2.to_f, bill.vote_count_1.to_f, @range) %>
+		   <img src='/images/hot.jpg' style="border:0;vertical-align:middle;"/>
+		<% elsif bill.is_vote_cold?(@perc_diff_in_days,bill.vote_count_2.to_f, bill.vote_count_1.to_f, @range) %>
+		   <img src='/images/cold.jpg' style="border:0;vertical-align:middle;"/>
+		<% end %>
+		
+	  <div class="title">
+						<% unless bill.title_popular_only.blank? %>
+            <%= link_to "#{bill.title_typenumber_only} - #{truncate(bill.title_popular_only, :length => 103)}", :controller => 'bill', :action => "show", :id => bill.ident %>        
+						<% else %>                                 
+						<%= link_to "#{bill.title_typenumber_only}", :controller => 'bill', :action => "show", :id => bill.ident %>        
+         		<% end %>
+           
+           
+		<% unless bill.title_official.blank? %>
+			<p><%= truncate(bill.title_official, :length => 145) %></p>
+		<% end %>
+           
+             </div>        
+
+<!-- <span class="date">(<%= bill.session.ordinalize %> Congress)</span>  -->
+
+<span class="status">            
+            
+            <span><%= temp_url_strip(bill.status) %></span>
+            
+            <span class="date"><%= bill.last_action.formatted_date if bill.last_action %></span>
+            
+						<% unless bill.session == DEFAULT_CONGRESS %>
+              <span>(<%= bill.session.ordinalize %> congress)</span>
+            <% end %>
+
+			</span>
+			
+			<span class="linkage">
+          <%= link_to "<span>News</span>", :controller => "bill", :action => "news", :id => bill.ident %>
+     		  <%= link_to "<span>Blogs</span>", :controller => "bill", :action => "blogs", :id => bill.ident %>
+     		  <%= link_to "<span>Comments</span>", :controller => "bill", :action => "comments", :id => bill.ident %>
+     		</span>
+        
+      </td>
+      <td valign="center" style="text-align:center;">
+        <h1><%= bill.vote_count_1 || "0" %></h1>
+      <td style="text-align:center;">
+        <h1 id="support"><%= bill.vote_count_1.to_i - bill.support_count_1.to_i %></h1>
+      </td>
+      <td style="text-align:center;">
+        <h1 id="oppose"><%= bill.support_count_1 %></h1>
+      </td>
+      <td style="text-align:center;"><h1><%= bill.bookmark_count_1 || "0" %></h1></td>
+      <td style="text-align:center;">
+	     <h1><%= bill.total_comments || "0" %></h1>
+	  </td>
+
+      <td><% @bs =  bill.total_support %>
+	      <% @bo = bill.total_opposed %>
+         <%= draw_inline_user_bill_vote(bill) %>      
+        <div id="vote_results_<%= bill.id %>" style="position:absolute;display:none;">
+        </div>
+      </td>
+   </tr>
+   <tr>
+    <td colspan="8"><p id="vote_message_<%= bill.id.to_s %>" style="display:none;"></p></td>
+   </tr>
+  <% end %>
+</table>
+<div style="border-top:1px dashed #C1C7C0;text-align:right;">
+<%= will_paginate @results %>
+
+</div>
+
+<% if @bill %>
+   <% javascript_tag :defer => 'defer' do -%>
+    new Effect.ScrollTo('<%= @bill.ident %>');
+    new Effect.Highlight('<%= @bill.ident %>', {duration: 8} );
+  <% end -%>
+<% end %>

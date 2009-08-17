@@ -1,0 +1,20 @@
+<ul>
+  <% top_people.each do |p| %>
+    <li>
+      <a href="<%= url_for :controller => 'people', :action => 'show', :id => p %>">
+
+        <span class="views_count">
+          <span><strong><%= number_with_delimiter(p.views(DEFAULT_COUNT_TIME)) %></strong> views</span>
+        </span>
+        
+        <span class="title"><%= p.senator? ? 'Senator' : 'Representative' %> <%= p.popular_name %></span></span>
+        <span class="date">
+          <span><%= p.party %>, <%= Person.state_for_abbrev(p.state)%></span> 
+        </span>
+
+      </a>
+    </li>   
+  <% end %>
+</ul>
+<a href="/people/<%= person_type %>?sort=popular" class="med_button med_arrow"><span>More <%= person_type.capitalize %></span></a>
+<div class="clear">&nbsp;</div>

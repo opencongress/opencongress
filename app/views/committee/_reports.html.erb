@@ -1,0 +1,13 @@
+<% if @reports.empty? -%>
+<h3>No Reports Found</h3>
+<% else %>
+<div>
+<h3>Reports</h3>
+<ul class="list-links">
+<% @reports.each do |r| -%>
+<li><%= link_to_report r %></li>
+<% end -%>
+</ul>
+</div>
+<% end -%>
+

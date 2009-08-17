@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <style>
+      body {
+      	font:80%/140% "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;
+      	background: #<%= @bgcolor %>;
+      	color: #<%= @textcolor %>;
+      }
+    
+      a {
+        color: #<%= @textcolor %>;
+      }
+      a:hover {
+        text-decoration: none;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+    
+      li {
+        margin: 0 5px 10px 5px;
+        height: 43px;
+        overflow: hidden;
+        line-height: 1.1em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="syndicator">
+      <div class="syndicator_items">		
+
+        <div style="font-weight: bold;line-height: 1.1em;text-align: center;margin-top:5px;">
+          <%= @title %> <a href="<%= @feed_link %>" target="_top"><img src="/images/feed-icon-10x10.png" border=0></a>
+        </div>
+        <br />
+        <ul>
+          <%= render :partial => 'syndicator_item', :collection => @items, :locals => { :show_views => true } %>
+          <div style="clear: both; height: 1px; overflow: hidden;">&nbsp;</div>
+        </ul>
+        
+        <div style="font-weight: bold; text-align: center; padding-bottom: 5px;">
+          <a href="<%= @more_link %>" target="_top"><%= @more_text %> >></a><br />
+
+          <span style="font-size: 10px;">
+            Powered by <a href="/" target="_top">OpenCongress</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

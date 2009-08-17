@@ -1,0 +1,24 @@
+<h1>Listing watch_dogs</h1>
+
+<table>
+  <tr>
+    <th>District</th>
+    <th>User</th>
+    <th>Is active</th>
+  </tr>
+
+<% for watch_dog in @watch_dogs %>
+  <tr>
+    <td><%=h watch_dog.district_id %></td>
+    <td><%=h watch_dog.user_id %></td>
+    <td><%=h watch_dog.is_active %></td>
+    <td><%= link_to 'Show', watch_dog %></td>
+    <td><%= link_to 'Edit', edit_watch_dog_path(watch_dog) %></td>
+    <td><%= link_to 'Destroy', watch_dog, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New watch_dog', new_watch_dog_path %>

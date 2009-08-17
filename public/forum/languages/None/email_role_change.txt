@@ -1,0 +1,7 @@
+Hello {user_name},
+
+This message is to inform you that your account at {forum_name} has been changed.
+You have been assigned {role_name} status.
+
+You can review your role change at the following url:
+{forum_url}

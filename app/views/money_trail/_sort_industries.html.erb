@@ -1,0 +1,8 @@
+<div id="sortby">
+	<label for="sort-by">Sort by</label>
+	<select name="selectedPage" id="industry_sort" onchange="changePage('industry_sort'); return false;">
+	  <option value="/industry" <% if sort == :all %>selected<% end %>>Name</option>
+	  <option value="/industry/by_most_viewed" <% if sort == :popular %>selected<% end %>>Most Viewed</option>
+	</select>
+</div>
+<!-- // sortby-->

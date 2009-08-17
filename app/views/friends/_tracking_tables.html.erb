@@ -1,0 +1,15 @@
+  <% if @in_my_district_solr && @in_my_district_solr.total > 0 %>
+    <h3>In My Congressional District</h3>
+    <%= render :partial => "tracking_table", :locals => {:collection => @in_my_district} %>
+    <br/>
+  <% end %>
+
+  <% if @in_my_state_solr && @in_my_state_solr.total > 0 %>
+    <h3>In My State</h3>
+    <%= render :partial => "tracking_table", :locals => {:collection => @in_my_state} %>
+    <br/>
+  <% end %>
+  
+  <h3>All Users</h3>
+
+  <%= render :partial => "tracking_table", :locals => {:collection => @users} %>

@@ -1,0 +1,17 @@
+<% @content_for_timeframe = render :partial => 'shared/timeframe_select' %>
+
+<%= will_paginate @searches %>
+<table class='simple-table'>
+  <tr>
+    <th>Search term</th>
+    <th>Count</th>
+  </tr>
+  
+  <% @searches.each do |s| %>
+    <tr>
+      <td><%= search_link(h(s.text)) %></td>
+      <td><%= s.count %></td>
+    </tr>
+  <% end %>
+</table>
+<%= will_paginate @searches %>

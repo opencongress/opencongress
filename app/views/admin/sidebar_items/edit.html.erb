@@ -1,0 +1,9 @@
+<h1>Editing sidebar_items</h1>
+
+<% form_tag :action => 'update', :id => @sidebar_items do -%>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Edit' %>
+<% end %>
+
+<%= link_to 'Show', :action => 'show', :id => @sidebar_items %> |
+<%= link_to 'Back', :action => 'list' %>

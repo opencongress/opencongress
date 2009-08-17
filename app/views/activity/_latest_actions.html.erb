@@ -1,0 +1,11 @@
+<% ["Today", "Yesterday", "Within a week", "Recently"].each do |key| %>
+  <% next unless latest_actions[key].size > 0 %>
+  <h2><%= key %></h2>
+  <% latest_actions[key].each do |a| %>
+    <% logger.info "Action: #{a.inspect}" %>
+    <div class="action">
+      <%= belongs_to_title(a) %>
+      <p><%= a.to_s %></p>
+    </div>
+  <% end %>
+<% end %>

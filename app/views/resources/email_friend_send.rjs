@@ -1,0 +1,9 @@
+if @success
+  page.insert_html :bottom, 'emailsendresults', @content
+  page.show('emailsendresults');
+  page.hide('emailindicator');
+  page.call('Effect.BlindUp', 'emailfriend');
+else
+  page.hide('emailindicator');
+  page.alert(@content)
+end

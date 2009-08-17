@@ -1,0 +1,20 @@
+<% if @can_edit %>
+	<% remote_form_for :notebook_item, @notebook_item,
+				   :url => url_for(:controller => 'notebook_items', :action => 'update', :login => current_user.login), 
+				   :html => {:id => "add-link-form", :class => "notebook-form"} do |f| %>
+
+	<h3>Edit File</h3>			
+	<%= f.hidden_field :id %>	
+	<% if @notebook_item.can_render_thumbnail? %>
+    <% height = @notebook_item.item_div("medium", @notebook_item.id) %>
+    <div style="height:<%= div_height(height) %>px;">
+      <%= image_for @notebook_item, :medium %><br />
+    </div>
+  <% end %>
+	<p><label class="require" for="title">Title</label><span id="finding-title-status" style="display:none">finding title....</span><%= f.text_field :title %></p>				
+	<p><label for="description">Description</label><%= f.text_area :description,:rows => 4 %></p>
+	<p><label for="tags">Tags<em>[separate, with, a comma, to add multiple, tags]</em></label><%= f.text_field :tag_list %></p>
+	<%= hidden_field_tag :page, @page %>
+	<input type="submit" value="Update" /><!-- or <a href="javascript:void(0);" onclick="NotebookForm.hideAllForms();">Cancel</a>-->
+<% end %>
+<% end %>

@@ -1,0 +1,251 @@
+@import url("profile.css");
+
+body#political_notebooks .inner {
+  padding:0px;
+  background: url(img/sen-sort.png) left 84px repeat-x;
+   _background: url(img/sen-sort.gif) left 84px repeat-x;
+}
+
+#primary-content h1.tab-nav {
+  font-family:"Brush Script MT", script, "Monotype Corsiva", "URW Chancery L", cursive;
+  font-size:2.2em;
+  margin-right:10px;
+  text-align:left;
+  float:left;
+}
+#bookmarklet {
+  background: url('graphics/bookmark_bg-trans.png') no-repeat left top;
+   _background: url('graphics/bookmark_bg-trans.gif') no-repeat left top;
+  width:92px;
+  height:40px;
+  float:right;
+  padding-right:4px;
+  margin:2px 0px 0 0;
+}
+#bookmarklet a {
+  float:right;
+  cursor:move;
+}
+#privacy {
+  float:right;
+  margin:14px 24px 0 0;
+}
+ul#notebook-add-links{
+	float:left;
+  margin:0px 0 0 0;
+}
+
+ul#notebook-add-links li{
+	font-size:14px;
+	font-weight:bold;
+  display:inline;
+}
+ul#notebook-add-links li a img {
+  position:relative;
+  top:4px;
+  padding:0 4px;
+}
+ul#notebook-add-links li a{
+	margin:0 4px;
+  text-decoration:none;
+}
+ul#notebook-add-links li a:hover{
+  text-decoration:none;
+}
+form.notebook-form label{
+	font-weight:bold;
+	font-size:15px;
+}
+
+form.notebook-form label.require:after {
+  color:#B60202;
+  content:"*";
+  padding-left:2px;
+}
+form.notebook-form input[type="text"],textarea{
+	font-size:14px;
+	padding:3px;
+	display:block;
+	width:600px;
+}
+
+form.notebook-form label em {
+  font-size:12px;
+  color:#888;
+  padding-left:10px;
+}
+img.mypn-icon {
+  float:left;
+  position:relative;
+  left:-4px;
+}
+ul#notebook-items{
+  font-family:"Verdana", "Tahoma", "Arial";
+  padding-top:3px;
+	width:650px;
+}
+   
+ul#notebook-items p {
+  margin-bottom:0;
+}
+ul#notebook-items li{
+	padding-bottom:24px;
+	padding-left: 3px;
+	font-size:12px;
+}        
+ul#notebook-items li ul li {
+  padding-bottom:0;
+}
+
+ul#notebook-items li a{
+	font-size:15px;
+	text-decoration:none;
+  line-height:21px;
+}
+ul#notebook-items li a:visited {
+  color:#1B79DF;
+}
+ul#notebook-items li a span.download{
+	font-size:12px;
+	color:#77b1ef;
+	text-decoration:none;
+}
+
+ul#notebook-items li a:hover span.download{
+	font-size:12px;
+	color:#001f9e;
+	text-decoration:none;
+}
+
+
+ul#notebook-items li a:hover{
+	text-decoration:underline;
+}
+
+ul#notebook-items li span{
+  font-style:italic;
+	color:#bababa;	
+}
+
+ul#notebook-items li span a{
+	font-size:12px;
+}
+.notebook_top {
+  padding-top:28px;
+  background: url("graphics/notebook_top.png") no-repeat left top;
+   _background: url("graphics/notebook_top.gif") no-repeat left top;
+}
+.notebook_top h3 {
+  margin:0 0 0 92px;
+  line-height:36px;
+} 
+.notebook_content {
+  background: url("graphics/notebook.png") repeat-y left top;
+   _background: url("graphics/notebook.gif") repeat-y left top;  
+  line-height:24px;
+  overflow:visible;
+  min-height:462px;
+  padding:0 20px 0 98px;
+} 
+.notebook_bottom {
+  padding-bottom:32px;
+  background: url("graphics/notebook_bottom.png") no-repeat left bottom;
+   _background: url("graphics/notebook_bottom.gif") no-repeat left bottom;  
+}
+div.notebook-form-div{
+	padding-top:30px;
+}
+
+.notebookPrivacy{
+	color:#555;
+	font-weight:normal;
+	margin-left:50px;
+	text-decoration:none
+}
+
+a#no_tags {
+  font-size:12px;
+  padding-left:10px;
+  font-style:italic;
+  text-decoration:none;
+  color:#1B79DF;
+}
+a#no_tags:hover,
+a#no_tags:focus {
+  text-decoration:underline;
+  color:#001F9E;
+}
+
+ul#pn_tabs {
+  position:relative;
+  width:30px;
+  left:913px;
+  top:45px;
+}
+ul#pn_tabs li a{
+  position:absolute;
+  width:22px;
+  height:99px;
+  overflow:hidden;
+  text-indent:-999px;
+}
+a#all_tab{
+  top:0px;
+  background-image: url('graphics/pntab_all-trans.png');
+  z-index:6;
+}
+a#links_tab{
+  top:78px;
+  background-image: url('graphics/pntab_links-trans.png');
+  z-index:5;
+}
+a#videos_tab{
+  top:156px;
+  background-image: url('graphics/pntab_videos-trans.png');
+  z-index:4;
+}
+a#notes_tab{
+  top:234px;
+  background-image: url('graphics/pntab_notes-trans.png');
+  z-index:3;
+}
+a#files_tab{
+  top:312px;
+  background-image: url('graphics/pntab_files-trans.png');
+  z-index:2;
+}
+ul#pn_tabs li a.on {
+  background-position:left top;
+  z-index:10 !important;
+}
+ul#pn_tabs li a.off {
+  background-position:-22px top;
+}
+ul#pn_tabs li a.off:hover {
+  background-position:left top; 
+}
+.hints {
+  margin:1em 35px;
+}             
+.hints p {
+  font-style:italic;
+}
+
+.notebook_top h3{
+line-height: 1em;
+padding: 0px 0 13px 10px !important;
+}
+
+.explain_box{
+padding: 0px 0 10px;
+}
+
+.cc{
+background: #fff;
+}
+
+/*.notebook_link span{
+line-height: 1em;
+display: block;
+padding: 0 !important;
+} */

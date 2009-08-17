@@ -1,0 +1,12 @@
+<% unless committee.future_meetings.empty? -%>
+  <h3>Meetings</h3>
+
+  <div class="calendar_schedule">
+    <table class="simple-table">
+      <tr><th>Date</th><th>Summary</th></tr>
+      <% committee.future_meetings.each do |comm| -%>
+        <tr><td><%= date_format(comm.meeting_at) %> (<%= distance_of_time_in_words_to_now comm.meeting_at %>)</td><td><%= comm.subject %></td></tr>
+      <% end -%>
+    </table>
+  </div>
+<% end -%>

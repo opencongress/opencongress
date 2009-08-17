@@ -1,0 +1,31 @@
+<form action="/search/result" id="form-search" method="get">
+  <div id="search">
+  	<div class="search">
+  		<label for="search-field">Search</label>
+  		<input name="q" id="search-field" type="text" value="<%= @query.blank? ? '' : @query %>" />
+  		<input type="image" src="/stylesheets/img/search_submit.png" name="submit" id="search_submit" value="Search">
+  	</div>	
+  </div>
+	  
+  <div id="sessions">
+    <p>Sessions:</p>
+    <% AVAILABLE_CONGRESSES.each do |c| %>
+      <%= check_box_tag "search_congress[#{c}]", "#{c}", true %> <%= number_to_ordinal(c) %> Congress<br />
+    <% end %>
+  </div>
+		
+		
+	<div id="search_in">
+	  <p>Search in:</p>
+	  
+	  <input checked="checked" id="search_bills" name="search_bills" type="checkbox" value="1" /> <label for="search_bills">Bills</label><br />
+	  <input checked="checked" id="search_people" name="search_people" type="checkbox" value="1" /> <label for="search_senators">Congresspeople</label><br />
+	  <input checked="checked" id="search_committees" name="search_committees" type="checkbox" value="1" /><label for="search_committees"> Committees</label><br />
+	  <input checked="checked" id="search_issues" name="search_issues" type="checkbox" value="1" /> <label for="search_issues">Issues</label><br />
+	  <input checked="checked" id="search_comments" name="search_comments" type="checkbox" value="1" /> <label for="search_reps">User Comments</label><br />
+	  <!-- ><input checked="checked" id="search_commentary" name="search_commentary" type="checkbox" value="1" /> <label for="search_reps">News &amp; Blogs</label><br /> -->
+	  <input checked="checked" id="search_commentary" name="search_gossip_blog" type="checkbox" value="1" /> <label for="search_reps">OpenCongress Gossip Blog</label>
+
+	  <span id="search_indicator" style="display: none"><img src="/images/indicator.gif" class="noborder"></span>
+	</div>
+</form>

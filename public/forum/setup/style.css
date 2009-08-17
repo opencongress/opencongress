@@ -1,0 +1,142 @@
+body {
+   background: #fff;
+   margin: 0px;
+   padding: 0px;
+   text-align: center;
+}
+body, div, p, blockquote, h1, h2, input {
+   font-family: Trebuchet MS, Arial, Verdana;
+}
+body, div, p, blockquote {
+   font-size: 13px;
+   line-height: 170%;
+}
+a, a:link, a:visited {
+   text-decoration: underline;
+   color: #f60;
+}
+a:hover {
+   text-decoration: underline;
+   color: #c30;
+}
+h1 {
+   background: #F1F3FF;
+   border-bottom: 1px solid #ACBEDF;
+   margin: 0px;
+   padding: 0px;
+}
+h1 span {
+   background: url(leaf.gif) no-repeat center left;
+   color: #ACBEDF;
+   display: block;
+   width: 500px;
+   margin-left: auto;
+   margin-right: auto;
+   font-size: 36px;
+   padding: 20px 0px 20px 0px;
+   text-align: left;
+}
+h1 span strong {
+   padding-left: 80px;
+   color: #758ebc;
+}
+.Container {
+   background: url(fade.jpg) top left repeat-x;
+}
+.Content {
+   margin-left: auto;
+   margin-right: auto;
+   text-align: left;
+   width: 500px;
+   padding: 20px 0px 0px 0px;
+}
+h2 {
+   margin: 0px;
+   padding: 0px;
+}
+code {
+   background: #FEFECC;
+   margin: 10px 0px 10px 0px;
+   padding: 10px;
+   border-left: 4px solid #FCEEAA;
+   color: #960;
+   font-family: courier;
+   font-size: 12px;
+   display: block;
+}
+fieldset {
+   border: 0px;
+   margin: 0px;
+   padding: 0px;
+}
+fieldset ul {
+   list-style: none;
+   margin: 0px;
+   padding: 8px 8px 2px 8px;
+   background: #efefef;
+}
+fieldset label {
+   float: left;
+   margin: 0px 0px 6px 0px;
+   width:30%;
+}
+fieldset ul li {
+   clear: left;
+}
+fieldset ul li input {
+   margin-bottom: 6px;
+   width: 50%;
+}
+.Button {
+   padding: 10px 0px 20px 0px;
+}
+.Button input {
+   font-size: 14px;
+   font-weight: bold;
+   border: 0px;
+   margin: 0px;
+   padding: 0px;
+   background: none;
+   cursor: pointer;
+   color: #64AE18;
+}
+.Button a {
+   font-size: 14px;
+   font-weight: bold;
+   color: #64AE18;			
+}
+.Warnings {
+   background: url(../themes/vanilla/styles/default/alert.gif) left top no-repeat #FFFECC;
+   padding: 8px;
+   margin: 10px 0px 0px 0px;
+   border-top: 1px solid #FAEBB1;
+   border-bottom: 1px solid #FAEBB1;
+   color: #D57D00;
+}
+.Warnings,
+.Warnings div {
+   color: #D57D00;
+}
+.Warnings strong {
+   color: #c00;
+   display: block;
+   padding: 0px 0px 4px 22px;
+}
+.Warnings div a,
+.Warnings div a:link,
+.Warnings div a:visited {
+   color: #B16800;
+}
+.Warnings div a:hover {
+   color: #c00;
+}
+.Warnings div code {
+   background: none;
+   margin: 10px 0px 10px 0px;
+   padding: 0px;
+   border: 0px;
+   color: #960;
+   font-family: courier;
+   font-size: 12px;
+   display: block;
+}

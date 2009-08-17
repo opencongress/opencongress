@@ -1,0 +1,24 @@
+<div id="votinghistory_list">
+  <ul>
+    <% votes.each do |vote| %>
+      <li>
+        <a href="<%= url_for :controller => 'roll_call', :action => 'show', :id => vote.roll_call %>">
+          <% if vote.roll_call.bill %>
+            <span class="title"><%= vote.roll_call.bill.title_full_common %></span>
+          <% end %>
+
+
+          <div class="type">
+            <%= vote.roll_call.question %>
+          </div>
+          <div class="vote">
+            <%= get_vote_image(vote.vote) %> <%= vote %>
+    				
+            <% unless vote.with_party?.nil? %><em>(<%= vote.with_party? ? "with party" : "against party" %>)</em><% end %>
+          </div>
+          <span class="date"><%= vote.roll_call.date.strftime("%B %d, %Y") %></span>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</div>

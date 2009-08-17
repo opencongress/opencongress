@@ -1,0 +1,26 @@
+<% object = add_to_mypn %>
+
+<% if logged_in? %>
+<li class="side-button" id="addmypn_<%= object.class %>_<%= object.id %>">
+	<% if PoliticalNotebook.find_or_create_from_user(current_user).already_contains? object %>
+		Added to MyPN
+	<% else %>
+		<script>
+		$j().ready(function() {
+			$j('#add_item').jqm({ajax:'@href', trigger: 'a.mypn'});
+		});
+		</script>	
+		<%= link_to("Save to Notebook", "/users/" + current_user.login.to_s + "/profile/political_notebook/notebook_links/faceform?id=" + object.id.to_s + "&type=" + object.class.to_s, :class => "mypn") %>
+		
+		<div id="add_item" class="jqmWindow">
+		</div>
+	<% end %>
+
+
+
+<% else %>
+	<li class="side-button">
+		<%= link_to("Save to Notebook", { :controller => "account", :action => "login" }, :class => "mypn") %>
+<% end %>
+</li>
+

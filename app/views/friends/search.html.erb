@@ -1,0 +1,18 @@
+
+<div style="border:1px solid #E3E7DF;padding:3px 5px;background:#f5f7fa;">
+
+	<div style="padding:10px;background:#fff;"><h3>Search Results</h3>
+<% if @results.length == 0 %>
+Sorry, nothing found.
+<% else %>
+
+<ul>
+  <% @results.each do |r| %>
+    <li><%= link_to h(r.login), user_profile_path(r.login) %> <span id="fdiv_<%=h r.id %>"><%= add_friend_link_ajax(r, "fdiv_#{r.id}") %></span></li>
+  <% end %>
+</ul>
+
+<% end %>
+	</div>
+</div>
+

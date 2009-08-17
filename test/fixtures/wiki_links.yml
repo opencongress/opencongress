@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  wikiable_type: MyString
+  wikiable_id: 1
+  name: MyString
+  oc_link: MyString
+
+two:
+  wikiable_type: MyString
+  wikiable_id: 1
+  name: MyString
+  oc_link: MyString

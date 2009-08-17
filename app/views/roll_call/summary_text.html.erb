@@ -1,0 +1,21 @@
+<% if @roll_call %>
+OpenCongress url:<%= url_for(:only_path => false, :controller => 'roll_call', :action => 'show', :id => @roll_call) %>
+<% if @roll_call.bill %>Bill number:<%= @roll_call.bill.title_typenumber_only %>
+<% unless @roll_call.bill.title_popular_only.blank? %>Short title:<%= @roll_call.bill.title_popular_only %><% end %>
+Long title:<%= @roll_call.bill.title_official %><% end %>
+Date:<%= @roll_call.date.strftime("%B %d, %Y") %>
+Chamber:<%= @roll_call.chamber %>
+<% if @roll_call.amendment %>Amendment number:<%= @roll_call.amendment.display_number %><% end %>
+Number:<%= @roll_call.number %>
+Type:<%= @roll_call.roll_type %>
+Question:<%= @roll_call.question %>
+<% if @roll_call.amendment %>Amendment purpose:<%= @roll_call.amendment.purpose %><% end %>
+Required percentage of 'Aye' votes:<%= @roll_call.required %> <%= numeric_percentage(@roll_call) %>
+Ayes:<%= @roll_call.ayes %> <%= aye_breakdown('plain') %>
+Nays:<%= @roll_call.nays %> <%= nay_breakdown('plain') %>
+Abstained:<%= @roll_call.abstains %> <%= abstain_breakdown('plain') %>
+Percentage of 'aye' votes:<%= "%2d" % ((@roll_call.ayes.to_f / @roll_call.total_votes.to_f) * 100) %>%
+Result:<%= @roll_call.result %>
+<% else %>
+Invalid roll call ID.
+<% end %>

@@ -1,0 +1,9 @@
+Edit Plan Language Summary for <%= @bill.title_typenumber_only %>
+
+<% form_tag :action => 'update', :id => @bill.ident do -%>
+  <p>
+  <%= text_area 'bill', 'plain_language_summary', :rows => 15 %></p>
+  <%= hidden_field 'bill', 'ident' %>
+  
+  <p><%= submit_tag 'Edit' %></p>
+<% end %>

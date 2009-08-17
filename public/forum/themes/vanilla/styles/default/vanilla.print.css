@@ -1,0 +1,1081 @@
+body {
+	margin:0px;
+	padding:0px;
+	background:#ffffff;
+	}
+body, div, table, td {
+	font-family:'Trebuchet MS', 'Verdana', 'Tahoma', 'Arial', sans-serif;
+	font-size:12px;
+	color:#000;
+	}
+a {
+	color: #000;
+	text-decoration: underline;
+	cursor: pointer;
+	}
+	
+/* Errors & Success */
+.ErrorContainer {
+	background: #FFEDEF;
+	border-top: 1px solid #FFC2CA;
+	border-bottom: 1px solid #FFC2CA;
+	padding: 10px !important;
+	margin-bottom: 10px !important;
+	}
+.ErrorTitle {
+	font-weight: bold;
+	color: #c00 !important;
+	}
+.Error {
+	color: #c00 !important;
+	}
+.Success {
+	border-top: 1px solid #99CC99;
+	border-bottom: 1px solid #99CC99;
+	background: #E2F9E3;
+	color: #060 !important;
+	display: block;
+	padding: 6px !important;
+	text-align: center;
+	font-size: 13px;
+	margin-bottom: 10px !important;
+	}
+   
+/* Header.. */
+
+#Header h1 {
+	color:#000;
+	font-size:22px;
+	margin: 0px 0px 18px 0px;
+	}
+#Header h1 strong {
+	color:#ffa500;
+	}
+   
+/* Clear out unnecessary items */
+#Session,
+.PageList,
+.BannerContainer,
+.Timer,
+#Panel,  
+#Header ul {
+   display: none;
+	}
+
+
+/* Content.. */
+
+#Content {
+	margin: 0px;
+	}
+
+/* ContentInfo/Control/Whatever - Universal to Discussion Index & Comments */
+
+.ContentInfo {
+	text-align:right;
+	}
+   
+#DiscussionsPage .ContentInfo.Bottom {
+	margin-top:-6px;
+	margin-bottom: 8px;
+	}
+.ContentInfo * {
+	font-size:14px;
+	font-weight:bold;
+	margin:0px;
+	padding:0px;
+   color: #000;
+   text-decoration: none;
+	}
+#CommentsPage .ContentInfo h1 {
+	float:left;
+	width:60%;
+	overflow:hidden;
+	white-space:nowrap;
+	text-align:left;
+	}
+html>body .ContentInfo h1 { width:80% !important; }
+#DiscussionsPage .ContentInfo h1 {
+	float:none;
+	text-align:left;
+	}
+.PageInfo {
+	border-top:1px solid #cccccc;
+	border-bottom:1px solid #cccccc;
+	padding:0px 1px;
+	margin:5px 0px;
+	height:23px;
+	line-height:23px;
+	font-weight:bold;
+	}
+#CommentsPage .ContentInfo.Top .PageInfo{
+		margin:5px 0px 0px 0px !important;
+	}
+.PageInfo p {
+	margin:0px;
+	padding:0px;
+	display:inline;
+	float:left;
+	}
+
+/* Discussion Index */
+  
+#Discussions {
+	margin-top:-5px !important;
+	}	
+#Discussions, #Discussions * {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	}
+#Discussions li ul {
+	background-color:#fefecc;
+	border-bottom:1px solid #cccccc;
+	}
+#Discussions li li {
+	height:auto;
+	border:0px;
+	}
+.NoNewComments,
+#Discussions li.Read ul {
+	background-color:#fffeec !important;
+	}
+.NewComments,
+#Discussions li.Read.NewComments ul {
+	background-color:#fefecc !important;
+	}
+#Discussions li ul {
+	padding: 7px 6px 7px 6px;
+	color:#333;
+	}
+#Discussions ul span, #Discussions ul span a, #Discussions ul a {
+	color:#333;
+	text-decoration:none;
+	}
+.Discussion {
+	background: yellow;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	width: 100%;
+}
+.DiscussionType {
+	font-size:14px;
+	float:left;
+	margin-right:5px !important;
+	color:#062971;
+	font-weight:bold;
+	line-height:20px;
+	}
+.DiscussionType span,
+.DiscussionType.Normal {
+	display:none;
+	}
+.DiscussionType * {
+	float: left;
+	}
+.DiscussionTopic, .User.Name {
+	font-size:14px;
+	line-height:20px;
+	overflow: hidden;
+	}
+.DiscussionTopic span {
+	display:none;
+	}
+.DiscussionTopic a, .User.Name a {
+	color:#3354aa !important;
+	text-decoration:underline !important;
+	font-weight:bold;
+	}
+.DiscussionCategory, .DiscussionStarted, .DiscussionComments, .DiscussionLastComment, .DiscussionActive, .DiscussionNew {
+	width: auto;
+	display:inline;
+	font-size:10px;
+	margin-right:10px!important;
+	}
+.NewComments .DiscussionNew a {
+	color:#cc0000 !important;
+	}
+#Discussions li.Read.NewComments .DiscussionNew {
+	display:inline;
+	}
+
+/* Category Index */
+  
+#CategoryPage div.ContentInfo h1 {
+	float: left;
+	text-align: left;
+	width: 100%;
+	padding-bottom:6px;
+	}
+#Categories {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	border-top: 1px solid #cccccc;
+	margin-bottom: 20px;
+	float: left;
+	width: 100%;
+	}
+.BlockedCategory {
+	background: #ffffff;
+	}
+.UnblockedCategory {
+	background: #f5f9ff;
+	}
+#Categories li ul {
+	border-bottom:1px solid #cccccc;
+	}
+#Categories li li {
+	height:auto;
+	border:0px;
+	}
+#Categories li ul {
+	padding: 7px 6px 7px 6px;
+	}
+#Categories ul span, #Categories ul span a, #Categories ul a {
+	color:#333;
+	text-decoration:none;
+	}
+#Categories ul a {
+	color:#333;
+	}
+.Category {
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	width: 100%;
+	}
+.CategoryName {
+	font-size:14px;
+	margin-right:5px !important;
+	color:#062971 !important;
+	font-weight:bold;
+	line-height:20px;
+	}
+.CategoryName a {
+	color: #3354AA !important;
+	text-decoration: underline !important;
+	}
+.CategoryName span,
+.CategoryDescription span,
+.CategoryName.Normal {
+	display:none;
+	}
+.CategoryDescription {
+	font-size:13px;
+	line-height:20px;
+	overflow: hidden;
+	}
+.CategoryDiscussionCount, .CategoryOptions {
+	width: auto;
+	display:inline;
+	font-size:10px;
+	margin-right:10px!important;
+	}
+
+/* Comments.. */
+
+#Comments {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	}
+#Comments li {
+	margin:0px;
+	padding:10px 0px;
+	border-bottom:1px solid #cccccc;
+	}
+#Comments .CommentHeader {
+	padding-left: 8px;
+	padding-right: 8px;
+	text-align:right;
+	line-height:32px;
+	}
+#Comments .CommentHeader ul {
+	float:left;
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	}
+#Comments .CommentHeader li {
+	margin:0px;
+	padding:0px;
+	display:inline;
+	color:#333;
+	font-size:11px;
+	border-bottom:0px;
+	}
+#Comments .CommentHeader li div.CommentIcon {
+	padding:8px 0px 8px 30px;
+	margin-right: 6px;
+	background-repeat:no-repeat;
+	display: inline;
+	background: #ffffff center center no-repeat;
+	}
+#Comments .CommentHeader li span {
+	display:none;
+	}
+#Comments .CommentHeader a.WhisperBack {
+   display: none;
+	}
+#Comments .CommentHeader em {
+	color:#333;
+	font-style:normal;
+	}
+#Comments .CommentHeader a {
+	text-decoration:none;
+	font-weight:bold;
+	font-size:13px;
+	color:#3354aa;
+	}
+#Comments .CommentHeader span {
+	font-size:10px;
+	font-weight: normal;
+	color:#333;
+}
+#Comments .CommentHeader span a {
+   display: none;
+	}
+#Comments .CommentNotice {
+	padding: 6px;
+	font-size:13px;
+	text-align: center;
+	border-top: 1px solid #D9999A;
+	border-bottom: 1px solid #D9999A;
+	background: #FEE1E1;
+	color: #850406 !important;
+	margin: 10px 0px 10px 0px;
+	}
+#Comments .CommentBody {
+	display:block;
+	margin: 10px;
+	color:#000000;
+	}
+#Comments .CommentBody ul li,
+#Comments .CommentBody ol li {
+	border-bottom:none;
+	padding:0;
+	}	
+#CommentsPage .ContentInfo.Middle .PageInfo {
+	border-top: 0px;
+	margin:0px;
+	}
+#CommentsPage .ContentInfo.Bottom {
+	margin-bottom: 20px;
+	}
+#Comments code {
+	border-left: 6px solid #FFFFAA;
+	background: #FFFFEE;
+	padding: 8px;
+	padding-left: 16px;
+	display: block;
+	white-space: pre;
+	}	
+
+/* Search Page */
+
+#Form.Search {
+	width: 99% !important;
+	padding: 20px 0px 0px 0px !important;
+	}
+html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
+		width: 100% !important;
+	}
+
+#Form.Search fieldset legend {
+	padding: 0px !important;
+	margin-bottom: 6px;
+	}
+#SearchSimple {
+	margin: 0px !important;
+	}
+#SearchSimple label {
+	display: inline !important;
+	width: 10px !important;
+	}
+#MainSearchInput #txtKeywords {
+	width: 60% !important;
+	margin-left: 0px !important;
+	}
+#MainSearchInput label {
+	display: none !important;
+	}
+#Form.Search .Submit input {
+	margin: 0px !important;
+	color: #000000 !important;
+	}
+.SearchInput,
+.SearchSelect,
+.SearchSelect option {
+	color: #000 !important;
+	}
+#SimpleSearchRadios input {
+	width: auto !important;
+	margin: 0px 2px 0px 12px;
+	}
+#SimpleSearchRadios label {
+	font-weight: normal !important;
+	}
+.SearchSwitch {
+   display: none;
+	}
+
+/* Advanced Search Form */
+#SearchDiscussionFields, #SearchCommentFields, #SearchUserFields {
+	display: none;
+	}
+.AdvancedSearchInput {
+	width: 60% !important;
+	}
+.AdvancedUserInput,
+#DiscussionAutoCompleteResults,
+#CommentAutoCompleteResults {
+	width: 160px !important;
+	}
+#ddRoles, #ddOrder, #ddCommentCategories, #ddDiscussionCategories {
+	width: auto !important;
+	}
+	
+/* Search Results */
+  
+#SearchPage {
+	margin-bottom: 20px;
+	}
+#SearchPage .ContentInfo h1 {
+	text-align: left !important;
+	}
+#SearchPage .Bottom .PageInfo {
+	margin-top: 0px !important;
+	border-top: 0px !important;
+	}
+
+/* Comment Search Results */
+  
+#CommentResults {
+	margin-top:-5px !important;
+	}
+#CommentResults, #CommentResults * {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	}
+#CommentResults li li {
+	height:auto;
+	border:0px;
+	}
+#CommentResults li ul {
+	padding: 6px 6px 7px 6px;
+	color:#333;
+	background-color:#fefecc;
+	border-bottom:1px solid #cccccc;
+	}
+#CommentResults ul span, #CommentResults ul span a, #CommentResults ul a {
+	color:#333;
+	text-decoration:none;
+	}
+#CommentResults ul a {
+	color:#333;
+	}	
+#CommentResults .CommentResult ul {
+	background-color:#ffffff !important;
+	}
+#CommentResults .CommentText span {
+	display: none;
+	}
+#CommentResults .CommentText span.Highlight {
+	display:inline;
+	color: #333;
+	background: #ff9;
+	}
+#CommentResults .CommentText {
+	margin:6px 0px 4px 0px !important;
+	}
+#CommentResults .CommentText a {
+	color:#000000 !important;
+	}
+.CommentAuthor, .CommentAdded {
+	width: auto;
+	display:inline;
+	font-size:10px;
+	margin-right:10px!important;
+	}
+/*
+  This is an IE kludge.
+  For some reason IE was adding about 20px of padding to the top of this element
+  and the only way to get rid of it was to add a 1px border to the top.
+*/
+#CommentResults .SearchComment {
+	border-top: 1px solid #fefecc;
+	}
+#CommentResults .SearchComment ul {
+	margin: 0px !important;
+	}
+
+/* User Search Results */
+  
+#UserResults {
+	margin-top:-5px !important;
+	}
+#UserResults, #UserResults * {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	}
+/*
+  This is an IE kludge.
+  For some reason IE was adding about 20px of padding to the top of this element
+  and the only way to get rid of it was to add a 1px border to the top.
+*/
+#UserResults li {
+	border-top: 1px solid #fff;
+	}
+#UserResults li ul {
+	margin-top: 0px !important;
+	border-bottom:1px solid #cccccc;
+	}
+#UserResults li li {
+	height:auto;
+	border:0px;
+	}
+#UserResults li ul {
+	padding: 6px 6px 7px 6px;
+	color:#333;
+	}
+li.User {
+	display:inline;
+	font-size:10px;
+	margin-right:10px !important;
+	}
+li.User span {
+	color: #333;
+	}
+li.User.Name {
+	display:block;
+	font-size: 11px;
+	}
+li.User.Name .UserIcon {
+	padding:8px 0px 8px 30px !important;
+	margin-right: 6px !important;
+	background-repeat:no-repeat !important;
+	display: inline !important;
+	background: center center no-repeat;	
+	}
+li.User.Name a {
+	font-size: 14px;
+	}
+li.User.Name.WithIcon {
+	line-height:32px;
+	}
+li.User.Name span {
+	display:none;
+	}
+
+/* Forms.. */
+
+#Form * {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	}
+#Form {
+	margin-bottom: 10px;
+	}
+#Form fieldset {
+	border:0px;
+	clear:none;
+	margin-bottom: 20px;
+	}
+#Form fieldset legend {
+	padding: 4px 0px 4px 0px;
+	margin: 0px;
+	font-size:14px;
+	font-weight:bold;
+	color:#000000;
+	}
+#Form form {
+	margin: 0px;
+	padding:10px 10px 0px 10px;
+	border:1px solid #ffedae;
+	border-left:0px;
+	border-right:0px;
+	background-color:#fef9e9;
+	}
+#Form li {
+	margin-bottom:10px;
+	color:#834300;
+	font-weight:bold;
+	}
+#Form label a {
+	margin-bottom:-3px;
+	margin-right:15px;
+	float:right;
+	padding:3px 6px;
+	color:#834300;
+	text-decoration:none;
+	font-weight:normal;
+	border:1px solid #ffedae;
+	background-color:#ffffff;
+	}
+#WhisperUsername,
+#WhisperAutoCompleteResults {
+	width: 200px;
+	}
+#Form textarea {
+	width:100%;
+	height:150px;
+	}
+#Form textarea.SmallCommentBox {
+	height: 150px;
+	}
+#Form textarea.LargeCommentBox {
+	height: 400px;
+	}
+#Form .Button {
+	cursor: pointer;
+	color: #000 !important;
+   width:auto !important;
+	}
+#Form .Button.SubmitButton {
+	margin-right:10px;
+	}
+
+/* Add Comment & Start Discussion Forms */
+
+#Form.StartDiscussion,
+#Form.AddComments {
+   display: none;
+	}	
+
+/* Account Section Forms.. */
+
+#AccountProfile .Picture,
+#AccountProfile .ProfileIcon {
+	display: none;
+	}
+.Account {
+	padding-top:18px;
+	margin: 0px !important;
+	}
+#Form.Account * {
+	color:#84733d;
+	}
+#Form.Account legend {
+	color:#000000;
+	}
+#Form.Account h2 {
+	font-size:14px;
+	margin-bottom:10px;
+	}
+#Form.Account label {
+	display:block;
+	width:40%;
+	line-height:18px;
+	margin-bottom: 4px;
+	}
+#Form.GlobalsForm label {
+	float: left;
+	}
+#Form.Extensions label {
+	width: 100%;
+	}
+#Form.Account .Description span label,
+#Form.Account label small {
+	font-weight:normal;
+	}
+#Form.Account input,
+#Form.Account select {
+	width:40%;
+	}
+#Form.GlobalsForm input,
+#Form.GlobalsForm select {
+	width: 59%;
+	}
+.Description {
+	margin:3px 0px !important;
+	padding: 3px 0px 5px 0px !important;
+	font-weight:normal;
+	color:#a99861 !important;
+	}
+#Form.Account p span {
+	display:block;
+	margin-top:5px;
+	}
+#Form.Account p span label {
+	float:none;	
+	display:inline;
+	margin-left:5px;
+	font-weight:bold;
+	line-height:20px;
+	width:90%;
+	}
+#Form.Account p span input {
+	width:12px;
+	}
+#Form.Preferences p span label {
+	font-weight: normal;
+	}
+	
+/* Globals Form */
+  
+#Form.GlobalsForm select.SmallSelect {
+	width: 50px;
+	}
+#Form.GlobalsForm #ForumOptions p span label {
+	font-weight: normal !important;
+	}
+#Form.GlobalsForm #ForumOptions {
+	margin-bottom: 20px;
+	}
+#Form.GlobalsForm p {
+	margin-bottom: 10px;
+	}
+	
+/* Update Check form */
+  
+#Form.UpdateCheck p.Description {
+	padding: 0px !important;
+	margin: 0px 0px 10px 0px !important;
+	}  
+  
+/* RoleEdit Form */
+  
+#Form.RoleEditForm li p span label {
+	font-weight: normal !important;
+	}
+
+/* Custom form for extensions management screen */
+
+#Form.Extensions {
+	margin: 0px 0px 20px 0px !important;
+	}
+#Form.Extensions div.ExtensionsEnabled h2,
+#Form.Extensions div.ExtensionsDisabled h2 {
+	padding-top:20px;
+	}
+div.Extensions ul {
+	border:1px solid #dddddd;
+	border-bottom:0px;
+	margin: 20px 0px 20px 0px !important;
+	}
+div.Extensions ul {
+	background-color:#fffeec;
+	}
+div.Extensions ul li { 
+	border-bottom:1px solid #dddddd;
+	margin:0px !important;
+	padding:10px !important;
+	overflow: hidden;
+	}
+div.Extensions ul li.Enabled {
+	background: #FEFECB;
+	}
+div.Extensions ul li.Disabled {
+	background: url(disabled-tile.gif) #F4F4C2;
+	}
+div.Extensions h3 {
+	font-size:13px;
+	color:#000 !important;
+	}
+div.Extensions h3 label {
+	display: inline !important;
+	padding-left: 30px !important;
+	}
+div.Extensions ul li input {
+	width: auto !important;
+	margin-top: 3px !important;
+	left: 20px;
+	position: absolute;
+	}
+div.Extensions h3 a {
+	color:#1EB136 !important;
+	text-decoration: none;
+	}
+div.Extensions ul li span,
+div.Extensions ul li span * {
+	font-size: 12px;
+	font-weight: normal;
+	z-index: 1;
+	}
+div.Extensions ul li span {
+	margin-left: 10px !important;
+	}
+div.Extensions .Version {
+	font-weight: bold;
+	margin-left: 5px !important;
+	}
+div.Extensions ul li p {
+	padding-left:30px !important;
+	color:#000 !important;
+	font-weight:normal;
+	}
+div.Extensions ul li p a {
+	color:#335eb7 !important;
+	text-decoration: none;
+	}
+
+/* Custom form for sortable list */
+  
+.SortList {
+	color: #000000;
+	background: rgb(254,254,204);
+	margin-top: 10px !important;
+	padding: 0px;
+	border: 1px solid #ddd;
+	border-top: 0px;
+	}
+.MovableSortListItem {
+	cursor: move;
+	}
+.SortListItem {
+	border-top: 1px solid #dddddd;
+	padding: 6px !important;
+	margin: 0px !important;
+	}
+.SortEdit {
+	position: absolute;
+	margin-left: 364px !important;
+	}
+.SortEdit, .SortEdit:link, .SortEdit:active, .SortEdit:visited {
+	font-weight: normal;
+	color: #1EB136 !important;
+	text-decoration: none;
+	}
+.SortRemove {
+	display: block;
+	position: absolute;
+	margin-left: 394px !important;
+	height: 20px;
+	width: 20px;
+	background: url(btn.remove.gif) no-repeat top right;
+	text-decoration: none;
+	}
+
+/* */
+
+#CustomInfo li {
+	width:50%;
+	float:left;
+	}
+#CustomInfo li input {
+	width:80% !important;
+	}
+.Submit {
+	margin:20px 0px !important;
+	text-align:right;
+	}
+.Submit input {
+	width: auto !important;
+	float:left;
+	cursor:pointer;
+	}
+.Submit a {
+	color: #FF6600 !important;
+	}
+
+/* Profile Page.. */
+
+#AccountProfile {
+	float:left;
+	width:300px;
+	margin-top:20px;
+	border-right:1px solid #cccccc;
+	}
+#AccountProfile * {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	}
+#AccountProfile li {
+	clear:both;
+	margin-right:20px;
+	line-height:18px;
+	}
+#AccountProfile h3 {
+	font-size:12px;
+	width:44%;
+	float:left;
+	}
+#AccountProfile p {
+	float:left;
+	width:55%;
+	}
+#AccountProfile h2 {
+	font-size:14px;
+	color:#000000;
+	width:60%;
+	float:left;
+	}
+#AccountProfile .ProfileTitle * {
+	line-height:32px;
+	}
+#AccountProfile .Tagline {
+	padding: 6px;
+	text-align: center;
+	border-top: 1px solid #D9999A;
+	border-bottom: 1px solid #D9999A;
+	background: #FEE1E1;
+	color: #850406 !important;
+	margin: 0px 20px 10px 0px;
+	}
+.ProfileTitleIcon {
+	background-repeat:no-repeat;
+	}
+.ProfileTitle h2 {
+	width:48% !important;
+	}
+.ProfileTitle.WithIcon h2 {
+	padding-left:4px !important;
+	width: auto;
+	}
+.ProfileTitle.WithIcon .ProfileIcon {
+	padding:8px 0px 8px 30px;
+	background: #ffffff no-repeat center center;
+	margin-right: 6px;
+	display: inline;
+	float: left;
+	width: 32px;
+	}	
+#AccountProfile .ProfileTitle p {
+	width:auto;
+	float: right;
+	text-align:right;
+	font-size:11px;
+	color:#333;
+	}
+#AccountProfile .ProfileTitle {
+	line-height:20px;
+	margin-bottom:10px;
+	}
+#AccountHistory {
+	margin-left:320px;
+	padding-top:20px;
+	}
+html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
+	margin-left:300px !important;
+	}
+#AccountHistory * {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	color:#333;
+	}
+#AccountHistory ul, #AccountHistory h2 {
+	margin:0px 20px;
+	}
+#AccountHistory ul {
+	margin-bottom:20px;
+	}
+#AccountHistory h2 {
+	font-size:14px;
+	color:#000000;
+	}
+#AccountHistory ul {
+	border-top:1px solid #cccccc;
+	}
+#AccountHistory li {
+	padding:5px;
+	border-bottom:1px solid #cccccc;
+	}
+#AccountHistory h3,
+#AccountHistory h3 a {
+	color:#333;
+	font-size:12px;
+	}
+#AccountHistory h3 small {
+	font-size:11px;
+	}
+#AccountHistory p {
+	font-size:11px;
+	}
+#AccountHistory p.Note {
+	padding:3px;
+	padding-bottom:0px;
+	font-style:italic;
+	}
+	
+/* Settings Home */
+  
+#Form.Help legend {
+	padding-top: 22px !important;
+	}
+#Form.Help form {
+	margin: 0px;
+	padding: 0px;
+	}
+#SettingsPage #Form.Help p.Description {
+	padding: 10px !important;
+	color:#84733d !important;
+	}
+#SettingsPage #Content dl * {
+	margin:0px;
+	padding:0px;
+	color: #84733d;
+	font-size:12px;
+	}
+#SettingsPage #Content dl dt {
+	margin: 10px 10px;
+	font-weight:bold;
+	font-size:14px;
+	}
+#SettingsPage #Content dl dd {
+	margin:10px;
+	}
+.WhisperFrom {
+	background-color:#fefceb;
+	}
+.WhisperTo {
+	background-color:#feebfa;
+	}
+.left {
+	float:left;
+	}
+.hiLite {
+	background-color:#ffff99;
+	font-style:normal;
+	}
+
+/* Autocomplete results */
+  
+.AutoCompleteContainer {
+	margin: 0px;
+	padding: 0px;
+	border: 1px solid #888888;
+	border-top: 0px;
+	}
+.AutoCompleteContainer td {
+	padding: 3px;
+	cursor: pointer;
+	}
+.AutoCompleteRow td {
+	background: #ffffff;
+	color: #000000;
+	}
+.AutoCompleteHoverRow td {
+	background: #335EA8;
+	color: #ffffff;
+	}  
+
+/* Thank you positioniseverything.com*/
+
+.clearfix:after {
+	content:".";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden;
+	}
+.clearfix {
+	display:inline-table;
+	}
+	
+/* Hides from IE-mac \*/
+  
+* html .clearfix {
+	height:1%;
+	}
+.clearfix {
+	display:block;
+	}
+	
+/* End hide from IE-mac */

@@ -1,0 +1,18 @@
+<p>
+  <b>District:</b>
+  <%=h @watch_dog.district_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%=h @watch_dog.user_id %>
+</p>
+
+<p>
+  <b>Is active:</b>
+  <%=h @watch_dog.is_active %>
+</p>
+
+
+<%= link_to 'Edit', edit_watch_dog_path(@watch_dog) %> |
+<%= link_to 'Back', watch_dogs_path %>

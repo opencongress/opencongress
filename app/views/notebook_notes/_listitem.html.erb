@@ -1,0 +1,8 @@
+<ul>
+<li class="notebook_note" id="notebook_item_<%= listitem.id %>"><img class="mypn-icon" src="/images/mypn-note.png" alt="Note" title="Note" />
+	<% unless listitem.description.blank? %>
+		<%= RedCloth.new(h listitem.description).to_html %>
+	<% end %>
+	<%= render :partial => 'political_notebooks/item_meta', :object => listitem %>
+</li>
+</ul>

@@ -1,0 +1,5 @@
+<% @content_for_sortby = render :partial => 'sort_roll_calls', :locals => {:sort => @sort} %>
+  <div id="the-rolls">
+    <%= render :partial => 'roll_call/roll_calls_list', :locals => {:rolls => @rolls}%>
+  </div>
+</div> <!-- // views -->

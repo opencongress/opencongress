@@ -1,0 +1,3 @@
+class RepRepComparison < Comparison
+  
+end

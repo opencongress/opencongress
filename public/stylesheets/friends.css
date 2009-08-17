@@ -1,0 +1,118 @@
+@import url("profile.css");
+
+
+#the-items.friends{
+margin: 0;
+padding: 0 !important;
+}
+
+
+#the-items.friends h3{
+margin: 0;
+padding: 0;
+}
+
+ul.activity{
+clear: both;
+margin: 10px 0 !important;
+border: 1px solid #ddd;
+}
+
+ul.activity li{
+padding: 8px ;
+}
+
+
+.invites {
+margin: 0 25px 0 30px;
+}
+
+
+.invites a{
+font-size: 12px !important;
+}
+
+
+ul.activity li.odd{
+background: #f8f8f8;
+}
+
+hr{
+clear: both;
+}
+
+span.time{
+display: block;
+font-size: 10px;
+color: #999;
+margin-right: 10px;
+}
+
+
+.friends ul{
+float: left;
+width: 300px;
+}
+
+
+.friends li{
+font-size: 11px;
+border-bottom: 1px solid #eee;
+}
+
+.commented{
+padding-left: 20px;
+background: url('img/commented.png') 2px top no-repeat;
+   _background: url('img/commented.gif') 2px top no-repeat;
+}
+
+.commented span{
+color: #3895bd;
+}
+
+
+
+.befriended{
+padding-left: 20px;
+background: url('img/befriended.png') 2px 1px no-repeat;
+   _background: url('img/befriended.gif') 2px 1px no-repeat;
+}
+
+
+.befriended span{  
+color: #df8874;
+}
+
+p.line{
+clear: both;
+}
+
+.for{
+padding-left: 20px;
+background: url('/images/passed_big.png') 2px 1px no-repeat;
+   _background: url('/images/passed_big.gif') 2px 1px no-repeat;
+}
+
+.failed{
+padding-left: 20px;
+background: url('/images/Failed_big.png') 2px top no-repeat;
+   _background: url('/images/Failed_big.gif') 2px top no-repeat;
+}
+
+
+.for span{
+color: #72aa53;
+font-weight: bold;
+}
+
+.failed{
+color: #e14242;
+}
+
+
+.friends_table{
+float: right;
+}
+
+
+

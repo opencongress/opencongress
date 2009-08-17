@@ -1,0 +1,105 @@
+<% case type
+	when "bv", "bn"%>
+
+
+
+
+		<% popular.each do |bill| %>
+		 	<ul>
+
+        <li>
+        	<a href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>">
+		 	<span class="views_count">
+      			<span><strong><%= number_with_delimiter(bill.views(DEFAULT_COUNT_TIME)) %></strong> views</span>
+         	</span>
+
+          	<span class="title"><%= bill.title_typenumber_only %> - <span><%= truncate(bill.title_common, :length => 50) rescue nil %></span></span>
+          
+          	<span class="date">
+            <span><%= temp_url_strip(bill.status) %></span> 
+            	<%= bill.last_action.formatted_date if bill.last_action %>
+         	</span>
+	      	</a>
+		</li>   
+			</ul>
+
+    <% end %>
+	
+	 <% if type == "bv" %>
+			<a href="/bill/most/viewed" class="med_button med_arrow"><span>More Most Viewed Bills</span></a>
+	 <% else %>
+	 		<a href="/bill/most/viewed" class="med_button med_arrow"><span>More New Bills</span></a>
+		<% end %>
+	 <div class="clear">&nbsp;</div>
+		
+<% when "pis" %>
+
+    
+			<ul class="folder-small">
+        <% @popular_issues.each do |i| %>
+          <li>
+            <a href="<%= url_for :controller => 'issue', :action => 'show', :id => i %>">
+              <span class="views_count">
+                <span>
+                  <strong><%= number_with_delimiter(i.views(DEFAULT_COUNT_TIME)) %></strong> views
+                </span>
+              </span>
+              <span class="title"><%= i.term %></span>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+
+	
+	<%= link_to '<span>More Issue Areas</span>', { :controller => 'issue' }, :class => 'med_button med_arrow' %>
+
+<% when "ts" %>
+
+      
+      <% current_search = 0 %>
+      <ul>
+      <% @hot_bills.each do |hb|%>
+
+			  
+			  
+        <li>
+          <a href="<%= url_for :controller => 'bill', :action => 'show', :id => hb.ident %>">
+		 	<span class="views_count">
+      			<span><strong><%= number_with_delimiter(hb.views(DEFAULT_COUNT_TIME)) %></strong> views</span>
+         	</span>
+
+          	<span class="title"><%= hb.title_typenumber_only %> - <span><%= truncate(hb.title_common, :length => 50) rescue nil %></span></span>
+          
+          	<span class="date">
+            <span><%= temp_url_strip(hb.status) %></span> 
+            	<%= hb.last_action.formatted_date if hb.last_action %>
+         	</span>
+	      	</a>
+		</li>
+        <% end %>
+
+		
+
+  
+          <!-- <%# @popular_searches.each do |s| %>
+            <li>
+            <a href="<%# search_url(h(s.text)) %>">
+              <span class="views_count">
+                <span>
+                  <strong><%# number_with_delimiter(s.count) %></strong> searches
+                </span>
+              </span>
+            <span class="title"><%# s.text %></span>
+            </a></li>
+          <%# end %> -->
+      </ul>
+		
+		
+		
+		<%# link_to '<span>More Popular Searches</span>', { :controller => 'search', :action => 'popular' }, :class => 'med_button med_arrow' %>
+		<%= link_to '<span>More Hot Bills</span>', { :controller => 'bill', :action => 'hot' }, :class => 'med_button med_arrow' %>
+
+
+<% end %>
+
+<!-- // end of list boxes -->

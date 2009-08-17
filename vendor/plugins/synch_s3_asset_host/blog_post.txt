@@ -1,0 +1,132 @@
+So you've got "multiple asset hosts":http://spattendesign.com/2007/10/24/setting-up-multiple-asset-hosts-in-rails running in your Rails application, and you're using Amazon's S3 to host your assets.  Now you want to make sure that your assets are kept up to date.  This plugin is a Capistrano recipe that keeps the asset hosts synchronized with the public directory in your subversion repository.
+
+h3. Usage
+
+After you get everything setup and do your first deploy, just run @cap deploy@ as normal and all changed files in @RAILS_ROOT/public@ will be uploaded to all of your asset host buckets before the final @deploy:symlink@ task.
+
+* cap s3_asset_host:synch_public (This is the default task)
+* cap s3_asset_host:reset_and_synch
+* cap s3_asset_host:setup
+* cap s3_asset_host:create_buckets
+* cap s3_asset_host:delete_all
+* cap s3_asset_host:connect
+
+You can get documentation on these tasks by running @cap -T@
+
+h3. Requirements
+
+This plug-in is a Capistrano extension.  It requires Capistrano 2.0.0 or greater.
+
+You will also require the "aws-s3 gem":http://amazon.rubyforge.org
+
+If you want to use more than one asset host, then you have to either install the multiple asset hosts plugin 
+or upgrade to Rails 2.0 (see "setting up multiple asset hosts in Rails":http://spattendesign.com/2007/10/24/setting-up-multiple-asset-hosts-in-rails)
+
+h3. Setup
+
+To set-up, you need to do the following
+
+* Install the AWS-S3 gem.
+* Set up your Rails application to use asset hosts.
+* Set up your asset hosts.
+* Configure Capistrano.
+
+h4. Installing the AWS-S3 gem
+
+You need to do this on both your local computer *and* the computer that is defined as the asset_host_syncher (see Capistrano Configuration, below).
+
+@$> sudo gem install aws-s3@
+
+h4. Setting up your Rails app to use asset hosts
+
+h5. Single asset host
+
+For a single asset host, simply add the following line to @RAILS_ROOT/config/environments/production.rb@:
+
+@config.action_controller.asset_host = "http://assets.example.com"@
+
+h5. Multiple asset hosts
+
+Follow the instructions in "setting up multiple asset hosts in Rails"::http://spattendesign.com/2007/10/24/setting-up-multiple-asset-hosts-in-rails
+
+h4. Setting up your asset hosts
+
+Set up a CNAME entry for each asset host pointing to @s3.amazonaws.com@.  How you do this depends on your domain host.  Here's what it looks like on "easydns":http://easydns.com
+
+!http://spattendesign.com/assets/2007/10/24/easydns_cname.png!
+
+You may need to wait up to 24 hours for the DNS entries for these new hosts to propagate.
+
+h4. Configuring Capistrano
+
+h5. Capistrano installation
+
+This plugin requires Capistrano 2.0.0 or greater.
+
+To upgrade to the latest version (currently 2.1.0):
+
+@$> gem install capistrano@
+
+Once the plug-in is installed, make sure that the recipes are seen by Capistrano
+
+@$> cap -T | grep s3_asset_host@ 
+
+should return a bunch of tasks.  If you don't see anything listed, then you need to update your @Capfile@ by doing the following (this is "from Jamis Buck":http://groups.google.com/group/capistrano/browse_thread/thread/531ad32aff5fe5a8):
+
+In Capistrano 2.1.0 or above:
+<pre>
+$> cd RAILS_ROOT
+$> rm Capify
+$> capify .
+</pre>
+
+If you do not want to delete your @Capify@ file, or if you are using Capistrano 2.0.0, add the following line to your @Capify@ file:<br/>
+@Dir['vendor/plugins/*/recipes/*.rb'].each { |plugin| load(plugin) }@
+
+h5. Capistrano configuration
+
+In @RAILS_ROOT/config/deploy.rb@
+Specify one of your web hosts as an "asset_host_syncher".  If you only have one web host, you don't make a new line for this, 
+just edit the existing line that sets your :web role
+
+  @role :web, webserver1, :asset_host_syncher => true@
+
+tell Capistrano to synch your s3 hosts before doing the final symlink task:
+
+  @before "deploy:symlink", "s3_asset_host:synch_public"@
+
+h5. S3 configuration
+
+Create a file in @RAILS_ROOT/config@ called @synch_s3_asset_host.yml@.  Add the following to it,
+and edit to suit:
+<pre>
+   AWS_ACCESS_KEY_ID: 'your access key here'
+   AWS_SECRET_ACCESS_KEY: 'your secret key here'
+   asset_host_name: "assets%d.example.com"     
+   # dry_run: false # Set to true if you want to test the asset_host uploading without doing anything on Amazon S3
+</pre>
+
+h4. The first deploy
+
+Commit all changes to your rails application and do the initial bucket setup:
+
+<pre>
+$> svn add config/synch_s3_asset_host.yml
+$> svn add vendor/plugins/synch_s3_asset_host
+$> svn commit -m "Adding synch_s3_asset_host plugin"
+$> cap s3_asset_host:setup
+$> cap deploy
+</pre>
+
+This will do the following:
+* Create your Amazon S3 AWS buckets
+* upload everything in RAILS_ROOT/public (in your svn repository) to each bucket
+* Set the revision in each bucket to the latest revision in your repository.
+
+This could take a while if you have lots of images or other big files.
+
+h3. You're done!
+
+That should do it.  Now, every time you run @cap deploy@, your asset hosts should be updated with any changes to files in @RAILS_ROOT/public@.
+
+Let me know if you have any problems, suggestions or comments.

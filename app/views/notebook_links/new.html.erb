@@ -1,0 +1,50 @@
+<h1>New notebook_link</h1>
+
+<%= error_messages_for :notebook_link %>
+
+<%# form_remote_for([@notebook, @notebook_link]) do |f| %>
+  <% remote_form_for :notebook_link, 
+					 :url => political_notebook_notebook_links_path({:login =>@user.login}) do |f| %>
+
+
+  <p>
+    <b>Political notebook</b><br />
+    <%= f.text_field :political_notebook_id %>
+  </p>
+
+  <p>
+    <b>Url</b><br />
+    <%= f.text_field :url %>
+  </p>
+
+  <p>
+    <b>Title</b><br />
+    <%= f.text_field :title %>
+  </p>
+
+  <p>
+    <b>Date</b><br />
+    <%= f.text_field :date %>
+  </p>
+
+  <p>
+    <b>Source</b><br />
+    <%= f.text_field :source %>
+  </p>
+
+  <p>
+    <b>Description</b><br />
+    <%= f.text_area :description %>
+  </p>
+
+  <p>
+    <b>Is internal</b><br />
+    <%= f.check_box :is_internal %>
+  </p>
+
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', political_notebook_notebook_links_path(@notebook) %>

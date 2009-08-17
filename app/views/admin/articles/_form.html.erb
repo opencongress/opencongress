@@ -1,0 +1,31 @@
+<%= error_messages_for 'article' %>
+
+<!--[form:article]-->
+	
+<p><label for="article_title">Title</label><br/>
+<%= text_field 'article', 'title'  %></p> 
+
+<p><label for="article_article">Article</label><br/>
+<%= text_area 'article', 'article', :rows => 25, :cols => 60  %></p>
+
+<p><label for="article_excerpt">Excerpt (required)</label><br />
+This will appear on the homepage and may contain links.<br />
+<%= text_area 'article', 'excerpt', :rows => 5, :cols => 60  %></p>
+
+<p><label for="article_frontpage_image">Frontpage image URL (optional)</label><br/>
+<%= text_field 'article', 'frontpage_image_url'  %></p>
+
+<p><label for="article_tags">Tags (separate each with a comma)</label><br/>
+<%= text_area 'article', 'tag_list', :rows => 3, :value => @article.tag_list  %></p>
+
+<p><label for="article_created_at">Created at</label><br/>
+<%= datetime_select 'article', 'created_at'  %></p>
+
+<p><label for="article_published_flag">Published</label><br/>
+<%= check_box 'article', 'published_flag'  %></p>
+
+<p><label for="article_frontpage_flag">Frontpage</label><br/>
+<%= check_box 'article', 'frontpage'  %></p>
+
+<!--[eoform:article]-->
+

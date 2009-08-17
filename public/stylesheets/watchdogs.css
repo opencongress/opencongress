@@ -1,0 +1,72 @@
+#watchdog_main{
+padding: 10px;
+}
+
+#notebook-items li{
+padding: 0 0 20px 0 !important;
+font-size: 11px !important;
+}
+
+#notebook-items p{
+font-size: 11px;
+margin: 0;
+padding: 0 0 0 10px;
+}
+
+#notebook-items li a{
+font-size: 11px !important;
+}
+
+
+
+#notebook-items p.heading{
+background: #DEE8EF;
+padding: 5px 5px 5px 10px;
+margin-bottom: 10px;
+}
+
+
+#notebook-items p a{
+padding: 0 !important;
+font-size: 11px !important;
+}
+
+.watchdog_list{
+float: right;
+background: #efefef;
+width: 260px;
+margin-right: 5px;
+padding: 10px 0px 0px;
+clear: both;
+border: 1px solid #ddd;
+}
+
+.watchdog_list ul{
+text-align: right;
+}
+
+
+.watchdog_list ul li a{
+text-align: right;
+display: block;
+line-height: 26px;
+padding: 0 10px 0 0;
+text-decoration: none;
+border-bottom: 1px solid #ccc;
+color: #333;
+}
+
+
+.watchdog_list ul li a:hover{
+background: #fff;
+}
+
+
+h3{
+margin: 15px 0 !important;
+}
+
+.find{
+float: right;
+}
+

@@ -1,0 +1,55 @@
+<%= render :partial => "header" %>
+
+<table class="thunderdome">
+  <tr><th></th><th></th>
+                <th><%= th_sort("Tracking", "bookmark_count_1", params[:order]) %></th>
+                <th><%= th_sort("Approval Votes", "p_approval_count", params[:order]) %></th>
+                <th><%= th_sort("Approval", "p_approval_avg", params[:order]) %></th>
+                <th><%= th_sort("Comments", "total_comments", params[:order]) %></th>  </tr>
+  <% count = 0 %>
+	<% (2..params[:page].to_i).each {|i| count += 20} %>
+
+  <% @results.each do |person| %>
+      <% count += 1 %>
+    <tr>
+	  <td style="padding-right:10px;text-align:right;"><h1 class="count <% if @p_title == 'Senators' %>sen<% else %>rep<% end %>"><%= count %></h1>
+      <td id="<%= person.ident %>">
+
+         <font class="big"><%= link_to person.title_full_name, :controller => 'people', :action => "show", :id => person.ident %> [<%= person.state %>]</font><span class="date"> <%= person.party %></span>
+         <br /> 
+		  <%= link_to "News", :controller => "people", :action => "news", :id => person.ident %> &middot;
+		  <%= link_to "Blogs", :controller => "people", :action => "blogs", :id => person.ident %> &middot;
+		  <%= link_to "Comments", :controller => "people", :action => "comments", :id => person.ident %>
+					         
+		<br/>
+
+      </td>
+      <td style="text-align:center;">
+        <h1><%= person.bookmark_count_1.to_i || "0" %></h1>
+      </td>
+      <td style="text-align:center;">
+        <h1><%= person.p_approval_count.to_i || "0" %></h1>
+      </td>
+      <td style="text-align:center;">
+        <h1><%= (person.p_approval_avg.to_f * 10).round %>%</h1>
+      </td>
+      <td style="text-align:center;">
+	     <h1><%= person.total_comments || "0" %></h1>
+	  </td>
+
+
+   </tr>
+
+  <% end %>
+</table>
+<div style="border-top:1px dashed #C1C7C0;text-align:right;">
+<%= will_paginate @results %>
+
+</div>
+
+<% if @person %>
+   <% javascript_tag :defer => 'defer' do -%>
+    new Effect.ScrollTo('<%= @person.ident %>');
+    new Effect.Highlight('<%= @person.ident %>', {duration: 8} );
+  <% end -%>
+<% end %>

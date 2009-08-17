@@ -1,0 +1,25 @@
+<h2 class="icon">
+  <a href="/gossip">Congress Gossip</a>
+
+  <a href="/gossip/atom"><img src="/images/feed.jpg" class="noborder" alt="RSS" /></a>
+
+</h2>
+<div class="box04">
+
+<% most_recent = gossip.delete_at(0) %>
+<h3 class="line">
+  <em class="date"><%= most_recent.formatted_date %></em>
+  <strong class="gossip"><%= most_recent.title %></strong>
+</h3>
+
+<%= gossip_excerpt_with_more(most_recent.tip_html) %>
+
+<br /><br />
+<ul class="star">
+  <% gossip.each do |g| -%>
+    <li><%= link_to g.title, :controller => 'gossip' %></li>
+  <% end -%>
+</ul>
+<%= link_to 'More Gossip', { :controller => 'gossip' }, :class => 'arrow' %>
+
+</div>

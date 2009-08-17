@@ -1,0 +1,11 @@
+<% if @votes.length == 0 %>
+  <p>No Recent Votes</p>
+<% end %>
+<% @votes.each do |v| %>
+<% bill = v.bill %>
+          <%= v.support == 0 ? "Supporting: " : "Opposing: " %>
+          <%= link_to bill.title_typenumber_only, :controller => 'bill', :action => "show", :id => bill.ident %>
+          <%= bill.title_common %></span>
+        <br/>
+<% end %>
+

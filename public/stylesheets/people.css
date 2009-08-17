@@ -1,0 +1,1055 @@
+@import "vids.css";
+
+.news #tabs ul li#news_blogs,
+.news #tabs ul li#news_blogs span a,
+.blogs #tabs ul li#news_blogs,
+.blogs #tabs ul li#news_blogs span a {
+  background-position:right -844px;
+}                             
+.news #tabs ul li#news_blogs span,
+.blogs #tabs ul li#news_blogs span  {
+  background-position:0 -844px;
+}  
+
+.sidebar {
+width: 384px;
+_width: 370px;
+float: left;
+height: inherit;
+overflow: hidden;
+background: #fff;
+}
+
+#name{
+float: left;
+padding-bottom: 20px;	
+}
+
+#term{
+float: right;
+}
+
+#term em{
+padding: 0 7px;
+}
+
+
+#show_rolehistory_list a{
+padding: 0 14px 0 9px;
+background: url(img/arrows.png) right -22px no-repeat;
+   _background: url(img/arrows.gif) right -22px no-repeat;
+}
+
+#hide_rolehistory_list a{
+padding: 0 14px 0 9px;
+background: url(img/arrows.png) right 3px no-repeat;
+   _background: url(img/arrows.gif) right 3px no-repeat;
+}
+
+#rolehistory_list li{
+text-align: right;
+margin-right: 60px;
+}
+
+#content{
+padding: 0;
+}
+
+#contain_peeps{
+height: 600px;
+background: url(img/sen-sort.png) left top repeat-x;
+   _background: url(img/sen-sort.gif) left top repeat-x;
+}
+
+
+     
+div#voting_history{
+clear: both;
+float: left;
+margin:40px 0 0 0;
+}
+
+#voting_history .explain_box{
+clear: both;
+float: left;
+padding: 0 0 0 35px;
+font-size: 11px;
+color: #666;
+line-height: 1.4em;
+}
+
+
+#voting_history h3{
+padding: 0 0 0 35px;
+}
+
+
+#person_video{
+clear: both;
+padding: 35px;
+}
+
+
+
+.show #content-main .col1,
+.news_blogs #content-main .col1,
+.news #content-main .col1,
+.blogs #content-main .col1 {
+	width:300px;
+	clear: both;
+	float:left;
+	padding:35px 42px 65px 35px;
+}
+
+.show #content-main .col2,
+.news_blogs #content-main .col2,
+.news #content-main .col2,
+.blogs #content-main .col2 {
+	width:300px;
+	float:left;
+	padding:35px 42px 65px 20px;
+}
+
+
+.vid-page{
+padding: 35px;
+background: #fff;
+}
+
+#people.show #bill_and_status_list{
+width: 375px;
+padding: 30px 20px 0 35px;
+
+}
+
+.co{
+margin-left: 10px;
+}
+div.video_embed object, .video_embed embed, .video_embed object embed{
+
+}
+
+
+
+.compare_select{
+padding: 31px 0 20px 20px;
+margin: 10px 40px 20px 0px;
+float: right;
+width: 475px;
+background: url(img/small_compare.png) right top no-repeat;
+   _background: url(img/small_compare.gif) right top no-repeat;
+}
+
+.compare_select span{
+padding-right: 15px;
+}
+
+.votes_with em, .votes_least em{
+font-size: 11px;
+color: #999;
+display: block;
+padding-bottom: 5px;
+}
+
+
+.votes_with{
+float: left;
+width: 200px;
+margin-top: 20px;
+padding-right: 0px;
+}
+
+.votes_least{
+float: left;
+margin-top: 20px;
+padding-right: 20px;
+}
+
+.votes_percent{
+clear: left;
+margin-top: 20px;
+padding-top: 20px;
+padding-right: 20px;
+}
+
+.votes_percent li{
+float: left;
+width: 175px
+}
+
+
+
+#views.wide #people_list,
+#views.wide #sort_nav,
+#views.wide #contain_peeps {
+  float:none;
+  width:100%;
+display: block;
+float: left;
+}
+
+
+#views.wide #people_list,
+#views.wide #sort_nav{
+background:none !important;
+}
+
+#views.wide #sort_nav .find_map{
+display: block;
+margin: 0 47px 0 0 ;
+background: 0;
+padding: 18px 0 0 0;
+}
+
+#views.wide #people_list,
+#views.wide #contain_peeps {
+  height:auto;
+}
+
+
+
+
+.temp{
+float: left;
+width: 100px;
+padding-top: 42px;
+height: 0;
+overflow: hidden;
+}
+
+.committee_list{
+margin-right: 40px;
+float: right;
+padding: 30px 0 0 0;
+width: 255px;
+}
+
+.committee_list h3{
+padding: 0;}
+
+
+.bills_list{
+
+}
+
+#bill_and_status_list{
+float: left;
+width: 680px;
+}
+
+#bill_and_status_list h3{
+padding-left: 0px;
+}
+
+hr{
+border: none;
+}
+
+
+.hot{
+background: url(img/hot.png) center 14px no-repeat;
+   _background: url(img/hot.gif) center 14px no-repeat;
+}
+
+.cooling{
+background: url(img/cooling.png) bottom center no-repeat;
+   _background: url(img/cooling.gif) bottom center no-repeat;
+}
+
+.senators #heading{
+border-bottom: 1px solid #f3e8d6;
+height: 45px;
+ background: url('img/brown_bg.png');
+   _background: url('img/brown_bg.gif');
+}
+
+.representatives #heading{
+background: url(img/rep_heading_orange.png);
+   _background: url(img/rep_heading_orange.gif);
+border-bottom: 1px solid #e7cdbc;	
+height: 45px;
+}
+
+#heading h2{
+height: 20px;
+float: left;
+ font-style: italic;
+font-family: Georgia, Times, serif;
+}
+
+#heading h2 span{
+display: none;
+font-weight: normal;
+font-size: 12px;
+}
+
+.representatives #heading p{
+color: #b97d59;	
+}
+
+
+#heading p{
+float: left;
+font-size: 11px;
+text-align: left;
+padding: 7px 25px 0 20px ;
+font-style: italic;
+color: #999
+}
+
+
+
+ul#people_list{
+width: 617px;
+height: 566px;
+overflow: auto;
+float: left;
+_float: right;
+display: block;
+_margin-left: 0;
+_position: relative;
+_margin-top: -100px;
+background: url(img/zip_arrow.png) 0 -71px no-repeat;
+   _background: url(img/zip_arrow.gif) 0 -71px no-repeat;
+}
+               
+ul#people_list li{
+list-style: none;
+display: block;
+clear: both;
+overflow: hidden;
+}
+
+ul#people_list li.state{
+list-style: none;
+display: block;
+margin: 25px 0 10px 34px;
+font-size: 13px;
+}
+
+ul#people_list li.state div.label {
+display: block;
+height: 10px;
+border-bottom: #d1d7dc 1px solid;
+margin-right: 30px;
+}
+
+ul#people_list li.state b{
+display: inline;/*
+background: #f4faff;
+padding-right: 10px;*/
+float: left;
+}
+
+ul#people_list li.state span{
+display: none;
+
+}
+
+ul#people_list li.state a{
+float:right;
+background: #f4faff;
+color: #666;
+font-size: 10px;
+padding: 0 10px;
+}
+
+ul#people_list li.help p{
+padding: 30px 46px 5px;
+font-size: 11px !important;
+color: #999;
+}
+
+ul#people_list li.person{
+list-style: none;
+display: block;
+padding: 17px 0 17px 36px;
+}
+
+ul#people_list li.person img{
+display: block;
+float: left;
+width: 73px;
+margin: 0 20px 0 10px;
+}
+
+ul#people_list li.person a.name{
+display: block;
+font-weight: bold;
+font-size: 14px;
+margin: 7px 0 0 2px;
+}
+
+.person .details{
+width: 247px;
+float: left;
+}
+
+.person .stats{
+width: 170px;
+float: right;
+height: 80px;
+margin: 3px 20px 0 0;
+}
+
+.person .stats li{
+line-height: 2.5em;
+padding-left: 25px;
+font-size: 11px;
+}
+
+ul#people_list li.person a.name span{
+display: block;
+font-weight: normal;
+margin-top: 2px;
+font-size: 12px;
+text-decoration: none;
+}
+
+ul#people_list li.person a.track_small{
+margin: 16px 0;
+}
+
+#zip_sort{
+height: 83px;
+}
+
+#sort_nav{
+height: 83px;
+width: 617px;
+float: left;
+/*
+background: url(img/sorting_bg.png) no-repeat;
+   _background: url(img/sorting_bg.gif) no-repeat;
+*/
+background: url(img/zip_arrow.png) 0 11px no-repeat;
+   _background: url(img/zip_arrow.gif) 0 11px no-repeat;
+}
+
+#sort_nav .find_map{
+display: none;
+float: left;
+}
+
+
+
+.find_map{
+display: block;
+margin: 0;
+background: url(img/map_right.png) right 20px no-repeat;
+   _background: url(img/map_right.gif) right 20px no-repeat;
+height: 65px;
+/*
+background: url(img/map_bg.png) 0 -13px repeat-x;
+   _background: url(img/map_bg.gif) 0 -13px repeat-x;
+*/
+}
+
+.find_map span{
+display: block;
+height: 0;
+width: 340px;
+margin: 0px 0 0 22px;
+
+overflow: hidden;
+padding-top: 49px;
+background: url(img/find_map.png) repeat-x;
+   _background: url(img/find_map.gif) repeat-x;
+}
+
+.find_map span:hover{
+background: url(img/find_map.png) 0 -55px repeat-x;
+   _background: url(img/find_map.gif) 0 -55px repeat-x;
+}
+
+.representatives .find_map span{
+background: url(img/map_buttons.png) 0 -314px no-repeat;
+   _background: url(img/map_buttons.gif) 0 -314px no-repeat;
+}
+
+.representatives .find_map span:hover{
+background: url(img/map_buttons.png) 0 -366px no-repeat;
+   _background: url(img/map_buttons.gif) 0 -366px no-repeat;
+}
+
+
+
+
+
+
+.sidebar .find_map{
+padding: 18px 0 0 0 !important;
+}
+
+#head_button{
+display: block;
+padding-top: 84px;
+height: 0;
+border-top: 1px solid #ddd;
+border-right: 1px solid #ddd;
+overflow: hidden;
+background: url(img/headtohead.png) repeat-x;
+   _background: url(img/headtohead.gif) repeat-x;
+}
+
+#head_button:hover{
+background: url(img/headtohead.png) 0 -84px repeat-x;
+   _background: url(img/headtohead.gif) 0 -84px repeat-x;
+}
+
+#zipcode_lookup{
+float: left;
+width: 385px; 
+height: 65px;
+background: url(img/zip_lookup.jpg) -2px 0 no-repeat;
+padding: 31px 0 0 0;
+}
+
+#zipcode_lookup h3{
+color: #4e6426;
+font-size: 14px;   
+float: left;
+line-height: 2em;
+margin: 0 18px 0 26px;
+}
+
+#zipcode_lookup .form{
+border: none;
+float: left;
+width: 111px;
+margin-right: 16px;
+height: 21px;
+padding: 7px 0 0 0px;
+text-align: center;
+background: none;
+background: url(img/forms.png) 0 0px no-repeat;
+   _background: url(img/forms.gif) 0 0px no-repeat;
+}
+
+.track_small{
+margin: 10px 0 0 0;
+}
+
+
+.rating{
+  background: url(img/no-rating.png) 3px center no-repeat;
+   _background: url(img/no-rating.gif) 3px center no-repeat;
+}
+
+.no_rating{
+  background: url(img/no-rating.png) 3px center no-repeat;
+   _background: url(img/no-rating.gif) 3px center no-repeat;
+}
+
+.bill_count{
+  background: url(img/tiny_bill.png) left center no-repeat;
+   _background: url(img/tiny_bill.gif) left center no-repeat;
+}
+
+.cronie{
+  background: url(img/cronie.png) left center no-repeat;
+   _background: url(img/cronie.gif) left center no-repeat;
+}
+
+.senators .previous{
+border: 1px solid;
+float: left;
+}
+
+.senators .next{
+border: 1px solid;
+float: right;
+}
+
+/*///////////////////////////////////////
+
+~ Profile Pages
+
+///////////////////////////////////////*/
+
+
+.people_header h3{
+font-family: Georgia, Times, sans-serif;
+font-style: italic;
+margin-bottom: 1px;
+font-size: 16px;
+}
+
+.people_header{
+padding: 35px;
+}
+
+.status_bar{
+clear: both;
+background: url(img/brown_status_bar2.png);
+   _background: url(img/brown_status_bar2.gif);
+height: 51px;
+}
+
+.status_bar *{
+float: left;
+}
+
+#personphoto{
+float: right;
+margin: 0;
+}
+
+#personphoto img{
+width: 200px;
+margin-top: 160px;
+}
+
+
+
+#sponsor_stats {
+border-top:1px solid #e1ded5;
+border-bottom:1px solid #e1ded5;
+clear: both;
+padding: 10px 0 4px;
+}         
+
+#sponsor_stats.clearfix:after {
+  clear:left;
+}
+#sponsor_stats li {
+  float:left;
+  padding-left:25px;
+  background: url(img/sprites.png) -279px -93px no-repeat;
+   _background: url(img/sprites.gif) -279px -93px no-repeat;
+margin-bottom: 6px;
+
+}
+
+.pie_votes{
+padding-left: 25px;
+  background: url(img/sprites.png) 0 -219px no-repeat;
+   _background: url(img/sprites.gif) 0 -219px no-repeat;
+}
+
+.abstains{
+padding-left: 25px;
+  background: url(img/sprites.png) 0 -240px no-repeat;
+   _background: url(img/sprites.gif) 0 -240px no-repeat;
+}
+#map{
+border: 0px solid #fff !important;
+margin-left: -410px;
+padding: 0;
+}
+
+#us-map{
+border: 10px solid #444 !important;
+padding: 50px;
+float: left;
+}
+
+
+#people.show .inner, 
+#people.comments .inner, 
+#people.bills .inner, 
+#people.videos .inner,
+#people.voting_history .inner, 
+#people.news_blogs .inner,
+#people.news .inner,
+#people.blogs .inner,
+#people.money .inner {
+background: url(img/sen_profile_bg.png) right top repeat-y;
+   _background: url(img/sen_profile_bg.gif) right top repeat-y;
+float: left;
+width: 100%;
+}
+
+#people.show #topic, 
+#people.news_blogs #topic,
+#people.voting_history #topic,
+#people.bills #topic,
+#people.comments #topic,
+#people.videos #topic,
+#people.news #topic,
+#people.blogs #topic,
+#people.money #topic {
+background: url(img/brown_bg.png) left top repeat;
+   _background: url(img/brown_bg.gif) left top repeat;
+}
+
+
+#people.show #content-main, 
+#people.bills #content-main, 
+#people.comments #content-main, 
+#people.videos #content-main, 
+#people.news_blogs #content-main, 
+#people.voting_history #content-main{
+width: 745px;
+float: left;
+overflow: hidden;
+}
+
+
+/*#people.show #tertiary-content, 
+#people.show #tertiary-content, 
+#people.bills #tertiary-content, 
+#people.comments #tertiary-content, 
+#people.videos #tertiary-content, 
+#people.news_blogs #tertiary-content, 
+#people.voting_history #tertiary-content{
+width: 220px;
+float: left;
+}
+*/
+
+
+
+#people.show .pagination, 
+#people.bills .pagination, 
+#people.comments .pagination, 
+#people.videos .pagination, 
+#people.news_blog .pagination, 
+#people.voting_history .pagination{
+padding: 20px 35px 0;
+}
+
+
+#people.bills .bills_list, 
+#people.comments .bills_list, 
+#people.videos .bills_list, 
+#people.news_blog .bills_list, 
+#people.voting_history .bills_list{
+padding: 35px ;
+}
+
+#people.bills .all_bills h3 {
+padding: 0 35px ;
+margin: 0 ;
+}
+
+
+/*//////////////////////////////////
+
+Compare People
+
+//////////////////////////////////*/
+
+
+.compare #heading{
+height: 45px;
+}
+
+
+
+.comppeeps {
+border: 1px solid;
+width: 450px;
+float: left;
+}
+
+.comppeeps h3{
+float: left;
+padding-top: 30px;
+padding-left: 15px;
+margin-bottom: 0;
+}
+
+
+.comppeeps p{
+padding: 20px;
+float: left;
+}
+
+.comppeeps img{
+width: 130px;
+float: right !important;
+}
+
+.compare table{
+margin: 0 35px;
+}
+
+
+
+#votinghistory_list{
+padding: 0 35px;
+width: 670px;
+}
+
+#votinghistory_list ul{
+width: 670px;
+}
+
+#votinghistory_list li{
+padding: 10px 0px 32px;
+margin: 0;
+width: 100%;
+}
+
+#votinghistory_list li a{
+width: 100%;
+}
+
+#votinghistory_list a:hover{
+  text-decoration: underline;
+}
+
+#votinghistory_list a a{
+display: none;
+}
+
+
+#votinghistory_list .med_button{
+margin-top: 45px;
+}
+
+
+#votinghistory_list li a{
+text-decoration: none;
+font-weight: bold;
+min-height: 60px;
+border-bottom: 1px solid #ddd;
+margin: 0;
+padding: 10px 0;
+float: left;
+color: #333;
+display: block;
+}
+
+#votinghistory_list .title{
+height: 15px;
+overflow: hidden;
+display: block;
+}
+
+
+#votinghistory_list .vote{
+float: left;
+}
+
+
+#votinghistory_list .date{
+float: right;
+font-size: 11px;
+color: #777;
+}
+
+#votinghistory_list .type{
+display: block;
+font-style: italic;
+font-size: 11px;
+padding: 2px 0 0 0;
+font-weight: normal;
+color: #777;
+}
+
+
+#votinghistory_list .aye{
+color: #569a31;
+font-weight: bold;
+padding-right: 3px;
+}
+
+
+#votinghistory_list .nay{
+color: #d05829;
+padding-right: 3px;
+font-weight: bold;
+}
+
+
+
+.bills #sort, .news_blogs #sort{
+float: right;
+width: 358px;
+padding: 40px 20px 0 0;
+}
+
+.comments #sort{
+float: right;
+width: 358px;
+padding: 30px 0px 0;
+}
+
+.comments_title{
+padding-top: 30px;
+}
+
+
+.comments #sort h4, .bills #sort h4, .news_blogs #sort h4{
+float: left;
+padding: 0 15px 0 0;
+}
+
+#comments-container{
+background: #fff;
+padding-top: 13px;
+}
+
+.bills .search_form, .voting_history .search_form{
+float: right;
+width: 100%;
+padding: 30px;
+}
+
+.bills .search_form div, .voting_history .search_form div{
+float: right;
+
+}
+
+.bills .search_form div span, .voting_history .search_form div span{
+display: none;
+}
+
+
+.user_stats_div {
+float: left;
+  width: 660px;
+  padding:35px;
+}
+
+
+
+.user_stats_div table{
+margin-bottom: 10px;
+}
+
+.user_stats_div table td{
+padding: 0 30px 0 0;
+}
+
+
+/*
+
+.rating_filter{
+padding: 0px 0 0 0;
+margin: 0;
+clear: both;
+float: right;
+width: 250px;
+}
+
+
+div.rating_filter h4{
+padding: 0px 0 0 0;
+margin: 0;
+height: 16px;
+clear: none;
+float: left !important;
+}
+
+*/
+
+.news_blogs #content-main div.clearfix{
+background: #fff;
+}
+
+.representatives #zipcode_lookup h3{
+width: 121px;
+}
+
+#voting_history .med_button{
+margin: 25px 0 0 35px;
+}
+
+div.news_blogs{
+float: left;
+border-top: 1px solid #efecdf;
+border-bottom: 1px solid #efecdf;
+background: #f9f7ef;
+width: 745px;
+}
+
+
+/* zipcodelookup page */
+#people.zipcodelookup .inner {
+  padding:20px;
+}
+#people.zipcodelookup ul#people_list {
+  background:none;
+  height:auto;
+  width:540px;
+  padding:0;
+}
+#people.zipcodelookup ul#people_list li.person {
+  padding-left:0px;
+}
+#people.zipcodelookup h3.foo {
+  margin-top:20px;
+}
+#people.zipcodelookup .zip_search {
+  float:right;
+  width:418px;
+  margin-top:38px;
+}
+.zip_search table td {
+  padding:6px 0px;
+}
+
+
+#the-people span.date{
+line-height: .6em;
+float: right;
+font-size: 150px;
+height: 0px;
+padding-right: 14px;
+color: #f1edd6;
+}
+
+#timeframe .news{
+padding-left: 260px;
+}
+
+#timeframe .approval{
+padding-left: 438px;
+}
+
+#timeframe .popular{
+padding-left: 156px;
+}
+
+#timeframe .blog{
+padding-left: 370px;
+}
+
+#compbox{
+}
+
+.cbox{
+background: url(img/find_rep.png) 0px 0px no-repeat;
+   _background: url(img/find_rep.gif) 0px 0px no-repeat;
+}
+
+.compare .padding{
+padding: 29px;
+}
+
+
+.rep_info{
+padding: 10px;
+background: url(img/address.png) no-repeat center center;
+   _background: url(img/address.gif) no-repeat center center;
+margin: 20px 0;
+margin-left: 32px;
+}
+
+.phone{
+padding-top: 10px;
+}
+
+#money_trail{
+padding: 30px;
+clear: both;
+}
+
+
+#money_trail th{
+text-align: left;
+}
+
+
+#money_trail table{
+width: 600px;
+margin-top: 10px;
+}
+
+table.comp td{
+min-width: 100px;
+}
+

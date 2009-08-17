@@ -1,0 +1,20 @@
+c1:
+  blog_entry_id: 1
+  name: jim
+  email: jim@jim.com
+  url: http://cnn.com
+  comment: Nice blog - please see my blog http://wanker-spam.com
+
+c2:
+  blog_entry_id: 1
+  name: jim
+  email: jim@jim.com
+  url: http://cnn.com
+  comment: Really great info - please see my blog http://wanker-spam.com
+
+c3:
+  blog_entry_id: 2
+  name: crack head bob
+  email: crack@crack.com
+  url: http://boingboing.com
+  comment: Got any crack?

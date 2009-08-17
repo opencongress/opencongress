@@ -1,0 +1,16 @@
+<%= billsearch_spinner %>
+
+<p>
+  Here is a list of some of the "hottest" bills currently in Congress -- the most newsworthy bills, and in some cases 
+  the most contentious bills -- as compiled by the editors of OpenCongress. To add a bill to your profile, just select 
+  how you're following the bill, 
+  add a comment if you choose (e.g., "This bill is important because..."), and click "Add Bill". The bill and its 
+  important details will be added to your profile.
+</p>
+
+<form id="dummyform"></form>
+
+<% @hot_bill_categories.each do |c| %>
+  <h3><%= c.name %></h3>
+  <%= render :partial => 'billaddform', :collection => c.bills %>
+<% end %>

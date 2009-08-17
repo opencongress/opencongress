@@ -1,0 +1,26 @@
+class CommentaryController < ApplicationController
+  skip_before_filter :store_location, :only => [:rate]
+
+  def rate
+    @learn_off = true
+    
+    unless current_user == :false
+      commentary = Commentary.find_by_id(params[:id])
+      score = current_user.commentary_ratings.find_or_create_by_commentary_id(commentary.id)
+      score.rating = params[:value]
+      score.save
+
+      if commentary.commentary_ratings.length >= 3
+        commentary.average_rating = commentary.commentary_ratings.average(:rating)
+        commentary.save
+      end
+      
+      #commentary.commentariable.expire_commentary_fragments(commentary.is_news? ? 'news' : 'blog')
+      
+      logger.info params.to_yaml
+      render :text => "<font color='red'>Rating saved.</font>"
+    else
+      render :text => "<font color='red'>You must be logged in to rate articles. Log in above.</font>"
+    end
+  end
+end

@@ -1,0 +1,6 @@
+<% @page_title = "Admin: Editing Commentary Item"%>
+
+<% form_tag :action => 'update', :id => @commentary do -%>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Edit' %>
+<% end %>

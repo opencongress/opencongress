@@ -1,0 +1,34 @@
+<div id="heading">
+  <h2><%= @user.login %>'s Watchdog</h2>
+</div>
+
+<%= render :partial => "profile_nav" %>
+
+<% if @my_district %>
+
+<div class="dog_senators">
+
+<p>Welcome to your profile's Watchdog page. Here, you can compare your votes on bills to those of your elected officials, and see what topics other users in your state and district are tracking.</p>
+
+  <h3 class="dark floatright">My State: <%= link_to @my_state.name, @my_state %></h3>
+  <h3>My Senators</h3>
+  <% @my_state.senators.each do |s| %>
+    <%= render :partial => "watchdog_person_detail", :locals => {:s => s} %>
+  <% end %>
+
+
+  <h3  class="dark">My District</h3>
+  <% if @my_district.rep %>
+  <%= render :partial => "watchdog_person_detail", :locals => {:s => @my_district.rep} %>
+  <% else %>
+  <p>Welcome to your profile's Watchdog page. At this time, we are not finding a representative for your district.  
+    Congress may be in transition, or we may be having a temporary problem with our data.</p>
+    <% end %>
+  </div><!-- end peoples -->
+
+<% else %>
+  <!-- No District Set -->
+  <h3 class="dark"><p>To get started, first we need to associate your profile your specific Congressional district.</h3>
+  
+  <p>Please set your district by visiting your <%= link_to "Profile Settings", user_profile_path(@user.login) %> and entering a zipcode and a zip +4 extension. If you don't know your zip +4 offhand, no worries, you can find it easily from that page.</p>
+<% end %>

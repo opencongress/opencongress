@@ -1,0 +1,28 @@
+<% case item.sidebar.class_type
+   when 'Bill' %>
+    <%= link_to rb.title_full_common, :controller => 'bill', :action => 'show', :id => rb.ident %>
+    (<%= rb.views(DEFAULT_COUNT_TIME) %> views)<br />
+    <span class="date">
+      Introduced on <%= Time.at(rb.introduced).strftime("%B %d, %Y") %><br /> 
+      by the <%= rb.chamber.capitalize %>
+    </span>
+<% when 'Person' %>
+    <p><%= link_to_person item.person %></p>
+    <img src="/images/photos/<%= item.person.id -%>.jpeg" height="50" alt="person" /><br />
+    (<%= item.views(DEFAULT_COUNT_TIME) %> views)
+<% when 'Committee' %>
+    <p><%= link_to_item item.committee, :proper_name, :show %> (<%= item.views(DEFAULT_COUNT_TIME) %> views)</p>
+    <% unless item.committee.chair.nil? -%>
+      <p>Chair: <%= link_to_person item.committee.chair %></p>
+    <% end -%>
+    <% unless item.committee.ranking_member.nil? -%>
+      <p>Ranking Member: <%= link_to_person item.committee.ranking_member %></p>
+    <% end -%>
+<% when 'Subject' %>
+    <p><%= link_to_item item.subject, :term, :show %> (<%= item.views(DEFAULT_COUNT_TIME) %> views)</p>
+    <p>Bills: <%= item.subject.bills_count %>
+<% end %>
+
+<% if item.description %>
+  <p class="sidebar_item_description"><%= item.description %></p>
+<% end %>

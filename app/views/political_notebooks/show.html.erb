@@ -1,0 +1,129 @@
+<div id="heading">
+  <h2><%= @user.login %>'s Political Notebook</h2>
+</div>
+<div class="padding">
+  <% if @can_view %>
+  <% if @can_edit %>
+  <div id="bookmarklet" onmouseover="Element.show('bookmarklet_help');" onmouseout="Element.hide('bookmarklet_help');">
+  	<a href="javascript:w=window.open('<%= BASE_URL %>political_notebooks/bookmarklet_add?url='+escape(location.href),'OCbookmarklet', 'width=1020,height=635,scrollbars=1');setTimeout('w.focus()',50);void(0);"><img src="/images/bookmark-trans.png" alt="+MyPN" title="Bookmarklet" /></a>
+  	<%= dbox_start("bookmarklet_help", -250, 22, 300, "right")%>
+  	Drag this bookmarklet into your brower's toolbar (Internet Explorer users should right-click and select "add to favorites"), and it will instantly add pages from around the web to Your Political Notebook. 
+  	<%= dbox_end %>
+  </div>
+  <div id="privacy" onmouseover="Element.show('privacy_help');" onmouseout="Element.hide('privacy_help');">
+  	<% form_for :privacy_option, @user.privacy_option,:url => update_privacy_political_notebook_path({:login =>@user.login}) do |f| %>
+  	<span class="notebookPrivacy"><%= image_tag("/images/private.png", :alt => "private", :title => "Private",:id => 'Privacy') %></span><%= f.select PrivacyOption.column_names[PrivacyOption.column_names.index 'my_political_notebook'].to_sym, [["Public",2],["Friends", 1], ["Private",0]], {}, {:onchange => "this.form.submit();"} %>
+  	<% end %>
+  	<%#= link_to_function('Privacy Settings <img src="/images/triangle-right.png" alt="show" />', "Element.hide('pshow');['phide','plogin','pname','psite','pemail','pdist','pim','plocale','pzip','p1','p2'].each(Element.show);", :style=>"color:#555;font-weight:normal;margin-left:200px;text-decoration:none") %>
+  	<%= dbox_start("privacy_help", -135, -8, 180, "right")%>
+  	Who can see My Political Notebook?
+  	<%= dbox_end %>
+  </div>
+
+  <%= render :partial => 'toolbar' %>	
+  <% else %>
+  <br style="clear:both;" />
+  <% end %>
+  <div style="margin-top:4px;" class="explain_box">
+  	Save and share your favorite political content, from OpenCongress and around the web. <%= link_to "Learn how to get started.", {:controller => "about", :action => "political_notebooks"}, :class => 'arrow' %>
+  </div>
+  <div id="the-items">
+  	<ul id="pn_tabs">
+  		<li>
+  			<%= link_to "All Items", political_notebook_path({:login => @user.login, :tag=> @tag, :type => nil}), :id => "all_tab", :class => is_on(nil) %>
+  		</li>
+  		<li>
+  			<%= link_to "Links", political_notebook_path({:login => @user.login, :tag=> @tag, :type => "NotebookLink"}), :id => "links_tab", :class => is_on("NotebookLink") %>
+  		</li>
+  		<li>
+  			<%= link_to "Videos", political_notebook_path({:login => @user.login, :tag=> @tag, :type => "NotebookVideo"}), :id => "videos_tab", :class => is_on("NotebookVideo") %>
+  		</li>
+  		<li>
+  			<%= link_to "Notes", political_notebook_path({:login => @user.login, :tag=> @tag, :type => "NotebookNote"}), :id => "notes_tab", :class => is_on("NotebookNote") %>
+  		</li>
+  		<li>
+  			<%= link_to "Files", political_notebook_path({:login => @user.login, :tag=> @tag, :type => "NotebookFile"}), :id => "files_tab", :class => is_on("NotebookFile") %>
+  		</li>
+  	</ul>
+
+  	<% if @from_bookmarklet %>
+  	<div id="add-link-bookmarklet">
+  		<div id="facebox" style="top:140px;"> 
+  			<div class="popup"> 
+  				<table> 
+  					<tbody> 
+  						<tr> 
+  							<td class="tl"/><td class="b"/><td class="tr"/> 
+  						</tr> 
+  						<tr> 
+  							<td class="b"/> 
+  							<td class="body"> 
+  								<div class="content">
+  									<% if @notebook_link %>  
+  									<%= render :partial => "notebook_links/inline_form", :locals => { :from_bookmarklet => 'true' } %>                    
+  									<% elsif @notebook_video %>
+  									<%= render :partial => "notebook_videos/inline_form", :locals => { :from_bookmarklet => 'true' } %>
+  									<% end %>
+  								</div> 
+  								<div class="footer"> 
+  									<a href="#" class="close"> 
+  										<img src="/images/facebox/closelabel.gif" title="close" class="close_image" /> 
+  									</a> 
+  								</div> 
+  							</td> 
+  							<td class="b"/> 
+  						</tr> 
+  						<tr> 
+  							<td class="bl"/><td class="b"/><td class="br"/> 
+  						</tr> 
+  					</tbody> 
+  				</table> 
+  			</div> 
+  		</div>
+  	</div>
+  	<% end %>
+
+  	<div class="notebook_bottom">
+      <%= will_paginate @items, :params => {:controller => 'notebook_items', :action => '', :login => @user.login } %>		
+      
+  		<div class="notebook_top">                      
+			
+  			<h3 class="dark inline"> <%= get_label %><%= link_to "[remove tag filter]", political_notebook_path({:login => @user.login, :tag=> nil, :type => @type}), :id => "no_tags" if @tag %></h3>
+  			<div class="notebook_content">
+  				<% if @can_edit %>
+  					<% unless @from_bookmarklet %>
+  						<div id="no-items" style="display:<%= (@political_notebook.notebook_items.any?) ? 'none' : '' %>">
+  						You haven't added any items to your Political Notebook.  Use the links above to get started.
+  					</div>
+  					<% end %>
+  				<% end %>
+
+  				<ul id="notebook-items" class="notebook_items">
+  					<% @items.each do |item| %>
+  					<li><%= render :partial => "#{item.class.to_s.tableize}/listitem", :object => item %></li>
+  					<% end %>		
+  				</ul>            
+  			</div>
+  		</div>
+  	</div>
+  </div>   
+  <div class="hints">
+  <% case @type
+  when "NotebookLink" %>
+  <p>Here you can add links to any webpage from OpenCongress or around the web. For example, on an OpenCongress <a href="http://www.opencongress.org/bill/110-h1424/show">bill page</a>, click on the "+" next to the official bill number to add it here. Or, if you're reading a news article or blog post elsewhere on the web, use the bookmarklet to save it back here with your notes and remember it later. Don't forget the <a href="http://www.opencongress.org/blog">OpenCongress Blog</a> &mdash; for example, <a href="http://www.opencongress.org/articles/view/721-Obama-and-McCain-Legislative-Accomplishments">a post</a> comparing Sen. McCain and Sen. Obama's legislative accomplishments. Finally, you can bookmark any comment you value from users on OpenCongress &mdash; for example, <a href="http://www.opencongress.org/bill/110-h5749/show?goto_comment=20220">a call to action</a> on an Unemployment Bill. </p>
+  	<% when "NotebookVideo" %>
+  <p>
+  	Here you can embed any streaming video from around the web. For example, if you're watching <a href="http://www.youtube.com/watch?v=Mn5VathNJH4">a video</a> you want to save and share, copy-and-paste all the code to "Embed", and you'll be able to watch it here.
+  </p>
+  	<% when "NotebookNote" %>         
+  <p>Here you can add notes or thoughts you feel might be interesting to other users. Or simply as a reminder to yourself.</p>  
+  	<% when "NotebookFile" %>                   
+  	<p>Here you can upload files to save and share. For example, you might upload a <a href="http://2.bp.blogspot.com/_ov-pT1x-W8Y/SPZoiO-1fOI/AAAAAAAADAA/iBez5Ho3Svs/S1600-R/1013_super.png">polling graph</a>, or a <a href="http://www.publicknowledge.org/pdf/youtube-letter-20080514.pdf">.pdf</a> of a press release or a proposed bill. </p>
+  	<% else %>
+  	<p>To see different types of content to add to "My Political Notebook", click on any of the tabs on the right-hand side of this page. To see an example of a fleshed-out notebook, visit the page of <a href="http://www.opencongress.org/users/donnyshaw/profile/political_notebook">Donny Shaw</a>, our blog and outreach director.</p>
+  	<% end %>
+  </div>
+  <% else %>
+  	You currently don't have access to view this user's Political Notebook
+  <% end %>
+</div>

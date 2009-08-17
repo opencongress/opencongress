@@ -1,0 +1,12 @@
+<action> must be one of the following:
+
+    config                           Generate a config/captcha.yml file.
+    
+    image_directory                  Create a directory for storing generated
+                                     images. Will use the value of 'default_dir'
+                                     from config/captcha.yml if it exists.
+    
+    store_directory                  Create a directory for storing CAPTCHA objects.
+                                     Will use the value of 'store' from
+                                     config/captcha.yml if it exists.
+

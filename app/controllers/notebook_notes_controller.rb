@@ -1,0 +1,2 @@
+class NotebookNotesController < NotebookItemsController
+end

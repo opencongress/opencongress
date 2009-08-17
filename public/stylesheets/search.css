@@ -1,0 +1,274 @@
+
+#search .bills_list{
+
+}
+
+.didnt{
+border: 1px solid #eee;
+padding: 25px;
+background: #fff;
+}
+
+
+.issue_search, .news_search, .blogs_search, .blog_search, .comments_search, .bill_search, .upcomingbill_search, .committees_search, .industries_search, .member_search, .comments_search   {
+width: 100%;
+border-bottom: 1px solid;
+float: left;
+padding: 20px 0;
+}
+
+#search ul.listed{
+width: 100%;
+height: inherit;
+overflow: auto;
+display: block;
+}
+
+.tips .inner{
+padding: 35px;
+}
+
+.tips .inner p{
+padding: 0 0 25px 0;
+
+}
+
+.tips .inner li{
+padding: 0 0 35px 20px;
+}
+
+#heading{
+height: 45px;
+}
+
+
+#heading p{
+padding: 6px 0 0 20px;
+}
+
+
+#search .floatleft{
+margin-right: 30px;
+width: 293px;
+}
+
+#sessions{
+float: right;width: 203px;
+
+}
+
+#search_in{
+float: right;
+width: 203px;
+border: 1px
+}
+
+
+.comments_search li{
+float: left;
+margin: 10px 15px 20px 0;
+padding: 0 !important;
+width: 217px;
+height: 180px;
+}
+
+.comments_search li a{
+margin: 0px !important;
+
+}
+
+.regarding{
+padding: 0 20px;
+}
+
+
+body#search.zipcodelookup #all-search-results .comments_search ul#small_comments li a.comment span.text{
+height: 30px !important;
+overflow: hidden !important;
+
+display: block !important;
+}
+
+
+
+.regarding{
+font-size: 11px;
+float: right;	
+}
+
+.blog_search ul{
+padding: 0;
+}
+
+
+.blog_search li{
+width: 140px;
+border: 1px solid #ddd;
+margin-right: 12px;
+float: left;
+overflow: hidden;
+height: 170px;
+margin-left: 0px;
+padding: 15px !important;
+margin-bottom: 15px;
+}
+
+.blog_search li span.date{
+display: block;
+font-size: 11px;
+color: #777;
+}
+
+.blog_search li p{
+padding-top: 16px;
+font-size: 11px;
+}
+
+
+ul#people_list{
+width: 617px;
+height: 564px;
+overflow: auto;
+float: left;
+_float: right;
+display: block;
+.margin-left: 380px;
+_margin-left: 0;
+_position: relative;
+_margin-top: -100px;
+
+}
+
+ul#people_list li{
+list-style: none;
+display: block;
+width: 300px;
+height: 180px;
+
+overflow: hidden;
+clear: none !important;
+float: left !important;
+}
+
+
+ul#people_list li li{
+height: 26px;
+
+}
+
+
+ul#people_list li.state{
+list-style: none;
+display: block;
+margin: 25px 0 10px 34px;
+font-size: 13px;
+}
+
+ul#people_list li.state div.label {
+display: block;
+height: 10px;
+border-bottom: #d1d7dc 1px solid;
+margin-right: 30px;
+}
+
+ul#people_list li.state b{
+display: inline;/*
+background: #f4faff;
+padding-right: 10px;*/
+float: left;
+}
+
+ul#people_list li.state span{
+display: none;
+
+}
+
+ul#people_list li.state a{
+float:right;
+background: #f4faff;
+color: #666;
+font-size: 10px;
+padding: 0 10px;
+}
+
+ul#people_list li.help p{
+padding: 30px 46px 5px;
+font-size: 11px !important;
+color: #999;
+}
+
+ul#people_list li.person{
+list-style: none;
+display: block;
+padding:0;
+}
+
+ul#people_list li.person img{
+display: block;
+float: left;
+height: 135px;
+width: 105px;
+margin: 5px 20px 0 10px;
+}
+
+ul#people_list li.person a.name{
+display: block;
+font-weight: bold;
+font-size: 12px;
+margin: 7px 0 0 2px;
+float: left;
+}
+
+.person .details{
+width: 155px;
+float: left;
+padding: 0px;
+
+}
+
+.person .stats{
+float: left;
+padding-top: 4px;
+width: 90px;
+height: 80px;
+margin: 3px 0px 0 0;
+
+}
+
+.person .stats li{
+line-height: 2.5em;
+padding-left: 25px;
+font-size: 11px;
+}
+
+ul#people_list li.person a.name span{
+display: block;
+font-weight: normal;
+margin-top: 2px;
+font-size: 12px;
+text-decoration: none;
+}
+
+
+
+.rating{
+  background: url(img/no-rating.png) 3px center no-repeat;
+   _background: url(img/no-rating.gif) 3px center no-repeat;
+}
+
+.no_rating{
+  background: url(img/no-rating.png) 3px center no-repeat;
+   _background: url(img/no-rating.gif) 3px center no-repeat;
+}
+
+.bill_count{
+  background: url(img/tiny_bill.png) left center no-repeat;
+   _background: url(img/tiny_bill.gif) left center no-repeat;
+}
+
+.cronie{
+  background: url(img/cronie.png) left center no-repeat;
+   _background: url(img/cronie.gif) left center no-repeat;
+}
+
+

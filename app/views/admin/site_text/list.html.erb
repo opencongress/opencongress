@@ -1,0 +1,27 @@
+<% @page_title = "Site Text" %>
+
+<%= link_to 'New Site Text', :action => 'new' %>
+
+<table cellpadding="10">
+  <tr>
+  <% for column in SiteText.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for site_text in @site_texts %>
+  <tr>
+  <% for column in SiteText.content_columns %>
+    <td><%=h site_text.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => site_text %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => site_text %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => site_text }, :confirm => 'Are you sure?', :method => "post" %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= will_paginate @site_texts %>
+<br />
+
+<%= link_to 'New Site Text', :action => 'new' %>

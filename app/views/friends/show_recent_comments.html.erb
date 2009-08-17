@@ -1,0 +1,6 @@
+<% if @coms.length == 0 %>
+<p>No Recent Comments</p>
+<% end %>
+<% @coms.each do |com| %>
+<%= render :partial => "/profile/comment", :locals => {:comment => com} %>
+<% end %>

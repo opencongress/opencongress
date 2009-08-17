@@ -1,0 +1,131 @@
+.inner{
+padding: 0px;
+}
+
+#heading{
+min-height: 140px;
+}
+
+#heading p{
+padding-top: 0px;
+margin-top: 10px;
+}
+
+.explain_box{
+padding-top: 15px !important;
+}
+
+#battle_royale #heading .explain_box{
+padding: 38px 30px 0 30px;
+float: right;
+width: 490px;
+}
+
+
+#battle_royale #heading h2{
+width: 320px;
+overflow: hidden;
+margin: 8px 0 0 25px;
+height: 0;
+padding-top: 130px;
+float: left;
+background: url('img/br_logo.png') no-repeat left top;
+   _background: url('img/br_logo.gif') no-repeat left top;
+}
+
+#objects{
+padding: 15px 10px;
+height: 80px;
+width: 924px;
+margin: 30px auto 0;
+background: url(img/find_rep.png) no-repeat;
+   _background: url(img/find_rep.gif) no-repeat;
+}
+
+
+#objects form#search span input{
+background: url(img/forms.png) left -124px no-repeat;
+   _background: url(img/forms.gif) left -124px no-repeat;
+border: none;
+padding: 7px;
+width: 218px;
+}
+
+
+#objects #search{
+margin: 6px 0 0 0;}
+
+#objects .battle{
+font-size: 11px;
+width: 170px;
+padding-left: 10px;
+}
+
+#objects .battle em{
+font-weight: normal;
+}
+
+
+#battle_royale #objects h3{
+float: left;
+}
+
+#battle_royale table.thunderdome{
+width: 100%;
+margin: 0;
+}
+
+#battle_royale #content th{
+padding: 0px;
+}
+
+#battle_royale table, #battle_royale table th, #battle_royale table tr, #battle_royale td{
+
+}
+
+#battle_royale #content td{
+padding: 0px;
+}
+
+#search{
+float: left;
+}
+
+#sortby{
+width: 400px;
+float: right;
+}
+
+
+#timeframe_select, #view{
+float: left;
+padding: 10px;
+}
+
+.down{
+background: url('img/arrows.png') no-repeat right -22px;
+   _background: url('img/arrows.gif') no-repeat right -22px;
+padding-right: 12px;
+}
+
+.up{
+background: url('img/arrows.png') no-repeat right 2px;
+   _background: url('img/arrows.gif') no-repeat right 2px;
+padding-right: 12px;
+}
+
+
+.linkage{
+float: right;
+padding-right: 20px;
+}
+
+table td h1{
+font-weight: normal;
+font-size: 13px;
+}
+
+
+
+
+

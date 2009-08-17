@@ -1,0 +1,17 @@
+<ul>
+<% link = listitem %>
+<li class="notebook_link" id="notebook_item_<%= listitem.id %>">
+<img class="mypn-icon" src="/images/mypn-link.png" alt="link" title="Link" />
+	<% if link.is_internal? %>
+		<%= link_to_internal link %>
+	<% else %>
+		<%= link_to h(link.title), link.url%>
+	<% end %>		
+	<br />
+	<% unless link.description.blank? %>
+		<div class="padding-left"><%= h link.description %></div>
+	<% end %>
+	<%= render :partial => 'political_notebooks/item_meta', :object => link %>
+	
+</li>
+</ul>

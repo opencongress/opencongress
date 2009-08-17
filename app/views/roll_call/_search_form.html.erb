@@ -1,0 +1,13 @@
+
+	<a id="head_button" href="/people/compare"><span>Compare Head to Head Votes</span></a>
+
+
+	<% form_remote_tag(:url => { :action => 'search' }, :update => 'the-rolls') do %>
+		<h3>Search Roll Calls</h3><%= text_field_tag 'q' %>
+	<% end %>
+	
+<!--
+	<p>Search by bill number (for example, H.R. 3200), name (America's Affordable Health Choices Act of 2009), or issue area (health care). Click the button to the right for "Hot Bills" to see only the most buzzworthy votes in Congress.</p>
+		<p>	To view the full voting record of a Member of Congress, first go to the main listings of <a href="/person/senators">Senators</a> or <a href="/person/representatives">Representatives</a>, then click his or her profile, and last click the tab for "Actions & Votes".</p>
+		
+		-->

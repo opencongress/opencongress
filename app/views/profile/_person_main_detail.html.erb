@@ -1,0 +1,85 @@
+<% buttons_only ||= false %>
+<div id="the-people">
+
+<ul id="people_list" class="">
+
+  <% people.each_with_index do |person, i| %>
+
+    <li id="p<%= person.id.to_s %>" class="person">
+			<% unless buttons_only %> 
+			  <%= link_to("<img src='/images/photos/thumbs_125/" + person.id.to_s + ".jpeg' width=\"102px\"/>", 
+			    {:controller => "people", :action => "show", :id => person.to_param}) %>
+			<% end %>
+      
+			<div class="left details">
+				<% unless buttons_only %><a class="name" href="/people/show/<%= person.to_param %>"><%= person.name %> <span><%= person.party %></span></a><% end %>
+	    <% if show_updates == true %>
+
+			<ul class="left">
+				<li><% unless person.votes_count.nil? %>	
+					<%= ajax_toggler("new_votes_#{person.ident}", "<span>New Votes (#{person.votes_count})</span>", 
+					                    '<span>Hide New Votes</span>',
+					                     {:action => "tracked_votes", 
+						                  :id => person.id, 
+						                  :limit => person.votes_count}, 'med_button', 'med_button on') %>
+				<% end %>
+				<% unless person.newss_count.nil? %>
+					<%= ajax_toggler("news_updates_#{person.ident}", "<span>News Updates (#{person.newss_count})</span>",
+					                         '<span>Hide News Updates</span>',
+					                          {:action => "tracked_commentary_news", 
+							                                       :id => person.id, 
+							                                       :object => "Person",
+							                                       :limit => person.newss_count}, 'med_button', 'med_button on') %>
+				<% end %>
+				<% unless person.blogss_count.nil? %>
+					<%= ajax_toggler("blog_updates_#{person.ident}", "<span>Blog Updates (#{person.blogss_count})</span>",
+					                        '<span>Hide Blog Updates</span>',
+					                          {:action => "tracked_commentary_blogs", 
+							                                       :id => person.id, 
+							                                       :object => "Person",
+							                                       :limit => person.blogss_count}, 'med_button', 'med_button on') %>
+				<% end %>
+				<% unless person.commentss_count.nil? %>
+					<%= toggler_with_span_class("new_comments_#{person.ident}", 
+					             "<span>New Comments (#{person.commentss_count})</span>", '<span>Hide New Comments</span>', 'med_button', 'med_button on') %>
+				<% end %>
+				</li>
+			</ul>
+			</div>
+		<% end %>
+		  <% unless buttons_only %>
+  			<ul class="left stats">
+  				<% if person.person_approvals.size > 0 %>
+  				<li class="rating"><%= (person.person_approvals.average(:rating) * 10.0).round %>% User Approval</li>
+  				<% else %>
+  				<li class="no_rating">Rate this Senator</li>
+  				<% end %>
+  				<li class="bill_count"><%= person.bills.size ? person.bills.size : "0" %> Sponsored Bills</li>
+  				<% if person.belongs_to_major_party? %>
+  				<li class="cronie">Votes <%= person.with_party_percentage.round %>% with Party</li>
+  				<% end %>
+  			</ul>
+  		<% end %>
+				<% if (person.roles.first.enddate < Date.today) && (logged_in? && current_user == @user) %>
+				<div style="padding-top:3px;padding-bottom:3px;">
+				  <em>(This person's Congressional term has ended. You may want to <%= link_to "Remove", :controller => "profile", :action => "remove_person_bookmark", :login => @user.login, :id => person.id %> this person from your tracked items)</em>
+				</div>
+			  <% end %>
+			<div style="clear:both;"></div>
+			<div class="update_text" id="new_votes_<%= person.ident %>" style="display:none;">
+			</div>
+			<div class="update_text" id="news_updates_<%= person.ident %>" style="display:none;">
+
+			</div>
+			<div class="update_text" id="blog_updates_<%= person.ident %>" style="display:none;">
+
+			</div>
+			<div class="update_text" id="new_comments_<%= person.ident %>" style="display:none;">
+			  <%= render :partial => 'shared/comments_embedded', :locals => {:object => person }%>
+			</div>
+		</li>
+  <% end %>
+</ul>
+</div> <!-- // end contain_peeps -->
+
+

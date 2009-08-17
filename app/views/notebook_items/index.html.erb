@@ -1,0 +1,64 @@
+<div id="the-items">
+	<h3 class="dark inline">My Political Notebook</h3>
+
+
+		<ul id="notebook-add-links">
+			<li>Add a</li>
+			<li><a href="javascript:void(0);" onclick="NotebookForm.toggleForm('link');return false;"  id="toggle-link-link">Link</a></li>
+			<li><a href="javascript:void(0);" onclick="NotebookForm.toggleForm('video');return false;" id="toggle-video-link">Video</a></li>
+			<li><a href="javascript:void(0);" onclick="NotebookForm.toggleForm('note');return false;"  id="toggle-note-link">Note</a></li>
+			<li><a href="javascript:void(0);" onclick="NotebookForm.toggleForm('file');return false;"  id="toggle-file-link">File</a></li>		
+		</ul>
+		<br style="clear:both" />
+
+		<div id="add-link" class="notebook-form-div" style="display:none">
+			<form id="add-link-form" class="notebook-form">
+				<h3>Add a Link</h3>			
+				<p><label for="url">URL</label><input type="text" id="url"/></p>
+				<p><label for="description">Description</label><textarea id="description"></textarea></p>
+				<p><label for="tags">Tags</label><input type="text" id="tags" /></p>
+				<input type="submit" value="Add" /> or <a href="javascript:void(0);">Cancel</a>			
+			</form>
+		</div>
+		<div id="add-video" class="notebook-form-div" style="display:none">
+			<form id="add-video-form" class="notebook-form">
+				<h3>Add a Video</h3>			
+				<p><label for="Embed">Embed</label><textarea id="description"></textarea></p>
+				<p><label for="description">Description</label><textarea id="description"></textarea></p>			
+				<p><label for="tags">Tags</label><input type="text" id="tags" /></p>
+				<input type="submit" value="Add" /> or <a href="javascript:void(0);">Cancel</a>				
+			</form>
+		</div>
+		
+		<div id="add-note" class="notebook-form-div" style="display:none">
+			<form id="add-note-form" class="notebook-form">
+				<h3>Add a Note</h3>			
+				<p><label for="description">Note</label><textarea id="description"></textarea></p>
+				<p><label for="tags">Tags</label><input type="text" id="tags" /></p>
+				<input type="submit" value="Add" /> or <a href="javascript:void(0);">Cancel</a>			
+			</form>
+		</div>
+		
+		<div id="add-file" class="notebook-form-div" style="display:none">
+			<form id="add-file-form" class="notebook-form">
+				<h3>Add a File</h3>
+				<p><label for="url">File</label><br /><input type="file" name="somename" size="chars"></p>
+				<p><label for="description">Description</label><textarea id="description"></textarea></p>
+				<p><label for="tags">Tags</label><input type="text" id="tags" /></p>
+				<input type="submit" value="Add" /> or <a href="javascript:void(0);">Cancel</a>			
+			</form>
+		</div>
+
+
+	<ul class="links_detailed">
+		  <li class="odd">	<p style="display:inline;margin-right:8px;"><a href="/bill/110-h3221/show">Lorem ipsum dolor sit ame</a>&nbsp; sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad  <span style="color:#ccc">(April 10, 2008 - Digg / Political News / Upcoming)</span></p></li>				
+		  <li class="odd">	<p style="display:inline;margin-right:8px;"><a href="/bill/110-h3221/show">H.R.3221</a>&nbsp;Energy Policy Reform and Revitalization Act of 2007</p></li>		
+		  <li class="odd">	<p style="display:inline;margin-right:8px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></li>		
+		  <li class="odd">	<p style="display:inline;margin-right:8px;">
+			<object width="425" height="355"><param name="movie" value="http://www.youtube.com/v/-sOlaso_7Z8&hl=en"></param><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/-sOlaso_7Z8&hl=en" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></embed></object></p></li>
+
+		  <li class="odd">	<p style="display:inline;margin-right:8px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></li>		
+		  <li class="odd">	<p style="display:inline;margin-right:8px;"><a href="/bill/110-h3221/show">LoremIpsum.pdf</a></p></li>
+	</ul>
+	
+</div>

@@ -1,0 +1,13 @@
+<% subs = committees[committees_list] -%>
+<% first = subs[0] -%>
+<% rest = subs[1..-1] -%>
+
+
+<% if subs.length == 1 -%>
+  <li class="committee"><%= link_to first.proper_name, :controller => 'committee',  :action => "show", :id => first %></li>
+<% else  -%>
+  <li class="committee"><%= link_to first.proper_name, :controller => 'committee', :action => "show", :id => first %></li>
+  <% rest.each do |c| -%>
+    <li class="subcommittee"><%= link_to c.subcommittee_name.strip, { :controller => 'committee', :action => "show", :id => c }  %></li>
+  <% end -%>
+<% end -%>

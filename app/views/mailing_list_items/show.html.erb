@@ -1,0 +1,18 @@
+<p>
+  <b>Mailable type:</b>
+  <%=h @mailing_list_item.mailable_type %>
+</p>
+
+<p>
+  <b>Mailable:</b>
+  <%=h @mailing_list_item.mailable_id %>
+</p>
+
+<p>
+  <b>User mailing list:</b>
+  <%=h @mailing_list_item.user_mailing_list_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_mailing_list_item_path(@mailing_list_item) %> |
+<%= link_to 'Back', mailing_list_items_path %>

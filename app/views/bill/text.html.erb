@@ -1,0 +1,125 @@
+<div id="topic">
+
+<div class="top_bar">
+<a href="/bill/<%= @bill.ident %>/show" class="arrow-left"><span>Back to Bill Details</span></a>
+
+
+<% if @versions.size > 1 %>
+  <% @content_for_sortby = render :partial => 'select_bill_text_version' %>
+<% end %>
+
+</div>
+
+<script>
+  Event.observe(window, 'load', function() {
+    <% @commented_nodes.each do |n| %>
+      <% if n.comments.size > 0 %>
+        BillText.setCommentsForNode(<%= @version.id %>, '<%= n.nid %>', <%= n.comments.size %>)
+      <% end %>
+    <% end %>
+    
+    $('bill_text_loading').hide();
+    $('bill_text').show();
+    
+    <% if @nid %>
+      BillText.highlightNode('<%= @nid %>');
+    <% end %>
+  });
+</script>
+
+
+<div class="title">
+<!--
+<span class="date"><%= @bill.session == DEFAULT_CONGRESS ? 'current' : 'previous' %> <%= number_to_ordinal(@bill.session) %> session of congress</span>
+-->
+<h1><a href="/bill/<%= @bill.ident %>/show"><span><%= @bill.title_typenumber_only %></span></a> - <%= @bill.title_common %></h1>
+
+<% unless @bill.title_popular_only.blank? %>
+	<p><%= official_title %></p>
+<% end %> 
+
+</div>
+<!--
+<h2 class="title"><%= @bill.title_common %></h2>
+<% unless @bill.title_popular_only.blank? %>
+  <h3 class="official-title"><%= em_title %></h3>
+<% end %>
+-->
+
+
+
+
+<% if @versions.size > 1 %>
+<div id="version_history">
+<!--
+<h3 class="darkline">Version History</h3>
+-->
+
+  <table class="simple-table2" cellspacing="0" width="100%">
+    <tr>
+      <th align="left" scope="col">Version</th>
+      <th align="left" scope="col">Word Count</th>
+      <th align="left" scope="col">Changes From Previous Version</th>
+      <th align="left" scope="col">Percent Change</th>
+    </tr>
+    <% @versions.each_with_index do |v, i|%>
+      <tr <% if @version == v %>style="background: #D9D9F3;"<% end %>>
+        <td style="padding-left: 2px;"><%= v.pretty_version %></td>
+        <td><%= number_with_delimiter(v.word_count) %></td>
+        <td>
+          <% if v.total_changes %>
+            <span style='margin-right: 20px;'><%= number_with_delimiter(v.total_changes) %></span>
+            
+            <% if @version == v %>
+              <a href="#" id="bill_text_show_changes_link" class="arrow" onClick="BillText.showTextChanges(); return false;">
+                Show Changes
+              </a>
+              <a href="#" id="bill_text_hide_changes_link" class="arrow-left" onClick="BillText.hideTextChanges(); return false;" style="display: none;">
+                Hide Changes
+              </a>
+            <% end %>
+          <% else %>
+            n/a
+          <% end %>
+        </td>
+        <td><%= v.percent_change.nil? ? "n/a" : "#{ v.percent_change}%" %></td>
+      </tr>
+    <% end %>
+  </table>
+  <div id="bill_text_changes_key" style="display: none;">
+    <p class='line'>
+      <b>Key: </b>
+      <span class="bill_text_changed-from">changed or removed text</span> 
+      <span class="bill_text_changed-to" style="color: #00CD66">inserted or modified text</span> 
+    </p>
+  </div>
+
+</div> 
+
+<% end %>
+
+
+
+<div id="sortby">
+	<label for="sort-by">Display Version </label>
+	<select name="selectedPage" id="bill_text_sort" onchange="changePage('bill_text_sort'); return false;">
+	  <% @versions.each do |v| %>
+	    <option value="?version=<%= v.version %>" <% if @version == v %>selected<% end %>><%= v.pretty_version %></option>
+    <% end %>
+	</select>
+</div>
+
+
+</div> <!-- end topic -->
+
+<div id="bill_text_loading" >
+  <center><strong>One Moment Please</strong><br /><br /><img src='/images/flat-loader.gif' /><br/><span class="small">Loading Bill Text<span></center>
+</div>
+
+<p class="directions">Rollover any line of text to comment and/or link to it.</p>
+
+<p class="print">Preview and Print Bill Text</p>
+
+<div id="bill_text" style="display:none;">
+  <%= @bill_text %>
+</div>

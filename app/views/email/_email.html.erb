@@ -1,0 +1,21 @@
+<div>
+  <p>
+    <%= toggler(email_div, "<img src=\"#{contact_button(button)}\" height=22 class='noborder' />",
+                           "<img src=\"#{contact_button(button)}\" height=22 class='noborder' />")%>
+    <span style="display: none" id="sending_email">Sending email...</span>
+  </p>
+  <div style="display: none" id="<%= email_div %>">
+    <p>This feature coming soon -- you'll be able to contact a Congressperson or bill sponsors directly from this page on Open Congress. We believe it is essential for individuals to be able to easily contact Congress at the same moment they are looking at information on Open Congress. Our next phases of site development will make this possible and will provide new interactive features so you can contact Congress at the times when your voice can have the most impact. Read more about our development plans <a href="/about#coming_features">here</a>.</p>
+    <!-- 
+    <% form_remote_tag(:url => { :controller => controller,
+        :action => action, :id => id },
+        :loading => "new Effect.toggle('#{email_div}', 'blind');Element.show('sending_email')") do -%>
+      <%= submit_tag send_msg %>
+      <a href="#", onclick="javascript:new Effect.toggle('<%= email_div %>', 'blind', { duration: 1.0 })"><%= cancel_msg %></a>
+      <br />
+      Subject: <%= text_field_tag "subject", title, :size => 70 %>
+      <%= text_area_tag "msg", "Type your message here", :size => "80x8" %>
+    <% end %>
+  -->
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<% remote_form_for :notebook_link, 
+				   :url => political_notebook_notebook_links_path({:login =>current_user.login}),
+				   :html => {:id => "add-link-form", :class => "notebook-form"} do |f| %>
+
+	<h3>Add <%= @object.class%> To MyPN</h3>			
+	<div id="success-text-<%= @object.class%>-<%= @object.id %>" style="display:none"></div>
+	<div id="form-fields-<%= @object.class%>-<%= @object.id %>">
+		<input type="hidden" name="item_type"  value="NotebookLink" />				
+		<input type="hidden" name="id" id="id" value="<%= @object.id %>" />				
+		<input type="hidden" name="type" id="type" value="<%= @object.class.to_s %>" />
+		<input type="hidden" name="from" id="from" value="addmypn_<%= @object.class %>_<%= @object.id %>" />					
+		<input type="hidden" name="msgDiv" id="msgDiv" value="success-text-<%= @object.class%>-<%= @object.id %>" />										
+		<input type="hidden" name="formFields" id="formFields" value="form-fields-<%= @object.class%>-<%= @object.id %>" />															
+		<p><label for="title">Title</label><%= f.text_field :title, :value => default_title_from_notebookable(@object), :size => 50 %></p>
+		<p><label for="description">Description</label><%= f.text_area :description,:rows => 4 %></p>
+		<p><label for="tags">Tags</label><%= f.text_field :tag_list %></p>
+		<% if @object.kind_of? Bill %>
+		  <p><label for="category">Issue Area</label> <%= f.select :hot_bill_category_id, HotBillCategory.find(:all, :order => 'name ASC').collect {|c| [ c.name, c.id ] }, { :selected => @object.hot_bill_category_id, :include_blank => true } %></p>
+		<% end %>
+		<input type="submit" value="Add" />
+	<div>
+<% end %>

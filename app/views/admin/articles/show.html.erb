@@ -1,0 +1,21 @@
+<div id="admin-section">
+	<%= link_to 'Edit', :action => 'edit', :id => @article %><br/>
+	<%= link_to 'Destroy', { :action => 'destroy', :id => @article }, :confirm => 'Are you sure?', :method => "post" %><br/>
+	<%= link_to 'Back', :action => 'list' %><br/>
+</div>
+
+<div id="content-main">
+  <div class="blog-title">
+    <h3>
+      <strong class="gossip">
+          <%= @article.title %> 
+      </strong>
+    </h3>
+    <span class="blog-date"><b><%= @article.formatted_date %></b> - by <%= @article.user.full_name rescue nil %></span>
+  </div>
+
+  <div class="blog-body">
+    <%= @article.content_rendered %>
+  </div>
+
+</div>

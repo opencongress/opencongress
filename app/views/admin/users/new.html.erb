@@ -1,0 +1,15 @@
+<h1>New user</h1>
+
+<% form_tag :action => 'create' do -%>
+	<%= render :partial => 'form' %>
+
+	<p><label for="user_admin">Password</label><br/>
+	<%= text_field 'user', 'password'  %></p>	
+
+	<p><label for="user_admin">Password Confirmation</label><br/>
+	<%= text_field 'user', 'password_confirmation'  %></p>
+
+  <%= submit_tag "Create" %>
+<% end %>
+
+<%= link_to 'Back', :action => 'list' %>

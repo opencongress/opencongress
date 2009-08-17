@@ -1,0 +1,18 @@
+Hi <%=h @friend.friend.login %>,
+
+<%=h @friend.user.login %> has invited you to become OpenCongress friends.
+
+You may view <%=h @friend.user.login %>'s profile here:
+
+<%= BASE_URL %>users/<%=h @friend.user.login %>/profile
+
+To Approve this friend request, login to your OpenCongress account and visit this link:
+
+<%= BASE_URL %>users/<%=h @friend.friend.login %>/profile/friends/confirm/<%=h @friend.user.id %>
+
+Or to deny the request, visit:
+
+<%= BASE_URL %>users/<%=h @friend.friend.login %>/profile/friends/deny/<%=h @friend.user.id %>
+
+Thanks!
+The OpenCongress TEAM

@@ -1,0 +1,15 @@
+<% if @issues and !@issues.empty? %>
+  Click on the issue to select it:<br />
+  <% @issues.each do |i| %>
+    <a href="javascript:setIssueBillsIssueId('<%= i.id %>')"><%= i.term %></a> 
+    [<a href="/issue/show/<%= i.to_param %>" target="_blank">view issue</a>]<br />
+  <% end %>
+<% else %>
+  No issues found.
+<% end %>
+
+<script type="text/javascript" language="javascript">
+    // <![CDATA[
+      new Effect.Highlight('search_results', {duration: 3});
+    // ]]>
+</script>

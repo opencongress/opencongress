@@ -1,0 +1,44 @@
+<p style="font-weight:bold;font-size:14px;color:red;">Careful with this :)  Fixing an oops might mean a database restore.</p>
+<%= will_paginate(@teh_comments) %>
+<% form_tag '/admin/comments/bulk_operation' do %>
+<table style="border-collapse: separate;">
+  <tr><th>Comment</th><th>By</th><th>On</th><th>At</th><th>Action</th></tr>
+<% @teh_comments.each do |c| %>
+  <tr class="<%= cycle("odd","even") %>" id="comment<%= c.id %>">
+
+    <td style="width:400px;font-size:10px;"><%=h c.comment %></td>
+    <% if c.user %>
+    <td><%= c.user.login %>
+     <% if c.user.user_warnings.count > 0 %>
+     <%= link_to "Past Warnings", :controller => "user_warnings", :action => "show", :id => c.user.id %>
+     <% end %>
+    </td>
+    <% else %>
+    <td>Anonymous</td>
+    <% end %>
+    <td><%= c.user ? c.user.login : "Anonymous" %></td>
+    <td><%= Object.const_get(c.commentable_type).find_by_id(c.commentable_id).ident %></td>
+    <td><%= link_to c.created_at.to_s(:short), url_for(c.page_link_admin).gsub('admin/', '') %></td>
+    <td>
+      <%= check_box_tag "ban_ip[]", c.id %> Ban IP <br/>
+       <% if c.user %>
+       <%= check_box_tag "warn_user[]", c.id %> Warn User <br/>
+       <%= check_box_tag "ban_user[]", c.id %> Ban User<br/>
+       <% end %>
+       <% if c.flagged? %>
+       <%= check_box_tag "unflag[]", c.id %> Unflag<br/>
+       <% else %>
+       <%= check_box_tag "ok[]", c.id %> Set OK<br/>
+       <% end %>
+      <%= check_box_tag "censor[]", c.id %> Censor<br/>
+       
+    </td>
+
+  </tr>
+<% end %>
+</table>
+<p style="text-align:center;">
+<%= submit_tag "MAKE ROCKET GO", :style => "font-size:18px;" %>
+</p>
+<% end %>
+<%= will_paginate(@teh_comments) %>

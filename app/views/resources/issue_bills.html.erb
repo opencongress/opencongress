@@ -1,0 +1,77 @@
+<%= javascript_include_tag 'panel_generator' %>
+<div id="heading">
+  <h2>Make an "Issue Area" Widget</h2>
+</div>
+<div class="padding">
+  <p>
+    <% if @issue %>
+  Here is a widget for the issue that you've selected. Now, just customize the appearance of your panel, then simply copy-and-paste the HTML into your blog or website. Now your community will have an easy, up-to-date way to track the status of this issue in Congress.
+    <% else %>
+  Use this page to make a widget for your web-page or blog that will display either the most recent bills or the most-viewed bills in an issue area. First, select the issue area you want to display in one of two ways: by typing it into the text field, or by selecting a popular issue from the drop-down box. (There are over 4,000 issue areas here on OpenCongress, and a given issue area might be split into several subcategories &mdash; please visit the <a href="/issue/alphabetical/A">full alphabetical list</a> to see them all.) Next, use the form below to custom-tailor your widget to match your web-page. Then, simply copy and paste the HTML chunk into your web-page. It's an easy way to keep your community updated on the issues that matter to you. For an example of how it looks, please see our <a href="http://participatorypolitics.org/tools_issue_area.html">sample</a>.<br /><br />
+    <% end %>
+  </p>
+
+  <dl class="tool_form bill_status">
+
+    <% if @issue %>
+      <dt><label>Issue:</label></dt>
+      <dd><%= @issue.term %></dd>
+      <%= hidden_field 'panel', 'issue_id', { :value => @issue.id } %>
+    <% else %>
+      <% form_remote_tag(:url => { :controller => 'resources', :action => 'issue_search' }, 
+                                    :before => "onSearch()",
+                                    :complete => "onSearchComplete()",
+                                    :update => "search_results"
+                         ) do -%>
+      <dt><label for="post_info_url">Search for the issue:</label></dt> 
+      <dd><%= text_field 'issue_bills', 'issue_text', { :size => '30', :maxlength => '255', :value => "" } %>
+        <%= submit_tag "Search >>" %>
+        <img alt="Indicator" class="noborder" height="5" id="search_spinner" src="/images/indicator.gif" style="display: none; vertical-align: middle" width="21" />
+        <div class="form_note">(ie, "Immigration")</div>
+        <div id="search_results">
+        </div>
+      </dd>
+      <% end %>
+
+      <dt><label for="post_info_url">OR, select a popular issue:</label></dt>
+
+      <dd>
+        <%= select("panel", "issue_id_select", @most_viewed_issues.collect {|i| [ i.term, i.id ] }, { :include_blank => true }, { :onChange => "setIssueBillsIssueId(document.getElementById('panel_issue_id_select').value);" } ) %>
+      </dd>
+      <%= hidden_field 'panel', 'issue_id' %>
+    <% end %>
+
+    <dt><label for="post_info_url">Type of bills:</label></dt>
+
+    <dd>
+      <%= select("panel", "item_type", [ ["Newest Bills",'new-bill'], ["Most Viewed Bills",'viewed-bill']], { :selected => @item_type }, { :onChange => "updateIssueBillsFields();" } ) %>
+    </dd>
+  <%= render :partial => 'resources/panel_colors_form', :locals => { :update_function => 'updateIssueBillsFields' }  %>
+
+  <%= submit_tag "Update Panel Preview >> ", { :onClick => 'updateIssueBillsFields();' } %>
+
+  <%= hidden_field 'panel', 'path', { :value =>  "/resources/issue_bills_panel" } %>
+  <%= hidden_field 'panel', 'hostname', { :value => url_for(:only_path => false, :controller => 'index') } %>
+
+  </dl>
+
+  <div id="preview_container">
+  
+  <div id="preview_bill_status_preview">
+  How the panel will look:<br>
+  <iframe id="issue_bills_panel" name="oc_issue_bills_frame" width="176" scrolling="no" frameborder="0" style="border: 1px solid #999;" allowtransparency="true" hspace="0" vspace="0" marginheight="0" marginwidth="0" src="/resources/issue_bills_panel?bg_color=ffffff&textcolor=333333&issue_id=4166"></iframe>
+  </div>
+
+  <div id="preview_issue_bills_code">
+  Copy and paste this code into your webpage:<br>
+
+  <%= text_area 'panel', 'code', "cols" => 68, "rows" => 20 %>
+
+  </div>
+
+  </div>
+
+  <!-- The following image forces the fields to update on the initial load of the page -->
+  <img src="/images/blank.gif" class="noborder" width="0" height="0" onLoad="updateIssueBillsFields();">
+  <br />
+</div>

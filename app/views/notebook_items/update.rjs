@@ -1,0 +1,6 @@
+if @success
+  page.replace_html("notebook_item_#{@notebook_item.id}", :partial => "#{@notebook_item.class.to_s.tableize}/listitem", :object => @notebook_item)
+  page << "NotebookForm.hideAllForms();"
+else
+  page.alert("All fields marked with an * are required.")
+end

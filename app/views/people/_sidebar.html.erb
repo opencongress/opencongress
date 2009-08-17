@@ -1,0 +1,27 @@
+<div class="sidebar">
+	
+	<script>
+	$j().ready(function() {
+		$j('#map').jqm();
+	});
+	</script>
+	<a href="#" class="jqModal find_map"><span>Find <%= @person_type.to_s.capitalize %> by Map</span></a>
+
+	<div id="map" class="jqmWindow" style="display:none;">
+		<%= render :partial => "shared/map" %>
+		<div class="ie"><a href="#" class="jqmClose">Close</a></div>
+	</div>
+
+	<div id="zipcode_lookup">
+    
+    <h3>Find Your <%= person_type_small(@person_type.to_s) %></h3>
+    
+		<form name="zipcodeform" action="/people/zipcodelookup" method="post">
+    
+    <input type="text" name="zip5" size='5' maxlength='5' class="form" value="Enter Zip Code" onfocus="this.value = '';" onblur="if (this.value == ''){this.value = 'Enter Zip Code'};" />
+    <input type="image" src="/stylesheets/img/show_me.png" value="submit" /> 
+    </form>
+    </div>
+  <%= render :partial => 'shared/carousel' if @carousel %>
+	<a id="head_button" href="/people/compare">Head-to-Head Comparison Tool</a>
+</div>

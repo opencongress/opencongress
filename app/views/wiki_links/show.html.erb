@@ -1,0 +1,23 @@
+<p>
+  <b>Wikiable type:</b>
+  <%=h @wiki_link.wikiable_type %>
+</p>
+
+<p>
+  <b>Wikiable:</b>
+  <%=h @wiki_link.wikiable_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @wiki_link.name %>
+</p>
+
+<p>
+  <b>Oc link:</b>
+  <%=h @wiki_link.oc_link %>
+</p>
+
+
+<%= link_to 'Edit', edit_wiki_link_path(@wiki_link) %> |
+<%= link_to 'Back', wiki_links_path %>

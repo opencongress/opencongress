@@ -1,0 +1,5 @@
+Hello {user_name},
+
+This message is to inform you that your account at {forum_name} has been
+assigned to the {role_name}. This role does not have permission to take part in
+the discussions.

@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  comparison_id: 1
+  comp_value: 1
+  comp_indx: 1
+
+two:
+  comparison_id: 1
+  comp_value: 1
+  comp_indx: 1

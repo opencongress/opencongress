@@ -1,0 +1,8 @@
+@comments.each do |c|
+  page.hide 'com' + c.id.to_s
+  page.show 'comfl' + c.id.to_s
+end
+@showcomments.each do |c|
+  page.show 'com' + c.id.to_s
+  page.hide 'comfl' + c.id.to_s
+end

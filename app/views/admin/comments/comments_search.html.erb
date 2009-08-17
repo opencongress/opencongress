@@ -1,0 +1,25 @@
+<h1>Comment Search</h1>
+
+<p>Search for specific comments, then delete them in bulk.</p>
+<br/>
+<p>
+<% form_tag do %>
+	<%= text_field_tag :q, params[:q], :size => "80" %>
+	<%= submit_tag "Search" %>
+
+<% end %>
+</p>
+
+<% if @comments %>
+	<% @comments.each do |c| %>
+		<div style="padding:20px;background-color:#<%= cycle('EEEEEE', 'FFFFFF') %>">
+			 <%= c.user ? c.user.login : "Anonymous" %> on <%= c.created_at %><br/>
+			 <%= truncate(h(c.comment), 170) %>
+		</div>
+	<% end %>
+	<% form_tag do %>
+	  <%= hidden_field_tag :delete_comms, params[:q] %>
+	  <%= hidden_field_tag :q, params[:q] %>
+	  <%= submit_tag "Delete all comments from this query", :disable_with => "Please wait...", :confirm => "Are you sure?" %>
+	<% end %>
+<% end %>

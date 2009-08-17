@@ -1,0 +1,7 @@
+<% @content_for_sortby = render :partial => 'sort_bills', :locals => { :sort => 'popular'} %>
+<div id="the-bills">
+<% cache("bill_meta_popular_#{@days}", :expires_in => 3.hours) do %>
+  <!-- cached: <%= "bill_meta_popular_#{@days}" %> // <%= Time.now %> -->
+  <%= render(:partial => "bill/related_bills_list", :locals => { :related_bills_list => @bills, :show_views => true } ) %>
+<% end %>
+</div>

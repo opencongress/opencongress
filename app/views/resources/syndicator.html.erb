@@ -1,0 +1,47 @@
+<%= javascript_include_tag 'panel_generator' %>
+
+<div id="heading">
+  <h2>Make an "OpenCongress Trends" Widget</h2>
+</div>
+<div class="padding">
+  Use this page to make a widget for your webpage or blog that will display the latest trends on OpenCongress. First, use the form below to custom-tailor your panel to match your webpage. Then, copy and paste the HTML chunk into your webpage. It's an easy way to share interesting, up-to-date trends and to help build public knowledge about Congress. For an example of how it looks, please see our <a href="http://participatorypolitics.org/tools_syndicator.html">sample</a>.<br /><br />
+
+  <dl class="tool_form syndicator">
+
+  <dt><label for="post_info_url">Type of content to show:</label></dt> 
+  <dd><%= select("panel", "item_type", trend_item_types, { :selected => "viewed-bill" }, { :onChange => "updateSyndicatorFields();" }) %>
+  </dd>
+
+  <dt><label for="post_info_url">Number of items:</label></dt>
+  <dd><%= select("panel", "number", (3..10).collect {|n| [ n, n ] }, { :selected => 5 }, { :onChange => "updateSyndicatorFields();" } ) %>
+  </dd>
+
+  <%= render :partial => 'resources/panel_colors_form', :locals => { :update_function => 'updateSyndicatorFields' } %>
+
+  <%= submit_tag "Update Panel Preview >> ", { :onClick => 'updateSyndicatorFields();' } %>
+
+  <%= hidden_field 'panel', 'path', { :value =>  "/resources/syndicator_panel"}%>
+  <%= hidden_field 'panel', 'hostname', { :value => url_for(:only_path => false, :controller => 'index') } %>
+
+  </dl>
+
+  <div id="preview_container">
+  
+  <div id="preview_syndicator_preview">
+  How the panel will look:<br>
+  <iframe id="syndicator_panel" name="oc_syndicator_frame" width="176" height="392" scrolling="no" frameborder="0" style="border: 1px solid #999;" allowtransparency="true" hspace="0" vspace="0" marginheight="0" marginwidth="0" src="/resources/syndicator_panel?bg_color=ffffff&textcolor=333333&num_items=5&item_type=viewed-bill"></iframe>
+  </div>
+
+  <div id="preview_syndicator_code">
+  Copy and paste this code into your webpage:<br>
+
+  <%= text_area 'panel', 'code', "cols" => 68, "rows" => 20 %>
+
+  </div>
+
+  </div>
+
+  <!-- The following image forces the fields to update on the initial load of the page -->
+  <img src="/images/blank.gif" class="noborder" width="0" height="0" onLoad="updateSyndicatorFields();">
+  <br />
+</div>

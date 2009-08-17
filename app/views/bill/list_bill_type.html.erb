@@ -1,0 +1,12 @@
+<% @page_title = bill_type_page_title(@bill_type) %>
+<% @title_class = 'sort' %>
+
+<div id="heading">
+  <h2><%= @page_title %></h2>
+</div>
+
+<% cache(:controller => "bill", :action => "type", :bill_type => @bill_type, :page => @page) do %>
+  <%= will_paginate @bills %>
+  <%= render(:partial => "bill/related_bills_list", :locals => { :related_bills_list => @bills } ) %>
+  <%= will_paginate @bills %>
+<% end %>

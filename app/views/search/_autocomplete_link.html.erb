@@ -1,0 +1,5 @@
+<li>
+  <a href='<%= url_for_object(autocomplete_link[2]) %>'>  
+    <%= truncate(autocomplete_link[1], :length => 70).gsub(/#{params[:value]}/i, '<strong>\0</strong>') %>
+  </a>
+</li>

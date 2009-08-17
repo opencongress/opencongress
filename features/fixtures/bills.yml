@@ -1,0 +1,24 @@
+bill1:
+  sponsor_id: "412246"
+  bill_type: s
+  topresident_date: "1238644800"
+  lastaction: "1238644800"
+  last_vote_roll: 
+  number: "809"
+  topresident_datetime: "2009-04-02"
+  hot_bill_category_id: 
+  last_speech: 
+  last_vote_date: 
+  rolls: 
+  session: "111"
+  introduced: "1238644800"
+  id: "56724"
+  summary: !binary |
+    CQ==
+
+  pl: 
+  updated: 2009-04-06 20:19:06
+  plain_language_summary: 
+  last_vote_where: 
+
+

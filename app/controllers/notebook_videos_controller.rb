@@ -1,0 +1,2 @@
+class NotebookVideosController < NotebookItemsController
+end

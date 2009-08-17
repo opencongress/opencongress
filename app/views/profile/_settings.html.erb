@@ -1,0 +1,54 @@
+</tr>
+	</table>
+<table cellpadding="0" cellspacing="0" class="profile_table">
+  <tr class="<%= cycle('odd','even') %>">
+    <td colspan="2">RSS feed for all tracked items: <%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => "user_feeds", :login => current_user.login, :action => "tracked_items", :key => current_user.feed_key %></td></tr>
+  <tr class="<%= cycle('odd','even') %>">
+    <td colspan="2">RSS feed of my actions: <%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => "user_feeds", :login => current_user.login, :action => "actions", :key => current_user.feed_key %></td></tr>
+	<tr class="<%= cycle('odd','even') %>">
+		<td colspan="2">Default Comments Rating Filter
+
+	  <a name="comm_fil"></a>
+	    <!--Comments will only display if they have an average rating of--> 
+	           <% form_for :user, @user, :url => {:action => "ratings"}, :html => {:style => "display:inline;"} do |f| %>
+	              <%= f.select :default_filter, [1,2,3,4,5,6,7,8,9,10], {}, {:onChange => "this.form.submit();"} %>
+	              <!--or higher.-->
+	           <% end %> 
+						<%= link_to_function(image_tag("/images/question.png", :mouseover => '/images/question_hover.png', :alt => "What's This?", :title => "What's This?"), "Element.show('about_ratings');", :class => 'question') %>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding:0;height:0">	<%= dbox_start("about_ratings", 280, -60, 350) %>
+				    The Ratings Filter allows you to determine how many user comments to view on pages here on OpenCongress. Setting the filter higher (towards 10) allows you to see only the comments rated "most helpful" by users, while setting the filter lower (towards 0) allows you to see more comments on a page.<%= dbox_end %>
+					</td>
+				</tr>
+	<tr class="<%= cycle('odd','even') %>">
+		<td colspan="2">Get E-Mail updates about OpenCongress?   
+					<% form_for :user, nil, :url => {:controller => "account", :action => "mailing_list", :id => current_user.id}, :html => {:style => "display:inline;"} do |f| %>
+	        <%= f.check_box :mailing, :onClick => "this.form.submit();" %>
+	     <% end %>
+		</td>
+	</tr>
+	<tr class="<%= cycle('odd','even') %>">
+		<td colspan="2"><%= toggler('change_pass', 'Change Password', 'Close', 'arrow-blue settings') %>
+			<table id="change_pass" style="display:none;">
+	    <% form_for :user, nil, :url => {:controller => "account", :action => "change_pw", :id => current_user.id} do |f| %>
+	      <tr>
+					<td>New Password:</td>
+					<td><%= f.password_field :password %></td>
+	      </tr>
+				<tr>	
+					<td>Confirm:</td> 
+					<td><%= f.password_field :password_confirmation %></td>
+	      </tr>
+				<tr>
+					<td colspan="2" style="text-align:right;"><%= submit_tag "Change Password" %></td>
+	    	</tr>
+					<% end %>
+			</table>
+		</td>
+	</tr>
+	<tr>
+	  <td>OpenID URL:</td><td><% form_tag :controller => :account, :action => :add_openid do %><%= text_field_tag "identity_url", current_user.identity_url, :size => 20 %><%= submit_tag "Set" %><% end %></td>
+	</tr>
+</table>

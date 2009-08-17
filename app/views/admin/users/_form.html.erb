@@ -1,0 +1,22 @@
+<%= error_messages_for 'user' %>
+
+<!--[form:user]-->
+<table>
+<tr><td valign="top">
+	
+	<p><label for="user_login">Login</label><br/>
+	<%= text_field 'user', 'login'  %></p>
+
+	<p><label for="user_full_name">Full Name</label><br/>
+	<%= text_field 'user', 'full_name'  %></p>
+
+	<p><label for="user_admin">Admin</label><br/>
+	<%= check_box 'user', 'admin'  %></p>
+
+	<p><label for="user_blog_author">Blog Author</label><br/>
+	<%= check_box 'user', 'blog_author'  %></p>
+
+</td></tr>
+</table>
+<!--[eoform:user]-->
+

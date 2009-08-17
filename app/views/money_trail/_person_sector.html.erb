@@ -1,0 +1,12 @@
+<% ps = person_sector %>
+<tr>
+  <td>
+    <%= number_to_currency(ps.total, :precision => 0) %>
+  </td>
+  <td>
+    <%= link_to_person ps.person %>
+  </td>
+  <td>
+    <span class="sector_detail">as of <%= ps.updated_at.strftime('%b %d, %Y') %>.</span>
+  </td>
+</tr>

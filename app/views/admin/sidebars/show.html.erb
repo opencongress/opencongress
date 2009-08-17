@@ -1,0 +1,8 @@
+<% for column in Sidebar.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @sidebar.send(column.name) %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', :action => 'edit', :id => @sidebar %> |
+<%= link_to 'Back', :action => 'list' %>

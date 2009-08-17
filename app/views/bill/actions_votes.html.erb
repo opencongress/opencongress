@@ -1,0 +1,130 @@
+<div class="main">
+<%= render :partial => 'aavtabs' %>
+<% unless @bill.amendments.empty? %>
+<table id="amendments">
+	<thead>
+	<tr class="header">
+		<th><span>Latest Amendment</span></th>
+		<th><span class="nopad">Status</span></th>
+		<th><span class="nopad">Purpose</span>
+		<% if @bill.amendments.size > 1 %>
+		<%= link_to "View All Amendments [#{@bill.amendments.size}]", {:action => 'amendments'}, :class => 'toggle' %>
+		<% end %>
+		</th>
+	</tr>
+	</thead>
+
+	<tfoot>
+ <tr>                                
+		<td colspan="3">&nbsp;</td>
+	</tr>
+	</tfoot>
+
+	<tbody>
+	
+	<% @bill.amendments[0..2].map do |a| %>
+	<tr class="<%= cycle('a','b') %>">
+		<td class="amendments"><%= a.display_number %></td>
+		<% unless a.roll_calls.empty? %>
+		<td><%= link_to a.status.capitalize, :controller => 'roll_call', :action => 'show', :id => a.roll_calls.last %></td>
+		<% else %>
+		<td><%= a.status.capitalize %></td>
+		<% end %>
+		<td class="text"><%= a.purpose %></td>
+	</tr>
+	<% end %>
+	
+	</tbody>
+</table>
+<% end %>		     
+
+<% unless @bill.actions.empty? %>
+<table id="actions">
+	
+	<thead>
+	<tr class="header">
+		<th colspan="2"><span>Latest Actions</span>
+		<% if @bill.actions.size > 1 %>
+	<%= link_to "View All Actions [#{@bill.actions.size}]", {:action => 'actions'}, :class => 'toggle' %></th>
+		<% end %>
+	</tr>
+	</thead>
+	 <tfoot>
+
+	<tr>                                
+		<td colspan="2">&nbsp;</td>
+	</tr>
+
+	</tfoot>
+	<% reset_cycle %>
+	<tbody>
+	<% @bill.actions[0..2].map do |a| %>
+	<tr class="<%= cycle('a','b') %>">                                
+		<td width="18%" class="actionz"><%= a.formatted_date_short %></td><td class="text"><%= a.text %></td>
+	</tr>
+	<% end %>
+	</tbody>
+</table>
+<% end %>
+
+<% unless @bill.roll_calls.empty? %>
+<table id="votes" cellpadding="0" cellspacing="0">
+	
+	<thead>
+	<tr class="header">
+		<th colspan="3"><span>Latest Vote</span>
+		<% if @bill.roll_calls.size > 1 %>
+		<%= link_to "View All Votes [#{@bill.roll_calls.size}]", {:action => "votes"}, :class => 'toggle' %>
+		<% end %>
+		</th>
+	</tr>
+	</thead>
+	<tfoot>
+
+		<tr>                                
+			<td colspan="3">&nbsp;&nbsp;</td>
+		</tr>
+
+		</tfoot>
+	<tbody>
+	<tr>
+		<td colspan="3" class="action"><span class="date roll"><%= @roll_call.date.strftime("%B %d, %Y") %></span><%= link_to "Roll call number <b>#{@roll_call.number}</b>", :controller => 'roll_call', :action => 'show', :id => @roll_call.id %> <% if @roll_call.amendment %>(Amendment number <b><%= @roll_call.amendment.display_number %></b>) <% end %> in the <b><%= @roll_call.chamber %></b></td>
+	</tr>
+	<tr>
+		<td class="question" colspan="3"><em>Question:</em> <%= @roll_call.question %></td>
+	</tr>
+	<% if @roll_call.amendment %>
+	<tr>
+		<td class="amend" colspan="3"><em>Amendment purpose:</em> <%= @roll_call.amendment.purpose %></td>
+	</tr>  
+	<% end %>
+	<tr>
+		<td class="req"><em>Required percentage of 'Aye' votes:</em> <%= @roll_call.required %> <%= numeric_percentage(@roll_call) %></td>
+		<% if @roll_call.total_votes > 0 %>
+		<td><em>Percentage of 'aye' votes:</em> <%= "%2d" % ((@roll_call.ayes.to_f / @roll_call.total_votes.to_f) * 100) %>%</td>  
+		<% end %>
+		<td class="result"><em>Result:</em> <%= @roll_call.result %></td>    
+	</tr>  
+	<tr>
+		<td class="votes" colspan="3">
+			<%= roll_call_sublists_by_vote_type('+', @roll_call) %>
+			<div class="pie-chart" id='roll_call_Aye_chart'>
+				<%= @aye_chart %>
+			</div>
+
+			<%= roll_call_sublists_by_vote_type('-', @roll_call) %>
+			<div class="pie-chart" id='roll_call_Nay_chart'>
+				<%= @nay_chart %>
+			</div>
+
+			<%= roll_call_sublists_by_vote_type('0', @roll_call) %>
+			<div class="pie-chart" id='roll_call_Abstain_chart'>
+				<%= @abstain_chart %>
+			</div>
+			</td
+		</tr>
+	
+	</tbody>
+	</table>
+	<% end %>
+</div>

@@ -1,0 +1,39 @@
+@import url('ie7.css');
+
+body {
+  background-image:none;
+}
+#header {
+  padding-bottom:15px;
+}
+#blog h2 {
+  margin-left:0px;
+}
+.blog_list  {
+  padding-left:0px;
+}
+div.pop_bills{
+  margin-right:10px;
+}
+input#search-field {
+  margin-top:2px;
+}
+div#find {
+  padding-bottom:15px;
+}
+div.dboxed {
+  background-color:transparent;
+}
+.jqmWindow.scrolling .jqmClose{
+right: 15px;
+}           
+a#login_writerep_trigger {
+  width:189px;
+  margin-left:15px;
+}
+a.large_track span#b_myoc_txt {
+  display:inline-block;
+}
+tfoot td {
+background: url('img/tfoot.gif') left top no-repeat;
+}

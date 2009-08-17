@@ -1,0 +1,77 @@
+#facebox .b {
+  background:url(/images/facebox/b.png);
+   _background:url(/images/facebox/b.gif);
+}
+
+#facebox .tl {
+  background:url(/images/facebox/tl.png);
+   _background:url(/images/facebox/tl.gif);
+}
+
+#facebox .tr {
+  background:url(/images/facebox/tr.png);
+   _background:url(/images/facebox/tr.gif);
+}
+
+#facebox .bl {
+  background:url(/images/facebox/bl.png);
+   _background:url(/images/facebox/bl.gif);
+}
+
+#facebox .br {
+  background:url(/images/facebox/br.png);
+   _background:url(/images/facebox/br.gif);
+}
+
+#facebox {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  text-align: left;
+}
+
+#facebox .popup {
+  position: relative;
+}
+
+#facebox table {
+  margin: auto;
+  border-collapse: collapse;
+}
+              
+#facebox td  {
+	vertical-align:middle;
+}
+#facebox .body {
+  padding: 10px;
+  background: #fff;
+  width: 370px;
+}
+
+#facebox .loading {
+  text-align: center;
+}
+
+#facebox .image {
+  text-align: center;
+}
+
+#facebox img {
+  border: 0;
+}
+
+#facebox .footer {
+  border-top: 1px solid #DDDDDD;
+  padding-top: 5px;
+  margin-top: 10px;
+  text-align: right;
+}
+
+#facebox .tl, #facebox .tr, #facebox .bl, #facebox .br {
+  height: 10px;
+  width: 10px;
+  overflow: hidden;
+  padding: 0;
+}

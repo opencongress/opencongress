@@ -1,0 +1,155 @@
+<% cache("#{@person.fragment_cache_key}_header") do %>
+  <!-- <div class="issue_cloud">
+    <h3 class="dark">Issue Cloud</h3>
+    <% #tag_cloud @top_issues, %w(issue_cloud1 issue_cloud2 issue_cloud3 issue_cloud4 issue_cloud5 issue_cloud6 issue_cloud7 issue_cloud8 issue_cloud9 issue_cloud10) do |issue, css_class| %>
+      <%  #link_to issue.term, {:controller => 'issue', :action => :show, :id => issue}, :class => css_class %>
+    <% #end %>
+  </div> -->
+
+<% if @person.committees.any? %>
+    <% committees = @person.committees.sort_by { |c| [(c.name || ""), (c.subcommittee_name || "") ] }.group_by(&:name) %>
+    <div class="committee_list">
+      <h3 class="dark">Committee Membership</h3>
+      <ul class="list">
+        <%= render(:partial =>'committee/committees_list', :locals => {:committees => committees }, :collection => committees.keys.sort) %>
+      </ul>
+    </div>
+  <% end %>
+
+	<div id="bill_and_status_list">
+		<% sponsored_bills = @person.bills.find(:all, :limit => 3) %>
+		<% if sponsored_bills.any? %>
+			<h3 class="darkline">Most Recent Sponsored Bills</h3>
+			<%= render(:partial => 'bill/related_bills_list', :locals => { :related_bills_list => sponsored_bills })%>
+			<% if @person.bills.size > 3 %>
+				<a href="/people/bills/<%= @person.to_param %>#sponsored" class="med_button bold clearnone"><span>View All Sponsored Bills</span></a>
+				<% end %>
+		<% else %>
+			<% cosponsored_bills = @person.bills_cosponsored.find(:all, :limit => 3) %>
+			<% if cosponsored_bills.any? %>
+				<h3 class="darkline">Most Recent Co-Sponsored Bills</h3>
+				<%= render(:partial => 'bill/related_bills_list', :locals => { :related_bills_list => cosponsored_bills })%>
+ 			<% end %>
+		<% end %>
+		<% if @person.bills_cosponsored.size > 3 %>
+			<a href="/people/bills/<%= @person.to_param %>#cosponsored" class="med_button bold clearnone co"><span>View All Co-Sponsored Bills</span></a>
+		<% end %>
+	</div>
+
+  <br style="clear: both;" />
+
+  <% if @person.votes(3).any? %>
+    <div id="voting_history">
+      <h3>Recent Voting History</h3>
+      <%= site_text_explain('voting_history') %>
+      <%= render(:partial => 'voting_history', :locals => { :votes => @person.votes(3) }) %>
+      <a href="/people/voting_history/<%= @person.to_param %>" class="med_button clearnone"><span>View Full Voting History</span></a>
+			</div>
+  <% end %>
+<% if @person.votes? %>
+<div class="compare_select">
+  <form id="person_vote_compare_select" action="/people/compare" method="get">
+	  <span>Compare votes to</span>
+	  <input type="hidden" name="person1" value="<%= @person.id %>">
+	  <% compare_people = @person.senator? ? Person.senators : Person.voting_representatives %>
+	  <% compare_people.delete @person %>
+	  <%= select_tag "person2", options_from_collection_for_select(compare_people, "id", "select_list_name"), :onchange => "$('person_vote_compare_select').submit();" %>
+	  <% if @person.representative? %><input type="hidden" name="representatives" value="true"><% end %>
+	</form>
+</div>
+<% end %>
+
+  <div class="news_blogs">
+    <div class="col1">      
+
+      <% cache ("#{@person.fragment_cache_key}_news_preview") do %>
+      <!-- cached: <%= "#{@person.fragment_cache_key}_news_preview" %> // <%= Time.now %> -->
+      <a class="feed" href="<%= url_for :action => 'atom_news', :id => @person %>">FEED</a>
+      <h5 class="short">Recent News Coverage</h5>
+      <div id="news_list">
+        <a name="news"></a>
+
+        <%=
+        render :partial => 'shared/news', :object => @person.news.find(:all, :limit => 3),
+        :locals => { :limit => 3, :all_size => @person.news.size, :default_title => @person.popular_name,
+          :more_url => { :controller => 'people', :action => 'news', :id => @person },
+          :top_url => { :controller => 'people', :action => 'news', :id => @person, :sort => 'toprated' } }
+          %>
+
+        </div>
+        <% end %>
+
+      </div> <!-- // col1 -->
+
+      <div class="col2">
+        <% cache ("#{@person.fragment_cache_key}_blog_preview") do %>
+        <!-- cached: <%= "#{@person.fragment_cache_key}_blog_preview" %> // <%= Time.now %> -->
+        <a class="feed" href="<%= url_for :action => 'atom_blogs', :id => @person %>">FEED</a>
+        <h5 class="short">Recent Blog Coverage</h5>
+        <div id="blogs_list">
+          <a name="blogs"></a>
+
+          <%=
+          render :partial => 'shared/blogs', :object => @person.blogs.find(:all, :limit => 3),
+          :locals => { :limit => 3, :all_size => @person.blogs.size, :default_title => @person.popular_name,
+            :more_url => { :controller => 'bill', :action => 'blogs', :id => @person },
+            :top_url => { :controller => 'bill', :action => 'blogs', :id => @person, :sort => 'toprated' } }
+            %>
+          </div>
+          <% end %>
+
+        </div>  <!-- // col2 -->
+      </div>
+
+<div class="user_stats_div">
+
+  <% unless @person_tracking_suggestions[0] == 0 %>
+    <%= render :partial => "shared/tracking_suggestions_table", 
+               :locals => {:object => @person, 
+                           :title => @person.full_name, 
+                           :action => "tracking_person", 
+                           :tracking_suggestions => @person_tracking_suggestions} %>
+
+  <% end %>
+  
+	<% unless @supporting_suggestions[0] == 0 %>
+    <%= render :partial => "shared/support_oppose_tables",
+              :locals => {:object => @person,
+                          :title => @person.full_name,
+                          :action => "supporting_person",
+                          :stance => "supporting",
+                          :tracking_suggestions => @supporting_suggestions} %>
+  <% end %>
+
+  <% unless @opposing_suggestions[0] == 0 %>
+    <%= render :partial => "shared/support_oppose_tables",
+              :locals => {:object => @person,
+                          :title => @person.full_name,
+                          :action => "opposing_person",
+                          :stance => "opposing",
+                          :tracking_suggestions => @opposing_suggestions} %>
+  
+  <% end %>
+
+<% end %>
+
+</div>
+
+<% unless @person.videos.empty? %>  
+  <div id="person_video" class="cols-box clearfix">
+    <h3 class="darkline clear">Videos of <%= @person.popular_name %></h3>
+    <%= render :partial => 'shared/videos', :object => @person.videos.find(:all, :limit => 2), 
+               :locals => { :more_url => (@person.videos.size > 2) ? link_to("See more videos (#{@person.videos.size} total)", { :controller => 'people', :action => 'videos', :id => @person }, :class => "arrow") : nil } %>
+  </div>
+<% end %>
+<div class="padding">
+<% if @featured_person_text %>
+  <h3 class="darkline">Featured Members of Congress</h3>
+  <div id="featured_person">
+    <p class="bold behave">On <%= @featured_person_text.created_at.strftime("%B %d, %Y") %> <%= @person.popular_name %> was featured on the homepage of OpenCongress:</p>
+    <blockquote>
+      <%= @featured_person_text.text %>
+    </blockquote>
+  </div>
+<% end %>
+</div>

@@ -1,0 +1,43 @@
+<h1>New twitter_config</h1>
+
+<% form_for(@twitter_config) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_id %>
+  </p>
+  <p>
+    <%= f.label :secret %><br />
+    <%= f.text_field :secret %>
+  </p>
+  <p>
+    <%= f.label :token %><br />
+    <%= f.text_field :token %>
+  </p>
+  <p>
+    <%= f.label :tracking %><br />
+    <%= f.check_box :tracking %>
+  </p>
+  <p>
+    <%= f.label :bill_votes %><br />
+    <%= f.check_box :bill_votes %>
+  </p>
+  <p>
+    <%= f.label :person_approvals %><br />
+    <%= f.check_box :person_approvals %>
+  </p>
+  <p>
+    <%= f.label :new_notebook_items %><br />
+    <%= f.check_box :new_notebook_items %>
+  </p>
+  <p>
+    <%= f.label :logins %><br />
+    <%= f.check_box :logins %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', twitter_configs_path %>

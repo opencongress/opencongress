@@ -1,0 +1,18 @@
+<div id="tertiary-content">
+  <div class="col">
+    <div class="related-box">
+     <h2>Most Viewed</h2><span class="days">&#40;Past Seven Days&#41;</span>              
+      <% related_issues.each do |c| %>
+      <div <% if related_issues.last == c %>class="last"<% end %>>
+        <ul>
+          <li>
+            <p><%= link_to_item c, :term, :show %> <em>(<%= c.views(DEFAULT_COUNT_TIME) %> views)</em></p>
+          </li>
+        </ul>
+      </div>
+      <% end %>              
+    </div>
+    <!-- // related-box-->
+  </div>
+</div>
+<!-- // col  // tertiary-content -->

@@ -1,0 +1,9 @@
+Hi <%=h @friend.user.login %>,
+
+<%=h @friend.friend.login %> has accepted your Friend invitation on OpenCongress!
+
+You may now view their full profile and latest actions on your Friends page:
+
+<%= BASE_URL %>users/<%=h @friend.user.login %>/profile/friends
+
+Thanks, The OpenCongress Team

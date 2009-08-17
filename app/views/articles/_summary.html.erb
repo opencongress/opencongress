@@ -1,0 +1,29 @@
+
+<div class="blog-title">
+  <h3>
+    <strong class="gossip">
+      <% unless summary.title.empty? %>
+        <%= link_to summary.title, { :action => 'view', :id => summary } %> 
+      <% else %>
+        <%= link_to 'OpenCongress Blog', { :action => 'view', :id => summary } %>
+      <% end %>
+    </strong>
+  </h3>
+  <span class="blog-date"><b><%= summary.formatted_date %></b> - by <%= summary.user.full_name if summary.user %></span>
+</div>
+
+<div class="blog-body">
+  <%= summary.content_rendered %>
+
+  <div class="blog_buttons">
+    <%= link_to '<span>Permalink</span>', { :action => 'view', :id => summary }, :class => 'med_button blog_perm' %>
+    <% if summary.comments.count > 0 %>
+      <%= link_to  "<span>Comments (#{summary.comments.count.to_s})</span>", 
+                                  { :action => 'view', :id => summary, :anchor => 'comments' },
+                                    :class => 'med_button med_arrow' %>
+    <% else %>
+      <%= link_to '<span>Submit a Comment</span>', { :action => 'view', :id => summary, :anchor => 'add' }, :class => 'med_button blog_submit' %>
+    <% end %>
+  </div>
+  <div class="clear">&nbsp;</div>
+</div>

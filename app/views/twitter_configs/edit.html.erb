@@ -1,0 +1,32 @@
+<h1>Editing twitter_config</h1>
+
+<% form_for(:twitter_config, @twitter_config) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :tracking %><br />
+    <%= f.check_box :tracking %>
+  </p>
+  <p>
+    <%= f.label :bill_votes %><br />
+    <%= f.check_box :bill_votes %>
+  </p>
+  <p>
+    <%= f.label :person_approvals %><br />
+    <%= f.check_box :person_approvals %>
+  </p>
+  <p>
+    <%= f.label :new_notebook_items %><br />
+    <%= f.check_box :new_notebook_items %>
+  </p>
+  <p>
+    <%= f.label :logins %><br />
+    <%= f.check_box :logins %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', twitter_config_path(current_user.login,@twitter_config) %> |
+<%= link_to 'Back', twitter_configs_path(current_user.login) %>

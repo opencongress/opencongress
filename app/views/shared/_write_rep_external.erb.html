@@ -1,0 +1,74 @@
+<% unless people.empty? %>
+  <a href="#" class="writeextrigger">
+    <div>
+    <span class="write">Write <%= (params[:controller] == 'bill') ? 'Your' : 'This' %></span>
+    <span class="who"><%= people[0].senator? ? ((params[:controller] == 'bill') ? "Senators" : "Senator") : "Representative" %></span>
+    </div>
+  </a>
+
+  <div id="writerep_window" class="jqmWindow">
+    <div id="writerep_title">
+        <div class="ie">
+        <a href="#" class="jqmClose">
+            Close
+        </a>
+        </div>
+        <span id="writerep_person1_text"><b>You are writing <%= people[0].name %>.</b></span>
+        <% if people[1] %>
+          <span id="writerep_person2_text">
+            <a href="#" onclick="switchWriterepIframes('<%= people[1].name %>'); return false;">
+              Continue to <%= people[1].name %>
+            </a>
+          </span>
+        <% end %>
+    </div>
+  
+    <div id="writerep_person1">
+      <iframe width="940" id="writerep_content" class="writerep_content_frame" src="/writerep_spinner.html">
+      </iframe>
+    </div>
+  
+    <% if false #people[1] %>
+      <div id="writerep_person2">
+        <iframe width="940" id="writerep_content2" class="writerep_content_frame" src="<%= people[1].contact_webform %>">
+        </iframe>
+      </div>
+    <% end %>
+  </div>
+    
+  <script type="text/javascript">
+  $j().ready(function() {
+    var loadInIframeModal = function(hash){
+      var $trigger = $j(hash.t);
+      var $modal = $j(hash.w);
+      var myUrl = '<%= people[0].contact_webform %>'; //$trigger.attr('href');
+      var $modalContent = $j("iframe", $modal);
+
+      $modalContent.html('').attr('src', myUrl);
+
+      hash.w.show();
+    }
+  
+    // initialise jqModal
+    $j('#writerep_window').jqm({
+      modal: true,
+      trigger: 'a.writeextrigger',
+      target: '#writerep_content',
+      onShow:  loadInIframeModal
+    });
+
+  });
+
+  <% if people[1] %>
+    function switchWriterepIframes(name) {
+      //$('writerep_person1').hide();
+      //$('writerep_person2').show();
+  
+      document.getElementById('writerep_content').src = '<%= people[1].contact_webform %>'
+  
+      $('writerep_person2_text').hide();
+      $('writerep_person1_text').replace("<b>You are writing " + name + "</b>");
+    }
+  <% end %> 
+  </script>
+<% end %>

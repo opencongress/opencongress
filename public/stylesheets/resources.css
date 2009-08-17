@@ -1,0 +1,64 @@
+
+#content img{
+float: right;
+margin-bottom: 20px;
+width: 370px;
+padding: 9px;
+border: 1px solid #ddd;
+}
+
+.tool-container.buttons img{
+width: inherit !important;
+}
+
+
+
+
+hr{
+display: none;
+}
+
+.inner{
+
+}
+
+hr{
+clear: both;
+}
+
+#heading{
+height: 45px;
+margin-top: 0;
+}
+
+
+.tool-container p{
+min-height: 110px;
+}
+
+
+.tool-container a{
+display: block;
+margin: 10px 0;
+}
+
+.tool-container p a{
+display: inline;
+}
+
+
+.tool-container{
+width: 390px;
+float: left;
+padding: 35px;
+height: 360px;
+overflow: hidden;
+}
+
+
+.inner h1{
+clear: both;
+padding-bottom: 15px;
+border-bottom: 1px solid #ddd;
+margin: 0 0 0 35px;
+}

@@ -1,0 +1,35 @@
+<div class="main">
+<%= render :partial => 'aavtabs' %>
+
+<%= will_paginate @amendments %>
+<table id="amendments">
+<thead>
+	<tr class="header">
+		<th><span>All Amendments</span></th>
+		<th><span class="nopad">Status</span></th>
+		<th><span class="nopad">Purpose</span></th>
+	</tr>
+</thead>
+<tfoot>
+<tr>                                
+	<td colspan="3">&nbsp;</td>
+</tr>
+</tfoot>
+
+	<tbody>
+	<% @bill.amendments.map do |a| %>
+	<tr class="<%= cycle('a','b') %>">
+		<td class="amendments"><%= a.display_number %></td>
+		<% unless a.roll_calls.empty? %>
+		<td><%= link_to a.status.capitalize, :controller => 'roll_call', :action => 'show', :id => a.roll_calls.last %></td>
+		<% else %>
+		<td><%= a.status.capitalize %></td>
+		<% end %>
+		<td class="text"><%= a.purpose %></td>
+	</tr>
+	<% end %>
+	</tbody>
+
+</table>
+<%= will_paginate @amendments %>
+</div>

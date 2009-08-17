@@ -1,0 +1,11 @@
+if @success
+  if @captcha_form
+    page.replace_html("write_rep_form", render(:partial => 'write_rep_captcha_form'))
+  end
+else
+  if @error_msg.blank?
+    page.alert("All fields marked with an * are required.")
+  else
+    page.alert(@error_msg)
+  end
+end

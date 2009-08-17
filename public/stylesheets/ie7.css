@@ -1,0 +1,296 @@
+a {
+  color:#333;
+}
+a span, a td {
+  cursor:pointer;
+}
+.congress_status *, .small_button, .med_button, .track_small, .large_track {
+  white-space:nowrap;
+}
+a.large_track {
+  width:auto;
+}           
+#content {
+  display:inline-block;
+}
+#second_tier, .pop_bills div div ul {
+  float:none;
+}
+.pop_bills ul li span.date {
+  width:375px;
+}
+#blog h3.line2 {
+  padding:0;
+  margin:15px 0px 15px 12px;
+}
+#blog em.date {
+  padding:0;
+}
+#header .right {
+  position:relative;
+}                  
+#login {
+  left:0px !important;
+}
+#find {
+  min-height:48px;
+}
+#second_tier span.cap {
+  height:0px;
+}
+#footer {
+  padding-bottom:42px;
+}
+#footer, #footer-wrapper .right {
+  height:100%;
+}
+.senate_sesh {
+  padding-right:0px;
+}
+.use_oc button.med_button {
+  width:84px; 
+  height:30px;
+  overflow:hidden;
+  padding-right:6px;
+  background-position:right 0px;
+}                
+.use_oc button span {
+  padding-top:6px;
+  padding-left:16px;
+  height:20px;
+}
+.use_oc form input.email {
+  float:left;
+}
+a.large_track span {
+  padding: 6px 9px 6px 37px;
+}
+.jqmWindow.scrolling .ie {
+  position:relative;
+}
+.jqmWindow.scrolling .jqmClose{
+top: -20px;
+right: -15px;
+}           
+.jqmWindow.closer {
+  position:fixed;
+}
+.small_box .small_box_top {
+  display:inline-block;
+}
+ul.aavtabs li, ul.nbtab li {
+  display:inline;
+}
+ul#people_list.listed, ul#issue_list.listed {
+  background:none;
+  margin-left:0px;
+}
+ul#people_list.listed:first-child li {
+  margin-top:0px;
+}
+ul#people_list hr {
+  clear:both;
+  display:none;
+}
+ul.listed {
+  position:relative;
+}
+ul.listed div.label strong {
+position:absolute;
+background:#F4FAFF;
+padding:0 10px;
+}
+ul.listed div.label a {
+  position:relative;
+}
+#zipcode_lookup {
+  position:relative;
+  z-index:2;
+}
+#zipcode_lookup input.form {
+  padding:5px 0 1px 0;
+}
+#the-people {
+  width:617px;
+  background: url(img/zip_arrow.png) no-repeat 0px -71px;
+}           
+#views.wide #the-people {
+  background:none;
+  width:100%;
+}
+#people #topic {
+  width:745px;
+}
+#people .people_header {
+  display:inline-block;
+}
+li.subscribe a.new_mailing_list_item{
+padding: 4px 0 3px 29px;
+display: block;
+margin: 0px;
+clear: both;
+background: url('img/email_alerts.png') left 5px no-repeat;
+}
+.share_buttons a:hover{
+color: #1f3d59 !important;
+}
+.main {
+  width:745px;
+}
+#users_tracking.users_also {
+  width:675px;
+}
+#sort li a {
+  position:relative;
+}
+.rating_filter {
+  margin-top:20px;
+}
+h2.comments_title  {
+  width:200px;
+}
+h2.comments_title a.dbox_trigger, h2.icon a.dbox_trigger {
+  position:relative;
+  top:-16px;
+  left:0px;
+}                                                       
+#bill_carousel .category_track {
+  width:265px;
+}
+#bill_carousel span.slide_number {
+  white-space:nowrap;
+}
+table#actions, table#amendments, table#votes {
+  display:inline-block;
+}   
+tfoot {
+  background:none;
+}
+tfoot td {
+background: url('img/tfoot.png') left top no-repeat;
+}
+
+tr.header {
+position:relative;
+}
+td.amendments, td.actionz, td.action, td.question, td.votes, td.req, td.roll {
+  border-left:1px solid #DDDDDD;  
+}
+td.text, td.action, td.question, td.votes, td.result, td.roll {
+  border-right:1px solid #DDDDDD;    
+}
+td.roll td {
+  border-left:none !important;
+  border-right:none !important;
+}
+table#actions tr.b td, table#amendments tr.b td, table#votes tr.b td.roll {
+background-color:#F6FAFD;
+border-top: 1px solid #F2F2F2;
+border-bottom: 1px solid #F2F2F2;
+}
+table#actions th span, table#amendments th span, table#votes th span{
+  white-space:nowrap;
+  display:block;
+}                   
+#the-bills .dboxed{
+position: absolute;
+left:50%;
+top:inherit;
+margin:0;
+}
+#the-bills h2.icon {
+  float:none;
+}
+.sidebar {
+  height:auto;
+}
+#sponsor_stats {
+  padding-top:5px;
+}
+#sponsor_stats li {
+  float:none;
+}
+.bills .search_form, .voting_history .search_form{
+width:auto;
+}
+#user_login, #user_password, #user_password_confirmation, #user_email {
+  width:232px;
+}
+#signupform {
+  float:left;
+  width:410px;
+}        
+#signupform div.floatleft {
+  float:none !important;
+}
+#signupform input.floatright {
+  margin-top:10px;
+  float:none !important;
+}
+#oid_loginform input.floatleft {
+  margin-top:10px;
+}
+.cbox {
+  height:67px;
+  margin:15px 0;
+}
+.submit input {
+  height:33px;
+}
+#committee .carousel_inner {
+  position:relative;
+  z-index:2;
+  padding-left:10px;
+}
+#committee.show #heading {
+  height:100%;
+}
+#battle_royale #heading p {
+  float:none;
+}
+#objects .battle {
+  width:150px;
+}
+
+.notebook_bottom {
+  position:relative;
+  top:-90px;
+}
+ul#pn_tabs {
+  width:30px;
+  z-index:10;
+}
+ul#notebook-items li{
+  margin-top:-14px;
+  padding-bottom:24px;
+}
+ul#notebook-items li ul li {
+  margin-top:0;
+}
+ul#notebook-items li.notebook_note p {
+  float:left;
+}
+ul#notebook-items li.notebook_note span {
+  clear:left;
+}
+img#Privacy {
+  top:0px;
+}
+span.set a img#Privacy {
+  top:1px;
+}
+#linkcontent span.set a {
+  top:14px;
+}
+span#phide.set a {
+  top:4px;
+}
+#linkcontent.pfile {
+  margin-top:-40px;
+}
+td#pim.pset {
+  position:relative;
+}
+#bookmarklet a {
+  cursor:hand;
+}

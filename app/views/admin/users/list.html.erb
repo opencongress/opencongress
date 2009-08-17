@@ -1,0 +1,34 @@
+<div id="heading"> 
+<h2>System Users</h2>
+</div>
+
+<div class="padding">
+
+
+<p>To find a user in a specific district, search for <b>my_district:MA-2</b> or for multiples: <b>my_district:MA-2 OR my_district:MA-3</b></p>
+ 
+<%= will_paginate(@users) %>
+
+<br/>
+<%= page_entries_info @users %>
+<br/>
+ 
+   <% form_tag url_for({:controller => "/admin/users", :action => "list"}), :method => :get do %>
+    <%= text_field_tag :q, @query, :size => 30 %>
+    <%= submit_tag "Search" %>
+  <% end %>
+ 
+<div id="users">
+	<%= render :partial => 'user', :collection => @users %>
+</div>
+
+<br clear="all"/>
+
+<%= will_paginate(@users) %>
+
+<br />
+
+<%= link_to 'New user', :action => 'new' %>
+
+</div>
+

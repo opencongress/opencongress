@@ -1,0 +1,8 @@
+postgresql:
+  :adapter: postgresql
+  #:username: acts_as_tsearch_test
+  #:password: acts_as_tsearch_test
+  :database: acts_as_tsearch_test
+  :min_messages: ERROR
+
+

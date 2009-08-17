@@ -1,0 +1,87 @@
+<script type="text/javascript"><!--
+function onABCommComplete() {
+  // OPTIONAL: do something here after the new data has been populated in your text area
+}
+
+function onEmailSend()
+{
+  Element.show('emailindicator');
+  return false;
+}
+
+function onEmailSendComplete()
+{
+  Element.hide('emailindicator');
+  Effect.BlindUp('emailfriend');
+}
+
+function isValidEmailAddress(addr)
+{
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(addr))
+    return true;
+  else
+    return false;
+}
+
+function verifyEmailForm()
+{
+  if (!isValidEmailAddress(document.getElementById('email_email').value))
+  {
+    alert("You must enter a valid email address for 'Your Email'!");
+    return false;    
+  }
+  
+  var emails = document.getElementById('email_dest_emails').value.split("\n");
+  if (emails.length == 0)
+  {
+    alert("You must enter at least one 'Friend Email'!");
+    return false;
+  }
+
+  for (i = 0; i < emails.length; i++)
+  {
+  	if (!isValidEmailAddress(emails[i]))
+    {
+      alert("One of your friend's email addresses is invalid!");
+      return false;    
+    }
+  }
+    
+  return true;
+}
+//-->
+</script>
+
+<div id="emailsendresults" style="display:none;">
+  <a href="#" class="jqmClose">
+      Close
+  </a>
+  <br style="clear" />
+</div>
+
+<div id="emailfriend">
+  <% form_remote_tag(:url => { :controller => 'resources', :action => 'email_friend_send' }, 
+                                :condition => "verifyEmailForm()",
+                                :before => "onEmailSend()"
+                     ) do %> 
+    <%= hidden_field 'email', 'object_type', "value" => item.class %>
+    <%= hidden_field 'email', 'object_id', "value" => item.id %>
+    <br style="clear:both;" />
+    <dl>
+    <dt><label>Your Email:</label></dt>
+    <dd><%= text_field 'email', 'email', 'value' => @email_from %></dd>
+    <dt><label>Friends' Emails:<br />(one per line)<br /></label></dt><dd>
+      <%= text_area 'email', 'dest_emails', :cols => 30, :rows => 7 %>
+    </dd>
+    <dt><label>Personal Message:<br />(optional)</label></dt>
+    <dd>
+      <textarea rows="5" cols="30" id="email_message" name="email[message]">Hi, thought you might be interested in this info from OpenCongress, a public resource website about what's really happening in Congress.</textarea>
+    </dd>
+    <dt>&nbsp;</dt><dd><%= check_box('email', 'cc_me' ) %> Send me a copy</dd>
+    <dt>&nbsp;</dt><dd><%= show_simple_captcha(:image_style => 'all_black', :distortion => 'high') %>
+    <dt>&nbsp;</dt><dd><%= submit_tag "Send >>" %> 
+      <img alt="Indicator" class="noborder" id="emailindicator" src="/images/spinner.gif" style="display: none; vertical-align: middle; height: 20px;" />
+    </dd>
+    </dl>
+  <% end %>
+</div>

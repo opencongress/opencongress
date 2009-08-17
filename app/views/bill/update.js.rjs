@@ -1,0 +1,16 @@
+page['sort_nav'].replace :partial => 'sort_bills'
+
+case @sort
+  when 'all' 
+    page.replace_html "the-bills", :partial => 'bills_by_type', :locals => { :bills => @bills, :bill_counts => @bill_counts, :sort => @sort}
+  when 'hot'
+    page.replace_html "the-bills", :partial => "hot_bills", :locals => { :hot_bill_categories => @hot_bill_categories, :sort => @sort}
+  when 'news','blog'
+    page.replace_html "the-bills", :partial => "bill/related_bills_list", :locals => { :related_bills_list => @bills, :commentary_type => @commentary_type }
+  when 'pending'
+    page.replace_html "the-bills", :partial => "bill/related_bills_list", :locals => { :related_bills_list => @bills }   
+  when 'popular'
+    page.replace_html "the-bills", :partial => "bill/related_bills_list", :locals => { :related_bills_list => @bills, :show_views => true}
+  when 'rushed', 'rtb_all', 'gpo'
+    page.replace_html "the-bills", :partial => "bill/readthebill_list", :locals => { :bill => @bills, :sort => @sort}
+end

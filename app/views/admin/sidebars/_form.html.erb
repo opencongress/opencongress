@@ -1,0 +1,20 @@
+<%= error_messages_for 'sidebar' %>
+
+<!--[form:sidebar]-->
+<p><label for="sidebar_page">Page</label><br/>
+<%= text_field 'sidebar', 'page'  %></p>
+
+<p><label for="sidebar_class_type">Class type</label><br/>
+<%= select 'sidebar', 'class_type', ['Bill', 'Person', 'Committee', 'Subject' ] %></p>
+
+<p><label for="sidebar_enabled">Sidebar enabled?</label><br/>
+<%= check_box 'sidebar', 'enabled'  %> Yes</p>
+
+<p><label for="sidebar_title">Title</label><br/>
+<%= text_field 'sidebar', 'title'  %></p>
+
+<p><label for="sidebar_description">Description</label><br/>
+<%= text_area 'sidebar', 'description'  %></p>
+
+<!--[eoform:sidebar]-->
+

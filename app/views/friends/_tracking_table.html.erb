@@ -1,0 +1,51 @@
+  <table class="like_voters" cellpadding="0" cellspacing="0">
+  <tr class="top"><th class="first" colspan="2">User</th><th class="centered">District</th><th class="centered">Location</th><th class="centered">Last Login</th><th class="centered">Actions</th>
+  <% if @person %>
+  <th class="centered">Approval</th>
+  <% elsif @bill %>
+  <th class="centered">Vote</th>
+  <% end %>
+  <th style="padding-left:12px;">Friends +</th></tr>
+    <% collection.each do |u| %>
+      <tr class=<%= cycle('odd','even') %>>
+        <td class="first photo">
+        <% if u.small_picture %>
+           <%= link_to image_tag("http://www.opencongress.org/images/users/" + h(u.login) + "_s.jpg", :alt => "user photo"), user_profile_path(u.login) %>
+         <% else %>
+           <%= link_to image_tag("/images/anon-img-ex1.gif", :alt => "no photo"), user_profile_path(u.login) %>
+         <% end %>
+        </td>
+        <td>
+      <%= link_to u.login, user_profile_path(u.login) %></td>
+      <td class="centered"><%= u.can_view_special('my_congressional_district') ? u.district_cache.empty? ? "-" : u.district_cache.join(', ') : image_tag("/images/private.png", :alt => "private", :title => "Private") %></td>
+      <td class="centered"><%= u.can_view_special('location_allowed') ? u.location.blank? ? "-" : u.location : image_tag("/images/private.png", :alt => "private", :title => "Private") %></td>
+      <td class="centered"><%= u.can_view_special('last_login_allowed') ? u.last_login.blank? ? "-" : time_ago_in_words(u.last_login,true) + " ago" : image_tag("/images/private.png", :alt => "private", :title => "Private") %></td>
+      <td class="centered"><%= link_to_if (u.can_view_special('actions_allowed')), u['total_actions'], :controller => "profile", :action => 'actions', :login => u.login %></td>
+      <% if @person %>
+        <td class="centered"><%= (u.can_view_special('actions_allowed') && u['object_rating']) ? (u['object_rating'].to_i * 10).to_s + "%" : '-' %></td>
+      <% elsif @bill %>
+        <td class="centered"><%= (u.can_view_special('actions_allowed') && u['support']) ? (u['support'] == "1" ? "<div class='nay'></div>" : "<div class='aye'></div>")  : '-' %></td>
+      <% end %>
+      <td style="padding-left:12px;">
+          <div id="fdiv_<%= u.id %>">
+              <% if logged_in? %>
+                  <% if !u['is_friend'].nil? && u['is_friend_confirmed'] == 't' %>
+                    <%= h(u.login) %> is my friend.
+                  <% elsif !u['is_friend'].nil? %>
+                    <%=h u.login %> has yet to approve me.
+                  <% else %>
+                             <%= link_to_remote("Add #{h(u.login)} to Friends", { :update => "fdiv_#{u.id}", 
+                             :url => {:controller => "friends", 
+                             :action => "add", 
+                             :login => current_user.login, 
+                             :id => u.id}}) %>
+                  <% end %>
+              <% else %>
+               <%= link_to("Login", {:controller => "account", :action => "login"}) %> to add friends.
+              <% end %>
+          </div>
+      </td>
+      </tr>
+    <% end %>
+  </table>
+

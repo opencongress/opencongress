@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Tue Sep 19 04:48:55 CEST 2006</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1>CAPTCHA validation</h1>
+<p>
+This plugin adds the ability to require <a
+href="http://en.wikipedia.org/wiki/Captcha">CAPTCHA</a> validation in your
+model. It depends on <a href="http://rmagick.rubyforge.org/">RMagick</a> to
+generate images.
+</p>
+<p>
+Right now there are two different challenges in this plugin. There&#8217;s
+the familiar, but inaccessible image with embedded text, and then
+there&#8217;s another type of challenge which includes asking the user a
+(simple) question to prove he is not a robot. The latter type is also
+passable by people with vision impairments, and as a bonus it is also more
+lightweight.
+</p>
+<h1>Usage</h1>
+<p>
+How to use in your Rails application.
+</p>
+<h2>Install</h2>
+<p>
+Put this plugin in your application&#8217;s <tt>vendor/plugins</tt>
+directory. This can be done easily using the <tt>script/plugin</tt> script
+in your application:
+</p>
+<pre>
+  script/plugin install http://svn.2750flesk.com/plugins/trunk/validates_captcha
+</pre>
+<h2>Prepare</h2>
+<p>
+This plugin assumes it has write access to a directory where a PStore file
+with the generated CAPTCHA challenges is stored. This is by default
+<tt>var/data</tt>. You can create this directory by running
+<tt>script/generate captcha store_directory</tt> in your
+application&#8217;s root folder. You should check that your web
+server&#8217;s user has write access to this directory.
+</p>
+<p>
+If you plan to use the image challenges, these will also need to be stored
+in a server-writable directory. This is by default
+<tt>public/images/captcha</tt>. You can create this directory by running
+<tt>script/generate captcha image_directory</tt> in your
+application&#8217;s root directory.
+</p>
+<p>
+Both of these locations can be changed. See <a
+href="../classes/FleskPlugins/CaptchaConfig.html">FleskPlugins::CaptchaConfig</a>
+for details.
+</p>
+<h2>Update Model</h2>
+<p>
+This step is not necessary if you want to validate the challenge in your
+controller. Instructions on how to do that are further down on the page.
+</p>
+<pre>
+  class MySuperModel &lt; ActiveRecord::Base
+    validates_captcha
+  end
+</pre>
+<h2>Update View</h2>
+<p>
+In your view, put this inside the form for the model that requires CAPTCHA
+validation:
+</p>
+<pre>
+  &lt;% c = prepare_captcha :type =&gt; :image -%&gt;
+  &lt;%= captcha_hidden_field c, 'my_super_model' %&gt;
+  &lt;%= captcha_image_tag c %&gt;
+  &lt;%= captcha_label 'my_super_model', 'Type in the text from the image above' %&gt;
+  &lt;%= captcha_text_field 'my_super_model' %&gt;
+</pre>
+<p>
+To use the question challenge instead, do this:
+</p>
+<pre>
+  &lt;% c = prepare_captcha :type =&gt; :question -%&gt;
+  &lt;%= captcha_hidden_field c, 'my_super_model' %&gt;
+  &lt;%= captcha_question_as_label c, 'my_super_model' %&gt;
+  &lt;%= captcha_text_field 'my_super_model' %&gt;
+</pre>
+<p>
+See <a
+href="../classes/FleskPlugins/Captcha/Helpers.html">FleskPlugins::Captcha::Helpers</a>
+for how to customise your view.
+</p>
+<h2>Update Controller</h2>
+<p>
+If you want to validate the challenge in your controller, you can use the
++captcha_valid?+ method:
+</p>
+<pre>
+  def save
+        supermodel = MySuperModel.find(params[:id])
+        supermodel.attributes = params[:my_super_model]
+
+        if captcha_valid?(params[:my_super_model][:captcha_id], params[:my_super_model][:captcha_validation])
+                supermodel.save
+        else
+          flash[:error] = &quot;Are you sure you're human?&quot;
+          redirect_or_something
+        end
+  end
+</pre>
+<p>
+If you want to let the model handle the validation, you need to assign the
+values from your form to your model. If you&#8217;re using some form of
+mass-assignment, this will happen automatically:
+</p>
+<pre>
+  def save
+    @supermodel = MySuperModel.find(params[:id])
+    @supermodel.attributes = params[:my_super_model]
+    @supermodel.save
+  end
+</pre>
+<p>
+The virtual attributes, <tt>captcha_id</tt> and
+<tt>captcha_validation</tt>, are accessible to mass-assignment. If
+you&#8217;re assigning each attribute seperately, you will also have to
+assign these virtual attributes:
+</p>
+<pre>
+  def save
+    @supermodel = MySuperModel.find(params[:id])
+    @supermodel.name = params[:my_super_model][:name]
+    @supermodel.description params[:my_super_model][:description]
+    @supermodel.captcha_id = params[:my_super_model][:captcha_id]
+    @supermodel.captcha_validation = params[:my_super_model][:captcha_validation]
+  end
+</pre>
+<h2>Restart server</h2>
+<p>
+For Rails to use the newly installed plugin, you have to restart the
+server, even in development mode. You only have to do this once.
+</p>
+<h2>Contact</h2>
+<p>
+You can contact me at toredarell att gmail doot com
+</p>
+<h2>Contributors</h2>
+<ul>
+<li>Serge Sozonoff
+
+</li>
+<li>Blake Watters
+
+</li>
+<li>Manik Juneja
+
+</li>
+<li>Joscha Diehl
+
+</li>
+</ul>
+<h2>Licence</h2>
+<p>
+See MIT-LICENCE (same as Rails; use however you want; if your computer
+explodes it&#8217;s not my fault)
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

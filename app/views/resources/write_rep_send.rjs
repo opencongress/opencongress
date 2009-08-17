@@ -1,0 +1,5 @@
+if @error_msg.blank?
+  page.replace_html("write_rep_form", "Your message has been sent!")
+else
+  page.alert(@error_msg)
+end

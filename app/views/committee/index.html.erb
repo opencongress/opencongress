@@ -1,0 +1,27 @@
+<div id="heading">
+<h2>Congressional Committees</h2>
+</div>
+<% if @carousel %>
+  <%= render :partial => 'committee/carousel' %>
+<% end %>
+<%= render :partial => 'sort_committees', :locals => { :sort => :all } %>
+
+<ul id="house">
+ <li>
+  <h3>House Committees</h3>
+  <ul class="list">
+    <%= render(:partial =>'committees_list', :locals => {:committees => @house_committees}, 
+               :collection => @house_committees.keys.sort ) %>
+  </ul>
+ </li>
+</ul>
+
+<ul id="senate">
+<li>
+  <h3>Senate Committees</h3>
+  <ul class="list">
+    <%= render(:partial =>'committees_list', :locals => {:committees => @senate_committees}, 
+               :collection => @senate_committees.keys.sort ) %>
+  </ul>
+</li>
+</ul>

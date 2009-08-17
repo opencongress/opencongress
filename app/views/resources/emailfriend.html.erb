@@ -1,0 +1,10 @@
+Emailing the page: <b><%= @title %></b>
+<div id="emailfriend">
+  <% form_tag({:controller => 'resources', :action => 'emailfriend_send'} ) do -%> 
+    <%= hidden_field 'email', 'url', "value" => @theurl %>
+    <%= hidden_field 'email', 'title', "value" => @title %>
+    <br style="clear: both;" /><br />
+    <%= render :partial => '/shared/email_form' %>
+  <% end %>
+</div>
+

@@ -1,0 +1,45 @@
+
+<div id="linkcontent" style="clear:both;padding-top:10px;width:100%;">
+  <h3>Bills I Support</h3>
+    <table class="simple-table2" cellspacing="0">
+      <tr>
+        <th scope="col">Bill</th>
+        <th scope="col">Status</th>
+        <th scope="col">Last Action</th>
+        <th scope="col"></th>
+      </tr>
+      <% @bills_supported.each do |b| %>
+      <% bill = b.bill %>
+      <tr>
+        <td>
+          <%= link_to bill.title_typenumber_only, :controller => 'bill', :action => "show", :id => bill.ident %>
+          <%= bill.title_common %> <span class='date'>(<%= number_to_ordinal(bill.session) %> congress)</span>
+        </td>
+        <td><%= temp_url_strip(bill.status) %></td>
+        <td><%= bill.last_action.formatted_date %></td>
+        <td><%= button_to("Remove", :action => "remove_vote", :id => b.id) if current_user == @user %></td>
+      </tr>
+      <% end %>
+    </table>
+
+  <h3>Bills I Oppose</h3>
+    <table class="simple-table2" cellspacing="0">
+      <tr>
+        <th scope="col">Bill</th>
+        <th scope="col">Status</th>
+        <th scope="col">Last Action</th>
+        <th scope="col"></th>
+      </tr>
+      <% @bills_opposed.each do |b| %>
+      <% bill = b.bill %>
+      <tr>        <td>          <%= link_to bill.title_typenumber_only, :controller => 'bill', :action => "show", :id => bill.ident %>          <%= bill.title_common %> <span class='date'>(<%= number_to_ordinal(bill.session) %> congress)</span>i
+        </td>
+        <td><%= temp_url_strip(bill.status) %></td>
+        <td><%= bill.last_action.formatted_date %></td>
+        <td><%= button_to("Remove", :action => "remove_vote", :id => b.id) if current_user == @user %></td>
+      </tr>
+      <% end %>
+    </table>
+
+
+</div>

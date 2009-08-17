@@ -1,0 +1,177 @@
+<% @page_title = 'Search Results' %>
+
+
+
+<% if @found_items > 0 %>
+
+<div id="heading">
+    <h2>Search Results for "<%= @query %>"</h2>
+   <p class="floatright">For suggestions on how to optimize your search, please visit the <a href="/search/tips">Search Tips</a> page.</p>
+</div>
+
+<div class="padding">
+  
+  <p class="floatright didnt">
+  <strong class="blue">Didn't find what you're looking for?</strong><br /> Try searching <strong>all available sessions</strong> with an <a href="/search">Advanced Search</a>.
+  </p>
+  
+  <p style="width: 400px; padding: 15px 0; font-size: 13px; line-height: 1.8em;" class="floatleft"><b><%= number_with_delimiter(@found_items) %></b> items found<% if @congresses == ["#{DEFAULT_CONGRESS}"]%> <strong>in the 
+  current session of Congress</strong><% end %> for <strong style="color:#222;">"<%= @query %></strong>". 
+  <br />
+  <em>Search results are listed in order of relevance.</em></p>
+  <br/>
+  <!-- <p>For suggestions on how to optimize your search, please visit the <a href="/search/tips">Search Tips</a> page.</p> -->
+
+<div id="all-search-results">      
+      
+  <% if @search_people && @people.size > 0 %>
+   
+   <div class="member_search">
+   <h3 class="line2">Members of Congress <em> Found <b><%= number_with_delimiter(@people.total_entries) %></b> members of Congress.</em></h3>
+   
+   <div class="pagination_links">
+      <%= will_paginate(@people, :params => { :q => @query, :search_people => '1'}) %>
+    </div>
+   <%= render :partial => 'people/people_list', :locals => { :show_contact => false, :people => @people }%>
+    Found <b><%= number_with_delimiter(@people.total_entries) %></b> members of Congress.
+    
+    </div>
+    
+  <% end %>
+     
+  <% if @search_bills && @bills.size > 0 %>
+    
+    <div class="bill_search">
+    <h3 class="line2">Bills <em><%= total_and_pageview('bills', @bills.total_entries, @page) %></em></h3>
+          
+    <div class="pagination_links">
+      <%= will_paginate(@bills, :params => { :q => @query, :search_bills => '1'}) %>
+    </div>
+    <%= render(:partial => "bill/related_bills_list", :locals => { :related_bills_list => @bills, :show_congress_session => true }) %>
+
+    </div>
+  <% end %>
+  
+  <% if @search_issues && @issues.size > 0 %>
+
+    <div class="issue_search">
+    
+    <h3 class="line2">Issues <em> Found <b><%= number_with_delimiter(@issues.total_entries) %></b> issues.</em></h3>
+    
+    
+    <div class="pagination_links">
+      <%= will_paginate(@issues, :params => { :q => @query, :search_issues => '1'}) %>
+    </div>
+    
+     <%= render(:partial =>'issue/issue_list', :locals => { :subjects => @issues }) %>
+   
+   
+   </div>
+   
+  <% end %>
+  
+  
+  <% if @search_committees && @committees.size > 0 %>
+            <div class="committees_search">
+
+    <h3 class="line2">Committees <em>Found <b><%= @committees_total %></b> committees.</em></h3> 
+    <ul class="list">
+      <%= render(:partial =>'committee/committees_list', :locals => {:committees => @committees }, :collection => @committees.keys.sort) %>
+    </ul>
+    </div>
+  <% end %>
+  
+  <% if @search_comments && @s_comments.size > 0 %>
+   <div class="comments_search">
+    <h3 class="line2">User Comments <em>Found <b><%= number_with_delimiter(@s_comments.total_entries) %></b> comments.</em></h3>
+       <div class="pagination_links">
+      <%= will_paginate(@s_comments, :params => { :q => @query, :search_comments => '1'}) %>
+    </div>
+     <ul id="small_comments">
+      <% @s_comments.each do |comment| %>
+        <li>
+        <a href="<%= url_for(comment.commentable_link.merge({:goto_comment => comment.id})) %>" class="comment">
+            
+            <span class="text"><%= truncate(comment.headline, :length => 120) %></span>
+            
+            <span class="user"><%= (comment.user.nil?) ? 'Anonymous' : h(comment.user.login) %></span>
+            
+
+        </a>
+                    <span class="regarding">regarding <%= link_to comment.commentable_title, comment.commentable_link %> on <%= comment.created_at.strftime("%B %d, %Y") %></span>
+
+        </li>
+      <% end %>
+    </ul>
+    </div>
+  
+  <% end %>
+  
+  <% if (@search_commentary || @search_news) && @news.size > 0 %>
+   
+            <div class="news_search">
+   <h3 class="line2">News <em>Found <b><%= number_with_delimiter(@news_total) %></b> news articles.</em></h3>
+   
+  <div class="pagination_links">
+      <%= pagination_nav(@news_pages, :params => { :q => @query, :search_news => '1'}) %>
+    </div>
+    <%= render :partial => 'shared/commentary', :collection => @news, :locals => { :default_title => '' } %>
+    
+    Found <b><%= number_with_delimiter(@news_total) %></b> news articles.
+  
+    
+    </div>
+    
+  <% end %>
+  
+  <% if (@search_commentary || @search_blogs) && @blogs.size > 0 %>
+              <div class="blogs_search">
+
+    <h3 class="line2">Blogs <em>Found <b><%= number_with_delimiter(@blogs_total) %></b> blog articles.</em></h3>
+     <div class="pagination_links">
+      <%= pagination_nav(@blogs_pages, :params => { :q => @query, :search_blogs => '1'}) %>
+    </div>
+
+    <%= render :partial => 'shared/commentary', :collection => @blogs, :locals => { :default_title => '' } %>
+    
+    Found <b><%= number_with_delimiter(@blogs_total) %></b> blog articles.
+   
+    </div>
+  <% end %>
+  
+  <% if @search_gossip_blog && @articles.size > 0 %>
+    
+   <div class="blog_search">
+    <h3 class="line2">Congress Gossip Blog <em>Found <b><%= @articles.total_entries %></b> articles.</em></h3>
+      <div class="pagination_links">
+      <%= will_paginate(@articles, :params => { :q => @query, :search_gossip_blog => '1'}) %>
+      </div>
+    <ul class="star">
+      <% @articles.each do |article| %>
+        <li>
+          <%= link_to article.title, :controller => 'articles', :action => 'view', :id => article %>
+          <span class="date"><%= article.created_at.to_time.strftime("%B %d, %Y") %></span>
+          <p><%= article.headline %></p>
+        </li>
+      <% end %>
+    </ul>
+  
+    
+    </div>
+  <% end %>
+    
+  </div>
+<% else %>
+    <br />
+    <div class="padding">
+    <p class="behave" style="color:red">Your search did not return any results.</p>
+    <p class="behave">
+      Didn't find what you were looking for? Visit our <a href="/search/tips">Search Tips</a> page for suggestions on how to optimize your search. We will be continually improving our search function to make it easier to find the Congressional information you're looking for. If you have feedback about your search experience on OpenCongress, send us an e-mail: <script type="text/javascript">m("writeus","opencongress","org","1");</script>.
+    </p>
+    <p>
+      <%= render :partial => 'big_search_form' %>
+    </p>
+    </div>
+<% end %>
+  
+ </div>

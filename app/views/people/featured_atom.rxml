@@ -1,0 +1,25 @@
+xml.instruct!
+
+xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
+
+  xml.title   "Open Congress : Featured Members of Congress"
+  xml.link    "rel" => "self", "href" => url_for(:only_path => false, :controller => 'people/atom', :action => 'featured')
+  xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'index')
+  xml.updated @featured_people.first.updated_at.strftime("%Y-%m-%dT%H:%M:%SZ") if @featured_people.any?
+  xml.author  { xml.name "opencongress.org" }
+  xml.id      "tag:opencongress.org,2007:/people/featured"
+  
+  @featured_people.each do |fp|
+    xml.entry do
+      xml.title   "#{fp.created_at.strftime("%B %d, %Y")}: #{fp.person.name}"
+      xml.link    "rel" => "self", "href" => url_for(:only_path => false, :controller => 'people', :action => 'show', :id => fp.person)
+      xml.id      fp.atom_id_as_entry
+      xml.updated fp.created_at.strftime("%Y-%m-%dT%H:%M:%SZ")
+      xml.content "type" => "html" do
+        xml.text! "#{fp.text}<br /><br />"
+        xml.text! link_to("#{fp.person.firstname} #{fp.person.lastname}'s Profile on OpenCongress", :only_path => false, :controller => 'people', :action => 'show', :id => fp.person)
+      end
+    end
+  end
+end
+

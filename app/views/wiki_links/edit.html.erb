@@ -1,0 +1,31 @@
+<h1>Editing Wiki Link</h1>
+
+<% form_for(@wiki_link) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :wikiable_type, "OC Object Type" %><br />
+    <%= f.select :wikiable_type, [["Person", "Person"], ["Bill", "Bill"], ["Issue", "Subject"], ["Committee", "Committee"]] %>
+  </p>
+  <p>
+    <%= f.label :wikiable_id, "OC Ident (ie. 300094_ted_stevens )" %><br />
+    <%= f.text_field :wikiable_id %>
+  </p>
+  <p>
+    <%= f.label :name, "Wiki Term" %><br />
+    <%= f.text_field :name %>
+  </p>
+  
+  <p>
+    <%= f.label :oc_link, "Full OC URL" %><br />
+    <%= f.text_field :oc_link %>
+  </p>
+  
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+  
+<% end %>
+
+<%= link_to 'Show', @wiki_link %> |
+<%= link_to 'Back', wiki_links_path %>

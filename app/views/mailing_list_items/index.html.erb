@@ -1,0 +1,24 @@
+<h1>Listing mailing_list_items</h1>
+
+<table>
+  <tr>
+    <th>Mailable type</th>
+    <th>Mailable</th>
+    <th>User mailing list</th>
+  </tr>
+
+<% @mailing_list_items.each do |mailing_list_item| %>
+  <tr>
+    <td><%=h mailing_list_item.mailable_type %></td>
+    <td><%=h mailing_list_item.mailable_id %></td>
+    <td><%=h mailing_list_item.user_mailing_list_id %></td>
+    <td><%= link_to 'Show', mailing_list_item %></td>
+    <td><%= link_to 'Edit', edit_mailing_list_item_path(mailing_list_item) %></td>
+    <td><%= link_to 'Destroy', mailing_list_item, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New mailing_list_item', new_mailing_list_item_path %>

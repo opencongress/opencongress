@@ -1,0 +1,62 @@
+<div id="comments-container">
+  <a name="comments" id="comments" />
+
+  <%= render :partial => 'shared/sort_comments' %>
+
+	
+
+		<h2 class="comments_title">Comments 
+		  <% if @bill or @person %>
+		    <% link = @bill ? "/comments/atom/bill/#{@bill.id}" : "/comments/atom/person/#{@person.id}" %>
+		    <a href="<%= link %>" class="feed">Feed</a>
+		  <% end %>
+			<%= dbox_trigger('about_comments') %>
+		</h2>                            
+		<div class="dboxed">
+			<%= dbox_content("about_comments") %>
+		</div>
+
+<div class="rating_filter">
+		<h3>Filter Comments to a Rating of at least</span>
+    <!--<%= dbox_trigger('about_ratings')%>--></h3>
+		<div class="dboxed">
+		<%= dbox_content("about_ratings") %>
+		</div>
+    <%= hidden_field_tag "filterscore", ( logged_in? ? current_user.default_filter : 5 ) %>
+		<div class="rate">
+			<div id="filtertrack">
+				<div id="filterhandle"><span id="sfilterscore"><%= logged_in? ? current_user.default_filter : 5 %></div>
+			</div>
+		</div>
+		<script type="text/javascript" language="javascript">
+		// <![CDATA[
+		new Control.Slider('filterhandle','filtertrack',{range:$R(0,10),
+			values:[0,1,2,3,4,5,6,7,8,9,10],
+			sliderValue:<%= logged_in? ? current_user.default_filter : 5 %>,
+			onSlide:function(v){$('sfilterscore').innerHTML=v},
+			onChange:function(v){$('filterscore').value=v;new Ajax.Request('/comments/filter_by_rating/<%= object.id %>', {asynchronous:true, evalScripts:true, parameters:'type=' + escape("<%= object.class.to_s %>") + '&value=' + escape(v) + '&comment_page=' + escape("<%= params[:comment_page] %>") + '&comment_sort=' + escape("<%= params[:comment_sort] %>")})}});
+			// ]]>
+			</script>
+
+		</div>
+
+
+		<% if object.comments.size > 0 %>
+		<% @show_comments = true %>
+		<% unless @show_comments %>
+                    <h3 class="dark"><%= toggler("comment", "#{object.comments.size} comments - View All", "Hide comments", "arrow", "arrow-hide")%></h3>
+                <% end %>
+		<div id="comment" style="clear:left;<% unless @show_comments %>display:none;<% end %>">
+
+		<% else %>
+		<h3 class="no_comments"><strong>No Comments</strong> Start the Conversation!</h3>
+		<div id="comment" style="clear:left;">
+		<% end %>
+		<div id="comments_master" style="float:none;clear:left;">
+
+		<%= render :partial => 'shared/comments3', :locals => {:object => object, :master_container => nil} %>
+
+		</div>
+	</div>
+
+</div>

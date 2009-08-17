@@ -1,0 +1,16 @@
+<div id="tertiary-content">
+    <div class="related-box">
+      <h2>Most Viewed</h2><span class="days">&#40;Past Seven Days&#41;</span>          
+      <% related_bills.each do |rb| %>
+      <div class="last">
+            <%= link_to rb.title_full_common, :controller => 'bill', :action => 'show', :id => rb.ident %>
+            <em>(<%= rb.views(DEFAULT_COUNT_TIME) %> views)</em><br />
+            <span class="date">Introduced on <%= Time.at(rb.introduced).strftime("%B %d, %Y") %> by the <%= rb.chamber.capitalize %></span><br />
+            
+         </div>
+      <% end %>
+      <div><a href="/bill/most/viewed">See All Most-Viewed Bills</a></div>    
+    </div>
+    <!-- // related-box-->
+  </div>
+</div>

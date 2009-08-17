@@ -1,0 +1,170 @@
+= simple_http_auth
+
+Need to secure a backend or two somewhere, but don't feel like leveraging a
+huge, ungainly authentication engine? Don't care about putting a friendly face
+on the login screen?
+
+Welp, you want simple_http_auth. It wraps around just the right amount of the
+Basic HTTP Authentication scheme (RFC 2617), and allows you to easily integrate
+it into *your* application, instead of making you adapt your code to my
+authentication scheme.
+
+(Digest Authentication, Basic Authentication's grown-up older sibling, is not
+supported here, because Microsoft effectively spiked it by releasing IE6 and
+IIS 5.0 with a super magical pony implementation of Digest Authentication which,
+surprise surprise, totally doesn't work with Apache, and I'm not in a mood to
+meet standards-breakers halfway. If you don't want passwords floating through
+teh intarweb in plaintext, use SSL. And slap the IE6 dev team if you see them.)
+
+== Installation
+
+If your project is source-controlled by Subversion (which it should be, really),
+the easiest way to install this is via Rails' plugin script:
+
+  ./script/plugin install -x http://svn.codahale.com/simple_http_auth
+
+If you're not using Subversion, or if you don't want it adding
+<tt>svn:externals</tt> in your project, remove the <tt>-x</tt> switch:
+
+  ./script/plugin install http://svn.codahale.com/simple_http_auth
+  
+Alternatively, you can just check the trunk out from the repository, if you're
+super-DIY.
+
+  cd path_to_rails_app
+  cd vendor/plugins
+  svn co http://svn.codahale.com/simple_http_auth
+
+== Usage
+
+=== Overview
+
+1. Install the plugin. (See previous section)
+2. Add authentication requirements to your controllers as you see fit.
+3. Ride a bike instead of driving your car.
+
+=== Specifics
+
+simple_http_auth has one method: +requires_authentication+. To wit:
+
+  class PuppyHeavenController < ApplicationController
+    requires_authentication :using => lambda{ |username, password| username != 'cat' }
+    # ... actions go here ...
+  end
+
++requires_authentication+ takes a hash of options as its lone argument, only one
+of which is mandatory: <tt>:using</tt>. <tt>:using</tt> is the event handler for
+any authorization attempt, and is passed two arguments: the username and
+password provided by the user during their login attempt. <tt>:using</tt> can be
+a Proc, as in the example above, or a String or Symbol referencing one of the
+controller's methods. For example:
+
+  class PuppyHeavenController < ApplicationController
+    requires_authentication :using => :authenticate
+    # ... actions go here ...
+    
+  private
+    def authenticate(username, password)
+      return username == 'dog' && password == 'woof'
+    end
+  end
+
+The event handler for <tt>:using</tt> should return a Boolean value: true if the
+user is authorized to access the action, false if not. simple_http_auth doesn't
+maintain your user database, make you use a specific model or controller, or
+anything. You're responsible for all that.
+
+By default, +requires_authentication+ protects all of the controller's actions,
+but this behavior is modifiable by using the <tt>:except</tt> and <tt>:only</tt>
+options:
+
+  class PuppyHeavenController < ApplicationController
+    requires_authentication :using => lambda{ |username, password| username != 'cat' },
+                            :except => [:publicly_accessible_action]
+    # ... actions go here ...
+  end
+  
+or
+
+  class PuppyHeavenController < ApplicationController
+    requires_authentication :using => lambda{ |username, password| username != 'cat' },
+                            :only => [:totally_secret]
+    # ... actions go here ...
+  end
+  
+Other options include:
+
+<tt>:realm</tt> -- the authentication "realm," which is usually displayed in the
+browser's login dialog. Defaults to <tt>"Login Required"</tt>.
+
+<tt>:error_msg</tt> -- the message displayed on an unsuccessful access attempt.
+Defaults to <tt>"401 Unauthorized: You are not authorized to view this
+page."</tt>
+
+=== Logging Out
+
+Occasionally someone may want to exit your wonderful application, but I wouldn't
+know why. To enable these backsliders (or users in internet cafes, at work, on
+their sister's computer, whatever), simple_http_auth provides for logging out:
+
+  class HappyMagicController < ApplicationController
+    requires_authentication :using => :whatever,
+                            :logout_on => :logout
+    
+    def logout
+      # logout.rhtml will be displayed after the user logs out
+    end
+  end
+
+=== Using HTTP Authentication On Hosting Services
+
+If you're like most people, you've got a little corner on a shared host
+somewhere, and your Rails apps get managed by someone else. If that's the case,
+you make need to jump through a few hoops to get HTTP authentication working.
+Some virtual hosting configurations of Apache, for example, don't pass HTTP
+authentication headers to FastCGI applications like Rails, so you'll need to add
+the following line to your <tt>public/.htaccess</tt> file if HTTP authentication
+doesn't appear to work:
+
+  RewriteRule ^(.*)$ dispatch.fcgi [E=X-HTTP_AUTHORIZATION:%{HTTP:Authorization},QSA,L]
+  
+(This is guaranteed to work on Dreamhost, but I'm not sure about others. Email
+me with details if you get it working in other environments and need to change
+this.)
+
+There is another option which influences how simple_http_auth gets the user's
+login and password:
+
+<tt>:at</tt> -- an array of header fields where the user's login and password
+can be found. Defaults to <tt>['REDIRECT_REDIRECT_X_HTTP_AUTHORIZATION',
+'REDIRECT_X_HTTP_AUTHORIZATION', 'X-HTTP_AUTHORIZATION', 'HTTP_AUTHORIZATION']</tt>,
+which should cover just about everything. These are tried in order, from first
+to last, and the first header which exists is used as the authentication data.
+If you're getting a login dialog, but nothing seems to let you log in (and
+you're *damn* sure your <tt>:using</tt> handler is working), try fiddling with
+this to make sure it's actually receiving the data. For example:
+
+  class PuppyHeavenController < ApplicationController
+    requires_authentication :using => lambda{ |username, password| username != 'cat' },
+                            :at => ['WOW-WHAT-A-STRANGE-HTTP-SERVER-YOU-HAVE']
+    # ... actions go here ...
+  end
+
+== Resources
+
+=== Subversion
+
+* http://svn.codahale.com/simple_http_auth
+
+=== Blog
+
+* http://blog.codahale.com
+
+== Credits
+
+Written by Coda Hale <coda.hale@gmail.com>.
+
+Released under the MIT license (see MIT-LICENSE).
+
+Thanks to my employer, both for paying me to work with Ruby and Rails on a daily
+basis, and also for allowing me to release code which I developed for them.

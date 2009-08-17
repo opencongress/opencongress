@@ -1,0 +1,153 @@
+<div id="heading">
+  <h2><%= @user.login %>'s Tracked Items</h2>
+</div>
+
+<%= render :partial => "profile_nav" %>
+
+<div class="profile_content">
+
+
+<div id="the-items">
+   <div style="padding-bottom:30px;">
+		<p>This is your profile's page of Tracked Items. To add items, simply click "Track This" in the right-hand sidebar of the page for any bill, issue, or Member, and it will appear here automatically. You'll have assembled a one-stop overview of everything you're following in Congress.</p>
+		<br />
+		<div class="what-line"></div>
+
+	<p>Just getting started? Our special page of <a href="/bill/hot">Hot Bills</a> is an easy way to find bills that affect the issues you care about, and then add them to your tracked items. For next steps, including ways you can use social networking on OpenCongress, see our <a href="/profile/howtouse">how-to guide</a>.</p>
+	 </div>
+		<%= dbox_start("things_im_tracking_whatsthis", 80, -40, 500) %>
+		Your OpenCongress profile can track any of the bills, issue, or Member of Congress on the site. Just click the "Track This" button in the right-hand sidebar of any applicable page and it will be automatically added here to your tracked items. On this page, you have a continually-updating "bird's eye" view of all the activities associated with each tracked item since you last logged-in. Click on any button on this page, for example, "Status Updates", for a drop-down view of the latest five updates and a link to view all. Click on a category name below, such as "Bills", to view more detailed updates for each tracked bill and suggestions on how to find other interesting bills to track throughout the site.
+		<%= dbox_end %>
+	  
+	<div class="what-line"></div>
+	<div style="float:right;">
+	<%= link_to_function(image_tag('/images/question.png', :mouseover => '/images/question_hover.png', :alt => "What's This?", :title => "What's This?"), "Element.show('things_im_tracking_whatsthis');", :class => 'question') %>
+	<% if @user == current_user %>
+	  <span style = "margin-left:20px;"><%= image_tag("/images/private.png", :alt => "private", :title => "Private", :id => 'Privacy') %></span>
+	<% form_for :privacy_option, @user.privacy_option, :url => {:controller => "/profile", :action => "update_privacy" } do |f| %>
+    <%= f.select PrivacyOption.column_names[10].to_sym, [["Public",2],["Friends", 1], ["Private",0]], {}, {:onchange => "this.form.submit();"} %>
+    <% end %>
+    <% end %>
+    </div>
+  <h3><%= link_to "Tracking #{@user.bill_bookmarks.length} Bills", :controller => "profile", :action => "bills" %></h3>
+	<ul class="links_detailed">
+		<% @bill_items_tracked[0...10].each do |bill| %>
+		  <li class="<%= cycle('odd', 'even')%>"><%= render :partial => "bill_main_detail", :locals => {:bill => bill} %></li>
+  	<% end %>
+		<% if @bill_items_tracked.length > 10 %>
+			<li class="even"><%= link_to "#{@user.bill_bookmarks.length - 10} more bills", {:controller => "profile", :action => "bills"}, :class => "arrow" %></li>
+		<% end %>
+	</ul>
+  	
+	<h3><%= link_to "Tracking #{@sen_items_tracked.length} Senators", :controller => "profile", :action => "person", :person_type => "senators" %></h3>
+     <%= render :partial => "person_main_detail", :locals => {:people => @sen_items_tracked[0...10], :show_updates => true }, 
+                            :person_type => "Senator" %>
+    <div style="clear:both;"> </div>
+	
+  <h3><%= link_to "Tracking #{@rep_items_tracked.length} Representatives", :controller => "profile", :action => "person", :person_type => "representatives" %></h3>
+   <%= render :partial => "person_main_detail", :locals => {:people => @rep_items_tracked[0...10], :show_updates => true}, 
+                             :person_type => "Senator" %>
+  <div style="clear:both;"/>
+
+<h3><%= link_to "Tracking #{@user.bookmarked_committees.length} Committees", :controller => "profile", :action => "committees" %></h3>
+<ul class="links_detailed">
+        <% @user.bookmarked_committees[0...10].each do |committee| %>
+        <li id="issues_tracked">
+                <h5><%= link_to(committee.name, :controller => "committee", :action => "show", :id => committee.to_param) %></h5>
+                        <ul class="updates">
+                                <% unless committee.new_bills_since(@user) == 0 %>
+                                        <li><%= toggler_with_span_class("new_committee_bills_#{committee.id}", "<span>New Bills (#{committee.new_bills_since(@user).length})</span>", 'Hide New Bills', 'off', 'on') %></li>
+                                <% end %>
+                                <% unless committee.new_reports_since(@user).length == 0 %>
+                                        <li><%= toggler_with_span_class("new_reports_#{committee.id}", "New Reports (#{committee.new_reports_since(@user).length})", 'Hide New Reports', 'off', 'on') %></li>
+                                <% end %>
+                                <% unless committee.comments_since(@user) == 0 %>
+                                        <li><%= toggler_with_span_class("new_comments_#{committee.id}", "New Comments (#{committee.comments_since(@user)})", 'Hide New Comments', 'off', 'on') %></li>
+                                <% end %>
+                        </ul>
+                </li>
+                <li>
+                        <div class="update_text" id="new_committee_bills_<%= committee.id %>" style="display:none;">
+                                <ul>
+                                <% committee.new_bills_since(@user).each do |bill| %>
+                                         <li><%= link_to(bill.title_typenumber_only, :controller => "bill", :action => "show", :id => bill.ident) %> - <%= bill.title_common %>
+                                <% end %>
+                                </ul>
+                        </div>
+                        <div class="update_text" id="new_reports_<%= committee.id %>" style="display:none;">
+                                <ul>
+                                <% committee.new_reports_since(@user).each do |cr| %>
+                                         <li><%= link_to(cr.name, {:controller => "committee", :action => "report", :id => cr.to_param}, :popup => true) %> - <%= cr.title.titleize %>
+                                <% end %>
+                                </ul>
+                        </div>
+                        <div class="update_text" id="new_comments_<%= committee.id %>" style="display:none;">
+                                  <%= render :partial => 'shared/comments_embedded', :locals => {:object => committee }%>
+                        </div>
+                </li>
+        <% end %>                <% if @user.bookmarked_committees.length > 10 %>
+        <li class="even"><%= link_to "#{@user.bookmarked_committees.length - 10} more Committees", {:controller => "profile", :action => "committees"}, :class => "arrow" %></li>
+        <% end %>
+</ul>
+
+  <% link_to "Industries", :controller => "accounts", :action => "industries" %>
+  
+	<h3><%= link_to "Tracking #{@user.bookmarked_issues.length} Issues", :controller => "profile", :action => "issues" %></h3>
+	<ul class="links_detailed">
+		<% @user.bookmarked_issues[0...10].each do |subject| %>
+		<li id="issues_tracked">
+			<h5><%= link_to(subject.term, :controller => "issue", :action => "show", :id => subject.to_param) %></h5>
+				<ul class="updates">
+					<% unless subject.new_bills_since(@user) == 0 %>
+						<li><%= toggler_with_span_class("new_bills_#{subject.term}", "New Bills (#{subject.new_bills_since(@user).length})", 'Hide New Bills', 'off', 'on') %></li>
+					<% end %>
+					<% unless subject.comments_since(@user) == 0 %>
+						<li><%= toggler_with_span_class("new_comments_#{subject.term}", "New Comments (#{subject.comments_since(@user)})", 'Hide New Comments', 'off', 'on') %></li>
+					<% end %>
+				</ul>
+			</li>
+			<li>
+				<div class="update_text" id="new_bills_<%= subject.term %>" style="display:none;">
+					<ul>
+					<% subject.new_bills_since(@user).each do |bill| %>
+						 <li><%= link_to(bill.title_typenumber_only, :controller => "bill", :action => "show", :id => bill.ident) %> - <%= bill.title_common %>
+					<% end %>
+					</ul>
+				</div>
+				<div class="update_text" id="new_comments_<%= subject.term %>" style="display:none;">
+					  <%= render :partial => 'shared/comments_embedded', :locals => {:object => subject }%>
+				</div>
+			</li>                    
+		<% end %>
+		<% if @user.bookmarked_issues.length > 10 %>
+	  	<li class="even"><%= link_to "#{@user.bookmarked_issues.length - 10} more Issues", {:controller => "profile", :action => "issues"}, :class => "arrow" %></li>
+		<% end %>
+	</ul>
+
+	<% if @senators%>
+
+	<h3 class="darkline">Senators Representing Your State</h3>
+	<p>
+	<div>
+    <%= render :partial => "person_main_detail", :locals => {:people => @senators, :show_updates => false}, :person_type => "Senator", :no_show_stats => true %>
+
+	<% end %>
+
+	<% if @reps %>
+	<br />
+	<h3 class="darkline">Representatives Representing Your Zipcode</h3>
+		<% if @reps.size > 1 %>
+		<p>
+			We found multiple Representatives serving your zipcode. You can narrow the representatives down by adding your zipcode's 4 digit extension to your profile. No worries if you don't know it offhand -- you can look it up easily on the <a href="http://zip4.usps.com/zip4/welcome.jsp" target="_blank">U.S. Postal Service site</a>.
+		</p>
+		<% end %>
+
+	<p><div>
+	    <%= render :partial => "person_main_detail", :locals => {:people => @reps, :show_updates => false}, :person_type => "Representatives", :no_show_stats => true %>
+	</p>
+	<% end %>
+
+
+</div>
+</div>
+</div>

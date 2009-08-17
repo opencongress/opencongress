@@ -1,0 +1,9 @@
+<div id="issue_summary_text">
+<%= @subject.summary %>
+</div>
+
+<% if @related_subjects %>
+  Related Issues: <%= link_to_subjects @related_subjects %>
+<% end %>
+
+<%= render :partial => "bill/related_bills_list", :locals => {:show_views => true, :related_bills_list => @bills} -%>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  everyone: false
+  friends_only: false
+  user_only: false
+  user_id: 1
+
+two:
+  name: MyString
+  everyone: false
+  friends_only: false
+  user_only: false
+  user_id: 1

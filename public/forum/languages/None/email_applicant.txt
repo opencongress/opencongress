@@ -1,0 +1,4 @@
+A new application has been completed by {applicant_name} ({applicant_email}).
+
+Approve or decline this application at:
+{application_url}

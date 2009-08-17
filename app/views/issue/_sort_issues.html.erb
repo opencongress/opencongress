@@ -1,0 +1,51 @@
+<div id="heading">
+
+	<h2>Issues</h2>
+	<p>This list of more than 4,000 issue areas is created and assigned to bills by the Congressional Research Service, the non-partisan think tank of Congress.</p>
+	<a href="#" id="view_button"><span>Change View</span></a> 
+	<script type="text/javascript">
+	$j(document).ready(function(){
+
+		$j("#view_button").toggle(function(){
+			$j(this).addClass("swap");
+			$j("#views").fadeOut("fast", function() {
+				$j(this).fadeIn("fast").addClass("wide");
+			});
+		}, function () {
+			$j(this).removeClass("swap");
+			$j("#views").fadeOut("fast", function() {
+				$j(this).fadeIn("fast").removeClass("wide");
+			});
+		});
+
+	});              
+	</script>
+
+</div>
+
+<div id="views">
+	<div class="sidebar">
+    <a href="/resources/issue_bills" class="issue_widget_link">Make a Widget for any issue</a>
+		<div id="zipcode_lookup">
+
+			<h3>Search for Issues:</h3>
+			<% form_remote_tag(:url => { :action => 'quick_search' }, :update => 'issue_list') do %>
+				<%= text_field_tag 'q' %>
+				<input type="image" src="/stylesheets/img/show_me.png" value="submit" /> 
+				<% end %>
+			</div>
+
+			<%= render :partial => 'shared/carousel' if @carousel %>	
+
+			<a id="head_button" href="/people/compare"></a>
+	</div>
+
+		<div id="contain_issues" class="contain_list">
+			<div id="sort_nav">	
+				<ul id="sort">
+					<h4>Sort By</h4>
+					<li id="newest" class="<%= sort == :alphabetical ? 'active' : '' %>"><%= link_to "<span>Name</span>", :action => 'alphabetical'  %></li> 
+				  <li id="hotbills" class="<%= sort == :by_most_viewed ? 'active' : '' %>"><%= link_to "<span>Most Viewed</span>", :action => 'by_most_viewed' %></li> 	
+					<li id="oldest" class="<%= sort == :by_bill_count ? 'active' : '' %>"><%= link_to "<span>Most Bills</span>", :action => 'by_bill_count' %></li> 
+					
+				</ul>

@@ -1,0 +1,19 @@
+<div id="tertiary-content">
+  <div class="col">
+    <div class="related-box">
+     <h2><%= sidebar.title %></h2>              
+      <% sidebar.sidebar_items.each do |i| %>
+      <div <% if sidebar.sidebar_items.last == i %>class="last"<% end %>>
+        <ul>
+          <li>
+            <%= render :partial => 'shared/custom_sidebar_item', :locals => { :item => i } %>
+          </li>
+        </ul>
+      </div>
+      <% end %>  
+      <% unless sidebar.description.empty? %><div><%= sidebar.description %></div><% end %>            
+    </div>
+    <!-- // related-box-->
+  </div>
+</div>
+<!-- // col  // tertiary-content -->

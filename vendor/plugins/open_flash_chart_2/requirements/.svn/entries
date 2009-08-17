@@ -1,0 +1,69 @@
+8
+
+dir
+4838
+svn+ssh://svn.opencongress.org/var/svn/opencongress/branches/maple/vendor/plugins/open_flash_chart_2/requirements
+svn+ssh://svn.opencongress.org/var/svn/opencongress
+
+
+
+2009-05-05T22:44:56.042017Z
+3907
+agp
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+b3b261aa-951b-0410-bb93-ed926f8ead73
+
+swfobject.js
+file
+
+
+
+
+2009-05-17T00:46:36.000000Z
+eaa5417940c71f441b016b12c534665d
+2009-05-05T22:44:56.042017Z
+3907
+agp
+has-props
+
+VERSION.txt
+file
+
+
+
+
+2009-05-17T00:46:36.000000Z
+6a7b2f5d4b36a00515da0bcdeff6ce1c
+2009-05-05T22:44:56.042017Z
+3907
+agp
+
+json
+dir
+
+open-flash-chart.swf
+file
+
+
+
+
+2009-05-17T00:46:36.000000Z
+7bf678c04d5df4b1c39a70d1c5cf02ea
+2009-05-05T22:44:56.042017Z
+3907
+agp
+has-props
+

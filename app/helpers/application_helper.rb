@@ -836,7 +836,7 @@ EOT
     tag = ""
     
     # site text always takes precedence over controller-set meta_keywords
-    if !@site_text_page.meta_keywords.blank?
+    if @site_text_page && !@site_text_page.meta_keywords.blank?
       tag = "<meta name='keywords' content=\"#{@site_text_page.meta_keywords}\" />"
     elsif @meta_keywords
       tag = "<meta name='keywords' content=\"#{strip_tags(@meta_keywords)}\" />"

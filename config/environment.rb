@@ -20,6 +20,8 @@ CONGRESS_START_DATES = {
   107 => '2001-01-01'
 }
 
+require 'yaml'
+
 API_KEYS = YAML::load(File.open("config/api_keys.yml"))
 
 AVAILABLE_CONGRESSES = [111, 110, 109]

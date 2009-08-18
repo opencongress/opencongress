@@ -10,6 +10,7 @@
     clear: both; 
     visibility: hidden;
 }
+
 body {
   background:#f7f7ee url('img/body-bg.png') repeat-x left top;
    _background:#f7f7ee url('img/body-bg.gif') repeat-x left top;
@@ -3495,7 +3496,12 @@ border-right: 1px solid #ccc;
 
 .mediawiki h1.firstHeading{
 padding-left: 30px;
-padding-top: 80px;
+padding-top: 55px;
+background: url('img/bill_heading_blue.png') left top;
+padding-bottom: 48px;
+width: 720px;
+float: left;
+margin-bottom: 50px;
 }
 
 
@@ -3509,13 +3515,16 @@ padding-top: 0px !important;
 background: #efefef;
 padding: 0 !important;
 border-bottom: 1px solid #ccc;
+margin-top: 90px;
+height: 29px;
+border-top: 1px solid #ccc;
 }
 
 
 .mediawiki #p-cactions a{
 display: block;
-padding: 5px 15px!important;
-
+padding: 7px 15px !important;
+margin: 0;
 
 }
 
@@ -3523,14 +3532,54 @@ padding: 5px 15px!important;
 .mediawiki #p-cactions ul{
 height: 28px;
 margin: 0 !important
+padding: 0 !important;
 }
 
 .mediawiki #p-cactions ul li{
 float: left;
-margin: !important;
+margin: 0 !important;
 padding: 0 !important;
 
 }
+
+.mediawiki .yui-content{
+margin: 0 !important;
+padding: 20px !important;
+}
+
+
+
+.mediawiki .bookmark{
+background: url('img/bill_heading_blue.png') left top;
+width: 130px;
+float: right;
+margin-top: 116px;
+margin-left: 20px;
+margin-bottom: 12px;
+}
+
+#bodyContent #toc tbody tr td{
+padding: 15px 20px;
+}
+
+
+#bodyContent #toc tbody tr td ul{
+padding: 0px 0 0 10px;
+}
+
+
+#bodyContent h2{
+font-family: Arial, Helvetica, sans-serif;
+margin: 0 0 13px 0 !important;
+}
+
+
+#bodyContent .infobox td{
+padding-bottom: 15px;
+border-right: none !important;
+}
+
+
 
 /*///////////////////////////////////////////
 

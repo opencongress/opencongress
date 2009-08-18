@@ -943,8 +943,8 @@ class Person < ActiveRecord::Base
   end
   
   def oppose_suggestions
-    primary = "my_disapproved_reps_facet" if self.roles.first == "rep"
-    primary = "my_disapproved_sens_facet" if self.roles.first == "sen"
+    primary = "my_disapproved_reps_facet" if self.roles.first.role_type == "rep"
+    primary = "my_disapproved_sens_facet" if self.roles.first.role_type == "sen"
                 
     users = User.find_by_solr('placeholder:placeholder', :facets => {:fields => [:my_bills_supported, :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens, :my_bills_opposed], 
                                                       :browse => ["#{primary.gsub('_facet', '')}:#{self.id}"], 

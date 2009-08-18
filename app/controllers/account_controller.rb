@@ -314,7 +314,7 @@ class AccountController < ApplicationController
 
         cookie_domain = '.opencongress.org'
 
-        data = "wpName=#{CGI::escape(current_user.login)}&wpPassword=#{API_KEY['wiki_pass']}&wpLoginattempt=Log%20in&#{API_KEYS['wiki_key']}=true"
+        data = "wpName=#{CGI::escape(current_user.login)}&wpPassword=#{API_KEYS['wiki_pass']}&wpLoginattempt=Log%20in&#{API_KEYS['wiki_key']}=true"
 
         headers = {
           'Content-Type' => 'application/x-www-form-urlencoded'

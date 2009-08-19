@@ -21,9 +21,6 @@
     padding: 30px;
 } 
 .jqmWindow.closer {
-  position:absolute;
-  top:inherit;
-  left:inherit;
   margin-left:0px;
 }
 .jqmWindow.scrolling {

@@ -6,6 +6,9 @@ body {
 #header {
   padding-bottom:15px;
 }
+#header #login input {
+  float:left;
+}
 #blog h2 {
   margin-left:0px;
 }
@@ -27,13 +30,34 @@ div.dboxed {
 .jqmWindow.scrolling .jqmClose{
 right: 15px;
 }           
-a#login_writerep_trigger {
+a.writeextrigger, a#login_writerep_trigger {
   width:189px;
   margin-left:15px;
+}
+a.writeextrigger div, a#login_writerep_trigger div {
+  padding-right:10px;
 }
 a.large_track span#b_myoc_txt {
   display:inline-block;
 }
 tfoot td {
 background: url('img/tfoot.gif') left top no-repeat;
+}
+#account #login-left {
+  padding-left:30px;
+  float:left !important;
+  width:400px;
+}        
+#account #login-right {
+  float:left !important;
+  width:400px;
+}
+dd, dt {
+  white-space:nowrap;
+}
+#users_result h3 {
+  width:24px;
+}
+#writerep_title span, form.notebook-form h3 {
+  white-space:nowrap;
 }

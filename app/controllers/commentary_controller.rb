@@ -18,9 +18,9 @@ class CommentaryController < ApplicationController
       #commentary.commentariable.expire_commentary_fragments(commentary.is_news? ? 'news' : 'blog')
       
       logger.info params.to_yaml
-      render :text => "<font color='red'>Rating saved.</font>"
+      render :text => "<font style='color:#45A307;'>Saved.</font>"
     else
-      render :text => "<font color='red'>You must be logged in to rate articles. Log in above.</font>"
+      render :text => "<font style='color:#45A307;'>You must be logged in to rate articles. Log in above.</font>"
     end
   end
 end

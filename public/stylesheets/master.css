@@ -1083,6 +1083,7 @@ color: #888;
 
 #sort_nav #jump li a:hover{
 display: block;
+_display:inline-block;
 padding: 30px 6px 0 5px;
 height: 0;
 overflow: hidden;

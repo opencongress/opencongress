@@ -67,7 +67,7 @@ dd, dt {
   margin-left:10px;
 }
 .contain_list ul.listed {
-  height:662px !important;
+  height:564px !important;
   overflow-x:hidden !important;
 }
 #the-people {
@@ -77,4 +77,13 @@ dd, dt {
 }           
 #timeframe a {
   white-space:nowrap;
+}
+.jcarousel-skin-tango .jcarousel-container {
+  margin-top:0px;
+}
+#zipcode_lookup h3 {
+  margin:0 10px 0 14px;
+}
+#zipcode_lookup input.form {
+  margin:0 10px 0 0;
 }

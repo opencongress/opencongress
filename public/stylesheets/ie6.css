@@ -1,8 +1,5 @@
 @import url('ie7.css');
 
-body {
-  background-image:none;
-}
 #header {
   padding-bottom:15px;
 }
@@ -59,5 +56,25 @@ dd, dt {
   width:24px;
 }
 #writerep_title span, form.notebook-form h3 {
+  white-space:nowrap;
+}
+.contain_list {
+  width:617px;
+  float:left;
+  margin-bottom:-30px;
+}
+.contain_list ul#sort {
+  margin-left:10px;
+}
+.contain_list ul.listed {
+  height:662px !important;
+  overflow-x:hidden !important;
+}
+#the-people {
+ position:relative;
+ top:-30px;
+  background: url(img/zip_arrow.gif) no-repeat 0px -71px;
+}           
+#timeframe a {
   white-space:nowrap;
 }

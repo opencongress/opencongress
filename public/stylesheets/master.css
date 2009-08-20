@@ -2178,7 +2178,6 @@ color: #999
 
 .sidebar {
 width: 384px;
-_width: 370px;
 float: left;
 overflow: hidden;
 background: #fff;
@@ -2245,12 +2244,12 @@ width: 617px;
 height: 564px;
 overflow: auto;
 float: left;
-_float: right;
+/*_float: right;*/
 display: block;
 .margin-left: 380px;
-_margin-left: 0;
+/*_margin-left: 0;
 _position: relative;
-_margin-top: -100px;
+_margin-top: -100px;*/
 /*background: url(img/zip_arrow.png) 0 -71px no-repeat;*/
 }
 

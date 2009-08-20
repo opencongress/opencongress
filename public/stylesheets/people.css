@@ -13,7 +13,6 @@
 
 .sidebar {
 width: 384px;
-_width: 370px;
 float: left;
 height: inherit;
 overflow: hidden;
@@ -304,11 +303,11 @@ width: 617px;
 height: 566px;
 overflow: auto;
 float: left;
-_float: right;
+/*_float: right;*/
 display: block;
-_margin-left: 0;
+/*_margin-left: 0;
 _position: relative;
-_margin-top: -100px;
+_margin-top: -100px;*/
 background: url(img/zip_arrow.png) 0 -71px no-repeat;
    _background: url(img/zip_arrow.gif) 0 -71px no-repeat;
 }

@@ -37,7 +37,7 @@
 						<% if PoliticalNotebook.find_or_create_from_user(current_user).already_contains? commentary %>
 							<span>Saved</span>
 						<% else %>
-						<script>
+						<script type='text/javascript'>
 						$j().ready(function() {
 						  $j('#faceform_<%= commentary.id.to_s %>').jqm({ajax: '/users/<%= current_user.login %>/profile/political_notebook/notebook_links/faceform?id=<%= commentary.id %>&type=<%= commentary.class %>', trigger: 'a.trigger_<%= commentary.id.to_s %>'});
 						});

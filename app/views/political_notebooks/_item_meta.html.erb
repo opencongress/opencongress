@@ -1,7 +1,7 @@
 <% item = item_meta %>
 <span>Added <%= time_ago_in_words item.created_at %> ago -
 	<% if item.count_times_bookmarked > 1 %>
-	<script>
+	<script type='text/javascript'>
 	$j().ready(function() {
 		$j('#other-bookmarked-<%= item.id %>').jqm({trigger: '.meta-info-<%= item.id %>'});
 	});
@@ -41,7 +41,7 @@
       &nbsp;-
 	<% end %>
 	<% if current_user == item.political_notebook.user %>
-		<script>
+		<script type='text/javascript'>
 		$j().ready(function() {
 			$j('#edit-link-<%= item.id %>').jqm({trigger: '.meta-edit-<%= item.id %>'});
 		});

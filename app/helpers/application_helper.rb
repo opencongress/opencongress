@@ -716,7 +716,7 @@ EOT
   end
   
   def dbox_trigger(text_name)
-    "<script>
+    "<script type='text/javascript'>
     $j().ready(function() {
       $j('##{text_name}')
         .jqDrag('##{text_name}_drag')

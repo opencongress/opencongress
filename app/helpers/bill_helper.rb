@@ -110,7 +110,7 @@ module BillHelper
         summary.gsub!(/"/, "\\\"")
         summary.gsub!(/'/, "&apos;")
       
-        out = "<script>
+        out = "<script type='text/javascript'>
         $j().ready(function() {
         	$j('#bill_summary_extra').jqm({trigger: 'a.summary_trigger'});
         });

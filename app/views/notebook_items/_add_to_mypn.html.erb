@@ -5,7 +5,7 @@
 	<% if PoliticalNotebook.find_or_create_from_user(current_user).already_contains? object %>
 		Added to MyPN
 	<% else %>
-		<script>
+		<script type='text/javascript'>
 		$j().ready(function() {
 			$j('#add_item').jqm({ajax:'@href', trigger: 'a.mypn'});
 		});

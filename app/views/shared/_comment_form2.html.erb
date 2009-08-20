@@ -55,7 +55,7 @@ Please <%= link_to "Login", :controller => "account", :action => "login" %> or
   <% end %>
 </div>
 <% else %>
-<script>
+<script type='text/javascript'>
 $j().ready(function() {
 	$j('#login_comment').jqm({ajax:'@href', trigger: 'a.comment_login'});
 });

@@ -63,7 +63,7 @@
   	<div class="search">
   		<label for="search-field">Search</label>
   		<input name="q" id="search-field" type="text" value="<%= @query.blank? ? '' : @query %>" />
-  		<input type="image" src="/stylesheets/img/search_submit.gif" name="submit" id="search_submit" value="Search">
+  		<input type="image" src="/stylesheets/img/search_submit.gif" name="submit" id="search_submit" value="Search" />
   		<input id="search_congress_111" name="search_congress[111]" type="hidden" value="111" /> 
   		<input id="search_bills" name="search_bills" type="hidden" value="1" />
   		<input id="search_people" name="search_people" type="hidden" value="1" />
@@ -97,7 +97,7 @@
 	
 	<div id="search-autocomplete-choices" class="autocomplete"></div>
 </div>
-<script>
+<script type="text/javascript">
 new Ajax.Autocompleter("search-field", "search-autocomplete-choices", "/search/autocomplete", {
   paramName: "value", 
   minChars: 3, 
@@ -134,7 +134,7 @@ A project of <a href="http://participatorypolitics.org/" target="_blank">PPF</a>
 				<li id="wiki_nav" class="sub"><%= link_to '<span>Wiki</span>', WIKI_URL  %></li>		
 				<li id="blog_nav" class="sub"><%= link_to '<span>Blog</span>', :controller => 'blog' %></li>
 				<li id="tool_nav" class="sub">		
-				<%= link_to '<span>Resources <img src="/stylesheets/img/tool_arrow-trans.png" /></span>', :controller => 'resources' %>
+				<%= link_to '<span>Resources <img src="/stylesheets/img/tool_arrow-trans.png" alt="&gt;" /></span>', :controller => 'resources' %>
 				<ul class="sub">
 					<li id="compare_nav"><%= link_to '<span>Vote Comparison</span>', :controller => 'people', :action => 'compare' %></li> 
 					<li id="widget_nav"><a href="/resources#widgets"><span>Site Widgets</span></a></li>

@@ -1,5 +1,4 @@
 @import url('ie7.css');
-
 #header {
   padding-bottom:15px;
 }
@@ -74,9 +73,47 @@ dd, dt {
  position:relative;
  top:-30px;
   background: url(img/zip_arrow.gif) no-repeat 0px -71px;
-}           
+}        
+#the-people ul.listed li.person {
+  display:inline-block;
+}  
+/*** no hover change for currently unsolveable guillotine type bug ***/
+#the-people a.track_small:hover {
+  background: url('img/large_buttons.gif') right -769px no-repeat;
+}
+#the-people a.track_small:hover span {
+    background: url('img/large_buttons.gif') left -769px no-repeat;
+}   
+#the-people div.label strong {
+  margin-top:9px;
+}                
+#the-people div.label a {
+  top:9px;
+}
 #timeframe a {
   white-space:nowrap;
+}     
+#timeframe {
+  margin-bottom:38px;
+}
+#timeframe .approval {
+  padding-left:400px;
+}                   
+#people_list li.person span.date {
+  float:none;
+  display:block;
+  width:536px;
+  text-align:center;
+  height:24px;
+  font-size:24px;
+  line-height:24px;
+  margin-bottom:20px;
+  color:#C3A088;
+  background:url('img/date_span.gif') left center no-repeat;
+}          
+.wide #people_list li.person span.date {
+  width:100%;
+  background-position:49% center;
 }
 .jcarousel-skin-tango .jcarousel-container {
   margin-top:0px;
@@ -86,4 +123,7 @@ dd, dt {
 }
 #zipcode_lookup input.form {
   margin:0 10px 0 0;
+}
+.wide ul#sort h4 {
+  padding-left:0px;
 }

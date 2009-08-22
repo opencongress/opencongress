@@ -33,6 +33,9 @@ a.writeextrigger, a#login_writerep_trigger {
 a.writeextrigger div, a#login_writerep_trigger div {
   padding-right:10px;
 }
+#tertiary-content a.large_track {
+  margin-left:49px;
+}
 a.large_track span#b_myoc_txt {
   display:inline-block;
 }
@@ -126,4 +129,28 @@ dd, dt {
 }
 .wide ul#sort h4 {
   padding-left:0px;
+}
+#bill .small_box{
+   background: url('img/stats_bottom_bill.gif') left bottom no-repeat ;
+}
+#bill .small_box_top {
+   background: url('img/stats_top_bill.gif') left 0 no-repeat;
+}
+#people .small_box{
+   background: url('img/stats_bottom_people.gif') left bottom no-repeat ;
+}
+#people .small_box_top {
+   background: url('img/stats_top_people.gif') left 0 no-repeat;
+}
+#people div.committee_list {
+  margin-right:10px;
+}
+#votinghistory_list li {
+  padding:0;
+}
+#votinghistory_list li a {
+  padding:15px 0;
+}
+#voting_history a.med_button {
+  margin-top:25px;
 }

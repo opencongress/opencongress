@@ -56,7 +56,7 @@ h5.short {
 #subfoot,
 #topic,
 #vote,
-#user_content .uc-box h3,
+#tertiary-content .uc-box h3,
 .uc-box font  {
   font-family:Arial, sans-serif;
 }
@@ -93,17 +93,18 @@ h5.short {
   font-size:11px;
   color:#6d6d6d;
 }
-#user_content h2, #user_content h3 {
+#tertiary-content h2, #tertiary-content h3 {
   text-align:center;
 }
 
-#user_content .uc-box h3 {
+#tertiary-content .uc-box h3 {
   text-align:left;
   float:left;
   margin-right:5px;
   margin-bottom:0px;
 }          
-#user_content .jqmWindow h3 {
+#tertiary-content .jqmWindow h3,
+#tertiary-content h3.small_comment_title {
   text-align:left;
 } 
 .c_item {/*
@@ -125,14 +126,14 @@ font {
   color:#c04c4c;
 }
 
-#user_content .uc-box h3,
-#user_content .uc-box h4 {
+#tertiary-content .uc-box h3,
+#tertiary-content .uc-box h4 {
   line-height:15px;
 }
-#user_content .uc-box h4 {
+#tertiary-content .uc-box h4 {
   margin-bottom:0px;
 }                                 
-#user_content h2 {
+#tertiary-content h2 {
   font-size:13px;
   color:#252525;
   padding-top:24px;

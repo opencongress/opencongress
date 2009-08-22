@@ -1,7 +1,6 @@
 <div id="tertiary-content">
 
 	<% if object.class.to_s == "Bill" %>
-	<div id="user_content" class="bill">
 		<% if @bill_text %>
 		  <div id="bill-text" class="un">
 		    <%= link_to "View Bill Overview <span>Official info, comments, more</span>", {:action => 'show'}, :class => 'overview_button' %>
@@ -90,7 +89,6 @@
 
 		<div id="login_vote" class="jqmWindow">
 		</div>    
-	</div>
 	
 <% elsif object.class.to_s == "Person" %>
   <div class="rep_info">
@@ -117,10 +115,9 @@
 
   </div>
   <%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
-
-  <div id="user_content" class="person">   	
-  	<div class="uc-box-bottom">
-  		<div class="uc-box">
+ 	
+	<div class="uc-box-bottom">
+		<div class="uc-box">
   		<%= render :partial => 'people/approval' %>
   	</div>
   </div> 
@@ -199,33 +196,33 @@
 		});
 	</script>
   
-<ul class="share_buttons">
-	<li>
-		<a href="/resources/email_feedback_form?subject=<%= request.url %>" class="feedback">Send us Feedback</a>
-	</li>
-</ul>
+	<ul class="share_buttons">
+		<li>
+			<a href="/resources/email_feedback_form?subject=<%= request.url %>" class="feedback">Send us Feedback</a>
+		</li>
+	</ul>
 
-<div id="email_feedback" class="jqmWindow">
-	<%# render :partial => 'shared/email_feedback_form' %>
-</div>
+	<div id="email_feedback" class="jqmWindow">
+		<%# render :partial => 'shared/email_feedback_form' %>
+	</div>
 	
-<% unless @top_comments.empty? %>
-<h3 class="small_comment_title">Top-Rated Comments</h3>
+	<% unless @top_comments.empty? %>
+	<h3 class="small_comment_title">Top-Rated Comments</h3>
 
-<ul id="small_comments">
-<% @top_comments.each do |c| %>
-<li>
-	<a href="<%= url_for c.page_link %>" class="comment">
-		<span class="text">&#8220;<%= truncate(c.comment, :length => 75) %>&#8221;</span>
-		<span class="user"><%= c.user.nil? ? 'Anonymous' : c.user.login %></span>
-	</a>
-</li>
-<% end %>
-</ul>
+	<ul id="small_comments">
+	<% @top_comments.each do |c| %>
+	<li>
+		<a href="<%= url_for c.page_link %>" class="comment">
+			<span class="text">&#8220;<%= truncate(c.comment, :length => 75) %>&#8221;</span>
+			<span class="user"><%= c.user.nil? ? 'Anonymous' : c.user.login %></span>
+		</a>
+	</li>
+	<% end %>
+	</ul>             
 <% end %>
 	<!--
 	  <div id="small_comment">
 	    <%# render :partial => 'shared/comment_form2', :locals => {:object => object, :master_container => 'small_comment', :redirect => false } %>
 	  </div>
   -->
-</div>
+</div> <!-- // tertiary-content -->

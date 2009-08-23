@@ -93,15 +93,15 @@ dd, dt {
 #the-people div.label a {
   top:9px;
 }
-#timeframe a {
+#sort_nav.approval #timeframe a {
   white-space:nowrap;
 }     
-#timeframe {
+#sort_nav.approval #timeframe {
   margin-bottom:38px;
 }
-#timeframe .approval {
+#sort_nav.approval #timeframe .approval {
   padding-left:400px;
-}                   
+}                  
 #people_list li.person span.date {
   float:none;
   display:block;

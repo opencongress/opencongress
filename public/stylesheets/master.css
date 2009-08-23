@@ -3455,12 +3455,12 @@ clear: none;
 
 .ie6{
 display: none;
-_display:block;
+/*_display:block;
 _padding: 60px;
 _font-size: 14px;
 _line-height: 1.8em;
 _background: #;
-}
+*/}
 
 
 .mediawiki #p-navigation{

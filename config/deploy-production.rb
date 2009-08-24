@@ -1,5 +1,6 @@
 #require 'palmtree/recipes/mongrel_cluster'
 
+
 set :application, "opencongress"
 
 #set :repository, "svn+ssh://db.opencongress.org/var/svn/opencongress/trunk/"
@@ -51,6 +52,8 @@ task :link_images do
 	run "ln -s #{deploy_to}/#{shared_dir}/images #{current_release}/public/images/" 
   run "ln -s #{deploy_to}/#{shared_dir}/files/oc_whats.flv #{current_release}/public/oc_whats.flv"
   run "ln -s #{deploy_to}/#{shared_dir}/files/screencast.mp4 #{current_release}/public/screencast.mp4"
+  run "ln -s #{deploy_to}/#{shared_dir}/files/facebooker.yml #{current_release}/config/"
+  run "ln -s #{deploy_to}/#{shared_dir}/files/synch_s3_asset_host.yml #{current_release}/config/"
   sudo "chown -R mongrel:nogroup #{current_release}"
   sudo "chmod 777 #{current_release}/public/forum/conf/settings.php"
   sudo "chmod -R 777 #{current_release}/public/forum/extensions"

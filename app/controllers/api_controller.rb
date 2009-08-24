@@ -255,12 +255,12 @@ class ApiController < ApplicationController
   end
   
   def most_blogged_bills_this_week
-    bills = Bill.find_by_most_commentary('blog', 6, DEFAULT_COUNT_TIME + 30.days)
+    bills = Bill.find_by_most_commentary('blog', 10, DEFAULT_COUNT_TIME)
     do_render(bills, {:except => [:rolls, :hot_bill_category_id]})
   end
   
   def bills_in_the_news_this_week
-    bills = Bill.find_by_most_commentary('news', 10, DEFAULT_COUNT_TIME + 30.days)
+    bills = Bill.find_by_most_commentary('news', 10, DEFAULT_COUNT_TIME)
     do_render(bills, {:except => [:rolls, :hot_bill_category_id]})
   end
   

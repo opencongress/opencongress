@@ -899,7 +899,8 @@ class Bill < ActiveRecord::Base
     Bill.count(:all, :include => [:bill_cosponsors], :conditions => ["bills.session = ?", DEFAULT_CONGRESS], :group => "bills_cosponsors.person_id").sort {|a,b| b[1]<=>a[1]}
   end
   
-  def Bill.find_by_most_commentary(type = 'news', num = 5, since = DEFAULT_COUNT_TIME, congress = DEFAULT_CONGRESS, bill_types = '')
+  def Bill.find_by_most_commentary(type = 'news', num = 5, since = DEFAULT_COUNT_TIME, congress = DEFAULT_CONGRESS, bill_types = ["h", "hc", "hj", "hr", "s", "sc", "sj", "sr"])
+
     is_news = (type == "news") ? true : false
     
     Bill.find_by_sql(["SELECT bills.*, top_bills.article_count AS article_count FROM bills

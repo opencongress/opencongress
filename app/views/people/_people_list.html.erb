@@ -56,7 +56,7 @@
 				<% else %>
 				<li class="no_rating">Rate this Senator</li>
 				<% end %>
-				<li class="bill_count"><%= person.bills.size ? person.bills.size : "0" %> Sponsored Bills</li>
+				<li class="bill_count"><%= person.person_stats && person.person_stats.sponsored_bills ? person.person_stats.sponsored_bills : "0" %> Sponsored Bills</li>
 				<% if person.belongs_to_major_party? %>
 				<li class="cronie">Votes <%= person.with_party_percentage.round %>% with Party</li>
 				<% end %>

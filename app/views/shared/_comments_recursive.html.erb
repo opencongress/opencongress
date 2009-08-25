@@ -44,7 +44,7 @@
 
 
     <div class="comm_rating_inner">		
-  		Overall Rating: <%=h number_with_precision(comment.average_rating,1) %>&nbsp;&ensp;|&ensp;</td>
+  		Overall Rating: <%=h number_with_precision(comment.average_rating,1) %>&nbsp;&ensp;|&ensp;
   	  <% if logged_in? %>
   		  <div class="rate_comm" id="rate_comment_<%= comment.id.to_s%>">
   				<% if (comment_score = myscores.select{ |s| s.comment_id == comment.id }.first).nil? %>

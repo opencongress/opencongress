@@ -54,6 +54,7 @@ task :link_images do
   run "ln -s #{deploy_to}/#{shared_dir}/files/screencast.mp4 #{current_release}/public/screencast.mp4"
   run "ln -s #{deploy_to}/#{shared_dir}/files/facebooker.yml #{current_release}/config/"
   run "ln -s #{deploy_to}/#{shared_dir}/files/synch_s3_asset_host.yml #{current_release}/config/"
+  run "ln -s #{deploy_to}/#{shared_dir}/files/facebook.yml #{current_release}/config/"
   sudo "chown -R mongrel:nogroup #{current_release}"
   sudo "chmod 777 #{current_release}/public/forum/conf/settings.php"
   sudo "chmod -R 777 #{current_release}/public/forum/extensions"

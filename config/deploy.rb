@@ -50,6 +50,9 @@ task :link_images do
   run "ln -s /data/blog #{current_release}/public/images/blog"
   run "ln -s #{deploy_to}/#{shared_dir}/files/oc_whats.flv #{current_release}/public/oc_whats.flv"
   run "ln -s #{deploy_to}/#{shared_dir}/files/screencast.mp4 #{current_release}/public/screencast.mp4"
+  run "ln -s #{deploy_to}/#{shared_dir}/files/facebooker.yml #{current_release}/config/"
+  run "ln -s #{deploy_to}/#{shared_dir}/files/synch_s3_asset_host.yml #{current_release}/config/"
+  run "ln -s #{deploy_to}/#{shared_dir}/files/facebook.yml #{current_release}/config/"
 
   run "ln -s /u/apps/opencongress-dev/shared/robots_all.txt #{current_release}/public/robots.txt"
   run "touch #{current_release}/tmp/restart.txt"

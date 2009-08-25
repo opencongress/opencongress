@@ -1,11 +1,11 @@
 <ul>
   <% unless @people_hits.empty? %>
-    <h2>People</h2>
+    <li><h2>People</h2></li>
     <%= render :partial => 'search/autocomplete_link', :collection => @people_hits %>
   <% end %>
 
   <% unless @bill_hits.empty? %>
-    <h2>Bills</h2>
+    <li><h2>Bills</h2></li>
     <%= render :partial => 'search/autocomplete_link', :collection => @bill_hits %>
   <% end %>
 </ul>

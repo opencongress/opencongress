@@ -20,7 +20,7 @@ class Emailer < ActionMailer::Base
   
   def feedback(cc, from, subject, message)
     @subject = subject                     
-    @recipients = 'agp@opencongress.org'
+    @recipients = 'writeus@opencongress.org'
     @cc = cc
     @from = from
     @sent_on = Time.now

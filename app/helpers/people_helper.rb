@@ -66,7 +66,7 @@ module PeopleHelper
         end                           
       
         if @person.belongs_to_major_party?
-          if stats.opposing_party_votes_most_often_with
+          if stats.opposing_party_votes_most_often_with && stats.votes_most_often_with && stats.votes_most_often_with.id != stats.opposing_party_votes_most_often_with.id
             output += "<li class='#{@person.opposing_party}'>" + 
             (link_to stats.opposing_party_votes_most_often_with.title_full_name, { :controller => 'people', :action => 'show', :id => stats.opposing_party_votes_most_often_with }) + 
             "</li>"
@@ -78,14 +78,14 @@ module PeopleHelper
     if stats.votes_least_often_with || stats.same_party_votes_least_often_with
       output += "<ul class='votes_least'><li><em>Least often votes with:</em></li>"
       
-        if stats.same_party_votes_least_often_with
+        if stats.same_party_votes_least_often_with && stats.votes_least_often_with && stats.same_party_votes_least_often_with.id != stats.votes_least_often_with.id
           output += "<li class='#{@person.party}'>" + 
           (link_to stats.same_party_votes_least_often_with.title_full_name,{ :controller => 'people', :action => 'show', :id => stats.same_party_votes_least_often_with }) +
           "</li>"
         end
       
         if @person.belongs_to_major_party?
-          if stats.votes_least_often_with
+          if stats.votes_least_often_with 
             output += "<li class='#{@person.opposing_party}'>" + 
             (link_to stats.votes_least_often_with.title_full_name, { :controller => 'people', :action => 'show', :id => stats.votes_least_often_with }) + 
             "</li>"

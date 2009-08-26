@@ -10,7 +10,7 @@ set :application, "opencongress"
 default_run_options[:pty] = true
 set :repository,  "git@github.com:opencongress/opencongress.git"
 set :scm, "git"
-
+set :git_shallow_clone, 1
 
 # If you aren't deploying to /u/apps/#{application} on the target
 # servers (which is the default), you can specify the actual location
@@ -44,6 +44,8 @@ task :link_images do
   run "cp #{deploy_to}/#{shared_dir}/files/production.rb #{current_release}/config/environments/production.rb"
   run "cp #{deploy_to}/#{shared_dir}/settings.php #{current_release}/public/forum/conf/settings.php"
   run "cp #{deploy_to}/#{shared_dir}/database.php #{current_release}/public/forum/conf/database.php"
+  run "ln -s #{deploy_to}/#{shared_dir}/states #{current_release}/public/images/states"
+  run "ln -s #{deploy_to}/#{shared_dir}/districts #{current_release}/public/images/districts"
   run "ln -s #{deploy_to}/#{shared_dir}/user_images #{current_release}/public/images/users"
   run "ln -s #{deploy_to}/#{shared_dir}/index #{current_release}/index"
   run "ln -s /data/govtrack/109/repstats/images/people #{current_release}/public/images/people"

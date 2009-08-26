@@ -98,12 +98,7 @@ ul#people_list{
 width: 617px;
 overflow: auto;
 float: left;
-_float: right;
 display: block;
-.margin-left: 380px;
-_margin-left: 0;
-_position: relative;
-_margin-top: -100px;
 }
 
 ul#people_list li{
@@ -191,7 +186,6 @@ li.people {
 li.people ul li a {
 	text-decoration:underline;
 }
-
 #alerts{
 background: #f9f9f9;
 border: 1px solid #eee;
@@ -365,7 +359,25 @@ width: inherit;
 
 .person .details a.name{
 display: block !important;
-padding-bottom: 20px;}
+padding-bottom: 20px;
+}
+
+.rating{
+  background: url(img/no-rating.png) 3px center no-repeat;
+   _background: url(img/no-rating.gif) 3px center no-repeat;
+}
+.no_rating{
+  background: url(img/no-rating.png) 3px center no-repeat;
+   _background: url(img/no-rating.gif) 3px center no-repeat;
+}
+.bill_count{
+  background: url(img/tiny_bill.png) left center no-repeat;
+   _background: url(img/tiny_bill.gif) left center no-repeat;
+}
+.cronie{
+  background: url(img/cronie.png) left center no-repeat;
+   _background: url(img/cronie.gif) left center no-repeat;
+}
 
 .stats{
 }
@@ -374,7 +386,7 @@ padding-bottom: 20px;}
 min-height: inherit;
 }
 
-.my_left, .my_left p{
+.my_left {
 clear: both !important;
 }
 
@@ -435,9 +447,14 @@ float: left;
 margin: 0 0 20px 0 !important;
 }
 
-
-
-
-
-
-
+ul.links_detailed li {
+  margin-left:18px;
+}
+ul.links_detailed li.tracking {
+  margin-bottom: 12px;
+  clear:both;
+}
+div.after {
+  clear:both;
+  border-bottom:1px solid #DDDDDD;
+}

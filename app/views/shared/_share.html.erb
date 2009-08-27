@@ -23,24 +23,30 @@ $j().ready(function() {
 	<li class="mixx">
 		<a href="http://www.mixx.com/submit?page_url=<%= url %>&title=<%= title %>">Mixx</a>
 	</li>  
+	<li class="twitter">
+		<a href="http://www.mixx.com/submit?page_url=<%= url %>&title=<%= title %>">Twitter</a>
+	</li>  
 
 </ul>  
 		<a href="#" class="more_trigger more">More</a>
 
 <div id="share_more" class="jqmWindow closer">
+	
+<h3>Share</h3>	
+	
 <div class="ie"><a href="#" class="jqmClose">Close</a></div>
- <ul>
+ <ul class="more_share">
 	<li>
 		<a href="http://del.icio.us/post?url=<%= esc_url %>&amp;title=<%= title %>">
-			<img src="/images/share_icons/share-delicious.gif" alt="del.icio.us" /></a>
+			<img src="/images/share_icons/share-delicious.gif" alt="del.icio.us" /><span>Del.icio.us</span></a>
 	</li>
 	<li>
 		<a href="http://www.newsvine.com/_wine/save?popoff=0&amp;u=<%= esc_url %>&amp;h=<%= title %>"> 
-			<img src="/images/share_icons/share-newsvine.gif" alt="Newsvine" /></a>
+			<img src="/images/share_icons/share-newsvine.gif" alt="Newsvine" /><span>Newsvine</span></a>
 	</li>
 	<li>
 		<a href="http://co.mments.com/track?url=<%= esc_url %>">
-			<img src="/images/share_icons/share-comments.gif" alt="co.mments" /></a>
+			<img src="/images/share_icons/share-comments.gif" alt="co.mments" /><span>Co.mments</span></a>
 	</li>
 	</ul>
 </div>

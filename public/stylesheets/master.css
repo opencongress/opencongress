@@ -2799,81 +2799,109 @@ background-position: 1px -21px;
 }
 
 .subscribe .newsgator a{
-background-position: -52px 0px;
+background-position: -52px -21px;
 }
 .subscribe .newsgator a:hover{
-background-position: -52px -21px;
+background-position: -52px 0px;
 }
 
 .subscribe .bloglines a{
-background-position: -75px 0px;
+background-position: -75px -21px;
 }
 .subscribe .bloglines a:hover{
-background-position: -75px -21px;
+background-position: -75px 0px;
 }
 
 .subscribe .netvibes a{
-background-position: -97px 0px;
+background-position: -97px -21px;
 }
 .subscribe .netvibes a:hover{
-background-position: -97px -21px;
+background-position: -97px 0px;
 }
 
 .subscribe .yahoo a{
-background-position: -119px 0px;
+background-position: -119px -21px;
 }
 .subscribe .yahoo a:hover{
-background-position: -119px -21px;
+background-position: -119px 0px;
 }
 
 .subscribe .google a{
-background-position: -141px 0px;
+background-position: -141px -21px;
 }
 .subscribe .google a:hover{
-background-position: -141px -21px;
+background-position: -141px 0px;
 }
 
 .subscribe .rss_link a{
-background-position: -163px 0px;
+background-position: -163px -21px;
 }
 .subscribe .rss_link a:hover{
-background-position: -163px -21px;
+background-position: -163px 0px;
 }
 
 .share_icons .reddit a{
-background-position: -185px 0px;
+background-position: -185px -21px;
 }
 .share_icons .reddit a:hover{
-background-position: -185px -21px;
+background-position: -185px 0px;
 }
 
 .share_icons .digg a{
-background-position: -207px 0px;
-}
-.share_icons .digg a:hover{
 background-position: -207px -21px;
 }
 
+.share_icons .digg a:hover{
+background-position: -207px 0px;
+}
+
 .share_icons .facebook a{
-background-position: -249px 0px;
+background-position: -249px -21px;
 }
 .share_icons .facebook a:hover{
-background-position: -249px -21px;
+background-position: -249px 0px;
 }
 
 .share_icons .stumble a{
-background-position: -228px 0px;
+background-position: -228px -21px;
 }
 .share_icons .stumble a:hover{
-background-position: -228px -21px;
+background-position: -228px 0px;
 }
 
 .share_icons .mixx a{
-background-position: -271px 0px;
-}
-.share_icons .mixx a:hover{
 background-position: -271px -21px;
 }
+.share_icons .mixx a:hover{
+background-position: -271px 0px;
+}
+
+.share_icons .twitter a{
+background-position: -294px -21px;
+}
+.share_icons .twitter a:hover{
+background-position: -294px 0px;
+}
+
+.more_share li{
+float: left;
+padding-right: 13px;
+}
+
+.more_share li a{
+display: block;
+padding: 0;
+}
+
+.more_share li a img{
+float: left;
+}
+
+.more_share li a span{
+padding-left: 9px;
+float: left;
+}
+
 
 .submit {
 border: 0;

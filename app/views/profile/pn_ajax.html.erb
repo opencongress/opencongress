@@ -1,0 +1,17 @@
+<% if logged_in? %>
+				<% if PoliticalNotebook.find_or_create_from_user(current_user).already_contains? @commentary %>
+					<span>Saved</span>
+				<% else %>
+				<script type='text/javascript'>
+				$j().ready(function() {
+				  $j('#faceform_<%= @commentary.id.to_s %>').jqm({ajax: '/users/<%= current_user.login %>/profile/political_notebook/notebook_links/faceform?id=<%= @commentary.id %>&type=<%= @commentary.class %>', trigger: 'a.trigger_<%= @commentary.id.to_s %>'});
+				});
+				</script>     
+				<span id="addmypn_<%= @object.class %>_<%= @object.id %>"><a href="#" class="trigger_<%= @commentary.id.to_s %>" >Save</a></span>
+				<div class="jqmWindow" id="faceform_<%= @commentary.id.to_s %>">
+				 <img src="/images/indicator.gif" class="noborder" /> 
+				</div>
+				<% end %>
+ <% else %>
+	<span><%= link_to("Save to Notebook", :controller => "account", :action => "login") %></span>
+ <% end %>

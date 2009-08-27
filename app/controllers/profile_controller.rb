@@ -511,6 +511,17 @@ class ProfileController < ApplicationController
 
   end
   
+  def pn_ajax
+
+    @commentary = Commentary.find_by_id(params[:id])
+    if ["Person", "Bill", "Commentary"].include?(params[:object_type])
+      @object = Object.const_get(params[:object_type]).find_by_id(params[:object_id])
+    end
+
+    render :layout => false
+
+  end
+  
   private
   def can_view_tab
     @user = User.find_by_login(params[:login])

@@ -876,7 +876,10 @@ padding: 45px 290px 0 40px;
 padding-right: 20px !important; 
 }
  */
-
+.inner .jcarousel-skin-bravo .jcarousel-clip-horizontal {
+  left:0;
+  width:870px;
+}             
 .jcarousel-prev, .jcarousel-next{
 margin: 110px 0 0 0 !important;
 }
@@ -983,8 +986,3 @@ height: 450px !important;
 background: url('img/number5.png') no-repeat 690px 58px;
    _background: url('img/number5.gif') no-repeat 690px 58px;
 }
-
-
-
-
-

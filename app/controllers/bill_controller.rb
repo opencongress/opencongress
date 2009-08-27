@@ -617,7 +617,7 @@ private
         @types = "all"
         @types_from_params = Bill.all_types_ordered
       end
-      @carousel = [Bill.find_hot_bills]
+      @carousel = [Bill.find_hot_bills('bills.page_views_count desc',{:limit => 12})]
   end
   
   def bill_profile_shared

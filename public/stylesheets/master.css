@@ -2494,14 +2494,18 @@ background: url(img/carousel_left.png) no-repeat;
 .inner .jcarousel-skin-bravo {
   padding:10px 24px 30px 24px;
   margin:0px 0 10px 0;
+  height:148px;
+  overflow:hidden;
 }
+
 .inner .jcarousel-skin-bravo .jcarousel-container {
   height: 218px;
   width:955px;
 }
 
 .inner .jcarousel-skin-bravo .jcarousel-clip-horizontal {
-  width: 870px;
+  width: 835px;
+  left:30px;
 }
 
 .inner .jcarousel-skin-bravo .jcarousel-item {
@@ -2569,12 +2573,9 @@ body#bill .jcarousel-container {
   border-bottom:1px solid #DDDDDD;
 */
 }
-.inner .jcarousel-skin-bravo {
-  height:119px;
-  overflow:hidden;
-}
-#bill_carousel.jcarousel-list {
-  width:50000px !important;
+#sort_nav ul#bill_carousel {
+  margin:0;
+  height:148px;
 }
 #bill_carousel li,#committee_carousel li {
   margin:35px 0 0 24px;

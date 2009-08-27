@@ -3,7 +3,8 @@
 
 <% if logged_in? || controller.controller_name == "articles" %>
 <div id="add" class="comment-add" style="clear:both;">
-      <h3>Speak Your Mind</h3>
+ <div class="count">characters remaining:&nbsp;&nbsp;<span id="counter"></span></div>
+ <h3>Speak Your Mind</h3>
 
   
   <div style="color: red"><%= error_messages_for :comment, :header_message => "Please try again.", :message => "Your comment couldn't be saved because of the following errors:" %></div>
@@ -25,7 +26,15 @@ Please <%= link_to "Login", :controller => "account", :action => "login" %> or
     
     <% end %>
     
-    
+     <script type="text/javascript">
+		$j(document).ready(function() {
+			$j('#comment_comment').simplyCountable({
+				maxCount:1000,
+				countDirection:'down'
+			});
+		});
+
+		</script>
     <% unless controller_name == 'articles' %>
     <%= f.text_area :comment, :rows => 6, :cols => 60 %>
     <% else %>
@@ -42,7 +51,7 @@ Please <%= link_to "Login", :controller => "account", :action => "login" %> or
     </div>
     <% end %>
     
-    <div class="submit"><%= submit_tag "Add Comment" %></div>
+    <div class="submit"><%= submit_tag "Add Comment", :id => 'post' %></div>
     
    
    <div class="comment-message">

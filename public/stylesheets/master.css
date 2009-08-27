@@ -3618,6 +3618,21 @@ clear: both !important;
 width: 100px !important;
 }
 
-
-
-
+/****** countable css ****/
+span#post {
+  display:block;
+  line-height:33px;
+  color:#a61c1c;
+  padding-left:50px;
+}
+span.safe {
+  color:#333;
+}
+span.over {
+  color:#a61c1c;
+}
+.count {
+  color:#AAAAAA;
+  font-size:11px;
+  float:right;
+}

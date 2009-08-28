@@ -1770,7 +1770,9 @@ float: left;
 font-weight: normal;
 padding-left: 5px;
 }
-
+.category_track span.category_id {
+  font-weight:bold;
+}
 #bill.list_bill_type #heading{
 height: 45px;
 }

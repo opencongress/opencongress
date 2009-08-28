@@ -35,10 +35,14 @@ padding-top: 0 !important;
 border-bottom: 1px solid #ddd !important;
 background: url('img/carousel_dark_bg.png') left bottom repeat-x;
    _background: url('img/carousel_dark_bg.gif') left bottom repeat-x;
-min-height: 240px;
+/*min-height: 240px;*/
 }
-
-
+.inner .jcarousel-skin-bravo {
+  height:130px;
+}
+#committee_carousel li {
+  margin-top:41px;
+}
 
 #house{
 float: left;

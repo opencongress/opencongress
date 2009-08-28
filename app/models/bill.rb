@@ -775,11 +775,11 @@ class Bill < ActiveRecord::Base
     return nil
   end
   
-  def Bill.find_hot_bills(order = 'hot_bill_categories.name')
+  def Bill.find_hot_bills(order = 'hot_bill_categories.name', options = {})
     # not used right now.  more efficient to loop through categories
     # probably just need to add an index to hot_bill_category_id
     Bill.find(:all, :conditions => "bills.hot_bill_category_id IS NOT NULL", :include => :hot_bill_category, 
-              :order => order)
+              :order => order, :limit => options[:limit])
   end
   
   def Bill.top20_viewed

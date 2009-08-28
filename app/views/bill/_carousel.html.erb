@@ -1,5 +1,3 @@
-
-
 <script type="text/javascript">
 
 function mycarousel_initCallback(carousel)
@@ -31,9 +29,6 @@ $j(document).ready(function() {
 
 </script>
 
-
-<%# debugger %>
-
 <div class="carousel_wrap">
 <h3 class="carousel_title">Hot Bills at a Glance</h3>
 
@@ -60,11 +55,15 @@ $j(document).ready(function() {
 			<% else %>                                 
 			<span class="a"><%= "#{b.title_typenumber_only}" %></span>
 			<% end %>
-
-			<% unless b.title_official.blank? %>
-			<p><%= b.title_official %></p>
+			<p>
+			<% if b.plain_language_summary %>
+				<%= truncate(b.plain_language_summary.gsub(/<\/?[^>]*>/, ""), :length => 340) %>
+			<% else %>
+				<% unless b.title_official.blank? %>
+					<%= truncate(b.title_official, :length => 340) %>
+				<% end %>
 			<% end %>
-			       			
+			</p>
 		</div>
 
 		<span class="status">            

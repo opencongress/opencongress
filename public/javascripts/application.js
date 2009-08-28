@@ -189,9 +189,13 @@ NotebookForm = {
 }
 
 Ajax.Responders.register({
-  onCreate: function() {
+  onCreate: function(request) {
     // don't show the throbber if it's a search autocomplete request
     if ($('search-field') && $('search-field').value.length >= 3)
+      return;
+
+    var match = /pn_ajax/.test(request.url)
+    if (match == true)
       return;
       
     if ($('loading') && Ajax.activeRequestCount>0)

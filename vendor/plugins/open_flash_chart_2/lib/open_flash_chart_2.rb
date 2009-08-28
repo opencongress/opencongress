@@ -70,7 +70,7 @@ module OFC2
         swfobject.embedSWF(
           '#{swf_base}open-flash-chart.swf', '#{div_name}',
           '#{width}', '#{height}','9.0.0', 'expressInstall.swf',
-          {'get-data':'#{div_name}_data'} );
+          {'get-data':'#{div_name}_data'},{wmode:"transparent"} );
 
       </script>
     EOF
@@ -92,7 +92,7 @@ module OFC2
         swfobject.embedSWF(
         "#{swf_base}open-flash-chart.swf","#{div_name}",
         "#{width}", "#{height}", "9.0.0", "expressInstall.swf",
-        {"data-file":"#{base}#{url}"} );
+        {"data-file":"#{base}#{url}"},{wmode:"transparent"} );
       </script>
     EOF
   end

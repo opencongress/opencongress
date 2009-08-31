@@ -99,6 +99,8 @@ margin-left: 10px;
 }
 div.video_embed object, .video_embed embed, .video_embed object embed{
 }
+
+
 .compare_select{
 padding: 31px 0 20px 20px;
 margin: 10px 40px 20px 0px;
@@ -576,20 +578,76 @@ padding: 0 35px ;
 margin: 0 ;
 }
 /*//////////////////////////////////
-Compare People
+~ Compare People
 //////////////////////////////////*/
+.voting_similarity{
+clear: both;
+float: left;
+font-size: 11px;
+line-height: 1.5em;
+}
+.peeps{
+	padding: 0 10px !important;
+}
+
+.voting_similarity .floatright img{
+margin-left: 10px !important;
+}
+.voting_similarity .floatleft img{
+margin: 0 0 14px 0 !important;
+float: right !important;
+}
+.voting_similarity .floatright p{
+padding: 10px 0 0 0;
+}
+.voting_similarity .floatleft{
+float: left;
+width: 48%;
+}
+.voting_similarity .floatleft p{
+padding: 10px 0 0 0;
+}
+
+.voting_similarity .floatright{
+float: right;
+width: 48%;
+}
+.shared {
+line-height: 1.7em !important;
+}
 .compare #heading{
 height: 45px;
 }
+
+.comp{
+margin: 0 !important;
+}
+
+.comp tr{
+border-bottom: 1px solid #ddd;
+}
+
+.comp td{
+padding: 8px 0;
+border-right: 1px solid #ddd;
+}
+
 .comppeeps {
-border: 1px solid;
-width: 450px;
+width: 453px;
+clear: both;
 float: left;
+margin: 5px 0;
+}
+.comppeeps.right {
+margin: 5px 10px 10px 0;
+width: 447px !important;
+float: right;
+clear: none !important;
 }
 .comppeeps h3{
 float: left;
-padding-top: 30px;
-padding-left: 15px;
+padding-top: 0px;
+padding-left: 20px;
 margin-bottom: 0;
 }
 .comppeeps p{
@@ -599,7 +657,13 @@ float: left;
 .comppeeps img{
 width: 130px;
 float: right !important;
+min-height: 150px;
+color: #999;
+font-size: 11px;
+margin-top: 10px !important;
+background: url(img/big_default_compare.png) center;
 }
+
 .compare table{
 margin: 0 35px;
 }
@@ -669,6 +733,186 @@ color: #d05829;
 padding-right: 3px;
 font-weight: bold;
 }
+
+body#people.compare h3{
+	clear: both;
+	margin-top: 20px;
+}
+
+
+body#people.compare .padding .left{
+float: left;
+width: 45%;
+}
+
+
+body#people.compare .padding .right{
+width: 52%;
+float: right;
+}
+
+.explains{
+width: 240px;
+background: url(img/comparez.png) right 0 no-repeat;
+padding-right: 140px;
+float: left;
+}
+
+
+.explains ul{
+	list-style: circle;
+	padding-left: 17px;	
+}
+
+
+.explains2{
+width: 48%;
+float: left;
+padding-left: 28px;
+}
+
+#compopts{
+clear: both;	
+padding-top: 10px;
+}
+
+.ctabs{
+width: 100%;
+	height: 30px;
+font-weight:bold;
+margin-right: 5px;
+border-bottom: 1px solid #ddd;
+}
+
+.ctabs div{
+float: left;
+background: #fff;
+margin-right: 5px;
+}
+.ctabs a{
+	padding-right: 5px;
+	background: url(img/large_buttons.png) right -880px;
+}
+
+.ctabs a span{
+	padding-left: 14px;
+	background: url(img/large_buttons.png) left -880px;
+}
+
+.ctabs a:hover{
+	cursor: pointer;
+	background: url(img/large_buttons.png) right -844px;
+}
+
+.ctabs a:hover span{
+	background: url(img/large_buttons.png) left -844px;
+	color: #666 !important;
+}
+
+#csens.reps_tab, #creps.sens_tab {
+height: 30px;
+overflow: hidden;
+}
+
+#csens.reps_tab a, #creps.sens_tab a{
+	background: url(img/large_buttons.png) right -844px;
+}
+
+#csens.reps_tab a span, #creps.sens_tab a span{
+	color: #aaa;
+	background: url(img/large_buttons.png) left -844px;
+}
+
+#creps.reps_tab a:hover, #csens.sens_tab a:hover{
+	background: url(img/large_buttons.png) right -880px;
+	cursor: default;
+}
+
+#creps.reps_tab a:hover span, #csens.sens_tab a:hover span{
+	background: url(img/large_buttons.png) left -880px;
+	cursor: default;
+}
+
+
+.cbox-bottom{
+margin: 0px 0 0 0px !important;
+border: 1px solid #ddd;
+border-top: none;
+background: #fff;
+}
+
+.cbox{
+padding-top: 27px;
+padding-left: 0px;
+}
+
+.cbox.first form{
+padding: 20px 0 25px 166px;
+
+}
+
+.cbox.second form{
+padding: 10px 0 25px 146px;
+border-bottom: 1px solid #ddd;
+background: #efefef url(img/sen-sort.png) repeat-x;
+}
+
+.call{
+	background: #f7f7f7;
+}
+.peep1{
+	background: #fff !important;
+min-width: 100px;
+padding: 0 12px !important;
+
+}
+
+.peep2{
+	min-width: 100px;
+	padding: 0 12px !important;
+	background: #fcfcfc !important;
+}
+
+.billlist{
+	padding-right: 30px !important;
+}
+
+.no{
+	background: #eee !important;
+}
+
+
+.cbox form div input{
+margin-left: 271px;
+margin-top: 10px;
+}
+
+.cbox form span{
+padding: 0 9px;
+}
+
+.cbox select{
+	min-width: 280px;
+}
+
+.cbox select option{
+
+}
+
+ul.inline{
+padding-top: 5px;
+}
+
+.related-box2{
+	clear: both;
+margin-top: 20px;
+}
+
+ul.inline li{
+	padding-right: 10px;
+	display: inline;
+}
+
 .bills #sort, .news_blogs #sort{
 float: right;
 width: 358px;
@@ -789,6 +1033,7 @@ padding-left: 156px;
 padding-left: 370px;
 }
 #compbox{
+clear: both;
 }
 .cbox{
 background: url(img/find_rep.png) 0px 0px no-repeat;
@@ -818,6 +1063,4 @@ text-align: left;
 width: 600px;
 margin-top: 10px;
 }
-table.comp td{
-min-width: 100px;
-}
+

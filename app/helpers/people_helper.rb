@@ -174,7 +174,7 @@ module PeopleHelper
       clash = "yes"
       vote1 = "Not Voting"
     elsif vote2.nil? && !vote1.nil?
-      clash = "yes"
+      clash = "yes"     
       vote2 = "Not Voting"
     elsif vote2.nil? && vote1.nil?
       clash="no"
@@ -186,7 +186,9 @@ module PeopleHelper
       end
     end
     unless xml == true
-     "<td class='#{clash}'><table class='compin'><tr><td class='call'><b>Roll Call&nbsp;" + link_to(vo.number, :controller => :roll_call, :action => :show, :id => vo.id) + "</b></td><td class='peeps'>#{@person1.lastname}:&nbsp;<font class='#{vote1}'>#{vote1}</b></td><td class='peeps'>#{@person2.lastname}:&nbsp;<font class='#{vote2}'>#{vote2}</b></td></tr></table></td>" 
+     "<td width='7%' align='center' class='call'>" + link_to(vo.number, :controller => :roll_call, :action => :show, :id => vo.id) + "</td>
+     <td class='#{clash} peeps peep1'><strong>#{@person1.lastname}</strong>&nbsp;<font class='#{vote1}'>#{vote1}</td>
+     <td class='#{clash} peeps peep2'><strong>#{@person2.lastname}</strong>&nbsp;<font class='#{vote2}'>#{vote2}</td>" 
     else
       xml_builder = Builder::XmlMarkup.new
       xml_builder.person1 { |xml|

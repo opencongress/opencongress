@@ -65,13 +65,13 @@
     <h3 class="dark inline">Make a Widget for this Issue By:</h3>
     <a href="/resources/issue_bills?issue_id=<%= @subject.id %>&item_type=new-bill">Newest Bills</a>&nbsp;&middot;&nbsp;
     <a href="/resources/issue_bills?issue_id=<%= @subject.id %>&item_type=viewed-bill">Most Viewed Bills</a>
-   
-		<%= link_to_function(image_tag('/images/question.png', :mouseover => '/images/question_hover.png', :alt => "What's This?", :title => "What's This?"), "Element.show('issue_bills_panel_whatsthis');", :class => 'question') %>
-		
-		<%= dbox_start("issue_bills_panel_whatsthis", 0, 0, 450) %>
-		 OpenCongress syndication panels allow you to display information about <a href="/resources/bill_status/">bills</a> and <a href="/resources/issue_bills/">issue areas</a> on your own website or blog. First, select which bill or issue you want to track, then customize the appearance of the panel, and finally paste a simple chunk of HTML into your site. Now your community will have an easy, up-to-date way to track the status of important bills and issues in Congress.  
-      <%= dbox_end %>
 
+		<%= dbox_trigger('widgets') %>
+
+		<div class="dboxed">
+		<%= dbox_content("widgets") %>
+		</div>
+   
   </div>
   
 

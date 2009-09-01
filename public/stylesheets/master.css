@@ -1600,8 +1600,8 @@ font-weight: normal;
 
 .dboxed{
 position: absolute;
-margin: -100px 0 0 100px;
-background: #fff;
+/*margin: -100px 0 0 100px;
+background: #fff;*/
 
 }
 
@@ -1631,9 +1631,12 @@ background: url('img/sprites.png') -61px -156px no-repeat ;
    _background: url('img/sprites.gif') -61px -156px no-repeat ;
 padding-top: 21px;
 overflow: hidden;
+float:none;
+cursor: default;
 position: absolute;
-top: 10px;
-right: 10px;
+margin:0;
+top: 3px;
+right: 5px;
 z-index: 56789;
 }
 
@@ -1655,7 +1658,10 @@ background-position: -107px -156px;
   position:absolute;
   bottom:2px;
   right:2px;
-  
+  cursor:se-resize;
+}         
+.dboxed h1 {
+  padding-left:10px;
 }
 
 /* filter slider styles */

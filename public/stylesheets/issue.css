@@ -119,5 +119,6 @@ background: url(img/zip_arrow.png) 0 11px no-repeat;
    _background: url(img/zip_arrow.gif) 0 11px no-repeat;
 }
 
-
-
+a#widgets_trigger {
+  float:left;
+}

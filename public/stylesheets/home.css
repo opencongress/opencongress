@@ -24,9 +24,9 @@ font-size: 12px !important;
 /*
 background: url('img/congress_status.png') left top no-repeat;
 */
-width: 572px;
+width: 578px;
 min-height: 84px;
-margin: 6px 10px 0 0px;
+margin: 6px 0px 0 0px;
 font-size: 11px;
 }
 
@@ -34,7 +34,7 @@ font-size: 11px;
 .congress_status h2{
 font-size: 11px;
 margin: 0 !important;
-padding: 8px 10px 13px 17px !important;
+padding: 8px 0px 13px 17px !important;
 font-family: Arial, Helvetica, sans-serif !important;
 display: block;
 float: left;

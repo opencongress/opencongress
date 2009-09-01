@@ -91,7 +91,8 @@ echo $HeadString . '
   </div>
   
   <div class="center">
-    <p>Get involved with Congress. Track, comment, share.</p>
+<p><span>Everyone can be an insider</span></p>
+<p> <a class="learn_it" href="/#pitch">Learn how to track, comment, and share</a>  </p>                                                                                       
     <p class="project">A project of <a target="_blank" href="http://www.participatorypolitics.org">PPF</a> and the <a target="_blank" href="http://www.sunlightfoundation.com/">Sunlight Foundation</a></p>
   </div>
   

@@ -64,10 +64,37 @@
   		  &nbsp;|&nbsp;&nbsp;<%= comment_scores.select{ |s| s.score > 5 }.size %> of <%= comment_scores.size %> found useful.
   		<% end %>
   		<% if logged_in? %>
-  		  <a href="<%= url_for :controller => "comments", :action => 'flag', :id => comment.id %>" class="flag" onmouseover="Element.show('flag_help_<%= comment.id.to_s %>');" onmouseout="Element.hide('flag_help_<%= comment.id.to_s %>');"><%= image_tag('/images/flag.png', :alt => 'flag') %></a>
-  		  <%= dbox_start("flag_help_#{comment.id.to_s}", -190, 0, 175, "right")%>
-  		    Click this flag to mark this comment as inappropriate
-  		  <%= dbox_end %>
+  		  <a href="<%= url_for :controller => "comments", :action => 'flag', :id => comment.id %>" class="flag" id="flag_<%= comment.id.to_s %>"><%= image_tag('/images/flag.png', :alt => 'flag') %></a>
+				<script type="text/javascript">
+				$j().ready(function(){
+					$j("#flag_<%= comment.id.to_s %>").qtip({
+						content: "Click this flag to mark this comment as inappropriate",
+						show: 'mouseover',
+						hide: 'mouseout',
+						position:{
+							corner: {
+								target: 'bottomLeft',
+								tooltip: 'topRight'
+							}
+						},
+						style: {
+							border: {
+								width: 2,
+								radius: 5,
+								color: '#BBBBBB'
+							},
+							tip: {
+								corner: 'topRight',
+								color: '#999999',
+								size: {
+									x:20,
+									y:12
+									}
+								}
+						}
+					})
+				});
+				</script>
   	  <% end %>
   	</div>
   </div>

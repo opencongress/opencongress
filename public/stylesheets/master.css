@@ -1740,7 +1740,9 @@ padding: 20px 35px 20px 35px;
 #comments-container h3{
 margin-bottom: 0;
 }
-
+h3.no_comments {
+  clear:both;
+}
 .add-comment{
 width: inherit;
 }

@@ -4,20 +4,75 @@
 <div class="padding">
   <% if @can_view %>
   <% if @can_edit %>
-  <div id="bookmarklet" onmouseover="Element.show('bookmarklet_help');" onmouseout="Element.hide('bookmarklet_help');">
+  <div id="bookmarklet">
   	<a href="javascript:w=window.open('<%= BASE_URL %>political_notebooks/bookmarklet_add?url='+escape(location.href),'OCbookmarklet', 'width=1020,height=635,scrollbars=1');setTimeout('w.focus()',50);void(0);"><img src="/images/bookmark-trans.png" alt="+MyPN" title="Bookmarklet" /></a>
-  	<%= dbox_start("bookmarklet_help", -250, 22, 300, "right")%>
-  	Drag this bookmarklet into your brower's toolbar (Internet Explorer users should right-click and select "add to favorites"), and it will instantly add pages from around the web to Your Political Notebook. 
-  	<%= dbox_end %>
   </div>
-  <div id="privacy" onmouseover="Element.show('privacy_help');" onmouseout="Element.hide('privacy_help');">
+  <script type="text/javascript">
+	$j().ready(function(){
+		$j("#bookmarklet").qtip({
+			content: "Drag this bookmarklet into your brower's toolbar (Internet Explorer users should right-click and select \"add to favorites\"), and it will instantly add pages from around the web to Your Political Notebook.",
+			show: 'mouseover',
+			hide: 'mouseout',
+			position:{
+				corner: {
+					target: 'bottomLeft',
+					tooltip: 'topRight'
+				}
+			},
+			style: {
+				border: {
+					width: 2,
+					radius: 5,
+					color: '#BBBBBB'
+				},
+				tip: {
+					corner: 'topRight',
+					color: '#999999',
+					size: {
+						x:20,
+						y:12
+						}
+					}
+			}
+		})
+	});
+	</script>  	
+
+
+  <div id="privacy">
   	<% form_for :privacy_option, @user.privacy_option,:url => update_privacy_political_notebook_path({:login =>@user.login}) do |f| %>
-  	<span class="notebookPrivacy"><%= image_tag("/images/private.png", :alt => "private", :title => "Private",:id => 'Privacy') %></span><%= f.select PrivacyOption.column_names[PrivacyOption.column_names.index 'my_political_notebook'].to_sym, [["Public",2],["Friends", 1], ["Private",0]], {}, {:onchange => "this.form.submit();"} %>
+  	<span class="notebookPrivacy"><%= image_tag("/images/private.png", :alt => "private",:id => 'Privacy') %></span><%= f.select PrivacyOption.column_names[PrivacyOption.column_names.index 'my_political_notebook'].to_sym, [["Public",2],["Friends", 1], ["Private",0]], {}, {:onchange => "this.form.submit();"} %>
   	<% end %>
-  	<%#= link_to_function('Privacy Settings <img src="/images/triangle-right.png" alt="show" />', "Element.hide('pshow');['phide','plogin','pname','psite','pemail','pdist','pim','plocale','pzip','p1','p2'].each(Element.show);", :style=>"color:#555;font-weight:normal;margin-left:200px;text-decoration:none") %>
-  	<%= dbox_start("privacy_help", -135, -8, 180, "right")%>
-  	Who can see My Political Notebook?
-  	<%= dbox_end %>
+    <script type="text/javascript">
+		$j().ready(function(){
+			$j("#privacy").qtip({
+				content: "Who can see My Political Notebook?",
+				show: 'mouseover',
+				hide: 'mouseout',
+				position:{
+					corner: {
+						target: 'bottomLeft',
+						tooltip: 'topRight'
+					}
+				},
+				style: {
+					border: {
+						width: 2,
+						radius: 5,
+						color: '#BBBBBB'
+					},
+					tip: {
+						corner: 'topRight',
+						color: '#999999',
+						size: {
+							x:20,
+							y:12
+							}
+						}
+				}
+			})
+		});
+		</script>  	
   </div>
 
   <%= render :partial => 'toolbar' %>	

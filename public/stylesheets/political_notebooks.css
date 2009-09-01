@@ -159,7 +159,8 @@ div.notebook-form-div{
 .notebookPrivacy{
 	color:#555;
 	font-weight:normal;
-	margin-left:50px;
+  padding-right:8px;
+/*	margin-left:50px;*/
 	text-decoration:none
 }
 

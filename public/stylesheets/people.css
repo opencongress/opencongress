@@ -1035,10 +1035,10 @@ padding-left: 370px;
 #compbox{
 clear: both;
 }
-.cbox{
+.cbox{/*
 background: url(img/find_rep.png) 0px 0px no-repeat;
    _background: url(img/find_rep.gif) 0px 0px no-repeat;
-}
+*/}
 .compare .padding{
 padding: 29px;
 }

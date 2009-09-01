@@ -106,7 +106,7 @@ require 'acts_as_taggable'
 require 'memcache'
 require 'json'
 require 'action_controller/integration'
-#Forum.establish_connection "vanilla"
+Forum.establish_connection "vanilla"
 
 #require 'will_paginate'
 WillPaginate::ViewHelpers.pagination_options[:renderer] = 'SpanLinkRenderer'      

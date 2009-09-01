@@ -684,10 +684,15 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 #SearchSimple {
 	margin: 0px !important;
 	}
-#SearchSimple label {
+#SearchSimple ul li label {
 	display: inline !important;
 	width: 10px !important;
-	}
+	}                 
+#SearchSimple ul {
+  float:left;
+  margin:5px 0 0 10px;
+  width:auto;
+}
 #MainSearchInput #txtKeywords {
 	width: 60% !important;
 	margin-left: 0px !important;

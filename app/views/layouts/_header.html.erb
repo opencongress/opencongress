@@ -1,14 +1,3 @@
-<% if request.env['HTTP_USER_AGENT'] && request.env['HTTP_USER_AGENT'].downcase.include?("msie 6") %>
-  <div class="ie6">
-  Hi there! We have some good news and some OK news. The good news is that OpenCongress has launched a comprehensive redesign and a major site upgrade! 
-  The OK news is that the site will not display correctly in the web browser you're using, which is Internet Explorer version 6. 
-  Sorry about this -- the site appears correctly in Internet Explorer version 7 and other browsers, just not version 6 at this time. 
-  It will be fixed shortly over August 2009, but in the meantime, we hope you'll still use OpenCongress -- 
-  the easiest way is to <a href="http://www.mozilla.com/en-US/firefox/personal.html?from=getfirefox">Get Firefox</a>, the awesome free and open-source 
-  web browser built by the public benefit organization Mozilla. Again, OpenCongress will soon look fine in IE version 6, just not at the moment. Thanks for your patience!
-  </div>
-<% end %>
-
 <div id="header" class="clearfix">
 
 	<h1><a class="logo" href="/" title="link to the home page">
@@ -141,11 +130,10 @@ A project of <a href="http://participatorypolitics.org/" target="_blank">PPF</a>
 					<li id="states_nav"><%= link_to '<span>States</span>', :controller => 'states' %></li>
 					<li id="howitworks_nav"><a href="/about/howtouse"><span>How-to Use OpenCongress</span></a></li>
 					<li id="twitter_nav"><a href="http://twitter.com/opencongress"><span>Follow Our Twitter</span></a></li>
-					<!--<li id="howitworks_nav"><a href="#"><span>How Congress Works</span></a></li>-->
+					<li id="disc_nav"><%= link_to '<span>Discussion</span>', '/forum/categories.php' %></li>
 					<li id="allresources_nav"><%= link_to '<span><strong>All Resources</strong></span>', :controller => 'resources', :anchor => 'all' %></li>
 				</ul>
 				</li>
-				<!-- <li id="disc_nav" class="sub"><%= link_to '<span>Discussion</span>', '/forum/categories.php' %></li> -->
 				<li id="battle_nav" class="sub"><%= link_to '<span>Battle Royale</span>', :controller => 'battle_royale' %></li> 
 
 			</ul>

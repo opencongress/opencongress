@@ -5,7 +5,8 @@ $HeadString = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'.$this->Context->GetDefinition('XMLLang').'">
 <head>
   <title>'.$this->Context->Configuration['APPLICATION_TITLE'].' - '.$this->Context->PageTitle.'</title>
-  <link rel="shortcut icon" href="'.$this->Context->StyleUrl.'favicon.ico" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
   <script type="text/javascript" src="/javascripts/prototype.js"></script>
   <!--[if IE 7]><style type="text/css">@import url("/stylesheets/ie7.css");</style><![endif]-->
 
@@ -68,13 +69,12 @@ echo $HeadString . '
     </div>
     <div id="search">
     <form action="/forum/search.php" id="SearchSimple" method="get">
-        <div><input type="hidden" value="Search" name="PostBackAction"/>
-          <label for="search-field">
-            <span class="default">Search</span>
-            <div class="search">	
-              <span class="left"></span>
-              <span id="MainSearchInput">
-              <input name="Keywords" autocomplete="off" id="txtKeywords" class="search-field" type="text" value="Search Forums" onfocus="this.value = '';" onblur="if (this.value == ''){this.value = 'Search Forums'};"/></span>
+        <div class="search">
+          <label for="search-field">Search</label>
+        <input type="hidden" value="Search" name="PostBackAction"/>
+        <input name="Keywords" autocomplete="off" id="txtKeywords" class="search-field" type="text" value="Search Forums" onfocus="this.value = '';" onblur="if (this.value == ''){this.value = 'Search Forums'};"/>
+        <input type="image" src="/stylesheets/img/search_submit.gif" name="submit" id="search_submit" value="Search" />
+          		
               <ul>
               <li id="SimpleSearchRadios">Search:<input type="radio" class="SearchRadio" checked="checked" value="Topics" id="Radio_Topics" name="Type"/>
       			<label class="Radio" for="Radio_Topics">Topics</label>
@@ -84,9 +84,6 @@ echo $HeadString . '
       			<label class="Radio" for="Radio_Users">Users</label>
       			</li>
       			</ul>
-              <span class="right"></span>
-            </div>  
-          </label>
         </div>
 
       </form>
@@ -117,16 +114,16 @@ echo $HeadString . '
         <li id="tool_nav" class="sub">
           <a href="/resources"><span>Resources <img src="/stylesheets/img/tool_arrow.png" /></span></a>
 
-          <ul>
+          <ul class="sub">
             <li id="compare_nav"><a href="/people/compare" ><span>Vote Comparison</span></a></li> 
-            <li id="battle_nav"><a href="/battle_royale"><span>Battle Royale</span></a></li> 
             <li id="widget_nav"><a href="#"><span>Site Widgets</span></a></li>
             <li id="states_nav"><a href="/states"><span>States</span></a><li>
               <li id="howitworks_nav"><a href="#"><span>How Congress Works</span></a></li>
+              <li id="disc_nav"><a href="/forum/categories.php"><span>Discussion</span></a></li>
               <li id="allresources_nav"><a href="/tools#all"><span>All Resources</span></a></li>
             </ul>
           </li>
-          <li id="disc_nav" class="sub"><a href="/forum/categories.php"><span>Discussion</span></a></li>
+          <li id="battle_nav" class="sub"><a href="/battle_royale"><span>Battle Royale</span></a></li> 
         </ul>
 
       </div>

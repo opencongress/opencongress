@@ -67,5 +67,3 @@ Lastly, some Postgres tips:
   
   starting pg:  pg_ctl -D data -l logfile start
   accessing pg from the command line : psql opencongress_dev
-
-

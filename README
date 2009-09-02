@@ -43,13 +43,13 @@ Here is what you have to do to get OpenCongress close to working on your persona
 
 Next, you will have to get the data from govtrack and fill in your database with the parsed govtrack data
 
-  mkdir /data/govtrack/109
-  cd /data/govtrack/109
-  rsync -az govtrack.us::govtrackdata/us/109/bills .
-  rsync -az govtrack.us::govtrackdata/us/109/repstats .
-  rsync -az govtrack.us::govtrackdata/us/109/bills.index.xml .
-  rsync -az govtrack.us::govtrackdata/us/109/committeeschedule.xml .
-  rsync -az govtrack.us::govtrackdata/us/109/rolls .
+  mkdir /data/govtrack/111
+  cd /data/govtrack/111
+  rsync -az govtrack.us::govtrackdata/us/111/bills .
+  rsync -az govtrack.us::govtrackdata/us/111/repstats .
+  rsync -az govtrack.us::govtrackdata/us/111/bills.index.xml .
+  rsync -az govtrack.us::govtrackdata/us/111/committeeschedule.xml .
+  rsync -az govtrack.us::govtrackdata/us/111/rolls .
 
 Now, you will have to actually parse the data
 

@@ -3,7 +3,7 @@ class ProfileController < ApplicationController
   before_filter :can_view_tab, :only => [:actions,:items_tracked,:bills, :my_votes, :comments, :person, :issues, :watchdog]
   skip_before_filter :store_location, :only => [:track,:tracked_bill_status,
                                                 :tracked_votes,:tracked_commentary_news,:tracked_commentary_blogs,
-                                                :edit_profile,:watchdog, :remove_vote, :remove_bill_bookmark, :remove_person_bookmark, :remove_bookmark]
+                                                :edit_profile,:watchdog, :remove_vote, :remove_bill_bookmark, :remove_person_bookmark, :remove_bookmark, :pn_ajax]
 
   class Picture
     def getSmallThumb(x)
@@ -512,7 +512,6 @@ class ProfileController < ApplicationController
   end
   
   def pn_ajax
-
     @commentary = Commentary.find_by_id(params[:id])
     if ["Person", "Bill", "Commentary"].include?(params[:object_type])
       @object = Object.const_get(params[:object_type]).find_by_id(params[:object_id])

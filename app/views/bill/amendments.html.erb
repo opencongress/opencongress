@@ -2,7 +2,7 @@
 <%= render :partial => 'aavtabs' %>
 
 <%= will_paginate @amendments %>
-<table id="amendments">
+<table cellpadding="0" cellspacing="0" id="amendments">
 <thead>
 	<tr class="header">
 		<th><span>All Amendments</span></th>
@@ -17,7 +17,7 @@
 </tfoot>
 
 	<tbody>
-	<% @bill.amendments.map do |a| %>
+	<% @amendments.map do |a| %>
 	<tr class="<%= cycle('a','b') %>">
 		<td class="amendments"><%= a.display_number %></td>
 		<% unless a.roll_calls.empty? %>

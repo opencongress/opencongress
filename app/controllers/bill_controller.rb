@@ -393,7 +393,7 @@ class BillController < ApplicationController
   end 
   
   def votes
-    @roll_calls = @bill.roll_calls.paginate(:all, :page => @page, :per_page => 10, :order => ["date DESC"])
+    @roll_calls = @bill.roll_calls.paginate(:all, :page => @page, :per_page => 8, :order => ["date DESC"])
   end
 
   def comms
@@ -662,11 +662,11 @@ private
   end
   
   def aavtabs
-    @aavtabs = [
-      ["Amendments", {:controller => 'bill', :action => 'amendments', :id => @bill.ident}],
-      ["Actions", {:controller => 'bill', :action => 'actions', :id => @bill.ident}],
-      ["Votes", {:controller => 'bill', :action => 'votes', :id => @bill.ident}]
-    ]
+    @aavtabs = []
+    @aavtabs <<  ["Amendments", {:controller => 'bill', :action => 'amendments', :id => @bill.ident}] unless @bill.amendments.empty?
+    @aavtabs <<  ["Actions", {:controller => 'bill', :action => 'actions', :id => @bill.ident}] unless @bill.actions.empty?
+    @aavtabs << ["Votes", {:controller => 'bill', :action => 'votes', :id => @bill.ident}] unless @bill.roll_calls.empty?
+
   end
   
   def page_view

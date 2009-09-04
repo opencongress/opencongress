@@ -2,7 +2,7 @@
 <%= render :partial => 'aavtabs' %>
 <%= will_paginate @roll_calls %>
 
-<table id="votes"cellpadding="0" cellspacing="0">
+<table id="votes" cellpadding="0" cellspacing="0">
 <thead>
 <tr class="header"><th><span>All Votes</span></th></tr>
 </thead>
@@ -38,7 +38,7 @@
         <td><em>Result:</em> <%= roll.result %></td>    
       </tr>  
 			<tr>
-				<td colspan="3">
+				<td class="pies" colspan="3">
 					<%= roll_call_sublists_by_vote_type('+', roll) %>
 				  <div class="pie-chart" id='roll_call_Aye_chart_<%= roll.id %>'>
 						<%= ofc2(210,120, "roll_call/partyvote_piechart_data/#{roll.id}?breakdown_type=#{CGI.escape("+")}&disclaimer_off=true&radius=40") %>

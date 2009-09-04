@@ -3,7 +3,7 @@
 <%= will_paginate @actions %>
 
 
-<table id="actions">
+<table id="actions" cellpadding="0" cellspacing="0">
 	<thead>
 	<tr class="header">
 		<th colspan="2"><span>All Actions</span></th>
@@ -16,7 +16,7 @@
 	</tfoot>
 	<tbody>
 
-	<% @bill.actions.map do |a| %>
+	<% @actions.map do |a| %>
 	
 	<tr class="<%= cycle('a','b') %>">                                
 		<td width="18%" class="actionz"><%= a.formatted_date_short %></td><td class="text"><%= a.text %></td>

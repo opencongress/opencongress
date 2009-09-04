@@ -155,7 +155,9 @@ margin-left: 2px;
 tr td.roll tbody {
   border:none !important;
 }
-
+table#votes td.pies {
+  padding-right:0;
+}
 .pie-chart{
 margin-left: 14px;
 padding: 50px 0;

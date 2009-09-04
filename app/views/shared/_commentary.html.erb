@@ -25,53 +25,12 @@
     <% end %>
   <% end %>
 </em></div> 
+<div id="pn_<%= commentary.id %>">
+</div>
+<script type="text/javascript" language="javascript">
 
-<table class="combox" cellspacing="0" cellpadding="0">
-	<tr>
-		<td class="left"></td>
-		<td class="mypnz_img">
-			<img src="/img/mypn-small.png" alt="Add to My Political Notebook"/> 			
-		</td>
-		<td class="mypnz_txt">
-           <div id="pn_<%= commentary.id %>">
-	       </div>
-			<script type="text/javascript" language="javascript">
-	
-	       <%= remote_function(:update => "pn_#{commentary.id}", :url => {:controller => "profile", :action => "pn_ajax", :id => commentary.id, :object_type => object.class.to_s, :object_id => object.id}) %> 
-	        </script>        
-		 </td>
-	<td class="center"></td>
-	<td class="ratez">
-		<span id="comm_rate_<%= commentary.id.to_s%>">
-		  <% if logged_in? %>
-			Rate
-			<% else %>
-		 <%= link_to("Rate", :controller => "account", :action => "login") %>
-		<% end %>
-	      <span id="comm_rate_ind_<%= commentary.id.to_s%>" style="display: none;">
-	        <img src="/images/indicator.gif" class="noborder" />
-	      </span>
-	    </span>
-	</td>
-	<td class="ratez_form">
-		<form id="rating_<%= commentary.id.to_s %>">  
-			<script type="text/javascript" language="javascript">
-			$j(function(){ 
-			 $j('.rate_<%= commentary.id.to_s %>').rating({
-				callback: function(value, link){
-					new Ajax.Updater('comm_rate_<%= commentary.id.to_s%>','/commentary/rate/<%= commentary.id %>?value=' + value, {asynchronous:true, evalScripts:true}); return false;
-					}
-			}); 
-			});
-			</script>
-			<% (1..10).each do |v| %>
-		<input class="rate_<%= commentary.id.to_s %> {split:2}" type="radio" name="rate_<%= commentary.id.to_s %>" value="<%= v %>" <%= "disabled='disabled'" unless logged_in? %><%= commentary.score == v ? "checked='checked'" : "" %> />
-	  <% end %>
-			</form>           
-		 </td>
-		<td class="right"></td>
-	</tr>
-</table>
+   <%= remote_function(:update => "pn_#{commentary.id}", :url => {:controller => "profile", :action => "pn_ajax", :id => commentary.id, :object_type => object.class.to_s, :object_id => object.id}) %> 
+    </script>
 
 
   <div id="about_commentary_ratings_<%= commentary.id.to_s %>" style="display: none; margin-bottom: 5px;">

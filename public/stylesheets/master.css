@@ -1348,10 +1348,10 @@ width: 100%;
    _background: url('img/combox_center.gif') no-repeat left center;
   width:3px;
 }                                   
-.combox td.right {
+.combox td.ratez_form {
   background: url('img/combox_right.png') no-repeat right center;
    _background: url('img/combox_right.gif') no-repeat right center;
-  width:7px;
+  padding-right:7px;
 }  
 .ratez {
   padding:0 14px 0 10px;

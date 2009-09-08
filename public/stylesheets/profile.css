@@ -225,50 +225,81 @@ width: 120px;
 float: right;
 }
 
+#about_me {
+  clear:left;
+  float:left;
+  width:450px;
+}
+#about_me #user_about {
+  display:block;
+  clear:left;
+}
 
-.profile_table{
+#personal_info {
 margin: 0px 0 20px;
-width: 450px;
+width: 260px;
+float:left;
+clear:left;
 }
-
-
-.profile_table td{
-padding: 5px 0;
-}
-
-.profile_table td label{
-font-weight: bold;
-}
-
-#about_me{
-padding: 10px 0;
+#personal_info p, #privacy_settings p, .settings p {
+margin: 10px 0 0 0;
 clear: left;
 }
 
-#about_me label{
-font-weight: bold;
-padding-right: 90px;
+#personal_info label {
+  float:left;
+  font-weight: bold;
+  width:100px;
+}
+.settings label {
+  float:left;
+  font-weight:bold;
+  width:300px;
+}            
+a#about_ratings_trigger {
+  position:relative;
+  left:-340px;
+}               
+#user_mailing {
+  float:none;
+  margin:0 !important;
 }
 
-.editable-content{
-border-top: 1px solid #999;
-border-bottom: 1px solid #eee;
-border-right: 1px solid #ccc;
-border-left: 1px solid #ccc;
-padding: 3px;
+.editable-content, #user_email.editable-content, #user_zipcode.editable-content {
+  border-top: 1px solid #999;
+  border-bottom: 1px solid #eee;
+  border-right: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  padding: 3px;  
+  margin:0;
+  background-image:none;
+  float:none;
 }
-
 .profile_content h3{
 float: left;
 margin-top: 20px;
 margin-right: 10px;
 }
 
-#pshow{
-padding-top: 20px;
-float: left;
+#privacy_settings{
+  float:left;
+  width:175px;
+}
+#privacy_settings a {
+  text-decoration:none;
+}                      
+.privacy {
+  background:url('/images/private.png') no-repeat left center;
+  padding-left:18px;
 }
 
+#privacy_settings select, #privacy_settings input {
+  margin:9px 0 0 0;
+  display:block;
+}         
+.settings {
+  clear:both;
+}
 table.combox{
 }
 

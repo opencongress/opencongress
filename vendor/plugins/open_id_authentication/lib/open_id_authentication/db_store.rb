@@ -13,6 +13,7 @@ module OpenIdAuthentication
     end
 
     def store_association(server_url, assoc)
+#      require 'base64'
       remove_association(server_url, assoc.handle)
       Association.create(:server_url => server_url,
                          :handle     => assoc.handle,

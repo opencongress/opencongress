@@ -933,6 +933,8 @@ class Person < ActiveRecord::Base
     primary = "my_approved_reps_facet" if self.title == "Rep."
     primary = "my_approved_sens_facet" if self.title == "Sen."
         
+    return [0,{}] if self.title.blank?
+    
     users = User.find_by_solr('placeholder:placeholder', :facets => {:fields => [:my_bills_supported, :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens, :my_bills_opposed], 
                                                       :browse => ["#{primary.gsub('_facet', '')}:#{self.id}"], 
                                                       :limit => 6, :zeros => false, :sort =>  true}, :limit => 1)
@@ -945,6 +947,8 @@ class Person < ActiveRecord::Base
   def oppose_suggestions
     primary = "my_disapproved_reps_facet" if self.roles.first.role_type == "rep"
     primary = "my_disapproved_sens_facet" if self.roles.first.role_type == "sen"
+ 
+    return [0,{}] if self.title.blank?
                 
     users = User.find_by_solr('placeholder:placeholder', :facets => {:fields => [:my_bills_supported, :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens, :my_bills_opposed], 
                                                       :browse => ["#{primary.gsub('_facet', '')}:#{self.id}"], 
@@ -1208,7 +1212,9 @@ class Person < ActiveRecord::Base
 	end
 	
 	def title_common
-	  senator? ? 'Senator' : 'Rep.'
+	  return 'Senator' if senator? 
+	  return 'Rep.' if representative?
+	  return ''
 	end
 	
 	def title_long
@@ -1218,6 +1224,10 @@ class Person < ActiveRecord::Base
 	    when 'Rep.'
 	      'Representative'
 	  end
+	end
+	
+	def title_for_share
+	  name
 	end
 	
 	def title_full_name_party_state
@@ -1265,6 +1275,10 @@ class Person < ActiveRecord::Base
                          AS (v_id integer, v_count bigint) 
                          LEFT OUTER JOIN people ON v_id=people.id 
                          ORDER BY v_count DESC", self.id, CONGRESS_START_DATES[DEFAULT_CONGRESS]])
+  end
+  
+  def is_sitting?
+    title.blank? ? false : true
   end
   
   def votes(num = -1)

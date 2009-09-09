@@ -1,0 +1,82 @@
+<div class="padding">
+  <h2>User Stats</h2>
+  <p style="font-size:14px;font-weight:bold;">
+    Total Users: <%= @total_users%><br/>
+    Total Active Users (last login less than one month ago): <%= @active_users %><br/>
+    Total Inactive Users (last login over three months ago): <%= @inactive_users %><br/>
+    <br />
+    Total Items Tracked: <%= @total_bookmarks %><br/>
+    Total Bill Votes: <%= @total_billvotes %><br/>
+    Total Approval Ratings: <%= @total_papproval %><br/>
+    Total Comments: <%= @total_comments %><br/>
+    Total Friendships: <%= @total_friendships %><br/>
+  </p>
+
+  <div class="padding" style="width: 600px">
+    <div class="floatleft" style="margin-right: 30px; font-size:14px;font-weight:bold;">
+      Users by State:
+      <table>
+        <th>State</th><th>Users</th>
+        <% @state_users.each do |su| %>
+          <tr>
+            <td><%= su.state_cache.first.blank? ? "Unknown" : Person.state_for_abbrev(su.state_cache.first) %></td>
+            <td><%= su.cnt %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <div class="floatleft" style="font-size:14px;font-weight:bold;">
+      Users by District:
+      <table>
+        <th>District</th><th>Users</th>
+        <% @district_users.each do |su| %>
+          <tr>
+            <td><%= su.district_cache.first.blank? ? "Unknown" : su.district_cache.first %></td>
+            <td><%= su.cnt %></td>
+          </tr>
+        <% end %>
+        <tr><td>Multiple Districts</td><td><%= @multiple_dist %></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <br class="clear" />
+  <h2>Recent Stats</h2>
+  <%= @users %>
+  <br/>
+  <br/>
+  <%= @bill_bookmarks %>
+  <br/>
+  <br/>
+  <%= @sen_bookmarks %>
+  <br/>
+  <br/>
+  <%= @rep_bookmarks %>
+  <br/>
+  <br/>
+  <%= @issue_bookmarks %>
+  <br/>
+  <br/>
+  <%= @teh_comments %>
+  <br/>
+  <br/>
+  <%= @bill_votes_aye %>
+  <br/>
+  <br/>
+  <%= @bill_votes_nay %>
+  <br/>
+  <br/>
+  <%= @confirmed_friendships %>
+  <br/>
+  <br/>
+  <%= @unconfirmed_friendships %>
+  <br/>
+  <br/>
+  <%= @news_ratings_data %>
+  <br/>
+  <br/>
+  <%= @blog_ratings_data %>
+  <br/>
+  <br/>
+  <%= @comment_ratings_data %>
+</div>

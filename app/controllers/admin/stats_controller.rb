@@ -207,7 +207,7 @@ class Admin::StatsController < Admin::IndexController
     render :text => g.render
   end
   
-  def userstats
+  def users
     @total_users = User.count
     @total_bookmarks = Bookmark.count
     @total_billvotes = BillVote.count
@@ -215,6 +215,41 @@ class Admin::StatsController < Admin::IndexController
     @total_comments = Comment.count
     @total_friendships = Friend.count / 2
     
+    @inactive_users = User.count(:conditions => ["users.previous_login_date < ? OR users.previous_login_date IS NULL", 3.months.ago])
+    @active_users = User.count(:conditions => ["users.previous_login_date > ?", 1.months.ago])
+    
+    @state_users = User.find_by_sql("SELECT state_cache, count(*) as cnt FROM users GROUP BY state_cache ORDER BY state_cache")
+    all_district_users = User.find_by_sql("SELECT district_cache, count(*) as cnt FROM users GROUP BY district_cache ORDER BY district_cache")
+    @multiple_dist = 0
+    @district_users = []
+    all_district_users.each do |du|
+      if du.district_cache.size > 1
+        @multiple_dist += du.cnt.to_i
+      else
+        @district_users << du
+      end
+    end
+    @district_users.sort! { |a,b|
+      if a.district_cache.first.nil?
+        1
+      elsif b.district_cache.first.nil?
+        -1
+      else
+        a_state, a_dist = a.district_cache.first.split(/-/)
+        b_state, b_dist = b.district_cache.first.split(/-/)
+    
+        if a_dist.nil?
+          1
+        elsif b_dist.nil?
+          -1
+        elsif a_state == b_state
+          a_dist.to_i <=> b_dist.to_i
+        else
+          a_state <=> b_state
+        end
+      end
+    }
+      
     @users = open_flash_chart_object(700,250, '/admin/stats/userstats_data', false, '/')
     @bill_bookmarks = open_flash_chart_object(700,250, '/admin/stats/bill_bookmarks_data', false, '/')
     @rep_bookmarks = open_flash_chart_object(700,250, '/admin/stats/person_bookmarks_data/rep', false, '/')
@@ -230,6 +265,27 @@ class Admin::StatsController < Admin::IndexController
     @blog_ratings_data = open_flash_chart_object(700,250, '/admin/stats/blog_ratings_data', false, '/')
 
     
+  end
+  
+  def bills
+    @page_title = "Bill Stats"
+    session = params[:session].blank? ? DEFAULT_CONGRESS : params[:session]
+    @bills = Bill.find(:all, :conditions => ["session = ?", session], 
+                       :order => 'bills.page_views_count DESC').paginate(:page => params[:page])
+  end
+  
+  def mypn
+    @users = PoliticalNotebook.find_by_sql(["SELECT count(political_notebooks.user_id) FROM political_notebooks 
+                              INNER JOIN notebook_items ON political_notebooks.id=notebook_items.political_notebook_id 
+                              GROUP BY political_notebooks.user_id 
+                              ORDER BY political_notebooks.user_id;", 1.month.ago])
+
+    @active_users = PoliticalNotebook.find_by_sql(["SELECT count(political_notebooks.user_id) FROM political_notebooks 
+                              INNER JOIN notebook_items ON political_notebooks.id=notebook_items.political_notebook_id 
+                              WHERE notebook_items.created_at > ? GROUP BY political_notebooks.user_id 
+                              ORDER BY political_notebooks.user_id;", 1.month.ago])
+                              
+    @item_types = NotebookItem.find_by_sql("SELECT type, count(*) AS cnt FROM notebook_items GROUP BY type;")
   end
   
   def data

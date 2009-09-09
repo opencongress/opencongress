@@ -36,6 +36,9 @@ class Subject < ActiveRecord::Base
     "Issue #{id}"
   end
 
+  def title_for_share
+    term
+  end
 
   def place_in_battle_royale_100
     b = Subject.find_all_by_most_tracked_for_range(nil, {:limit => 100, :offset => 0})

@@ -1,7 +1,7 @@
 <% @page_title = 'OpenCongress Blog Posts' %>
 
-<%= link_to 'New Article', { :action => 'new' }, :class => 'bigger' %>
-
+<%= link_to '<span>New Article</span>', { :action => 'new' }, :class => 'med_button', :style => 'margin: 10px;' %>
+<br/>
 <table width="100%" cellpadding="5px">
   <tr>
 	<th>Title</th>
@@ -26,8 +26,10 @@
 <% end %>
 </table>
 
-<%= will_paginate @articles %>
+<div class="padding">
+  <%= will_paginate @articles %>
+  <%= link_to '<span>New Article</span>', { :action => 'new' }, :class => 'med_button' %>
+  
+</div>
 
 <br /><br />
-
-<%= link_to 'New Article', { :action => 'new' }, :class => 'bigger' %>

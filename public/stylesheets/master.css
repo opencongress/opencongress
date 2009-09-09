@@ -840,7 +840,7 @@ background-position: left center;
 #wiki #wiki_nav a,
 #articles #blog_nav a,
 #tool_nav a,
-#forum #disc_nav a {
+#tool_nav a,#forum #disc_nav a {
 background-position: right center;
 color: #777;
 }

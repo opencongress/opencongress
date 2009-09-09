@@ -222,6 +222,10 @@ class Committee < ActiveRecord::Base
     pn
   end
 
+  def title_for_share
+    proper_name
+  end
+  
   def short_name
     proper_name.sub(/house\s+|senate\s+/i, "")
   end

@@ -1,0 +1,23 @@
+<div class="padding">
+  <h2>House and Senate Sessions</h2>
+  
+  <table>
+    <tr><th>Date</th><th>Chamber</th><th>In Session?</th><th>Action</th></tr>
+    <% @sessions.each do |s| %>
+      <tr>
+        <td><%= s.date.strftime("%B %d, %Y") %></td>
+        <td><%= s.chamber %></td>
+        <td><%= s.is_in_session? ? "Yes" : "No" %></td>
+        <td><%= link_to s.is_in_session? ? "NOT in session" : "IS in session", :action => 'session_toggle', :id => s %></td>
+      </tr>
+    <% end %>
+  </table>
+  <br/>
+  <h2>Add a session</h2>
+  <% form_for @session, :url => { :action => "session_new" } do |f| %>
+    Date: <%= f.date_select :date %>
+    Chamber: <%= f.select :chamber, [['House', 'house'], ['Senate','senate']] %>
+    <%= f.submit "Add" %>
+  <% end %>
+</div>
+      

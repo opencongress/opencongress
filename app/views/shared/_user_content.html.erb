@@ -169,7 +169,7 @@
 					:url => url_for(:only_path => false, 
 					:controller => params[:controller], :action => 'show', 
 					:id => object.kind_of?(Bill) ? object.ident : object),
-					:title => "Title",
+					:title => "Check out #{object.title_for_share} on OpenCongress",
 					:item => object
 					} %>
 				</li>

@@ -16,13 +16,13 @@
     <tr>
       <th>Name</th>
       <th>Amount Received</th>
-      <th>Vote On Passage</th>
+      <% unless @bill.originating_chamber_vote.roll_call.nil? %><th>Vote On Passage</th><% end %>
     </tr>
     <% @bill.top_recipients_for_all_interest_groups('support').each do |r| %>
       <tr>
         <td><%= link_to_person(r) %></td>
         <td><%= r.contrib_total %></td>
-        <td><%= @bill.originating_chamber_vote.roll_call.vote_for_person(r) %></td>
+        <td><%= @bill.originating_chamber_vote.roll_call.vote_for_person(r) unless @bill.originating_chamber_vote.roll_call.nil? %></td>
       </tr>
     <% end %>
   </table>
@@ -56,7 +56,7 @@
     <tr>
       <td><%= link_to_person(r) %></td>
       <td><%= r.contrib_total %></td>
-      <td><%= @bill.originating_chamber_vote.roll_call.vote_for_person(r) %></td>
+      <td><%= @bill.originating_chamber_vote.roll_call.vote_for_person(r) unless @bill.originating_chamber_vote.roll_call.nil? %></td>
     </tr>
     <% end %>
   </table>

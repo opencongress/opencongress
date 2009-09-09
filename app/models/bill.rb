@@ -1091,6 +1091,10 @@ class Bill < ActiveRecord::Base
     
     title ? "#{@@TYPES[bill_type]}#{number} #{title.title}" : ""
   end
+  
+  def title_for_share
+    title_typenumber_only
+  end
 
   # methods for progress
   def introduced_action

@@ -1,0 +1,17 @@
+<div class="padding">
+  <h2>MyPN Stats</h2>
+  <p style="font-size:14px;font-weight:bold;">
+    Users that have saved at least one item: <%= @users.size %><br />
+    Users that have saved an item in the last month: <%= @active_users.size %><br />
+    <br />
+    Items by type:<br /><br />
+    <table style="margin-left: 30px">
+      <% @item_types.each do |t| %>
+        <tr>
+          <th><%= t.attributes['type'][8..-1] %></th>
+          <td><%= t.cnt %></th>
+        </tr>
+      <% end %>
+    </table>
+  </p>
+</div>

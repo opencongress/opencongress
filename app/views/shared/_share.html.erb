@@ -9,22 +9,22 @@ $j().ready(function() {
 <ul class="share_icons">
 	
 	<li class="reddit">
-		<a href="http://reddit.com/submit?url=<%= esc_url %>&amp;title=<%= title %>">Reddit</a>
+		<a href="http://reddit.com/submit?url=<%= esc_url %>&title=<%= title %>">Reddit</a>
 	</li>
 	<li class="digg">
-		<a href="http://digg.com/submit?phase=2&amp;url=<%= esc_url %>&amp;title=<%= title %>">Digg</a>
+		<a href="http://digg.com/submit?phase=2&amp;url=<%= esc_url %>&title=<%= title %>">Digg</a>
 	</li>  
 	<li class="stumble">
-		<a href="http://www.stumbleupon.com/submit?url=<%= esc_url %>&amp;title=<%= title %>">Stumbleupon</a>
+		<a href="http://www.stumbleupon.com/submit?url=<%= esc_url %>&title=<%= title %>">Stumbleupon</a>
 	</li>  
 	<li class="facebook">
-		<a href="http://www.facebook.com/share.php?u=<%= url %>&amp;title=<%= title %>">Facebook</a>
+		<a href="http://www.facebook.com/share.php?u=<%= url %>&title=<%= title %>">Facebook</a>
 	</li>  
 	<li class="mixx">
 		<a href="http://www.mixx.com/submit?page_url=<%= url %>&title=<%= title %>">Mixx</a>
 	</li>  
 	<li class="twitter">
-		<a href="http://twitter.com/home?status=<%= url %>&title=<%= title %>%20at%20OpenCongress">Twitter</a>
+		<a href="http://twitter.com/home?status=<%= "#{title}: #{url}" %>">Twitter</a>
 	</li>  
 
 

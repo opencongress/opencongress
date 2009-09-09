@@ -8,6 +8,7 @@
     <li><%= link_to 'Blog', :controller => 'articles', :action => :list  %> </li> 
     <li><%= link_to 'Edit Blogroll', :controller => 'articles', :action => 'edit_blogroll'  %> </li> 
     <li><%= link_to 'Thunderdome', :controller => 'thunderdome', :action => 'index' %></li>
+    <li><%= link_to 'House and Senate Sessions', :controller => 'index', :action => 'session_list' %></li>
   <% end %>
   <% if current_user.user_role.can_edit_blog_tags %>
     <li><%= link_to 'Blog Tags', :controller => 'tags', :action => :list  %></li>  
@@ -40,10 +41,13 @@
   <% if current_user.user_role.can_see_stats %>
     <br />
     <h3>Stats</h3>
+    <li><%= link_to 'Bill Stats', '/admin/stats/bills'  %></li>    
+    <li><%= link_to 'User Login Stats', '/admin/stats/users' %></li> 
+    <li><%= link_to 'MyPN Stats', '/admin/stats/mypn' %></li> 
+    <br />
     <li><%= link_to 'Most Common Search Terms', '/admin/stats/searches'  %></li>  
     <li><%= link_to 'Referrer Stats', '/admin/stats/referrers'  %></li>
     <li><%= link_to 'Syndication Panel Pages', '/admin/stats/panel'  %></li>
-    <li><%= link_to 'User Login Stats', '/admin/stats/userstats' %></li> 
     <li><%= link_to 'Data Stats', '/admin/stats/data' %></li> 
   <% end %>
   </ul>

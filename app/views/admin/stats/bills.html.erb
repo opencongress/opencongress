@@ -1,0 +1,26 @@
+<div class="padding" style="clear: both;">
+  <h2>Bill Stats</h2>
+  <%= will_paginate @bills %>
+  <table>
+    <tr>
+      <th>Bill</th>
+      <th>Views</th>
+      <th>Tracking</th>
+      <th>Comments</th>
+      <th>"Aye" votes</th>
+      <th>"Nay" votes</th>
+    <tr>
+    
+    <% @bills.each do |b| %>
+      <tr>
+        <td><%= link_to b.title_typenumber_only, :controller => '/bill', :action => 'show', :id => b.ident %></td>
+        <td><%= b.views %></td>
+        <td><%= b.bookmarks.length %></td>
+        <td><%= b.comments.size %></td>
+        <td><%= b.bill_votes.count(:all, :conditions => "support = 0") %></td>
+        <td><%= b.bill_votes.count(:all, :conditions => "support = 1") %></td>
+      </tr>
+    <% end %>
+  </table>
+  <%= will_paginate @bills %>
+</div>

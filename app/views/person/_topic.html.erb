@@ -5,19 +5,20 @@
     <h5>
       <%= @person.party %> &nbsp;&bull;&nbsp;
       <%= "#{number_to_ordinal(@person.district)} District, " if (@person.representative? && @person.district != '0')%>
-      <%= Person.state_for_abbrev(@person.state) %> &nbsp;&bull;&nbsp;
-      <%= number_to_ordinal(@person.consecutive_roles.size) %> Term &nbsp;&bull;&nbsp;
+      <%= "#{Person.state_for_abbrev(@person.state)} &nbsp;&bull;&nbsp;" unless @person.state.blank? %> 
+      <%= @person.is_sitting? ? "#{number_to_ordinal(@person.consecutive_roles.size)} Term" : "#{@person.consecutive_roles.size} Terms" %> &nbsp;&bull;&nbsp;
       Sworn In <%= @person.consecutive_roles.last.startdate.strftime("%Y") %>
     </h5>
   </div>
   
 	<div id="term">
-		<em>Current Term  </em><b><%= "#{@person.roles_sorted.first.startdate.year} - #{@person.roles_sorted.first.enddate.year}" %></b>
+		<em><%= @person.is_sitting? ? "Current Term" : "Last Term" %></em>
+		<strong><%= "#{@person.roles_sorted.first.startdate.year} - #{@person.roles_sorted.first.enddate.year}" %></strong>
 		<%  if @person.roles_sorted.size > 1 %>
 		<%= toggler("rolehistory_list", "View All", "Hide")%>
 		<ul id="rolehistory_list" style="display:none;"> 
 			<% @person.roles_sorted[1..@person.roles_sorted.size].each do |role| %>
-			<li><b><%= "#{role.startdate.year} - #{role.enddate.year}" %></b></li>
+			<li><strong><%= "#{role.startdate.year} - #{role.enddate.year}" %></strong></li>
 			<% end %>
   	</ul>
 <% end %>

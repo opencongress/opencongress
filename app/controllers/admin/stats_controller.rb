@@ -250,19 +250,19 @@ class Admin::StatsController < Admin::IndexController
       end
     }
       
-    @users = open_flash_chart_object(700,250, '/admin/stats/userstats_data', false, '/')
-    @bill_bookmarks = open_flash_chart_object(700,250, '/admin/stats/bill_bookmarks_data', false, '/')
-    @rep_bookmarks = open_flash_chart_object(700,250, '/admin/stats/person_bookmarks_data/rep', false, '/')
-    @sen_bookmarks = open_flash_chart_object(700,250, '/admin/stats/person_bookmarks_data/sen', false, '/')
-    @issue_bookmarks = open_flash_chart_object(700,250, '/admin/stats/issue_bookmarks_data', false, '/')
-    @teh_comments = open_flash_chart_object(700,250, '/admin/stats/comments_data', false, '/')
-    @bill_votes_aye = open_flash_chart_object(700,250, '/admin/stats/billvotes_data/1', false, '/')
-    @bill_votes_nay = open_flash_chart_object(700,250, '/admin/stats/billvotes_data/0', false, '/')
-    @confirmed_friendships = open_flash_chart_object(700,250, '/admin/stats/confirmed_friendships_data', false, '/')
-    @unconfirmed_friendships = open_flash_chart_object(700,250, '/admin/stats/unconfirmed_friendships_data', false, '/')
-    @comment_ratings_data = open_flash_chart_object(700,250, '/admin/stats/comment_ratings_data', false, '/')
-    @news_ratings_data = open_flash_chart_object(700,250, '/admin/stats/news_ratings_data', false, '/')
-    @blog_ratings_data = open_flash_chart_object(700,250, '/admin/stats/blog_ratings_data', false, '/')
+    # @users = open_flash_chart_object(700,250, '/admin/stats/userstats_data', false, '/')
+    # @bill_bookmarks = open_flash_chart_object(700,250, '/admin/stats/bill_bookmarks_data', false, '/')
+    # @rep_bookmarks = open_flash_chart_object(700,250, '/admin/stats/person_bookmarks_data/rep', false, '/')
+    # @sen_bookmarks = open_flash_chart_object(700,250, '/admin/stats/person_bookmarks_data/sen', false, '/')
+    # @issue_bookmarks = open_flash_chart_object(700,250, '/admin/stats/issue_bookmarks_data', false, '/')
+    # @teh_comments = open_flash_chart_object(700,250, '/admin/stats/comments_data', false, '/')
+    # @bill_votes_aye = open_flash_chart_object(700,250, '/admin/stats/billvotes_data/1', false, '/')
+    # @bill_votes_nay = open_flash_chart_object(700,250, '/admin/stats/billvotes_data/0', false, '/')
+    # @confirmed_friendships = open_flash_chart_object(700,250, '/admin/stats/confirmed_friendships_data', false, '/')
+    # @unconfirmed_friendships = open_flash_chart_object(700,250, '/admin/stats/unconfirmed_friendships_data', false, '/')
+    # @comment_ratings_data = open_flash_chart_object(700,250, '/admin/stats/comment_ratings_data', false, '/')
+    # @news_ratings_data = open_flash_chart_object(700,250, '/admin/stats/news_ratings_data', false, '/')
+    # @blog_ratings_data = open_flash_chart_object(700,250, '/admin/stats/blog_ratings_data', false, '/')
 
     
   end

@@ -3,7 +3,7 @@ class VideoIds < ActiveRecord::Migration
     add_column :people, :metavid_id, :string
     add_column :people, :youtube_id, :string
     
-    add_column :videos, :description, :text  
+    #add_column :videos, :description, :text  
     add_column :videos, :url, :string
     add_column :videos, :length, :integer
     add_index  :videos, :url

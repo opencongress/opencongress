@@ -10,8 +10,8 @@ class NovemberIndices < ActiveRecord::Migration
     
     add_index :bill_subjects, :bill_id
 
-    execute "VACUUM ANALYZE commentaries" 
-    execute "VACUUM ANALYZE bill_subjects" 
+    #execute "VACUUM ANALYZE commentaries" 
+    #execute "VACUUM ANALYZE bill_subjects" 
   end
 
   

@@ -8,7 +8,7 @@ class BillCommentariesIndex < ActiveRecord::Migration
     add_index :commentaries, :person_id
     add_index :commentaries, :date
     
-    execute "VACUUM FULL ANALYZE"
+    #execute "VACUUM FULL ANALYZE"
   end
   
   def self.down

@@ -15,7 +15,7 @@ class PolymorphicCommentaries < ActiveRecord::Migration
 
     remove_index :commentaries, [:date, :is_ok, :is_news]
     
-    execute "VACUUM ANALYZE commentaries"
+    #execute "VACUUM ANALYZE commentaries"
   end
   
   def self.down

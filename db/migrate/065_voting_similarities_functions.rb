@@ -1,9 +1,14 @@
 class VotingSimilaritiesFunctions < ActiveRecord::Migration
   def self.up
-    execute  "CREATE FUNCTION plpgsql_call_handler()
-             RETURNS OPAQUE AS '/opt/local/postgresql819/lib/plpgsql.so' LANGUAGE 'C'"
-    execute  "CREATE LANGUAGE 'plpgsql' HANDLER plpgsql_call_handler LANCOMPILER 'PL/pgSQL'"
-             
+    #execute  "CREATE FUNCTION plpgsql_call_handler()
+     #        RETURNS OPAQUE AS '/opt/local/postgresql819/lib/plpgsql.so' LANGUAGE 'C'"
+    #execute  "CREATE LANGUAGE 'plpgsql' HANDLER plpgsql_call_handler LANCOMPILER 'PL/pgSQL'"
+    execute "CREATE OR REPLACE FUNCTION plpgsql_call_handler()
+      RETURNS language_handler AS
+    '$libdir/plpgsql', 'plpgsql_call_handler'
+      LANGUAGE 'c'"         
+    execute "CREATE LANGUAGE 'plpgsql' HANDLER plpgsql_call_handler;"
+    
     execute  "CREATE FUNCTION oc_votes_together(pid integer, after timestamp) RETURNS setof record  AS $$
               DECLARE
                 a_vote RECORD;

@@ -7,7 +7,7 @@ class CommentaryRefactor < ActiveRecord::Migration
     add_index :commentaries, :commentary_type
     add_index :commentaries, :status
     
-    execute "VACUUM ANALYZE commentaries"
+    #execute "VACUUM ANALYZE commentaries"
     
     execute "UPDATE commentaries SET is_news='t' WHERE commentary_type='news'"
     execute "UPDATE commentaries SET is_news='f' WHERE commentary_type='blog'"
@@ -20,7 +20,7 @@ class CommentaryRefactor < ActiveRecord::Migration
 
     add_index :commentaries, [:date, :is_ok, :is_news]
     
-    execute "VACUUM ANALYZE commentaries"
+    #execute "VACUUM ANALYZE commentaries"
   end
   
   def self.down

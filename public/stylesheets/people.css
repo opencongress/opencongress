@@ -655,13 +655,13 @@ padding: 20px;
 float: left;
 }
 .comppeeps img{
-width: 130px;
+/*width: 130px;*/
 float: right !important;
-min-height: 150px;
+/*min-height: 150px;*/
 color: #999;
 font-size: 11px;
-margin-top: 10px !important;
-background: url(img/big_default_compare.png) center;
+margin: 20px 10px 0 0;
+/*background: url(img/big_default_compare.png) center;*/
 }
 
 .compare table{

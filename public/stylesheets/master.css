@@ -2184,7 +2184,13 @@ padding: 30px 25px 0 0 ;
 font-style: italic;
 color: #999
 }
-
+#heading .jqmnContent p {
+  float:none;
+  padding:10px;
+  font-style: normal;
+  margin-top:0;
+  font-size:12px;
+}
 .sidebar {
 width: 384px;
 float: left;

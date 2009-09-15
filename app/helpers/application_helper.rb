@@ -879,4 +879,8 @@ EOT
   def bookmarking_image
     "<link rel=\"image_src\" href=\"" + (@bookmarking_image.blank? ? "/stylesheets/img/insider.png" : @bookmarking_image) + "\" />"
   end
+  
+  def has_originating_chamber_roll_call?(bill)
+    bill and bill.originating_chamber_vote and bill.originating_chamber_vote.roll_call
+  end
 end

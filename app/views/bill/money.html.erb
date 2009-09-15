@@ -1,31 +1,31 @@
 <div class="padding">
 <div id="money_trail">
 
-  <h3>Interests that <em>support</em> this bill:</h3>
+  <% unless @bill.bill_interest_groups.select{|g| g.disposition == 'support'}.empty? %>
+    <h3>Interests that <em>support</em> this bill:</h3>
   
-  <ul class="floatleft">
-  <% @bill.bill_interest_groups.select{|g| g.disposition == 'support'}.each do |big| %>
-    <%= render :partial => 'money_trail/interest_group', :object => big.crp_interest_group, :locals => { :bill => @bill } %>
-  <% end %>
-  </ul>
-  
-  
-  
-  <h3>Top recipients for ALL supporting interest groups</h3>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Amount Received</th>
-      <% unless @bill.originating_chamber_vote.roll_call.nil? %><th>Vote On Passage</th><% end %>
-    </tr>
-    <% @bill.top_recipients_for_all_interest_groups('support').each do |r| %>
-      <tr>
-        <td><%= link_to_person(r) %></td>
-        <td><%= r.contrib_total %></td>
-        <td><%= @bill.originating_chamber_vote.roll_call.vote_for_person(r) unless @bill.originating_chamber_vote.roll_call.nil? %></td>
-      </tr>
+    <ul class="floatleft">
+    <% @bill.bill_interest_groups.select{|g| g.disposition == 'support'}.each do |big| %>
+      <%= render :partial => 'money_trail/interest_group', :object => big.crp_interest_group, :locals => { :bill => @bill } %>
     <% end %>
-  </table>
+    </ul>
+  
+    <h3>Top recipients for ALL supporting interest groups</h3>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Amount Received</th>
+        <% if has_originating_chamber_roll_call?(@bill) %><th>Vote On Passage</th><% end %>
+      </tr>
+      <% @bill.top_recipients_for_all_interest_groups('support').each do |r| %>
+        <tr>
+          <td><%= link_to_person(r) %></td>
+          <td>$<%= number_with_delimiter(r.contrib_total) %></td>
+          <td><%= @bill.originating_chamber_vote.roll_call.vote_for_person(r) if has_originating_chamber_roll_call?(@bill) %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
 
   <% unless @bill.bill_position_organizations.select{|g| g.disposition == 'support'}.empty? %>
     <h3>Specific Organizations Supporting <%= @bill.title_typenumber_only %></h3>
@@ -36,30 +36,32 @@
     </ul>
   <% end %>    
 
-  <h3>Interests that <em>oppose</em> this bill:</h3>
+  <% unless @bill.bill_interest_groups.select{|g| g.disposition == 'oppose'}.empty? %>
+    <h3>Interests that <em>oppose</em> this bill:</h3>
   
-  <ul class="floatleft">
-  <% @bill.bill_interest_groups.select{|g| g.disposition == 'oppose'}. each do |big| %>
-    <%= render :partial => 'money_trail/interest_group', :object => big.crp_interest_group, :locals => { :bill => @bill } %>
-  <% end %>
-  </ul>
-
-  <h3>Top recipients for ALL opposing interest groups</h3>
-  
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Amount Received</th>
-      <th>Vote On Passage</th>
-    </tr>
-    <% @bill.top_recipients_for_all_interest_groups('oppose').each do |r| %>
-    <tr>
-      <td><%= link_to_person(r) %></td>
-      <td><%= r.contrib_total %></td>
-      <td><%= @bill.originating_chamber_vote.roll_call.vote_for_person(r) unless @bill.originating_chamber_vote.roll_call.nil? %></td>
-    </tr>
+    <ul class="floatleft">
+    <% @bill.bill_interest_groups.select{|g| g.disposition == 'oppose'}. each do |big| %>
+      <%= render :partial => 'money_trail/interest_group', :object => big.crp_interest_group, :locals => { :bill => @bill } %>
     <% end %>
-  </table>
+    </ul>
+
+    <h3>Top recipients for ALL opposing interest groups</h3>
+  
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Amount Received</th>
+        <% if has_originating_chamber_roll_call?(@bill) %><th>Vote On Passage</th><% end %>
+      </tr>
+      <% @bill.top_recipients_for_all_interest_groups('oppose').each do |r| %>
+      <tr>
+        <td><%= link_to_person(r) %></td>
+        <td>$<%= number_with_delimiter(r.contrib_total) %></td>
+        <td><%= @bill.originating_chamber_vote.roll_call.vote_for_person(r) if has_originating_chamber_roll_call?(@bill) %></td>
+      </tr>
+      <% end %>
+    </table>
+  <% end %>
   
   <% unless @bill.bill_position_organizations.select{|g| g.disposition == 'oppose'}.empty? %>
     <h3>Specific Organizations Opposing <%= @bill.title_typenumber_only %></h3>

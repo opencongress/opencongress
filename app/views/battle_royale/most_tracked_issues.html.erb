@@ -1,28 +1,35 @@
 <%= render :partial => "header" %>
 
 <table class="thunderdome">
-  <tr><th></th><th></th>
-                <th><%= th_sort("Tracking", "bookmark_count_1", params[:order]) %></th>
-                <th><%= th_sort("Comments", "total_comments", params[:order]) %></th>  </tr>
+  <tr><th>Issues</th>
+                <th><%= th_sort("<span>Tracking</span>", "bookmark_count_1", params[:order]) %></th>
+                <th><%= th_sort("<span>Comments</span>", "total_comments", params[:order]) %></th>  </tr>
   <% count = 0 %>
   <% @results.each do |issue| %>
       <% count += 1 %>
-    <tr>
-	  <td style="padding-right:10px;text-align:right;"><h1 class="count issue"><%= count %></h1>
-      <td id="i_<%= issue.id %>" style="vertical-align:middle;">
+    
 
-  <font class="big"><%= link_to issue.term, :controller => 'issue', :action => :show, :id => issue %></font>
-  <br />
+     <tr>
+	  
+      <td id="i_<%= issue.id %>" style="vertical-align:top;" class="bill">
+<span class="count issue"><%= count %></span>
+
+  	  <span class="big"><%= link_to issue.term, :controller => 'issue', :action => :show, :id => issue %></span>
+
+
       <%= link_to "Bills", :controller => "issue", :action => "top_twenty_bills", :id => issue %>&nbsp;&middot;&nbsp;<%= link_to "Comments", :controller => "issue", :action => "comments", :id => issue %>
-					         <br/>
-					         <%=h issue.summary %>
-      </td>
-      <td style="text-align:center;">
-        <h1><%= issue.bookmark_count_1.to_i %></h1>
+
+      <%=h issue.summary %>
       </td>
 
-      <td style="text-align:center;">
-	     <h1><%= issue.total_comments || "0" %></h1>
+
+
+      <td class="br_td">
+        <%= issue.bookmark_count_1.to_i %>
+      </td>
+
+      <td class="br_td">
+	     <%= issue.total_comments || "0" %>
 	  </td>
 
 
@@ -31,9 +38,8 @@
   <% end %>
 </table>
 
-<div style="border-top:1px dashed #C1C7C0;text-align:right;">
-<%= will_paginate @results %>
-
+<div class="padding floatright">
+	<%= will_paginate @results %>
 </div>
 
 <% if @issue %>

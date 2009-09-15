@@ -601,16 +601,16 @@ EOT
 		end
 		logger.info params[:controller]
 		if request.path_parameters['controller'] == "battle_royale"
-			"<table cellspacing='0' cellpadding='0' style='white-space:nowrap;'><tr><td>" +
+			"" +
 			link_to_remote("Aye",
 			{ :url => {:controller => "bill", :action => "bill_vote", :bill => bill.ident, :id => 0}},
 			:class => "aye #{yah}") +
-			"</td><td>" +
+			"" +
 
 			link_to_remote("Nay",
 			{:url => {:controller => "bill", :action => "bill_vote", :bill => bill.ident, :id => 1}},
 			:class => "nay #{nah}") +
-			"</td></tr></table>"
+			""
 		else
 		  if logged_in?
         "<div class='voting_buttons'>" +

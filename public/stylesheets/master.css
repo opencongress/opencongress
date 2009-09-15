@@ -137,6 +137,16 @@ padding-left: 43px;
 
 ///////////////////////////////////////////////////////*/
 
+.aye, .aye *{
+color: #569a31 !important;
+}
+
+.nay, .nay *{
+	color: #d05829 !important;
+	}
+
+
+
 .blue{
 color: #4b86c0;
 }

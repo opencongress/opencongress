@@ -1,40 +1,45 @@
 <%= render :partial => "header" %>
 
 <table class="thunderdome">
-  <tr><th></th><th></th>
-                <th><%= th_sort("Tracking", "bookmark_count_1", params[:order]) %></th>
-                <th><%= th_sort("Approval Votes", "p_approval_count", params[:order]) %></th>
-                <th><%= th_sort("Approval", "p_approval_avg", params[:order]) %></th>
-                <th><%= th_sort("Comments", "total_comments", params[:order]) %></th>  </tr>
+  <tr>
+		<th> <% if @p_title == 'Senators' %>Senators<% else %>Representatives<% end %></th>
+        <th><%= th_sort("<span>Tracking</span>", "bookmark_count_1", params[:order]) %></th>
+        <th><%= th_sort("<span>Approval Votes</span>", "p_approval_count", params[:order]) %></th>
+        <th><%= th_sort("<span>Approval</span>", "p_approval_avg", params[:order]) %></th>
+        <th><%= th_sort("<span>Comments</span>", "total_comments", params[:order]) %></th>  </tr>
   <% count = 0 %>
 	<% (2..params[:page].to_i).each {|i| count += 20} %>
 
   <% @results.each do |person| %>
       <% count += 1 %>
     <tr>
-	  <td style="padding-right:10px;text-align:right;"><h1 class="count <% if @p_title == 'Senators' %>sen<% else %>rep<% end %>"><%= count %></h1>
-      <td id="<%= person.ident %>">
+      <td width="350px" id="<%= person.ident %>" class="bills">
+<span class="count <% if @p_title == 'Senators' %>sen<% else %>rep<% end %>"><%= count %></span>
+        
 
-         <font class="big"><%= link_to person.title_full_name, :controller => 'people', :action => "show", :id => person.ident %> [<%= person.state %>]</font><span class="date"> <%= person.party %></span>
-         <br /> 
-		  <%= link_to "News", :controller => "people", :action => "news", :id => person.ident %> &middot;
-		  <%= link_to "Blogs", :controller => "people", :action => "blogs", :id => person.ident %> &middot;
-		  <%= link_to "Comments", :controller => "people", :action => "comments", :id => person.ident %>
-					         
-		<br/>
+<span class="big"><%= link_to person.title_full_name, :controller => 'people', :action => "show", :id => person.ident %> [<%= person.state %>]</span>
+	<span class="date"> <%= person.party %></span>
 
+
+		<div class="linkage floatleft">
+		  <%= link_to "<span class='news_11'>News</span>", :controller => "people", :action => "news", :id => person.ident %>
+		  <%= link_to "<span class='blogs_11'>Blogs</span>", :controller => "people", :action => "blogs", :id => person.ident %> 
+		  <%= link_to "<span class='comments_11'>Comments</span>", :controller => "people", :action => "comments", :id => person.ident %>			         
+		</div>
+		
+		
       </td>
-      <td style="text-align:center;">
-        <h1><%= person.bookmark_count_1.to_i || "0" %></h1>
+      <td class="br_td">
+        <%= person.bookmark_count_1.to_i || "0" %>
       </td>
-      <td style="text-align:center;">
-        <h1><%= person.p_approval_count.to_i || "0" %></h1>
+      <td class="br_td">
+        <%= person.p_approval_count.to_i || "0" %>
       </td>
-      <td style="text-align:center;">
-        <h1><%= (person.p_approval_avg.to_f * 10).round %>%</h1>
+      <td class="br_td">
+        <%= (person.p_approval_avg.to_f * 10).round %>%
       </td>
-      <td style="text-align:center;">
-	     <h1><%= person.total_comments || "0" %></h1>
+      <td class="br_td">
+	     <%= person.total_comments || "0" %>
 	  </td>
 
 
@@ -42,7 +47,7 @@
 
   <% end %>
 </table>
-<div style="border-top:1px dashed #C1C7C0;text-align:right;">
+<div class="padding floatright">
 <%= will_paginate @results %>
 
 </div>

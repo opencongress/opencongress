@@ -48,8 +48,9 @@
     <option value="/battle_royale/issues?timeframe=<%= params[:timeframe] %>" <% if im_here('battle_royale','issues') %>selected<% end %>>Issues</option>
     </select>
     </form>
+<span class="xml">
     <%= link_to (image_tag "/images/xml-trans.png", :style => "vertical-align:top;margin-top:2px;"), params.merge(:format => "xml"), :target => "_blank" %>
-
+</span>
   </div>
 
   

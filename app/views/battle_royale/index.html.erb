@@ -1,20 +1,22 @@
 <%= render :partial => "header" %>
 
 <table class="thunderdome" cellspacing="0" cellpadding="0">
-  <tr><th></th><th></th>
-                <th><%= th_sort("Votes", "vote_count_1", params[:order]) %></th>
-                <th><%= th_sort("Ayes", "current_support_pb", params[:order]) %></th>
-                <th><%= th_sort("Nays", "support_count_1", params[:order]) %></th>
-                <th><%= th_sort("Tracking", "bookmark_count_1", params[:order]) %></th>
-                <th><%= th_sort("Comments", "total_comments", params[:order]) %></th>
-                <th style="color:#9E005D;" class="">Vote!</th></tr>
+  <tr>
+	<th class="main_title">Bills</th>
+                <th class="votes_td"><%= th_sort("<span>Votes</span>", "vote_count_1", params[:order]) %></th>
+                <th class="ayes_td aye"><%= th_sort("<span>Ayes</span>", "current_support_pb", params[:order]) %></th>
+                <th class="nays_td nay"><%= th_sort("<span>Nays</span>", "support_count_1", params[:order]) %></th>
+                <th class="tracking_td"><%= th_sort("<span>Tracking</span>", "bookmark_count_1", params[:order]) %></th>
+                <th class="comments_td"><%= th_sort("<span>Comments</span>", "total_comments", params[:order]) %></th>
+                <th colspan="2" class="vote_td">Vote!</th></tr>
   <% count = 0 %>
 	<% (2..params[:page].to_i).each {|i| count += 20} %>
   <% @results.each do |bill| %>
       <% count += 1 %>
-    <tr valign="middle">
-	  <td><h1 class="count bill"><%= count %></h1></td>
-      <td id="<%= bill.ident %>">
+    <tr>
+      
+	  <td valign="top" class="bills" id="<%= bill.ident %>">
+		  <span class="count bill"><%= count %></span>
 
 		<% if bill.is_vote_hot?(@perc_diff_in_days,bill.vote_count_2.to_f, bill.vote_count_1.to_f, @range) %>
 		   <img src='/images/hot.jpg' style="border:0;vertical-align:middle;"/>
@@ -43,7 +45,6 @@
             <span><%= temp_url_strip(bill.status) %></span>
             
             <span class="date"><%= bill.last_action.formatted_date if bill.last_action %></span>
-            
 						<% unless bill.session == DEFAULT_CONGRESS %>
               <span>(<%= bill.session.ordinalize %> congress)</span>
             <% end %>
@@ -51,40 +52,33 @@
 			</span>
 			
 			<span class="linkage">
-          <%= link_to "<span>News</span>", :controller => "bill", :action => "news", :id => bill.ident %>
-     		  <%= link_to "<span>Blogs</span>", :controller => "bill", :action => "blogs", :id => bill.ident %>
-     		  <%= link_to "<span>Comments</span>", :controller => "bill", :action => "comments", :id => bill.ident %>
+          <%= link_to "<span class='news_11'>News</span>", :controller => "bill", :action => "news", :id => bill.ident %>
+     		  <%= link_to "<span class='blogs_11'>Blogs</span>", :controller => "bill", :action => "blogs", :id => bill.ident %>
+     		  <%= link_to "<span class='comments_11'>Comments</span>", :controller => "bill", :action => "comments", :id => bill.ident %>
      		</span>
         
       </td>
-      <td valign="center" style="text-align:center;">
-        <h1><%= bill.vote_count_1 || "0" %></h1>
-      <td style="text-align:center;">
-        <h1 id="support"><%= bill.vote_count_1.to_i - bill.support_count_1.to_i %></h1>
-      </td>
-      <td style="text-align:center;">
-        <h1 id="oppose"><%= bill.support_count_1 %></h1>
-      </td>
-      <td style="text-align:center;"><h1><%= bill.bookmark_count_1 || "0" %></h1></td>
-      <td style="text-align:center;">
-	     <h1><%= bill.total_comments || "0" %></h1>
-	  </td>
+      <td valign="top" class="br_td"><%= bill.vote_count_1 || "0" %></td>
+	  <td valign="top" class="br_td"><span id="support" class="aye"><%= bill.vote_count_1.to_i - bill.support_count_1.to_i %></span></td>
+      <td class="br_td"><span id="oppose" class="nay"><%= bill.support_count_1 %></span></td>
+      <td class="br_td"><%= bill.bookmark_count_1 || "0" %></td>
+      <td class="br_td"><%= bill.total_comments || "0" %></td>
 
-      <td><% @bs =  bill.total_support %>
+      <td class="br_td vote_line"><% @bs =  bill.total_support %>
 	      <% @bo = bill.total_opposed %>
          <%= draw_inline_user_bill_vote(bill) %>      
         <div id="vote_results_<%= bill.id %>" style="position:absolute;display:none;">
         </div>
       </td>
    </tr>
-   <tr>
-    <td colspan="8"><p id="vote_message_<%= bill.id.to_s %>" style="display:none;"></p></td>
+   <tr style="display:none;">
+    <td colspan="8"><p id="vote_message_<%= bill.id.to_s %>"></p></td>
    </tr>
   <% end %>
 </table>
-<div style="border-top:1px dashed #C1C7C0;text-align:right;">
-<%= will_paginate @results %>
 
+<div class="padding floatright">
+	<%= will_paginate @results %>
 </div>
 
 <% if @bill %>

@@ -11,8 +11,17 @@ padding-top: 0px;
 margin-top: 10px;
 }
 
-.explain_box{
-padding-top: 15px !important;
+.explain_box {
+	width: 540px !important;
+	font-size: 13px !important;
+padding: 18px 0 0 0 !important;
+}
+
+.explain_box p{
+	font-size: 13px !important;
+margin-bottom: 0px;
+color: #666 !important;
+line-height: 1.5em;
 }
 
 #battle_royale #heading .explain_box{
@@ -25,7 +34,7 @@ width: 490px;
 #battle_royale #heading h2{
 width: 320px;
 overflow: hidden;
-margin: 8px 0 0 25px;
+margin: 5px 0 0 10px;
 height: 0;
 padding-top: 130px;
 float: left;
@@ -38,7 +47,7 @@ padding: 15px 10px;
 height: 80px;
 width: 924px;
 margin: 30px auto 0;
-background: url(img/find_rep.png) no-repeat;
+background: url('img/find_rep.png') no-repeat;
    _background: url(img/find_rep.gif) no-repeat;
 }
 
@@ -71,12 +80,66 @@ float: left;
 }
 
 #battle_royale table.thunderdome{
-width: 100%;
-margin: 0;
+width: 940px;
+margin: 0 30px;
+border-top: 1px solid #eee;
+border-left: 1px solid #eee;
+border-right: 1px solid #eee;
 }
+
+
+#battle_royale #content tr{
+border-bottom: 1px solid #ddd;
+background: #fcfcfc url(img/sen-sort.png) 0 -55px repeat-x;
+}
+
 
 #battle_royale #content th{
 padding: 0px;
+border-left: 1px solid #eee;
+text-align: left;
+}
+
+#battle_royale #content th.main_title{
+padding: 0px 0 0 16px;
+}
+
+
+#battle_royale #content th a{
+display: block;
+padding: 0 13px 0 0;
+text-decoration: none;
+}
+
+#battle_royale #content th a:hover{
+background: #fff;
+}
+
+#battle_royale #content th a span{
+padding: 11px 18px 10px 15px;
+text-align: left;
+display: block;
+background: url('img/arrows.png') no-repeat right -103px;
+}
+
+#battle_royale #content th a:hover span{
+background: url('img/arrows.png') no-repeat right -9px;
+}
+
+.down span{
+background: url('img/arrows.png') no-repeat right -9px !important;
+}
+
+.down:hover span{
+background: url('img/arrows.png') no-repeat right 15px !important;
+}
+
+.up span{
+background: url('img/arrows.png') no-repeat right 15px !important;
+}
+
+.up:hover span{
+background: url('img/arrows.png') no-repeat right -9px !important;
 }
 
 #battle_royale table, #battle_royale table th, #battle_royale table tr, #battle_royale td{
@@ -86,6 +149,67 @@ padding: 0px;
 #battle_royale #content td{
 padding: 0px;
 }
+
+#battle_royale #content td.bills{
+padding: 20px 10px 20px 100px;
+overflow: hidden;
+background: url('img/bill.png') no-repeat 19px 19px;
+
+}
+
+#battle_royale #content td.bills .title{
+margin-bottom: 8px;
+margin-top: 0;
+}
+
+
+#battle_royale #content td.bills .title a{
+font-weight: bold;
+color: #333;
+font-size: 13px;
+}
+
+
+#battle_royale #content td.bills .title p{
+margin-top: 8px;
+font-size: 11px;
+color: #999;
+}
+
+
+#battle_royale #content td.bills img{
+float: right;
+}
+
+/*
+.count.bill{
+line-height: .8em;
+float: right;
+font-size: 150px;
+height: 0px;
+padding-right: 0px;
+color: #f7f7f7;
+}
+*/
+
+.count.bill{
+line-height: 1.3em;
+float: right;
+font-size: 190px;
+height: 0px;
+padding-right: 0px;
+color: #f7f7f7;
+}
+
+.count.sen, .count.rep, .count.issue{
+line-height: 1em;
+float: right;
+font-size: 70px;
+height: 0px;
+padding-right: 0px;
+color: #f7f7f7;
+}
+
 
 #search{
 float: left;
@@ -102,27 +226,102 @@ float: left;
 padding: 10px;
 }
 
-.down{
-background: url('img/arrows.png') no-repeat right -22px;
-   _background: url('img/arrows.gif') no-repeat right -22px;
-padding-right: 12px;
+#timeframe_select label, #view label{
+padding-right: 10px;
 }
 
-.up{
-background: url('img/arrows.png') no-repeat right 2px;
-   _background: url('img/arrows.gif') no-repeat right 2px;
-padding-right: 12px;
+.xml{
+	float: left;
+	margin: 9px 0 0 5px;
 }
-
 
 .linkage{
-float: right;
-padding-right: 20px;
+font-size: 11px;
+clear: both;
+float: left;
+padding-top: 8px;
+}
+
+.linkage a{
+text-decoration: none;
+margin-right: 10px;
+}
+
+.linkage a:hover{
+text-decoration: underline;
+}
+
+.linkage a span{
+padding: 0 0px 0 18px;
+}
+
+.linkage a span.news_11{
+background: url('img/11px_icons.png') no-repeat left 1px;
+}
+
+.linkage a span.blogs_11{
+background: url('img/11px_icons.png') no-repeat left -25px;
+}
+
+.linkage a span.comments_11{
+background: url('img/11px_icons.png') no-repeat left -50px;
 }
 
 table td h1{
 font-weight: normal;
 font-size: 13px;
+}
+
+
+th.vote_td{
+text-align: center !important;
+}
+
+.votes_td{
+}
+
+
+.comments_td,
+.tracking_td,
+.nays_td,
+.ayes_td{
+}
+
+.br_td{
+border-left: 1px solid #f9f9f9;
+font-weight: bold;
+vertical-align: top;
+font-size: 14px;
+padding-top: 22px !important;
+text-align: center;
+}
+
+.pagination{
+	pading: 10px !important;
+}
+
+a.bill_support, .bill_nosupport{
+	margin: 0px 15px 12px;
+	display: block;
+	padding-top: 31px;
+	width: 31px;
+	float: none;
+	clear: both;
+	overflow: hidden;
+  height: 0;
+}
+
+a.bill_nosupport{
+	background: url('img/vote_squares.png') no-repeat left -39px;
+}
+
+a.bill_nosupport:hover;{
+	background: url('img/vote_squares.png') no-repeat left -39px;
+}
+
+a.bill_support{
+	background: url('img/vote_squares.png') no-repeat left 0px;
+
 }
 
 

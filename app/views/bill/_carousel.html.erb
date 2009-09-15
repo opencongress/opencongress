@@ -39,10 +39,10 @@ $j(document).ready(function() {
 
 	    <div class="category_track">
 				<div>
-					<span class="category_id"><%= b.hot_bill_category.name %></span>
 	     		<span class="slide_number"><%= (i + 1) %> of <%= @carousel[0].size %></span>
 				</div>
 	   		<%= render :partial => "shared/track_link", :locals => {:object => b, :button => "large_track"} %>
+			<span class="category_id" style="clear:both;"><%= b.hot_bill_category.name %></span>
 
 	   	</div>
 

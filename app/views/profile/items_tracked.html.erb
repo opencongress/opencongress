@@ -15,17 +15,13 @@
 
 	<p>Just getting started? Our special page of <a href="/bill/hot">Hot Bills</a> is an easy way to find bills that affect the issues you care about, and then add them to your tracked items. For next steps, including ways you can use social networking on OpenCongress, see our <a href="/profile/howtouse">how-to guide</a>.</p>
 	 </div>
-		<%= dbox_start("things_im_tracking_whatsthis", 80, -40, 500) %>
-		Your OpenCongress profile can track any of the bills, issue, or Member of Congress on the site. Just click the "Track This" button in the right-hand sidebar of any applicable page and it will be automatically added here to your tracked items. On this page, you have a continually-updating "bird's eye" view of all the activities associated with each tracked item since you last logged-in. Click on any button on this page, for example, "Status Updates", for a drop-down view of the latest five updates and a link to view all. Click on a category name below, such as "Bills", to view more detailed updates for each tracked bill and suggestions on how to find other interesting bills to track throughout the site.
-		<%= dbox_end %>
-	  
+
 	<div class="what-line"></div>
 	<div style="float:right;">
-	<%= link_to_function(image_tag('/images/question.png', :mouseover => '/images/question_hover.png', :alt => "What's This?", :title => "What's This?"), "Element.show('things_im_tracking_whatsthis');", :class => 'question') %>
 	<% if @user == current_user %>
-	  <span style = "margin-left:20px;"><%= image_tag("/images/private.png", :alt => "private", :title => "Private", :id => 'Privacy') %></span>
 	<% form_for :privacy_option, @user.privacy_option, :url => {:controller => "/profile", :action => "update_privacy" } do |f| %>
     <%= f.select PrivacyOption.column_names[10].to_sym, [["Public",2],["Friends", 1], ["Private",0]], {}, {:onchange => "this.form.submit();"} %>
+	  <span style = "margin-left:10px;"><%= image_tag("/images/private.png", :alt => "private", :title => "Private", :id => 'Privacy') %></span>
     <% end %>
     <% end %>
     </div>

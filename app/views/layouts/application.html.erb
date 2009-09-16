@@ -142,9 +142,9 @@
     </div> <!-- // content -->
 
 
-	  <% cache("layout_footer", :expires_in => 3.hours) do %>
+	  <%# cache("layout_footer", :expires_in => 3.hours) do %>
 	    <%= render :partial => 'layouts/footer' %>
-    <% end %>
+    <%# end %>
    
   </div> <!-- // wrapper -->
 </body>

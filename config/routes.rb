@@ -98,6 +98,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'roll_call/text/summary/:id', :controller => "roll_call", :action => 'summary_text'
   
   map.connect 'admin', :controller => "admin/index"
+  map.connect 'admin/stats/bills.:format', :controller => "admin/stats", :action => 'bills'
   
   map.connect 'battle_royale.:format', :controller => "battle_royale", :action => "index"
   map.connect 'battle_royale/:action.:format', :controller => "battle_royale"

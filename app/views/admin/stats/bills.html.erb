@@ -1,5 +1,13 @@
 <div class="padding" style="clear: both;">
   <h2>Bill Stats</h2>
+  <form action="/admin/stats/bills" method="get" id="session_select">
+    Session: 
+    <select name="session" onchange="$('session_select').submit();">
+      <%= options_for_select(AVAILABLE_CONGRESSES.collect{ |x| ["#{x}", "#{x}"] }, @session) %>
+    </select>
+  </form>
+  <p style="margin: 10px 0;"><a href="/admin/stats/bills.csv<%= "?session=#{@session}" if @session %>">All Bill Data in CSV Format</a> (Right Click and "Save File..." Will take a minute to load.)</p>
+  
   <%= will_paginate @bills %>
   <table>
     <tr>
@@ -9,18 +17,27 @@
       <th>Comments</th>
       <th>"Aye" votes</th>
       <th>"Nay" votes</th>
+    </tr>
     <tr>
+      <td><strong>Totals for <%= number_to_ordinal(@session) %> Congress</strong></td>
+      <td><strong><%= number_with_delimiter(@total_pageviews) %></strong></td>
+      <td><strong><%= number_with_delimiter(@total_bookmarks) %></strong></td>
+      <td><strong><%= number_with_delimiter(@total_comments) %></strong></td>
+      <td><strong><%= number_with_delimiter(@total_ayes) %></strong></td>
+      <td><strong><%= number_with_delimiter(@total_nays) %></strong></td>
+    </tr>
     
     <% @bills.each do |b| %>
       <tr>
         <td><%= link_to b.title_typenumber_only, :controller => '/bill', :action => 'show', :id => b.ident %></td>
-        <td><%= b.views %></td>
-        <td><%= b.bookmarks.length %></td>
-        <td><%= b.comments.size %></td>
-        <td><%= b.bill_votes.count(:all, :conditions => "support = 0") %></td>
-        <td><%= b.bill_votes.count(:all, :conditions => "support = 1") %></td>
+        <td><%= number_with_delimiter(b.views) %></td>
+        <td><%= number_with_delimiter(b.bookmarks.length) %></td>
+        <td><%= number_with_delimiter(b.comments.size) %></td>
+        <td><%= number_with_delimiter(b.bill_votes.count(:all, :conditions => "support = 0")) %></td>
+        <td><%= number_with_delimiter(b.bill_votes.count(:all, :conditions => "support = 1")) %></td>
       </tr>
     <% end %>
+    
   </table>
   <%= will_paginate @bills %>
 </div>

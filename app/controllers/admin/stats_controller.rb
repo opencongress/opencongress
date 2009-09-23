@@ -269,9 +269,29 @@ class Admin::StatsController < Admin::IndexController
   
   def bills
     @page_title = "Bill Stats"
-    session = params[:session].blank? ? DEFAULT_CONGRESS : params[:session]
-    @bills = Bill.find(:all, :conditions => ["session = ?", session], 
-                       :order => 'bills.page_views_count DESC').paginate(:page => params[:page])
+    @session = params[:session].blank? ? DEFAULT_CONGRESS : params[:session]
+    if params[:format] == 'csv'
+      @bills = Bill.find(:all, :conditions => ["session = ?", @session], 
+                        :order => 'bills.page_views_count DESC')
+    else
+      @bills = Bill.find(:all, :conditions => ["session = ?", @session], 
+                        :order => 'bills.page_views_count DESC').paginate(:page => params[:page])
+    end
+    
+    @total_pageviews = Bill.sum('page_views_count', :conditions => ['session = ?', @session])
+    @total_bookmarks = Bookmark.count_by_sql(["SELECT count(*) FROM bookmarks INNER JOIN bills ON bills.id=bookmarks.bookmarkable_id 
+                                               WHERE bills.session=? AND bookmarks.bookmarkable_type='Bill'", @session])
+    @total_comments = Comment.count_by_sql(["SELECT count(*) FROM comments INNER JOIN bills ON bills.id=comments.commentable_id 
+                                             WHERE bills.session=? AND comments.commentable_type='Bill'", @session])
+    @total_ayes = BillVote.count_by_sql(["SELECT count(*) FROM bill_votes INNER JOIN bills ON bills.id=bill_votes.bill_id 
+                                          WHERE bills.session=? AND bill_votes.support='0'", @session])                                          
+    @total_nays = BillVote.count_by_sql(["SELECT count(*) FROM bill_votes INNER JOIN bills ON bills.id=bill_votes.bill_id 
+                                          WHERE bills.session=? AND bill_votes.support='1'", @session])
+                                          
+    respond_to do |format|
+      format.html
+      format.csv { render :layout => false }
+    end                                      
   end
   
   def mypn

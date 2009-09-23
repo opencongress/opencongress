@@ -601,16 +601,28 @@ EOT
 		end
 		logger.info params[:controller]
 		if request.path_parameters['controller'] == "battle_royale"
+			if logged_in?
 			"" +
 			link_to_remote("Aye",
-			{ :url => {:controller => "bill", :action => "bill_vote", :bill => bill.ident, :id => 0}},
+			{ :url => {:controller => "battle_royale", :action => "br_bill_vote", :bill => bill.ident, :id => 0}},
 			:class => "aye #{yah}") +
 			"" +
 
 			link_to_remote("Nay",
-			{:url => {:controller => "bill", :action => "bill_vote", :bill => bill.ident, :id => 1}},
+			{:url => {:controller => "battle_royale", :action => "br_bill_vote", :bill => bill.ident, :id => 1}},
 			:class => "nay #{nah}") +
 			""
+      else
+        link_to_remote("Aye",
+  			{ :url => {:controller => "account", :action => "login", :modal => true, :login_action => 0}},
+  			:class => "aye #{yah}") +
+  			"" +
+
+        link_to_remote("Nay",
+  			{ :url => {:controller => "account", :action => "login", :modal => true, :login_action => 1}},
+  			:class => "nay #{nah}") +
+  			""
+       end
 		else
 		  if logged_in?
         "<div class='voting_buttons'>" +

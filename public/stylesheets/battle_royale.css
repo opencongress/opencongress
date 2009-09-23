@@ -320,20 +320,18 @@ a.bill_support, .bill_nosupport{
   height: 0;
 }
 
-a.bill_nosupport{
-	background: url('img/vote_squares.png') no-repeat left -39px;
+a.nay {
+  background: url('img/vote_squares.png') no-repeat left -39px;
+} 
+a.nay.bill_support, a.nay:hover {
+  background-position:-35px -39px;
 }
-
-a.bill_nosupport:hover;{
-	background: url('img/vote_squares.png') no-repeat left -39px;
+a.aye {
+  background: url('img/vote_squares.png') no-repeat left 0px;  
 }
-
-a.bill_support{
-	background: url('img/vote_squares.png') no-repeat left 0px;
-
+a.aye.bill_support, a.aye:hover {
+  background-position:-35px 0px;
 }
-
-
 
 
 

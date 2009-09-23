@@ -59,16 +59,15 @@
         
       </td>
       <td valign="top" class="br_td"><%= bill.vote_count_1 || "0" %></td>
-	  <td valign="top" class="br_td"><span id="support" class="aye"><%= bill.vote_count_1.to_i - bill.support_count_1.to_i %></span></td>
-      <td class="br_td"><span id="oppose" class="nay"><%= bill.support_count_1 %></span></td>
+	  <td valign="top" class="br_td"><span id="<%= "support_#{bill.id}"%>" class="aye"><%= bill.vote_count_1.to_i - bill.support_count_1.to_i %></span></td>
+      <td class="br_td"><span id="<%= "oppose_#{bill.id}"%>" class="nay"><%= bill.support_count_1 %></span></td>
       <td class="br_td"><%= bill.bookmark_count_1 || "0" %></td>
       <td class="br_td"><%= bill.total_comments || "0" %></td>
 
-      <td class="br_td vote_line"><% @bs =  bill.total_support %>
-	      <% @bo = bill.total_opposed %>
+      <td id="<%= "vote_results_#{bill.id.to_s}"%>" class="br_td vote_line">
+				<%# @bs =  bill.total_support %>
+	      <%# @bo = bill.total_opposed %>
          <%= draw_inline_user_bill_vote(bill) %>      
-        <div id="vote_results_<%= bill.id %>" style="position:absolute;display:none;">
-        </div>
       </td>
    </tr>
    <tr style="display:none;">

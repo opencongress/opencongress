@@ -712,7 +712,8 @@ div.pop_bills{
 width: 544px;
 clear: both;
 float: right;
-margin-top: 30px;
+/*margin-top: 30px;*/
+margin-top:12px;
 margin-right: 30px;
 background: url(img/home_bill_bottom.png) left bottom no-repeat;
    _background: url(img/home_bill_bottom.gif) left bottom no-repeat;
@@ -985,4 +986,19 @@ padding-top: 50px !important;
 height: 450px !important;
 background: url('img/number5.png') no-repeat 690px 58px;
    _background: url('img/number5.gif') no-repeat 690px 58px;
+}
+
+.b-bill{
+background: url(img/b-bill.png);
+width: 543px;
+padding-top: 55px;
+height: 0;
+overflow: hidden;
+display: block;
+float: right;
+margin-bottom:12px;
+}
+
+.b-bill:hover{
+background: url(img/b-bill.png) 0 -56px;
 }

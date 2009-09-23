@@ -69,11 +69,11 @@ class AboutController < ApplicationController
   end
 
   def terms_of_service
-     @head_title = "Terms of Service and Comment Policy"
+     @page_title = "Terms of Service and Comment Policy"
   end                                                   
   
   def privacy_policy
-     @head_title = "Privacy Policy"
+     @page_title = "Privacy Policy"
   end
 
 private                            

@@ -26,9 +26,9 @@
       <%= will_paginate comments, :param_name => 'comment_page', :params => { :controller => object.display_object_name.downcase, :action => 'comments', :id => ((object.display_object_name == 'Bill') ? object.ident : object.id), :navtab => 'comments', :comment_sort => params[:comment_sort], :anchor => 'comments'} %>
     <% end %>
     <br />
-    <% if params[:comment_sort] == 'newest' # just display a flat list since nesting doesn't make sense when sort=newest %>
+    <% if (params[:comment_sort] == 'newest' || params[:comment_sort] == 'rating') # just display a flat list since nesting doesn't make sense when sort=newest, likewise for rating %>
       <% comments.each do |node| %>
-        <%= render :partial => 'shared/comments_recursive', :locals => {:object => object, :comment => node, :myscores => myscores} %>
+        <%= render :partial => 'shared/comments_recursive', :locals => {:object => object, :comment => node, :myscores => myscores, :flat => true} %>
       <% end %>
     <% else %>
       <%= display_nested_set_rows(comments) { |node|

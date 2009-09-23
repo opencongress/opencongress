@@ -1999,7 +1999,12 @@ p.comment_desc, p.comment_score {
 	padding-right:10px;
 	margin-bottom:0.5em;
 }
-
+a.inreply {
+  font-style: italic;
+  text-decoration: none;
+  color:#888;
+  padding-left:12px;
+}
 p.com_content {
 padding: 0 12px;
 }

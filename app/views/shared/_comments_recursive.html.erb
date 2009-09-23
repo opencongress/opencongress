@@ -1,3 +1,4 @@
+<% flat ||= false %>
 <% if comment.censored %>
   <div class="commentfl" style="clear:both;float:none;border-top:1px solid #D0D6E2;">
   	<p>Moderated Comment</p>
@@ -9,7 +10,7 @@
   <% if (def_fil <= comment.average_rating) %>display:none;<%end%>">
   <p>Filtered Comment [<%= link_to_function "show", "new Effect.Appear('com#{comment.id.to_s}');Element.hide('comfl#{comment.id.to_s}');" %>]</p>
   </div>
-
+	
   <div id="com<%= comment.id.to_s %>" class="comment" style="clear:both;float:none;
   <% if (def_fil > comment.average_rating) %>display:none;<%end%>; width: 100%;">
 
@@ -19,7 +20,8 @@
 
   <div class="comm_comm">
     <div class="comm_user">
-  		<% if comment.user %>
+  		
+		<% if comment.user %>
   		  <%= link_to h(comment.user.login), :controller => "profile", :action => "profile", :login => h(comment.user.login) %>
   		<% else %>
   			Anonymous 
@@ -98,8 +100,12 @@
   	  <% end %>
   	</div>
   </div>
+  
 
-
+	<% if flat && comment.parent_id %>
+		<%= link_to "in reply to #{comment.parent.user ? comment.parent.user.login : "Anonymous"} #{comment.parent.created_at.strftime('%b %d, %Y')} #{comment.parent.created_at.strftime('%I:%M%p').gsub(/^0+/, '').downcase}", url_for(comment.parent.commentable_link.merge({:goto_comment => comment.parent.id})), {:class => 'inreply'} %>
+	<% end %>
+	
   <% if comment.user && comment.user.small_picture %>
     <div class="comment_pic"><img src="/images/users/<%= h(comment.user.login) %>_s.jpg" />
 		<% unless comment.user.user_role.id ==  0 %>

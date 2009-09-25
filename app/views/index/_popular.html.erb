@@ -67,7 +67,7 @@
       			<span><strong><%= number_with_delimiter(hb.views(DEFAULT_COUNT_TIME)) %></strong> views</span>
          	</span>
 
-          	<span class="title"><%= hb.title_typenumber_only %> - <span><%= truncate(hb.title_common, :length => 50) rescue nil %></span></span>
+          	<span class="title"><%= hb.title_typenumber_only %> - <span><%= truncate(hb.title_common, :length => 45) rescue nil %></span></span>
           
           	<span class="date">
             <span><%= temp_url_strip(hb.status) %></span> 

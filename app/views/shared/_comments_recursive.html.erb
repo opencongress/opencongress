@@ -4,6 +4,9 @@
   	<p>Moderated Comment</p>
   </div>
 <% else %>
+<% if comment.parent_id %>
+	<div class="replytri"><img src="/img/comm_reply.png"></div>
+<% end %>
   <% def_fil = 5 %>
   <% def_fil = ( current_user.default_filter ? current_user.default_filter : 5 ) if logged_in? %>
   <div id="comfl<%= comment.id.to_s %>" class="commentfl" style="clear:both;float:none;

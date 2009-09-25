@@ -2005,6 +2005,16 @@ a.inreply {
   color:#888;
   padding-left:12px;
 }
+.replytri {
+  position:relative;
+  height:0px;
+}
+.replytri img {
+  position:absolute;
+  z-index:1000;
+  top:-6px;
+  left:12px;
+}
 p.com_content {
 padding: 0 12px;
 }

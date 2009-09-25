@@ -160,3 +160,6 @@ dd, dt {
 ul.sort_comments li span {
   white-space:nowrap;
 }
+.replytri img {
+  display:none;
+}

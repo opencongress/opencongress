@@ -294,3 +294,6 @@ td#pim.pset {
 #bookmarklet a {
   cursor:hand;
 }
+.replytri img {
+  top:-2px;
+}

@@ -57,8 +57,8 @@
 
                   <% @committee.members.find(:all, :conditions => conditions, :order => "people.lastname asc").each do |m| %>
                   <div class="graph_item">
-                    <a href="<%= url_for({:controller => "people", :action => "show", :id => m.ident}) %>"><image src="/images/photos/thumbs_125/<%= m.id %>.jpeg" width="102px" height="125px"/></a>
-                      <span class="name"><%= m.full_name %></span>
+                    <a href="<%= url_for({:controller => "people", :action => "show", :id => m.ident}) %>"><image src="/images/photos/thumbs_125/<%= m.id %>.jpeg" width="102px" height="125px"/>
+                      <span class="name"><%= m.full_name %></span></a>
                     </div>
                     <% end %>
                   </div>

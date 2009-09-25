@@ -1,6 +1,7 @@
 
 #heading{
 min-height: 45px;
+padding-bottom:28px;
 }
 
 #yield{
@@ -151,18 +152,18 @@ background: #efefef;
 }
 
 .key{
-padding: 25px;
-background: #ffe6e6;
+/*padding: 25px;
+background: #ffe6e6;*/
 }
 
 
-.key p{
+.key p#find{
 clear: both;
-padding: 10px 20px 10px;
-
-
+padding:27px 0 23px 35px;
 }
-
+p#find strong {
+  background: #ffe6e6;  
+}
 
 .star{
 margin-left: 30px;

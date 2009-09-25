@@ -1,29 +1,22 @@
-
-
+<div id="heading" class="clearfix">
+	<h2>OpenCongress API Documentation</h2>   
+	<div class="explain_box">
 <% unless logged_in? %>
-  <div class="note"><div><p>Welcome. This API provides programmers with structured access to all the data on OpenCongress, everything from official bill info to news and blog coverage to user-generated votes on bills and much more. As an open-source public resource on Congress, we encourage developers to share and remix any of this info on their own websites to keep their online communities up-to-date with their political interests.</p> 
+	  <p>Welcome. This API provides programmers with structured access to all the data on OpenCongress, everything from official bill info to news and blog coverage to user-generated votes on bills and much more. As an open-source public resource on Congress, we encourage developers to share and remix any of this info on their own websites to keep their online communities up-to-date with their political interests.</p> 
   
-  <p>Using the API requires an API KEY, which is automatically assigned to every free "My OpenCongress" account -- simply <a href="/register">join</a> or <a href="/login">login</a>, it takes less than a minute, and your key will appear here, along with sample links to call. The data below is just a start -- we will continually add more unique info & useful enhancements in order to contribute public knowledge about Congress back to the data commons on the open Web. We're always interested in hearing requests or seeing use cases of how you're using this API -- see the Developer Resources at the bottom of this page.</p>
+	  <p>Using the API requires an API KEY, which is automatically assigned to every free "My OpenCongress" account -- simply <a href="/register">join</a> or <a href="/login">login</a>, it takes less than a minute, and your key will appear here, along with sample links to call. The data below is just a start -- we will continually add more unique info &amp; useful enhancements in order to contribute public knowledge about Congress back to the data commons on the open Web. We're always interested in hearing requests or seeing use cases of how you're using this API -- see the Developer Resources at the bottom of this page.</p>
   
-  You are not logged in.  The API requires an API KEY, which would be displayed here and in the sample links if you were logged in.</div></div>
+	  <p>You are not logged in.  The API requires an API KEY, which would be displayed here and in the sample links if you were logged in.</p></div>
 
-<div id="heading">
-
-<h2>OpenCongress API Documentation</h2>
-
-</div>
 <% else %>
-<div id="heading">
-
-<h2>OpenCongress API Documentation</h2>
-
-</div>
-  <div class="key">
-  <p id="find"><a href="#" class="med_button"><span>Copy to Clipboard</span></a>Your Unique API Key: <strong><%= @api_key %></strong></p>
-  <p>Welcome. This API provides programmers with structured access to all the data on OpenCongress, everything from official bill info to news and blog coverage to user-generated votes on bills and much more. The data below is just a start -- we will continually add more unique info & useful enhancements in order to contribute public knowledge about Congress back to the data commons on the open Web. We're always interested in hearing requests or seeing use cases of how you're using this API -- see the Developer Resources at the bottom of this page.</p>
-  <p>Please do not share your API key. This API defaults to returning XML.  All queries (except queries to our "Battle Royale" user-generated info, for now) can also return JSON by specifying: format=json as a parameter in the url. The API also defaults to returning 30 results.  You can pass the per_page variable to decrease this (30 is the max), and the page variable to flip through pages.</p>
-  </div>
+	  <div class="key">
+	  <p id="find"><a href="#" class="med_button"><span>Copy to Clipboard</span></a>Your Unique API Key: <strong><%= @api_key %></strong></p>
+	  <p>Welcome. This API provides programmers with structured access to all the data on OpenCongress, everything from official bill info to news and blog coverage to user-generated votes on bills and much more. The data below is just a start -- we will continually add more unique info &amp; useful enhancements in order to contribute public knowledge about Congress back to the data commons on the open Web. We're always interested in hearing requests or seeing use cases of how you're using this API -- see the Developer Resources at the bottom of this page.</p>
+	  <p>Please do not share your API key. This API defaults to returning XML.  All queries (except queries to our "Battle Royale" user-generated info, for now) can also return JSON by specifying: format=json as a parameter in the url. The API also defaults to returning 30 results.  You can pass the per_page variable to decrease this (30 is the max), and the page variable to flip through pages.</p>
+	  </div>
 <% end %>
+	</div>
+</div>
 
 
 <div class="people_section">

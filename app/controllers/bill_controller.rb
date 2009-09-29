@@ -631,7 +631,7 @@ private
       else
         @meta_description = @bill.plain_language_summary
       end
-      @meta_keywords = "Congress, #{@bill.sponsor.popular_name}, " + @bill.subjects.find(:all, :order => 'bill_count DESC', :limit => 5).collect{|s| s.term}.join(", ")
+      @meta_keywords = "Congress, #{@bill.sponsor.popular_name unless @bill.sponsor.nil?}, " + @bill.subjects.find(:all, :order => 'bill_count DESC', :limit => 5).collect{|s| s.term}.join(", ")
       @sidebar_stats_object = @user_object = @comments = @topic = @bill
       @page = params[:page] ||= 1   
       if @bill.has_wiki_link?
@@ -648,7 +648,8 @@ private
       @tabs << ["Money Trail",{:action => 'money', :id => @bill.ident}] unless @bill.bill_interest_groups.empty?
       @tabs.concat([
         ["Wiki","#{@wiki_url}"],
-        ["News <span>(#{number_with_delimiter(@bill.news.size)})</span> & Blogs <span>(#{number_with_delimiter(@bill.blogs.size)})</span>",{:action => 'news_blogs', :id => @bill.ident}],
+        #["News <span>(#{number_with_delimiter(@bill.news_article_count)})</span> & Blogs <span>(#{number_with_delimiter(@bill.blog_article_count)})</span>",{:action => 'news_blogs', :id => @bill.ident}],
+        ["News <span>(#{number_with_delimiter(@bill.bill.news.size)})</span> & Blogs <span>(#{number_with_delimiter(@bill.bill.blogs.size)})</span>",{:action => 'news_blogs', :id => @bill.ident}],
         ["Videos <span>(#{number_with_delimiter(@bill.videos.size)})</span>",{:action => 'videos', :id => @bill.ident}],
         ["Comments <span>(#{number_with_delimiter(@comments.comments.size)})</span>",{:action => 'comments', :id => @bill.ident}]
       ])

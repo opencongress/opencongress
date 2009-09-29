@@ -33,11 +33,12 @@ $j(document).ready(function() {
 <%# debugger %>
 <div class="carousel_wrap">
 <ul id="committee_carousel" class="jcarousel-skin-bravo">
-  <% @carousel.each_slice(2) do |c| %>	
+  <% @carousel.each_slice(2) do |c| %>
+  <% name = c[0].name + (c[0].subcommittee_name.blank? ? "" : " - #{c[0].subcommittee_name}") %>
 	<% unless c[0].nil? %>
 	<li>
    <div>
-		<p><%= link_to c[0].name, :action => 'show', :id => c[0].id %> <em>(<%= c[0].views(DEFAULT_COUNT_TIME)%> views)</em></p>
+		<p><%= link_to name, :action => 'show', :id => c[0] %> <em>(<%= c[0].views(DEFAULT_COUNT_TIME)%> views)</em></p>
    <% unless c[0].chair.nil? -%>
     <p>Chair: <%= link_to_person c[0].chair %></p>
   <% end -%>
@@ -49,7 +50,7 @@ $j(document).ready(function() {
 
 	<% unless c[1].nil? %>
 	<div>
-   <p><%= link_to c[1].name, :action => 'show', :id => c[1].id %> <em>(<%= c[1].views(DEFAULT_COUNT_TIME)%> views)</em></p>
+   <p><%= link_to name, :action => 'show', :id => c[1] %> <em>(<%= c[1].views(DEFAULT_COUNT_TIME)%> views)</em></p>
    <% unless c[1].chair.nil? -%>
     <p>Chair: <%= link_to_person c[1].chair %></p>
   <% end -%>

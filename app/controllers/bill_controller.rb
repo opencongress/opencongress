@@ -649,7 +649,7 @@ private
       @tabs.concat([
         ["Wiki","#{@wiki_url}"],
         #["News <span>(#{number_with_delimiter(@bill.news_article_count)})</span> & Blogs <span>(#{number_with_delimiter(@bill.blog_article_count)})</span>",{:action => 'news_blogs', :id => @bill.ident}],
-        ["News <span>(#{number_with_delimiter(@bill.bill.news.size)})</span> & Blogs <span>(#{number_with_delimiter(@bill.bill.blogs.size)})</span>",{:action => 'news_blogs', :id => @bill.ident}],
+        ["News <span>(#{number_with_delimiter(@bill.news.size)})</span> & Blogs <span>(#{number_with_delimiter(@bill.blogs.size)})</span>",{:action => 'news_blogs', :id => @bill.ident}],
         ["Videos <span>(#{number_with_delimiter(@bill.videos.size)})</span>",{:action => 'videos', :id => @bill.ident}],
         ["Comments <span>(#{number_with_delimiter(@comments.comments.size)})</span>",{:action => 'comments', :id => @bill.ident}]
       ])

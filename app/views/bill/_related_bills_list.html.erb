@@ -38,7 +38,13 @@
            
            
 		<% unless bill.title_official.blank? %>
-			<p><%= truncate(bill.title_official, :length => 145) %></p>
+			<p>
+				<% if controller.action_name == 'list_bill_type' %>
+				<%= bill.title_official %>			
+				<% else %>
+				<%= truncate(bill.title_official, :length => 145) %>
+				<% end %>
+			</p>
 		<% end %>
            
              </div>

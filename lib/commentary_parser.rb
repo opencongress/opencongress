@@ -267,11 +267,11 @@ module CommentaryParser
 
         os = OpenStruct.new
       
-        os.title = (t.inner_html).unpack("C*").pack("U*") if t
+        os.title = (t.inner_html) if t #.unpack("C*").pack("U*") if t
         os.url = t.attributes["href"] if t
         os.date = d.at("span.date").inner_html
         os.source = d.at("span.source").inner_html
-        os.excerpt = d.at("div.snippet").inner_html.unpack("C*").pack("U*")
+        os.excerpt = d.at("div.snippet").inner_html #.unpack("C*").pack("U*")
         
         items << os
       end
@@ -304,10 +304,10 @@ module CommentaryParser
             
         os = OpenStruct.new
       
-        os.title = (t.inner_html).unpack("C*").pack("U*") if t
+        os.title = (t.inner_html) if t #.unpack("C*").pack("U*") if t
         os.url = t.attributes["href"] if t
         os.date = d.at("font:nth(0)").inner_html
-        os.excerpt = (d.at("br + font").inner_html).unpack("C*").pack("U*")
+        os.excerpt = (d.at("br + font").inner_html) #.unpack("C*").pack("U*")
         os.source = d.at("a.f1").inner_html
         os.source_url = d.at("a.f1").attributes["href"]
         #os.weight = place   -- figure out the technorati weighting first

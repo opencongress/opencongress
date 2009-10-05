@@ -76,6 +76,14 @@
   <% end %>
 </table>
 
+<script type="text/javascript">
+$j().ready(function() {
+	$j('#login_vote').jqm({ajax:'@href', trigger: 'a.modal_fire'});
+});
+</script>
+<div id="login_vote" class="jqmWindow">
+</div>
+
 <div class="padding floatright">
 	<%= will_paginate @results %>
 </div>

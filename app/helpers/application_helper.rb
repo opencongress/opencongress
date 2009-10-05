@@ -613,14 +613,12 @@ EOT
 			:class => "nay #{nah}") +
 			""
       else
-        link_to_remote("Aye",
-  			{ :url => {:controller => "account", :action => "login", :modal => true, :login_action => 0}},
-  			:class => "aye #{yah}") +
+        link_to("Aye", {:controller => "account", :action => "login", :modal => true, :login_action => 0},
+  			:class => "modal_fire aye #{yah}") +
   			"" +
 
-        link_to_remote("Nay",
-  			{ :url => {:controller => "account", :action => "login", :modal => true, :login_action => 1}},
-  			:class => "nay #{nah}") +
+        link_to("Nay", {:controller => "account", :action => "login", :modal => true, :login_action => 1},
+  			:class => "modal_fire nay #{nah}") +
   			""
        end
 		else

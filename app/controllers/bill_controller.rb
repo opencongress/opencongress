@@ -300,6 +300,8 @@ class BillController < ApplicationController
         else
           @br_link = @bill.br_link
         end
+        @include_vids_styles = true
+        
         @tracking_suggestions = @bill.tracking_suggestions
         @supporting_suggestions = @bill.support_suggestions
         @opposing_suggestions = @bill.oppose_suggestions

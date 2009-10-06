@@ -297,6 +297,8 @@ class PeopleController < ApplicationController
         
       end      
 		  
+		  @include_vids_styles = true
+      
       @featured_person_text = @person.featured_people.first
       @person_tracking_suggestions = @person.tracking_suggestions
       @supporting_suggestions = @person.support_suggestions

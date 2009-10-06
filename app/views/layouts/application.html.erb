@@ -55,7 +55,7 @@
   <%= javascript_include_tag 'swfobject' if (@roll_call || @roll_calls) %>
 	
 	<% if @include_vids_styles %>
-  <script type="text/javascript" src="http://metavid.org/w/extensions/MetavidWiki/skins/mv_embed/mv_embed.js"></script>
+  <script type="text/javascript" src="http://metavid.org/w/js2/mwEmbed/jsScriptLoader.php?class=mv_embed"></script>
   <% end %>
   
   <% if @atom %>

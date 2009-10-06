@@ -79,6 +79,23 @@ padding: 13px 0px 10px !important;
 margin: 0 15px;
 }
 
+.blog-body table{
+padding: 13px 0px 10px !important;
+margin: 0 15px;
+}
+
+.blog-body table td, .blog-body table td{
+padding: 10px !important;
+font-size: 12px;
+min-width: 55px;
+}
+
+.blog-body table th{
+text-align: left;
+padding-left: 10px !important;
+}
+
+
 p{
 
 }

@@ -65,7 +65,7 @@ class Comment < ActiveRecord::Base
     if self.commentable_type == "Bill"
       return {:controller => "bill", :action => "show", :id => specific_object.ident, :goto_comment => self.id}
     elsif self.commentable_type == "Person"
-      return {:controller => "people", :action => "comments", :id => specific_object.to_param, :comment_page => self.page}
+      return {:controller => "people", :action => "show", :id => specific_object.to_param, :goto_comment => self.id}
     elsif self.commentable_type == "Subject"
       return {:controller => "issue", :action => "comments", :id => specific_object.to_param, :comment_page => self.page}
     elsif self.commentable_type == "Article"

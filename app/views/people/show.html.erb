@@ -1,9 +1,9 @@
 <% cache("#{@person.fragment_cache_key}_header") do %>
   <!-- <div class="issue_cloud">
     <h3 class="dark">Issue Cloud</h3>
-    <% #tag_cloud @top_issues, %w(issue_cloud1 issue_cloud2 issue_cloud3 issue_cloud4 issue_cloud5 issue_cloud6 issue_cloud7 issue_cloud8 issue_cloud9 issue_cloud10) do |issue, css_class| %>
-      <%  #link_to issue.term, {:controller => 'issue', :action => :show, :id => issue}, :class => css_class %>
-    <% #end %>
+    <%# tag_cloud @top_issues, %w(issue_cloud1 issue_cloud2 issue_cloud3 issue_cloud4 issue_cloud5 issue_cloud6 issue_cloud7 issue_cloud8 issue_cloud9 issue_cloud10) do |issue, css_class| %>
+      <%# link_to issue.term, {:controller => 'issue', :action => :show, :id => issue}, :class => css_class %>
+    <%# end %>
   </div> -->
 
 <% if @person.committees.any? %>

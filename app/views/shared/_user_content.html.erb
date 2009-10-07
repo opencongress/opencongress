@@ -138,7 +138,7 @@
 			:type => object.class.to_s},
 			:html => { :class => 'large_track', :id => "b_myoc"}) %>
 			<% else %>
-			<a href="<%= url_for :controller => "profile", :action => "remove_bill_bookmark", :login => current_user.login, :id => object.id %>" id='b_myoc' class='large_track tracking' onmouseover="this.firstChild.update('Stop Tracking');" onmouseout="this.firstChild.update('Tracking Now');"><span id='b_myoc_txt'>Tracking Now</span></a>
+			<a href="<%= url_for :controller => "profile", :action => "remove_#{object.class.to_s.downcase}_bookmark", :login => current_user.login, :id => object.id %>" id='b_myoc' class='large_track tracking' onmouseover="this.firstChild.innerHTML='Stop Tracking';" onmouseout="this.firstChild.innerHTML='Tracking Now';"><span id='b_myoc_txt'>Tracking Now</span></a>
 			<% end %>
 			<% else %>
 			<script type="text/javascript">

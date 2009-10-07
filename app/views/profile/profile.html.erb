@@ -101,7 +101,7 @@
 				<% if @user.can_view(:my_instant_messanger_names, current_user) %>
 					<% for i in ["chat_aim","chat_msn","chat_yahoo","chat_gtalk","chat_icq"] do %>
 						<% unless @user[i].blank? && @user != current_user %>
-							<% # logger.info i %>
+							<%# logger.info i %>
 							<p>
 							<label><%= i.gsub(/chat_/, '').upcase %></label>
 							<%= draw_edit_in_place(i) %>
@@ -129,8 +129,9 @@
 						<%= submit_tag "Save changes", :id => "submit", :name => "submit", :class => "form_submit", :disabled => false, :disable_with => "Please wait..." %>
 					<% end %>
 					</div>
-				<% end %>
+
 				<p><%= toggler("phide","Change Privacy Settings", "Hide Privacy Settings", "privacy", "privacy") %></p>				
+				<% end %>
 				</div>
 
 				<div class="settings">

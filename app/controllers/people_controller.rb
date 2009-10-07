@@ -649,7 +649,12 @@ class PeopleController < ApplicationController
       person.save
     end
     logger.info params.to_yaml
-    render :text => "OK"
+    #render :text => "OK"
+    render :update do |page|
+      page.replace "approval-container", :partial => 'approval', :locals => {:person => person, :user_approval => score.rating} 
+      page.visual_effect :pulsate, "mscoretp#{person.id.to_s}"
+      page.visual_effect :pulsate, "person_rating"
+     end
   end
 
   def ranking

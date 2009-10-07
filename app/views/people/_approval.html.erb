@@ -1,44 +1,37 @@
-<div id="approval-container">
-	<p>Average Rating</p>
-        <% if @person.user_approval %>
-        <h3 id="rating" class="color<%= @person.user_approval %>">
-             <%= number_with_precision(@person.user_approval * 10,1) %>%
+<div id="approval-container" class="clearfix">
+   <% if person.user_approval %>
+        <h3 id="person_rating" style="color:<%= percent_to_color((person.user_approval * 10).round) %>">
+             <%= number_with_precision(person.user_approval * 10, :precision => 1) %>%
         </h3>
         <% else %>
-        <h3 id="rating" class="color<%= @person.user_approval %>" onmouseover="Element.show('approval_help');" onmouseout="Element.hide('approval_help');">
-          (rate this)
+        <h3 id="person_rating" style="font-size:10px;color:#b2b2b2">
+					<%= 5 - person.person_approvals.length == 1 ? "1 rating" : "#{5 - person.person_approvals.length} ratings"  %> needed<br />for average.
         </h3>
         <% end %>
+			<h4>Average Rating</h4>     
+			<div class="my_rating">
 	<% if logged_in? %>
-		<%= hidden_field_tag "scorep_" + @person.id.to_s, 5 %>
+		<%= hidden_field_tag "scorep_" + person.id.to_s, 5 %>
+		<p>My Rating</p>
 		<div class="rate">
-			<div id="trackp<%= @person.id.to_s %>" class="slider">
-				<div id="handlep<%= @person.id.to_s %>" class="handle">
+			<div id="trackp<%= person.id.to_s %>" class="slider">
+				<div id="handlep<%= person.id.to_s %>" class="handle"><span style="color:<%= percent_to_color(user_approval * 10) %>" id="mscoretp<%= person.id.to_s%>"><%= user_approval * 10 %>% </span>
 				</div>
 			</div>
 		</div>
 
 		<script type="text/javascript" language="javascript">
 		// <![CDATA[
-		new Control.Slider('handlep<%= @person.id.to_s %>','trackp<%= @person.id.to_s %>',{range:$R(0,10),
+		new Control.Slider('handlep<%= person.id.to_s %>','trackp<%= person.id.to_s %>',{range:$R(0,10),
 			values:[0,1,2,3,4,5,6,7,8,9,10],
-			sliderValue:<%= @user_approval %>,
-			onSlide:function(v){$('mscoretp<%= @person.id.to_s%>').innerHTML=" " +v*10 + '%'},
-			onChange:function(v){$('scorep_<%=h @person.id %>').value=v;new Ajax.Request('/people/rate/<%= @person.id %>', {asynchronous:true, evalScripts:true, parameters:'value=' + escape(v)})}});
+			sliderValue:<%= user_approval %>,
+			onSlide:function(v){$('mscoretp<%= person.id.to_s%>').innerHTML=" " +v*10 + '%'},
+			onChange:function(v){$('scorep_<%=h person.id %>').value=v;new Ajax.Request('/people/rate/<%= person.id %>', {asynchronous:true, evalScripts:true, parameters:'value=' + escape(v)})}});
 			// ]]>
 			</script>
 
-	<% end %>
-		
-	My Rating:
-	<% if logged_in? %>
-		<span class="color<%= @user_approval %>" id="mscoretp<%= @person.id.to_s%>"><%= @user_approval * 10 %>% </span>
 	<% else %>
 		<span><%= link_to "Login", :controller => "account", :action => "login" %> to Rate</span>
 	<% end %>
-	<br />
+	</div>
 </div>
- <div style="display:none;position:absolute;" class="approval_help" id="approval_help">
-  This average will display after at least five different users give a rating.
- </div>
-

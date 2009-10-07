@@ -1063,4 +1063,23 @@ text-align: left;
 width: 600px;
 margin-top: 10px;
 }
-
+.uc-box {
+  width:152px;
+}
+#approval-container h3#person_rating {
+  float:right;
+}
+.my_rating {
+  border-top:1px solid #E1DED5;
+  padding-top:10px;
+  margin-top:10px;
+  clear:both;
+}
+.my_rating .rate {
+  float:right;
+}
+.my_rating p {
+  float:left;
+  font-size:11px;
+  margin-top:15px;
+}

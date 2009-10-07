@@ -1686,7 +1686,7 @@ background-position: -107px -156px;
   height:15px;
   position:relative;  
 }
-#filterhandle{
+#filterhandle, .handle {
   width:13px;
   height:35px;
   line-height: 1.3em;
@@ -1697,7 +1697,7 @@ background-position: -107px -156px;
    _background:url(/images/handle.gif) center 18px no-repeat;
   cursor:default;
 }
-#filterhandle:hover,#filterhandle:active{
+#filterhandle:hover, .handle:hover,#filterhandle:active, .handle:active{
   background:url(/images/handle.png) center -13px no-repeat;
    _background:url(/images/handle.gif) center -13px no-repeat;
   color: #333;
@@ -1721,7 +1721,7 @@ background-position: -107px -156px;
   top:5px;
 }
 
-#filtertrack {
+#filtertrack, .slider {
 	margin-left:7px;
 	margin-right:10px;
 	float:left;
@@ -2758,7 +2758,7 @@ background: url('img/email_alerts.png') left 5px no-repeat;
 }
 
 .uc-box {
-  width:208px;  
+  width:208px;
   padding:18px 24px 10px 32px;
   text-align:left;
   background:url('img/uc-box.png') no-repeat left top;
@@ -3101,6 +3101,7 @@ background: url('img/stats_bottom.png') left bottom no-repeat ;
 }
 #stats span.count {
   float: right;
+  color:#647180;
 }
 
 

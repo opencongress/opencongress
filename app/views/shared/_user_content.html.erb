@@ -118,7 +118,7 @@
  	
 	<div class="uc-box-bottom">
 		<div class="uc-box">
-  		<%= render :partial => 'people/approval' %>
+  		<%= render :partial => 'people/approval', :locals => {:person => @person, :user_approval => @user_approval} %>
   	</div>
   </div> 
 

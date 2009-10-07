@@ -535,7 +535,7 @@ EOT
   def display_nested_set_rows(rows)
     ret = "<ul style=\"float:none;clear:both;\">"
     rows.each do |row|
-      ret += "\n\t<li style=\"margin-left:#{row.level.to_i * 10}px;\">"
+      ret += "\n\t<li style=\"margin-left:#{row.level.to_i * 15}px;\">"
       ret += yield row
       ret += "\t</li>"
     end

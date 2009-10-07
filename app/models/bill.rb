@@ -945,7 +945,7 @@ class Bill < ActiveRecord::Base
                        ON (gpo_action.gpo_session=bills.session AND gpo_action.gpo_bill_type=bills.bill_type AND gpo_action.gpo_number=bills.number)
                        INNER JOIN
                        (SELECT MIN(actions.datetime) AS consideration_date, actions.bill_id AS consideration_id 
-                        FROM actions, action_references WHERE actions.action_type='action' AND actions.id=action_references.action_id AND action_references.label='consideration' GROUP BY actions.bill_id) consideration_action
+                        FROM actions, action_references WHERE actions.action_type='action' AND actions.id=action_references.action_id AND action_references.label='consideration' AND actions.text NOT LIKE '%Committee%' GROUP BY actions.bill_id) consideration_action
                        ON consideration_action.consideration_id=bills.id
                        WHERE bills.session=? AND ((consideration_action.consideration_date - gpo_action.gpo_date < '259200 seconds'::interval) OR gpo_action.gpo_date IS NULL OR bills.id = 54463)
                              #{resolution_condition}

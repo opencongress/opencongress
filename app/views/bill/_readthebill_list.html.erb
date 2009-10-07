@@ -1,8 +1,9 @@
+<div class="padding">
 <a href="/bill/readthebill?sort=<%= @sort %>&show_resolutions=<%= (!@show_resolutions).to_s %>">
   <%= @show_resolutions ? "Hide Resolutions" : "Show Resolutions" %>
 </a>
 
-<table class="simple-table2" cellspacing="0">
+<table class="simple-table" id="readthebill_table">
   <tr>
     <th scope="col">Bill</th>
     <th scope="col"><%= @sort == 'gpo' ? 'Text Available' : 'Introduced' %></th>
@@ -13,21 +14,24 @@
   
   <% @bills.each do |bill| %>
     <tr>
-      <td class="arrow" width="550">
+      <td class="arrow" width="550" style="padding: 5px;">
       
         <% unless bill.hot_bill_category.nil? %><img src="/images/icon-hot-bill.gif" class="noborder" style="line-height: .8em;" alt="hot bill" /><% end %>
         <%= link_to bill.title_typenumber_only, :controller => 'bill', :action => "show", :id => bill.ident %> <%= bill.title_common %> 
         <span class='date'>(<%= bill.session.ordinalize %> congress)</span>
       </td>
-      <td><%= @sort == 'gpo' ? (bill.gpo_date.blank? ?  "unknown *" : Date.parse(bill.gpo_date).strftime("%B %d, %Y")) : bill.bill.introduced_action.formatted_date %> <% if @sort == 'gpo' and bill.id == 54463 %>**<% end %></td>
-      <td><%= @sort == 'gpo' ? Date.parse(bill.consideration_date).strftime("%B %d, %Y") : bill.originating_chamber_vote.formatted_date %></td>
-      <td><%= @sort == 'gpo' ? (bill.gpo_date.blank? ? "unknown *" : "#{(Time.parse(bill.consideration_date) - Time.parse(bill.gpo_date)).to_i / 3600} hours") : "#{bill.hours_to_first_attempt_to_pass} hours" %> <% if @sort == 'gpo' and bill.id == 54463 %>**<% end %></td>
+      <td style="padding: 5px;"><%= @sort == 'gpo' ? (bill.gpo_date.blank? ?  "unknown *" : Date.parse(bill.gpo_date).strftime("%B %d, %Y")) : bill.bill.introduced_action.formatted_date %> <% if @sort == 'gpo' and bill.id == 54463 %>**<% end %></td>
+      <td style="padding: 5px;"><%= @sort == 'gpo' ? Date.parse(bill.consideration_date).strftime("%B %d, %Y") : bill.originating_chamber_vote.formatted_date %></td>
+      <td style="padding: 5px;"><%= @sort == 'gpo' ? (bill.gpo_date.blank? ? "unknown *" : "#{(Time.parse(bill.consideration_date) - Time.parse(bill.gpo_date)).to_i / 3600} hours") : "#{bill.hours_to_first_attempt_to_pass} hours" %> <% if @sort == 'gpo' and bill.id == 54463 %>**<% end %></td>
       <% if @sort != 'gpo' %><td><%= bill.originating_chamber_vote.roll_call.nil? ? bill.originating_chamber_vote.result.capitalize : link_to(bill.originating_chamber_vote.result.capitalize, :controller => 'roll_call', :action => 'show', :id => bill.originating_chamber_vote.roll_call)  %></td><% end %>
     </tr>
   <% end %>
 </table>
 
 <% if @sort = 'gpo' %>
+  <p>
+    Negative times mean the bill was considered before the text was available.
+  </p>
   <p>
     * - Due to limitations on Congressional data, the exact time this bill was made available cannot be determined at this time, but it was considered in less than 72 hours. For more info about a bill's timeline in the legislative process, click on a bill name above and then follow the link in the middle of the page to "See All Actions".
   </p>
@@ -38,4 +42,5 @@
   </p>
 <% end %>
 <%= will_paginate @bills %>
+</div>
         

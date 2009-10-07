@@ -684,7 +684,7 @@ EOT
               if rc.action.where == 's'
                 current_user.my_sens.each do |sen|
                   voted = rc.vote_for_person(sen).to_s 
-                  out += "<p>#{sen.title_full_name}<font class='#{voted}'> #{voted} </font></p><p>[#{sen.party_and_state}]</p>"
+                  out += "<p>#{sen.title_full_name}<font class='#{voted}'> #{voted} </font></p><font>[#{sen.party_and_state}]</font>"
                 end
               end
             end
@@ -696,7 +696,7 @@ EOT
               if rc.action.where == 'h'
                 current_user.my_reps.each do |rep| 
                   voted = rc.vote_for_person(rep).to_s
-                  out += "<p>#{rep.title_full_name}<font class='#{voted}'> #{voted} </font></p><p>[#{rep.party_and_state}]</p>"
+                  out += "<p>#{rep.title_full_name}<font class='#{voted}'> #{voted} </font></p><font>[#{rep.party_and_state}]</font>"
                 end
               end
             end

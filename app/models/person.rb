@@ -1334,10 +1334,14 @@ class Person < ActiveRecord::Base
     ids = User.find_id_by_solr("my_state:#{state}", :facets => {:browse => ["my_state_f:#{state}", "my_people_tracked:#{self.id}"]}, :limit => 5000)
     rating = PersonApproval.average(:rating, :conditions => ["user_id in (?)", ids.results])
     if rating
-      return "#{(rating * 10.00).round}%"
+      return (rating * 10.00).round
     else
-      return "N/A"
+      return nil
     end
+  end
+  
+  def average_approval_state
+    average_approval_from_state(self.state)    
   end
 
   def top_interest_groups(num = 10)

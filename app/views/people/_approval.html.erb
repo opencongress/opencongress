@@ -9,6 +9,10 @@
         </h3>
         <% end %>
 			<h4>Average Rating</h4>     
+  		<% unless person.average_approval_state.nil? %>
+			<h3 id="state_rating" style="color:<%= percent_to_color(person.average_approval_state) %>"><%= person.average_approval_state %>%</h3>
+			<h4>Avg. from State</h4>
+			<% end %>
 			<div class="my_rating">
 	<% if logged_in? %>
 		<%= hidden_field_tag "scorep_" + person.id.to_s, 5 %>

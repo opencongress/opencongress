@@ -16,8 +16,12 @@
   There <%= pluralize_nn(s.users_tracking_from_state_count(@my_state.abbreviation), "is", "are") %> 
   <%= pluralize(s.users_tracking_from_state_count(@my_state.abbreviation), "OpenCongress user", "OpenCongress users") %> in 
   <%= @my_state.abbreviation %> tracking <%= s.full_name %>.<br/>
-  
-  The average approval rating by OpenCongress users in <%= @my_state.abbreviation %> of Sen. <%= s.lastname %> is approximately <%= s.average_approval_from_state(@my_state.abbreviation) %><br/><br/>
+  <% unless s.average_approval_from_state(@my_state.abbreviation).nil? %>
+  The average approval rating by OpenCongress users in <%= @my_state.abbreviation %> of <%= s.short_name %> is approximately <%= s.average_approval_from_state(@my_state.abbreviation) %>%
+	<% else %>
+	<%= s.short_name %>	has not yet received a rating from OpenCongress users in <%= @my_state.abbreviation %>.
+	<% end %> 
+	<br/><br/>
   
   <h3>Comments on <%= s.title_full_name %></h3>
     Mine: <%= s.comments.count(:id, :conditions => ["user_id = ?", @user.id]) %> | 

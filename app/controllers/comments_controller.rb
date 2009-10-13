@@ -157,6 +157,7 @@ class CommentsController < ApplicationController
   def flag
     @comment = Comment.find_by_id(params[:id])
     @comment.update_attribute(:flagged, true)
+    flash[:notice] = "Comment has been Flagged."
     redirect_to url_for(@comment.commentable_link.merge({:goto_comment => @comment.id}))
   end
   

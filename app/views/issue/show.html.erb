@@ -24,7 +24,9 @@
 <% end %>
 
 <% unless @latest_bills.empty? %>
+  <div class="clear"><%= will_paginate @latest_bills %></div>
   <%= render :partial => "bill/related_bills_list", :locals => {:related_bills_list => @latest_bills, :subject => @subject } -%>
+  <%= will_paginate @latest_bills %>
 <% else %>
   <div class="padding">
   <p class="behave">No bills at this time. The Congressional Research Service -- the official

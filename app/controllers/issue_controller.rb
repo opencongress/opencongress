@@ -1,3 +1,4 @@
+
 class IssueController < ApplicationController
   before_filter :issue_profile_shared, :only => [:show, :comments]
   skip_before_filter :store_location, :except => [:index, :alphabetical, :by_most_viewed, :by_bill_count, :top_twenty_bills, :show, :top_viewed_bills]
@@ -133,8 +134,7 @@ class IssueController < ApplicationController
     @page_title = @subject.term
     @meta_description = "#{@subject.term}-related bills and votes in the U.S. Congress."
     @comments = @subject
-    bills = @subject.latest_bills(20)
-    @latest_bills = bills.first(5)
+    @latest_bills = @subject.latest_bills(10, params[:page].blank? ? 1 : params[:page])
     @top_comments = @subject.comments.find(:all,:include => [:comment_scores, :user], :order => "comments.average_rating DESC", :limit => 2)
     @atom = {'link' => url_for(:only_path => false, :controller => 'issue', :id => @subject, :action => 'atom'), 'title' => "Major Bill Actions in #{@subject.term}"}
 		@hide_atom = true

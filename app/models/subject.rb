@@ -299,8 +299,9 @@ class Subject < ActiveRecord::Base
     SubjectRelation.all_related(self)
   end
 
-  def latest_bills(num, congress = DEFAULT_CONGRESS)
-    bills.find(:all, :conditions => ['bills.session = ?', congress], :order => 'bills.lastaction DESC', :limit => num);
+  def latest_bills(num, page = 1, congress = DEFAULT_CONGRESS)
+    bills.find(:all, :conditions => ['bills.session = ?', congress], 
+               :order => 'bills.lastaction DESC').paginate(:per_page => num, :page => page)
   end
 
   def newest_bills(num, congress = DEFAULT_CONGRESS)

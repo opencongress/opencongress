@@ -222,18 +222,22 @@ class ProfileController < ApplicationController
   end
   
   def remove_vote
-    bill_vote = current_user.bill_votes.destroy(params[:id])
+    bill_vote = current_user.bill_votes.find_by_bill_id(params[:id])
+    bill_vote.destroy
+    flash[:notice] = "Vote Removed"
     redirect_back_or_default(:action => "index", :login => current_user.login)
   end
   def remove_bill_bookmark
     bookmark = current_user.bookmarks.find_by_bookmarkable_type_and_bookmarkable_id("Bill", params[:id])
     bookmark.destroy
+    flash[:notice] = "Bill Removed from Tracking"
     redirect_back_or_default(:action => "items_tracked", :login => current_user.login)
   end
   
   def remove_person_bookmark
     bookmark = current_user.bookmarks.find_by_bookmarkable_type_and_bookmarkable_id("Person", params[:id])
     bookmark.destroy
+    flash[:notice] = "Person Removed from Tracking"
     redirect_back_or_default(:action => "items_tracked", :login => current_user.login)
   end
   

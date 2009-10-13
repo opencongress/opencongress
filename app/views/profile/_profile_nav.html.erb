@@ -75,7 +75,7 @@
 <% end %>
 
 <% if controller.controller_name == "friends" %>
-  <% if logged_in? && @user.id == current_user.id %>
+  <% if @user == current_user %>
 <div class="invites">
 
 	<script type='text/javascript'>

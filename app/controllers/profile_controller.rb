@@ -3,7 +3,7 @@ class ProfileController < ApplicationController
   before_filter :can_view_tab, :only => [:actions,:items_tracked,:bills, :my_votes, :comments, :person, :issues, :watchdog]
   skip_before_filter :store_location, :only => [:track,:tracked_bill_status,
                                                 :tracked_votes,:tracked_commentary_news,:tracked_commentary_blogs,
-                                                :edit_profile,:watchdog, :remove_vote, :remove_bill_bookmark, :remove_person_bookmark, :remove_bookmark, :pn_ajax]
+                                                :edit_profile,:watchdog, :remove_vote, :remove_bill_bookmark, :remove_person_bookmark, :remove_bookmark, :pn_ajax, :update_privacy]
 
   class Picture
     def getSmallThumb(x)
@@ -449,7 +449,8 @@ class ProfileController < ApplicationController
      @user = current_user
      params[:privacy_option].delete("user_id")
      @user.privacy_option.update_attributes(params[:privacy_option])
-     redirect_to :controller => "/profile", :login => @user.login, :action => "profile"
+     flash[:notice] = "Privacy Setting Updated"
+     redirect_back_or_default(:controller => "/profile", :login => @user.login, :action => "profile")
          
   end
 

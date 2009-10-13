@@ -75,8 +75,9 @@
 <% end %>
 
 <% if controller.controller_name == "friends" %>
-<div class="invites">
   <% if logged_in? && @user.id == current_user.id %>
+<div class="invites">
+
 	<script type='text/javascript'>
 	$j().ready(function() {
 		$j('#invite_form').jqm({ajax:'@href', trigger: 'a.invite_trigger'});
@@ -101,8 +102,9 @@
    <div style="clear:both;"></div>
   </div>
   <div id="invite_form" class="jqmWindow">  </div>
-<% end %>
+
 </div>
+<% end %>   
 <% end %>
 
 <% if controller.action_name == "watchdog" %>

@@ -158,7 +158,7 @@ end
 puts "people parsed"
 
 Person.transaction {
-  source = File.open(GOVTRACK_DATA_PATH + "/repstats/people.xml")
+  source = File.open(GOVTRACK_DATA_PATH + "/people.xml")
   
   listener = PeopleListener.new
   REXML::Document.parse_stream(source, listener)

@@ -5,7 +5,7 @@
 <%= render :partial => "profile/profile_nav" %>
 
 <div class="profile_content">
-
+<% if @user.can_view(:my_friends, current_user) %>
 
 
 
@@ -191,5 +191,7 @@
 
 </div>
 
-
+<% else %>
+<p>Not Publicly Viewable</p>
+<% end %>
 </div>

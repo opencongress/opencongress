@@ -33,16 +33,19 @@
 			   <%= link_to "<span>Friends</span>", friends_path(@user.login), 
 			          :class => params[:controller] == "friends" ? "arrow_button active" : "arrow_button" %></li>
 			<% end %>
-
+      
+			<% if @user.can_view(:my_political_notebook, current_user) %>
 			<li class="" id="Notebook">
 				<%= link_to "<span>My Political Notebook</span>", political_notebook_path(@user.login), 
 				        :class => controller.controller_name == 'political_notebooks' ? "arrow_button active" : "arrow_button" %>
-
-			</li>
-
+			 </li>
+			<% end %>
+			
+			<% if @user.can_view(:watchdog, current_user) %>
 			<li class="" id="Watchdog">
 				<%= link_to "<span>Watchdog</span>", user_watchdog_path(@user.login), :class => controller.action_name == "watchdog" ? "arrow_button active" : "arrow_button" %>
 			</li>       
+			<% end %>
 		</ul>
 
 <% if @show_email_alerts %>

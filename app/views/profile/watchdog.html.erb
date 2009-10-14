@@ -4,11 +4,22 @@
 
 <%= render :partial => "profile_nav" %>
 
+<% if @user.can_view(:watchdog, current_user) %>
 <% if @my_district %>
 
 <div class="dog_senators">
 
+
+	<% if @user == current_user %>
+	<div style="float:right;width:100px;">
+		<span style="margin:2px 5px 0 0px;float:left;"><%= image_tag("/images/private.png", :alt => "private", :title => "Private") %></span>
+			<% form_for :privacy_option, @user.privacy_option, :url => {:controller => "/profile", :action => "update_privacy" } do |f| %>
+			  <%= f.select :watchdog, [["Public",2],["Friends", 1], ["Private",0]], {}, {:onchange => "this.form.submit();"} %>
+			<% end %>
+	</div>
+	<% end %>
 <p>Welcome to your profile's Watchdog page. Here, you can compare your votes on bills to those of your elected officials, and see what topics other users in your state and district are tracking.</p>
+<br />
 
   <h3 class="dark floatright">My State: <%= link_to @my_state.name, @my_state %></h3>
   <h3>My Senators</h3>
@@ -31,4 +42,7 @@
   <h3 class="dark"><p>To get started, first we need to associate your profile your specific Congressional district.</h3>
   
   <p>Please set your district by visiting your <%= link_to "Profile Settings", user_profile_path(@user.login) %> and entering a zipcode and a zip +4 extension. If you don't know your zip +4 offhand, no worries, you can find it easily from that page.</p>
+<% end %>
+<% else %>
+<p>Not Publicly Viewable</p>
 <% end %>

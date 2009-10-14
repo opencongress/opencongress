@@ -75,9 +75,11 @@
 			<% end %>
      
 			<% unless @user.location.blank? %>
+				<% if @user.can_view(:my_location, current_user) %>
 			<p><label>Location</label>
 			<%= draw_edit_in_place("location") %>
       </p>
+				<% end %>
 			<% end %>
 
 			<% if @user.can_view(:my_zip_code, current_user) %>

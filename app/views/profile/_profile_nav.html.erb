@@ -108,6 +108,7 @@
 <% end %>
 
 <% if controller.action_name == "watchdog" %>
+	<% if @user.can_view(:watchdog, current_user) %>
   <div id="alerts">
 
         <h3 class="dark">My Friends</h3>
@@ -134,6 +135,7 @@
           </li>
          </ul>
   </div>
+	<% end %>
 <% end %>
 
 	

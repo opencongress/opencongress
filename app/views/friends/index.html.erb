@@ -120,7 +120,7 @@
 <div class="friends_table">
 <h3 class="inline"><%= user_name("My", "'s") %> Friends</h3>
 
-<% if logged_in? && @user == current_user %>
+<% if @user == current_user %>
 	<span style="margin:2px 5px 0 20px;float:left;"><%= image_tag("/images/private.png", :alt => "private", :title => "Private") %></span>
 		<% form_for :privacy_option, @user.privacy_option, :url => {:controller => "/profile", :action => "update_privacy" } do |f| %>
 		  <%= f.select PrivacyOption.column_names[11].to_sym, [["Public",2],["Friends", 1], ["Private",0]], {}, {:onchange => "this.form.submit();"} %>

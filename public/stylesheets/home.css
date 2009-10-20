@@ -712,8 +712,7 @@ div.pop_bills{
 width: 544px;
 clear: both;
 float: right;
-/*margin-top: 30px;*/
-margin-top:12px;
+margin-top: 30px;
 margin-right: 30px;
 background: url(img/home_bill_bottom.png) left bottom no-repeat;
    _background: url(img/home_bill_bottom.gif) left bottom no-repeat;

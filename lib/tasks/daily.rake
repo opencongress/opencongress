@@ -35,7 +35,7 @@ namespace :update do
     begin
       data = IO.popen("sha1sum -c /tmp/people.sha1").read
       unless data.match(/OK\n$/)
-        system "sha1sum /data/govtrack/#{DEFAULT_CONGRESS}/people.xml >/tmp/people.sha1"
+        system "sha1sum /data/govtrack/people.xml >/tmp/people.sha1"
         Person.transaction {
           load 'bin/daily/daily_parse_people.rb'
         }

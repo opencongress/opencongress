@@ -122,7 +122,7 @@ module PeopleHelper
   	          " Sponsored Bills (Ranks #{@person.person_stats.sponsored_bills_rank} of #{total_people}) "
        unless @person.person_stats.sponsored_bills_passed.nil?
          output += @person.person_stats.sponsored_bills_passed.to_s +
-         " Passed (Ranks #{@person.person_stats.sponsored_bills_passed_rank} of #{total_people})</li>"
+         " Made Into Law (Ranks #{@person.person_stats.sponsored_bills_passed_rank} of #{total_people})</li>"
        end
     else
       output += "<li>No Sponsored Bills</li>"
@@ -134,7 +134,7 @@ module PeopleHelper
           	  " Co-Sponsored Bills (Ranks #{@person.person_stats.cosponsored_bills_rank} of #{total_people}) "
       unless @person.person_stats.cosponsored_bills_passed.nil?
         output += @person.person_stats.cosponsored_bills_passed.to_s +
-            	  " Passed (Ranks #{@person.person_stats.cosponsored_bills_passed_rank} of #{total_people})" 
+            	  " Made Into Law (Ranks #{@person.person_stats.cosponsored_bills_passed_rank} of #{total_people})" 
       end        
       output += "</li>"
     else

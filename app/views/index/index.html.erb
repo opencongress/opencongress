@@ -179,7 +179,7 @@
 		<ul class="latest_votes">
 			<% RollCall.latest_votes_for_unique_bills(3).each do |r| %>
 			<li>
-				<a href="/roll_call/show/<%= r.id %>">
+				<a href="<%= r.vote_url %>">
 				<span><%= truncate(r.bill.title_full_common, :length => 70) %></span><br />
 				<span class="type"><%= get_result_image(r.result) %> <%= r.roll_type %></span>
 				<span class="date"><%= r.date.strftime("%b %d, %Y") %></span>

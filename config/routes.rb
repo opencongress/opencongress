@@ -164,6 +164,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'video/rss', :controller => 'video', :action => 'all', :format => 'atom'
 
   map.connect 'bill/bill_vote/:bill/:id', :controller => "bill", :action => "bill_vote"
+  map.connect 'vote/:year/:chamber/:number', :controller => "roll_call", :action => "by_number"
   map.connect 'users/:login/profile/political_notebook/:action', :controller => 'notebook_items'
   
 #  map.connect 'users/:login/profile/political_notebook/new',  :controller => "notebook_items", :action => "new"               
@@ -173,6 +174,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'api/bill/text_summary/:id', :controller => 'bill', :action => 'status_text'
   map.connect 'api/roll_call/text_summary/:id', :controller => "roll_call", :action => 'summary_text'  
 
+  map.connect 'baucus_bill_health_care.html', :controller => 'index', :action => 's1796_redirect'
   map.connect 'tools/:action/:id', :controller => 'resources'
     
   # Install the default route as the lowest priority.

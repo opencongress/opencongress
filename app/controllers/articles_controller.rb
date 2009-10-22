@@ -53,7 +53,8 @@ class ArticlesController < ApplicationController
 
       @meta_description = @article.excerpt.blank? ? @article.article : @article.excerpt
       @meta_keywords = @article.tags.collect{|t| t.name }.join(", ")
-
+      @bookmarking_image = @article.frontpage_image_url
+      
       @atom = {'link' => url_for(:only_path => false, :controller => 'articles', :action => 'atom'), 'title' => "OpenCongress Blog"}
       @related_gossip = Gossip.latest(3)
       @page_title_prefix = "Blog" 

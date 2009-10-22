@@ -1,7 +1,7 @@
 class RollCallController < ApplicationController
   helper :index
   skip_before_filter :store_location, :except => [:show, :all]
-  before_filter :page_view, :only => :show
+  before_filter :page_view, :only => [:show, :by_number]
   before_filter :login_required, :only => [:make_hot]
   before_filter :no_users, :only => [:can_blog]
   
@@ -127,29 +127,8 @@ class RollCallController < ApplicationController
     unless @roll_call
       redirect_to :controller => 'index', :action => 'notfound'
       return
-    end
-    @master_chart = ofc2(400,220, "roll_call/master_piechart_data/#{@roll_call.id}")
-    @aye_chart = ofc2(400,220, "roll_call/partyvote_piechart_data/#{@roll_call.id}?breakdown_type=#{CGI.escape("+")}")
-    @nay_chart = ofc2(400,220, "roll_call/partyvote_piechart_data/#{@roll_call.id}?breakdown_type=-")
-    @abstain_chart = ofc2(400,220, "roll_call/partyvote_piechart_data/#{@roll_call.id}?breakdown_type=0")
-
-
-    @page_title = "#{@roll_call.chamber} Roll Call ##{@roll_call.number} Details"
-    @title_desc = SiteText.find_title_desc('roll_call_show')
-    
-    @breadcrumb = { 
-      1 => { 'text' => "Roll Calls", 'url' => { :controller => 'roll_call'} }
-    }
-    if @roll_call.bill
-      @breadcrumb = {
-        2 => { 'text' => @roll_call.roll_type + ": " + @roll_call.bill.title_typenumber_only, 
-               'url' => { :controller => 'roll_call', :action => 'show', :id => @roll_call} }
-      }
     else
-      @breadcrumb = {
-         2 => { 'text' => @roll_call.question, 
-                'url' => { :controller => 'roll_call', :action => 'show', :id => @roll_call} }
-      }
+      redirect_to @roll_call.vote_url
     end
   end
   
@@ -281,14 +260,37 @@ class RollCallController < ApplicationController
     render :layout => false
   end
   
+  def by_number
+    @roll_call = RollCall.find_by_ident("#{params[:year]}-#{params[:chamber]}#{params[:number]}")  
+    
+    unless @roll_call
+      redirect_to :controller => 'index', :action => 'notfound'
+      return
+    end
+    
+    roll_call_shared
+    
+    render :action => 'show'
+  end
+  
   private
 
   def page_view
-    @roll_call = RollCall.find(params[:id])
+    @roll_call = RollCall.find_by_id(params[:id]) || RollCall.find_by_ident("#{params[:year]}-#{params[:chamber]}#{params[:number]}")
     
     if @roll_call
       PageView.create_by_hour(@roll_call, request)
     end
   end
   
+  def roll_call_shared
+    @master_chart = ofc2(400,220, "roll_call/master_piechart_data/#{@roll_call.id}")
+    @aye_chart = ofc2(400,220, "roll_call/partyvote_piechart_data/#{@roll_call.id}?breakdown_type=#{CGI.escape("+")}")
+    @nay_chart = ofc2(400,220, "roll_call/partyvote_piechart_data/#{@roll_call.id}?breakdown_type=-")
+    @abstain_chart = ofc2(400,220, "roll_call/partyvote_piechart_data/#{@roll_call.id}?breakdown_type=0")
+
+
+    @page_title = "#{@roll_call.chamber} Roll Call ##{@roll_call.number} Details"
+    @title_desc = SiteText.find_title_desc('roll_call_show')
+  end
 end

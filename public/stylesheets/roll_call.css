@@ -8,7 +8,7 @@ border-bottom: 1px solid #ddc7ee;
 }
 
 
-.show #heading {
+.show #heading, .by_number #heading {
 min-height: 45px;
 padding-bottom: 50px;
 background: url(img/committees_heading.png);
@@ -42,9 +42,6 @@ background: none;
 
 ul.rolls_list li{
 clear: both;
-}
-
-.show .inner{
 }
 
 ul.rolls_list li.help p{
@@ -246,7 +243,7 @@ background: url(img/sen-sort.png) left 83px repeat-x;
    _background: url(img/sen-sort.gif) left 83px repeat-x;
 }
 
-#roll_call.show .inner {
+#roll_call.show .inner, #roll_call.by_number .inner {
 background: none !important;
 }
 

@@ -69,6 +69,10 @@ end
     RollCallVote.find(:first, :conditions => [ "person_id=? AND roll_call_id=?", person.id, self.id])
   end
   
+  def vote_url
+    "/vote/#{self.date.year}/#{where[0...1]}/#{number}"
+  end
+    
   #def ayes
   #  aye_votes.size
   #end

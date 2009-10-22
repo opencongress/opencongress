@@ -44,4 +44,8 @@ class IndexController < ApplicationController
 			page.replace_html 'popular', :partial => "index/popular", :locals => {:object => @object}
 		end
 	end
+	
+	def s1796_redirect
+	  redirect_to :controller => 'bill', :action => 'show', :id => '111-s1796'
+	end
 end

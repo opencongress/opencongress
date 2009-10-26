@@ -1184,7 +1184,7 @@ class Person < ActiveRecord::Base
   end
   
   def party_and_state
-    "#{self.party[0,1]}-#{self.state}"
+    self.party.blank? ? "#{self.state}" : "#{self.party[0,1]}-#{self.state}"
   end
   
   def opposing_party
@@ -1199,7 +1199,7 @@ class Person < ActiveRecord::Base
     end
   end
   def select_list_name
-    "#{lastname}, #{firstname} " + party_and_state
+    "#{lastname}, #{firstname} (#{party_and_state})"
   end
   def short_name
     "#{title} " + lastname

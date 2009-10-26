@@ -23,7 +23,7 @@ def metavid_item_to_video(item, person = nil)
     v.title = item.text('title')
     v.source = 'metavid'
   
-    v.embed = "<video roe='#{embed}' />"
+    v.embed = "<video roe='#{embed}'></video>"
     
     # pull the date from the title
     md = /\d+-\d+-\d+/.match(v.title)  

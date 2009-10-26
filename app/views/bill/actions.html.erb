@@ -19,7 +19,7 @@
 	<% @actions.map do |a| %>
 	
 	<tr class="<%= cycle('a','b') %>">                                
-		<td width="18%" class="actionz"><%= a.formatted_date_short %></td><td class="text"><%= a.text %></td>
+		<td width="18%" class="actionz"><%= a.formatted_date_short %></td><td class="text"><%= a.to_s %></td>
 	</tr>
 	
 	

@@ -104,7 +104,7 @@ class Action < ActiveRecord::Base
     Time.at(date).utc.strftime("%b %d, %Y")
   end
   def formatted_date_short
-    Time.at(date).utc.strftime("%b ") + Time.at(date).day.ordinalize    
+    Time.at(date).utc.strftime("%b ") + Time.at(date).utc.day.ordinalize    
   end
   def date_std
     datetime.strftime('%b %d, %Y')

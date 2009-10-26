@@ -4,14 +4,11 @@ OpenCongress has recently updated our official <a href="http://www.opencongress.
 
 <% form_tag '/account/accept_tos' do |f| %>
 
-<div title="Account signup" id="signupform" class="form">
+<div title="Accept Terms of Service" id="accept_tos" class="form">
   <%= error_messages_for 'user' %><br />
-  <table cellspacing="0" cellpadding="0">
-		<tr>
- 		  <td><%= check_box_tag "accept_tos" %></td>
- 		  <td><label for "accept_tos">I agree to the <a href="/about/terms_of_service">Terms of Service</a> and <a href="/about/privacy_policy">Privacy Policy</a>.</td>
- 		</tr>
- 	</table>
+ 		  <%= check_box_tag "accept_tos" %>
+ 		  <label for "accept_tos">I agree to the <a href="/about/terms_of_service">Terms of Service</a> and <a href="/about/privacy_policy">Privacy Policy</a>.
+	<br /><br />
  	<input type="image" src="/images/agree.png" value="submit" />
 </div>
 

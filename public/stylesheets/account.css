@@ -81,7 +81,14 @@ overflow: hidden;
 clear: none !important;
 float: left !important;
 }
-
+.memo ul#people_list li{
+  width:100%;
+}
+.memo ul#people_list li div.details a.track_small {
+  clear:none;
+  margin:10px 0 0 0;
+  float:left !important;
+}
 
 ul#people_list li li{
 height: 26px;

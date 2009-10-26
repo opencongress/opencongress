@@ -269,6 +269,9 @@ class AccountController < ApplicationController
        @user.identity_url = identity_url
        @user.email = session[:invite].invitee_email unless session[:invite].nil? or request.post?
   
+       @user.accepted_tos = true
+       @user.accepted_tos_at = Time.now     
+  
        if @user.zipcode
          @senators, @reps = Person.find_current_congresspeople_by_zipcode(@user.zipcode, @user.zip_four)
          @user.representative_id = @reps.first.id if (@reps && @reps.length == 1)
@@ -283,7 +286,7 @@ class AccountController < ApplicationController
 
        redirect_to(:controller => '/account', :action => 'confirm', :login => @user.login)
      rescue ActiveRecord::RecordInvalid
-       render :action => 'signup'
+       render :action => 'new_openid'
      end
     end
   end

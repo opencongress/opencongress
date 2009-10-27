@@ -656,7 +656,7 @@ private
         ["Comments <span>(#{number_with_delimiter(@comments.comments.size)})</span>",{:action => 'comments', :id => @bill.ident}]
       ])
       @top_comments = @bill.comments.find(:all,:include => [:comment_scores, :user], :order => "comments.average_rating DESC", :limit => 2)
-      @bookmarking_image = "/stylesheets/img/bill.png"
+      @bookmarking_image = "/stylesheets/img/fb-bill.jpg"
       @atom = {'link' => url_for(:only_path => false, :controller => 'bill', :id => @bill.ident, :action => 'atom'), 'title' => "#{@bill.title_typenumber_only} activity"}
     else
       flash[:error] = "Invalid bill URL."

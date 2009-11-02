@@ -1,5 +1,5 @@
 <div class='add-comment comment_reply' id="comment_reply_<%= parent_id.to_s %>">
-<% if logged_in? || object.class.to_s == "Article" %>
+<% if logged_in? %>
   <div style="color: red">
     <%= error_messages_for :comment, :header_message => "Please try again.", :message => "Your comment couldn't be saved because of the following errors:" %>
   </div>

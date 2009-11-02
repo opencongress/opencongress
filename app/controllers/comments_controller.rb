@@ -1,13 +1,10 @@
 class CommentsController < ApplicationController
   skip_before_filter :store_location
-  before_filter :login_required, :only => ["flag", "censor", "ban_ip"]
+  before_filter :login_required, :only => ["flag", "censor", "ban_ip", "add_comment"]
   before_filter :admin_login_required, :only => ["censor", "ban_ip"]
-
-
 
   def add_comment
     object = Object.const_get(params[:type]).find_by_id(params[:id])
-    login_required unless object.class.to_s == "Article"
     if object
       @comment = Comment.new(params[:comment])
       

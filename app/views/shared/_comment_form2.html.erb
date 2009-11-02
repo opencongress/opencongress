@@ -1,7 +1,7 @@
 <br />
 <!-- <h3 class="dark clear"><%= toggler("add", "Add A Comment", "", "arrow")%></h3> -->
 
-<% if logged_in? || controller.controller_name == "articles" %>
+<% if logged_in? %>
 <div id="add" class="comment-add" style="clear:both;">
  <div class="count">characters remaining:&nbsp;&nbsp;<span id="counter"></span></div>
  <h3>Speak Your Mind</h3>

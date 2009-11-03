@@ -3,7 +3,7 @@
 
 echo '<div id="Panel" class="'.$this->CssClass.'">';
 
-echo '<ul id="in">
+echo '<ul id="in" class="clearfix">
   <li id="caty"><a href="/forum/categories.php"><span>Forum Categories</a></span></li>
   <li id="disc"><a href="/forum"><span>Discussions</a></span></li>
   ';

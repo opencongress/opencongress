@@ -111,7 +111,7 @@ module ProfileHelper
         end
         if vote_other = bill.other_chamber_vote
               if (vote_other.where == "h" && person.title == "Rep.") || (vote_other.where == "s" && person.title == "Sen.")
-                  out << vote_other.result == "pass" ? "Aye" : "Nay"  
+                  out << (vote_other.result == "pass" ? "Aye" : "Nay")
                   out << "<span style='font-size:10px;font-style:italics;'>(#{vote_other.how})</span>"
               end
         end

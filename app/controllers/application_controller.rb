@@ -9,7 +9,8 @@ class ApplicationController < ActionController::Base
   before_filter :current_tab
   before_filter :has_accepted_tos?
   before_filter :get_site_text_page
-
+  before_filter :is_banned?
+  
   def paginate_collection(collection, options = {})
     # from http://www.bigbold.com/snippets/posts/show/389
     options[:page] = options[:page] || params[:page] || 1
@@ -110,6 +111,14 @@ class ApplicationController < ActionController::Base
       logger.info "USER APP TOS: #{current_user.accepted_tos}"
       unless current_user.accepted_tos == true
         redirect_to :controller => "/account", :action => "accept_tos"
+      end
+    end
+  end
+  
+  def is_banned?
+    if logged_in?
+      if current_user.is_banned == true
+        redirect_to :controller => "/account", :action => "logout"
       end
     end
   end

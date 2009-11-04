@@ -7,7 +7,7 @@ class AccountController < ApplicationController
   skip_before_filter :store_location
 
   skip_before_filter :has_accepted_tos?, :only => ["accept_tos","logout"]
-
+  skip_before_filter :is_banned?, :only => ["logout"]
   include OpenIdAuthentication
 
 #  observer :user_observer

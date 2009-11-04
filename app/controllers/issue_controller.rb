@@ -88,7 +88,7 @@ class IssueController < ApplicationController
     congress = params[:congress] ? params[:congress] : DEFAULT_CONGRESS
       respond_to do |format|
         format.html {
-    @stats_object = @subject
+    @sidebar_stats_object = @subject
     @user_object = @subject
     @page_title_prefix = "U.S. Congress"
     @page_title = @subject.term
@@ -128,7 +128,7 @@ class IssueController < ApplicationController
       @br_link = @subject.br_link
     end      
 	
-    @stats_object = @subject
+    @sidebar_stats_object = @subject
     @user_object = @subject
     @page_title_prefix = "U.S. Congress"
     @page_title = @subject.term
@@ -189,7 +189,7 @@ class IssueController < ApplicationController
       @page_title_prefix = "U.S. Congress"
       @page_title = @subject.term
       @meta_description = "#{@subject.term} on OpenCongress"
-      @stats_object = @user_object = @comments = @subject
+      @sidebar_stats_object = @user_object = @comments = @subject
       @page = params[:page] ||= 1   
       @top_comments = @subject.comments.find(:all,:include => [:comment_scores, :user], :order => "comments.average_rating DESC", :limit => 2)
       @atom = {'link' => url_for(:only_path => false, :controller => 'issue', :id => @subject, :action => 'atom'), 'title' => "#{@subject.term} activity"}

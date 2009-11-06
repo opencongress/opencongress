@@ -2179,6 +2179,16 @@ background:url("img/sprites.png") -131px -136px;
    _background:url("img/sprites.gif") -131px -136px;
 }
 
+.maplight {
+  clear:both;
+}
+.maplight a {
+  text-decoration:none;
+}
+.maplight img {
+  position:relative;
+  top:6px;
+}
 /* standard view for lists */
 
 #heading{
@@ -3468,11 +3478,6 @@ width: 100px;
 padding-left: 142px;
 font-size: 11px;
 color: #999;
-}
-
-.clear{
-clear: both;
-
 }
 
 #signupform .clear label{

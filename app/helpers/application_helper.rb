@@ -275,7 +275,7 @@ EOT
 
   def maplight_link(bill = nil)
     if bill
-      "<h3>For more info about the campaign contributions behind this bill, visit its page on<a class='arrow' target='_blank' href=\"http://maplight.org/map/us/bill/#{bill.ident}\"> <img src=\"/images/maplight-trans.png\" alt='Maplight.org' class='noborder maplight' /></a></h3>"
+      "<div class='maplight'><a href='http://maplight.org/'>Campaign contribution data for bills provided by <img src=\"/images/maplight-trans.png\" alt='Maplight.org' /></a></div>"
     else
       "<h3>For more info about the campaign contributions behind the bills in Congress, visit <a class='arrow' target='_blank' href=\"http://maplight.org\"><img class='noborder maplight' src=\"/images/maplight-trans.png\" alt='Maplight.org' /></a>.</h3>"
     end

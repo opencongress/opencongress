@@ -5,7 +5,7 @@ class Admin::ArticlesController < Admin::IndexController
   verify :method => :post, :only => [ :destroy, :create, :update ],
          :redirect_to => { :action => :list }
          
-  cache_sweeper :article_sweeper, :only => [ :destroy, :update ]
+#  cache_sweeper :article_sweeper, :only => [ :destroy, :update ]
   
   public         
     def index

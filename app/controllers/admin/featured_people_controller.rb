@@ -1,5 +1,5 @@
 class Admin::FeaturedPeopleController < Admin::IndexController
-  cache_sweeper :featured_person_sweeper, :only => [ :destroy, :create, :update ]
+#  cache_sweeper :featured_person_sweeper, :only => [ :destroy, :create, :update ]
   
   def index
     list

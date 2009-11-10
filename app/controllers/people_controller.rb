@@ -149,7 +149,7 @@ class PeopleController < ApplicationController
         
       }
       format.xml {
-         expires_in 6.hours, :private => false
+         expires_in 6.hours, :public => true
       }
       format.json {
         render :json => Hash.from_xml(render_to_string(:template => "people/compare.xml.builder", :layout => false)).to_json, :layout => false
@@ -241,7 +241,7 @@ class PeopleController < ApplicationController
     @date_method = :"entered_top_#{commentary_type}"
     
     @people = Person.top20_commentary(commentary_type, person_type)
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :action => 'top20_atom', :layout => false
   end
@@ -269,7 +269,7 @@ class PeopleController < ApplicationController
   
   def show
     congress = params[:congress] ? params[:congress] : DEFAULT_CONGRESS
-    expires_in 20.minutes, :private => false
+    expires_in 20.minutes, :public => true
 
     respond_to do |format|
      format.html {
@@ -484,7 +484,7 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:id])
     @commentaries = @person.news.find(:all, :limit => 20)
     @commentary_type = 'news'
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :action => 'commentary_atom', :layout => false
   end
@@ -493,7 +493,7 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:id])
     @commentaries = @person.blogs.find(:all, :limit => 20)
     @commentary_type = 'blog'
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :action => 'commentary_atom', :layout => false
   end
@@ -502,7 +502,7 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:id])
     @commentaries = @person.news.find(:all, :conditions => "commentaries.average_rating > 5", :limit => 5)
     @commentary_type = 'topnews'
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :action => 'commentary_atom', :layout => false
   end
@@ -511,7 +511,7 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:id])
     @commentaries = @person.blogs.find(:all, :conditions => "commentaries.average_rating > 5", :limit => 5)
     @commentary_type = 'topblog'
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :action => 'commentary_atom', :layout => false
   end
@@ -519,7 +519,7 @@ class PeopleController < ApplicationController
   def atom_featured
     @featured_people = FeaturedPerson.find(:all, :order => 'created_at DESC', :limit => 20)
 
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
     render :action => 'featured_atom', :layout => false
   end
   
@@ -593,7 +593,7 @@ class PeopleController < ApplicationController
     
     @items = @person.recent_activity
     
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
     
     render :layout => false
   end
@@ -619,7 +619,7 @@ class PeopleController < ApplicationController
     end
     @date_method = :entered_top_viewed
 
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
  
     render :action => 'top20_atom', :layout => false
   end

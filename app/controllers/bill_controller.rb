@@ -206,7 +206,7 @@ class BillController < ApplicationController
     session, bill_type, number = Bill.ident params[:id]
     @bill = Bill.find_by_session_and_bill_type_and_number session, bill_type, number, :include => :actions
     @posts = []
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :layout => false
   end
@@ -215,7 +215,7 @@ class BillController < ApplicationController
     @bill = Bill.find_by_ident(params[:id])
     @commentaries = @bill.news
     @commentary_type = 'news'
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :action => 'commentary_atom', :layout => false
   end
@@ -224,7 +224,7 @@ class BillController < ApplicationController
     @bill = Bill.find_by_ident(params[:id])
     @commentaries = @bill.blogs
     @commentary_type = 'blog'
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :action => 'commentary_atom', :layout => false
   end
@@ -233,7 +233,7 @@ class BillController < ApplicationController
     @bill = Bill.find_by_ident(params[:id])
     @commentaries = @bill.news.find(:all, :conditions => "commentaries.average_rating > 5", :limit => 5)
     @commentary_type = 'topnews'
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :action => 'commentary_atom', :layout => false
   end
@@ -242,7 +242,7 @@ class BillController < ApplicationController
     @bill = Bill.find_by_ident(params[:id])
     @commentaries = @bill.blogs.find(:all, :conditions => "commentaries.average_rating > 5", :limit => 5)
     @commentary_type = 'topblog'
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :action => 'commentary_atom', :layout => false
   end
@@ -252,7 +252,7 @@ class BillController < ApplicationController
     @date_method = :entered_top_viewed
     @feed_title = "Top 20 Most Viewed Bills"
     @most_type = "viewed"
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
     
     render :action => 'top20_atom', :layout => false
   end
@@ -269,7 +269,7 @@ class BillController < ApplicationController
     @date_method = :"entered_top_#{commentary_type}"
   
     @bills = Bill.top20_commentary(commentary_type)
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :action => 'top20_atom', :layout => false
   end

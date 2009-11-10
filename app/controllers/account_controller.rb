@@ -72,6 +72,7 @@ class AccountController < ApplicationController
       ip = self.current_user.user_ip_addresses.find_or_create_by_addr(UserIpAddress.int_form(request.remote_ip))
       self.current_user.check_feed_key
       process_login_actions
+      cookies[:ocloggedin]="true"
       if params[:remember_me] == "1"
         self.current_user.remember_me
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }

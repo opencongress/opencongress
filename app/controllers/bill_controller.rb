@@ -352,6 +352,7 @@ class BillController < ApplicationController
     begin
       # open html from file
       path = "#{OC_BILLTEXT_PATH}/#{@bill.session}/#{@bill.bill_type}#{@bill.number}#{@version.version}.gen.html-oc"
+      
       @bill_text = File.open(path).read
     rescue
       @bill_text = "We're sorry but OpenCongress does not have the full bill text at this time.  Try at <a href='http://thomas.loc.gov/cgi-bin/query/z?c#{@bill.session}:#{@bill.title_typenumber_only}:'>THOMAS</a>."
@@ -465,7 +466,7 @@ class BillController < ApplicationController
       elsif @sort == 'oldest'
         @blogs = @bill.blogs.find(:all, :order => 'commentaries.date ASC').paginate :page => @page
       else
-        @blogs = @bill.blogs.paginate :page => @page
+        @blogs = @bill.blogs.paginate :page => params[:page]
       end
     end
     
@@ -515,7 +516,7 @@ class BillController < ApplicationController
       elsif @sort == 'oldest'
         @news = @bill.news.find(:all, :order => 'commentaries.date ASC').paginate :page => @page
       else
-        @news = @bill.news.paginate :page => @page
+        @news = @bill.news.paginate :page => params[:page]
       end
     end
     
@@ -650,8 +651,7 @@ private
       @tabs << ["Money Trail",{:action => 'money', :id => @bill.ident}] unless @bill.bill_interest_groups.empty?
       @tabs.concat([
         ["Wiki","#{@wiki_url}"],
-        #["News <span>(#{number_with_delimiter(@bill.news_article_count)})</span> & Blogs <span>(#{number_with_delimiter(@bill.blog_article_count)})</span>",{:action => 'news_blogs', :id => @bill.ident}],
-        ["News <span>(#{number_with_delimiter(@bill.news.size)})</span> & Blogs <span>(#{number_with_delimiter(@bill.blogs.size)})</span>",{:action => 'news_blogs', :id => @bill.ident}],
+        ["News <span>(#{number_with_delimiter(@bill.news_article_count)})</span> & Blogs <span>(#{number_with_delimiter(@bill.blog_article_count)})</span>",{:action => 'news_blogs', :id => @bill.ident}],
         ["Videos <span>(#{number_with_delimiter(@bill.videos.size)})</span>",{:action => 'videos', :id => @bill.ident}],
         ["Comments <span>(#{number_with_delimiter(@comments.comments.size)})</span>",{:action => 'comments', :id => @bill.ident}]
       ])

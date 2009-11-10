@@ -7,11 +7,11 @@
   <!-- cached: <%= "#{@person.fragment_cache_key}_#{params[:action]}_#{@sort}" %> // <%= Time.now %> -->
 <div class="col1" id ="news_list">
 	<h4 class="short">News Coverage</h5>
-  <%= render :partial => 'shared/news', :object => @news, :locals => { :limit => 10, :all_size => @news.size, :short => true, :default_title => @person.popular_name, :more_url => { :controller => 'people', :action => 'news', :id => @person } } %>
+  <%= render :partial => 'shared/news', :object => @news, :locals => { :limit => 10, :all_size => @person.news_article_count, :short => true, :default_title => @person.popular_name, :more_url => { :controller => 'people', :action => 'news', :id => @person } } %>
 </div>
 <div class="col2" id="blogs_list">
 	<h4 class="short">Blog Coverage</h5>
-							  <%= render :partial => 'shared/blogs', :object => @blogs, :locals => { :limit => 10, :all_size => @blogs.size, :default_title => @person.popular_name,  :short => true, :more_url => { :controller => 'people', :action => 'blogs', :id => @person } } %>
+							  <%= render :partial => 'shared/blogs', :object => @blogs, :locals => { :limit => 10, :all_size => @person.blog_article_count, :default_title => @person.popular_name,  :short => true, :more_url => { :controller => 'people', :action => 'blogs', :id => @person } } %>
 </div>
 <% end %>
 </div>

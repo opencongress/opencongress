@@ -8,7 +8,7 @@
   <!-- cached: <%= "#{@person.fragment_cache_key}_news_#{@sort}_page_#{@page}" %> // <%= Time.now %> -->
   <p><%= will_paginate @news, :params => { :sort => @sort }  %></p>
   <%= render :partial => 'shared/news', :object => @news,
-    :locals => { :limit => nil, :all_size => @news.size, :default_title => @person.full_name } %>
+    :locals => { :limit => @news.size, :all_size => @person.news_article_count, :default_title => @person.full_name } %>
   <p><%= will_paginate @news, :params => { :sort => @sort }  %></p>
 <% end %>
 </div>

@@ -42,6 +42,9 @@ class Admin::CommentaryController < Admin::IndexController
           c.status = statuses[k]
           c.is_ok = 'true' if statuses[k] == 'OK'
           c.save
+          
+          c.commentariable.increment!(c.is_news ? :news_article_count : :blog_article_count)
+          
         end
       end
       
@@ -79,6 +82,9 @@ class Admin::CommentaryController < Admin::IndexController
     if @commentary.save
       flash[:notice] = 'Commentary was successfully created.'
       @commentary.commentariable.expire_commentary_fragments(@commentary.is_news? ? 'news' : 'blog')
+      
+      @commentary.commentariable.increment!(@commentary.is_news ? :news_article_count : :blog_article_count)
+      
       case @commentary.commentariable_type
       when 'Bill'
         redirect_to :controller => '/bill', :action => 'show', :id => @commentary.commentariable.ident
@@ -130,6 +136,8 @@ class Admin::CommentaryController < Admin::IndexController
         c.is_ok = false
         c.save
         
+        c.commentariable.decrement!(c.is_news ? :news_article_count : :blog_article_count)
+        
         object = c.commentariable unless object
         logger.info "%%%%%%%%%%%%%%%%%%% #{c_id}"
       end
@@ -168,6 +176,8 @@ class Admin::CommentaryController < Admin::IndexController
     @commentary.status = 'DELETED'
     @commentary.is_ok = false
     @commentary.save
+    
+    @commentary.commentariable.decrement!(@commentary.is_news ? :news_article_count : :blog_article_count)
     
     flash[:notice] = 'Commentary was deleted.'    
     

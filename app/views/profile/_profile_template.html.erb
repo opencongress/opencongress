@@ -33,14 +33,14 @@ dsfsdddsf
 					<div id="news_<%= bill.ident %>" style="display:none;">
 						<%=
 				        render :partial => 'shared/news', :object => bill.news.find(:all, :limit => 3),
-				          :locals => { :limit => 3, :all_size => bill.news.size, :default_title => bill.title_typenumber_only,
+				          :locals => { :limit => 3, :all_size => bill.news_article_count, :default_title => bill.title_typenumber_only,
 				                       :more_url => { :controller => 'bill', :action => 'news', :id => bill.ident } }
 				      %>
 					</div>
 					<div id="blog_<%= bill.ident %>" style="display:none;">
 						<%=
 				        render :partial => 'shared/blogs', :object => bill.blogs.find(:all, :limit => 3),
-				          :locals => { :limit => 3, :all_size => bill.blogs.size, :default_title => bill.title_typenumber_only,
+				          :locals => { :limit => 3, :all_size => bill.blog_article_count, :default_title => bill.title_typenumber_only,
 				                       :more_url => { :controller => 'bill', :action => 'blogs', :id => bill.ident } }
 				      %>
 					</div>

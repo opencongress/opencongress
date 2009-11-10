@@ -144,13 +144,13 @@ class ProfileController < ApplicationController
     if params[:object] == "Bill"
       bill = Object.const_get(params[:object]).find_by_id(params[:id])
       render :partial => 'shared/news', :object => bill.news.find(:all, :limit => @limit),
-  	      :locals => { :limit => @limit, :all_size => bill.news.size, :default_title => bill.title_common, 
+  	      :locals => { :limit => @limit, :all_size => bill.news_article_count, :default_title => bill.title_common, 
   	                   :more_url => { :controller => 'bill', :action => 'news', :id => bill.ident } }
     elsif params[:object] ==  "Person"    
       person = Object.const_get(params[:object]).find_by_id(params[:id])
 
       render :partial => 'shared/news', :object => person.news.find(:all, :limit => @limit),
-        :locals => { :limit => @limit, :all_size => person.news.size, :default_title => person.name, 
+        :locals => { :limit => @limit, :all_size => person.news_article_count, :default_title => person.name, 
                      :more_url => { :controller => 'people', :action => 'news', :id => person } }
     else
       render :nothing
@@ -164,13 +164,13 @@ class ProfileController < ApplicationController
     if params[:object] == "Bill"
       bill = Object.const_get(params[:object]).find_by_id(params[:id])
       render :partial => 'shared/blogs', :object => bill.blogs.find(:all, :limit => @limit),
-  	      :locals => { :limit => @limit, :all_size => bill.blogs.size, :default_title => bill.title_common, 
+  	      :locals => { :limit => @limit, :all_size => bill.blog_article_count, :default_title => bill.title_common, 
   	                   :more_url => { :controller => 'bill', :action => 'blogs', :id => bill.ident } }
     elsif params[:object] ==  "Person"    
       person = Object.const_get(params[:object]).find_by_id(params[:id])
 
       render :partial => 'shared/blogs', :object => person.blogs.find(:all, :limit => @limit),
-        :locals => { :limit => @limit, :all_size => person.blogs.size, :default_title => person.name, 
+        :locals => { :limit => @limit, :all_size => person.blog_article_count, :default_title => person.name, 
                      :more_url => { :controller => 'people', :action => 'blogs', :id => person } }
     else
       render :nothing

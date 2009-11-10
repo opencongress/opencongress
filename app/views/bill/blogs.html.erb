@@ -7,7 +7,7 @@
   <div id="blogs_list">
     <p><%= will_paginate @blogs, :params => { :sort => @sort }  %></p>
     <%= render :partial => 'shared/blogs', :object => @blogs,
-      :locals => { :limit => nil, :all_size => @blogs.size, :default_title => @bill.title_typenumber_only,
+      :locals => { :limit => @blogs.size, :all_size => @bill.blog_article_count, :default_title => @bill.title_typenumber_only,
                    :more_url => { :controller => 'bill', :action => 'blogs', :id => @bill.ident } } %>
     <p><%= will_paginate @blogs, :params => { :sort => @sort }  %></p>
   </div>

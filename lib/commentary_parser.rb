@@ -135,6 +135,9 @@ module CommentaryParser
           else
             saved = true
             puts "Saved #{commentary_type} item.  URL: #{c.url}"
+            
+            c.commentariable.increment!(c.is_news ? :news_article_count : :blog_article_count) if c.is_ok?
+            
             #puts "ITEM: #{c.inspect}"
           end
         rescue 

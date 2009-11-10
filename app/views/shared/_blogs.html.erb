@@ -10,7 +10,7 @@
 <% else %>
   <p style="margin-bottom:25px;">
   <% if all_size > blog_max %>
-    <a href="<%= url_for more_url %>" class="toggle">View All (<%= number_with_delimiter(all_size - limit) %>)</a>
+    <a href="<%= url_for more_url %>" class="toggle">View All (<%= number_with_delimiter(all_size) %>)</a>
   <% end %>
   <% unless top_url.nil? %>
 	&nbsp;|&nbsp;

@@ -38,6 +38,7 @@ class PeopleController < ApplicationController
   end
   
   def people_list
+    expires_in 20.minutes, :public => true
     congress = params[:congress] ? params[:congress].to_i : DEFAULT_CONGRESS
     person_type = (params[:person_type] == 'senators') ? 'sen' : 'rep'
 		#params[:sort] = 'popular' unless params[:days].blank?

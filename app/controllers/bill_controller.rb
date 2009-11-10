@@ -52,6 +52,7 @@ class BillController < ApplicationController
   end
   
   def all
+    expires_in 20.minutes, :public => true
     congress = params[:congress] ? params[:congress] : DEFAULT_CONGRESS
     
     # the following is temporary until a better way is figured out!

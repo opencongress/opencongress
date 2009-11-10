@@ -8,7 +8,8 @@
   <!-- cached: <%= "#{@person.fragment_cache_key}_blog_#{@sort}_page_#{@page}" %> // <%= Time.now %> -->
   <p><%= will_paginate @blogs, :params => { :sort => @sort }  %></p>
   <%= render :partial => 'shared/blogs', :object => @blogs,
-    :locals => { :limit => @blogs.size, :all_size => @person.blog_article_count, :default_title => @person.full_name } %>
+    :locals => { :limit => @blogs.size, :all_size => @person.blog_article_count, :default_title => @person.full_name,
+                 :more_url => { :controller => 'people', :action => 'blogs', :id => @person } } %>
   <p><%= will_paginate @blogs, :params => { :sort => @sort }  %></p>
 <% end %>
 </div>

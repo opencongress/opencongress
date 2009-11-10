@@ -89,19 +89,21 @@
 	</ul>
 
 	<div id="summaries">
-		<div id="wiki_summary" <%= @bill.wiki_summary.blank? ? "style='display:none;'" : "" %>>
-		<% if @bill.wiki_summary %>
-			<p><%= @bill.wiki_summary  %></p>
-			<p id="contribute">This summary providedby people like you <a href="<%= @wiki_url %>">Contribute to it</a></p>
-			<% else %>
-			<p id="contribute">This bill currently has no wiki summary. <a href="<%= @wiki_url ? @wiki_url : @wiki_create_url %>" class="<%= "wiki_link" unless logged_in? %>">Create Summary</a></p>
-			<% end %> 
-		</div>
+	  <% cache("bill_wiki_summary_#{@bill.id}", :expires_in => 6.hours) do %>
+	    <!-- bill_wiki_summary_<%= @bill.id %>: <%= Time.now %> -->
+		  <div id="wiki_summary" <%= @bill.wiki_summary.blank? ? "style='display:none;'" : "" %>>
+		    <% if @bill.wiki_summary %>
+			    <p><%= @bill.wiki_summary  %></p>
+			    <p id="contribute">This summary providedby people like you <a href="<%= @wiki_url %>">Contribute to it</a></p>
+			  <% else %>
+			    <p id="contribute">This bill currently has no wiki summary. <a href="<%= @wiki_url ? @wiki_url : @wiki_create_url %>" class="<%= "wiki_link" unless logged_in? %>">Create Summary</a></p>
+			  <% end %> 
+		  </div>
 
-		<div id="summary" class="clearfix" <%= @bill.wiki_summary.blank? ? "" : "style='display:none;'" %>>
-			<div class="official_summary"><%= bill_summary_with_more %></div>
-		</div>                      
-
+  		<div id="summary" class="clearfix" <%= @bill.wiki_summary.blank? ? "" : "style='display:none;'" %>>
+  			<div class="official_summary"><%= bill_summary_with_more %></div>
+		  </div>                      
+		<% end %>
 	</div>
 
 		<div class="clearfix"></div>       

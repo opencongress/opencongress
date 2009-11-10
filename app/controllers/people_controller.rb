@@ -269,6 +269,8 @@ class PeopleController < ApplicationController
   
   def show
     congress = params[:congress] ? params[:congress] : DEFAULT_CONGRESS
+    expires_in 20.minutes, :private => false
+
     respond_to do |format|
      format.html {
 		  @abstain_rank = @person.abstain_rank

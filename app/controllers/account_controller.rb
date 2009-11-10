@@ -148,6 +148,7 @@ class AccountController < ApplicationController
     # Forum Integration
     cookies.delete 'lussumocookieone'
     cookies.delete 'lussumocookietwo'
+    cookies.delete 'ocloggedin'
     cookies['PHPSESSID'] = {:value => '', :path => '/', :expires => Time.at(0), :domain => ".www.opencongress.org" }
     cookies['PHPSESSID'] = {:value => '', :path => '/', :expires => Time.at(0), :domain => ".opencongress.org" }
     cookies['PHPSESSID'] = {:value => '', :path => '/', :expires => Time.at(0), :domain => ".www.opencongress.org" }

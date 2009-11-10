@@ -289,7 +289,7 @@ class BillController < ApplicationController
   end
   
   def show
-    expires_in 20.minutes, :private => false
+    expires_in 20.minutes, :public => true
     respond_to do |format|
       format.html {
         comment_redirect(params[:goto_comment]) and return if params[:goto_comment]

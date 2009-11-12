@@ -70,7 +70,7 @@ class GossipController < ApplicationController
   
   def atom
     @gossip = Gossip.latest
-     expires_in 60.minutes, :private => false
+     expires_in 60.minutes, :public => true
    
     render :layout => false
   end

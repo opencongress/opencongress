@@ -223,7 +223,7 @@ class RollCallController < ApplicationController
   
   def atom
     @rolls = RollCall.find :all, :order => 'date DESC', :limit => 20
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :layout => false
   end

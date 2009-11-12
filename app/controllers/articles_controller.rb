@@ -63,21 +63,21 @@ class ArticlesController < ApplicationController
     
     def atom
       @articles = Article.find(:all, :conditions => ['published_flag = true'], :limit => 10, :order => 'created_at DESC')
-      expires_in 60.minutes, :private => false
+      expires_in 60.minutes, :public => true
 
       render :layout => false
     end
 
     def article_atom
       @article = Article.find(params[:id])
-      expires_in 60.minutes, :private => false
+      expires_in 60.minutes, :public => true
      
       render :layout => false
     end
     
     def all_comments_atom
       @comments = Comment.find(:all, :conditions => "commentable_type = 'Article'", :order => 'created_at DESC', :limit => 20)
-      expires_in 60.minutes, :private => false
+      expires_in 60.minutes, :public => true
       render :layout => false
     end
     

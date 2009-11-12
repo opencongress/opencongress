@@ -190,7 +190,7 @@ class ProfileController < ApplicationController
     }
     if params[:format]
 
-      expires_in 60.minutes, :private => false
+      expires_in 60.minutes, :public => true
       render :action => "new_link.rxml", :layout => false
     else
       render :action => "bills.html.erb"
@@ -217,7 +217,7 @@ class ProfileController < ApplicationController
       end
       @items.flatten!
       @items.sort! { |x,y| y.date <=> x.date }
-      expires_in 60.minutes, :private => false
+      expires_in 60.minutes, :public => true
 
       render :action => "new_link.rxml", :layout => false
     else
@@ -263,7 +263,7 @@ class ProfileController < ApplicationController
     }
     if params[:format]
       @comments = Comment.find(:all, :conditions => ["user_id = ?", @user.id], :order => "created_at DESC", :limit => 20)
-      expires_in 60.minutes, :private => false
+      expires_in 60.minutes, :public => true
       render :action => "comments.rxml", :layout => false
     else
       @comments = Comment.find(:all, :conditions => ["user_id = ?", @user.id], :order => "created_at DESC", :page => {:size => 10, :current => params[:page]})
@@ -289,7 +289,7 @@ class ProfileController < ApplicationController
     }
 		@learn_off = true
     if params[:format]
-      expires_in 60.minutes, :private => false
+      expires_in 60.minutes, :public => true
 
       @items = []
       @bookmarks.each do |b|
@@ -336,7 +336,7 @@ class ProfileController < ApplicationController
     
     @items.flatten!
     @items.sort! { |x,y| y.rss_date <=> x.rss_date }
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :action => "new_link.rxml", :layout => false
   end
@@ -358,7 +358,7 @@ class ProfileController < ApplicationController
       end
       @items.flatten!
       @items.sort! { |x,y| y.date <=> x.date }
-      expires_in 60.minutes, :private => false
+      expires_in 60.minutes, :public => true
 
       render :action => "new_link.rxml", :layout => false
     else
@@ -383,7 +383,7 @@ class ProfileController < ApplicationController
       end
       @items.flatten!
       @items.sort! { |x,y| y.date <=> x.date }
-      expires_in 60.minutes, :private => false
+      expires_in 60.minutes, :public => true
 
       render :action => "new_link.rxml", :layout => false
     else

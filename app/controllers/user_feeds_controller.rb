@@ -37,7 +37,7 @@ class UserFeedsController < ApplicationController
 #    logger.info @items.to_yaml
     @items.flatten!
     @items.sort! { |x,y| y.rss_date <=> x.rss_date }
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :action => "tracked_rss.rxml", :layout => false
 
@@ -52,13 +52,13 @@ class UserFeedsController < ApplicationController
      end
      @items.flatten!
      @items.sort! { |x,y| y.rss_date <=> x.rss_date }
-     expires_in 60.minutes, :private => false
+     expires_in 60.minutes, :public => true
      render :action => "committees.xml.builder", :layout => false
   end
   
   def actions
     @items = @user.recent_actions
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
     render :action => "user_actions_rss.rxml", :layout => false
   end
   
@@ -66,7 +66,7 @@ class UserFeedsController < ApplicationController
     @ptype = 'Senators'
     @page_title = "Profile of #{@user.login} - Senators Tracked"
     @bookmarks = @user.senator_bookmarks
-     expires_in 60.minutes, :private => false
+     expires_in 60.minutes, :public => true
      @items = []
      @bookmarks.each do |b|
         @items << b.person.last_x_bills(10).to_a
@@ -81,7 +81,7 @@ class UserFeedsController < ApplicationController
     @ptype = 'Representatives'
     @page_title = "Profile of #{@user.login} - Representatives Tracked"
     @bookmarks = @user.representative_bookmarks
-     expires_in 60.minutes, :private => false
+     expires_in 60.minutes, :public => true
      @items = []
      @bookmarks.each do |b|
         @items << b.person.last_x_bills(10).to_a
@@ -102,7 +102,7 @@ class UserFeedsController < ApplicationController
     end
     @items.flatten!
     @items.sort! { |x,y| y.date <=> x.date }
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
     render :action => "bills.rxml", :layout => false
   end
 
@@ -120,7 +120,7 @@ class UserFeedsController < ApplicationController
     end
     @items.flatten!
     @items.sort! { |x,y| y.date <=> x.date }
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
     render :action => "bills.rxml", :layout => false
 
   end
@@ -128,7 +128,7 @@ class UserFeedsController < ApplicationController
   def comments
     @page_title = "Profile of #{@user.login} - Comments"
     @comments = Comment.find(:all, :conditions => ["user_id = ?", @user.id], :order => "created_at DESC", :limit => 20)
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
     render :action => "comments.rxml", :layout => false
   end
   
@@ -142,7 +142,7 @@ class UserFeedsController < ApplicationController
     end
     @items.flatten!
     @items.sort! { |x,y| y.date <=> x.date }
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :action => "bills.rxml", :layout => false
   end

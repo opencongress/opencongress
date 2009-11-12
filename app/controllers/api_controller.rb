@@ -336,7 +336,7 @@ class ApiController < ApplicationController
     unless params[:key].blank?
      u = User.find_by_feed_key(params[:key])
      u.api_hits.create({:action => params[:action]})
-expires_in 60.minutes, :private => false
+expires_in 60.minutes, :public => true
     else
      redirect_to :action => "index"
     end

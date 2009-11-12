@@ -168,14 +168,14 @@ class IssueController < ApplicationController
     @subject = Subject.find(params[:id])
     
     @actions = @subject.latest_major_actions(20)
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :layout => false
   end
   
   def atom_top20
     @issues = Subject.top20_viewed
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :action => 'top20_atom', :layout => false
   end

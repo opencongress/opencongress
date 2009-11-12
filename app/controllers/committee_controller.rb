@@ -103,14 +103,14 @@ class CommitteeController < ApplicationController
     
     @committee_name = @committee.subcommittee_name ? @committee.subcommittee_name : @committee.name
     @actions = @committee.latest_major_actions(20)
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :layout => false
   end
   
   def atom_top20
     @comms = Committee.top20_viewed
-    expires_in 60.minutes, :private => false
+    expires_in 60.minutes, :public => true
 
     render :action => 'top20_atom', :layout => false
   end

@@ -21,7 +21,5 @@ config.action_view.debug_rjs                         = true
 config.action_mailer.raise_delivery_errors = true
 config.action_mailer.delivery_method = :sendmail
 
-GOVTRACK_BILLTEXT_PATH = "/data/govtrack/bills.text/110"
-GOVTRACK_DATA_PATH = '/data/govtrack/110'
 BASE_URL = 'http://morgan.dev.opencongress.org/'
-WIKI_URL = 'http://morgan.dev.opencongress.org/wiki'
+WIKI_BASE_URL = 'http://morgan.dev.opencongress.org/wiki'

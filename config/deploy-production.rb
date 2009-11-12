@@ -41,7 +41,6 @@ task :link_images do
   run "cp #{deploy_to}/#{shared_dir}/api_keys.yml #{current_release}/config/api_keys.yml"
   run "cp #{deploy_to}/#{shared_dir}/facebooker.yml #{current_release}/config/facebooker.yml"
   run "cp #{deploy_to}/#{shared_dir}/mongrel_cluster.yml #{current_release}/config/mongrel_cluster.yml"
-  run "cp #{deploy_to}/#{shared_dir}/files/production.rb #{current_release}/config/environments/production.rb"
   run "cp #{deploy_to}/#{shared_dir}/settings.php #{current_release}/public/forum/conf/settings.php"
   run "cp #{deploy_to}/#{shared_dir}/database.php #{current_release}/public/forum/conf/database.php"
   run "ln -s #{deploy_to}/#{shared_dir}/states #{current_release}/public/images/states"

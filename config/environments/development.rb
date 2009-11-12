@@ -1,5 +1,8 @@
 # Settings specified here will take precedence over those in config/environment.rb
 
+BASE_URL = 'http://dev.opencongress.org'
+WIKI_BASE_URL = 'http://wiki-dev.opencongress.org/wiki'
+
 # In the development environment your application's code is reloaded on
 # every request.  This slows down response time but is perfect for development
 # since you don't have to restart the webserver when you make code changes.
@@ -25,12 +28,5 @@ config.action_mailer.sendmail_settings = {
   :arguments      => '-XV -f bounces-main -i -t'
 }
 
-
-GOVTRACK_BILLTEXT_PATH = "/data/govtrack/bills.text/110"
-GOVTRACK_DATA_PATH = '/data/govtrack/110'
-BASE_URL = 'http://dev.opencongress.org'
-WIKI_URL = 'http://wiki-dev.opencongress.org/wiki'
-
-WIKI_BASE = "http://wiki-dev.opencongress.org"
+WIKI_BASE_URL = "http://wiki-dev.opencongress.org"
 MINI_MAILER_FROM = "alert@dev.opencongress.org"
-

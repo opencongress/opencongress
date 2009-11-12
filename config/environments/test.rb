@@ -21,9 +21,6 @@ config.action_mailer.delivery_method = :test
 config.gem 'rspec',         :lib => 'spec'
 config.gem "cucumber"
 
-
-GOVTRACK_BILLTEXT_PATH = "/data/govtrack/bills.text/110"
-GOVTRACK_DATA_PATH = '/data/govtrack/110'
 BASE_URL = 'http://dev.opencongress.org/'
-WIKI_URL = 'http://dev.opencongress.org/wiki'
+WIKI_BASE_URL = 'http://dev.opencongress.org/wiki'
 

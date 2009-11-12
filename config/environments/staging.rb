@@ -23,22 +23,19 @@ config.action_mailer.sendmail_settings = {
   :arguments      => '-XV -f bounces-main -i -t'
 }
 
-
 config.cache_store = :mem_cache_store, 'localhost:11211', { :namespace => 'opencongress_staging' }
 
 BASE_URL = 'http://dev.opencongress.org/'
 
-GOVTRACK_DATA_PATH = '/data/govtrack/111'
-GOVTRACK_BILLTEXT_PATH = "/data/govtrack/bills.text/111"
 GOVTRACK_BILLTEXT_DIFF_PATH = "/data/govtrack/bills.text.cmp"
 OC_BILLTEXT_PATH = "/data/opencongress/bills.text"
 COMMITTEE_REPORTS_PATH = '/data/committee_reports/'
 CRP_DATA_PATH = '/data/crp'
-WIKI_URL = 'http://wiki-dev.opencongress.org/wiki'
+WIKI_BASE_URL = 'http://wiki-dev.opencongress.org/wiki'
 
 # the following API key is for OpenCongress production use only!
-TECHNORATI_API_KEY = 'xxx'
+TECHNORATI_API_KEY = API_KEYS['technorati_api_key']
 
-WIKI_BASE = "http://wiki-dev.opencongress.org"
+WIKI_BASE_URL = "http://wiki-dev.opencongress.org"
 MINI_MAILER_FROM = "alerts@dev.opencongress.org"
 

@@ -1,15 +1,10 @@
 #require 'palmtree/recipes/mongrel_cluster'
 
-
 set :application, "opencongress"
-
-#set :repository, "svn+ssh://db.opencongress.org/var/svn/opencongress/trunk/"
-#set :repository, "svn+ssh://db.opencongress.org/var/svn/opencongress/branches/maple"
-#set :mongrel_conf, "#{current_path}/config/mongrel_cluster.yml"
 
 default_run_options[:pty] = true
 set :repository,  "git@github.com:opencongress/opencongress.git"
-set :scm, "git"
+set :scm, :git
 set :git_shallow_clone, 1
 
 # If you aren't deploying to /u/apps/#{application} on the target
@@ -20,13 +15,8 @@ default_run_options[:pty] = true
 set :deploy_to, "/u/apps/opencongress"
 set :rails_env, "production"
 
+set :keep_releases, 4
 set :use_sudo, true
-#false
-#set :mongrel_prefix, "#{current_path}"
-
-# If you aren't using Subversion to manage your source code, specify
-# your SCM below:
-# set :scm, :subversion
 
 role :web, "75.126.164.19", :asset_host_syncher => true
 role :web, "74.86.203.130"
@@ -40,7 +30,6 @@ task :link_images do
   run "cp #{deploy_to}/#{shared_dir}/database.yml #{current_release}/config/database.yml"
   run "cp #{deploy_to}/#{shared_dir}/api_keys.yml #{current_release}/config/api_keys.yml"
   run "cp #{deploy_to}/#{shared_dir}/facebooker.yml #{current_release}/config/facebooker.yml"
-  run "cp #{deploy_to}/#{shared_dir}/mongrel_cluster.yml #{current_release}/config/mongrel_cluster.yml"
   run "cp #{deploy_to}/#{shared_dir}/settings.php #{current_release}/public/forum/conf/settings.php"
   run "cp #{deploy_to}/#{shared_dir}/database.php #{current_release}/public/forum/conf/database.php"
   run "ln -s #{deploy_to}/#{shared_dir}/states #{current_release}/public/images/states"

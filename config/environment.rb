@@ -38,8 +38,6 @@ COMMITTEE_REPORTS_PATH = '/data/committee_reports/'
 OPENSECRETS_DATA_PATH = '/data/opensecrets/'
 TECHNORATI_API_KEY = API_KEYS['technorati_api_key']
 
-# Used across the site for things like "This bill was viewed 30,212 in the last 7 days"
-DEFAULT_COUNT_TIME = 7.days
 
 # Ban file
 BAN_FILE = '/usr/local/apache2/conf/extra/banned_users.txt'
@@ -53,10 +51,8 @@ WIKI_BASE_URL = 'http://wiki.opencongress.org/wiki'
 require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
-  config.logger = Logger.new(config.log_path)
-
   config.gem "json"
-
+  
   config.action_controller.session = { :session_key => "_myapp_session", :secret => API_KEYS['app_key'] }
 
   # Settings in config/environments/* take precedence those specified here
@@ -87,6 +83,10 @@ Rails::Initializer.run do |config|
   # Disable delivery errors if you bad email addresses should just be ignored
   # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.sendmail_settings = {
+    :location       => '/usr/sbin/sendmail',
+    :arguments      => '-XV -f bounces-main -i -t'
+  }
 
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
@@ -118,6 +118,10 @@ require 'acts_as_taggable'
 require 'active_record_fk_hack'
 require 'action_controller/integration'
 Forum.establish_connection "vanilla"
+
+
+# Used across the site for things like "This bill was viewed 30,212 in the last 7 days"
+DEFAULT_COUNT_TIME = 7.days
 
 WillPaginate::ViewHelpers.pagination_options[:renderer] = 'SpanLinkRenderer'      
 WillPaginate::ViewHelpers.pagination_options[:previous_label] = 'Previous'

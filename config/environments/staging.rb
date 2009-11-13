@@ -17,11 +17,6 @@ config.action_controller.perform_caching             = false
 
 # Disable delivery errors if you bad email addresses should just be ignored
 # config.action_mailer.raise_delivery_errors = false
-config.action_mailer.delivery_method = :sendmail
-config.action_mailer.sendmail_settings = {
-  :location       => '/usr/sbin/sendmail',
-  :arguments      => '-XV -f bounces-main -i -t'
-}
 
 config.cache_store = :mem_cache_store, 'localhost:11211', { :namespace => 'opencongress_staging' }
 

@@ -1,29 +1,27 @@
-#require 'palmtree/recipes/mongrel_cluster'
+#
+# This uses the capistrano multistage extension (gem install capistrano-ext) to deploy
+# to multiple environments.
+#
+# Use cap deploy to deploy to production; cap staging deploy to deploy to dev.
+#
+set :stages, %w(staging production)
+set :default_stage, "production"
+require 'capistrano/ext/multistage'
 
-set :application, "opencongress-dev"
+#
+# These may be overridden by deploy/staging.rb:
+#
+set :application, "opencongress"
+set :deploy_to, "/u/apps/opencongress"
 
+default_run_options[:pty] = true
 set :repository,  "git://github.com/opencongress/opencongress.git"
+set :branch, "master"
 set :scm, :git
 set :git_shallow_clone, 1
 
-set(:scm_username) do
-   Capistrano::CLI.ui.ask "Give me a username: "
-end
-
 default_run_options[:pty] = true
-set :deploy_to, "/u/apps/opencongress-dev"
-
-set(:user) do 
-   Capistrano::CLI.ui.ask "Give me a ssh user: " 
-end 
-
 set :use_sudo, true
-set :rails_env, "staging"
-set :keep_releases, 4
-
-role :web, "dev.opencongress.org", :asset_host_syncher => true
-role :app, "dev.opencongress.org"
-role :db,  "dev.opencongress.org", :primary => true
 
 desc "Link the images"
 task :link_images do
@@ -35,35 +33,33 @@ task :link_images do
   run "ln -s #{deploy_to}/#{shared_dir}/states #{current_release}/public/images/states"
   run "ln -s #{deploy_to}/#{shared_dir}/districts #{current_release}/public/images/districts"
   run "ln -s #{deploy_to}/#{shared_dir}/user_images #{current_release}/public/images/users"
-  run "ln -s #{deploy_to}/#{shared_dir}/notebook_items #{current_release}/public/"
-  run "ln -s #{deploy_to}/#{shared_dir}/index #{current_release}/index"
-  run "ln -s #{deploy_to}/#{shared_dir}/wiki #{current_release}/public/wiki"
   run "ln -s /data/govtrack/109/repstats/images/people #{current_release}/public/images/people"
   run "ln -s /data/govtrack/photos #{current_release}/public/images/photos"
-  run "ln -s /data/blog #{current_release}/public/images/blog"
+  run "ln -s #{deploy_to}/#{shared_dir}/notebook_items #{current_release}/public/"
+	run "ln -s #{deploy_to}/#{shared_dir}/images #{current_release}/public/images/" 
   run "ln -s #{deploy_to}/#{shared_dir}/files/oc_whats.flv #{current_release}/public/oc_whats.flv"
   run "ln -s #{deploy_to}/#{shared_dir}/files/screencast.mp4 #{current_release}/public/screencast.mp4"
-  run "ln -s #{deploy_to}/#{shared_dir}/files/facebooker.yml #{current_release}/config/"
   run "ln -s #{deploy_to}/#{shared_dir}/files/synch_s3_asset_host.yml #{current_release}/config/"
   run "ln -s #{deploy_to}/#{shared_dir}/files/facebook.yml #{current_release}/config/"
-  run "ln -s /u/apps/opencongress-dev/shared/robots_all.txt #{current_release}/public/robots.txt"
-  run "touch #{current_release}/tmp/restart.txt"
   sudo "chown -R mongrel:admins #{current_release}"
+  sudo "chmod 777 #{current_release}/public/forum/conf/settings.php"
+  sudo "chmod -R 777 #{current_release}/public/forum/extensions"
 end
 
-#after "deploy:symlink", "s3_asset_host:synch_public"
+#
+# Delete all but the last 4 releases:
+#
+set :keep_releases, 4
+after "deploy:update", "deploy:cleanup" 
 
 namespace :deploy do
 
   task :after_symlink do
     link_images
-    s3_asset_host:synch_public
-  # ...
   end
+
   task :restart do
     sudo "touch #{current_release}/tmp/restart.txt"
   end
 
 end
-
-

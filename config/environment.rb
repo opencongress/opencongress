@@ -9,7 +9,7 @@ ENV['RAILS_ENV'] ||= 'development'
 RAILS_GEM_VERSION = '2.3.2'
 
 require 'yaml'
-
+require 'ostruct'
 #
 # A few important constants.
 #

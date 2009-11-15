@@ -53,7 +53,7 @@ class AccountController < ApplicationController
     end
     
     if params[:wiki_return_page]
-      session[:return_to] = "#{WIKI_URL}/#{params[:wiki_return_page]}"
+      session[:return_to] = "#{WIKI_BASE_URL}/#{params[:wiki_return_page]}"
     end
     if using_open_id?
        open_id_authentication(params[:openid_url])

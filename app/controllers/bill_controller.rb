@@ -410,7 +410,7 @@ class BillController < ApplicationController
       require 'hpricot'
       require 'mediacloth'
       require 'open-uri'
-      wiki_url = "#{WIKI_URL}/api.php?action=query&prop=revisions&titles=Economic_Stimulus_Bill_of_2008&rvprop=timestamp|content&format=xml"
+      wiki_url = "#{WIKI_BASE_URL}/api.php?action=query&prop=revisions&titles=Economic_Stimulus_Bill_of_2008&rvprop=timestamp|content&format=xml"
       session, bill_type, number = Bill.ident params[:id]
       if @bill = Bill.find_by_session_and_bill_type_and_number(session, bill_type, number, { :include => [ :bill_titles ]})
          #unwise = %w({ } | \ ^ [ ] `)
@@ -642,7 +642,7 @@ private
       if @bill.has_wiki_link?
         @wiki_url = @bill.wiki_url
       elsif logged_in?
-        @wiki_create_url = "#{WIKI_URL}/Special:AddData/Bill?Bill[common_title]=#{CGI::escape(@bill.title_common[0..60])}&Bill[bill_number]=#{@bill.bill_type}#{@bill.number}&Bill[chamber]=#{@bill.is_senate_bill? ? "U.S. Senate" : "U.S.%20House%20of%20Representatives"}&Bill[congress]=#{DEFAULT_CONGRESS}" #prolly should be rewritten as a post handled by a custom sfEditFormPreloadText call?
+        @wiki_create_url = "#{WIKI_BASE_URL}/Special:AddData/Bill?Bill[common_title]=#{CGI::escape(@bill.title_common[0..60])}&Bill[bill_number]=#{@bill.bill_type}#{@bill.number}&Bill[chamber]=#{@bill.is_senate_bill? ? "U.S. Senate" : "U.S.%20House%20of%20Representatives"}&Bill[congress]=#{DEFAULT_CONGRESS}" #prolly should be rewritten as a post handled by a custom sfEditFormPreloadText call?
       else
         
       end

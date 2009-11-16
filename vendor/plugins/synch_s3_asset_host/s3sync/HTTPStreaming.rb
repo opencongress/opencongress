@@ -22,7 +22,7 @@ module Net
 	# Allow request body to be an IO stream
 	# Allow an IO stream argument to stream the response body out
 	class HTTP
-		alias _HTTPStremaing_request request
+		alias _HTTPStreaming_request request
 		
 		def request(req, body = nil, streamResponseBodyTo = nil, &block)
 			if not block_given? and streamResponseBodyTo and streamResponseBodyTo.respond_to?(:write)
@@ -40,9 +40,9 @@ module Net
 				# this might be a retry, we should make sure the stream is at its beginning
 				body.rewind if body.respond_to?(:rewind) 
 				req.body_stream = body
-				return _HTTPStremaing_request(req, nil, &block)
+				return _HTTPStreaming_request(req, nil, &block)
 			else
-				return _HTTPStremaing_request(req, body, &block)
+				return _HTTPStreaming_request(req, body, &block)
 			end
 		end
 	end
@@ -68,9 +68,13 @@ module S3sync
 			now = Time.new
 			if(now - @last > 1) # don't do this oftener than once per second
 				@printed = true
-				$stdout.printf("\rProgress: %db  %db/s  %s       ", @transferred, (@transferred/(now - @start)).floor, 
-					@total > 0? (100 * @transferred/@total).floor.to_s + "%" : ""  
-				)  
+            begin
+               $stdout.printf("\rProgress: %db  %db/s  %s       ", @transferred, (@transferred/(now - @start)).floor, 
+                  @total > 0? (100 * @transferred/@total).floor.to_s + "%" : ""  
+               )
+            rescue FloatDomainError
+               #wtf?
+            end
 				$stdout.flush
 				@last = now
 			end

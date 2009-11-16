@@ -20,8 +20,7 @@ symlinks and permissions management features don't do anything on Windows). If
 you get it running somewhere interesting let me know (see below)
 
 s3sync is free, and license terms are included in all the source files. If you
-decide to make it better, or find bugs, please let me know via the S3 forums or
-gbs-s3@10forward.com
+decide to make it better, or find bugs, please let me know.
 
 The original inspiration for this tool is the perl script by the same name which
 was made by Thorsten von Eicken (and later updated by me). This ruby program
@@ -66,6 +65,11 @@ Your environment:
 -----------------
 s3sync needs to know several interesting values to work right.  It looks for 
 them in the following environment variables -or- a s3config.yml file.
+In the yml case, the names need to be lowercase (see example file).
+Furthermore, the yml is searched for in the following locations, in order:
+   $S3CONF/s3config.yml
+   $HOME/.s3conf/s3config.yml
+   /etc/s3conf/s3config.yml
 
 Required:
 	AWS_ACCESS_KEY_ID
@@ -75,6 +79,7 @@ Required:
 	right tool for you to be starting out with.
 Optional:
 	AWS_S3_HOST - I don't see why the default would ever be wrong
+   HTTP_PROXY_HOST,HTTP_PROXY_PORT,HTTP_PROXY_USER,HTTP_PROXY_PASSWORD - proxy
 	SSL_CERT_DIR - Where your Cert Authority keys live; for verification
 	SSL_CERT_FILE - If you have just one PEM file for CA verification
 	S3SYNC_RETRIES - How many HTTP errors to tolerate before exiting
@@ -140,6 +145,24 @@ local folders are conjured into existence whenever they are needed to make the
 "get" succeed.
 
 
+About MD5 hashes
+----------------
+s3sync's normal operation is to compare the file size and MD5 hash of each item
+to decide whether it needs syncing.  On the S3 side, these hashes are stored and
+returned to us as the "ETag" of each item when the bucket is listed, so it's
+very easy.  On the local side, the MD5 must be calculated by pushing every byte
+in the file through the MD5 algorithm.  This is CPU and IO intensive!  
+
+Thus you can specify the option --no-md5. This will compare the upload time on
+S3 to the "last modified" time on the local item, and not do md5 calculations
+locally at all. This might cause more transfers than are absolutely necessary.
+For example if the file is "touched" to a newer modified date, but its contents
+didn't change. Conversely if a file's contents are modified but the date is not
+updated, then the sync will pass over it.  Lastly, if your clock is very
+different from the one on the S3 servers, then you may see unanticipated
+behavior.
+
+
 A word on SSL_CERT_DIR:
 -----------------------
 On my debian install I didn't find any root authority public keys.  I installed
@@ -153,27 +176,14 @@ If you don't set up a cert dir, and try to use ssl, then you'll 1) get an ugly
 warning message slapped down by ruby, and 2) not have any protection AT ALL from
 malicious servers posing as s3.amazonaws.com.  Seriously... you want to get
 this right if you're going to have any sensitive data being tossed around.
+--
+There is a debian package ca-certificates; this is what I'm using now.
+apt-get install ca-certificates
+and then use:
+SSL_CERT_DIR=/etc/ssl/certs
 
-ALTERNATELY: Here is a simpler approach offered to me thanks to Paul Hoffman,
-dpu1356, and lowflyinghawk:
-Create a file, put this in it:
-
------BEGIN CERTIFICATE-----
-MIICNDCCAaECEAKtZn5ORf5eV288mBle3cAwDQYJKoZIhvcNAQECBQAwXzELMAkG
-A1UEBhMCVVMxIDAeBgNVBAoTF1JTQSBEYXRhIFNlY3VyaXR5LCBJbmMuMS4wLAYD
-VQQLEyVTZWN1cmUgU2VydmVyIENlcnRpZmljYXRpb24gQXV0aG9yaXR5MB4XDTk0
-MTEwOTAwMDAwMFoXDTEwMDEwNzIzNTk1OVowXzELMAkGA1UEBhMCVVMxIDAeBgNV
-BAoTF1JTQSBEYXRhIFNlY3VyaXR5LCBJbmMuMS4wLAYDVQQLEyVTZWN1cmUgU2Vy
-dmVyIENlcnRpZmljYXRpb24gQXV0aG9yaXR5MIGbMA0GCSqGSIb3DQEBAQUAA4GJ
-ADCBhQJ+AJLOesGugz5aqomDV6wlAXYMra6OLDfO6zV4ZFQD5YRAUcm/jwjiioII
-0haGN1XpsSECrXZogZoFokvJSyVmIlZsiAeP94FZbYQHZXATcXY+m3dM41CJVphI
-uR2nKRoTLkoRWZweFdVJVCxzOmmCsZc5nG1wZ0jl3S3WyB57AgMBAAEwDQYJKoZI
-hvcNAQECBQADfgBl3X7hsuyw4jrg7HFGmhkRuNPHoLQDQCYCPgmc4RKz0Vr2N6W3
-YQO2WxZpO8ZECAyIUwxrl0nHPjXcbLm7qt9cuzovk2C2qUtN8iD3zV9/ZHuO3ABc
-1/p3yjkWWW8O6tO1g39NTUJWdrTJXwT4OPjr0l91X817/OWOgHz8UA==
------END CERTIFICATE-----
-
-and set the SSL_CERT_FILE env var to point at it.
+You used to be able to use just one certificate, but recently AWS has started
+using more than one CA.
 
 
 Getting started:
@@ -372,6 +382,25 @@ Handle EU bucket 307 redirects (in s3try.rb)
 2007-11-20
 Version 1.2.3
 Fix SSL verification settings that broke in new S3 API.
+----------
+
+2008-01-06
+Version 1.2.4
+Run from any dir (search "here" for includes).
+Search out s3config.yml in some likely places.
+Reset connection (properly) on retry-able non-50x errors.
+Fix calling format bug preventing it from working from yml.
+Added http proxy support.
+----------
+
+2008-05-11
+Version 1.2.5
+Added option --no-md5
+----------
+
+2008-06-16
+Version 1.2.6
+Catch connect errors and retry.
 ----------
 
 FNORD

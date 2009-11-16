@@ -159,4 +159,14 @@ Version 1.2.3
 Fix SSL verification settings that broke in new S3 API.
 ----------
 
+2008-01-06
+Version 1.2.4
+Run from any dir (search "here" for includes).
+Search out s3config.yml in some likely places.
+Reset connection (properly) on retry-able non-50x errors.
+Fix calling format bug preventing it from working from yml.
+Added http proxy support.
+----------
+
+
 FNORD

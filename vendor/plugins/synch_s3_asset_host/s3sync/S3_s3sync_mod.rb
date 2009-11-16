@@ -27,7 +27,7 @@ require 'HTTPStreaming'
 module S3
 	class AWSAuthConnection
 	
-      def make_http(bucket='', host='')
+      def make_http(bucket='', host='', proxy_host=nil, proxy_port=nil, proxy_user=nil, proxy_pass=nil)
 
          # build the domain based on the calling format
          server = ''
@@ -45,7 +45,9 @@ module S3
          else
            server = @server
          end
-         http = Net::HTTP.new(server, @port)
+         # automatically does the right thing when no proxy
+         http = Net::HTTP::Proxy(proxy_host, proxy_port, proxy_user, proxy_pass).new(server, @port)
+         #http = Net::HTTP.new(server, @port)
          http.use_ssl = @is_secure
          http.verify_mode=@verify_mode
          http.ca_file=@ca_file

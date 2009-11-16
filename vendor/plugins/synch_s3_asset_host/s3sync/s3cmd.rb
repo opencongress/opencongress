@@ -10,10 +10,13 @@
 
 module S3sync
 
+   # always look "here" for include files (thanks aktxyz)
+   $LOAD_PATH << File.expand_path(File.dirname(__FILE__)) 
+
 	require 's3try'
 	
-	$S3CMD_VERSION = '1.2.3'
-
+	$S3CMD_VERSION = '1.2.6'
+   
 	require 'getoptlong'
 
    # after other mods, so we don't overwrite yaml vals with defaults
@@ -30,7 +33,8 @@ module S3sync
 			  [ '--verbose', '-v',	GetoptLong::NO_ARGUMENT ],
 			  [ '--dryrun',  '-n',	GetoptLong::NO_ARGUMENT ], 
 			  [ '--debug',   '-d',	GetoptLong::NO_ARGUMENT ],
-			  [ '--progress',       GetoptLong::NO_ARGUMENT ]
+			  [ '--progress',       GetoptLong::NO_ARGUMENT ],
+           [ '--expires-in', GetoptLong::REQUIRED_ARGUMENT ]
 			  )
 			  
 		def S3sync.s3cmdUsage(message = nil)
@@ -40,7 +44,8 @@ module S3sync
 #{name} [options] <command> [arg(s)]\t\tversion #{$S3CMD_VERSION}
   --help    -h        --verbose     -v     --dryrun    -n	
   --ssl     -s        --debug       -d     --progress
-
+  --expires-in=( <# of seconds> | [#d|#h|#m|#s] )
+  
 Commands:
 #{name}  listbuckets  [headers]
 #{name}  createbucket  <bucket>  [constraint (i.e. EU)]
@@ -61,7 +66,16 @@ ENDUSAGE
 		end
 		s3cmdUsage if $S3syncOptions['--help']
 		$S3syncOptions['--verbose'] = true if $S3syncOptions['--dryrun'] or $S3syncOptions['--debug'] or $S3syncOptions['--progress']
-		$S3syncOptions['--ssl'] = true if $S3syncOptions['--ssl'] # change from "" to true to appease s3 port chooser 
+		$S3syncOptions['--ssl'] = true if $S3syncOptions['--ssl'] # change from "" to true to appease s3 port chooser
+      
+      if $S3syncOptions['--expires-in'] =~ /d|h|m|s/
+         e = $S3syncOptions['--expires-in']
+         days = (e =~ /(\d+)d/)? (/(\d+)d/.match(e))[1].to_i : 0
+         hours = (e =~ /(\d+)h/)? (/(\d+)h/.match(e))[1].to_i : 0
+         minutes = (e =~ /(\d+)m/)? (/(\d+)m/.match(e))[1].to_i : 0
+         seconds = (e =~ /(\d+)s/)? (/(\d+)s/.match(e))[1].to_i : 0
+         $S3syncOptions['--expires-in'] = seconds + 60 * ( minutes + 60 * ( hours + 24 * ( days ) ) )
+      end
 
 		# ---------- CONNECT ---------- #
 		S3sync::s3trySetup 
@@ -139,10 +153,14 @@ ENDUSAGE
 			when "listbuckets"
 				headers = hashPairs(ARGV[1...ARGV.length])
 				$stderr.puts "list all buckets #{headers.inspect if headers}" if $S3syncOptions['--verbose']
-				res = S3try(:list_all_my_buckets, headers)
-				res.entries.each do |item|
-					puts item.name
-				end
+            if $S3syncOptions['--expires-in']
+               $stdout.puts S3url(:list_all_my_buckets, headers)
+            else
+               res = S3try(:list_all_my_buckets, headers)
+               res.entries.each do |item|
+					   puts item.name
+               end
+            end
 			when "createbucket"
 				s3cmdUsage("Need a bucket") if bucket == ''
             lc = ''
@@ -170,10 +188,14 @@ ENDUSAGE
 				headers = hashPairs(ARGV[3...ARGV.length])
 				$stderr.puts "get from key #{bucket}:#{path} into #{file} #{headers.inspect if headers}" if $S3syncOptions['--verbose']
 				unless $S3syncOptions['--dryrun']
-					outStream = File.open(file, 'wb')
-					outStream = ProgressStream.new(outStream) if $S3syncOptions['--progress']
-					S3try(:get_stream, bucket, path, headers, outStream)
-					outStream.close
+               if $S3syncOptions['--expires-in']
+                  $stdout.puts S3url(:get, bucket, path, headers)
+               else
+                  outStream = File.open(file, 'wb')
+                  outStream = ProgressStream.new(outStream) if $S3syncOptions['--progress']
+                  S3try(:get_stream, bucket, path, headers, outStream)
+                  outStream.close
+               end
 				end
 			when "put"
 				s3cmdUsage("Need a bucket") if bucket == ''

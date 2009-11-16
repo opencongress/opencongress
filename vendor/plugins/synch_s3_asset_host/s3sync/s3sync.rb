@@ -12,16 +12,21 @@ module S3sync
 
 	$S3SYNC_MIME_TYPES_FILE = (ENV["S3SYNC_MIME_TYPES_FILE"] or '/etc/mime.types')
 	
-	$S3SYNC_VERSION = '1.2.3'
+	$S3SYNC_VERSION = '1.2.6'
 
+   # always look "here" for include files (thanks aktxyz)
+   $LOAD_PATH << File.expand_path(File.dirname(__FILE__)) 
+   
 	require 'getoptlong'
 	#require 'generator' # http://www.ruby-doc.org/stdlib/libdoc/generator/rdoc/classes/Generator.html
 	require 'thread_generator' # memory doesn't leak with this one, at least nothing near as bad
 	require 'md5'
 	require 'tempfile'
 	require 's3try'
-  require 's3config'
-  #include S3Config
+   
+   # after other mods, so we don't overwrite yaml vals with defaults
+   require 's3config'
+   include S3Config
 	
 	$S3syncDirString = '{E40327BF-517A-46e8-A6C3-AF51BC263F59}'
 	$S3syncDirTag = 'd66759af42f282e1ba19144df2d405d0'
@@ -59,11 +64,12 @@ module S3sync
 			  [ '--debug',   '-d',	GetoptLong::NO_ARGUMENT ],
 			  [ '--memory',   '-m',	GetoptLong::NO_ARGUMENT ],
 			  [ '--progress',	GetoptLong::NO_ARGUMENT ],
-              [ '--expires',        GetoptLong::REQUIRED_ARGUMENT ],
-              [ '--cache-control',  GetoptLong::REQUIRED_ARGUMENT ],
-	      [ '--exclude',        GetoptLong::REQUIRED_ARGUMENT ],
+        [ '--expires',        GetoptLong::REQUIRED_ARGUMENT ],
+        [ '--cache-control',  GetoptLong::REQUIRED_ARGUMENT ],
+        [ '--content-encoding',  GetoptLong::REQUIRED_ARGUMENT ],
+        [ '--exclude',        GetoptLong::REQUIRED_ARGUMENT ],
 			  [ '--make-dirs',	GetoptLong::NO_ARGUMENT ],
-			  [ '--config-file', '-f', GetoptLong::REQUIRED_ARGUMENT]
+			  [ '--no-md5',	GetoptLong::NO_ARGUMENT ]           
 			  )
 			  
 		def S3sync.usage(message = nil)
@@ -74,8 +80,9 @@ module S3sync
   --help    -h          --verbose     -v     --dryrun    -n	
   --ssl     -s          --recursive   -r     --delete
   --public-read -p      --expires="<exp>"    --cache-control="<cc>"
-  --exclude="<regexp>"  --progress           --debug   -d
-  --make-dirs           --config-file -f
+  --exclude="<regexp>"  --content-encoding="<ce>"
+  --progress            --debug       -d
+  --make-dirs           --no-md5
 One of <source> or <destination> must be of S3 format, the other a local path.
 Reminders:
 * An S3 formatted item with bucket 'mybucket' and prefix 'mypre' looks like:
@@ -96,7 +103,6 @@ ENDUSAGE
 		$S3syncOptions['--verbose'] = true if $S3syncOptions['--dryrun'] or $S3syncOptions['--debug'] or $S3syncOptions['--progress']
 		$S3syncOptions['--ssl'] = true if $S3syncOptions['--ssl'] # change from "" to true to appease s3 port chooser
 
-    S3Config.load_config($S3syncOptions['--config-file'] || S3Config::DEFAULT_CONFIG_FILE)
 		
 		# ---------- CONNECT ---------- #
 		S3sync::s3trySetup 
@@ -294,7 +300,7 @@ ENDUSAGE
 					items = tItems.collect do |item|
 						if item.respond_to?('key')
 							key = Iconv.iconv($S3SYNC_NATIVE_CHARSET, "UTF-8", item.key).join
-							Node.new(key, item.size, item.etag)
+							Node.new(key, item.size, item.etag, item.last_modified)
 						else
 							Iconv.iconv($S3SYNC_NATIVE_CHARSET, "UTF-8", item.prefix).join
 						end
@@ -384,7 +390,7 @@ ENDUSAGE
 				end
 				destinationNode = destinationTree.next? ? destinationTree.next : nil
 			elsif sourceNode.name == destinationNode.name
-				if (sourceNode.size != destinationNode.size) or (sourceNode.tag != destinationNode.tag)
+				if (sourceNode.size != destinationNode.size) or (($S3syncOptions['--no-md5'])? (sourceNode.date > destinationNode.date) : (sourceNode.tag != destinationNode.tag))
 					puts "Update node #{sourceNode.name}" if $S3syncOptions['--verbose']
 					destinationNode.updateFrom(sourceNode) unless $S3syncOptions['--dryrun']
 				elsif $S3syncOptions['--debug']
@@ -411,10 +417,12 @@ ENDUSAGE
 		attr_reader :name
 		attr_reader :size 
 		attr_reader :tag
-		def initialize(name='', size = 0, tag = '')
+      attr_reader :date
+		def initialize(name='', size = 0, tag = '', date = Time.now.utc)
 			@name = name
 			@size = size
 			@tag = tag
+         @date = date
 		end
 		def directory?()
 			@tag == $S3syncDirTag and @size == $S3syncDirString.length
@@ -449,8 +457,9 @@ ENDUSAGE
 				@path.sub!(%r{/$}, "") # don't create directories with a slash on the end
 				@size = itemOrName.size
 				@tag = itemOrName.tag.gsub(/"/,'')
+            @date = Time.xmlschema(itemOrName.date)
 			end
-			debug("s3 node object init. Name:#{@name} Path:#{@path} Size:#{@size} Tag:#{@tag}")
+			debug("s3 node object init. Name:#{@name} Path:#{@path} Size:#{@size} Tag:#{@tag} Date:#{@date}")
 		end
 		# get this item from s3 into the provided stream
 		# S3 pushes to the local item, due to how http streaming is implemented
@@ -498,12 +507,19 @@ ENDUSAGE
 					headers['x-amz-acl'] = 'public-read' if $S3syncOptions['--public-read']
 					headers['Expires'] = $S3syncOptions['--expires'] if $S3syncOptions['--expires']
 					headers['Cache-Control'] = $S3syncOptions['--cache-control'] if $S3syncOptions['--cache-control']
+          headers['Content-Encoding'] = $S3SyncOptions['--content-encoding'] if $S3SyncOptions['--content-encoding']
 					fType = @path.split('.').last
 					debug("File extension: #{fType}")
-					if defined?($mimeTypes) and fType != '' and (mType = $mimeTypes[fType]) and mType != ''
-						debug("Mime type: #{mType}")
-						headers['Content-Type'] = mType
-					end
+					if fType != ''
+					  if defined?($mimeTypes) and (mType = $mimeTypes[fType]) and mType != ''
+  						debug("Mime type: #{mType}")
+  						headers['Content-Type'] = mType
+  					end
+            # File type sniffing added by Carl Tashian 11/16/09
+					  if fType == 'gz' || fType == 'cssgz' || fType == 'jsgz'
+              headers['Content-Encoding'] = 'gzip'
+				    end
+          end
 					@result = S3sync.S3try(:put, @bucket, @path, s3o, headers)
 					theStream.close if (theStream and not theStream.closed?)
 				rescue NoMethodError
@@ -537,20 +553,26 @@ ENDUSAGE
 				linkData = File.readlink(@path)
 				$stderr.puts "link to: #{linkData}" if $S3syncOptions['--debug']
 				@size = linkData.length
-				md5 = Digest::MD5.new()
-				md5 << linkData
-				@tag = md5.hexdigest
+				unless $S3syncOptions['--no-md5']
+               md5 = Digest::MD5.new()
+               md5 << linkData
+               @tag = md5.hexdigest
+            end
+            @date = File.lstat(@path).mtime.utc
 			elsif FileTest.file?(@path)
 				@size = FileTest.size(@path)
 				data = nil
 				begin
-					data = self.stream
-					md5 = Digest::MD5.new()
-					while !data.eof?
-						md5 << data.read(2048) # stream so it's not taking all memory
-					end
-					data.close
-					@tag = md5.hexdigest
+               unless $S3syncOptions['--no-md5']
+                  data = self.stream
+                  md5 = Digest::MD5.new()
+                  while !data.eof?
+                     md5 << data.read(2048) # stream so it's not taking all memory
+                  end
+                  data.close
+                  @tag = md5.hexdigest
+               end
+               @date = File.stat(@path).mtime.utc
 				rescue SystemCallError
 					# well we're not going to have an md5 that's for sure
 					@tag = nil
@@ -560,8 +582,9 @@ ENDUSAGE
 				# so for easy comparison, set our size and tag thusly
 				@size = $S3syncDirString.length
 				@tag = $S3syncDirTag
+            @date = File.stat(@path).mtime.utc
 			end
-			debug("local node object init. Name:#{@name} Path:#{@path} Size:#{@size} Tag:#{@tag}")
+			debug("local node object init. Name:#{@name} Path:#{@path} Size:#{@size} Tag:#{@tag} Date:#{@date}")
 		end
 		# return a stream that will read the contents of the local item
 		# local gets pulled by the S3Node update fn, due to how http streaming is implemented

@@ -11,13 +11,6 @@ config.cache_classes = true
 config.action_controller.consider_all_requests_local = false
 config.action_controller.perform_caching             = false
 
-# Enable serving of images, stylesheets, and javascripts from an asset server.
-# Here we serve all stylesheets from the same asset server so that we won't fetch
-# the same images twice due to relative URLs in different CSS files.
-config.action_controller.asset_host = Proc.new { |source|
-  source.starts_with?('/stylesheets') ? 'http://a3.opencongress.org' : "http://a#{rand 5}.opencongress.org"
-}
-
 # Disable delivery errors if you bad email addresses should just be ignored
 # config.action_mailer.raise_delivery_errors = false
 

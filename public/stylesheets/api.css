@@ -1,33 +1,33 @@
 
-#heading{
+#heading {
 min-height: 45px;
-padding-bottom:28px;
+padding-bottom: 28px;
 }
 
-#yield{
+#yield {
 padding: 10px;
 }
 
-#wrapper{
+#wrapper {
 }
 
-h3{
+h3 {
 margin: 0 !important;
 padding: 20px;
-}w
+}
+w
 
-dl{
-
+dl {
 }
 
 
-dt{
+dt {
 font-weight: bold;
 padding-left: 20px;
 margin-bottom: 10px;
 }
 
-#find{
+#find {
 margin: 0;
 clear: both;
 padding: 27px 0px 23px 35px;
@@ -38,25 +38,24 @@ font-size: 16px;
 }
 
 
-#find strong{
+#find strong {
 font-weight: bold;
 }
 
-#find .med_button{
+#find .med_button {
 float: right;
 margin: -8px 17px 0 0;
 }
 
 
-#find .med_button span{
-
+#find .med_button span {
 padding-top: 6px;
 padding-bottom: 7px;
 }
 
 
 
-dd{
+dd {
 font-size: 11px;
 padding: 10px;
 background: #eee;
@@ -64,7 +63,7 @@ border: 1px solid #ddd;
 margin: 5px 20px 20px 20px;
 }
 
-dd a{
+dd a {
 display: block;
 padding: 10px;
 font-size: 12px;
@@ -73,24 +72,24 @@ border-top: 1px solid #ccc;
 margin: 10px -10px -10px -10px;
 }
 
-dd a:hover{
+dd a:hover {
 background: #fff;
 color: #333;
 }
 
 
-.people_section p, .bills_section p, .br_section p{
+.people_section p, .bills_section p, .br_section p {
 padding: 0 20px;
 margin-top: 0;
 }
 
-.people_section{
+.people_section {
 background: #fefefe;
 border: 1px solid #dedede;
 margin: 35px;
 }
 
-.bills_section, .semantic_wiki, .rollcall_section, .issues_section, .br_section, .dev_resources{
+.bills_section, .semantic_wiki, .rollcall_section, .issues_section, .br_section, .dev_resources {
 border: 1px solid #dedede;
 margin: 0 35px 35px;
 background: #fefefe;
@@ -98,13 +97,13 @@ background: #fefefe;
 
 
 
-.br_section table{
+.br_section table {
 border: 1px solid #ccc;
 width: 600px;
 margin-left: 20px;
 }
 
-.br_section table table{
+.br_section table table {
 width: 100%;
 border: none;
 margin-left: 0px;
@@ -116,13 +115,13 @@ padding: 5px;
 }
 
 
-.br_section table td span{
+.br_section table td span {
 padding: 5px 10px 5px 5px;
 display: block;
 }
 
 
-.br_section table th{
+.br_section table th {
 border-bottom: 1px solid #aaa;
 padding: 10px;
 text-align: left;
@@ -130,42 +129,42 @@ text-align: left;
 
 
 
-.br_section table table th{
+.br_section table table th {
 border-bottom: 1px solid #aaa;
 padding: 5px;
 text-align: left;
 }
 
-.br_section table th.border-right{
+.br_section table th.border-right {
 border-right: 1px solid #aaa;
 }
 
 
-.br_section p{
+.br_section p {
 margin: 0px 0 10px;
 }
 
 
 
-.odd{
-background: #efefef;	
+.odd {
+background: #efefef;
 }
 
-.key{
+.key {
 /*padding: 25px;
 background: #ffe6e6;*/
 }
 
 
-.key p#find{
+.key p#find {
 clear: both;
-padding:27px 0 23px 35px;
+padding: 27px 0 23px 35px;
 }
 p#find strong {
-  background: #ffe6e6;  
+background: #ffe6e6;
 }
 
-.star{
+.star {
 margin-left: 30px;
 }
 

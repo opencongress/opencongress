@@ -10,9 +10,12 @@ config.cache_classes = true
 # Full error reports are disabled and caching is turned on
 config.action_controller.consider_all_requests_local = false
 
-# Enable serving of images, stylesheets, and javascripts from an asset server
-# config.action_controller.asset_host                  = "http://assets.example.com"
-config.action_controller.asset_host = "http://assets%d.opencongress.org"
+# Enable serving of images, stylesheets, and javascripts from an asset server.
+# Here we serve all stylesheets from the same asset server so that we won't fetch
+# the same images twice due to relative URLs in different CSS files.
+config.action_controller.asset_host = Proc.new { |source|
+  source.starts_with?('/stylesheets') ? 'http://a3.opencongress.org' : "http://a#{rand 5}.opencongress.org"
+}
 
 #
 # Caching

@@ -1,4 +1,4 @@
-.blog-title{
+.blog-title {
 padding: 50px 50px 0px;
 border: 1px solid #ddd;
 border-bottom: 0;
@@ -7,12 +7,12 @@ margin: 15px 0 0 15px;
 font-weight: normal !important;
 }
 
-.blog-title strong{
+.blog-title strong {
 font-weight: normal !important;
 }
 
 
-.blog-title h3{
+.blog-title h3 {
 padding: 0px;
 margin: 0px 0 2px 0;
 font-weight: normal;
@@ -20,18 +20,18 @@ line-height: 1.4em;
 font-size: 22px;
 }
 
-.blog-date{
+.blog-date {
 color: #999;
 }
 
-.blog_title{
+.blog_title {
 font-style: italic;
 padding: 20px;
 font-family: Georgia, Times, serif;
 }
 
 
-.blog-title a{
+.blog-title a {
 padding: 0px;
 margin: 0px;
 letter-spacing: .01em;
@@ -41,10 +41,10 @@ color: #333;
 font-weight: normal;
 }
 
-li.comments{
+li.comments {
 }
 
-.blog-body{
+.blog-body {
 padding: 0 35px 10px;
 font-size: 14px;
 color: #3f3f3f;
@@ -56,51 +56,50 @@ margin: 0 0 0 15px;
 background: #fff;
 }
 
-.blog-body a{
+.blog-body a {
 text-decoration: underline;
 }
 
-.blog-body img{
+.blog-body img {
 padding: 10px;
 margin-bottom: 20px;
 margin-left: 25px;
 background: #fff;
 border: 1px solid #ddd;
-max-width:563px;
+max-width: 563px;
 }
 
-#content-main ul{
+#content-main ul {
 margin: 0;
 padding: 0;
 }
 
-.blog-body p{
+.blog-body p {
 padding: 13px 0px 10px !important;
 margin: 0 15px;
 }
 
-.blog-body table{
+.blog-body table {
 padding: 13px 0px 10px !important;
 margin: 0 15px;
 }
 
-.blog-body table td, .blog-body table td{
+.blog-body table td, .blog-body table td {
 padding: 10px !important;
 font-size: 12px;
 min-width: 55px;
 }
 
-.blog-body table th{
+.blog-body table th {
 text-align: left;
 padding-left: 10px !important;
 }
 
 
-p{
-
+p {
 }
 
-blockquote{
+blockquote {
 padding: 20px;
 color: #5d5d5d;
 margin: 20px 20px 0;
@@ -110,17 +109,16 @@ border: 1px solid #e9f6ff;
 border-left: 5px solid #d4e6f2;
 border-bottom: 1px solid #d4e6f2;
 font-size: 14px;
-
 }
 
-.col .related-box div{
+.col .related-box div {
 }
 
-.col .related-box h2{
+.col .related-box h2 {
 padding: 0;
 }
 
-.blog_buttons{
+.blog_buttons {
 height: 30px;
 clear: both;
 float: left;
@@ -130,28 +128,28 @@ margin: 0 14px 10px;
 }
 
 
-.blog_buttons a{
+.blog_buttons a {
 text-decoration: none;
 }
 
 
-.blog_buttons a.med_arrow{
+.blog_buttons a.med_arrow {
 float: right !important;
 clear: none !important;
 }
 
 
-.blog_buttons a span{
+.blog_buttons a span {
 padding-top: 5px;
 }
 
 
-.blog_submit{
+.blog_submit {
 float: right !important;
 clear: none !important;
 }
 
-.blog_perm{
+.blog_perm {
 float: left;
 clear: none;
 margin: 0;
@@ -165,65 +163,65 @@ font-size: 11px;
 font-size: 11px;
 }
 
-#content-main{
+#content-main {
 float: left;
 margin: 14px;
 width: 700px;
 }
 
-#tertiary-content{
+#tertiary-content {
 float: left;
 width: 220px;
 margin: 20px 0 0 20px;
 }
 
-input.floatright{
+input.floatright {
 float: left !important;
 margin-right: 0 !important;
 }
 
-.related-box div{
+.related-box div {
 clear: both;
 }
 
-p.floatleft{
+p.floatleft {
 float: right !important;
 margin-right: 0 !important;
 }
 
-#tertiary-content ul.star{
-padding-left: 15px;}
+#tertiary-content ul.star {
+padding-left: 15px;
+}
 
-.margintop{
+.margintop {
 padding-top: 10px;
 }
 
-.med_button.clear span{
+.med_button.clear span {
 padding-bottom: 3px;
 }
 
 
 #comments-container {
-  margin-left: 15px;
+margin-left: 15px;
 padding: 30px 0;
-
 }
 
-#tertiary-content h3{
+#tertiary-content h3 {
 margin-top: 20px;
 clear: both;
 }
 
-.add_to_emails{
+.add_to_emails {
 background: url(img/forms.png) left -124px no-repeat;
-   _background: url(img/forms.gif) left -124px no-repeat;
+_background: url(img/forms.gif) left -124px no-repeat;
 border: none;
 padding: 7px;
 width: 218px;
 }
 
 
-#articles .blog-body ul li{
+#articles .blog-body ul li {
 list-style: circle !important;
 }
 
@@ -232,18 +230,18 @@ margin: 20px 0 !important;
 padding-left: 30px !important;
 }
 
-.sort_comments{
+.sort_comments {
 float: right;
 margin-right: 0;
 }
 
-.sort_comments h4{
+.sort_comments h4 {
 display: inline;
 float: left;
 padding-right: 13px;
 }
 
-h3.no_comments{
+h3.no_comments {
 clear: both;
 padding: 20px;
 color: #5d5d5d;
@@ -255,50 +253,50 @@ font-size: 14px;
 font-weight: normal;
 }
 
-h3.no_comments strong{
+h3.no_comments strong {
 font-weight: bold;
 padding: 0 10px 0 35px;
 background: url(img/comments.png) left 2px no-repeat;
-   _background: url(img/comments.gif) left 2px no-repeat;
+_background: url(img/comments.gif) left 2px no-repeat;
 }
 
-.blog-body h2{
+.blog-body h2 {
 padding-left: 15px;
 margin: 20px 0 0;
 padding-bottom: 0;
 line-height: 1.4em;
 }
 
-.a{
+.a {
 background: url(img/1.png) center no-repeat;
-   _background: url(img/1.gif) center no-repeat;
+_background: url(img/1.gif) center no-repeat;
 }
 
-.b{
+.b {
 background: url(img/2.png) center no-repeat;
-   _background: url(img/2.gif) center no-repeat;
+_background: url(img/2.gif) center no-repeat;
 }
 
-.c{
+.c {
 background: url(img/3.png) center no-repeat;
-   _background: url(img/3.gif) center no-repeat;
+_background: url(img/3.gif) center no-repeat;
 }
 
-.d{
+.d {
 background: url(img/4.png) center no-repeat;
-   _background: url(img/4.gif) center no-repeat;
+_background: url(img/4.gif) center no-repeat;
 }
 
-.e{
+.e {
 background: url(img/5.png) center no-repeat;
-   _background: url(img/5.gif) center no-repeat;
+_background: url(img/5.gif) center no-repeat;
 }
 
-#articles.edit .inner{
+#articles.edit .inner {
 padding: 35px;
 }
 
 
-#comments_master{
+#comments_master {
 width: 681px;
 }

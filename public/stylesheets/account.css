@@ -1,24 +1,24 @@
 .tos {
-  padding:25px 30px;
+padding: 25px 30px;
 }
 .tos td input {
-  margin:0 6px 0 0;
+margin: 0 6px 0 0;
 }
 .tos td {
-  vertical-align:top;
+vertical-align: top;
 }
 .tos table {
-  margin-bottom:14px;
+margin-bottom: 14px;
 }
 
-.inner{
+.inner {
 }
 
-#heading{
+#heading {
 height: 45px;
 }
 
-.box01{
+.box01 {
 width: 300px;
 float: left;
 padding: 26px 80px 0 30px;
@@ -27,34 +27,34 @@ margin-left: 50px;
 }
 
 
-#account.signup #signupform{
+#account.signup #signupform {
 margin: 56px 60px 0 0;
 }
 
-#signupform{
+#signupform {
 margin: 20px 10px 0 0;
 }
 
 
-#signupform label{
+#signupform label {
 line-height: 1em;
 margin: 0 !important;
 }
 
 
 
-#signupform td{
+#signupform td {
 padding: 0 !important;
 }
 
 
-h3{
+h3 {
 clear: both;
 padding-top: 30px;
 font-size: 16px;
 }
 
-.track_small{
+.track_small {
 float: right !important;
 }
 
@@ -63,7 +63,7 @@ ul#people_list {
 height: inherit;
 }
 
-div.memo p{
+div.memo p {
 clear: both !important;
 padding-top: 20px;
 float: left;
@@ -71,32 +71,30 @@ float: left;
 
 
 
-ul#people_list li{
+ul#people_list li {
 list-style: none;
 display: block;
 width: 300px;
 height: 180px;
-
 overflow: hidden;
 clear: none !important;
 float: left !important;
 }
-.memo ul#people_list li{
-  width:100%;
+.memo ul#people_list li {
+width: 100%;
 }
 .memo ul#people_list li div.details a.track_small {
-  clear:none;
-  margin:10px 0 0 0;
-  float:left !important;
+clear: none;
+margin: 10px 0 0 0;
+float: left !important;
 }
 
-ul#people_list li li{
+ul#people_list li li {
 height: 26px;
-
 }
 
 
-ul#people_list li.state{
+ul#people_list li.state {
 list-style: none;
 display: block;
 margin: 25px 0 10px 34px;
@@ -110,39 +108,38 @@ border-bottom: #d1d7dc 1px solid;
 margin-right: 30px;
 }
 
-ul#people_list li.state b{
+ul#people_list li.state b {
 display: inline;/*
 background: #f4faff;
 padding-right: 10px;*/
 float: left;
 }
 
-ul#people_list li.state span{
+ul#people_list li.state span {
 display: none;
-
 }
 
-ul#people_list li.state a{
-float:right;
+ul#people_list li.state a {
+float: right;
 background: #f4faff;
 color: #666;
 font-size: 10px;
 padding: 0 10px;
 }
 
-ul#people_list li.help p{
+ul#people_list li.help p {
 padding: 30px 46px 5px;
 font-size: 11px !important;
 color: #999;
 }
 
-ul#people_list li.person{
+ul#people_list li.person {
 list-style: none;
 display: block;
-padding:0;
+padding: 0;
 }
 
-ul#people_list li.person img{
+ul#people_list li.person img {
 display: block;
 float: left;
 height: 135px;
@@ -150,7 +147,7 @@ width: 105px;
 margin: 5px 20px 0 10px;
 }
 
-ul#people_list li.person a.name{
+ul#people_list li.person a.name {
 display: block;
 font-weight: bold;
 font-size: 12px;
@@ -158,29 +155,27 @@ margin: 7px 0 0 2px;
 float: left;
 }
 
-.person .details{
+.person .details {
 width: 155px;
 float: left;
 padding: 0px;
-
 }
 
-.person .stats{
+.person .stats {
 float: left;
 padding-top: 4px;
 width: 90px;
 height: 80px;
 margin: 3px 0px 0 0;
-
 }
 
-.person .stats li{
+.person .stats li {
 line-height: 2.5em;
 padding-left: 25px;
 font-size: 11px;
 }
 
-ul#people_list li.person a.name span{
+ul#people_list li.person a.name span {
 display: block;
 font-weight: normal;
 margin-top: 2px;
@@ -190,45 +185,45 @@ text-decoration: none;
 
 
 
-.rating{
-  background: url(img/no-rating.png) 3px center no-repeat;
-   _background: url(img/no-rating.gif) 3px center no-repeat;
+.rating {
+background: url(img/no-rating.png) 3px center no-repeat;
+_background: url(img/no-rating.gif) 3px center no-repeat;
 }
 
-.no_rating{
-  background: url(img/no-rating.png) 3px center no-repeat;
-   _background: url(img/no-rating.gif) 3px center no-repeat;
+.no_rating {
+background: url(img/no-rating.png) 3px center no-repeat;
+_background: url(img/no-rating.gif) 3px center no-repeat;
 }
 
-.bill_count{
-  background: url(img/tiny_bill.png) left center no-repeat;
-   _background: url(img/tiny_bill.gif) left center no-repeat;
+.bill_count {
+background: url(img/tiny_bill.png) left center no-repeat;
+_background: url(img/tiny_bill.gif) left center no-repeat;
 }
 
-.cronie{
-  background: url(img/cronie.png) left center no-repeat;
-   _background: url(img/cronie.gif) left center no-repeat;
+.cronie {
+background: url(img/cronie.png) left center no-repeat;
+_background: url(img/cronie.gif) left center no-repeat;
 }
 
 
-.why_get{
+.why_get {
 padding-left: 0;
 width: 430px;
 }
 
-.why_get h4{
+.why_get h4 {
 font-size: 14px;
 margin-bottom: 15px;
 }
 
-.why_get ul{
+.why_get ul {
 background: url(img/register_images.png) left 5px no-repeat;
-   _background: url(img/register_images.gif) left 5px no-repeat;
+_background: url(img/register_images.gif) left 5px no-repeat;
 padding: 0;
 }
 
-.why_get ul li{
-margin-top: 1px; 
+.why_get ul li {
+margin-top: 1px;
 list-style: none;
 padding: 14px 0 14px 50px;
 }

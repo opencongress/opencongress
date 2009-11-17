@@ -1,113 +1,97 @@
 <div id="header" class="clearfix">
 
-	<h1><a class="logo" href="/" title="link to the home page">
-	<img src="/stylesheets/img/open-congress.png" alt="OpenCongress -" /><br/><br/>
-	<%= "#{@page_title_prefix} - " if @page_title_prefix %><%= truncate(@page_title, :length => 100) %> <%= truncate(@head_title, :length => 90) if @head_title %></a></h1>
+	<div class="bar">
+		<p class="project">
+			A project of <a href="http://participatorypolitics.org/" target="_blank">PPF</a> and <a href="http://sunlightfoundation.com/" target="_blank">Sunlight</a>
+		</p>
+		
+		<div id="user_account">
+			<% if logged_in? %>
+		  	  	<a class="ad_search" href="/search">Advanced Search</a>
 
+				Welcome <b><%= link_to h(current_user.login), :controller => "profile", :login => current_user.login, :action => "profile" %></b> |
+				
+			  	<% if can_blog? %>
+			    	<% if @user_object %>
+			    		<%= link_to 'Manage SEO/Site Text for this Page', {:controller => 'admin/site_text_pages', :action => 'edit', :pageparams => params, :page_text_editable_type => @user_object.class.name.capitalize, :page_text_editable_id => @user_object.id }  %> |
+
+			    	<% else %>
+                		<%= link_to 'Manage SEO/Site Text for this Page', {:controller => 'admin/site_text_pages', :action => 'edit', :pageparams => params }  %>  |
+	  				<% end %>
+				<% end %>   
+			
+			  	<%= link_to "Logout", :controller => "/account", :action => "logout" %>
+			
+				<% else %>	
+													
+				<%= link_to_function "Search", "['login','login-link','search-toggle'].each(Element.toggle);", :id => "search-toggle", :style => "display:none;" %>
+				<%= link_to_function "Login", "['login','login-link','search-toggle'].each(Element.toggle);", {:controller => "/account", :action => "login"}, :id => "login-link" %> | <%= link_to "Register", :controller => "account", :action => "signup" %>
+			<% end %>
+		</div>	
+	</div>
+
+
+	<h1><a class="logo" href="/" title="link to the home page"><img src="/stylesheets/img/open-congress.png" alt="OpenCongress -" /><%= "#{@page_title_prefix} - " if @page_title_prefix %><%= truncate(@page_title, :length => 100) %> <%= truncate(@head_title, :length => 90) if @head_title %></a></h1>
+
+	
 	<div class="right">
 
-			<div id="user_account">
-				<p>				
-					<% if logged_in? %>
-  					Welcome <b><%= link_to h(current_user.login), :controller => "profile", :login => current_user.login, :action => "profile" %></b> | 
-  					<%= link_to "Logout", :controller => "/account", :action => "logout" %>
-  				  <% if can_blog? %>
-  				    <% if @user_object %>
-  				    <% else %>
-              <% end %>
-            <% end %>   
-					<% else %>
-										
-						<%= link_to_function "Search", "['login','login-link','search-toggle'].each(Element.toggle);", :id => "search-toggle", :style => "display:none;" %>
-						<%= link_to_function "Login", "['login','login-link','search-toggle'].each(Element.toggle);", {:controller => "/account", :action => "login"}, :id => "login-link" %> | <%= link_to "Register", :controller => "account", :action => "signup" %>
-					<% end %>
-					 
-				</p>
-			</div>
-
-   	  <span id="autocomplete-spin" style="display: none;">
-        <img src="/stylesheets/img/spin.gif" alt="Working..." />
-      </span>
+		<span id="autocomplete-spin" style="display: none;">
+			<img src="/stylesheets/img/spin.gif" alt="Working..." />
+		</span>
       
-			<div id="login" style="display:none;">
-				<form action='/login' method='post'>
-					<input id="login_field" name="user[login]" size="10" type="text" value="username" onfocus="if (this.value==this.defaultValue) this.value='';" />
-					<input id="password_field" name="user[password]" size="10" type="password" value="Password" onfocus="if (this.value==this.defaultValue) this.value='';" />
-					<input name="commit" type="image" src="/stylesheets/img/login.png" value="Login" />
-				</form>
-				
-			
-										
-				<a href="/login">OpenID Login</a>
+		<div id="login" style="display:none;">
+			<form action='/login' method='post'>
+				<input id="login_field" name="user[login]" size="10" type="text" value="username" onfocus="if (this.value==this.defaultValue) this.value='';" />
+				<input id="password_field" name="user[password]" size="10" type="password" value="Password" onfocus="if (this.value==this.defaultValue) this.value='';" />
+				<input name="commit" type="image" src="/stylesheets/img/login.png" value="Login" />
+			</form>
+												
+			<a href="/login">OpenID Login</a>
+		</div>
 
 
-				
-			</div>
- 
-
- 	<div id="search">
+	 	<div id="search">
+			<form action="/search/result" id="form-search" method="get">
+				<div class="search">
+					<label for="search-field">Search</label>
+					<input name="q" id="search-field" type="text" value="<%= @query.blank? ? '' : @query %>" />
+					<input type="image" src="/stylesheets/img/search_submit.gif" name="submit" id="search_submit" value="Search" />
+					<input id="search_congress_111" name="search_congress[111]" type="hidden" value="111" /> 
+					<input id="search_bills" name="search_bills" type="hidden" value="1" />
+					<input id="search_people" name="search_people" type="hidden" value="1" />
+					<input id="search_committees" name="search_committees" type="hidden" value="1" />
+					<input id="search_issues" name="search_issues" type="hidden" value="1" />
+					<input id="search_comments" name="search_comments" type="hidden" value="1" />
+					<input id="search_gossip_blog" name="search_gossip_blog" type="hidden" value="0" />
+				</div>
+			</form>
+		
+			<div id="search-autocomplete-choices" class="autocomplete"></div>
+		</div>
 
 		
-  <form action="/search/result" id="form-search" method="get">
-  	<div class="search">
-  		<label for="search-field">Search</label>
-  		<input name="q" id="search-field" type="text" value="<%= @query.blank? ? '' : @query %>" />
-  		<input type="image" src="/stylesheets/img/search_submit.gif" name="submit" id="search_submit" value="Search" />
-  		<input id="search_congress_111" name="search_congress[111]" type="hidden" value="111" /> 
-  		<input id="search_bills" name="search_bills" type="hidden" value="1" />
-  		<input id="search_people" name="search_people" type="hidden" value="1" />
-  		<input id="search_committees" name="search_committees" type="hidden" value="1" />
-  		<input id="search_issues" name="search_issues" type="hidden" value="1" />
-  		<input id="search_comments" name="search_comments" type="hidden" value="1" />
-  		<input id="search_gossip_blog" name="search_gossip_blog" type="hidden" value="0" />
-  	
-  					  	  	<a class="ad_search" href="/search">Advanced Search</a>
-
-
-  	
-  		<% if logged_in? %>
-  			<% if can_blog? %>
-  			  	<div class="seo">
-  					<% if @user_object %>
-		                <p><%= link_to 'Manage SEO/Site Text for this Page', {:controller => 'admin/site_text_pages', :action => 'edit', :pageparams => params, :page_text_editable_type => @user_object.class.name.capitalize, :page_text_editable_id => @user_object.id }  %></p>
-  				 	<% else %>
-                		<p><%= link_to 'Manage SEO/Site Text for this Page', {:controller => 'admin/site_text_pages', :action => 'edit', :pageparams => params }  %></p>
-              		<% end %>
-            	</div>
-            		<% end %>   
-				
-			<% else %>
-			<% end %>
-				
-
-  	
-  	</div>
-  </form>
-	
-	<div id="search-autocomplete-choices" class="autocomplete"></div>
-</div>
-<script type="text/javascript">
-new Ajax.Autocompleter("search-field", "search-autocomplete-choices", "/search/autocomplete", {
-  paramName: "value", 
-  minChars: 3, 
-  indicator: 'autocomplete-spin'
-});
-</script>
+		<script type="text/javascript">
+		new Ajax.Autocompleter("search-field", "search-autocomplete-choices", "/search/autocomplete", {
+		  paramName: "value", 
+		  minChars: 3, 
+		  indicator: 'autocomplete-spin'
+		});
+		</script>
+		
 	</div> 
-	
-<div class="center">
-  <% unless params[:controller] == 'index' %><p><span>Everyone can be an insider</span></p><% end %>   <p> <a class="learn_it" href="/#pitch">Learn how to track, comment, and share</a>  </p>
- 
+		
+	<div class="tagline">
 
-
-
-
-<p class="project">
-A project of <a href="http://participatorypolitics.org/" target="_blank">PPF</a> and <a href="http://sunlightfoundation.com/" target="_blank">Sunlight</a>
-</p>
-</div>
+		
+		<p>Everyone can be an <strong>insider</strong></p>
+		<a class="learn_it" href="/#pitch"><a href="#">Learn how</a> to track, comment, and share</a>	
+	</div>
 
 </div> <!-- // header -->
+
+
+
 
 <div id="nav" class="un">
 	<div class="left">

@@ -423,9 +423,9 @@ class Person < ActiveRecord::Base
     link = ""
     
     unless self.wiki_link
-      link = "#{WIKI_BASE}/wiki/#{firstname}_#{lastname}"
+      link = "#{WIKI_BASE_URL}/wiki/#{firstname}_#{lastname}"
     else
-      link = "#{WIKI_BASE}/wiki/#{self.wiki_link.name}"
+      link = "#{WIKI_BASE_URL}/wiki/#{self.wiki_link.name}"
     end
     
     return link

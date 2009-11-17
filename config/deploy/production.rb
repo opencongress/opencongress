@@ -20,7 +20,7 @@ task :compress_static, :roles => :web, :only => {:asset_host_syncher => true} do
   run "cp -r #{current_release}/public/javascripts #{current_release}/public/min/js"
   run "cp -r #{current_release}/public/stylesheets #{current_release}/public/min/css"
   run "find #{current_release}/public/min -name *.[cj]s* -exec java -jar #{current_release}/bin/yuicompressor.jar {} -o {} \\;"
-  run "find #{current_release}/public/min -name *.[cj]s* -exec gzip {} \\;"
+  run "find #{current_release}/public/min -name *.[cj]s* -exec gzip -c {} > {}.gz \\;"
 end
 
 

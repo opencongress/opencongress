@@ -584,9 +584,9 @@ class User < ActiveRecord::Base
         logger.info "tis not allowed"
         res = false
       end
-    elsif viewer.id == self.id
+    elsif viewer.object_id == self.id
       res = true
-    elsif self.friends.find_by_friend_id(viewer.id) && self.privacy_option[option] >= 1
+    elsif self.friends.find_by_friend_id(viewer.object_id) && self.privacy_option[option] >= 1
       res = true
     elsif self.privacy_option[option] == 2
       res = true

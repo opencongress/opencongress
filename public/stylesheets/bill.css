@@ -33,17 +33,17 @@ ul#in li#all {
 }
 
 #timeframe_select.popular {
-margin-left:185px;  
+margin-left:278px;  
 float: left;
 }
 
 #timeframe_select.news {
-margin-left:292px;  	
+margin-left:370px;  	
 float: left;
 }
 
 #timeframe_select.blog {
-  margin-left:408px;  
+  margin-left:480px;  
   float: left;
 }
 

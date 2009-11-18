@@ -7,7 +7,7 @@ margin: 0 35px 10px 35px;
 }
 
 .inner ul{
-margin: 0 35px 10px 55px;
+margin: 0 35px 10px 25px;
 }
 
 
@@ -19,4 +19,28 @@ line-height: 1.5em;
 
 #heading{
 height: 45px;
+}
+
+#content .left{
+width: 440px;
+float: left;
+clear: none;
+}
+
+#content .right{
+width: 440px;
+float: left !important;
+clear: none;
+}
+
+#content p.left{
+width: 220px;
+float: left;
+clear: none;
+}
+
+#content p.right{
+width: 420px;
+float: left !important;
+clear: none;
 }

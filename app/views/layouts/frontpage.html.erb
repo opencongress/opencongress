@@ -72,6 +72,15 @@
 </head>
 
 <body id="home">
+
+
+
+  <div style="display:none;" id="loading">
+    <div><img src="/img/throbber.gif" border="0" alt="Loading"/></div>
+  </div>
+
+<div class="top_bar">
+
   <div id="wrapper">
 
 	  <%= render :partial => 'layouts/header' %>
@@ -80,7 +89,9 @@
 
   </div>
   <!-- // wrapper -->
-
+  <div class="clear">&nbsp;</div>
+  </div> <!-- // top bar -->
+  
     <% cache("layout_footer", :expires_in => 3.hours) do %>
       <%= render :partial => 'layouts/footer' %>
     <% end %>

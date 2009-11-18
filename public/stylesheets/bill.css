@@ -1190,13 +1190,13 @@ color: #7f8f9f;
 padding: 20px 30px 25px 50px;
 }
 
-#bill  .top_bar{
+/*#bill  .top_bar{
 border-bottom: 1px solid #b2cbe4;
 padding: 10px;
 background: #edf6ff;
 display: none;
 }
-
+*/
 #bill.text #version_history{
 padding: 30px 50px;
 

@@ -59,7 +59,7 @@ namespace :deploy do
   end
 
   task :restart do
-    sudo "touch #{current_release}/tmp/restart.txt"
+    sudo "touch #{deploy_to}/current/tmp/restart.txt"
   end
 
 end

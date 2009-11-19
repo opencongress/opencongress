@@ -49,13 +49,13 @@ begin
 rescue NameError => error
 end
 
-ActionController::Base.session_store = :mem_cache_store
-ActionController::Base.session = {
-  :session_key => '_opencongress_session',
-  :cache   => CACHE,
-  :expires => 86400,
-  :secret  => API_KEYS['oc_session_secret_key']
-}
+#ActionController::Base.session_store = :mem_cache_store
+#ActionController::Base.session = {
+#  :session_key => '_opencongress_session',
+#  :cache   => CACHE,
+#  :expires => 86400,
+#  :secret  => API_KEYS['oc_session_secret_key']
+#}
 
 GOVTRACK_DATA_PATH = "/data/govtrack/#{DEFAULT_CONGRESS}"
 GOVTRACK_BILLTEXT_PATH = "/data/govtrack/bills.text"

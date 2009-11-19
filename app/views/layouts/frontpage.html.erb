@@ -60,17 +60,6 @@
 
 	</script>
 
-  
-<% if ENV['RAILS_ENV'] == 'production' %>
-    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
-    </script>
-    <script type="text/javascript">
-    _uacct = "UA-1208819-1";
-    urchinTracker();
-    </script>
-  <% end %>
-</head>
-
 <body id="home">
 
 
@@ -95,5 +84,15 @@
     <% cache("layout_footer", :expires_in => 3.hours) do %>
       <%= render :partial => 'layouts/footer' %>
     <% end %>
+
+    <% if ENV['RAILS_ENV'] == 'production' %>
+        <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+        </script>
+        <script type="text/javascript">
+        _uacct = "UA-1208819-1";
+        urchinTracker();
+        </script>
+      <% end %>
+    </head>
 </body>
 </html>

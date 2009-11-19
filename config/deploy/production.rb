@@ -10,7 +10,6 @@ role :app, "74.86.203.130"
 role :db,  "75.126.164.19", :primary => true
 role :db, "74.86.203.130"
 
-
 desc "Compress stylesheets and javascripts ahead of S3 sync"
 task :compress_static, :roles => :web, :only => {:asset_host_syncher => true} do
   # static files in public/ are to be compressed ahead of time so they can sync with S3

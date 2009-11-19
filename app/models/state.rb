@@ -16,12 +16,12 @@ class State < ActiveRecord::Base
   end
 
   def user_count
-    User.count_by_solr("my_state:#{abbreviation}")    
+    User.count_by_solr("my_state:\"#{abbreviation}\"")    
   end
 
   
   def users
-    User.find_by_solr("my_state:#{abbreviation}", :facets => {:fields => [:public_actions, :public_tracking, :my_bills_supported, :my_bills_opposed, 
+    User.find_by_solr("my_state:\"#{abbreviation}\"", :facets => {:fields => [:public_actions, :public_tracking, :my_bills_supported, :my_bills_opposed, 
                            :my_committees_tracked, :my_bills_tracked, :my_people_tracked, :my_issues_tracked,
                            :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens], :limit => 10, :sort => true}, 
                            #:browse => ["public_tracking:true", "public_actions:true"]}

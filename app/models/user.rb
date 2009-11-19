@@ -155,6 +155,7 @@ class User < ActiveRecord::Base
     ZipcodeDistrict.zip_lookup(self.zipcode, self.zip_four).collect {|p| p.state}.uniq
   end
 
+  
   def my_state_f
     self.my_state
   end
@@ -206,7 +207,7 @@ class User < ActiveRecord::Base
       friends_logins = friends.collect{|p| "login:#{p.friend.login}"}
       unless friends_logins.empty?
         User.find_by_solr("#{friends_logins.join(' OR ')}", 
-             :facets => {:browse => ["my_state_f:#{self.my_state}"]}, :limit => 100).results
+             :facets => {:browse => ["my_state_f:\"#{self.my_state}\""]}, :limit => 100).results
       else
         return []
       end
@@ -364,7 +365,7 @@ class User < ActiveRecord::Base
   end
 
   def self.find_users_in_states_supporting(states, object, limit)
-    query = "my_state:(#{states.join(' OR ')})"
+    query = "my_state:(\"#{states.join('" OR "')}\")"
     case object.class.to_s
       when 'Person'
         case object.title
@@ -379,7 +380,7 @@ class User < ActiveRecord::Base
   end
 
   def self.find_users_in_states_opposing(states, object, limit)
-    query = "my_state:(#{states.join(' OR ')})"
+    query = "my_state:(\"#{states.join('" OR "')}\")"
     case object.class.to_s
       when 'Person'
         case object.title
@@ -394,7 +395,7 @@ class User < ActiveRecord::Base
   end
           
   def self.find_users_in_states_tracking(states, object, limit)
-    query = "my_state:(#{states.join(' OR ')})"
+    query = "my_state:(\"#{states.join('" OR "')}\")"
     case object.class.to_s
     when 'Person'
       User.find_id_by_solr(query, :facets => {:browse => ["public_tracking:true", "my_people_tracked:#{object.id}"]}, :limit => limit)

@@ -1327,11 +1327,11 @@ class Person < ActiveRecord::Base
   end
 
   def users_tracking_from_state_count(state)
-    User.count_by_solr("my_state:#{state}", :facets => {:browse => ["public_tracking:true", "my_state_f:#{state}", "my_people_tracked:#{self.id}"]})
+    User.count_by_solr("my_state:\"#{state}\"", :facets => {:browse => ["public_tracking:true", "my_state_f:\"#{state}\"", "my_people_tracked:#{self.id}"]})
   end
   
   def average_approval_from_state(state)
-    ids = User.find_id_by_solr("my_state:#{state}", :facets => {:browse => ["my_state_f:#{state}", "my_people_tracked:#{self.id}"]}, :limit => 5000)
+    ids = User.find_id_by_solr("my_state:\"#{state}\"", :facets => {:browse => ["my_state_f:\"#{state}\"", "my_people_tracked:#{self.id}"]}, :limit => 5000)
     rating = PersonApproval.average(:rating, :conditions => ["user_id in (?)", ids.results])
     if rating
       return (rating * 10.00).round
@@ -1354,7 +1354,7 @@ class Person < ActiveRecord::Base
   end
   
   def comments_from_state_count(state)
-    ids = User.find_id_by_solr("my_state:#{state}", :facets => {:browse => ["my_state_f:#{state}", "my_people_tracked:#{self.id}"]}, :limit => 5000)
+    ids = User.find_id_by_solr("my_state:\"#{state}\"", :facets => {:browse => ["my_state_f:\"#{state}\"", "my_people_tracked:#{self.id}"]}, :limit => 5000)
     comments_count = Comment.count(:id, :conditions => ["commentable_type = ? AND commentable_id = ? AND user_id in (?)", 'Person', self.id, ids.results])
     return comments_count
   end

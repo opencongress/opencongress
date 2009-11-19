@@ -50,5 +50,6 @@ class IndexController < ApplicationController
 	end
 	
 	def senate_health_care_bill_111
+	  render :layout => 'application'
 	end
 end

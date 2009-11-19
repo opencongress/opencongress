@@ -32,10 +32,6 @@ DEFAULT_USERAGENT = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.1)
 DEFAULT_SEARCH_PAGE_SIZE = 10
 DEFAULT_CONGRESS = 111
 ENV['FACEBOOKER_CALLBACK_PATH'] = '/facebook'
-GOVTRACK_DATA_PATH = "/data/govtrack/#{DEFAULT_CONGRESS}"
-GOVTRACK_BILLTEXT_PATH = "/data/govtrack/bills.text"
-COMMITTEE_REPORTS_PATH = '/data/committee_reports/'
-OPENSECRETS_DATA_PATH = '/data/opensecrets/'
 TECHNORATI_API_KEY = API_KEYS['technorati_api_key']
 
 
@@ -117,7 +113,7 @@ require 'simple-rss'
 require 'acts_as_taggable'
 require 'active_record_fk_hack'
 require 'action_controller/integration'
-Forum.establish_connection "vanilla"
+#Forum.establish_connection "vanilla"
 
 
 # Used across the site for things like "This bill was viewed 30,212 in the last 7 days"

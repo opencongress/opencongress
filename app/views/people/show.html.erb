@@ -92,8 +92,8 @@
           <%=
           render :partial => 'shared/blogs', :object => @person.blogs.find(:all, :limit => 3),
           :locals => { :limit => 3, :all_size => @person.blog_article_count, :default_title => @person.popular_name,
-            :more_url => { :controller => 'bill', :action => 'blogs', :id => @person },
-            :top_url => { :controller => 'bill', :action => 'blogs', :id => @person, :sort => 'toprated' } }
+            :more_url => { :controller => 'people', :action => 'blogs', :id => @person },
+            :top_url => { :controller => 'people', :action => 'blogs', :id => @person, :sort => 'toprated' } }
             %>
           </div>
           <% end %>

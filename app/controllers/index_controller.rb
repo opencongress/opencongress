@@ -48,4 +48,7 @@ class IndexController < ApplicationController
 	def s1796_redirect
 	  redirect_to :controller => 'bill', :action => 'show', :id => '111-s1796'
 	end
+	
+	def senate_health_care_bill_111
+	end
 end

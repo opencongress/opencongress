@@ -26,7 +26,7 @@ module S3sync
    
    # after other mods, so we don't overwrite yaml vals with defaults
    require 's3config'
-   include S3Config
+   #include S3Config
 	
 	$S3syncDirString = '{E40327BF-517A-46e8-A6C3-AF51BC263F59}'
 	$S3syncDirTag = 'd66759af42f282e1ba19144df2d405d0'
@@ -69,7 +69,8 @@ module S3sync
         [ '--content-encoding',  GetoptLong::REQUIRED_ARGUMENT ],
         [ '--exclude',        GetoptLong::REQUIRED_ARGUMENT ],
 			  [ '--make-dirs',	GetoptLong::NO_ARGUMENT ],
-			  [ '--no-md5',	GetoptLong::NO_ARGUMENT ]           
+			  [ '--no-md5',	GetoptLong::NO_ARGUMENT ],
+        [ '--config-file', '-f', GetoptLong::REQUIRED_ARGUMENT]      
 			  )
 			  
 		def S3sync.usage(message = nil)
@@ -81,7 +82,7 @@ module S3sync
   --ssl     -s          --recursive   -r     --delete
   --public-read -p      --expires="<exp>"    --cache-control="<cc>"
   --exclude="<regexp>"  --content-encoding="<ce>"
-  --progress            --debug       -d
+  --progress            --debug       -d     --config-file="<file>" -f
   --make-dirs           --no-md5
 One of <source> or <destination> must be of S3 format, the other a local path.
 Reminders:
@@ -102,6 +103,8 @@ ENDUSAGE
 		usage if $S3syncOptions['--help']
 		$S3syncOptions['--verbose'] = true if $S3syncOptions['--dryrun'] or $S3syncOptions['--debug'] or $S3syncOptions['--progress']
 		$S3syncOptions['--ssl'] = true if $S3syncOptions['--ssl'] # change from "" to true to appease s3 port chooser
+
+    S3Config.load_config($S3syncOptions['--config-file'] || S3Config::DEFAULT_CONFIG_FILE)
 
 		
 		# ---------- CONNECT ---------- #

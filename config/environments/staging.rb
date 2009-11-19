@@ -16,6 +16,17 @@ config.action_controller.perform_caching             = false
 
 config.cache_store = :mem_cache_store, 'localhost:11211', { :namespace => 'opencongress_staging' }
 
+if defined?(PhusionPassenger)
+    PhusionPassenger.on_event(:starting_worker_process) do |forked|
+        if forked
+            # We're in smart spawning mode.
+            reestablish_connection_to_memcached
+        else
+            # We're in conservative spawning mode. We don't need to do anything.
+        end
+    end
+end
+
 BASE_URL = 'http://dev.opencongress.org/'
 
 GOVTRACK_BILLTEXT_DIFF_PATH = "/data/govtrack/bills.text.cmp"

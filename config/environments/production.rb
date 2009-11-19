@@ -27,35 +27,16 @@ require 'memcache'
 config.action_controller.perform_caching = true
 config.cache_store = :mem_cache_store, '10.13.219.6:11211', { :namespace => 'opencongress_production' }
 
-#
-# We'll make a CACHE global for the session cache only
-# this will use the new memcache-client gem
-#
-CACHE = MemCache.new(:namespace => 'opencongress_sessions')
-CACHE.servers = '10.13.219.6:11211'
-
-# This is where we deal with Passenger's forking copy-on-write socket sharing
-# which normally would cause errors / unexpected behavior
-begin
-   PhusionPassenger.on_event(:starting_worker_process) do |forked|
-     if forked
-       # We're in smart spawning mode, so...
-       # Close duplicated memcached connections - they will open themselves
-       CACHE.reset
-       Rails.cache.instance_variable_get(:@data).reset
-     end
-   end
-# In case you're not running under Passenger (i.e. devmode with webrick)
-rescue NameError => error
+if defined?(PhusionPassenger)
+    PhusionPassenger.on_event(:starting_worker_process) do |forked|
+        if forked
+            # We're in smart spawning mode.
+            reestablish_connection_to_memcached
+        else
+            # We're in conservative spawning mode. We don't need to do anything.
+        end
+    end
 end
-
-#ActionController::Base.session_store = :mem_cache_store
-#ActionController::Base.session = {
-#  :session_key => '_opencongress_session',
-#  :cache   => CACHE,
-#  :expires => 86400,
-#  :secret  => API_KEYS['oc_session_secret_key']
-#}
 
 GOVTRACK_DATA_PATH = "/data/govtrack/#{DEFAULT_CONGRESS}"
 GOVTRACK_BILLTEXT_PATH = "/data/govtrack/bills.text"

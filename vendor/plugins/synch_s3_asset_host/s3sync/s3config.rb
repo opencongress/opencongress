@@ -7,21 +7,21 @@
 # with respect to your use of this software code. 
 # (c) 2007 alastair brunton
 #
-# modified to search out the yaml in several places, thanks wkharold.
+ 
 require 'yaml'
-
+ 
+ 
 module S3Config
   
-  confpath = ["#{ENV['S3CONF']}", "#{ENV['HOME']}/.s3conf", "/etc/s3conf"]
+  DEFAULT_CONFIG_FILE = 's3config.yml'
   
-  confpath.each do |path|
-    if File.exists?(path) and File.directory?(path) and File.exists?("#{path}/s3config.yml")
-      config = YAML.load_file("#{path}/s3config.yml")
+  def S3Config.load_config(config_file = DEFAULT_CONFIG_FILE)
+    if File.exists?(config_file)
+      config = YAML.load_file( config_file )
       config.each_pair do |key, value|
-        eval("$#{key.upcase} = '#{value}'")
+         eval("$#{key.upcase} = '#{value}'")
       end
-      break
     end
   end
-    
+ 
 end

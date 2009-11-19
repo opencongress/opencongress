@@ -104,7 +104,7 @@ ENDUSAGE
 		$S3syncOptions['--verbose'] = true if $S3syncOptions['--dryrun'] or $S3syncOptions['--debug'] or $S3syncOptions['--progress']
 		$S3syncOptions['--ssl'] = true if $S3syncOptions['--ssl'] # change from "" to true to appease s3 port chooser
 
-    S3Config.load_config($S3syncOptions['--config-file'] || S3Config::DEFAULT_CONFIG_FILE)
+  S3Config.load_config($S3syncOptions['--config-file'] || S3Config::DEFAULT_CONFIG_FILE)
 
 		
 		# ---------- CONNECT ---------- #
@@ -510,7 +510,7 @@ ENDUSAGE
 					headers['x-amz-acl'] = 'public-read' if $S3syncOptions['--public-read']
 					headers['Expires'] = $S3syncOptions['--expires'] if $S3syncOptions['--expires']
 					headers['Cache-Control'] = $S3syncOptions['--cache-control'] if $S3syncOptions['--cache-control']
-          headers['Content-Encoding'] = $S3SyncOptions['--content-encoding'] if $S3SyncOptions['--content-encoding']
+					headers['Content-Encoding'] = $S3syncOptions['--content-encoding'] if $S3syncOptions['--content-encoding']
 					fType = @path.split('.').last
 					debug("File extension: #{fType}")
 					if fType != ''
@@ -525,10 +525,10 @@ ENDUSAGE
           end
 					@result = S3sync.S3try(:put, @bucket, @path, s3o, headers)
 					theStream.close if (theStream and not theStream.closed?)
-				rescue NoMethodError
+				#rescue NoMethodError
 					# when --progress is used and we can't get the stream object, it doesn't report as null
 					# so the above .closed? test will break
-					$stderr.puts "Skipping #{@path}: " + $!
+				#	$stderr.puts "Skipping #{@path}: " + $!
 				rescue SystemCallError
 					theStream.close if (theStream and not theStream.closed?)
 					$stderr.puts "Skipping #{@path}: " + $!

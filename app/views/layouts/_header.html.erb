@@ -31,20 +31,20 @@
 	</div>
 
 
-	<h1><a class="logo" href="/" title="link to the home page"><img src="/stylesheets/img/open-congress.png" alt="OpenCongress -" /><%= "#{@page_title_prefix} - " if @page_title_prefix %><%= truncate(@page_title, :length => 100) %> <%= truncate(@head_title, :length => 90) if @head_title %></a></h1>
+	<h1><a class="logo" href="/" title="link to the home page"><img src="/images//open-congress.png" alt="OpenCongress -" /><%= "#{@page_title_prefix} - " if @page_title_prefix %><%= truncate(@page_title, :length => 100) %> <%= truncate(@head_title, :length => 90) if @head_title %></a></h1>
 
 	
 	<div class="right">
 
 		<span id="autocomplete-spin" style="display: none;">
-			<img src="/stylesheets/img/spin.gif" alt="Working..." />
+			<img src="/images//spin.gif" alt="Working..." />
 		</span>
       
 		<div id="login" style="display:none;">
 			<form action='/login' method='post'>
 				<input id="login_field" name="user[login]" size="10" type="text" value="username" onfocus="if (this.value==this.defaultValue) this.value='';" />
 				<input id="password_field" name="user[password]" size="10" type="password" value="Password" onfocus="if (this.value==this.defaultValue) this.value='';" />
-				<input name="commit" type="image" src="/stylesheets/img/login.png" value="Login" />
+				<input name="commit" type="image" src="/images//login.png" value="Login" />
 			</form>
 												
 			<a href="/login">OpenID Login</a>
@@ -56,7 +56,7 @@
 				<div class="search">
 					<label for="search-field">Search</label>
 					<input name="q" id="search-field" type="text" value="<%= @query.blank? ? '' : @query %>" />
-					<input type="image" src="/stylesheets/img/search_submit.gif" name="submit" id="search_submit" value="Search" />
+					<input type="image" src="/images//search_submit.gif" name="submit" id="search_submit" value="Search" />
 					<input id="search_congress_111" name="search_congress[111]" type="hidden" value="111" /> 
 					<input id="search_bills" name="search_bills" type="hidden" value="1" />
 					<input id="search_people" name="search_people" type="hidden" value="1" />
@@ -107,7 +107,7 @@
 				<li id="wiki_nav" class="sub"><%= link_to '<span>Wiki</span>', WIKI_BASE_URL  %></li>		
 				<li id="blog_nav" class="sub"><%= link_to '<span>Blog</span>', :controller => 'blog' %></li>
 				<li id="tool_nav" class="sub">		
-				<%= link_to '<span>Resources <img src="/stylesheets/img/tool_arrow-trans.png" alt="&gt;" /></span>', :controller => 'resources' %>
+				<%= link_to '<span>Resources <img src="/images//tool_arrow-trans.png" alt="&gt;" /></span>', :controller => 'resources' %>
 				<ul class="sub">
 					<li id="compare_nav"><%= link_to '<span>Vote Comparison</span>', :controller => 'people', :action => 'compare' %></li> 
 					<li id="widget_nav"><a href="/resources#widgets"><span>Site Widgets</span></a></li>

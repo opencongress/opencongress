@@ -11,19 +11,18 @@ role :db,  "75.126.164.19", :primary => true
 role :db, "74.86.203.130"
 
 desc "Compress stylesheets and javascripts ahead of S3 sync"
-task :compress_static, :roles => :web, :only => {:asset_host_syncher => true} do
-  # static files in public/ are to be compressed ahead of time so they can sync with S3
-  # S3sync will deliver content-encoding headers for files ending .gz, .cssgz, or .jsgz
-  run "mkdir -p #{current_release}/public/staged"
-  run "rm -rf #{current_release}/public/staged/*"
-  run "cp -r #{current_release}/public/javascripts #{current_release}/public/staged/js"
-  run "cp -r #{current_release}/public/stylesheets #{current_release}/public/staged/css"
-  run "find #{current_release}/public/min -name *.[cj]s* -exec java -jar #{current_release}/bin/yuicompressor.jar {} -o {} \\;"
-  run "find #{current_release}/public/min -name *.[cj]s* -exec gzip -c {} > {}.gz \\;"
+task :precache_assets, :roles => :app do
+  #root_path    = File.expand_path(File.dirname(__FILE__) + '/..')
+  #jammit_path  = Dir["#{root_path}/vendor/gems/jammit-*/bin/jammit"].first
+  #yui_lib_path = Dir["#{root_path}/vendor/gems/yui-compressor-*/lib"].first
+  #assets_path  = "#{root_path}/public/assets"
+
+  # Precaching assets
+  run "cd #{current_release}; jammit"
 end
 
 #
 # Sync with Amazon S3 asset hosts:
 #
-# after "deploy:symlink", "compress_static"
-after "deploy:symlink", "s3_asset_host:synch_public"
+before "deploy:symlink", "precache_assets"
+before "deploy:symlink", "s3_asset_host:synch_public"

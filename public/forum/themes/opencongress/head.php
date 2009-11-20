@@ -44,7 +44,9 @@ if (is_array($this->Strings)) {
 $BodyId = "";
 if ($this->BodyId != "") $BodyId = ' id="'.$this->BodyId.'"';
 echo $HeadString . '
-  <link type="text/css" rel="Stylesheet" media="screen" href="/stylesheets/master.css" />
+  <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/reset.css" />
+  <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/typo.css" />
+  <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/master.css" />
   </head>
   <body'.$BodyId.' '.$this->Context->BodyAttributes.'>';
 ?>
@@ -73,7 +75,7 @@ echo $HeadString . '
           <label for="search-field">Search</label>
         <input type="hidden" value="Search" name="PostBackAction"/>
         <input name="Keywords" autocomplete="off" id="txtKeywords" class="search-field" type="text" value="Search Forums" onfocus="this.value = '';" onblur="if (this.value == ''){this.value = 'Search Forums'};"/>
-        <input type="image" src="/stylesheets/img/search_submit.gif" name="submit" id="search_submit" value="Search" />
+        <input type="image" src="/images//search_submit.gif" name="submit" id="search_submit" value="Search" />
           		
               <ul>
               <li id="SimpleSearchRadios">Search:<input type="radio" class="SearchRadio" checked="checked" value="Topics" id="Radio_Topics" name="Type"/>
@@ -113,7 +115,7 @@ echo $HeadString . '
         <li id="wiki_nav" class="sub"><a href="/wiki"><span>Wiki</span></a></li>
         <li id="blog_nav" class="sub"><a href="/blog"><span>Blog</span></a></li>
         <li id="tool_nav" class="sub">
-          <a href="/resources"><span>Resources <img src="/stylesheets/img/tool_arrow.png" /></span></a>
+          <a href="/resources"><span>Resources <img src="/images//tool_arrow.png" /></span></a>
 
           <ul class="sub">
             <li id="compare_nav"><a href="/people/compare" ><span>Vote Comparison</span></a></li> 

@@ -56,6 +56,15 @@ namespace :deploy do
 
   task :after_update_code do
     link_images
+
+    # If jammit is ever vendored, we'll need this:
+    #root_path    = File.expand_path(File.dirname(__FILE__) + '/..')
+    #jammit_path  = Dir["#{root_path}/vendor/gems/jammit-*/bin/jammit"].first
+    #yui_lib_path = Dir["#{root_path}/vendor/gems/yui-compressor-*/lib"].first
+    #assets_path  = "#{root_path}/public/assets"
+
+    # Compile CSS & JS for public/assets/ (see assets.yml)
+    run "cd #{current_release}; /opt/rubye/bin/jammit"
   end
 
   task :restart do

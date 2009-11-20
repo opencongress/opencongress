@@ -7,6 +7,12 @@ config.cache_classes = true
 # Use a different logger for distributed setups
 # config.logger = SyslogLogger.new
 
+
+config.action_controller.asset_host = Proc.new { |source|
+  source.starts_with?('/stylesheets') || source.starts_with?('/assets') ? 'http://a3.opencongress.org' : "http://a#{rand 4}.opencongress.org"
+}
+
+
 # Full error reports are disabled and caching is turned on
 config.action_controller.consider_all_requests_local = false
 config.action_controller.perform_caching             = false

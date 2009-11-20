@@ -12,9 +12,7 @@
   <link rel="icon" type="image/png" href="/favicon.png" />
   <%= bookmarking_image %>
 
-  <%= stylesheet_link_tag 'master' %>
-  <%= stylesheet_link_tag 'home' %>
- 	<%= stylesheet_link_tag 'jquery.jcarousel' %> 
+  <%= include_stylesheets :frontpage, :media => 'all' %>
 
   <!--[if lt IE 7]><style type="text/css">@import url("/stylesheets/ie6.css");</style><![endif]-->
 
@@ -24,10 +22,7 @@
 	<%= javascript_include_tag 'ie8/IE8' %>
 	<![endif]-->
   
-  <%= javascript_include_tag :defaults %>
-  <%= javascript_include_tag 'm' %>         
-	<%= javascript_include_tag 'jquery-1.3.2.min' %>
-	<%= javascript_include_tag 'jquery.jcarousel' %>
+  <%= include_javascripts :defaults, :frontpage %>
  
 <script type="text/javascript">
  // Disable and pause carousel autoscrolling

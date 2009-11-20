@@ -11,10 +11,9 @@
   <link rel="icon" type="image/png" href="/favicon.png" /> 
   <%= bookmarking_image %>
 
-  <%= stylesheet_link_tag 'master' %>
-  <%= stylesheet_link_tag 'jqModal' %>
-  <%= stylesheet_link_tag 'jquery.rating' %>
-  <%= @admin_styles ?  stylesheet_link_tag 'admin' : stylesheet_link_tag controller.controller_name %>
+  <%= include_stylesheets :application, :media => 'all' %>
+  
+  <%= @admin_styles ? stylesheet_link_tag('admin') : stylesheet_link_tag(controller.controller_name) %>
   <%= stylesheet_link_tag 'vids' if @include_vids_styles %>
   <%= stylesheet_link_tag 'jquery.jcarousel' if @carousel %>
   <%= stylesheet_link_tag 'oc-wiki' if @include_wiki_styles %>
@@ -24,18 +23,9 @@
   <!--[if lt IE 7]>
   <%= javascript_include_tag 'ie8/IE8' %>
   <![endif]-->
-  <%= javascript_include_tag :defaults %>
-  <%= javascript_include_tag 'slider' %>
-  <%= javascript_include_tag 'sorttable' %>
-  <%= javascript_include_tag 'builder' %>
-  <%= javascript_include_tag 'm' %>
-  <%= javascript_include_tag 'styles' %>
-  <%= javascript_include_tag 'jquery-1.3.2.min' %>
-  <%= javascript_include_tag 'jqmodal' %>
-  <%= javascript_include_tag 'jquery.qtip-1.0.0-rc3.min' %>
-  <%= javascript_include_tag 'jquery.simplyCountable' %>
-  <%= javascript_include_tag 'star-rating/jquery.MetaData' %>
-  <%= javascript_include_tag 'star-rating/jquery.rating' %>
+
+  <%= include_javascripts :defaults, :common %>
+
   <%= javascript_include_tag 'jquery.jcarousel' if @carousel %>
   <%= javascript_include_tag 'swfobject' if (@roll_call || @roll_calls) %>
   <%= javascript_include_tag 'http://metavid.org/w/js2/mwEmbed/jsScriptLoader.php?class=mv_embed' if @include_vids_styles %>

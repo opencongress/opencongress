@@ -113,7 +113,7 @@ require 'simple-rss'
 require 'acts_as_taggable'
 require 'active_record_fk_hack'
 require 'action_controller/integration'
-#Forum.establish_connection "vanilla"
+Forum.establish_connection "vanilla"
 
 
 # Used across the site for things like "This bill was viewed 30,212 in the last 7 days"

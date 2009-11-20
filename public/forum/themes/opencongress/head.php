@@ -149,7 +149,7 @@ echo $HeadString . '
             <li id="states_nav"><a href="/states"><span>States</span></a><li>
             	<li id="howitworks_nav"><a href="/about/howtouse"><span>How-to Use OpenCongress</span></a></li>
     					<li id="twitter_nav"><a href="http://twitter.com/opencongress"><span>Follow Our Twitter</span></a></li>
-    					<li id="disc_nav"><%= link_to '<span>Discussion Forums</span>', '/forum/categories.php' %></li>
+    					<li id="disc_nav"><a href="/forum/categories.php"><span>Discussion Forums</span></a></li>
     				  <li id="allresources_nav"><a href="/resources#all"><span>All Resources</span></a></li>
             </ul>
           </li>

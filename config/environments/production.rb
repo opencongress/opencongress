@@ -14,7 +14,7 @@ config.action_controller.consider_all_requests_local = false
 # Here we serve all stylesheets from the same asset server so that we won't fetch
 # the same images twice due to relative URLs in different CSS files.
 config.action_controller.asset_host = Proc.new { |source|
-  source.starts_with?('/stylesheets') || source.starts_with?('/min/css') ? 'http://assets3.opencongress.org' : "http://assets#{rand 4}.opencongress.org"
+  source.starts_with?('/stylesheets') || source.starts_with?('/assets') ? 'http://assets3.opencongress.org' : "http://assets#{rand 4}.opencongress.org"
 }
 
 #

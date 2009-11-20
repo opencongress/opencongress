@@ -508,21 +508,36 @@ ENDUSAGE
 					debug(@path)
 					headers = {'Content-Length' => (fromNode.size.respond_to?(:nonzero?) ? fromNode.size.to_s : '0')}
 					headers['x-amz-acl'] = 'public-read' if $S3syncOptions['--public-read']
-					headers['Expires'] = $S3syncOptions['--expires'] if $S3syncOptions['--expires']
-					headers['Cache-Control'] = $S3syncOptions['--cache-control'] if $S3syncOptions['--cache-control']
-					headers['Content-Encoding'] = $S3syncOptions['--content-encoding'] if $S3syncOptions['--content-encoding']
 					fType = @path.split('.').last
 					debug("File extension: #{fType}")
 					if fType != ''
+            # Page speedup additions by Carl Tashian 11/16/09
+
+            # Set content encoding for gzipped items
+					  if ['gz', 'cssgz', 'jsgz'].any? { |t| fType == t }
+              headers['Content-Encoding'] = 'gzip'
+              if fType == 'cssgz'
+    						headers['Content-Type'] = 'text/css'
+    					elsif fType == 'jsgz'
+                headers['Content-Type'] = 'application/x-javascript'
+  					  end
+				    end
+
+				    # Set far future expiration on javascripts and stylesheets
+				    # NOTE: This depends on Rails always referring to the stylesheet
+				    # with a timestamp in the URL.
+				    # if ['cssgz', 'css', 'jsgz', 'js'].any? { |t| fType == t }
+				    #  headers['Expires'] = Time.gm(Time.now.year + 3).strftime("%a, %d %b %Y %H:%M:%S GMT")
+				    # end
+
 					  if defined?($mimeTypes) and (mType = $mimeTypes[fType]) and mType != ''
   						debug("Mime type: #{mType}")
   						headers['Content-Type'] = mType
   					end
-            # File type sniffing added by Carl Tashian 11/16/09
-					  if fType == 'gz' || fType == 'cssgz' || fType == 'jsgz'
-              headers['Content-Encoding'] = 'gzip'
-				    end
           end
+					headers['Expires'] = $S3syncOptions['--expires'] if $S3syncOptions['--expires']
+					headers['Cache-Control'] = $S3syncOptions['--cache-control'] if $S3syncOptions['--cache-control']
+					headers['Content-Encoding'] = $S3syncOptions['--content-encoding'] if $S3syncOptions['--content-encoding']
 					@result = S3sync.S3try(:put, @bucket, @path, s3o, headers)
 					theStream.close if (theStream and not theStream.closed?)
 				#rescue NoMethodError

@@ -175,14 +175,13 @@ namespace :s3_asset_host do
   end
 
   desc "Synchronizes the public directory with your asset hosts."
-  task :synch_public, :roles => :web, :only => {:asset_host_syncher => true} do
+  task :synch_public, :roles => :web, :only => {:asset_host_syncher => true} do    
     connect
     current_release_dir = fetch(:latest_release)
     asset_hosts.each do |host|
       command = "cd #{File.join(current_release_dir, 'vendor/plugins/synch_s3_asset_host/s3sync')} && "
       command += "./s3sync.rb --recursive --config-file #{File.join(current_release_dir, "config/synch_s3_asset_host.yml")} "
-      # command += "--exclude \"\\.svn|\\.DS_Store\" --public-read "
-      command += "--exclude \"\\.svn|\\.DS_Store|system\" --public-read "      
+      command += '--exclude "\\.svn|\\.DS_Store|system" --public-read '      
       command += "--dryrun " if fetch(:dry_run, false)
       command += "#{File.join(current_release_dir, 'public')}/ #{host}:" 
       run(command)

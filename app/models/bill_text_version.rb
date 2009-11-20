@@ -70,7 +70,7 @@ class BillTextVersion < ActiveRecord::Base
     'as' => 'Amendment in Senate',
     'as2' => 'Amendment in Senate (2)',
     'ocun' => 'OpenCongress Prepared (Unofficial)',
-    'ocas' => 'Amendment in Senate (OpenCongress Prepared -- Un-official)'
+    'ocas' => 'Amendment in Senate (OC Prepared)'
   }
   
   def pages

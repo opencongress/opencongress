@@ -29,44 +29,44 @@ ul.profile_nav li a {
 	padding-right: 17px;
 	font-size:13px;	
 	text-decoration: none;
-	  background: url('img/arrow_button_cap.png') right 0 no-repeat;
-   _background: url('img/arrow_button_cap.gif') right 0 no-repeat;
+	  background: url('/images/arrow_button_cap.png') right 0 no-repeat;
+   _background: url('/images/arrow_button_cap.gif') right 0 no-repeat;
 }
 
 ul.profile_nav li a.active {
 font-weight: bold;
 color: #888;
-background: url('img/arrow_button_cap.png') right -34px no-repeat;
-   _background: url('img/arrow_button_cap.gif') right -34px no-repeat;
+background: url('/images/arrow_button_cap.png') right -34px no-repeat;
+   _background: url('/images/arrow_button_cap.gif') right -34px no-repeat;
 }
 
 
 ul.profile_nav li a:hover {
 color: #888;
 text-decoration: none;
-background: url('img/arrow_button_cap.png') right -34px no-repeat;
-   _background: url('img/arrow_button_cap.gif') right -34px no-repeat;
+background: url('/images/arrow_button_cap.png') right -34px no-repeat;
+   _background: url('/images/arrow_button_cap.gif') right -34px no-repeat;
 }
 
 ul.profile_nav li a:hover span {
 padding: 9px 16px 7px;
 display: block;
-background: url('img/arrow_button.png') left -34px repeat-x;
-   _background: url('img/arrow_button.gif') left -34px repeat-x;
+background: url('/images/arrow_button.png') left -34px repeat-x;
+   _background: url('/images/arrow_button.gif') left -34px repeat-x;
 
 }
 
 ul.profile_nav li a span {
 padding: 9px 16px 7px;
 display: block;
-background: url('img/arrow_button.png') left 0 repeat-x;
-   _background: url('img/arrow_button.gif') left 0 repeat-x;
+background: url('/images/arrow_button.png') left 0 repeat-x;
+   _background: url('/images/arrow_button.gif') left 0 repeat-x;
 
 }
 
 ul.profile_nav li a.active span {
-background: url('img/arrow_button.png') left -34px repeat-x;
-   _background: url('img/arrow_button.gif') left -34px repeat-x;
+background: url('/images/arrow_button.png') left -34px repeat-x;
+   _background: url('/images/arrow_button.gif') left -34px repeat-x;
 }
 
 
@@ -329,16 +329,16 @@ clear: both;
 
 
 a.med_button.on{
-background: url('img/med_button_cap.png') right -31px no-repeat;
-   _background: url('img/med_button_cap.gif') right -31px no-repeat;
+background: url('/images/med_button_cap.png') right -31px no-repeat;
+   _background: url('/images/med_button_cap.gif') right -31px no-repeat;
 text-decoration: none;
 color: #999;
 }
 
 
 a.med_button.on span{
-background: url('img/med_button.png') left -31px no-repeat;
-   _background: url('img/med_button.gif') left -31px no-repeat;
+background: url('/images/med_button.png') left -31px no-repeat;
+   _background: url('/images/med_button.gif') left -31px no-repeat;
 }
 
 
@@ -394,20 +394,20 @@ padding-bottom: 20px;
 }
 
 .rating{
-  background: url(img/no-rating.png) 3px center no-repeat;
-   _background: url(img/no-rating.gif) 3px center no-repeat;
+  background: url(/images/no-rating.png) 3px center no-repeat;
+   _background: url(/images/no-rating.gif) 3px center no-repeat;
 }
 .no_rating{
-  background: url(img/no-rating.png) 3px center no-repeat;
-   _background: url(img/no-rating.gif) 3px center no-repeat;
+  background: url(/images/no-rating.png) 3px center no-repeat;
+   _background: url(/images/no-rating.gif) 3px center no-repeat;
 }
 .bill_count{
-  background: url(img/tiny_bill.png) left center no-repeat;
-   _background: url(img/tiny_bill.gif) left center no-repeat;
+  background: url(/images/tiny_bill.png) left center no-repeat;
+   _background: url(/images/tiny_bill.gif) left center no-repeat;
 }
 .cronie{
-  background: url(img/cronie.png) left center no-repeat;
-   _background: url(img/cronie.gif) left center no-repeat;
+  background: url(/images/cronie.png) left center no-repeat;
+   _background: url(/images/cronie.gif) left center no-repeat;
 }
 
 .stats{

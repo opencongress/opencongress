@@ -213,8 +213,8 @@ clear: both;
 }
 
 .add_to_emails {
-background: url(img/forms.png) left -124px no-repeat;
-_background: url(img/forms.gif) left -124px no-repeat;
+background: url(/images/forms.png) left -124px no-repeat;
+_background: url(/images/forms.gif) left -124px no-repeat;
 border: none;
 padding: 7px;
 width: 218px;
@@ -256,8 +256,8 @@ font-weight: normal;
 h3.no_comments strong {
 font-weight: bold;
 padding: 0 10px 0 35px;
-background: url(img/comments.png) left 2px no-repeat;
-_background: url(img/comments.gif) left 2px no-repeat;
+background: url(/images/comments.png) left 2px no-repeat;
+_background: url(/images/comments.gif) left 2px no-repeat;
 }
 
 .blog-body h2 {
@@ -268,28 +268,28 @@ line-height: 1.4em;
 }
 
 .a {
-background: url(img/1.png) center no-repeat;
-_background: url(img/1.gif) center no-repeat;
+background: url(/images/1.png) center no-repeat;
+_background: url(/images/1.gif) center no-repeat;
 }
 
 .b {
-background: url(img/2.png) center no-repeat;
-_background: url(img/2.gif) center no-repeat;
+background: url(/images/2.png) center no-repeat;
+_background: url(/images/2.gif) center no-repeat;
 }
 
 .c {
-background: url(img/3.png) center no-repeat;
-_background: url(img/3.gif) center no-repeat;
+background: url(/images/3.png) center no-repeat;
+_background: url(/images/3.gif) center no-repeat;
 }
 
 .d {
-background: url(img/4.png) center no-repeat;
-_background: url(img/4.gif) center no-repeat;
+background: url(/images/4.png) center no-repeat;
+_background: url(/images/4.gif) center no-repeat;
 }
 
 .e {
-background: url(img/5.png) center no-repeat;
-_background: url(img/5.gif) center no-repeat;
+background: url(/images/5.png) center no-repeat;
+_background: url(/images/5.gif) center no-repeat;
 }
 
 #articles.edit .inner {

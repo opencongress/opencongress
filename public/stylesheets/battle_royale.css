@@ -38,8 +38,8 @@ margin: 5px 0 0 10px;
 height: 0;
 padding-top: 130px;
 float: left;
-background: url('img/br_logo.png') no-repeat left top;
-   _background: url('img/br_logo.gif') no-repeat left top;
+background: url('/images/br_logo.png') no-repeat left top;
+   _background: url('/images/br_logo.gif') no-repeat left top;
 }
 
 #objects{
@@ -47,14 +47,14 @@ padding: 15px 10px;
 height: 80px;
 width: 924px;
 margin: 30px auto 0;
-background: url('img/find_rep.png') no-repeat;
-   _background: url(img/find_rep.gif) no-repeat;
+background: url('/images/find_rep.png') no-repeat;
+   _background: url(/images/find_rep.gif) no-repeat;
 }
 
 
 #objects form#search span input{
-background: url(img/forms.png) left -124px no-repeat;
-   _background: url(img/forms.gif) left -124px no-repeat;
+background: url(/images/forms.png) left -124px no-repeat;
+   _background: url(/images/forms.gif) left -124px no-repeat;
 border: none;
 padding: 7px;
 width: 218px;
@@ -90,7 +90,7 @@ border-right: 1px solid #eee;
 
 #battle_royale #content tr{
 border-bottom: 1px solid #ddd;
-background: #fcfcfc url(img/sen-sort.png) 0 -55px repeat-x;
+background: #fcfcfc url(/images/sen-sort.png) 0 -55px repeat-x;
 }
 
 
@@ -119,27 +119,27 @@ background: #fff;
 padding: 11px 18px 10px 15px;
 text-align: left;
 display: block;
-background: url('img/arrows.png') no-repeat right -103px;
+background: url('/images/arrows.png') no-repeat right -103px;
 }
 
 #battle_royale #content th a:hover span{
-background: url('img/arrows.png') no-repeat right -9px;
+background: url('/images/arrows.png') no-repeat right -9px;
 }
 
 .down span{
-background: url('img/arrows.png') no-repeat right -9px !important;
+background: url('/images/arrows.png') no-repeat right -9px !important;
 }
 
 .down:hover span{
-background: url('img/arrows.png') no-repeat right 15px !important;
+background: url('/images/arrows.png') no-repeat right 15px !important;
 }
 
 .up span{
-background: url('img/arrows.png') no-repeat right 15px !important;
+background: url('/images/arrows.png') no-repeat right 15px !important;
 }
 
 .up:hover span{
-background: url('img/arrows.png') no-repeat right -9px !important;
+background: url('/images/arrows.png') no-repeat right -9px !important;
 }
 
 #battle_royale table, #battle_royale table th, #battle_royale table tr, #battle_royale td{
@@ -153,7 +153,7 @@ padding: 0px;
 #battle_royale #content td.bills{
 padding: 20px 10px 20px 100px;
 overflow: hidden;
-background: url('img/bill.png') no-repeat 19px 19px;
+background: url('/images/bill.png') no-repeat 19px 19px;
 
 }
 
@@ -265,15 +265,15 @@ padding: 0 0px 0 18px;
 }
 
 .linkage a span.news_11{
-background: url('img/11px_icons.png') no-repeat left 1px;
+background: url('/images/11px_icons.png') no-repeat left 1px;
 }
 
 .linkage a span.blogs_11{
-background: url('img/11px_icons.png') no-repeat left -25px;
+background: url('/images/11px_icons.png') no-repeat left -25px;
 }
 
 .linkage a span.comments_11{
-background: url('img/11px_icons.png') no-repeat left -50px;
+background: url('/images/11px_icons.png') no-repeat left -50px;
 }
 
 table td h1{
@@ -321,13 +321,13 @@ a.bill_support, .bill_nosupport{
 }
 
 a.nay {
-  background: url('img/vote_squares.png') no-repeat left -39px;
+  background: url('/images/vote_squares.png') no-repeat left -39px;
 } 
 a.nay.bill_support, a.nay:hover {
   background-position:-35px -39px;
 }
 a.aye {
-  background: url('img/vote_squares.png') no-repeat left 0px;  
+  background: url('/images/vote_squares.png') no-repeat left 0px;  
 }
 a.aye.bill_support, a.aye:hover {
   background-position:-35px 0px;

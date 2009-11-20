@@ -19,18 +19,18 @@ margin-right: 5px !important;
   display:inline !important;
 overflow: hidden !important;
   padding:10px 0 11px 4px !important;
-  background: url('img/topic-tab-left.png') no-repeat left -9999px !important;
+  background: url('/images/topic-tab-left.png') no-repeat left -9999px !important;
 }               
 #tabs ul li span {
   padding:10px 4px 11px 0 !important;
-  background: url('img/topic-tab-right.png') no-repeat right -9999px !important;
+  background: url('/images/topic-tab-right.png') no-repeat right -9999px !important;
 }
 #tabs ul li span a,
 #tabs ul li span span.a  {
   padding:10px 12px 11px 13px !important;
 text-decoration: none !important;
 color: #555 !important;
-  background: url('img/topic-tab-bg.png') repeat-x left -9999px !important;
+  background: url('/images/topic-tab-bg.png') repeat-x left -9999px !important;
 }
 #tabs ul li:hover,
 #tabs ul li.here,

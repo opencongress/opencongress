@@ -9,6 +9,6 @@ background: none !important;
 }
 
 .inner{
-background: url(img/sen-sort.png) left 83px repeat-x;
-   _background: url(img/sen-sort.gif) left 83px repeat-x;
+background: url(/images/sen-sort.png) left 83px repeat-x;
+   _background: url(/images/sen-sort.gif) left 83px repeat-x;
 }

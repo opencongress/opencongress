@@ -33,8 +33,8 @@
 display: block;
 width: 23px;
 height: 0;
-background: url('img/sprites.png') -61px -156px no-repeat ;
-   _background: url('img/sprites.gif') -61px -156px no-repeat ;
+background: url('/images/sprites.png') -61px -156px no-repeat ;
+   _background: url('/images/sprites.gif') -61px -156px no-repeat ;
 padding-top: 21px;
 overflow: hidden;
 position: absolute;
@@ -57,8 +57,8 @@ background-position: -107px -156px;
 
 
 .jqmOverlay { 
-background: #fff url('img/overlay.png');
-   _background: #fff url('img/overlay.gif');
+background: #fff url('/images/overlay.png');
+   _background: #fff url('/images/overlay.gif');
 }
 
 /* Background iframe styling for IE6. Prevents ActiveX bleed-through (<select> form elements, etc.) */

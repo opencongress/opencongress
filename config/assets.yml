@@ -1,0 +1,38 @@
+package_assets: always
+javascripts:
+    defaults:
+        - public/javascripts/prototype.js
+        - public/javascripts/effects.js
+        - public/javascripts/dragdrop.js
+        - public/javascripts/controls.js
+        - public/javascripts/application.js
+    common:
+        - public/javascripts/slider.js
+        - public/javascripts/sorttable.js
+        - public/javascripts/builder.js
+        - public/javascripts/m.js
+        - public/javascripts/styles.js
+        - public/javascripts/jquery-1.3.2.min.js
+        - public/javascripts/jqmodal.js
+        - public/javascripts/jquery.qtip-1.0.0-rc3.min.js
+        - public/javascripts/jquery.simplyCountable.js
+        - public/javascripts/star-rating/jquery.MetaData.js
+        - public/javascripts/star-rating/jquery.rating.js
+    frontpage:
+        - public/javascripts/m.js
+        - public/javascripts/jquery-1.2.3.min.js
+        - public/javascripts/jquery.carousel.js
+
+stylesheets:
+    application:
+        - public/stylesheets/reset.css
+        - public/stylesheets/typo.css
+        - public/stylesheets/master.css
+        - public/stylesheets/jqModal.css
+        - public/stylesheets/jquery.rating.css
+    frontpage:
+        - public/stylesheets/reset.css
+        - public/stylesheets/typo.css
+        - public/stylesheets/master.css
+        - public/stylesheets/home.css
+        - public/stylesheets/jquery.jcarousel.css

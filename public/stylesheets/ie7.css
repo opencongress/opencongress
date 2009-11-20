@@ -112,7 +112,7 @@ ul.listed div.label a {
 }
 #the-people {
   width:617px;
-  background: url(img/zip_arrow.png) no-repeat 0px -71px;
+  background: url(/images/zip_arrow.png) no-repeat 0px -71px;
 }           
 #views.wide #the-people {
   background:none;
@@ -129,7 +129,7 @@ padding: 4px 0 3px 29px;
 display: block;
 margin: 0px;
 clear: both;
-background: url('img/email_alerts.png') left 5px no-repeat;
+background: url('/images/email_alerts.png') left 5px no-repeat;
 }
 .share_buttons a:hover{
 color: #1f3d59 !important;
@@ -167,7 +167,7 @@ tfoot {
   background:none;
 }
 tfoot td {
-background: url('img/tfoot.png') left top no-repeat;
+background: url('/images/tfoot.png') left top no-repeat;
 }
 
 tr.header {

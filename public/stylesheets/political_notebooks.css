@@ -2,8 +2,8 @@
 
 body#political_notebooks .inner {
   padding:0px;
-  background: url(img/sen-sort.png) left 84px repeat-x;
-   _background: url(img/sen-sort.gif) left 84px repeat-x;
+  background: url(/images/sen-sort.png) left 84px repeat-x;
+   _background: url(/images/sen-sort.gif) left 84px repeat-x;
 }
 
 #primary-content h1.tab-nav {
@@ -14,8 +14,8 @@ body#political_notebooks .inner {
   float:left;
 }
 #bookmarklet {
-  background: url('graphics/bookmark_bg-trans.png') no-repeat left top;
-   _background: url('graphics/bookmark_bg-trans.gif') no-repeat left top;
+  background: url('/images/bookmark_bg-trans.png') no-repeat left top;
+   _background: url('/images/bookmark_bg-trans.gif') no-repeat left top;
   width:92px;
   height:40px;
   float:right;
@@ -132,16 +132,16 @@ ul#notebook-items li span a{
 }
 .notebook_top {
   padding-top:28px;
-  background: url("graphics/notebook_top.png") no-repeat left top;
-   _background: url("graphics/notebook_top.gif") no-repeat left top;
+  background: url("/images/notebook_top.png") no-repeat left top;
+   _background: url("/images/notebook_top.gif") no-repeat left top;
 }
 .notebook_top h3 {
   margin:0 0 0 92px;
   line-height:36px;
 } 
 .notebook_content {
-  background: url("graphics/notebook.png") repeat-y left top;
-   _background: url("graphics/notebook.gif") repeat-y left top;  
+  background: url("/images/notebook_spiral.png") repeat-y left top;
+   _background: url("/images/notebook_spiral.gif") repeat-y left top;  
   line-height:24px;
   overflow:visible;
   min-height:462px;
@@ -149,8 +149,8 @@ ul#notebook-items li span a{
 } 
 .notebook_bottom {
   padding-bottom:32px;
-  background: url("graphics/notebook_bottom.png") no-repeat left bottom;
-   _background: url("graphics/notebook_bottom.gif") no-repeat left bottom;  
+  background: url("/images/notebook_bottom.png") no-repeat left bottom;
+   _background: url("/images/notebook_bottom.gif") no-repeat left bottom;  
 }
 div.notebook-form-div{
 	padding-top:30px;
@@ -192,27 +192,27 @@ ul#pn_tabs li a{
 }
 a#all_tab{
   top:0px;
-  background-image: url('graphics/pntab_all-trans.png');
+  background-image: url('/images/pntab_all-trans.png');
   z-index:6;
 }
 a#links_tab{
   top:78px;
-  background-image: url('graphics/pntab_links-trans.png');
+  background-image: url('/images/pntab_links-trans.png');
   z-index:5;
 }
 a#videos_tab{
   top:156px;
-  background-image: url('graphics/pntab_videos-trans.png');
+  background-image: url('/images/pntab_videos-trans.png');
   z-index:4;
 }
 a#notes_tab{
   top:234px;
-  background-image: url('graphics/pntab_notes-trans.png');
+  background-image: url('/images/pntab_notes-trans.png');
   z-index:3;
 }
 a#files_tab{
   top:312px;
-  background-image: url('graphics/pntab_files-trans.png');
+  background-image: url('/images/pntab_files-trans.png');
   z-index:2;
 }
 ul#pn_tabs li a.on {

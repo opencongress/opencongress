@@ -40,7 +40,7 @@ a.large_track span#b_myoc_txt {
   display:inline-block;
 }
 tfoot td {
-background: url('img/tfoot.gif') left top no-repeat;
+background: url('/images/tfoot.gif') left top no-repeat;
 }
 #account #login-left {
   padding-left:30px;
@@ -75,17 +75,17 @@ dd, dt {
 #the-people {
  position:relative;
  top:-30px;
-  background: url(img/zip_arrow.gif) no-repeat 0px -71px;
+  background: url(/images/zip_arrow.gif) no-repeat 0px -71px;
 }        
 #the-people ul.listed li.person {
   display:inline-block;
 }  
 /*** no hover change for currently unsolveable guillotine type bug ***/
 #the-people a.track_small:hover {
-  background: url('img/large_buttons.gif') right -769px no-repeat;
+  background: url('/images/large_buttons.gif') right -769px no-repeat;
 }
 #the-people a.track_small:hover span {
-    background: url('img/large_buttons.gif') left -769px no-repeat;
+    background: url('/images/large_buttons.gif') left -769px no-repeat;
 }   
 #the-people div.label strong {
   margin-top:9px;
@@ -112,7 +112,7 @@ dd, dt {
   line-height:24px;
   margin-bottom:20px;
   color:#C3A088;
-  background:url('img/date_span.gif') left center no-repeat;
+  background:url('/images/date_span.gif') left center no-repeat;
 }          
 .wide #people_list li.person span.date {
   width:100%;
@@ -131,16 +131,16 @@ dd, dt {
   padding-left:0px;
 }
 #bill .small_box{
-   background: url('img/stats_bottom_bill.gif') left bottom no-repeat ;
+   background: url('/images/stats_bottom_bill.gif') left bottom no-repeat ;
 }
 #bill .small_box_top {
-   background: url('img/stats_top_bill.gif') left 0 no-repeat;
+   background: url('/images/stats_top_bill.gif') left 0 no-repeat;
 }
 #people .small_box{
-   background: url('img/stats_bottom_people.gif') left bottom no-repeat ;
+   background: url('/images/stats_bottom_people.gif') left bottom no-repeat ;
 }
 #people .small_box_top {
-   background: url('img/stats_top_people.gif') left 0 no-repeat;
+   background: url('/images/stats_top_people.gif') left 0 no-repeat;
 }
 #people div.committee_list {
   margin-right:10px;

@@ -252,23 +252,23 @@ text-decoration: none;
 
 
 .rating{
-  background: url(img/no-rating.png) 3px center no-repeat;
-   _background: url(img/no-rating.gif) 3px center no-repeat;
+  background: url(/images/no-rating.png) 3px center no-repeat;
+   _background: url(/images/no-rating.gif) 3px center no-repeat;
 }
 
 .no_rating{
-  background: url(img/no-rating.png) 3px center no-repeat;
-   _background: url(img/no-rating.gif) 3px center no-repeat;
+  background: url(/images/no-rating.png) 3px center no-repeat;
+   _background: url(/images/no-rating.gif) 3px center no-repeat;
 }
 
 .bill_count{
-  background: url(img/tiny_bill.png) left center no-repeat;
-   _background: url(img/tiny_bill.gif) left center no-repeat;
+  background: url(/images/tiny_bill.png) left center no-repeat;
+   _background: url(/images/tiny_bill.gif) left center no-repeat;
 }
 
 .cronie{
-  background: url(img/cronie.png) left center no-repeat;
-   _background: url(img/cronie.gif) left center no-repeat;
+  background: url(/images/cronie.png) left center no-repeat;
+   _background: url(/images/cronie.gif) left center no-repeat;
 }
 
 

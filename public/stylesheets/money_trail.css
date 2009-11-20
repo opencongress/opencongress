@@ -17,8 +17,8 @@ padding: 0px 0 0 0;
 
 #heading{
 height: 45px;
-background: url('img/money_trail_heading.png');
-   _background: url('img/money_trail_heading.gif');
+background: url('/images/money_trail_heading.png');
+   _background: url('/images/money_trail_heading.gif');
 border-bottom: 1px solid #b0dd88;
 }
 #heading p{
@@ -46,8 +46,8 @@ padding: 4px 0 4px;
 }
 
 .inner{
-background: url(img/sen-sort.png) left 85px repeat-x;
-   _background: url(img/sen-sort.gif) left 85px repeat-x;
+background: url(/images/sen-sort.png) left 85px repeat-x;
+   _background: url(/images/sen-sort.gif) left 85px repeat-x;
 }
 
 .inner ul li a{
@@ -59,31 +59,31 @@ color: #666;
 }
 
 #money_trail ul li ul li ul li a.expand{
-background: url('img/arrows.png') 11px -38px no-repeat;
-   _background: url('img/arrows.gif') 11px -38px no-repeat;
+background: url('/images/arrows.png') 11px -38px no-repeat;
+   _background: url('/images/arrows.gif') 11px -38px no-repeat;
 padding-left: 22px;
 text-decoration: none;
 
 }
 
 #money_trail ul li ul li ul li a.expand:hover{
-background: #f9f9f9 url('img/arrows.png') 9px -13px no-repeat;
-   _background: #f9f9f9 url('img/arrows.gif') 9px -13px no-repeat;
+background: #f9f9f9 url('/images/arrows.png') 9px -13px no-repeat;
+   _background: #f9f9f9 url('/images/arrows.gif') 9px -13px no-repeat;
 text-decoration: none;
 color: #000;
 }
 
 #money_trail ul li ul li ul li a.collapse{
-background: #f9f9f9 url('img/arrows.png') 9px -13px no-repeat;
-   _background: #f9f9f9 url('img/arrows.gif') 9px -13px no-repeat;
+background: #f9f9f9 url('/images/arrows.png') 9px -13px no-repeat;
+   _background: #f9f9f9 url('/images/arrows.gif') 9px -13px no-repeat;
 text-decoration: none;
 color: #000;
 padding-left: 22px;
 }
 
 #money_trail ul li ul li ul li a.collapse:hover{
-background: #f9f9f9 url('img/arrows.png') 11px -38px no-repeat;
-   _background: #f9f9f9 url('img/arrows.gif') 11px -38px no-repeat;
+background: #f9f9f9 url('/images/arrows.png') 11px -38px no-repeat;
+   _background: #f9f9f9 url('/images/arrows.gif') 11px -38px no-repeat;
 text-decoration: none;
 color: #000;
 }

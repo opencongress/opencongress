@@ -1,9 +1,6 @@
 <div id="topic">
 
 <div class="top_bar">
-<a href="/bill/<%= @bill.ident %>/show" class="arrow-left"><span>Back to Bill Details</span></a>
-
-
 <% if @versions.size > 1 %>
   <% @content_for_sortby = render :partial => 'select_bill_text_version' %>
 <% end %>

@@ -516,9 +516,9 @@ ENDUSAGE
             # Set content encoding for gzipped items
 					  if ['gz', 'cssgz', 'jsgz'].any? { |t| fType == t }
               headers['Content-Encoding'] = 'gzip'
-              if fType == 'cssgz'
+              if File.basename(@path)[/[^.]*\.[^.]*$/] == '.css.gz' || fType == 'cssgz'
     						headers['Content-Type'] = 'text/css'
-    					elsif fType == 'jsgz'
+    					elsif File.basename(@path)[/[^.]*\.[^.]*$/] == '.js.gz' || fType == 'jsgz'
                 headers['Content-Type'] = 'application/x-javascript'
   					  end
 				    end

@@ -887,7 +887,7 @@ EOT
   end
 
   def bookmarking_image
-    "<link rel=\"image_src\" href=\"" + (@bookmarking_image.blank? ? "/images//fb-default.jpg" : @bookmarking_image) + "\" />"
+    "<link rel=\"image_src\" href=\"" + (@bookmarking_image.blank? ? "/images/fb-default.jpg" : @bookmarking_image) + "\" />"
   end
   
   def has_originating_chamber_roll_call?(bill)

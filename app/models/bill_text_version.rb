@@ -68,7 +68,9 @@ class BillTextVersion < ActiveRecord::Base
     'enr' => 'Enrolled Bill',
     'renr' => 'Re-enrolled',
     'as' => 'Amendment in Senate',
-    'as2' => 'Amendment in Senate (2)'
+    'as2' => 'Amendment in Senate (2)',
+    'ocun' => 'OpenCongress Prepared (Unofficial)',
+    'ocas' => 'Amendment in Senate (OC Prepared)'
   }
   
   def pages

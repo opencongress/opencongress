@@ -262,7 +262,7 @@ begin
   else
     bill = Bill.find_by_ident(ENV['BILL'])
   
-    parse_from_file(bill, 'ocun', ENV['PARSE_ONLY'])
+    parse_from_file(bill, ENV['BILL_TEXT_VERSION'], ENV['PARSE_ONLY'])
   end
 rescue
   puts "ERROR! Couldn't parse bill text for #{bill.title_typenumber_only}.  Skipping. The error: #{$!}"

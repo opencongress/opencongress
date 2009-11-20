@@ -175,7 +175,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'api/roll_call/text_summary/:id', :controller => "roll_call", :action => 'summary_text'  
 
   map.connect 'baucus_bill_health_care.html', :controller => 'index', :action => 's1796_redirect'
-  map.connect 'senate_health_care_bill', :controller => 'index', :action => 'senate_health_care_bill_111'
+  map.connect 'senate_health_care_bill', :controller => 'bill', :action => 'text', :id => '111-h3590'
 
   map.connect 'tools/:action/:id', :controller => 'resources'
     

@@ -14,6 +14,7 @@
   <%= include_stylesheets :application, :media => 'all' %>
   
   <%= @admin_styles ? stylesheet_link_tag('admin') : stylesheet_link_tag(controller.controller_name) %>
+
   <%= stylesheet_link_tag 'vids' if @include_vids_styles %>
   <%= stylesheet_link_tag 'jquery.jcarousel' if @carousel %>
   <%= stylesheet_link_tag 'oc-wiki' if @include_wiki_styles %>

@@ -48,55 +48,83 @@ echo $HeadString . '
   </head>
   <body'.$BodyId.' '.$this->Context->BodyAttributes.'>';
 ?>
+<div class="top_bar">
 <div id="wrapper">
+  
   <div id="header" class="clearfix">
-    <h1><a class="logo" href="/" title="link to the home page"> </a></h1>
 
-    <div class="right">
+  	<div class="bar">
+  		<p class="project">
+  			A project of <a href="http://participatorypolitics.org/" target="_blank">PPF</a> and <a href="http://sunlightfoundation.com/" target="_blank">Sunlight</a>
+  		</p>
 
-      <div id="user_account">
-        <p>
+  		<div id="user_account">
+  			<p>
           <?php
         if ($this->Context->Session->UserID > 0) {
           echo str_replace('//1',
           $this->Context->Session->User->Name,
             $this->Context->GetDefinition('SignedInAsX')).' (<a href="'.$this->Context->Configuration['SIGNOUT_URL'].'">'.$this->Context->GetDefinition('SignOut').'</a>)';
         } else {
-          echo $this->Context->GetDefinition('NotSignedIn').' (<a href="'.AppendUrlParameters($this->Context->Configuration['SIGNIN_URL'], 'ReturnUrl=http://www.opencongress.org'.$_SERVER['REQUEST_URI']).'">'.$this->Context->GetDefinition('SignIn').'</a>)';
+          echo $this->Context->GetDefinition('NotSignedIn').' (<a href="'.AppendUrlParameters($this->Context->Configuration['SIGNIN_URL'], 'ReturnUrl='.$_SERVER['SCRIPT_URI']).'">'.$this->Context->GetDefinition('SignIn').'</a>)';
         }
         ?>
       </p>
-    </div>
-    <div id="search">
-    <form action="/forum/search.php" id="SearchSimple" method="get">
-        <div class="search">
-          <label for="search-field">Search</label>
-        <input type="hidden" value="Search" name="PostBackAction"/>
-        <input name="Keywords" autocomplete="off" id="txtKeywords" class="search-field" type="text" value="Search Forums" onfocus="this.value = '';" onblur="if (this.value == ''){this.value = 'Search Forums'};"/>
-        <input type="image" src="/stylesheets/img/search_submit.gif" name="submit" id="search_submit" value="Search" />
-          		
-              <ul>
-              <li id="SimpleSearchRadios">Search:<input type="radio" class="SearchRadio" checked="checked" value="Topics" id="Radio_Topics" name="Type"/>
-      			<label class="Radio" for="Radio_Topics">Topics</label>
-      			<input type="radio" class="SearchRadio" value="Comments" id="Radio_Comments" name="Type"/>
-      			<label class="Radio" for="Radio_Comments">Comments</label>
-      			<input type="radio" class="SearchRadio" value="Users" id="Radio_Users" name="Type"/>
-      			<label class="Radio" for="Radio_Users">Users</label>
-      			</li>
-      			</ul>
-        </div>
+  		</div>	
+  	</div>
 
-      </form>
-    </div>          
-  </div>
-  
-  <div class="center">
-<p><span>Everyone can be an insider</span></p>
-<p> <a class="learn_it" href="/#pitch">Learn how to track, comment, and share</a>  </p>                                                                                       
-    <p class="project">A project of <a target="_blank" href="http://www.participatorypolitics.org">PPF</a> and the <a target="_blank" href="http://www.sunlightfoundation.com/">Sunlight Foundation</a></p>
-  </div>
-  
-</div> <!-- // header -->
+
+  	<h1><a class="logo" href="/" title="link to the home page"><img src="/stylesheets/img/open-congress.png" alt="OpenCongress -" /></a></h1>
+
+
+  	<div class="right">
+
+
+  		<div id="login" style="display:none;">
+  			<form action='/login' method='post'>
+  				<input id="login_field" name="user[login]" size="10" type="text" value="username" onfocus="if (this.value==this.defaultValue) this.value='';" />
+  				<input id="password_field" name="user[password]" size="10" type="password" value="Password" onfocus="if (this.value==this.defaultValue) this.value='';" />
+  				<input name="commit" type="image" src="/stylesheets/img/login.png" value="Login" />
+  			</form>
+
+  			<a href="/login">OpenID Login</a>
+  		</div>
+
+
+  	 	<div id="search">
+  			<form action="/forum/search.php" id="SearchSimple" method="get">
+            <div class="search">
+              <label for="search-field">Search</label>
+            <input type="hidden" value="Search" name="PostBackAction"/>
+            <input name="Keywords" autocomplete="off" id="txtKeywords" class="search-field" type="text" value="Search Forums" onfocus="this.value = '';" onblur="if (this.value == ''){this.value = 'Search Forums'};"/>
+            <input type="image" src="/stylesheets/img/search_submit.gif" name="submit" id="search_submit" value="Search" />
+
+                  <ul>
+                  <li id="SimpleSearchRadios">Search:<input type="radio" class="SearchRadio" checked="checked" value="Topics" id="Radio_Topics" name="Type"/>
+          			<label class="Radio" for="Radio_Topics">Topics</label>
+          			<input type="radio" class="SearchRadio" value="Comments" id="Radio_Comments" name="Type"/>
+          			<label class="Radio" for="Radio_Comments">Comments</label>
+          			<input type="radio" class="SearchRadio" value="Users" id="Radio_Users" name="Type"/>
+          			<label class="Radio" for="Radio_Users">Users</label>
+          			</li>
+          			</ul>
+            </div>
+
+          </form>
+
+  		</div>
+
+  	</div> 
+
+  	<div class="tagline">
+
+
+  		<p>Everyone can be an <strong>insider</strong></p>
+  		<a class="learn_it" href="/#pitch"><a href="#">Learn how</a> to track, comment, and share</a>	
+  	</div>
+
+  </div> <!-- // header -->
+
 <div id="nav" class="un">
   <div class="left">
     <div class="right">
@@ -117,11 +145,12 @@ echo $HeadString . '
 
           <ul class="sub">
             <li id="compare_nav"><a href="/people/compare" ><span>Vote Comparison</span></a></li> 
-            <li id="widget_nav"><a href="#"><span>Site Widgets</span></a></li>
+            <li id="widget_nav"><a href="/resources#widgets"><span>Site Widgets</span></a></li>
             <li id="states_nav"><a href="/states"><span>States</span></a><li>
-              <li id="howitworks_nav"><a href="#"><span>How Congress Works</span></a></li>
-              <li id="disc_nav"><a href="/forum/categories.php"><span>Discussion</span></a></li>
-              <li id="allresources_nav"><a href="/tools#all"><span>All Resources</span></a></li>
+            	<li id="howitworks_nav"><a href="/about/howtouse"><span>How-to Use OpenCongress</span></a></li>
+    					<li id="twitter_nav"><a href="http://twitter.com/opencongress"><span>Follow Our Twitter</span></a></li>
+    					<li id="disc_nav"><%= link_to '<span>Discussion Forums</span>', '/forum/categories.php' %></li>
+    				  <li id="allresources_nav"><a href="/resources#all"><span>All Resources</span></a></li>
             </ul>
           </li>
           <li id="battle_nav" class="sub"><a href="/battle_royale"><span>Battle Royale</span></a></li> 

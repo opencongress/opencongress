@@ -93,3 +93,4 @@ if ($this->Context->Mode == MODE_DEBUG && $AllowDebugInfo) {
 	
 </div>
 </div>
+</div>

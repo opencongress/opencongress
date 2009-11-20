@@ -69,7 +69,7 @@ class BillTextVersion < ActiveRecord::Base
     'renr' => 'Re-enrolled',
     'as' => 'Amendment in Senate',
     'as2' => 'Amendment in Senate (2)',
-    'ocun' => 'OpenCongress Prepared (Unofficial)'
+    'ocun' => 'OpenCongress Prepared (Unofficial)',
     'ocas' => 'Amendment in Senate (OpenCongress Prepared -- Un-official)'
   }
   

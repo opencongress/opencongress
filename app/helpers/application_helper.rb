@@ -857,7 +857,7 @@ EOT
   
   def page_title
     title = ""
-    unless @site_text_page.title_tags.nil? and @site_text_page.title_tags.blank?
+    unless (@site_text_page.title_tags.nil? or @site_text_page.title_tags.blank?)
       title += "#{@site_text_page.title_tags} - "
     end
     if @page_title

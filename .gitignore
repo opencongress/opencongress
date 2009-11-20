@@ -1,8 +1,4 @@
 log/*.log
 tmp/**/*
-config/assets.yml
-config/synch_s3_asset_host.yml
-config/database.yml
-config/api_keys.yml
 db/schema.rb
 public/assets/*

@@ -21,7 +21,7 @@ javascripts:
     frontpage:
         - public/javascripts/m.js
         - public/javascripts/jquery-1.2.3.min.js
-        - public/javascripts/jquery.carousel.js
+        - public/javascripts/jquery.jcarousel.js
 
 stylesheets:
     application:

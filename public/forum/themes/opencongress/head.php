@@ -121,7 +121,7 @@ echo $HeadString . '
   	<div class="tagline">
 
   		<p>Everyone can be an <strong>insider</strong></p>
-  		<a class="learn_it" href="/#pitch"><a href="#">Learn how</a> to track, comment, and share</a>	
+  		<span class="learn_it"><a href="/#pitch">Learn how</a> to track, comment, and share</span>
   	</div>
 
   </div> <!-- // header -->

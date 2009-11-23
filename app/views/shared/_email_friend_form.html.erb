@@ -56,11 +56,16 @@ function verifyEmailForm()
   <a href="#" class="jqmClose">
       Close
   </a>
-  <br style="clear" />
+<br style="clear" />
 </div>
 
 <div id="emailfriend">
-  <% form_remote_tag(:url => { :controller => 'resources', :action => 'email_friend_send' }, 
+	<div class="ie">
+  <a href="#" class="jqmClose">
+      Close
+  </a>
+  </div>  
+<% form_remote_tag(:url => { :controller => 'resources', :action => 'email_friend_send' }, 
                                 :condition => "verifyEmailForm()",
                                 :before => "onEmailSend()"
                      ) do %> 

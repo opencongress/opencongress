@@ -7,7 +7,7 @@
 .jqmWindow {
     display: none;
     position: fixed;
-    top: 17%;
+    top: 10%;
     left: 50%;
     margin-left: -385px;
     /*width: 600px;*/
@@ -19,6 +19,8 @@
     border-bottom: 1px solid #aaa;
     border-left: 1px solid #c9c9c9;
     padding: 30px;
+    overflow:auto;
+    max-height:80%;
 } 
 .jqmWindow.closer {
   margin-left:0px;

@@ -523,12 +523,17 @@ ENDUSAGE
   					  end
 				    end
 
+            #
 				    # Set far future expiration on javascripts and stylesheets
 				    # NOTE: This depends on Rails always referring to the stylesheet
 				    # with a timestamp in the URL.
-				    # if ['cssgz', 'css', 'jsgz', 'js'].any? { |t| fType == t }
-				    #  headers['Expires'] = Time.gm(Time.now.year + 3).strftime("%a, %d %b %Y %H:%M:%S GMT")
-				    # end
+				    # We are only doing this for CSS and JS files because
+				    # images can be loaded from CSS (without timestamps)
+				    # so we can't assume we'll be able to treat them the same.
+            #
+				    if ['cssgz', 'css', 'jsgz', 'js'].any? { |t| fType == t }
+				      headers['Expires'] = Time.gm(Time.now.year + 3).strftime("%a, %d %b %Y %H:%M:%S GMT")
+				    end
 
 					  if defined?($mimeTypes) and (mType = $mimeTypes[fType]) and mType != ''
   						debug("Mime type: #{mType}")
@@ -552,6 +557,7 @@ ENDUSAGE
 				raise "Node provided as update source doesn't support :stream"
 			end
 		end
+		
 		def delete
 			@result = S3sync.S3try(:delete, @bucket, @path)
 		end

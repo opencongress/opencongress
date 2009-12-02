@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
   validates_length_of       :zip_four, :within => 0..4, :allow_nil => true, :allow_blank => true
   validates_length_of       :email,    :within => 3..100, :if => :not_openid?
   #validates_email_veracity_of :email
+  validates_email_format_of :email, :message => "address invalid"
   validates_numericality_of :zipcode, :only_integer => true, :allow_nil => true, :message => "is not a valid 5 digit zipcode"
   validates_numericality_of :zip_four, :only_integer => true, :allow_nil => true, :message => "is not a valid 4 digit zipcode extension"
   validates_length_of :zipcode, :is => 5, :allow_nil => true, :message => "is not a valid 5 digit zipcode"

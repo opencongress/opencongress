@@ -74,8 +74,6 @@ class CommentsController < ApplicationController
       else
         @comment.update_attribute('root_id', @comment.id)
         
-        #params[:comment_page] = @comment.page
-#        goto_comment @comment.id, object
         @ajax_comment = true
         
         if @comment.commentable_type == "Article"

@@ -3,14 +3,14 @@
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include SimpleCaptcha::ControllerHelpers
-  
+
   before_filter :store_location, :except => ["rescue_action_in_public"]
   before_filter :show_comments?
   before_filter :current_tab
   before_filter :has_accepted_tos?
   before_filter :get_site_text_page
   before_filter :is_banned?
-  
+
   def paginate_collection(collection, options = {})
     # from http://www.bigbold.com/snippets/posts/show/389
     options[:page] = options[:page] || params[:page] || 1
@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
     pages = Paginator.new self, size, options[:per_page], (params[:page]||1)
     pages
   end
-  
+
   def is_valid_email?(e, with_headers = false)
     if with_headers == false
       email_check = Regexp.new('^[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$')
@@ -46,12 +46,12 @@ class ApplicationController < ActionController::Base
       true
     end		
   end
-  
+
   def days_from_params(days)
     days = days.to_i if (days && !days.kind_of?(Integer))
     return (days && ((days == 7) || (days == 14) || (days == 30))) ? days.days : DEFAULT_COUNT_TIME
   end
-  
+
   def rescue_action_in_public(exception)
     case exception
     when ::ActionController::RoutingError, ::ActionController::UnknownAction then
@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
       render :partial => "index/error_page", :layout => 'application', :locals => { :exception => exception }, :status => "500"
     end
   end
-  
+
   def comment_redirect(comment_id)
     comment = Comment.find_by_id(comment_id)
     # logger.info "COMMENT_ID:#{comment_id}"
@@ -73,39 +73,8 @@ class ApplicationController < ActionController::Base
     @goto_comment = comment
   end
 
-  
-  def goto_comment(comment_id, commentable)
-    @goto_comment = Comment.find_by_id(comment_id)
-    if @goto_comment
-
-      if page_result = Comment.find_by_sql(["select comment_page(id, commentable_id, commentable_type, ?) as page_number from comments where id = ?", Comment.per_page, @goto_comment.id])[0]
-        page_number = page_result.page_number
-        comm_controller = ""
-        comm_action = "comments"
-        case @goto_comment.commentable_type.to_s
-          when 'Person'
-            comm_controller = "people"
-          when 'Subject'
-            comm_controller = "issue"
-          when 'Bill'
-            comm_controller = "bill"
-          when 'Article'
-            comm_controller = "articles"
-            comm_action = "show"
-        end
-        redirect_to :controller => comm_controller, :action => comm_action, :comment_page => page_number, :comment_id => comment_id
-#        @current_tab = 'comments'
-#        params[:comment_page] = ((index.to_f / Comment.per_page.to_f) + 1.to_f).floor
-      else
-        @goto_comment = nil
-      end
-    end
-    
-    params[:goto_comment] = nil
-  end
-  
   private
-  
+
   def has_accepted_tos?
     if logged_in?
       logger.info "USER APP TOS: #{current_user.accepted_tos}"
@@ -114,7 +83,7 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-  
+
   def is_banned?
     if logged_in?
       if current_user.is_banned == true
@@ -122,7 +91,7 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-  
+
   def current_tab
     @current_tab = params[:navtab].blank? ? nil : params[:navtab]
   end
@@ -162,7 +131,7 @@ class ApplicationController < ActionController::Base
       redirect_to :controller => "/account", :action => "login"
     end
   end
-  
+
   def prepare_tsearch_query(text)
     text = text.strip
     
@@ -181,19 +150,19 @@ class ApplicationController < ActionController::Base
   def site_text_params_string(prms)
     ['controller', 'action', 'id', 'person_type', 'commentary_type'].collect{|k|"#{k}=#{prms[k]}" }.join("&")
   end
-  
+
   def get_site_text_page
     page_params = site_text_params_string(params)
     
     @site_text_page = SiteTextPage.find_by_page_params(page_params)
     @site_text_page = OpenStruct.new if @site_text_page.nil?
   end
-  
+
   protected
   def dump_session
     logger.info session.to_yaml
   end
-  
+
   def log_error(exception) #:doc:
     if ActionView::TemplateError === exception
       logger.fatal(exception.to_s)

@@ -354,9 +354,9 @@ color: #333;
 padding-left: 5px;
 }
 
-#topic .title h2{
+#topic .title h1{
 font-weight: bold;
-font-size: 14px;
+font-size: 16px !important;
 margin: 6px 0 4px 0;
 }
 

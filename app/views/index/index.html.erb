@@ -5,9 +5,11 @@
 
 <div class="inner">
 
-<div id="heading">
-<div id="inner_heading">
-  
+
+
+
+<div class="rightside">
+
   
 	<div class="floatright congress_status">
   	<h2>Today in Congress: <span><%= Date.today.strftime("%B %d, %Y") %></span></h2>
@@ -15,19 +17,16 @@
   		<%= session_div('senate', @sessions[:senate_session])%>	
   	</div>
  
-  
-	<div class="floatleft">	
-		<div class="myoc">
-			<h3 class="floatleft">Everyone can be an insider</h3>
-			<!--<p class="floatleft">OpenCongress helps you track and understand
-			what's really happening in Congress.</p>-->
-			<!--<p>Take advantage of <strong>every</strong> unique feature, it's free</p> -->
-			<a href="#pitch" class="small_button small_arrow floatleft"><span>Learn More</span></a> 
-		</div>	
+	
+	<div class="healthcare_bills">
+		<h2>Health Care Reform Bills</h2>
+		
+		<div>Senate - amendment to <a href="http://www.opencongress.org/bill/111-h3590/show">H.R. 3590</a>: <a href="http://www.opencongress.org/senate_health_care_bill">Patient Protection and Affordable Care Act</a> <span>Introduced 11-18-09 - Currently being debated in the Senate (<a href="http://www.opencongress.org/articles/view/1373-Senate-Votes-to-Move-the-Health-Care-Debate-Forward">more info</a>)</span></div>
+		
+		<div>House - <a href="http://www.opencongress.org/bill/111-h3962/show">H.R. 3962</a>: <a href="http://www.opencongress.org/bill/111-h3962/show">Affordable Health Care for America Act</a><span>Nov. 07, 2009 - Passed House by a vote of 220-215 <a hreflang="http://www.opencongress.org/vote/2009/h/887">(Roll Call Results)</a></span></a>	</div>
 	</div>
-</div>
-</div>
-
+	
+	
 	
 	<div class="pop_bills">
 		<div class="bill_top">
@@ -88,7 +87,7 @@
 	</div>
       
 
-	
+	</div>
 		
     <div class="blog_list">
 		<%= render :partial => 'articles/frontpage', :locals => { :articles => Article.frontpage_gossip } %>

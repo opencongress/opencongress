@@ -63,8 +63,8 @@ class ApplicationController < ActionController::Base
   
   def comment_redirect(comment_id)
     comment = Comment.find_by_id(comment_id)
-    logger.info "COMMENT_ID:#{comment_id}"
-    logger.info "PAGE: #{comment.page}"
+    # logger.info "COMMENT_ID:#{comment_id}"
+    # logger.info "PAGE: #{comment.page}"
     if comment.commentable_type == "Article"
       redirect_to comment.commentable_link.merge(:comment_page => comment.page)
     else
@@ -77,9 +77,9 @@ class ApplicationController < ActionController::Base
   def goto_comment(comment_id, commentable)
     @goto_comment = Comment.find_by_id(comment_id)
     if @goto_comment
-      #commentable.comments.find(:all, :order => 'comments.root_id ASC, comments.lft ASC').select{|c| c == @goto_comment }.each{|cc| logger.info "MATCHING COMMENT: #{cc.id} id, #{cc.lft} lft, #{cc.comment}"}
-      index = commentable.comments.find(:all, :order => 'comments.root_id ASC, comments.lft ASC').rindex(@goto_comment)
-      if index
+
+      if page_result = Comment.find_by_sql(["select comment_page(id, commentable_id, commentable_type, ?) as page_number from comments where id = ?", Comment.per_page, @goto_comment.id])[0]
+        page_number = page_result.page_number
         comm_controller = ""
         comm_action = "comments"
         case @goto_comment.commentable_type.to_s
@@ -93,7 +93,7 @@ class ApplicationController < ActionController::Base
             comm_controller = "articles"
             comm_action = "show"
         end
-        redirect_to :controller => comm_controller, :action => comm_action, :comment_page => ((index.to_f + 1.0 / Comment.per_page.to_f) + 1.to_f).floor, :comment_id => comment_id
+        redirect_to :controller => comm_controller, :action => comm_action, :comment_page => page_number, :comment_id => comment_id
 #        @current_tab = 'comments'
 #        params[:comment_page] = ((index.to_f / Comment.per_page.to_f) + 1.to_f).floor
       else

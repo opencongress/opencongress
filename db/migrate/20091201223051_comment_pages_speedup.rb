@@ -4,6 +4,7 @@ class CommentPagesSpeedup < ActiveRecord::Migration
     declare
        c_row record;
        rc int := 0;
+       found int := 0;
        page_count int := 1;
     begin
        for c_row in select id from comments where commentable_id = c_id and commentable_type = c_type order by comments.root_id ASC, comments.lft ASC loop
@@ -12,9 +13,16 @@ class CommentPagesSpeedup < ActiveRecord::Migration
              rc := 0;
              page_count := page_count + 1;
           end if;
-          EXIT WHEN c_row.id = comment_id;
+          if c_row.id = comment_id then
+            found := 1;
+            exit;
+          end if;
        end loop;
-       return page_count;
+       if found = 0 then
+         return 1;
+       else
+         return page_count;
+       end if;
     end;
     $$ LANGUAGE plpgsql;"
   end

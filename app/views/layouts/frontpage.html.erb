@@ -29,6 +29,7 @@
  function mycarousel_initCallback(a){a.buttonNext.bind("click",function(){a.startAuto(0)});a.buttonPrev.bind("click",
  function(){a.startAuto(0)});a.clip.hover(function(){a.stopAuto()},function(){a.startAuto()})}$j(document).ready(function(){$j("#why_carousel").jcarousel({auto:5,wrap:"last",initCallback:mycarousel_initCallback})});
 </script>
+</head>
 
 <body id="home">
   <div style="display:none;" id="loading">
@@ -53,7 +54,6 @@
 
     <% if ENV['RAILS_ENV'] == 'production' %>
         <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script><script type="text/javascript">_uacct = "UA-1208819-1";urchinTracker();</script>
-      <% end %>
-    </head>
+   <% end %>
 </body>
 </html>

@@ -7,7 +7,7 @@
           <span><strong><%= number_with_delimiter(p.views(DEFAULT_COUNT_TIME)) %></strong> views</span>
         </span>
         
-        <span class="title"><%= p.senator? ? 'Senator' : 'Representative' %> <%= p.popular_name %></span></span>
+        <span class="title"><%= p.senator? ? 'Senator' : 'Representative' %> <%= p.popular_name %></span>
         <span class="date">
           <span><%= p.party %>, <%= Person.state_for_abbrev(p.state)%></span> 
         </span>

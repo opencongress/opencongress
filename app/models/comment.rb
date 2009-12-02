@@ -104,12 +104,14 @@ class Comment < ActiveRecord::Base
     end
   end
 
-  
   def page
-      index = self.commentable.comments.find(:all, :order => 'comments.root_id ASC, comments.lft ASC').rindex(self)
-      return ((index.to_f / Comment.per_page.to_f) + 1.to_f).floor
+      if page_result = Comment.find_by_sql(["select comment_page(id, commentable_id, commentable_type, ?) as page_number from comments where id = ?", Comment.per_page, self.id])[0]
+        return page_result.page_number
+      else
+        return 0
+      end
   end
-  
+
   def commentable_title
     return self.parent.commentable_title if self.commentable_type.nil?
     

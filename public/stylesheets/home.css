@@ -20,13 +20,49 @@ overflow: hidden;
 font-size: 12px !important;
 }
 
+
+.rightside{
+padding-top: 1px;
+float: right;
+width: 575px;
+}
+
+
+.healthcare_bills{
+padding-top: 20px;
+	float: right;
+background: url('/images/healthcare_bill.png') 0 54px no-repeat;
+width: 540px;	
+margin-right: 30px;	
+border-top: 1px solid #ddd;
+}
+
+
+.healthcare_bills div{
+padding-left: 85px;	
+padding-bottom: 11px;
+font-weight: bold;
+}
+
+.healthcare_bills div a{
+text-decoration: underline !important;
+cursor: pointer;
+}
+
+
+
+.healthcare_bills div span{
+font-weight: normal;
+display: block;
+}
+
+
 .congress_status{
 /*
 background: url('/images/congress_status.png') left top no-repeat;
 */
 width: 578px;
-min-height: 84px;
-margin: 6px 0px 0 0px;
+margin: 26px 0px 0 0px;
 font-size: 11px;
 }
 
@@ -34,7 +70,7 @@ font-size: 11px;
 .congress_status h2{
 font-size: 11px;
 margin: 0 !important;
-padding: 8px 0px 13px 17px !important;
+padding: 8px 0px 13px 7px !important;
 font-family: Arial, Helvetica, sans-serif !important;
 display: block;
 float: left;
@@ -161,7 +197,7 @@ font-size: 14px;
 clear: left;
 color: #555;
 width: 360px;
-line-height: 1.6em;
+line-height: 1.5em;
 overflow: hidden; /*
 background: url(/images/home_blog_ul.png) left bottom repeat-x;
 */
@@ -188,6 +224,7 @@ padding: 0 0 3px 0;
 color: #333;
 font-weight: normal;
 font-size: 18px;
+line-height: 1.5em;
 display: block;
 margin-bottom: 5px;
 }
@@ -940,8 +977,8 @@ font-size: 11px;
 }
 
 .inner{
-background: url(/images/sen-sort.png) left 77px repeat-x !important;
-   _background: url(/images/sen-sort.gif) left 77px repeat-x !important;
+background: url(/images/sen-sort.png) left 0 repeat-x !important;
+_background: url(/images/sen-sort.gif) left 0 repeat-x !important;
 .background:none !important;
 }
 

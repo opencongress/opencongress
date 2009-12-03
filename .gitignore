@@ -2,5 +2,6 @@ log/*.log
 tmp/**/*
 db/schema.rb
 public/assets/*
-vendor/plugins/acts_as_solr/solr/logs/*
 vendor/plugins/acts_as_solr/solr/tmp/*
+vendor/plugins/acts_as_solr/solr/solr/**/*
+vendor/plugins/acts_as_solr/solr/logs/*

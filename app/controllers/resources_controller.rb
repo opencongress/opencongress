@@ -252,6 +252,10 @@ class ResourcesController < ApplicationController
   end
   
   def healthcare_panel
+    if params[:state] && @state = State.find(:conditions => {:abbreviation => params[:state]})
+      #
+    end
+    
     render :layout => false
   end
   

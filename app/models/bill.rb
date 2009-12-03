@@ -379,23 +379,6 @@ class Bill < ActiveRecord::Base
   end                          
                             
 
-
-  # Populate fake bill votes for testing
-  def self.pop_some
-    60000.times do
-#      bill = Bill.find(:first, :order => "random()")
-      date_mod = rand(80)
-      this_time = Time.new - date_mod*60*60*24
-      s = rand(2)
-      b = 0
-      if s == 1
-        b = 1
-      end
-      
-      BillVote.create({:bill_id => rand(800) + 43100, :created_at => this_time, :support => b, :user_id => 1})
-    end
-  end
-
   # returns the battle royale index
   def place_in_battle_royale_100
     b = Bill.find_all_by_most_user_votes_for_range(nil, {:limit => 100, :offset => 0})
@@ -442,7 +425,7 @@ class Bill < ActiveRecord::Base
   end
   
   def Bill.find_all_by_most_user_votes_for_range(range, options)
-    range = 630720000 if range.nil?
+    range = 2.years.to_i if range.nil?
     possible_orders = ["vote_count_1 desc", "vote_count_1 asc", "current_support_pb asc", 
                        "current_support_pb desc", "bookmark_count_1 asc", "bookmark_count_1 desc", 
                        "support_count_1 desc", "support_count_1 asc", "total_comments asc", "total_comments desc"]
@@ -454,124 +437,90 @@ class Bill < ActiveRecord::Base
       limit = options[:limit] ||= 20
       offset = options[:offset] ||= 0
       not_null_check = order.split(' ').first
-    
-  #    not_null_check = "vote_count_1"
-#      not_null_check = "total_comments" if order == "total_comments"
+
+      query = "
+          SELECT
+            bills.*,
+            #{search ? "rank(bill_fulltext.fti_names, ?, 1) as tsearch_rank, " : "" }
+            current_period.vote_count_1 as vote_count_1,
+            current_period.support_count_1 as support_count_1,
+            (total_counted.total_count - total_supported.total_support) as total_support,
+            current_period.current_support_pb as current_support_pb,
+            comments_total.total_comments as total_comments,
+            current_period_book.bookmark_count_1 as bookmark_count_1,
+            previous_period.vote_count_2 as vote_count_2,
+            previous_period.support_count_2 as support_count_2, 
+            total_supported.total_support as total_opposed,
+            total_counted.total_count as total_count
+          FROM
+            #{search ? "bill_fulltext," : ""}
+            bills 
+          INNER JOIN (
+            select bill_votes.bill_id  as bill_id_1, 
+            count(bill_votes.bill_id) as vote_count_1, 
+            sum(bill_votes.support) as support_count_1,
+            (count(bill_votes.bill_id) - sum(bill_votes.support)) as current_support_pb  
+            FROM bill_votes 
+            WHERE created_at > ? group by bill_id_1)
+          current_period ON bills.id = current_period.bill_id_1
+          LEFT OUTER JOIN (
+            select bill_votes.bill_id as bill_id_3, 
+            sum(bill_votes.support) as total_support 
+            FROM bill_votes 
+            GROUP BY bill_votes.bill_id) 
+          total_supported ON bills.id = total_supported.bill_id_3
+          LEFT OUTER JOIN (
+            select bill_votes.bill_id as bill_id_4, 
+            count(bill_votes.support) as total_count 
+            FROM bill_votes 
+            GROUP BY bill_votes.bill_id) 
+          total_counted ON bills.id = total_counted.bill_id_4
+          LEFT OUTER JOIN (
+            select comments.commentable_id as bill_id_5,
+            count(comments.id) as total_comments 
+            FROM comments 
+            WHERE created_at > ? AND 
+            comments.commentable_type = 'Bill' 
+            GROUP BY comments.commentable_id) 
+          comments_total ON bills.id = comments_total.bill_id_5 
+          LEFT OUTER JOIN (
+            select bill_votes.bill_id as bill_id_2, 
+            count(bill_votes.bill_id) as vote_count_2, 
+            sum(bill_votes.support) as support_count_2 
+            FROM bill_votes 
+            WHERE created_at > ? AND 
+            created_at <= ? 
+            GROUP BY bill_id_2) 
+          previous_period ON bills.id = previous_period.bill_id_2
+          LEFT OUTER JOIN (
+            select bookmarks.bookmarkable_id as bill_id_1, 
+             count(bookmarks.bookmarkable_id) as bookmark_count_1 
+             FROM bookmarks
+                 WHERE created_at > ?
+             GROUP BY bill_id_1) 
+          current_period_book ON bills.id = current_period_book.bill_id_1
+          WHERE #{not_null_check} IS NOT NULL
+          #{search ? "AND bill_fulltext.fti_names @@ to_tsquery('english', ?)
+          AND bills.id = bill_fulltext.bill_id" : ""}
+          ORDER BY #{order} 
+          LIMIT #{limit} 
+          OFFSET #{offset}"
+
+      query_params = [range.seconds.ago,range.seconds.ago, (range*2).seconds.ago, range.seconds.ago, range.seconds.ago]
+
       if search
-        Bill.find_by_sql(["SELECT bills.*, rank(bill_fulltext.fti_names, ?, 1) as tsearch_rank, 
-                         current_period.vote_count_1 as vote_count_1, current_period.support_count_1 as support_count_1,
-                         (total_counted.total_count - total_supported.total_support) as total_support,
-                         current_period.current_support_pb as current_support_pb,
-                         comments_total.total_comments as total_comments,
-                         current_period_book.bookmark_count_1 as bookmark_count_1,
-                         previous_period.vote_count_2 as vote_count_2, previous_period.support_count_2 as support_count_2, 
-                         total_supported.total_support as total_opposed, total_counted.total_count as total_count FROM bill_fulltext, bills 
-                           INNER JOIN (select bill_votes.bill_id  as bill_id_1, 
-                                       count(bill_votes.bill_id) as vote_count_1, 
-                                       sum(bill_votes.support) as support_count_1,
-                                       (count(bill_votes.bill_id) - sum(bill_votes.support)) as current_support_pb  
-                                       FROM bill_votes 
-                                            WHERE created_at > ? AND 
-                                                  created_at <= ? group by bill_id_1)
-                           current_period ON bills.id=current_period.bill_id_1
-                           LEFT OUTER JOIN (select bill_votes.bill_id as bill_id_3, 
-                                            sum(bill_votes.support) as total_support 
-                                            FROM bill_votes 
-                                            GROUP BY bill_votes.bill_id) 
-                           total_supported ON bills.id=total_supported.bill_id_3
-                           LEFT OUTER JOIN (select bill_votes.bill_id as bill_id_4, 
-                                            count(bill_votes.support) as total_count 
-                                            FROM bill_votes 
-                                            GROUP BY bill_votes.bill_id) 
-                           total_counted ON bills.id=total_counted.bill_id_4
-                           LEFT OUTER JOIN (select comments.commentable_id as bill_id_5,
-                                           count(comments.id) as total_comments 
-                                           FROM comments 
-                                              WHERE created_at > ? AND 
-                                                    comments.commentable_type = 'Bill' 
-                                           GROUP BY comments.commentable_id) 
-                           comments_total ON bills.id=comments_total.bill_id_5 
-                           LEFT OUTER JOIN (select bill_votes.bill_id as bill_id_2, 
-                                            count(bill_votes.bill_id) as vote_count_2, 
-                                            sum(bill_votes.support) as support_count_2 
-                                            FROM bill_votes 
-                                               WHERE created_at > ? AND 
-                                                     created_at <= ? 
-                                            GROUP BY bill_id_2) 
-                           previous_period ON bills.id=previous_period.bill_id_2
-                           LEFT OUTER JOIN (select bookmarks.bookmarkable_id  as bill_id_1, 
-                                           count(bookmarks.bookmarkable_id) as bookmark_count_1 
-                                           FROM bookmarks
-                                               WHERE created_at > ? AND 
-                                                     created_at <= ? 
-                                           GROUP BY bill_id_1) 
-                           current_period_book ON bills.id=current_period_book.bill_id_1
-                        WHERE #{not_null_check} IS NOT NULL
-                          AND bill_fulltext.fti_names @@ to_tsquery('english', ?) AND bills.id = bill_fulltext.bill_id
-                        ORDER BY #{order} 
-                        LIMIT #{limit} 
-                        OFFSET #{offset}", search, range.seconds.ago, Time.now, range.seconds.ago, 
-                                           (range*2).seconds.ago, range.seconds.ago,  range.seconds.ago, Time.now, search])
-        
-      else
-        Bill.find_by_sql(["SELECT bills.*, current_period.vote_count_1 as vote_count_1, current_period.support_count_1 as support_count_1,
-                         (total_counted.total_count - total_supported.total_support) as total_support,
-                         current_period.current_support_pb as current_support_pb,
-                         comments_total.total_comments as total_comments,
-                         current_period_book.bookmark_count_1 as bookmark_count_1,
-                         previous_period.vote_count_2 as vote_count_2, previous_period.support_count_2 as support_count_2, 
-                         total_supported.total_support as total_opposed, total_counted.total_count as total_count FROM bills
-                           INNER JOIN (select bill_votes.bill_id  as bill_id_1, 
-                                       count(bill_votes.bill_id) as vote_count_1, 
-                                       sum(bill_votes.support) as support_count_1,
-                                       (count(bill_votes.bill_id) - sum(bill_votes.support)) as current_support_pb  
-                                       FROM bill_votes 
-                                            WHERE created_at > ? AND 
-                                                  created_at <= ? group by bill_id_1)
-                           current_period ON bills.id=current_period.bill_id_1
-                           LEFT OUTER JOIN (select bill_votes.bill_id as bill_id_3, 
-                                            sum(bill_votes.support) as total_support 
-                                            FROM bill_votes 
-                                            GROUP BY bill_votes.bill_id) 
-                           total_supported ON bills.id=total_supported.bill_id_3
-                           LEFT OUTER JOIN (select bill_votes.bill_id as bill_id_4, 
-                                            count(bill_votes.support) as total_count 
-                                            FROM bill_votes 
-                                            GROUP BY bill_votes.bill_id) 
-                           total_counted ON bills.id=total_counted.bill_id_4
-                           LEFT OUTER JOIN (select comments.commentable_id as bill_id_5,
-                                           count(comments.id) as total_comments 
-                                           FROM comments 
-                                              WHERE created_at > ? AND 
-                                                    comments.commentable_type = 'Bill' 
-                                           GROUP BY comments.commentable_id) 
-                           comments_total ON bills.id=comments_total.bill_id_5 
-                           LEFT OUTER JOIN (select bill_votes.bill_id as bill_id_2, 
-                                            count(bill_votes.bill_id) as vote_count_2, 
-                                            sum(bill_votes.support) as support_count_2 
-                                            FROM bill_votes 
-                                               WHERE created_at > ? AND 
-                                                     created_at <= ? 
-                                            GROUP BY bill_id_2) 
-                           previous_period ON bills.id=previous_period.bill_id_2
-                           LEFT OUTER JOIN (select bookmarks.bookmarkable_id  as bill_id_1, 
-                                           count(bookmarks.bookmarkable_id) as bookmark_count_1 
-                                           FROM bookmarks
-                                               WHERE created_at > ? AND 
-                                                     created_at <= ? 
-                                           GROUP BY bill_id_1) 
-                           current_period_book ON bills.id=current_period_book.bill_id_1
-                        WHERE #{not_null_check} IS NOT NULL
-                        ORDER BY #{order} 
-                        LIMIT #{limit} 
-                        OFFSET #{offset}", range.seconds.ago, Time.now, range.seconds.ago, (range*2).seconds.ago, range.seconds.ago,  range.seconds.ago, Time.now])
-            end
+        # Plug the search parameters into the query parmaeters
+        query_params.unshift(search)
+        query_params.push(search)
+      end
+
+      Bill.find_by_sql([query, *query_params])
     else 
       return []
     end
   end
 
-  def Bill.count_all_by_most_user_votes_for_range(range,options)
+  def Bill.count_all_by_most_user_votes_for_range(range, options)
     possible_orders = ["vote_count_1 desc", "vote_count_1 asc", "current_support_pb asc", 
                        "current_support_pb desc", "bookmark_count_1 asc", "bookmark_count_1 desc", 
                        "support_count_1 desc", "support_count_1 asc", "total_comments asc", "total_comments desc"]
@@ -583,111 +532,66 @@ class Bill < ActiveRecord::Base
       limit = options[:limit] ||= 20
       offset = options[:offset] ||= 0
       not_null_check = order.split(' ').first
-    
-  #    not_null_check = "vote_count_1"
-#      not_null_check = "total_comments" if order == "total_comments"
-      if search
-        Bill.count_by_sql(["SELECT count(bills.*)
-                          FROM bill_fulltext, bills 
-                           INNER JOIN (select bill_votes.bill_id  as bill_id_1, 
-                                       count(bill_votes.bill_id) as vote_count_1, 
-                                       sum(bill_votes.support) as support_count_1,
-                                       (count(bill_votes.bill_id) - sum(bill_votes.support)) as current_support_pb  
-                                       FROM bill_votes 
-                                            WHERE created_at > ? AND 
-                                                  created_at <= ? group by bill_id_1)
-                           current_period ON bills.id=current_period.bill_id_1
-                           LEFT OUTER JOIN (select bill_votes.bill_id as bill_id_3, 
-                                            sum(bill_votes.support) as total_support 
-                                            FROM bill_votes 
-                                            GROUP BY bill_votes.bill_id) 
-                           total_supported ON bills.id=total_supported.bill_id_3
-                           LEFT OUTER JOIN (select bill_votes.bill_id as bill_id_4, 
-                                            count(bill_votes.support) as total_count 
-                                            FROM bill_votes 
-                                            GROUP BY bill_votes.bill_id) 
-                           total_counted ON bills.id=total_counted.bill_id_4
-                           LEFT OUTER JOIN (select comments.commentable_id as bill_id_5,
-                                           count(comments.id) as total_comments 
-                                           FROM comments 
-                                              WHERE created_at > ? AND 
-                                                    comments.commentable_type = 'Bill' 
-                                           GROUP BY comments.commentable_id) 
-                           comments_total ON bills.id=comments_total.bill_id_5 
-                           LEFT OUTER JOIN (select bill_votes.bill_id as bill_id_2, 
-                                            count(bill_votes.bill_id) as vote_count_2, 
-                                            sum(bill_votes.support) as support_count_2 
-                                            FROM bill_votes 
-                                               WHERE created_at > ? AND 
-                                                     created_at <= ? 
-                                            GROUP BY bill_id_2) 
-                           previous_period ON bills.id=previous_period.bill_id_2
-                           LEFT OUTER JOIN (select bookmarks.bookmarkable_id  as bill_id_1, 
-                                           count(bookmarks.bookmarkable_id) as bookmark_count_1 
-                                           FROM bookmarks
-                                               WHERE created_at > ? AND 
-                                                     created_at <= ? 
-                                           GROUP BY bill_id_1) 
-                           current_period_book ON bills.id=current_period_book.bill_id_1
-                        WHERE #{not_null_check} IS NOT NULL
-                          AND bill_fulltext.fti_names @@ to_tsquery('english', ?) AND bills.id = bill_fulltext.bill_id
-                                 
-                        LIMIT #{limit} 
-                        OFFSET #{offset}", range.seconds.ago, Time.now, range.seconds.ago, 
-                                           (range*2).seconds.ago, range.seconds.ago,  range.seconds.ago, Time.now, search])
-        
-      else
-        k = Bill.count_by_sql(["SELECT count(bills.*) FROM bills
-                           INNER JOIN (select bill_votes.bill_id  as bill_id_1, 
-                                       count(bill_votes.bill_id) as vote_count_1, 
-                                       sum(bill_votes.support) as support_count_1,
-                                       (count(bill_votes.bill_id) - sum(bill_votes.support)) as current_support_pb  
-                                       FROM bill_votes 
-                                            WHERE created_at > ? AND 
-                                                  created_at <= ? group by bill_id_1)
-                           current_period ON bills.id=current_period.bill_id_1
-                           LEFT OUTER JOIN (select bill_votes.bill_id as bill_id_3, 
-                                            sum(bill_votes.support) as total_support 
-                                            FROM bill_votes 
-                                            GROUP BY bill_votes.bill_id) 
-                           total_supported ON bills.id=total_supported.bill_id_3
-                           LEFT OUTER JOIN (select bill_votes.bill_id as bill_id_4, 
-                                            count(bill_votes.support) as total_count 
-                                            FROM bill_votes 
-                                            GROUP BY bill_votes.bill_id) 
-                           total_counted ON bills.id=total_counted.bill_id_4
-                           LEFT OUTER JOIN (select comments.commentable_id as bill_id_5,
-                                           count(comments.id) as total_comments 
-                                           FROM comments 
-                                              WHERE created_at > ? AND 
-                                                    comments.commentable_type = 'Bill' 
-                                           GROUP BY comments.commentable_id) 
-                           comments_total ON bills.id=comments_total.bill_id_5 
-                           LEFT OUTER JOIN (select bill_votes.bill_id as bill_id_2, 
-                                            count(bill_votes.bill_id) as vote_count_2, 
-                                            sum(bill_votes.support) as support_count_2 
-                                            FROM bill_votes 
-                                               WHERE created_at > ? AND 
-                                                     created_at <= ? 
-                                            GROUP BY bill_id_2) 
-                           previous_period ON bills.id=previous_period.bill_id_2
-                           LEFT OUTER JOIN (select bookmarks.bookmarkable_id  as bill_id_1, 
-                                           count(bookmarks.bookmarkable_id) as bookmark_count_1 
-                                           FROM bookmarks
-                                               WHERE created_at > ? AND 
-                                                     created_at <= ? 
-                                           GROUP BY bill_id_1) 
-                           current_period_book ON bills.id=current_period_book.bill_id_1
-                        WHERE #{not_null_check} IS NOT NULL
 
-                        LIMIT #{limit} 
-                        OFFSET #{offset}", range.seconds.ago, Time.now, range.seconds.ago, (range*2).seconds.ago, range.seconds.ago,  range.seconds.ago, Time.now])
-                        return k
-            end
+      query = "SELECT count(bills.*)
+          FROM
+            #{search ? "bill_fulltext," : ""}
+            bills 
+           INNER JOIN (select bill_votes.bill_id  as bill_id_1, 
+               count(bill_votes.bill_id) as vote_count_1, 
+               sum(bill_votes.support) as support_count_1,
+               (count(bill_votes.bill_id) - sum(bill_votes.support)) as current_support_pb  
+               FROM bill_votes 
+                    WHERE created_at > ? group by bill_id_1)
+           current_period ON bills.id=current_period.bill_id_1
+           LEFT OUTER JOIN (select bill_votes.bill_id as bill_id_3, 
+                sum(bill_votes.support) as total_support 
+                FROM bill_votes 
+                GROUP BY bill_votes.bill_id) 
+           total_supported ON bills.id=total_supported.bill_id_3
+           LEFT OUTER JOIN (select bill_votes.bill_id as bill_id_4, 
+              count(bill_votes.support) as total_count 
+              FROM bill_votes 
+              GROUP BY bill_votes.bill_id) 
+           total_counted ON bills.id=total_counted.bill_id_4
+           LEFT OUTER JOIN (select comments.commentable_id as bill_id_5,
+               count(comments.id) as total_comments 
+               FROM comments 
+                  WHERE created_at > ? AND 
+                        comments.commentable_type = 'Bill' 
+               GROUP BY comments.commentable_id) 
+           comments_total ON bills.id=comments_total.bill_id_5 
+           LEFT OUTER JOIN (select bill_votes.bill_id as bill_id_2, 
+              count(bill_votes.bill_id) as vote_count_2, 
+              sum(bill_votes.support) as support_count_2 
+              FROM bill_votes 
+                 WHERE created_at > ? AND 
+                       created_at <= ? 
+              GROUP BY bill_id_2) 
+           previous_period ON bills.id=previous_period.bill_id_2
+           LEFT OUTER JOIN (select bookmarks.bookmarkable_id  as bill_id_1, 
+               count(bookmarks.bookmarkable_id) as bookmark_count_1 
+               FROM bookmarks
+                   WHERE created_at > ?
+               GROUP BY bill_id_1) 
+           current_period_book ON bills.id=current_period_book.bill_id_1
+        WHERE #{not_null_check} IS NOT NULL
+          #{search ? "AND bill_fulltext.fti_names @@ to_tsquery('english', ?) AND bills.id = bill_fulltext.bill_id" : ""}                 
+        LIMIT #{limit} 
+        OFFSET #{offset}"
+      query_params = [range.seconds.ago, range.seconds.ago, 
+                           (range*2).seconds.ago, range.seconds.ago,  range.seconds.ago]
+
+      if search
+        query_params.push(search)
+      end
+
+      k = Bill.count_by_sql([query, *query_params])
+      return k
     else 
       return []
     end
-    
+
   end
 
   def adjusted_votes_this_period(total,this_period,minutes)
@@ -982,10 +886,6 @@ class Bill < ActiveRecord::Base
     (id || t | num) ? [id, t, num] : [nil, nil, nil]
   end
 
-#  def to_param
-#    "#{id}_#{title_typenumber_only.gsub(/[\.\s]+/,"").downcase}"
-#  end
-
   def to_param
     self.ident
   end
@@ -1023,10 +923,6 @@ class Bill < ActiveRecord::Base
   def last_5_actions
     actions.find(:all, :order => "date DESC", :limit => 5)
   end
-  
-#  def last_action
-#    actions.find(:first)
-#  end
   
   def status(options = {})
     status_hash = self.bill_status_hash

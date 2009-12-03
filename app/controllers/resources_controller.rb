@@ -251,6 +251,10 @@ class ResourcesController < ApplicationController
     render :partial => 'shared/email_friend_form', :locals => { :item => item }, :layout => false
   end
   
+  def healthcare_panel
+    render :layout => false
+  end
+  
   def email_friend_send
     @success = false
     if !simple_captcha_valid?

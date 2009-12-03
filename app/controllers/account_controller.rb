@@ -172,7 +172,7 @@ class AccountController < ApplicationController
      redirect_to(:controller => '/account', :action => 'welcome')
      return
   else
-     flash[:notice] = "We didn't find that confirmation code; maybe you've already activated your accuont?"
+     flash[:notice] = "We didn't find that confirmation code; maybe you've already activated your account?"
      redirect_to(:controller => '/account', :action => "signup")
      return
    end

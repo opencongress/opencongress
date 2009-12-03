@@ -239,21 +239,18 @@ class BattleRoyaleController < ApplicationController
 
   def get_range
     @head_title = "Battle Royale - What's Popular in Congress"
-    @range = 60*60*24*30
-    if params[:timeframe]
-      case params[:timeframe]
-        when "1day"
-          @range = 60*60*24
-        when "5days"
-          @range=60*60*24*5
-        when "30days"
-          @range=60*60*24*30
-        when "1year"
-          @range=60*60*24*365
-        when "AllTime"
-          @range=60*60*24*365*20
-      end
-    else params[:timeframe] = "30days"
+    params[:timeframe] ||= "30days"
+    case params[:timeframe]
+      when "1day"
+        @range = 1.day.to_i
+      when "5days"
+        @range = 5.days.to_i
+      when "30days"
+        @range = 30.days.to_i
+      when "1year"
+        @range = 1.year.to_i
+      when "AllTime"
+        @range = 20.years.to_i
     end
     
     @perc_diff_in_days = Bill.percentage_difference_in_periods(@range).to_f

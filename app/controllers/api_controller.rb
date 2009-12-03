@@ -276,7 +276,7 @@ class ApiController < ApplicationController
     bills = Bill.find_all_by_most_user_votes_for_range(@range, :order => sort + " " + order, :limit => 20)
     do_render(bills, {:except => [:current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, :support_count_2, :vote_count_2]})
   end
-  
+
   def most_supported_bills_this_week
     order = "desc"
     sort = "current_support_pb"

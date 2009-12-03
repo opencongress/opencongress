@@ -5,7 +5,7 @@
   </div>
 <% else %>
 <% if comment.parent_id && !flat %>
-	<div class="replytri"><img src="/img/comm_reply.png"></div>
+	<div class="replytri"><%= image_tag 'comm_reply.png' %></div>
 <% end %>
   <% def_fil = 5 %>
   <% def_fil = ( current_user.default_filter ? current_user.default_filter : 5 ) if logged_in? %>

@@ -624,13 +624,13 @@ EOT
 		else
 		  if logged_in?
         "<div class='voting_buttons'>" +
-          link_to_remote(image_tag('/img/yes.png') + "<span>I Support this Bill</span>",
+          link_to_remote(image_tag('yes.png') + "<span>I Support this Bill</span>",
   			      {:url => {:controller => "bill", :action => "bill_vote", :bill => bill.ident, :id => 0}},
   			      :class => "yes #{yah}") +
         "
                                             
         " +
-          link_to_remote(image_tag('/img/no.png') + "<span>I Oppose this Bill</span>",
+          link_to_remote(image_tag('no.png') + "<span>I Oppose this Bill</span>",
   			      {:url => {:controller => "bill", :action => "bill_vote", :bill => bill.ident, :id => 1}},
   			      :class => "no #{nah}") +
         "
@@ -640,12 +640,12 @@ EOT
         "
       else
         "<div class='voting_buttons'>" +
-          link_to(image_tag('/img/yes.png') + "<span>I Support this Bill</span>",
+          link_to(image_tag('yes.png') + "<span>I Support this Bill</span>",
               {:controller => "account", :action => "login", :modal => true, :login_action => 0}, :class => "vote_trigger yes") + 
         "
                                             
         " +
-          link_to(image_tag('/img/no.png') + "<span>I Oppose this Bill</span>",
+          link_to(image_tag('no.png') + "<span>I Oppose this Bill</span>",
               {:controller => "account", :action => "login", :modal => true, :login_action => 1}, :class => "vote_trigger no") +
         "
         </div>
@@ -758,7 +758,7 @@ EOT
      <div class='jqmnContent'>
      <p>#{text}</p>
      </div>
-     <img src='/img/resize.gif' id='#{text_name}_resize' alt='resize' class='dbox_resize' />
+     <img src='/images/resize.gif' id='#{text_name}_resize' alt='resize' class='dbox_resize' />
      </div>"
   end
   

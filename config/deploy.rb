@@ -52,7 +52,7 @@ namespace :deploy do
 
   task :jammit do
     # Compile CSS & JS for public/assets/ (see assets.yml)
-    run "cd #{current_release}; /opt/rubye/bin/jammit"
+    run "cd #{current_release}; /opt/rubye/bin/jammit --force"
   end
 
   task :restart do

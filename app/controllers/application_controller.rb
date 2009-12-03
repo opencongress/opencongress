@@ -148,7 +148,7 @@ class ApplicationController < ActionController::Base
   end
 
   def site_text_params_string(prms)
-    ['controller', 'action', 'id', 'person_type', 'commentary_type'].collect{|k|"#{k}=#{prms[k]}" }.join("&")
+    ['action', 'controller', 'id', 'person_type', 'commentary_type'].collect{|k|"#{k}=#{prms[k]}" }.join("&")
   end
 
   def get_site_text_page

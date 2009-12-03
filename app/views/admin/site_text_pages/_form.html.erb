@@ -1,5 +1,5 @@
 <div style="margin: 20px;">
-  <% form_for @site_text_page, :url => { :action => "update", :id => @site_text_page } do |f| %>
+  <% form_for @site_text_page_editing, :url => { :action => "update", :id => @site_text_page_editing } do |f| %>
     <%= f.error_messages %>
 
     <%= f.label :title_tags, 'Title Tags' %>:<br />
@@ -8,7 +8,7 @@
     <%= f.text_area :meta_description, :rows => 3 %><br />
     <%= f.label :meta_keywords, 'Meta Keywords' %>:<br />
     <%= f.text_field :meta_keywords %><br />
-    <%= f.label :title_desc, 'Title Description' %>:<br />
+    <%= f.label :title_desc, 'Title Description / Info Box' %>:<br />
     <%= f.text_area :title_desc, :rows => 3 %><br />
     <p>
       <%= f.submit 'Update' %>

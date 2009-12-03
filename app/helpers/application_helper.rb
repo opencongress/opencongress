@@ -873,7 +873,15 @@ EOT
     title = title.length > 113 ? (title[0...stop] + "... ") : (title + " - ")
     title += "OpenCongress"                                   
     return title
-  end  
+  end 
+  
+  def info_box
+    if @site_text_page && !@site_text_page.title_desc.blank?
+      return "<div class='extra_description'>#{@site_text_page.title_desc}</div>"
+    else
+      return ""
+    end
+  end 
   
   def get_vote_image(vote)
     vote_hash = {

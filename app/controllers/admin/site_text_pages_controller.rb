@@ -37,18 +37,18 @@ class Admin::SiteTextPagesController < Admin::IndexController
   def edit
     if params[:page_text_editable_id]
       @page_text_editable = Object.const_get(params[:page_text_editable_type]).find_by_id(params[:page_text_editable_id])
-      @site_text_page = SiteTextPage.find_or_create_by_page_text_editable_id_and_page_text_editable_type(
+      @site_text_page_editing = SiteTextPage.find_or_create_by_page_text_editable_id_and_page_text_editable_type(
                                       params[:page_text_editable_id], params[:page_text_editable_type])
                                       
       page_params = site_text_params_string(params[:pageparams])
       
-      @site_text_page.page_params = page_params
-      @site_text_page.save
+      @site_text_page_editing.page_params = page_params
+      @site_text_page_editing.save
     elsif params[:pageparams]
       page_params = params[:pageparams].keys.sort.collect{|k| "#{k}=#{params[:pageparams][k]}"}.join("&")
-      @site_text_page = SiteTextPage.find_or_create_by_page_params(page_params)
+      @site_text_page_editing = SiteTextPage.find_or_create_by_page_params(page_params)
     else
-      @site_text_page = SiteTextPage.find(params[:id])
+      @site_text_page_editing = SiteTextPage.find(params[:id])
     end
   end
 

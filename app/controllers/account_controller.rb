@@ -171,8 +171,8 @@ class AccountController < ApplicationController
      self.current_user = @user
      redirect_to(:controller => '/account', :action => 'welcome')
      return
-   else
-     flash[:notice] = "Invalid Confirmation Link"
+  else
+     flash[:notice] = "We didn't find that confirmation code; maybe you've already activated your accuont?"
      redirect_to(:controller => '/account', :action => "signup")
      return
    end

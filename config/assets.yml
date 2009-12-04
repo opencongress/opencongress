@@ -6,8 +6,6 @@ javascripts:
         - public/javascripts/dragdrop.js
         - public/javascripts/controls.js
         - public/javascripts/application.js
-    urchin:
-        - public/javascripts/urchin.js
     common:
         - public/javascripts/slider.js
         - public/javascripts/sorttable.js

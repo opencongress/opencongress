@@ -322,36 +322,36 @@ class Bill < ActiveRecord::Base
      time_since = 200.days.ago if RAILS_ENV == "development"
      ids = current_user.bill_bookmarks.collect{|p| p.bookmarkable_id}
      find_by_sql(["select bills.*, total_actions.action_count as actionn_count,
-                                total_blogs.blog_count as blogss_count, total_news.news_count as newss_count,
-                                total_comments.comments_count as commentss_count from bills
-                    LEFT OUTER JOIN (select count(actions.id) as action_count, 
-                                    actions.bill_id as bill_id_1 FROM actions WHERE 
-                                    actions.datetime > '#{time_since.to_s(:db)}' 
-                                    AND actions.bill_id in (#{ids.join(",")})
-                                    group by bill_id_1) total_actions ON 
-                                    total_actions.bill_id_1 = bills.id 
-                                LEFT OUTER JOIN (select count(commentaries.id) as blog_count,
-                                    commentaries.commentariable_id as bill_id_2 FROM commentaries WHERE
-                                    commentaries.commentariable_id IN (#{ids.join(",")}) AND
-                                    commentaries.commentariable_type='Bill' AND
-                                    commentaries.is_ok = 't' AND commentaries.is_news='f' AND
-                                    commentaries.date > '#{time_since.to_s(:db)}' 
-                                    group by commentaries.commentariable_id) 
-                                    total_blogs ON total_blogs.bill_id_2 = bills.id 
-                                LEFT OUTER JOIN (select count(commentaries.id) as news_count,
-                                    commentaries.commentariable_id as bill_id_3 FROM commentaries WHERE
-                                    commentaries.commentariable_id IN (#{ids.join(",")}) AND
-                                    commentaries.commentariable_type='Bill' AND
-                                    commentaries.is_ok = 't' AND commentaries.is_news='t' AND
-                                    commentaries.date > '#{time_since.to_s(:db)}' 
-                                    group by commentaries.commentariable_id)
-                                    total_news ON total_news.bill_id_3 = bills.id 
-                                LEFT OUTER JOIN (select count(comments.id) as comments_count,
-                                    comments.commentable_id as bill_id_4 FROM comments WHERE
-                                    comments.created_at > '#{time_since.to_s(:db)}' AND
-                                    comments.commentable_id in (#{ids.join(",")}) AND
-                                    comments.commentable_type = 'Bill' GROUP BY comments.commentable_id)
-                                    total_comments ON total_comments.bill_id_4 = bills.id WHERE bills.id IN (?)", current_user.bill_bookmarks.collect{|p| p.bookmarkable_id}])
+                      total_blogs.blog_count as blogss_count, total_news.news_count as newss_count,
+                      total_comments.comments_count as commentss_count from bills
+                  LEFT OUTER JOIN (select count(actions.id) as action_count, 
+                      actions.bill_id as bill_id_1 FROM actions WHERE 
+                      actions.datetime > '#{time_since.to_s(:db)}' 
+                      AND actions.bill_id in (#{ids.join(",")})
+                      group by bill_id_1) total_actions ON 
+                      total_actions.bill_id_1 = bills.id 
+                  LEFT OUTER JOIN (select count(commentaries.id) as blog_count,
+                      commentaries.commentariable_id as bill_id_2 FROM commentaries WHERE
+                      commentaries.commentariable_id IN (#{ids.join(",")}) AND
+                      commentaries.commentariable_type='Bill' AND
+                      commentaries.is_ok = 't' AND commentaries.is_news='f' AND
+                      commentaries.date > '#{time_since.to_s(:db)}' 
+                      group by commentaries.commentariable_id) 
+                      total_blogs ON total_blogs.bill_id_2 = bills.id 
+                  LEFT OUTER JOIN (select count(commentaries.id) as news_count,
+                      commentaries.commentariable_id as bill_id_3 FROM commentaries WHERE
+                      commentaries.commentariable_id IN (#{ids.join(",")}) AND
+                      commentaries.commentariable_type='Bill' AND
+                      commentaries.is_ok = 't' AND commentaries.is_news='t' AND
+                      commentaries.date > '#{time_since.to_s(:db)}' 
+                      group by commentaries.commentariable_id)
+                      total_news ON total_news.bill_id_3 = bills.id 
+                  LEFT OUTER JOIN (select count(comments.id) as comments_count,
+                      comments.commentable_id as bill_id_4 FROM comments WHERE
+                      comments.created_at > '#{time_since.to_s(:db)}' AND
+                      comments.commentable_id in (#{ids.join(",")}) AND
+                      comments.commentable_type = 'Bill' GROUP BY comments.commentable_id)
+                      total_comments ON total_comments.bill_id_4 = bills.id WHERE bills.id IN (?)", current_user.bill_bookmarks.collect{|p| p.bookmarkable_id}])
   end 
 
   # return bill actions since last X
@@ -360,24 +360,23 @@ class Bill < ActiveRecord::Base
      time_since = 200.days.ago if RAILS_ENV == "development"
      find_by_id(bill.id,
                     :select => "bills.*, (select count(actions.id) from actions where actions.datetime > '#{time_since.to_s(:db)}' AND bill_id = #{bill.id} ) as action_count,
-                                (select count(commentaries.id) FROM commentaries 
-                                     WHERE commentaries.commentariable_id = #{bill.id}
-                                       AND commentaries.commentariable_type='Bill'
-                                       AND commentaries.is_ok = 't' 
-                                       AND commentaries.is_news='f'
-                                       AND commentaries.date > '#{time_since.to_s(:db)}') as blog_count,
-                                (select count(commentaries.id) FROM commentaries 
-                                     WHERE commentaries.commentariable_id = #{bill.id}
-                                        AND commentaries.commentariable_type='Bill'
-                                        AND commentaries.is_ok = 't' 
-                                        AND commentaries.is_news='t'
-                                        AND commentaries.date > '#{time_since.to_s(:db)}') as newss_count,
-                                (select count(comments.id) FROM comments
-                                     WHERE comments.created_at > '#{time_since.to_s(:db)}'
-                                       AND comments.commentable_type='Bill'
-                                       AND comments.commentable_id = #{bill.id}) as comment_count")
+                        (select count(commentaries.id) FROM commentaries 
+                             WHERE commentaries.commentariable_id = #{bill.id}
+                               AND commentaries.commentariable_type='Bill'
+                               AND commentaries.is_ok = 't' 
+                               AND commentaries.is_news='f'
+                               AND commentaries.date > '#{time_since.to_s(:db)}') as blog_count,
+                        (select count(commentaries.id) FROM commentaries 
+                             WHERE commentaries.commentariable_id = #{bill.id}
+                                AND commentaries.commentariable_type='Bill'
+                                AND commentaries.is_ok = 't' 
+                                AND commentaries.is_news='t'
+                                AND commentaries.date > '#{time_since.to_s(:db)}') as newss_count,
+                        (select count(comments.id) FROM comments
+                             WHERE comments.created_at > '#{time_since.to_s(:db)}'
+                               AND comments.commentable_type='Bill'
+                               AND comments.commentable_id = #{bill.id}) as comment_count")
   end                          
-                            
 
   # returns the battle royale index
   def place_in_battle_royale_100
@@ -529,8 +528,6 @@ class Bill < ActiveRecord::Base
     search = options[:search]
     if possible_orders.include?(order)
 
-      limit = options[:limit] ||= 20
-      offset = options[:offset] ||= 0
       not_null_check = order.split(' ').first
 
       query = "SELECT count(bills.*)
@@ -576,11 +573,60 @@ class Bill < ActiveRecord::Base
                GROUP BY bill_id_1) 
            current_period_book ON bills.id=current_period_book.bill_id_1
         WHERE #{not_null_check} IS NOT NULL
-          #{search ? "AND bill_fulltext.fti_names @@ to_tsquery('english', ?) AND bills.id = bill_fulltext.bill_id" : ""}                 
-        LIMIT #{limit} 
-        OFFSET #{offset}"
+          #{search ? "AND bill_fulltext.fti_names @@ to_tsquery('english', ?) AND bills.id = bill_fulltext.bill_id" : ""}"
       query_params = [range.seconds.ago, range.seconds.ago, 
                            (range*2).seconds.ago, range.seconds.ago,  range.seconds.ago]
+
+      if search
+        query_params.push(search)
+      end
+
+      k = Bill.count_by_sql([query, *query_params])
+      return k
+    else 
+      return []
+    end
+
+  end
+
+  def Bill.count_anew(range, options)
+    possible_orders = ["vote_count_1 desc", "vote_count_1 asc", "current_support_pb asc", 
+                       "current_support_pb desc", "bookmark_count_1 asc", "bookmark_count_1 desc", 
+                       "support_count_1 desc", "support_count_1 asc", "total_comments asc", "total_comments desc"]
+    logger.debug options.to_yaml
+    order = options[:order] ||= "vote_count_1 desc"
+    search = options[:search]
+    if possible_orders.include?(order)
+      join_query = ""
+      join_query_bind = []
+      case order.split.first
+        when "bookmark_count_1"
+          join_query = "INNER JOIN (select bookmarks.bookmarkable_id as bill_id
+                 FROM bookmarks
+                WHERE created_at > ? GROUP BY bookmarkable_id) 
+             current_period_book ON bills.id=current_period_book.bill_id"
+          join_query_bind = [range.seconds.ago]
+        when "total_comments"
+          join_query = "INNER JOIN (select comments.commentable_id as bill_id
+              FROM comments 
+                 WHERE created_at > ? AND 
+                       comments.commentable_type = 'Bill'
+              GROUP BY comments.commentable_id) 
+          comments_total ON bills.id=comments_total.bill_id"
+          join_query_bind = [range.seconds.ago]
+      end
+
+      query = "SELECT count(bills.*)
+          FROM
+            #{search ? "bill_fulltext," : ""}
+            bills 
+           INNER JOIN (select bill_votes.bill_id
+               FROM bill_votes WHERE created_at > ?
+               GROUP BY bill_votes.bill_id) current_period
+           ON bills.id = current_period.bill_id
+           #{join_query}
+          #{search ? "WHERE bill_fulltext.fti_names @@ to_tsquery('english', ?) AND bills.id = bill_fulltext.bill_id" : ""}"
+      query_params = [range.seconds.ago, *join_query_bind]
 
       if search
         query_params.push(search)

@@ -253,7 +253,8 @@ class ResourcesController < ApplicationController
   
   def healthcare_panel
     if params[:state] && @state = State.find(:conditions => {:abbreviation => params[:state]})
-      #
+      # Count number of users in this state tracking this bill
+      
     end
     
     render :layout => false

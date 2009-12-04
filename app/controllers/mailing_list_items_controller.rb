@@ -48,9 +48,11 @@ class MailingListItemsController < ApplicationController
 
     respond_to do |format|
       if @mailing_list_item.save
-        flash[:notice] = 'MailingListItem was successfully created.'
-        format.html { redirect_to(@mailing_list_item) }
-        format.js {render :text => "Added to Email Alerts"}
+        format.html {
+          flash[:notice] = 'Email alert was successfully created.'
+          redirect_to(@mailing_list_item)
+        }
+        format.js { render :text => "Added to Email Alerts" }
         format.xml  { render :xml => @mailing_list_item, :status => :created, :location => @mailing_list_item }
       else
         format.html { render :action => "new" }

@@ -25,7 +25,7 @@
         <ul class="mini_bills_list">
         <% tracking_suggestions[1][:my_bills_opposed_facet].each do |p| %>
           <li><%= link_to p[:object].title_typenumber_only, :controller => "bill", :action => "show", :id => p[:object].ident %> <%= truncate_string(p[:object].title_short, 20) %>
-            [<%= link_to p[:trackers], :controller => "friends", :action => "oppossing_bill", :id => p[:object].ident %>]</li>
+            [<%= link_to p[:trackers], :controller => "friends", :action => "opposing_bill", :id => p[:object].ident %>]</li>
         <% end %>
         </ul>
       </td>

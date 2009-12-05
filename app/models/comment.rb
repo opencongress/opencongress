@@ -135,23 +135,21 @@ class Comment < ActiveRecord::Base
     "tag:opencongress.org,#{created_at.strftime("%Y-%m-%d")}:/comment/#{id}"
   end
 
-  def self.full_text_search(q, options = {})
-    #count = Comment.count_by_solr(q)
-    #comments = Comment.paginate_all_by_solr(q, :page => options[:page], :total_entries => count)
-    #comments  
+  def self.full_text_search(q, options = {})    
+    s_count = Comment.count(:all, :conditions => ["fti_names @@ to_tsquery('english', ?)", q])
     
-    
-    total_comments = Comment.count_by_sql(["SELECT count(*) FROM commentaries 
-                                         WHERE commentaries.is_ok = 't' AND
-                                               commentaries.is_news = '#{is_news}' AND
-                                               fti_names @@ to_tsquery('english', ?)", q])
-    comments = Comment.find_by_sql(["SELECT commentaries.*, rank(fti_names, ?, 1) as tsearch_rank FROM commentaries 
-                                 WHERE commentaries.is_ok = 't' AND
-                                       commentaries.is_news = '#{is_news}' AND
-                                       fti_names @@ to_tsquery('english', ?)                                       
-                                 ORDER BY commentaries.date DESC 
-                                 LIMIT #{DEFAULT_SEARCH_PAGE_SIZE}
-                                 OFFSET #{DEFAULT_SEARCH_PAGE_SIZE * (options[:page]-1)}", q, q])
+    # Note: This takes (current_page, per_page, total_entries)
+    # We need to do this so we can put LIMIT and OFFSET inside the subquery.
+    WillPaginate::Collection.create(options[:page], 12, s_count) do |pager|
+      # perfom the find.
+      # The subquery is here so we don't run ts_headline on all rows, which takes a long long time...
+      # See http://www.postgresql.org/docs/8.4/static/textsearch-controls.html
+      pager.replace Comment.find_by_sql(["SELECT
+          comments.*, ts_headline(comment, ?) as headline
+        FROM (SELECT * from comments
+          WHERE (fti_names @@ to_tsquery('english', ?))
+          ORDER BY created_at DESC LIMIT ? OFFSET ?) AS comments", q, q, pager.per_page, pager.offset])
+    end
   end
   
   # this is simply the standard equality method in active record's base class.  the problem

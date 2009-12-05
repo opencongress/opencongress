@@ -68,21 +68,20 @@ require 'htmlentities'
     end
   end
   
-  def self.full_text_search(q, options = {}, find_options = {})
+  def self.full_text_search(q, options = {})
     is_news = options[:commentary_type] == 'news' ? 't' : 'f'
     
     total_commentaries = Commentary.count_by_sql(["SELECT count(*) FROM commentaries 
                                          WHERE commentaries.is_ok = 't' AND
                                                commentaries.is_news = '#{is_news}' AND
                                                fti_names @@ to_tsquery('english', ?)", q])
-    commentaries = Commentary.find_by_sql(["SELECT commentaries.*, rank(fti_names, ?, 1) as tsearch_rank FROM commentaries 
+
+    Commentary.paginate_by_sql(["SELECT commentaries.*, rank(fti_names, ?, 1) as tsearch_rank FROM commentaries 
                                  WHERE commentaries.is_ok = 't' AND
                                        commentaries.is_news = '#{is_news}' AND
                                        fti_names @@ to_tsquery('english', ?)                                       
-                                 ORDER BY commentaries.date DESC 
-                                 LIMIT #{DEFAULT_SEARCH_PAGE_SIZE}
-                                 OFFSET #{DEFAULT_SEARCH_PAGE_SIZE * (options[:page]-1)}", q, q])
-    [total_commentaries, commentaries]
+                                 ORDER BY commentaries.date DESC", q, q],
+                          :per_page => DEFAULT_SEARCH_PAGE_SIZE, :page => options[:page], :total_entries => s_count)
   end
   
   def article_valid?

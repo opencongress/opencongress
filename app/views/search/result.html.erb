@@ -81,14 +81,14 @@
     </div>
   <% end %>
   
-  <% if @search_comments && @s_comments.size > 0 %>
+  <% if @search_comments && @comments.size > 0 %>
    <div class="comments_search">
-    <h3 class="line2">User Comments <em>Found <b><%= number_with_delimiter(@s_comments.total_entries) %></b> comments.</em></h3>
+    <h3 class="line2">User Comments <em>Found <b><%= number_with_delimiter(@comments.total_entries) %></b> comments.</em></h3>
        <div class="pagination_links">
-      <%= will_paginate(@s_comments, :params => { :q => @query, :search_comments => '1'}) %>
+      <%= will_paginate(@comments, :params => { :q => @query, :search_comments => '1'}) %>
     </div>
      <ul id="small_comments">
-      <% @s_comments.each do |comment| %>
+      <% @comments.each do |comment| %>
         <li>
         <a href="<%= url_for(comment.commentable_link.merge({:goto_comment => comment.id})) %>" class="comment">
             
@@ -110,14 +110,14 @@
   <% if (@search_commentary || @search_news) && @news.size > 0 %>
    
             <div class="news_search">
-   <h3 class="line2">News <em>Found <b><%= number_with_delimiter(@news_total) %></b> news articles.</em></h3>
+   <h3 class="line2">News <em>Found <b><%= number_with_delimiter(@news.total_entries) %></b> news articles.</em></h3>
    
   <div class="pagination_links">
-      <%= pagination_nav(@news_pages, :params => { :q => @query, :search_news => '1'}) %>
+      <%= will_paginate(@news, :params => { :q => @query, :search_news => '1'}) %>
     </div>
     <%= render :partial => 'shared/commentary', :collection => @news, :locals => { :default_title => '' } %>
     
-    Found <b><%= number_with_delimiter(@news_total) %></b> news articles.
+    Found <b><%= number_with_delimiter(@news,total_entries) %></b> news articles.
   
     
     </div>
@@ -127,14 +127,14 @@
   <% if (@search_commentary || @search_blogs) && @blogs.size > 0 %>
               <div class="blogs_search">
 
-    <h3 class="line2">Blogs <em>Found <b><%= number_with_delimiter(@blogs_total) %></b> blog articles.</em></h3>
+    <h3 class="line2">Blogs <em>Found <b><%= number_with_delimiter(@blogs.total_entries) %></b> blog articles.</em></h3>
      <div class="pagination_links">
-      <%= pagination_nav(@blogs_pages, :params => { :q => @query, :search_blogs => '1'}) %>
+      <%= will_paginate(@blogs, :params => { :q => @query, :search_blogs => '1'}) %>
     </div>
 
     <%= render :partial => 'shared/commentary', :collection => @blogs, :locals => { :default_title => '' } %>
     
-    Found <b><%= number_with_delimiter(@blogs_total) %></b> blog articles.
+    Found <b><%= number_with_delimiter(@blogs.total_entries) %></b> blog articles.
    
     </div>
   <% end %>

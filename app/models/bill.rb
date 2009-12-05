@@ -1102,13 +1102,19 @@ class Bill < ActiveRecord::Base
   end
     
   def self.full_text_search(q, options = {})
-    bills = Bill.paginate_by_sql(["SELECT bills.*, rank(bill_fulltext.fti_names, ?, 1) as tsearch_rank FROM bills, bill_fulltext
+    congresses = options[:congresses] || DEFAULT_CONGRESS
+    
+    s_count = Bill.count_by_sql(["SELECT COUNT(*) FROM bills, bill_fulltext
+          WHERE bills.session IN (?) AND
+            bill_fulltext.fti_names @@ to_tsquery('english', ?) AND
+            bills.id = bill_fulltext.bill_id", options[:congresses] || DEFAULT_CONGRESS, q])
+
+    Bill.paginate_by_sql(["SELECT bills.*, rank(bill_fulltext.fti_names, ?, 1) as tsearch_rank FROM bills, bill_fulltext
                                WHERE bills.session IN (?) AND
                                      bill_fulltext.fti_names @@ to_tsquery('english', ?) AND
                                      bills.id = bill_fulltext.bill_id
                                ORDER BY hot_bill_category_id, lastaction DESC", q, options[:congresses], q],
-                               :per_page => DEFAULT_SEARCH_PAGE_SIZE, :page => options[:page])
-    return bills
+                :per_page => DEFAULT_SEARCH_PAGE_SIZE, :page => options[:page], :total_entries => s_count)
   end
 
   def billtext_txt

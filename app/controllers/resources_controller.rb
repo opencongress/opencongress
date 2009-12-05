@@ -209,7 +209,7 @@ class ResourcesController < ApplicationController
       query_stripped = query_stripped.gsub(/\s+/," ")
       
       if (query_stripped.size > 0)
-        @issue_count, @issues = Subject.full_text_search(query_stripped, :page=>0)
+        @issues = Subject.full_text_search(query_stripped, :page => 1)
       end
     end
     

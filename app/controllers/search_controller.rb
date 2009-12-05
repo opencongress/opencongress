@@ -97,27 +97,22 @@ class SearchController < ApplicationController
         end
         
         if (@search_comments)
-          @s_comments = Comment.find(:all, :select => "comments.*, headline(comment,E'#{query_stripped}') as headline", 
-                                     :conditions => ["fti_names @@ to_tsquery('english', ?)", query_stripped], 
-                                      :order => "created_at DESC").paginate :page => @page, :per_page => 12            
-          
-          @found_items += @s_comments.total_entries
+          @comments = Comment.full_text_search(query_stripped, :page => @page)
+                    
+          @found_items += @comments.total_entries
         end
         
         if (@search_commentary || @search_news)
-          @news_total, @news = Commentary.full_text_search(query_stripped, 
-                                      { :page => @page, :commentary_type => 'news' })	  
-          @news_pages = pages_for(@news_total)
+          @news = Commentary.full_text_search(query_stripped, { :page => @page, :commentary_type => 'news' })	  
+
           
-          @found_items += @news_total
+          @found_items += @news.total_entries
         end
         
         if (@search_commentary || @search_blogs)
-          @blogs_total, @blogs = Commentary.full_text_search(query_stripped, 
-                                      { :page => @page, :commentary_type => 'blog' })	  
-          @blogs_pages = pages_for(@blogs_total)
-          
-          @found_items += @blogs_total
+          @blogs = Commentary.full_text_search(query_stripped, { :page => @page, :commentary_type => 'blog' })	  
+  
+          @found_items += @blogs.total_entries
         end
         
         if (@search_gossip_blog)

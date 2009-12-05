@@ -78,13 +78,26 @@ class Article < ActiveRecord::Base
     created_at.strftime "%B %e, %Y"
   end
   
-  def self.full_text_search(q, options = {}, find_options = {})
-    articles = Article.paginate_by_sql(["SELECT articles.*, rank(fti_names, ?, 1) as tsearch_rank, headline(article,?) as headline
-                                 FROM articles 
-                                 WHERE articles.published_flag = 't' AND
-                                        fti_names @@ to_tsquery('english', ?)                                       
-                                 ORDER BY articles.created_at DESC", q, q, q],
-                                :per_page => DEFAULT_SEARCH_PAGE_SIZE, :page => options[:page])
-    articles
+  def self.full_text_search(q, options = {})
+    @s_count = Article.count(:all, :conditions => ["articles.published_flag = 't' AND fti_names @@ to_tsquery('english', ?)", q])
+    
+    # Note: This takes (current_page, per_page, total_entries)
+    # We need to do this so we can put LIMIT and OFFSET inside the subquery.
+    WillPaginate::Collection.create(options[:page], options[:per_page] || DEFAULT_SEARCH_PAGE_SIZE, @s_count) do |pager|
+      # perfom the find.
+      # The subquery is here so we don't run ts_headline on all rows, which takes a long long time...
+      # See http://www.postgresql.org/docs/8.4/static/textsearch-controls.html
+      pager.replace Comment.find_by_sql(["
+        SELECT *,
+          ts_headline(article, ?) as headline
+        FROM (
+          SELECT articles.*, rank(fti_names, ?, 1) as tsearch_rank
+          FROM articles
+          WHERE articles.published_flag = 't' AND
+          (fti_names @@ to_tsquery('english', ?))
+          ORDER BY created_at DESC
+          LIMIT ?
+          OFFSET ?) AS comments", q, q, q, pager.per_page, pager.offset])
+    end
   end
 end

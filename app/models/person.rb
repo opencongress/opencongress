@@ -1316,7 +1316,7 @@ class Person < ActiveRecord::Base
     people.partition {|p| p.email }
   end
 
-  def self.full_text_search(q, options = {}, find_options = {})
+  def self.full_text_search(q, options = {})
     current = options[:only_current] ? " AND (people.title='Rep.' OR people.title='Sen.')" : ""
     
     people = Person.paginate_by_sql(["SELECT people.*, rank(fti_names, ?, 1) as tsearch_rank FROM people 

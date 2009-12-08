@@ -130,7 +130,7 @@ CommitteeReport.transaction {
       #person
       unless person.nil?
         name = person.match(/([A-Z\-\s]+)/).if_not_nil {|md| md.captures[0] }
-        state = person.match(/of (.*)$/).if_not_nil { |md| Person.abbrev_for_state(md.captures[0]) }
+        state = person.match(/of (.*)$/).if_not_nil { |md| State.abbrev_for(md.captures[0]) }
         first, last = name.match(/(\w+)\s(.+)/).if_not_nil {|md| md.captures}
         person = nil
       

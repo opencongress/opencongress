@@ -36,7 +36,7 @@ class FriendsController < ApplicationController
  		  @in_my_state_solr = User.find_users_in_states_tracking([params[:state]], @bill, 1000)
 		  @in_my_state = User.find_for_tracking_table(current_user, @bill, @in_my_state_solr.docs)
     elsif logged_in? && !current_user.zipcode.blank?
-      @state_name = State.for_abbrev(current_user.state_cache)
+      @state_name = State.for_abbrev(current_user.state_cache.first)
 		  @in_my_state_solr = User.find_users_in_states_tracking(current_user.state_cache, @bill, 1000)
 		  @in_my_state = User.find_for_tracking_table(current_user, @bill, @in_my_state_solr.docs)
 		  @in_my_district_solr = User.find_users_in_districts_tracking(current_user.district_cache, @bill, 1000)

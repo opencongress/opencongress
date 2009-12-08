@@ -1,9 +1,12 @@
 class Bookmark < ActiveRecord::Base
   belongs_to :bookmarkable, :polymorphic => true
-  belongs_to :person, :foreign_key => "bookmarkable_id", :include => :roles
-  belongs_to :bill, :foreign_key => "bookmarkable_id"
-  belongs_to :subject, :foreign_key => "bookmarkable_id"
-  belongs_to :committee, :foreign_key => "bookmarkable_id"
+  
+  with_options :foreign_key => "bookmarkable_id" do |b|
+    b.belongs_to :person, :include => :roles
+    b.belongs_to :bill
+    b.belongs_to :subject
+    b.belongs_to :committee
+  end
 
   validates_uniqueness_of :bookmarkable_id, :scope => [:user_id, :bookmarkable_type]
 

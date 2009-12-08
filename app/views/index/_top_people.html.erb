@@ -9,11 +9,11 @@
         
         <span class="title"><%= p.senator? ? 'Senator' : 'Representative' %> <%= p.popular_name %></span>
         <span class="date">
-          <span><%= p.party %>, <%= Person.state_for_abbrev(p.state)%></span> 
+          <span><%= p.party %>, <%= State.for_abbrev(p.state)%></span> 
         </span>
 
       </a>
-    </li>   
+    </li>
   <% end %>
 </ul>
 <a href="/people/<%= person_type %>?sort=popular" class="med_button med_arrow"><span>More <%= person_type.capitalize %></span></a>

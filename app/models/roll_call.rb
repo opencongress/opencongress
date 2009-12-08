@@ -4,18 +4,26 @@ class RollCall < ActiveRecord::Base
   has_one :action
   has_many :page_views, :as => :viewable
   has_many :roll_call_votes, :include => :person, :order => 'people.lastname'
-  has_many :aye_votes, :class_name => 'RollCallVote', :conditions => "roll_call_votes.vote='+'"
-  has_many :nay_votes, :class_name => 'RollCallVote', :conditions => "roll_call_votes.vote='-'"
-  has_many :abstain_votes, :class_name => 'RollCallVote', :conditions => "roll_call_votes.vote='0'"
-  has_many :democrat_votes, :class_name => 'RollCallVote', :include => "person", :conditions => "people.party='Democrat'"
-  has_many :democrat_aye_votes, :class_name => 'RollCallVote', :include => "person", :conditions => "people.party='Democrat' AND roll_call_votes.vote='+'"
-  has_many :democrat_nay_votes, :class_name => 'RollCallVote', :include => "person", :conditions => "people.party='Democrat' AND roll_call_votes.vote='-'"
-  has_many :democrat_abstain_votes, :class_name => 'RollCallVote', :include => "person", :conditions => "people.party='Democrat' AND roll_call_votes.vote='0'"
   
-  has_many :republican_votes, :class_name => 'RollCallVote', :include => "person", :conditions => "people.party='Republican'"
-  has_many :republican_aye_votes, :class_name => 'RollCallVote', :include => "person", :conditions => "people.party='Republican' AND roll_call_votes.vote='+'"
-  has_many :republican_nay_votes, :class_name => 'RollCallVote', :include => "person", :conditions => "people.party='Republican' AND roll_call_votes.vote='-'"
-  has_many :republican_abstain_votes, :class_name => 'RollCallVote', :include => "person", :conditions => "people.party='Republican' AND roll_call_votes.vote='0'"
+  named_scope :for_ident, lambda { |ident| {:conditions => ["date_part('year', roll_calls.date) = ? AND roll_calls.where = case ? when 'h' then 'house' else 'senate' end AND roll_calls.number = ?", *Bill.ident(ident)]} }
+
+  with_options :class_name => 'RollCallVote' do |rc|
+    rc.has_many :aye_votes, :conditions => "roll_call_votes.vote='+'"
+    rc.has_many :nay_votes, :conditions => "roll_call_votes.vote='-'"
+    rc.has_many :abstain_votes, :conditions => "roll_call_votes.vote='0'"
+  end
+
+  with_options :class_name => 'RollCallVote', :include => :person do |rc|
+    rc.has_many :democrat_votes, :conditions => "people.party='Democrat'"
+    rc.has_many :democrat_aye_votes, :conditions => "people.party='Democrat' AND roll_call_votes.vote='+'"
+    rc.has_many :democrat_nay_votes, :conditions => "people.party='Democrat' AND roll_call_votes.vote='-'"
+    rc.has_many :democrat_abstain_votes, :conditions => "people.party='Democrat' AND roll_call_votes.vote='0'"
+  
+    rc.has_many :republican_votes, :conditions => "people.party='Republican'"
+    rc.has_many :republican_aye_votes, :conditions => "people.party='Republican' AND roll_call_votes.vote='+'"
+    rc.has_many :republican_nay_votes, :conditions => "people.party='Republican' AND roll_call_votes.vote='-'"
+    rc.has_many :republican_abstain_votes, :conditions => "people.party='Republican' AND roll_call_votes.vote='0'"
+  end
 
 #  before_save :set_party_lines
   def views(seconds = 0)
@@ -30,7 +38,6 @@ class RollCall < ActiveRecord::Base
 end
 
   def set_party_lines
-    
     if self.republican_nay_votes.count >= self.republican_aye_votes.count
       self.republican_position = false
     else
@@ -44,27 +51,20 @@ end
     end
     self.save
   end
-      
 
   def atom_id
     "tag:opencongress.org,#{date.strftime("%Y-%m-%d")}:/roll_call/#{id}"
   end
-  
-  def RollCall.find_by_ident(ident_string)
-    year, ch, number = Bill.ident ident_string
-    chamber = (ch == 's') ? 'senate' : 'house'
-    
-    RollCall.find(:first, 
-                  :conditions => ["date_part('year', roll_calls.date) = ? AND roll_calls.where = ? 
-                                   AND roll_calls.number = ?",
-                                 year, chamber, number])                               
-  end 
-  
-  def RollCall.ident(param_id)
+
+  def self.find_by_ident(ident_string)
+    for_ident(ident_string).find(:first)
+  end
+
+  def self.ident(param_id)
     md = /(\d+)-([sh]?)(\d+)$/.match(canonical_name(param_id))
     md ? md.captures : [nil, nil, nil]
   end
-  
+
   def vote_for_person(person)
     RollCallVote.find(:first, :conditions => [ "person_id=? AND roll_call_id=?", person.id, self.id])
   end
@@ -73,24 +73,8 @@ end
     "/vote/#{self.date.year}/#{where[0...1]}/#{number}"
   end
     
-  #def ayes
-  #  aye_votes.size
-  #end
-
-  #def nays
-  #  nay_votes.size
-  #end
-  
-  #def abstains
-  #  abstain_votes.size
-  #end
-  
   def total_votes
     (ayes + nays + abstains + presents)
-  end
-  
-  def RollCall.latest_votes(num = 3)
-    RollCall.find(:all, :order => 'date DESC', :limit => num)
   end
   
   def RollCall.latest_votes_for_unique_bills(num = 3)
@@ -116,12 +100,6 @@ end
     DateTime.parse((doc/'table[@style="font-size: 90%"]').search("nobr")[1].inner_html)
   end
   
-  
-  @@DISPLAY_CHAMBER = {
-    "house" => "House",
-    "senate" => "Senate"
-  }
-  
   def short_identifier
     if self.amendment
        self.amendment.display_number
@@ -131,7 +109,7 @@ end
   end
   
   def chamber
-    @@DISPLAY_CHAMBER[where]
+    where.capitalize
   end
   
   def self.vote_together(person1, person2)

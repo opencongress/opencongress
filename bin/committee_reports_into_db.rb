@@ -56,7 +56,7 @@ structs.each do |s|
   
   # Person
   name = s.person.match(/([A-Z\-\s]+)/).if_not_nil {|md| md.captures[0] }
-  state = s.person.match(/of (.*)$/).if_not_nil { |md| Person.abbrev_for_state(md.captures[0]) }
+  state = s.person.match(/of (.*)$/).if_not_nil { |md| State.abbrev_for(md.captures[0]) }
   first, last = name.match(/(\w+)\s(.+)/).if_not_nil {|md| md.captures}
   
   next if [name, state, first, last].any?(&:nil?)

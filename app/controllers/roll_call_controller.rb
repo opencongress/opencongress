@@ -6,8 +6,8 @@ class RollCallController < ApplicationController
   before_filter :no_users, :only => [:can_blog]
   
   @@VOTE_TYPES = { "+" => "Aye", "-" => "Nay", "0" => "Abstain" }
-  @@VOTE_VALS = { "Aye" => "+", "Nay" => "-", "Abstain" => "0" }
-  
+  @@VOTE_VALS = @@VOTE_TYPES.invert
+
   def master_piechart_data
     @roll_call = RollCall.find_by_id(params[:id])
     
@@ -167,12 +167,12 @@ class RollCallController < ApplicationController
     @page_title = "#{@roll_call.chamber} Roll Call ##{@roll_call.number}: #{@party}s Voting '#{@vote}'"
     @title_desc = SiteText.find_title_desc('roll_call_show')
   end
-  
+
   def index
     redirect_to :action => 'all'
     @learn_off = true
   end
-  
+
   def all
     @page = params[:page].blank? ? 1 : params[:page]
     
@@ -261,8 +261,13 @@ class RollCallController < ApplicationController
   end
   
   def by_number
-    @roll_call = RollCall.find_by_ident("#{params[:year]}-#{params[:chamber]}#{params[:number]}")  
-    
+    @roll_call = RollCall.find_by_ident("#{params[:year]}-#{params[:chamber]}#{params[:number]}")
+
+    if params[:state] && State.for_abbrev(params[:state])
+      @state_abbrev = params[:state]
+      @state_name = State.for_abbrev(params[:state])
+    end
+
     unless @roll_call
       redirect_to :controller => 'index', :action => 'notfound'
       return
@@ -272,7 +277,7 @@ class RollCallController < ApplicationController
     
     render :action => 'show'
   end
-  
+
   private
 
   def page_view
@@ -282,7 +287,7 @@ class RollCallController < ApplicationController
       PageView.create_by_hour(@roll_call, request)
     end
   end
-  
+
   def roll_call_shared
     @master_chart = ofc2(400,220, "roll_call/master_piechart_data/#{@roll_call.id}")
     @aye_chart = ofc2(400,220, "roll_call/partyvote_piechart_data/#{@roll_call.id}?breakdown_type=#{CGI.escape("+")}")

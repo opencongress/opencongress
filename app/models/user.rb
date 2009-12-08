@@ -155,12 +155,6 @@ class User < ActiveRecord::Base
   def my_state
     ZipcodeDistrict.zip_lookup(self.zipcode, self.zip_four).collect {|p| p.state}.uniq
   end
-
-  
-  def my_state_f
-    self.my_state
-  end
-
   
   def my_district
     ZipcodeDistrict.zip_lookup(self.zipcode, self.zip_four).collect {|p| "#{p.state}-#{p.district}"}.uniq
@@ -182,6 +176,10 @@ class User < ActiveRecord::Base
       return nil
     end
  
+  end
+  
+  def my_state_f
+    self.my_state
   end
   
   def my_district_f

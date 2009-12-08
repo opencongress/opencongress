@@ -1,14 +1,17 @@
 class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :commentable, :polymorphic => true
-  belongs_to :bill, :foreign_key => "commentable_id"
-  belongs_to :person, :foreign_key => "commentable_id"
-  belongs_to :article, :foreign_key => "commentable_id"
-  belongs_to :sector, :foreign_key => "commentable_id"
-  belongs_to :committee, :foreign_key => "commentable_id"
-  belongs_to :subject, :foreign_key => "commentable_id"
-  belongs_to :bill_battle, :foreign_key => "commentable_id"
-  belongs_to :upcoming_bill, :foreign_key => "commentable_id"
+  
+  with_options :foreign_key => 'commentable_id' do |c|
+    c.belongs_to :bill
+    c.belongs_to :person
+    c.belongs_to :article
+    c.belongs_to :sector
+    c.belongs_to :committee
+    c.belongs_to :subject
+    c.belongs_to :bill_battle
+    c.belongs_to :upcoming_bill
+  end
   has_many :comment_scores
   
   named_scope :users_only, :conditions => ["comments.user_id IS NOT NULL"]
@@ -18,7 +21,6 @@ class Comment < ActiveRecord::Base
   named_scope :useless, :conditions => ["comments.average_rating < 5"]
   named_scope :most_useful, :order => ["average_rating desc"], :limit => 3
   named_scope :uncensored, :conditions => ["censored != ?", true]
-
   
   apply_simple_captcha
   validates_presence_of :comment, :message => "You must enter a comment."
@@ -29,24 +31,22 @@ class Comment < ActiveRecord::Base
   
   def commentable_link
     return self.parent.commentable_link if self.commentable_type.nil?
-    
+
     obj = Object.const_get(self.commentable_type)
     specific_object = obj.find_by_id(self.commentable_id)
-    if self.commentable_type == "Bill"
-      return {:controller => "bill", :action => "show", :id => specific_object.ident}
-    elsif self.commentable_type == "Person"
-      return {:controller => "people", :action => "show", :id => specific_object.to_param}
-    elsif self.commentable_type == "Subject"
-      return {:controller => "issue", :action => "show", :id => specific_object.to_param}
-    elsif self.commentable_type == "Committee"
-      return {:controller => "committees", :action => "show", :id => specific_object.to_param}          
-    elsif self.commentable_type == "Article"
-      return {:controller => "articles", :action => "view", :id => specific_object.to_param}
-    elsif self.commentable_type == "BillTextNode"
-      return {:controller => "bill", :action => "text", :id => specific_object.bill_text_version.bill.ident, 
+
+    case self.commentable_type
+    when 'Person', 'Committee', 'Article'
+      {:controller => self.commentable_type.pluralize.downcase, :action => "show", :id => specific_object.to_param}
+    when 'Bill'
+      {:controller => "bill", :action => "show", :id => specific_object.ident}
+    when 'Subject'
+      {:controller => "issue", :action => "show", :id => specific_object.to_param}
+    when 'BillTextNode'
+      {:controller => "bill", :action => "text", :id => specific_object.bill_text_version.bill.ident, 
               :version => self.commentable.bill_text_version.version, :nid => self.commentable.nid }
     else
-      return {:controller => "index" }
+      {:controller => "index" }
     end
 
   end
@@ -62,6 +62,7 @@ class Comment < ActiveRecord::Base
     
     obj = Object.const_get(self.commentable_type)
     specific_object = obj.find_by_id(self.commentable_id)
+
     if self.commentable_type == "Bill"
       return {:controller => "bill", :action => "show", :id => specific_object.ident, :goto_comment => self.id}
     elsif self.commentable_type == "Person"

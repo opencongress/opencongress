@@ -682,7 +682,7 @@ class PeopleController < ApplicationController
     if @person = Person.find(params[:id])
       @page_title_prefix = "U.S. Congress"
       @page_title = (@person.senator? ? 'Senator ' : 'Rep. ') + @person.popular_name + 
-                    ", #{Person.state_for_abbrev(@person.state) unless @person.state.blank?}"
+                    ", #{State.for_abbrev(@person.state) unless @person.state.blank?}"
       @page_title += " (#{@person.party[0,1]})" unless @person.party.blank?
       @meta_description = "Latest votes, sponsored bills, breaking news and blog coverage, and user community for #{@page_title} on OpenCongress"
       

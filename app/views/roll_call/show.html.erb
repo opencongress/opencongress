@@ -23,8 +23,13 @@
   
   <div class="cols-box clearfix">
     <div class="col1">
-      <h3 class="darkline">Votes by <%= person_type %></h3>
-      <%= render :partial => 'person_votes', :locals => { :votes => @roll_call.roll_call_votes } %>
+      <% if @state_name %>
+         <h3 class="darkline">Votes by <%= person_type %> in <%= @state_name %></h3>
+         <%= render :partial => 'person_votes', :locals => { :votes => @roll_call.roll_call_votes.for_state(@state_abbrev) } %>
+      <% else %>
+         <h3 class="darkline">Votes by <%= person_type %></h3>
+         <%= render :partial => 'person_votes', :locals => { :votes => @roll_call.roll_call_votes } %>
+      <% end %>
       <p>** Because of incomplete data from newly elected Representatives, party breakdown visualizations may be inaccurate by one or two votes.</p>
     </div>
     <div class="col2">

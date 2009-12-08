@@ -205,7 +205,7 @@ class Committee < ActiveRecord::Base
     unless self.wiki_link
       link = ""
     else
-      link = "#{WIKI_BASE_URL}/wiki/#{self.wiki_link.name}"
+      link = "#{WIKI_BASE_URL}/#{self.wiki_link.name}"
     end
     
     return link

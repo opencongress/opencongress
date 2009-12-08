@@ -42,72 +42,75 @@ ActionController::Routing::Routes.draw do |map|
 
   # Handle bill routing. The action determines what information about the bill will 
   # be displayed.
-  map.connect 'bill/all', :controller => 'bill', :action => 'all'
-  map.connect 'bill/pending', :controller => 'bill', :action => 'pending'
-  map.connect 'bill/popular', :controller => 'bill', :action => 'popular'
-  map.connect 'bill/hot', :controller => 'bill', :action => 'hot'
-  map.connect 'bill/readthebill', :controller => 'bill', :action => 'readthebill'
-  map.connect 'bill/readthebill.:format', :controller => 'bill', :action => 'readthebill'
-  map.connect 'bill/compare', :controller => 'bill', :action => 'compare'
-  map.connect 'bill/compare_by_issues', :controller => 'bill', :action => 'compare_by_issues'
-  map.connect 'bill/hot_temp', :controller => 'bill', :action => 'hot_temp'
-  map.connect 'bill/most/viewed', :controller => 'bill', :action => 'popular'  
-  map.connect 'bill/most/:type', :controller => 'bill', :action => 'most_commentary'
-  map.connect 'bill/atom_top20', :controller => 'bill', :action => 'atom_top20'
-  map.connect 'bill/atom/most/viewed', :controller => 'bill', :action => 'atom_top20'
-  map.connect 'bill/atom/most/:type', :controller => 'bill', :action => 'atom_top_commentary'
-  map.connect 'bill/type/:bill_type', :controller => 'bill', :action => 'list_bill_type'
-  map.connect 'bill/type/:bill_type/:page', :controller => 'bill', :action => 'list_bill_type'
-  map.connect 'bill/text/status/:id', :controller => 'bill', :action => 'status_text'
+  map.with_options :controller => 'bill' do |b|
+    b.connect 'bill/:id/:action'
+    b.connect 'bill/:id/:action.:format'
+    b.connect 'bill/all', :action => 'all'
+    b.connect 'bill/pending', :action => 'pending'
+    b.connect 'bill/popular', :action => 'popular'
+    b.connect 'bill/hot', :action => 'hot'
+    b.connect 'bill/readthebill', :action => 'readthebill'
+    b.connect 'bill/readthebill.:format', :action => 'readthebill'
+    b.connect 'bill/compare', :action => 'compare'
+    b.connect 'bill/compare_by_issues', :action => 'compare_by_issues'
+    b.connect 'bill/hot_temp', :action => 'hot_temp'
+    b.connect 'bill/most/viewed', :action => 'popular'  
+    b.connect 'bill/most/:type', :action => 'most_commentary'
+    b.connect 'bill/atom_top20', :action => 'atom_top20'
+    b.connect 'bill/atom/most/viewed', :action => 'atom_top20'
+    b.connect 'bill/atom/most/:type', :action => 'atom_top_commentary'
+    b.connect 'bill/type/:bill_type', :action => 'list_bill_type'
+    b.connect 'bill/type/:bill_type/:page', :action => 'list_bill_type'
+    b.connect 'bill/text/status/:id', :action => 'status_text'
+    b.connect 'bill/:id/blogs/search', :action => 'commentary_search', :commentary_type => 'blog'
+    b.connect 'bill/:id/news/search', :action => 'commentary_search', :commentary_type => 'news'
+    b.connect 'bill/:id/blogs/search/:page', :action => 'commentary_search', :commentary_type => 'blog'
+    b.connect 'bill/:id/news/search/:page', :action => 'commentary_search', :commentary_type => 'news'
+    b.connect 'bill/:id/blogs/:page', :action => 'blogs'
+    b.connect 'bill/:id/news/:page', :action => 'news'
+    b.connect 'bill/upcoming/:id', :action => 'upcoming'
+    b.connect 'bill/:show_comments/:id/show', :action => 'show'  
+    b.connect 'bill/bill_vote/:bill/:id', :action => "bill_vote"
+    b.bill 'bill/:id/show', :action => "show"
+  end
 
-  map.connect 'bill/:id/blogs/search', :controller => 'bill', :action => 'commentary_search', :commentary_type => 'blog'
-  map.connect 'bill/:id/news/search', :controller => 'bill', :action => 'commentary_search', :commentary_type => 'news'
-  map.connect 'bill/:id/blogs/search/:page', :controller => 'bill', :action => 'commentary_search', :commentary_type => 'blog'
-  map.connect 'bill/:id/news/search/:page', :controller => 'bill', :action => 'commentary_search', :commentary_type => 'news'
-  map.connect 'bill/:id/blogs/:page', :controller => 'bill', :action => 'blogs'
-  map.connect 'bill/:id/news/:page', :controller => 'bill', :action => 'news'
-  map.connect 'bill/upcoming/:id', :controller => 'bill', :action => 'upcoming'
-  map.connect 'bill/:show_comments/:id/show', :controller => 'bill', :action => 'show'  
-  map.connect 'bill/:id/:action', :controller => 'bill'
-  map.connect 'bill/:id/:action.:format', :controller => 'bill'
-  
-  map.bill 'bill/:id/show', :controller => "bill", :action => "show"
+  map.with_options :controller => 'people' do |p|
+    p.connect 'people/senators', :action => 'people_list', :person_type => 'senators'
+    p.connect 'people/representatives', :action => 'people_list', :person_type => 'representatives'
+    p.connect 'people/:person_type/most/:type', :action => 'most_commentary'
+    p.connect 'people/:person_type/atom/most/:type', :action => 'atom_top_commentary'
+    p.connect 'people/atom/featured', :action => 'atom_featured'
 
-  map.connect 'people/senators', :controller => 'people', :action => 'people_list', :person_type => 'senators'
-  map.connect 'people/representatives', :controller => 'people', :action => 'people_list', :person_type => 'representatives'
-  #map.connect 'person/senators', :controller => 'people', :action => 'people_list', :person_type => 'senators'
-  #map.connect 'person/representatives', :controller => 'people', :action => 'people_list', :person_type => 'representatives'
+    p.connect 'people/:show_comments/show/:id', :action => 'show'
+    p.connect 'people/wiki/:id', :action => 'wiki'
+    p.connect 'people/comments/:id', :action => 'comments'
+    p.connect 'people/news/:id/:page', :action => 'news'
+    p.connect 'people/blogs/:id/:page', :action => 'blogs'
 
-  map.connect 'people/:person_type/most/:type', :controller => 'people', :action => 'most_commentary'
-  map.connect 'people/:person_type/atom/most/:type', :controller => 'people', :action => 'atom_top_commentary'
-  map.connect 'people/atom/featured', :controller => 'people', :action => 'atom_featured'
+    p.connect 'people/voting_history/:id/:page', :action => 'voting_history'
+    p.connect 'person/compare.:format', :action => 'compare'
+    p.connect 'people/:action/:id'
+    p.connect 'person/:action/:id'
+    p.connect 'person/:action/:id.:format'
+  end
 
-
-  map.connect 'people/:show_comments/show/:id', :controller => 'people', :action => 'show'
-  map.connect 'people/wiki/:id', :controller => 'people', :action => 'wiki'
-  map.connect 'people/comments/:id', :controller => 'people', :action => 'comments'
-  map.connect 'people/news/:id/:page', :controller => 'people', :action => 'news'
-  map.connect 'people/blogs/:id/:page', :controller => 'people', :action => 'blogs'
-
-  map.connect 'people/voting_history/:id/:page', :controller => 'people', :action => 'voting_history'
-  map.connect 'person/compare.:format', :controller => 'people', :action => 'compare'
-  map.connect 'people/:action/:id', :controller => 'people'
-  map.connect 'person/:action/:id', :controller => 'people'
-  map.connect 'person/:action/:id.:format', :controller => 'people'
-  
   map.connect 'roll_call/text/summary/:id', :controller => "roll_call", :action => 'summary_text'
-  
+
   map.connect 'admin', :controller => "admin/index"
   map.connect 'admin/stats/bills.:format', :controller => "admin/stats", :action => 'bills'
+
+  map.with_options :controller => "battle_royale" do |br|
+    br.connect 'battle_royale.:format',  :action => "index"
+    br.connect 'battle_royale/:action.:format'
+  end
   
-  map.connect 'battle_royale.:format', :controller => "battle_royale", :action => "index"
-  map.connect 'battle_royale/:action.:format', :controller => "battle_royale"
-  
-  map.connect 'blog', :controller => "articles", :action => 'list'
-  map.connect 'blog/:tag', :controller => "articles", :action => 'list'
-  map.connect 'articles/view/:id', :controller => "articles", :action => "view" 
-  map.connect 'articles/view/:show_comments/:id', :controller => "articles", :action => 'view' 
-  map.connect 'articles/:id/atom', :controller => "articles", :action => 'article_atom'
+  map.with_options :controller => 'articles' do |a|
+    a.connect 'blog', :action => 'list'
+    a.connect 'blog/:tag', :action => 'list'
+    a.connect 'articles/view/:id', :action => "view" 
+    a.connect 'articles/view/:show_comments/:id', :action => 'view' 
+    a.connect 'articles/:id/atom', :action => 'article_atom'
+  end
 
   map.connect 'issues/:action/:id', :controller => 'issue'
   map.connect 'issue/:show_comments/show/:id', :controller => "issue", :action => "show"
@@ -116,69 +119,81 @@ ActionController::Routing::Routes.draw do |map|
  
   map.connect 'howtouse', :controller => 'about', :action => 'howtouse'
 
-  map.connect 'login', :controller => 'account', :action => 'login'
-  map.connect 'why', :controller => 'account', :action => 'why'
-  map.connect 'logout', :controller => 'account', :action => 'logout'
-  map.connect 'register', :controller => 'account', :action => 'signup'
-  map.connect 'account/confirm/:login', :controller => "account", :action => "confirm"
+  map.with_options :controller => 'account' do |a|
+    a.connect 'login', :action => 'login'
+    a.connect 'why', :action => 'why'
+    a.connect 'logout', :action => 'logout'
+    a.connect 'register', :action => 'signup'
+    a.connect 'account/confirm/:login', :action => "confirm"
+  end
 
-  map.connect 'comments/all_comments/:object/:id', :controller => "comments", :action => "all_comments"
-  map.connect 'comments/atom/:object/:id', :controller => 'comments', :action => "atom_comments"
-
-  map.user_watchdog 'users/:login/profile/watchdog', :controller => "profile", :action => "watchdog"
-  map.friends_import_contacts 'users/:login/profile/friends/import_contacts', :controller => "friends", :action => "import_contacts"
-  map.friends_like_voters 'users/:login/profile/friends/like_voters', :controller => "friends", :action => "like_voters"
-  map.friends_import_emails 'users/:login/profile/friends/invite_contacts', :controller => "friends", :action => "invite_contacts"
-  map.friends_near_me 'users/:login/profile/friends/near_me', :controller => "friends", :action => "near_me"
-  map.friends_add_confirm 'users/:login/profile/friends/confirm/:id', :controller => "friends", :action => "confirm"
-  map.friends_add_deny 'users/:login/profile/friends/deny/:id', :controller => "friends", :action => "deny"
-  map.friends_invite 'users/:login/profile/friends/invite', :controller => "friends", :action => "invite"
-  map.friends_invite_form 'users/:login/profile/friends/invite_form', :controller => "friends", :action => "invite_form"
+  map.with_options :controller => 'comments' do |c|
+    c.connect 'comments/all_comments/:object/:id', :action => "all_comments"
+    c.connect 'comments/atom/:object/:id', :action => "atom_comments"
+  end
+  
+  map.with_options :controller => 'friends' do |fr|
+    fr.friends_import_contacts 'users/:login/profile/friends/import_contacts', :action => "import_contacts"
+    fr.friends_like_voters 'users/:login/profile/friends/like_voters', :action => "like_voters"
+    fr.friends_import_emails 'users/:login/profile/friends/invite_contacts', :action => "invite_contacts"
+    fr.friends_near_me 'users/:login/profile/friends/near_me', :action => "near_me"
+    fr.friends_add_confirm 'users/:login/profile/friends/confirm/:id', :action => "confirm"
+    fr.friends_add_deny 'users/:login/profile/friends/deny/:id', :action => "deny"
+    fr.friends_invite 'users/:login/profile/friends/invite', :action => "invite"
+    fr.friends_invite_form 'users/:login/profile/friends/invite_form', :action => "invite_form"
+    fr.connect 'bill/users_tracking/:id/:state', :action => 'tracking_bill', :state => /\w{2}/
+  end
+  
   map.resources :friends, :path_prefix => '/users/:login/profile'
 
-  map.user_profile 'users/:login/profile', :controller => "profile", :action => "profile"
-  map.user_profile_actions 'users/:login/profile/actions', :controller => "profile", :action => "actions"
-  map.user_profile_items_tracked 'users/:login/profile/items_tracked', :controller => "profile", :action => "items_tracked"
-  map.connect 'users/:login/profile/bills_supported', :controller => "profile", :action => "bills_supported"
-  map.connect 'users/:login/profile/tracked_rss', :controller => "profile", :action => "tracked_rss"
-  map.connect 'users/:login/profile/user_actions_rss', :controller => "profile", :action => "user_actions_rss"
-  map.connect 'users/:login/profile/bills_supported/rss', :controller => "profile", :action => "bills_supported", :format => "rss"
-  map.connect 'users/:login/profile/bills_opposed', :controller => "profile", :action => "bills_opposed"
-  map.connect 'users/:login/profile/bills_opposed/rss', :controller => "profile", :action => "bills_opposed", :format => "rss"
-  map.connect 'users/:login/profile/my_votes', :controller => "profile", :action => "my_votes"
-  map.connect 'users/:login/profile/my_votes/rss', :controller => "profile", :action => "my_votes", :format => "rss"
-  map.connect 'users/:login/profile/bills', :controller => "profile", :action => "bills"
-  map.connect 'users/:login/profile/bills/rss', :controller => "profile", :action => "bills", :format => "rss"
-  map.connect 'users/:login/profile/comments', :controller => "profile", :action => "comments"
-  map.connect 'users/:login/profile/comments/rss', :controller => "profile", :action => "comments", :format => "rss"
-  map.connect 'users/:login/profile/issues', :controller => "profile", :action => "issues"
-  map.connect 'users/:login/profile/issues/rss', :controller => "profile", :action => "issues", :format => "rss"
-  map.connect 'users/:login/profile/committees', :controller => "profile", :action => "committees"
-  map.connect 'users/:login/profile/committees/rss', :controller => "profile", :action => "committees", :format => "rss"
-  map.connect 'users/:login/profile/:person_type/rss', :controller => "profile", :action => "person", :format => "rss"
-  map.connect 'users/:login/profile/:person_type', :controller => "profile", :action => "person"
+  map.with_options :controller => 'profile' do |p|
+    p.user_profile 'users/:login/profile', :action => "profile"
+    p.user_profile_actions 'users/:login/profile/actions', :action => "actions"
+    p.user_profile_items_tracked 'users/:login/profile/items_tracked', :action => "items_tracked"
+    p.user_watchdog 'users/:login/profile/watchdog', :action => "watchdog"
+    p.connect 'users/:login/profile/bills_supported', :action => "bills_supported"
+    p.connect 'users/:login/profile/tracked_rss', :action => "tracked_rss"
+    p.connect 'users/:login/profile/user_actions_rss', :action => "user_actions_rss"
+    p.connect 'users/:login/profile/bills_supported/rss', :action => "bills_supported", :format => "rss"
+    p.connect 'users/:login/profile/bills_opposed', :action => "bills_opposed"
+    p.connect 'users/:login/profile/bills_opposed/rss', :action => "bills_opposed", :format => "rss"
+    p.connect 'users/:login/profile/my_votes', :action => "my_votes"
+    p.connect 'users/:login/profile/my_votes/rss', :action => "my_votes", :format => "rss"
+    p.connect 'users/:login/profile/bills', :action => "bills"
+    p.connect 'users/:login/profile/bills/rss', :action => "bills", :format => "rss"
+    p.connect 'users/:login/profile/comments', :action => "comments"
+    p.connect 'users/:login/profile/comments/rss', :action => "comments", :format => "rss"
+    p.connect 'users/:login/profile/issues', :action => "issues"
+    p.connect 'users/:login/profile/issues/rss', :action => "issues", :format => "rss"
+    p.connect 'users/:login/profile/committees', :action => "committees"
+    p.connect 'users/:login/profile/committees/rss', :action => "committees", :format => "rss"
+    p.connect 'users/:login/profile/:person_type/rss', :action => "person", :format => "rss"
+    p.connect 'users/:login/profile/:person_type', :action => "person"
+  end
 
   map.connect 'users/:login/feeds/:action', :controller => "user_feeds"
   map.connect 'users/:login/feeds/:action/:key', :controller => "user_feeds"
   
   map.connect 'video/rss', :controller => 'video', :action => 'all', :format => 'atom'
-
-  map.connect 'bill/bill_vote/:bill/:id', :controller => "bill", :action => "bill_vote"
-  map.connect 'vote/:year/:chamber/:number', :controller => "roll_call", :action => "by_number"
-  map.connect 'users/:login/profile/political_notebook/:action', :controller => 'notebook_items'
   
-#  map.connect 'users/:login/profile/political_notebook/new',  :controller => "notebook_items", :action => "new"               
-#  map.connect 'users/:login/profile/political_notebook',      :controller => "notebook_items", :action => "index"
+  map.with_options :controller => "roll_call", :action => "by_number",
+                    :year => /\d{4}/, :chamber => /[hs]/, :number => /\d+/ do |rc|
+    rc.connect 'vote/:year/:chamber/:number'
+    rc.connect "vote/:year/:chamber/:number/:state", :state => /\w{2}/
+  end
 
-  # temporary home for api URLS
+  map.connect 'users/:login/profile/political_notebook/:action', :controller => 'notebook_items'
+
+  map.connect 'tools/:action/:id', :controller => 'resources'
+
+  # Temporary home for api URLS
   map.connect 'api/bill/text_summary/:id', :controller => 'bill', :action => 'status_text'
   map.connect 'api/roll_call/text_summary/:id', :controller => "roll_call", :action => 'summary_text'  
 
+  # Temporary routes for health care legislation
   map.connect 'baucus_bill_health_care.html', :controller => 'index', :action => 's1796_redirect'
   map.connect 'senate_health_care_bill', :controller => 'bill', :action => 'text', :id => '111-h3590', :version => 'ocas'
 
-  map.connect 'tools/:action/:id', :controller => 'resources'
-    
   # Install the default route as the lowest priority.
   map.connect ':controller/:action/:id'
   

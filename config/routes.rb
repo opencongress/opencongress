@@ -42,6 +42,9 @@ ActionController::Routing::Routes.draw do |map|
 
   # Handle bill routing. The action determines what information about the bill will 
   # be displayed.
+  map.connect 'bill/:id/users_tracking', :controller => 'friends', :action => 'tracking_bill'
+  map.connect 'bill/:id/users_tracking/:state', :controller => 'friends', :action => 'tracking_bill', :state => /\w{2}/
+
   map.with_options :controller => 'bill' do |b|
     b.connect 'bill/:id/:action'
     b.connect 'bill/:id/:action.:format'
@@ -141,7 +144,6 @@ ActionController::Routing::Routes.draw do |map|
     fr.friends_add_deny 'users/:login/profile/friends/deny/:id', :action => "deny"
     fr.friends_invite 'users/:login/profile/friends/invite', :action => "invite"
     fr.friends_invite_form 'users/:login/profile/friends/invite_form', :action => "invite_form"
-    fr.connect 'bill/users_tracking/:id/:state', :action => 'tracking_bill', :state => /\w{2}/
   end
   
   map.resources :friends, :path_prefix => '/users/:login/profile'

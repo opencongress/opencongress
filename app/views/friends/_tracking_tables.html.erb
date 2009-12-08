@@ -5,7 +5,7 @@
   <% end %>
 
   <% if @in_my_state_solr && @in_my_state_solr.total > 0 %>
-    <h3>In My State</h3>
+    <h3>In <%= @state_name %></h3>
     <%= render :partial => "tracking_table", :locals => {:collection => @in_my_state} %>
     <br/>
   <% end %>

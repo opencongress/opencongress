@@ -32,11 +32,14 @@ class FriendsController < ApplicationController
 		@page_title = "Users tracking #{@bill.title_typenumber_only}"
 
 		if params[:state]
-      @state_name = State.for_abbrev(params[:state])
- 		  @in_my_state_solr = User.find_users_in_states_tracking([params[:state]], @bill, 1000)
-		  @in_my_state = User.find_for_tracking_table(current_user, @bill, @in_my_state_solr.docs)
+		  @state_abbrev = params[:state]
+      if @state_name = State.for_abbrev(@state_abbrev)
+   		  @in_my_state_solr = User.find_users_in_states_tracking([params[:state]], @bill, 1000)
+  		  @in_my_state = User.find_for_tracking_table(current_user, @bill, @in_my_state_solr.docs)
+      end
     elsif logged_in? && !current_user.zipcode.blank?
-      @state_name = State.for_abbrev(current_user.state_cache.first)
+		  @state_abbrev = current_user.state_cache.first  
+      @state_name = State.for_abbrev(@state_abbrev)
 		  @in_my_state_solr = User.find_users_in_states_tracking(current_user.state_cache, @bill, 1000)
 		  @in_my_state = User.find_for_tracking_table(current_user, @bill, @in_my_state_solr.docs)
 		  @in_my_district_solr = User.find_users_in_districts_tracking(current_user.district_cache, @bill, 1000)

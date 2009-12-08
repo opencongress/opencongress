@@ -314,7 +314,6 @@ class BillController < ApplicationController
     end
   end
 
-
   def user_stats_ajax
     @bill = Bill.find_by_id(params[:id])
     @tracking_suggestions = @bill.tracking_suggestions
@@ -563,7 +562,7 @@ class BillController < ApplicationController
     @page_title = "Videos of #{@bill.title_typenumber_only}"
     @videos = @bill.videos.paginate :page => params[:page]
   end
-  
+
   def bill_vote
     @bill = Bill.find_by_ident(params[:bill])
     if logged_in?
@@ -607,9 +606,9 @@ class BillController < ApplicationController
       end
     end
   end
-  
+
 private
-  
+
   def get_params
     case params[:types]
       when "house"
@@ -624,7 +623,7 @@ private
       end
       @carousel = [Bill.find_hot_bills('bills.page_views_count desc',{:limit => 12})]
   end
-  
+
   def bill_profile_shared
     session, bill_type, number = Bill.ident params[:id]
     if @bill = Bill.find_by_session_and_bill_type_and_number(session, bill_type, number, { :include => [ :bill_titles ]})
@@ -644,7 +643,7 @@ private
       elsif logged_in?
         @wiki_create_url = "#{WIKI_BASE_URL}/Special:AddData/Bill?Bill[common_title]=#{CGI::escape(@bill.title_common[0..60])}&Bill[bill_number]=#{@bill.bill_type}#{@bill.number}&Bill[chamber]=#{@bill.is_senate_bill? ? "U.S. Senate" : "U.S.%20House%20of%20Representatives"}&Bill[congress]=#{DEFAULT_CONGRESS}" #prolly should be rewritten as a post handled by a custom sfEditFormPreloadText call?
       else
-        
+
       end
       @tabs = [
         ["Overview",{:action => 'show', :id => @bill.ident}],

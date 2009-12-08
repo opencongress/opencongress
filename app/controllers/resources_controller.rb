@@ -260,8 +260,9 @@ class ResourcesController < ApplicationController
 
     if params[:state] && @state_name = State.for_abbrev(params[:state])
       # Count number of users in this state tracking this bill
-      @house_state_users = User.find_users_in_states_tracking([params[:state]], @house_bill, 1000).total
-      @senate_state_users = User.find_users_in_states_tracking([params[:state]], @senate_bill, 1000).total
+      query = "my_state:(\"#{params[:state]}\")"
+      @house_state_users = User.count_by_solr(query, :facets => {:browse => ["public_tracking:true", "my_bills_tracked:#{@house_bill.ident}"]})
+      @senate_state_users = User.count_by_solr(query, :facets => {:browse => ["public_tracking:true", "my_bills_tracked:#{@senate_bill.ident}"]})
     end
 
     @page_title = "Healthcare Widget"

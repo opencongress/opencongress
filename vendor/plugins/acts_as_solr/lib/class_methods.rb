@@ -113,7 +113,7 @@ module ActsAsSolr #:nodoc:
       data = parse_query(query, options)
       data.total_hits
     end
-            
+
     # It's used to rebuild the Solr index for a specific model. 
     #  Book.rebuild_solr_index
     # 

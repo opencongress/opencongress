@@ -250,13 +250,22 @@ class ResourcesController < ApplicationController
     item = klass.find_by_id(id)
     render :partial => 'shared/email_friend_form', :locals => { :item => item }, :layout => false
   end
-  
+
   def healthcare_panel
-    if params[:state] && @state = State.find(:conditions => {:abbreviation => params[:state]})
+    @house_bill_ident = "111-h3962"
+    @senate_bill_ident = "111-h3590"
+
+    @house_bill = Bill.find_by_ident(@house_bill_ident)
+    @senate_bill = Bill.find_by_ident(@senate_bill_ident)
+
+    if params[:state] && @state_name = State.for_abbrev(params[:state])
       # Count number of users in this state tracking this bill
-      
+      @house_state_users = User.find_users_in_states_tracking([params[:state]], @house_bill, 1000).total
+      @senate_state_users = User.find_users_in_states_tracking([params[:state]], @senate_bill, 1000).total
     end
-    
+
+    @page_title = "Healthcare Widget"
+
     render :layout => false
   end
   

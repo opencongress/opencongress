@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><%= @page_title %></title>
+
+	<style media="all" type="text/css">
+
+.healthcare_widget{
+background: url(<%= image_path 'widgets/bg.png' %>) no-repeat;
+width: 348px;
+font-family: Arial, Helvetica, sans-serif;
+padding: 0px;
+font-size: 12px;
+}
+
+
+.healthcare_widget .title{
+border-bottom: 1px solid #ddd;
+min-height: 69px;
+}
+
+.healthcare_widget .title h3{
+margin: 0;
+font-size: 15px;
+color: #a82222;
+padding: 18px 0 0 68px;
+}
+
+
+.healthcare_widget .title p{
+margin: 0;
+padding: 2px 0 0 68px;
+font-size: 11px;
+}
+
+
+.healthcare_widget .guts{
+border-left: 1px solid #ddd;
+border-right: 1px solid #ddd;
+padding: 15px;
+}
+
+
+.healthcare_widget .guts h4{
+margin: 0;
+padding: 0 0 10px 0;
+font-size: 11px;
+color: #136b9e;
+}
+
+
+.healthcare_widget .house{
+border-bottom: 1px solid #ddd;
+margin-bottom: 15px;
+padding-bottom: 15px;
+}
+
+
+.healthcare_widget .senate .status{
+padding: 15px;
+background: #e9f2e4;
+margin-top: 15px;
+padding-bottom: 5px;
+}
+
+.healthcare_widget .senate .status h5{
+margin: 0 0 10px 0;
+font-size: 12px;
+color: #49643c;
+}
+
+
+.healthcare_widget .blog_coverage{
+display: block;
+color: #333;
+font-weight: bold;
+font-size: 14px;
+text-decoration: none;
+padding: 19px;
+border-top: 1px solid #ddd;
+background: url(<%= image_path 'widgets/button.png' %>) no-repeat;
+color: #666;
+}
+
+.healthcare_widget .blog_coverage:hover, .healthcare_widget a:hover{
+color: #000;
+}
+
+
+.passed{
+color: #4a862a;
+padding-left: 23px;
+background: url(<%= image_path 'widgets/widget_icons.png' %>) 7px -114px no-repeat;
+}
+
+
+.full_text, .comments, .roll_call, .voting_record, .tracking{
+background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 4px no-repeat;
+padding-left: 18px;
+line-height: 1.8em;
+color: #555;
+float: left;
+}
+
+
+.full_text{
+width: 9em;
+}
+
+.comments{
+background-position: 0 -84px;
+
+}
+
+
+.roll_call{
+width: 9em;
+background-position: 0 -27px;
+}
+
+
+.voting_record{
+background-position: 1px -27px;
+
+}
+
+
+.tracking{
+background-position: 0 -57px;
+display: block;
+float: none;
+clear: both;
+}
+
+
+.democrat{
+padding-left: 20px;
+background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 -139px no-repeat;
+}
+
+
+.republican{
+padding-left: 20px;
+background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 -168px no-repeat;
+}
+
+.status ul{
+padding: 0;
+margin: 0 0 10px 0;
+}
+
+
+.status ul li{
+margin-bottom: 3px;
+list-style: none;
+}
+
+
+h5.bill_title{
+margin: 0;
+font-size: 12px;
+margin-bottom: 10px;
+}
+
+
+
+	</style>
+</head>
+<body>
+
+
+<div class="healthcare_widget">
+
+	<div class="title">
+		<h3>Healthcare Debate Updates</h3>
+		<p>Actions by <strong><%= @state_name %></strong> users on OpenCongress.org</p>
+		
+	</div>
+		
+	<div class="guts">
+	
+		<div class="house">
+			<h4>House Version <span class="passed">Passed on 11/28/09</span></h4>
+			
+				<h5 class="bill_title">H.R. 3962 - Affordable Health Care for America Act</h5>
+			
+			
+			<%= link_to("View Full Bill Text", url_for(:controller => 'bill', :action => 'text', :id => @house_bill_ident), :class => "full_text") %>
+			<!-- <a href="#" class="comments">View Comments by <%= h params[:state] %> users</a> -->
+			<%= link_to("View Full Roll Call", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "h", :number => "887"), :class => "roll_call") %>
+			<%= link_to("#{ @state_name } Reps Voting Record", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "h", :number => "887", :state => params[:state]), :class => "voting_record") %>
+			<%= link_to("OpenCongress Users in #{ h params[:state ] } tracking this bill (#{ @house_state_users })", users_tracking_bill_by_state_url(:id => @house_bill_ident, :state => params[:state]), :class => "tracking") %>
+		</div>
+		
+		<div class="senate">
+			<h4>Senate Version</h4>
+			
+				<h5 class="bill_title">H.R. 3590 - Patient Protection and Affordable Care Act</h5>
+
+   			<%= link_to("View Full Bill Text", url_for(:controller => 'bill', :action => 'text', :id => @senate_bill_ident), :class => "full_text") %>
+   			<!-- <a href="#" class="comments">View Comments by <%= h params[:state] %> users</a> -->
+   			<%= link_to("View Full Roll Call", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "h", :number => "887"), :class => "roll_call") %>
+   			<%= link_to("#{ @state_name } Reps Voting Record", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "h", :number => "887", :state => params[:state]), :class => "voting_record") %>
+   			<%= link_to("OpenCongress Users in #{ h params[:state ] } tracking this bill (#{ @senate_state_users })", users_tracking_bill_by_state_url(:id => @senate_bill_ident, :state => params[:state]), :class => "tracking") %>
+			
+		<!--
+			<div class="status">
+				<h5>Likely Vote Count (51 votes needed)</h5>				
+			
+					<ul>
+						<li class="democrat"><strong>Democrats</strong> 45 out of 56</li>
+						<li class="republican"><strong>Republican</strong> 45 out of 56</li>						
+					</ul>
+				
+				<h5>FL Senators stated poistion</h5>
+				
+					<ul>
+						<li class="democrat"><strong>Nelson</strong> (Aye)</li>
+						<li class="republican"><strong>Martinez</strong> (Nay)</li>						
+					</ul>
+					
+			</div>
+         -->
+		</div>	
+			
+	</div> <!-- Guts -->
+
+	<%= link_to "OC blog coverage of health care reform", blog_url, :class => "blog_coverage" %>
+
+</div> <!-- End Widget -->
+
+
+</body>
+</html>

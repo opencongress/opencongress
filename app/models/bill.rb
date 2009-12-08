@@ -364,7 +364,7 @@ class Bill < ActiveRecord::Base
                                 }
     self.to_xml(default_options.merge(options))
   end
-  
+
   class << self
     # return bill actions since last X
     def find_changes_since_for_bills_tracked(current_user)
@@ -619,93 +619,95 @@ class Bill < ActiveRecord::Base
     end
   end
   
-  def Bill.find_by_ident(ident_string, find_options = {})
-    session, bill_type, number = Bill.ident ident_string
-    Bill.find_by_session_and_bill_type_and_number(session, bill_type, number, find_options)
-  end
-
-  def Bill.find_all_by_ident(ident_array, find_options = {})
-    the_bill_conditions = []
-    the_bill_params = {}
-    limit = find_options[:limit] != 20
-    round = 1
-    ident_array.each do |ia|
-      session, bill_type, number = Bill.ident ia
-      the_bill_conditions << "(session = :session#{round} AND bill_type = :bill_type#{round} AND number = :number#{round})"
-      the_bill_params.merge!({"session#{round}".to_sym => session, "bill_type#{round}".to_sym => bill_type, "number#{round}".to_sym => number})
-      round = round + 1
+  class << self
+    def find_by_ident(ident_string, find_options = {})
+      session, bill_type, number = Bill.ident ident_string
+      Bill.find_by_session_and_bill_type_and_number(session, bill_type, number, find_options)
     end
-    Bill.find(:all, :conditions => ["#{the_bill_conditions.join(' OR ')}", the_bill_params], :limit => find_options[:limit])
-#    Bill.find_by_session_and_bill_type_and_number(session, bill_type, number, find_options)
-  end
-  
-  def Bill.long_type_to_short(type)
-    @@INVERTED_TYPES[type.downcase.gsub(/\s|\./, "")]
-  end
 
-  def Bill.short_type_to_long(type)
-    @@TYPES[type]
-  end
-  
-  def Bill.session_from_date(date)
-    session_a = CONGRESS_START_DATES.to_a.sort { |a, b| a[0] <=> b[0] }
-
-    session_a.each_with_index do |s, i|
-      return nil if s == session_a.last
-      s_date = Date.parse(s[1])
-      e_date = Date.parse(session_a[i+1][1])
-
-      if date >= s_date and date < e_date
-        return s[0]
+    def find_all_by_ident(ident_array, find_options = {})
+      the_bill_conditions = []
+      the_bill_params = {}
+      limit = find_options[:limit] != 20
+      round = 1
+      ident_array.each do |ia|
+        session, bill_type, number = Bill.ident ia
+        the_bill_conditions << "(session = :session#{round} AND bill_type = :bill_type#{round} AND number = :number#{round})"
+        the_bill_params.merge!({"session#{round}".to_sym => session, "bill_type#{round}".to_sym => bill_type, "number#{round}".to_sym => number})
+        round = round + 1
       end
+      Bill.find(:all, :conditions => ["#{the_bill_conditions.join(' OR ')}", the_bill_params], :limit => find_options[:limit])
+  #    Bill.find_by_session_and_bill_type_and_number(session, bill_type, number, find_options)
     end
-    return nil
-  end
   
-  def Bill.find_hot_bills(order = 'hot_bill_categories.name', options = {})
-    # not used right now.  more efficient to loop through categories
-    # probably just need to add an index to hot_bill_category_id
-    Bill.find(:all, :conditions => "bills.hot_bill_category_id IS NOT NULL", :include => :hot_bill_category, 
-              :order => order, :limit => options[:limit])
-  end
-  
-  def Bill.top20_viewed
-    bills = PageView.popular('Bill')
-      
-    (bills.select {|b| b.stats.entered_top_viewed.nil? }).each do |bv|
-      bv.stats.entered_top_viewed = Time.now
-      bv.save
+    def long_type_to_short(type)
+      @@INVERTED_TYPES[type.downcase.gsub(/\s|\./, "")]
     end
-    
-    (bills.sort { |b1, b2| b2.stats.entered_top_viewed <=> b1.stats.entered_top_viewed })
-  end
 
-  def Bill.top5_viewed
-    bills = PageView.popular('Bill', DEFAULT_COUNT_TIME, 5)
-      
-    (bills.select {|b| b.stats.entered_top_viewed.nil? }).each do |bv|
-      bv.stats.entered_top_viewed = Time.now
-      bv.save
+    def short_type_to_long(type)
+      @@TYPES[type]
     end
-    
-    (bills.sort { |b1, b2| b2.stats.entered_top_viewed <=> b1.stats.entered_top_viewed })
-  end
-
-  def Bill.top20_commentary(type = 'news')
-    bills = Bill.find_by_most_commentary(type, num = 20)
-    
-    date_method = :"entered_top_#{type}"
-    (bills.select {|b| b.stats.send(date_method).nil? }).each do |bv|
-      bv.stats.write_attribute(date_method, Time.now)
-      bv.save
-    end
-    
-    (bills.sort { |b1, b2| b2.stats.send(date_method) <=> b1.stats.send(date_method) })
-  end
   
-  def Bill.random(limit)
-    Bill.find_by_sql ["SELECT * FROM (SELECT random(), bills.* FROM bills ORDER BY 1) as bs LIMIT ?;", limit]
-  end
+    def session_from_date(date)
+      session_a = CONGRESS_START_DATES.to_a.sort { |a, b| a[0] <=> b[0] }
+
+      session_a.each_with_index do |s, i|
+        return nil if s == session_a.last
+        s_date = Date.parse(s[1])
+        e_date = Date.parse(session_a[i+1][1])
+
+        if date >= s_date and date < e_date
+          return s[0]
+        end
+      end
+      return nil
+    end
+  
+    def find_hot_bills(order = 'hot_bill_categories.name', options = {})
+      # not used right now.  more efficient to loop through categories
+      # probably just need to add an index to hot_bill_category_id
+      Bill.find(:all, :conditions => "bills.hot_bill_category_id IS NOT NULL", :include => :hot_bill_category, 
+                :order => order, :limit => options[:limit])
+    end
+  
+    def top20_viewed
+      bills = PageView.popular('Bill')
+      
+      (bills.select {|b| b.stats.entered_top_viewed.nil? }).each do |bv|
+        bv.stats.entered_top_viewed = Time.now
+        bv.save
+      end
+    
+      (bills.sort { |b1, b2| b2.stats.entered_top_viewed <=> b1.stats.entered_top_viewed })
+    end
+
+    def top5_viewed
+      bills = PageView.popular('Bill', DEFAULT_COUNT_TIME, 5)
+      
+      (bills.select {|b| b.stats.entered_top_viewed.nil? }).each do |bv|
+        bv.stats.entered_top_viewed = Time.now
+        bv.save
+      end
+    
+      (bills.sort { |b1, b2| b2.stats.entered_top_viewed <=> b1.stats.entered_top_viewed })
+    end
+
+    def top20_commentary(type = 'news')
+      bills = Bill.find_by_most_commentary(type, num = 20)
+    
+      date_method = :"entered_top_#{type}"
+      (bills.select {|b| b.stats.send(date_method).nil? }).each do |bv|
+        bv.stats.write_attribute(date_method, Time.now)
+        bv.save
+      end
+    
+      (bills.sort { |b1, b2| b2.stats.send(date_method) <=> b1.stats.send(date_method) })
+    end
+  
+    def random(limit)
+      Bill.find_by_sql ["SELECT * FROM (SELECT random(), bills.* FROM bills ORDER BY 1) as bs LIMIT ?;", limit]
+    end
+  end # class << self
 
   def views(seconds = 0)
     # if the view_count is part of this instance's @attributes use that because it came from
@@ -777,66 +779,68 @@ class Bill < ActiveRecord::Base
   def activity_freshness
     actions.size ? ((actions.select { |a| a.datetime > 30.days.ago}).size.to_f / actions.size.to_f ) : 0
   end
+
+  class << self
+    def sponsor_count
+      Bill.count(:all, :conditions => ["session = ?", DEFAULT_CONGRESS], :group => "sponsor_id").sort {|a,b| b[1]<=>a[1]}
+    end
+
+    def cosponsor_count
+      Bill.count(:all, :include => [:bill_cosponsors], :conditions => ["bills.session = ?", DEFAULT_CONGRESS], :group => "bills_cosponsors.person_id").sort {|a,b| b[1]<=>a[1]}
+    end
   
-  def Bill.sponsor_count
-    Bill.count(:all, :conditions => ["session = ?", DEFAULT_CONGRESS], :group => "sponsor_id").sort {|a,b| b[1]<=>a[1]}
-  end
+    def find_by_most_commentary(type = 'news', num = 5, since = DEFAULT_COUNT_TIME, congress = DEFAULT_CONGRESS, bill_types = ["h", "hc", "hj", "hr", "s", "sc", "sj", "sr"])
 
-  def Bill.cosponsor_count
-    Bill.count(:all, :include => [:bill_cosponsors], :conditions => ["bills.session = ?", DEFAULT_CONGRESS], :group => "bills_cosponsors.person_id").sort {|a,b| b[1]<=>a[1]}
-  end
-  
-  def Bill.find_by_most_commentary(type = 'news', num = 5, since = DEFAULT_COUNT_TIME, congress = DEFAULT_CONGRESS, bill_types = ["h", "hc", "hj", "hr", "s", "sc", "sj", "sr"])
-
-    is_news = (type == "news") ? true : false
+      is_news = (type == "news") ? true : false
     
-    Bill.find_by_sql(["SELECT bills.*, top_bills.article_count AS article_count FROM bills
-                       INNER JOIN
-                       (SELECT commentaries.commentariable_id, count(commentaries.commentariable_id) AS article_count
-                        FROM commentaries 
-                        WHERE commentaries.commentariable_type='Bill' AND
-                              commentaries.date > ? AND
-                              commentaries.is_news=? AND
-                              commentaries.is_ok='t'                             
-                        GROUP BY commentaries.commentariable_id
-                        ORDER BY article_count DESC) top_bills
-                       ON bills.id=top_bills.commentariable_id
-                       WHERE bills.session = ? AND bills.bill_type IN (?)
-                       ORDER BY article_count DESC LIMIT ?", 
-                      since.ago, is_news, congress, bill_types, num])
-  end
+      Bill.find_by_sql(["SELECT bills.*, top_bills.article_count AS article_count FROM bills
+                         INNER JOIN
+                         (SELECT commentaries.commentariable_id, count(commentaries.commentariable_id) AS article_count
+                          FROM commentaries 
+                          WHERE commentaries.commentariable_type='Bill' AND
+                                commentaries.date > ? AND
+                                commentaries.is_news=? AND
+                                commentaries.is_ok='t'                             
+                          GROUP BY commentaries.commentariable_id
+                          ORDER BY article_count DESC) top_bills
+                         ON bills.id=top_bills.commentariable_id
+                         WHERE bills.session = ? AND bills.bill_type IN (?)
+                         ORDER BY article_count DESC LIMIT ?", 
+                        since.ago, is_news, congress, bill_types, num])
+    end
 
-  def Bill.find_rushed_bills(congress = DEFAULT_CONGRESS, rushed_time = 259200, show_resolutions = false)
-    resolution_condition = show_resolutions ? "" : " AND (bills.bill_type = 'h' OR bills.bill_type = 's')"
+    def find_rushed_bills(congress = DEFAULT_CONGRESS, rushed_time = 259200, show_resolutions = false)
+      resolution_condition = show_resolutions ? "" : " AND (bills.bill_type = 'h' OR bills.bill_type = 's')"
     
-    Bill.find_by_sql(["SELECT * FROM bills INNER JOIN 
-                       (SELECT actions.date AS intro_date, actions.bill_id AS intro_id 
-                        FROM actions WHERE actions.action_type='introduced') intro_action
-                       ON intro_action.intro_id=bills.id INNER JOIN
-                       (SELECT actions.date AS vote_date, actions.bill_id AS vote_id 
-                        FROM actions WHERE actions.action_type='vote' AND vote_type='vote' GROUP BY vote_id, vote_date) vote_action
-                       ON vote_action.vote_id=bills.id
-                       WHERE bills.session=? AND vote_action.vote_date - intro_action.intro_date < ? #{resolution_condition}
-                       ORDER BY vote_date DESC", congress, rushed_time])
-  end
+      Bill.find_by_sql(["SELECT * FROM bills INNER JOIN 
+                         (SELECT actions.date AS intro_date, actions.bill_id AS intro_id 
+                          FROM actions WHERE actions.action_type='introduced') intro_action
+                         ON intro_action.intro_id=bills.id INNER JOIN
+                         (SELECT actions.date AS vote_date, actions.bill_id AS vote_id 
+                          FROM actions WHERE actions.action_type='vote' AND vote_type='vote' GROUP BY vote_id, vote_date) vote_action
+                         ON vote_action.vote_id=bills.id
+                         WHERE bills.session=? AND vote_action.vote_date - intro_action.intro_date < ? #{resolution_condition}
+                         ORDER BY vote_date DESC", congress, rushed_time])
+    end
 
-  def Bill.find_gpo_consideration_rushed_bills(congress = DEFAULT_CONGRESS, rushed_time = 259200, show_resolutions = false)
-    # rushed time not working correctly for some reason (adapter is changing...)
+    def find_gpo_consideration_rushed_bills(congress = DEFAULT_CONGRESS, rushed_time = 259200, show_resolutions = false)
+      # rushed time not working correctly for some reason (adapter is changing...)
  
-    resolution_condition = show_resolutions ? "" : " AND (bills.bill_type = 'h' OR bills.bill_type = 's')"
+      resolution_condition = show_resolutions ? "" : " AND (bills.bill_type = 'h' OR bills.bill_type = 's')"
     
-    Bill.find_by_sql(["SELECT * FROM bills INNER JOIN 
-                       (SELECT gpo_billtext_timestamps.created_at AS gpo_date, gpo_billtext_timestamps.session AS gpo_session,
-                               gpo_billtext_timestamps.bill_type AS gpo_bill_type, gpo_billtext_timestamps.number AS gpo_number
-                        FROM gpo_billtext_timestamps WHERE version='ih' OR version='is') gpo_action
-                       ON (gpo_action.gpo_session=bills.session AND gpo_action.gpo_bill_type=bills.bill_type AND gpo_action.gpo_number=bills.number)
-                       INNER JOIN
-                       (SELECT MIN(actions.datetime) AS consideration_date, actions.bill_id AS consideration_id 
-                        FROM actions, action_references WHERE actions.action_type='action' AND actions.id=action_references.action_id AND action_references.label='consideration' AND actions.text NOT LIKE '%Committee%' GROUP BY actions.bill_id) consideration_action
-                       ON consideration_action.consideration_id=bills.id
-                       WHERE bills.session=? AND ((consideration_action.consideration_date - gpo_action.gpo_date < '259200 seconds'::interval) OR gpo_action.gpo_date IS NULL OR bills.id = 54463)
-                             #{resolution_condition}
-                       ORDER BY consideration_date DESC", congress])
+      Bill.find_by_sql(["SELECT * FROM bills INNER JOIN 
+                         (SELECT gpo_billtext_timestamps.created_at AS gpo_date, gpo_billtext_timestamps.session AS gpo_session,
+                                 gpo_billtext_timestamps.bill_type AS gpo_bill_type, gpo_billtext_timestamps.number AS gpo_number
+                          FROM gpo_billtext_timestamps WHERE version='ih' OR version='is') gpo_action
+                         ON (gpo_action.gpo_session=bills.session AND gpo_action.gpo_bill_type=bills.bill_type AND gpo_action.gpo_number=bills.number)
+                         INNER JOIN
+                         (SELECT MIN(actions.datetime) AS consideration_date, actions.bill_id AS consideration_id 
+                          FROM actions, action_references WHERE actions.action_type='action' AND actions.id=action_references.action_id AND action_references.label='consideration' AND actions.text NOT LIKE '%Committee%' GROUP BY actions.bill_id) consideration_action
+                         ON consideration_action.consideration_id=bills.id
+                         WHERE bills.session=? AND ((consideration_action.consideration_date - gpo_action.gpo_date < '259200 seconds'::interval) OR gpo_action.gpo_date IS NULL OR bills.id = 54463)
+                               #{resolution_condition}
+                         ORDER BY consideration_date DESC", congress])
+    end
   end
 
   def top_recipients_for_all_interest_groups(disposition = 'support', chamber = 'house', num = 10)
@@ -878,7 +882,7 @@ class Bill < ActiveRecord::Base
       md = /(\d+)-([hs][jcr]?)(\d+)$/.match(canonical_name(param_id))
       md ? md.captures : [nil, nil, nil]
     end
-  end
+  end # class << self
 
   def ident
     "#{session}-#{bill_type}#{number}"

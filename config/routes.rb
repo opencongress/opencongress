@@ -42,8 +42,8 @@ ActionController::Routing::Routes.draw do |map|
 
   # Handle bill routing. The action determines what information about the bill will 
   # be displayed.
-  map.connect 'bill/:id/users_tracking', :controller => 'friends', :action => 'tracking_bill'
-  map.connect 'bill/:id/users_tracking/:state', :controller => 'friends', :action => 'tracking_bill', :state => /\w{2}/
+  map.users_tracking_bill 'bill/:id/users_tracking', :controller => 'friends', :action => 'tracking_bill'
+  map.users_tracking_bill_by_state 'bill/:id/users_tracking/:state', :controller => 'friends', :action => 'tracking_bill', :state => /\w{2}/
 
   map.with_options :controller => 'bill' do |b|
     b.connect 'bill/:id/:action'
@@ -108,7 +108,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.with_options :controller => 'articles' do |a|
-    a.connect 'blog', :action => 'list'
+    a.blog 'blog', :action => 'list'
     a.connect 'blog/:tag', :action => 'list'
     a.connect 'articles/view/:id', :action => "view" 
     a.connect 'articles/view/:show_comments/:id', :action => 'view' 

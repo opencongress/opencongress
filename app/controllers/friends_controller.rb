@@ -31,12 +31,17 @@ class FriendsController < ApplicationController
     @users = User.find_for_tracking_table(current_user, @bill, @users_solr.docs)
 		@page_title = "Users tracking #{@bill.title_typenumber_only}"
 
-		if logged_in? && !current_user.zipcode.blank?
+		if params[:state]
+      @state_name = State.for_abbrev(params[:state])
+ 		  @in_my_state_solr = User.find_users_in_states_tracking([params[:state]], @bill, 1000)
+		  @in_my_state = User.find_for_tracking_table(current_user, @bill, @in_my_state_solr.docs)
+    elsif logged_in? && !current_user.zipcode.blank?
+      @state_name = State.for_abbrev(current_user.state_cache)
 		  @in_my_state_solr = User.find_users_in_states_tracking(current_user.state_cache, @bill, 1000)
 		  @in_my_state = User.find_for_tracking_table(current_user, @bill, @in_my_state_solr.docs)
 		  @in_my_district_solr = User.find_users_in_districts_tracking(current_user.district_cache, @bill, 1000)
 		  @in_my_district = User.find_for_tracking_table(current_user, @bill, @in_my_district_solr.docs)
-		end
+    end
   end
 
   def tracking_person
@@ -52,9 +57,8 @@ class FriendsController < ApplicationController
 		  @in_my_district_solr = User.find_users_in_districts_tracking(current_user.district_cache, @person, 1000)
 		  @in_my_district = User.find_for_tracking_table(current_user, @person, @in_my_district_solr.docs)
 		end
-
 	end
-  
+
   def tracking_issue
     @issue = Subject.find(params[:id])
     @users_solr = User.find_users_tracking_issue(@issue)

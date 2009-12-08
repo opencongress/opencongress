@@ -15,7 +15,7 @@ This is a list of all the users tracking <%= @bill.title_typenumber_only %> who 
   </th>
   <% end %>
   <% if @in_my_state_solr && @in_my_state_solr.total > 0 %>
-  <th>Users in My State Tracking <%= @bill.title_typenumber_only %>: <%= @in_my_state.length %>
+  <th>Users in <%= @state_name %> Tracking <%= @bill.title_typenumber_only %>: <%= @in_my_state.length %>
      <br/><span style="font-weight:normal;">(<%= @in_my_state.collect{|u| u['support'] == "0" ? 1 : nil }.compact.length %> votes Aye, <%= @in_my_state.collect{|u| u['support'] == "1" ? 1 : nil }.compact.length %> votes Nay, <%= @in_my_state.sum{|k| k['total_comments'].to_i} %> comments)</span>
   </th>
   <% end %>

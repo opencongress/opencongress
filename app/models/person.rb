@@ -1,8 +1,7 @@
 class Person < ActiveRecord::Base  
-  
 #  acts_as_solr :fields => [:party, {:with_party_percentage => :float}, {:abstains_percentage => :float}, {:against_party_percentage => :float}], 
 #               :facets => [:party]
-  
+
   has_many :committees, :through => :committee_people
   has_many :committee_people, :conditions => [ "committees_people.session = ?", DEFAULT_CONGRESS ]
   has_many :bills, :foreign_key => :sponsor_id, :conditions => [ "bills.session = ?", DEFAULT_CONGRESS ], :include => [ :bill_titles, :actions ], :order => 'bills.introduced DESC'
@@ -10,28 +9,21 @@ class Person < ActiveRecord::Base
   has_many :bills_cosponsored, :class_name => 'Bill', :through => :bill_cosponsors, :source => :bill, :conditions => [ "bills.session = ?", DEFAULT_CONGRESS ], :order => 'bills.introduced DESC'
   has_many :roles, :order => 'roles.startdate DESC'
   has_many :roll_call_votes, :include => :roll_call, :order => 'roll_calls.date DESC'
-  
-  has_many :unabstained_roll_calls, :class_name => "RollCall", :through => :roll_call_votes, 
-                                    :source => :roll_call, :include => [:bill],
-                                    :conditions => ["roll_call_votes.vote != '0' AND bills.session = ?", DEFAULT_CONGRESS]
-  
-  has_many :abstained_roll_calls, :class_name => "RollCall", :through => :roll_call_votes, 
-                                  :source => :roll_call, :include => [:bill],
-                                  :conditions => ["vote = '0' AND bills.session = ?", DEFAULT_CONGRESS]
 
-  has_many :party_votes, :class_name => "RollCall", :through => :roll_call_votes, :source => :roll_call,
-              :include => [:bill], 
-              :conditions => '((roll_calls.#{party == "Democrat" ? "democratic_position" : "republican_position"} = \'t\' 
-                              AND vote = \'+\')
-                              OR (roll_calls.#{party == "Democrat" ? "democratic_position" : "republican_position"} = \'f\' 
-                              AND vote = \'-\')) AND bills.session = #{DEFAULT_CONGRESS}'
+  with_options :class_name => "RollCall", :through => :roll_call_votes,
+               :source => :roll_call, :include => :bill do |rc|
+    rc.has_many :unabstained_roll_calls, :conditions => ["roll_call_votes.vote != '0' AND bills.session = ?", DEFAULT_CONGRESS]
+    rc.has_many :abstained_roll_calls, :conditions => ["vote = '0' AND bills.session = ?", DEFAULT_CONGRESS]
+    rc.has_many :party_votes, :conditions => '((roll_calls.#{party == "Democrat" ? "democratic_position" : "republican_position"} = \'t\' AND vote = \'+\') OR (roll_calls.#{party == "Democrat" ? "democratic_position" : "republican_position"} = \'f\' AND vote = \'-\')) AND bills.session = #{DEFAULT_CONGRESS}'
+  end
 
   has_many :person_approvals
 
   named_scope :republican, :conditions => {:party => "Republican"}
   named_scope :democrat, :conditions => {:party => "Democrat"}
   named_scope :independent, :conditions => ["party != 'Republican' AND party != 'Democrat'"]
-  
+  named_scope :in_state, lambda { |state| {:conditions => {:state => state.upcase}}}
+
   named_scope :sen, :joins => :roles, :select => "people.*", :conditions => ["roles.person_id = people.id AND roles.role_type='sen' AND roles.enddate > ?", Date.today]
   named_scope :rep, :joins => :roles, :select => "people.*", :conditions => ["roles.person_id = people.id AND roles.role_type='rep' AND roles.enddate > ?", Date.today]
 
@@ -1435,180 +1427,6 @@ class Person < ActiveRecord::Base
     
     FragmentCacheSweeper::expire_fragments(fragments)
   end
-  
-  @@ABBREV_FOR_STATE = { "alabama" => "AL",
-    "alaska" => "AK" ,
-    "arizona" => "AZ" ,
-    "arkansas" => "AR" ,
-    "california" => "CA" ,
-    "colorado" => "CO" ,
-    "connecticut" => "CT" ,
-    "delaware" => "DE" ,
-    "district of columbia" => "DC" ,
-    "florida" => "FL" ,
-    "georgia" => "GA" ,
-    "hawaii" => "HI" ,
-    "idaho" => "ID" ,
-    "illinois" => "IL" ,
-    "indiana" => "IN" ,
-    "iowa" => "IA" ,
-    "kansas" => "KS" ,
-    "kentucky" => "KY" ,
-    "louisiana" => "LA" ,
-    "maine" => "ME" ,
-    "maryland" => "MD" ,
-    "massachusetts" => "MA" ,
-    "michigan" => "MI" ,
-    "minnesota" => "MN" ,
-    "mississippi" => "MS" ,
-    "missouri" => "MO" ,
-    "montana" => "MT" ,
-    "nebraska" => "NE" ,
-    "nevada" => "NV" ,
-    "new hampshire" => "NH" ,
-    "new jersey" => "NJ" ,
-    "new mexico" => "NM" ,
-    "new york" => "NY" ,
-    "north carolina" => "NC" ,
-    "north dakota" => "ND" ,
-    "ohio" => "OH" ,
-    "oklahoma" => "OK" ,
-    "oregon" => "OR" ,
-    "pennsylvania" => "PA" ,
-    "rhode island" => "RI" ,
-    "south carolina" => "SC" ,
-    "south dakota" => "SD" ,
-    "tennessee" => "TN" ,
-    "texas" => "TX" ,
-    "utah" => "UT" ,
-    "vermont" => "VT" ,
-    "virginia" => "VA" ,
-    "washington" => "WA" ,
-    "west virginia" => "WV" ,
-    "wisconsin" => "WI" ,
-    "wyoming" => "WY" }
-
-  def Person.abbrev_for_state(name)
-    @@ABBREV_FOR_STATE[name.downcase]
-  end
-  
-  @@STATE_FOR_ABBREV = { 
-    "AL" => "Alabama",
-    "AK" => "Alaska" ,
-    "AZ" => "Arizona",
-    "AR" => "Arkansas",
-    "AS" => "American Samoa",    
-    "CA" => "California",
-    "CO" => "Colorado",
-    "CT" => "Connecticut",
-    "DE" => "Delaware",
-    "DC" => "District of Columbia",
-    "FL" => "Florida",
-    "GA" => "Georgia",
-    "GU" => "Guam",
-    "HI" => "Hawaii",
-    "ID" => "Idaho",
-    "IL" => "Illinois",
-    "IN" => "Indiana",
-    "IA" => "Iowa",
-    "KS" => "Kansas",
-    "KY" => "Kentucky",
-    "LA" => "Louisiana",
-    "ME" => "Maine",
-    "MD" => "Maryland",
-    "MA" => "Massachusetts",
-    "MI" => "Michigan",
-    "MN" => "Minnesota",
-    "MS" => "Mississippi",
-    "MO" => "Missouri",
-    "MT" => "Montana",
-    "NE" => "Nebraska",
-    "NV" => "Nevada",
-    "NH" => "New Hampshire",
-    "NJ" => "New Jersey",
-    "NM" => "New Mexico",
-    "NY" => "New York",
-    "NC" => "North Carolina",
-    "ND" => "North Dakota",
-    "OH" => "Ohio",
-    "OK" => "Oklahoma",
-    "OR" => "Oregon",
-    "PA" => "Pennsylvania",
-    "PR" => "Puerto Rico",
-    "RI" => "Rhode Island",
-    "SC" => "South Carolina",
-    "SD" => "South Dakota",
-    "TN" => "Tennessee",
-    "TX" => "Texas",
-    "UT" => "Utah",
-    "VI" => "Virgin Islands",
-    "VT" => "Vermont",
-    "VA" => "Virginia",
-    "WA" => "Washington",
-    "WV" => "West Virginia",
-    "WI" => "Wisconsin",
-    "WY" => "Wyoming" }
-
-    @@RESIDENT_FOR_ABBREV = {
-    "AL" => "Alabamian", 		  
-    "AK" => "Alaskan", 	      
-    "AZ" => "Arizonan", 		  
-    "AR" => "Arkansan", 		  
-    "CA" => "Californian", 	  
-    "CO" => "Coloradan",   
-    "CT" => "Connecticuter", 	  
-    "DE" => "Delawarean", 	      
-    "FL" => "Floridian", 		  
-    "GA" => "Georgian", 	      
-    "HI" => "Hawaiian", 		  
-    "ID" => "Idahoan", 	      
-    "IL" => "Illinoisan", 	      
-    "IN" => "Indianian", 		  
-    "IA" => "Iowan", 	          
-    "KS" => "Kansan", 	          
-    "KY" => "Kentuckian", 	      
-    "LA" => "Louisianian", 	  
-    "ME" => "Mainer", 			  
-    "MD" => "Marylander", 	      
-    "MA" => "Massachusettsan",   
-    "MI" => "Michiganian", 	  
-    "MN" => "Minnesotan", 	      
-    "MS" => "Mississippian", 	  
-    "MO" => "Missourian", 	      
-    "MT" => "Montanan", 	      
-    "NE" => "Nebraskan", 	      
-    "NV" => "Nevadan", 		  
-    "NH" => "New Hampshirite",   
-    "NJ" => "New Jerseyan",   	  
-    "NM" => "New Mexican", 	  
-    "NY" => "New Yorker", 	      
-    "NC" => "North Carolinian",  
-    "ND" => "North Dakotan", 	  
-    "OH" => "Ohioan", 	          
-    "OK" => "Oklahoman", 		  
-    "OR" => "Oregonian", 	      
-    "PA" => "Pennsylvanian", 	  
-    "RI" => "Rhode Islander", 	  
-    "SC" => "South Carolinian",  
-    "SD" => "South Dakotan", 	  
-    "TN" => "Tennessean", 	      
-    "TX" => "Texan", 			  
-    "UT" => "Utahn", 			  
-    "VT" => "Vermonter", 	      
-    "VA" => "Virginian", 	      
-    "WA" => "Washingtonian", 	  
-    "WV" => "West Virginian", 	  
-    "WI" => "Wisconsinite", 	  
-    "WY" => "Wyomingite" }     
-
-  def Person.state_for_abbrev(abbr)
-    return "" if abbr.blank?
-    @@STATE_FOR_ABBREV[abbr.upcase]
-  end
-  
-  def Person.resident_for_abbrev(abbr)
-    @@RESIDENT_FOR_ABBREV[abbr.upcase]
-  end  
 
   def set_party
      self.party = self.roles.first.party unless self.roles.empty?

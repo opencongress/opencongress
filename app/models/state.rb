@@ -163,5 +163,131 @@ chs=#{size}&chl=Democrats (#{democrat_representatives.count})|Republicans (#{rep
     end
   end
 
+  @@STATE_FOR_ABBREV = { 
+    "AL" => "Alabama",
+    "AK" => "Alaska" ,
+    "AZ" => "Arizona",
+    "AR" => "Arkansas",
+    "AS" => "American Samoa",    
+    "CA" => "California",
+    "CO" => "Colorado",
+    "CT" => "Connecticut",
+    "DE" => "Delaware",
+    "DC" => "District of Columbia",
+    "FL" => "Florida",
+    "GA" => "Georgia",
+    "GU" => "Guam",
+    "HI" => "Hawaii",
+    "ID" => "Idaho",
+    "IL" => "Illinois",
+    "IN" => "Indiana",
+    "IA" => "Iowa",
+    "KS" => "Kansas",
+    "KY" => "Kentucky",
+    "LA" => "Louisiana",
+    "ME" => "Maine",
+    "MD" => "Maryland",
+    "MA" => "Massachusetts",
+    "MI" => "Michigan",
+    "MN" => "Minnesota",
+    "MS" => "Mississippi",
+    "MO" => "Missouri",
+    "MT" => "Montana",
+    "NE" => "Nebraska",
+    "NV" => "Nevada",
+    "NH" => "New Hampshire",
+    "NJ" => "New Jersey",
+    "NM" => "New Mexico",
+    "NY" => "New York",
+    "NC" => "North Carolina",
+    "ND" => "North Dakota",
+    "OH" => "Ohio",
+    "OK" => "Oklahoma",
+    "OR" => "Oregon",
+    "PA" => "Pennsylvania",
+    "PR" => "Puerto Rico",
+    "RI" => "Rhode Island",
+    "SC" => "South Carolina",
+    "SD" => "South Dakota",
+    "TN" => "Tennessee",
+    "TX" => "Texas",
+    "UT" => "Utah",
+    "VI" => "Virgin Islands",
+    "VT" => "Vermont",
+    "VA" => "Virginia",
+    "WA" => "Washington",
+    "WV" => "West Virginia",
+    "WI" => "Wisconsin",
+    "WY" => "Wyoming" }
+
+    # Make a reverse map for state names to abbrevs, with downcase'd state names.
+    @@ABBREV_FOR_STATE = @@STATE_FOR_ABBREV.merge(@@STATE_FOR_ABBREV) { |k,ov| ov.downcase }.invert
+
+    def self.abbrev_for(name)
+      @@ABBREV_FOR_STATE[name.downcase]
+    end
+
+    def self.for_abbrev(abbr)
+      return "" if abbr.blank?
+      @@STATE_FOR_ABBREV[abbr.upcase]
+    end
+
+    @@RESIDENT_FOR_ABBREV = {
+    "AL" => "Alabamian", 		  
+    "AK" => "Alaskan", 	      
+    "AZ" => "Arizonan", 		  
+    "AR" => "Arkansan", 		  
+    "CA" => "Californian", 	  
+    "CO" => "Coloradan",   
+    "CT" => "Connecticuter", 	  
+    "DE" => "Delawarean", 	      
+    "FL" => "Floridian", 		  
+    "GA" => "Georgian", 	      
+    "HI" => "Hawaiian", 		  
+    "ID" => "Idahoan", 	      
+    "IL" => "Illinoisan", 	      
+    "IN" => "Indianian", 		  
+    "IA" => "Iowan", 	          
+    "KS" => "Kansan", 	          
+    "KY" => "Kentuckian", 	      
+    "LA" => "Louisianian", 	  
+    "ME" => "Mainer", 			  
+    "MD" => "Marylander", 	      
+    "MA" => "Massachusettsan",   
+    "MI" => "Michiganian", 	  
+    "MN" => "Minnesotan", 	      
+    "MS" => "Mississippian", 	  
+    "MO" => "Missourian", 	      
+    "MT" => "Montanan", 	      
+    "NE" => "Nebraskan", 	      
+    "NV" => "Nevadan", 		  
+    "NH" => "New Hampshirite",   
+    "NJ" => "New Jerseyan",   	  
+    "NM" => "New Mexican", 	  
+    "NY" => "New Yorker", 	      
+    "NC" => "North Carolinian",  
+    "ND" => "North Dakotan", 	  
+    "OH" => "Ohioan", 	          
+    "OK" => "Oklahoman", 		  
+    "OR" => "Oregonian", 	      
+    "PA" => "Pennsylvanian",
+    "PR" => "Puerto Rican",
+    "RI" => "Rhode Islander", 	  
+    "SC" => "South Carolinian",  
+    "SD" => "South Dakotan", 	  
+    "TN" => "Tennessean", 	      
+    "TX" => "Texan", 			  
+    "UT" => "Utahn", 			  
+    "VT" => "Vermonter", 	      
+    "VA" => "Virginian", 	      
+    "WA" => "Washingtonian", 	  
+    "WV" => "West Virginian", 	  
+    "WI" => "Wisconsinite", 	  
+    "WY" => "Wyomingite" }     
+
+  def self.resident_for_abbrev(abbr)
+    @@RESIDENT_FOR_ABBREV[abbr.upcase]
+  end  
+
   
 end

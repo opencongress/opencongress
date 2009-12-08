@@ -5,7 +5,7 @@
     <h5>
       <%= @person.party %> &nbsp;&bull;&nbsp;
       <%= "#{number_to_ordinal(@person.district)} District, " if (@person.representative? && @person.district != '0')%>
-      <%= "#{Person.state_for_abbrev(@person.state)} &nbsp;&bull;&nbsp;" unless @person.state.blank? %> 
+      <%= "#{State.for_abbrev(@person.state)} &nbsp;&bull;&nbsp;" unless @person.state.blank? %> 
       <%= @person.is_sitting? ? "#{number_to_ordinal(@person.consecutive_roles.size)} Term" : "#{@person.consecutive_roles.size} Terms" %> &nbsp;&bull;&nbsp;
       Sworn In <%= @person.consecutive_roles.last.startdate.strftime("%Y") %>
     </h5>

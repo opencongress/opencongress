@@ -19,7 +19,7 @@
         <th>State</th><th>Users</th>
         <% @state_users.each do |su| %>
           <tr>
-            <td><%= su.state_cache.first.blank? ? "Unknown" : Person.state_for_abbrev(su.state_cache.first) %></td>
+            <td><%= su.state_cache.first.blank? ? "Unknown" : State.for_abbrev(su.state_cache.first) %></td>
             <td><%= su.cnt %></td>
           </tr>
         <% end %>

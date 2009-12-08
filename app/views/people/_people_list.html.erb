@@ -13,7 +13,7 @@
       <% if person.roles.first.state != curr_state %>
         <% curr_state = person.roles.first.state %>
 				<hr id="<%= curr_state[0,1] %>"/>
-        <li class="state"><div class="label" id="<%= curr_state %>"><b><%= Person.state_for_abbrev(curr_state) %></b><a href="#top">top</a></div></li>
+        <li class="state"><div class="label" id="<%= curr_state %>"><b><%= State.for_abbrev(curr_state) %></b><a href="#top">top</a></div></li>
       <% end %>
     <% end %>                                      
 

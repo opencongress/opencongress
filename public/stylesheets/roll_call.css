@@ -29,6 +29,8 @@ ul.rolls_list{
 width: 618px;
 height: 557px;
 float: right;
+margin: 0;
+paddding: 0;
 background: url(/images/zip_arrow.png) 0 -70px no-repeat;
    _background: url(/images/zip_arrow.gif) 0 -70px no-repeat;
 overflow: auto;
@@ -42,6 +44,7 @@ background: none;
 
 ul.rolls_list li{
 clear: both;
+padding: 0;
 }
 
 ul.rolls_list li.help p{
@@ -58,16 +61,16 @@ background: url(/images/sen-sort.png) left top repeat-x;
 
 
 ul.rolls_list li:first-child {
-margin: 0 3px 0 2px;             
+margin: 0 3px 0 0px;             
 padding: 17px 0 17px 36px;  
 border-bottom: 1px solid #e8def8;
 }
 
 ul.rolls_list li a {
 display: block;
-padding: 17px 0 17px 36px;
+padding: 17px 17px 17px 36px;
 cursor:pointer;
-margin: 0 3px 0 2px;
+margin: 0 0px 0 2px;
 border-bottom: 1px solid #e8def8;
 min-height: 74px;
 text-decoration:none;
@@ -192,6 +195,28 @@ padding-top: 0px !important;
 
 .jcarousel-container{
 margin: 0 !important;
+}
+
+
+
+.jcarousel-container ul#mycarousel{
+}
+
+.jcarousel-container ul#mycarousel li{
+
+}
+
+.jcarousel-container ul#mycarousel li a{
+display: block;
+width: 230px;
+font-size: 11px;
+height: 1.3em;
+overflow: hidden;
+}
+
+.jcarousel-container ul#mycarousel li .views{
+padding-top: 1px;
+font-size: 11px;
 }
 
 

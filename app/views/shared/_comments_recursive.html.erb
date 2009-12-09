@@ -93,11 +93,8 @@
 	  		<% end %>
 
 				<span class="comm_score" id="comm_score_<%= comment.id %>" style="color:<%= integer_to_color(comment.score_count_sum.to_i)%>"><%= comment.score_count_sum %></span>
-
-	  			</div>	
-		
-
-  	</div>		
+			</div>	
+  	</div>
     <% unless comment.plus_score_count == 0  && comment.minus_score_count == 0 %>
 		<script type="text/javascript">
 		off_<%= comment.id.to_s%> = false
@@ -131,7 +128,6 @@
 
 			<% else %>
 			</div>
-		 </div>
   		<% end %>
 
 	<% if flat && comment.parent_id %>

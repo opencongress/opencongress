@@ -503,6 +503,34 @@ a.small_button{
 	background: url('/images/small_button_cap.png') right 0 no-repeat;
 	_background: url('/images/small_button_cap.gif') right 0 no-repeat;
 	}
+#plus.small_button {
+  color:#418d21;
+  margin-left:0px;
+}        
+#minus.small_button {
+  color:#8e0400;
+  background:url('/images/small_button_divide.png') right 0px no-repeat;
+  padding-right:1px;
+}                    
+#minus.small_button:hover, #minus.small_button.active {                                             
+  background:url('/images/small_button_divide.png') right 0px no-repeat;
+}
+#plus.small_button span,
+#minus.small_button span {
+  font-weight:bold;
+  font-size:13px;
+}                       
+#plus.small_button span {
+  background-position:-4px top;
+  padding:2px 4px 2px 10px;
+}
+#plus.small_button:hover span, #plus.small_button.active span {
+  background-position:-4px -23px;
+}
+
+#minus.small_button span {
+  padding:1px 9px 3px 12px;
+}
 
 a.small_button span{
 	display: block;
@@ -1988,7 +2016,41 @@ float: right;
 .comm_action a{
 margin-left: 8px;
 }
+.comm_action .flag {
+  float:left;
+  margin-left:0;
+  margin-top:2px;
+  margin-right:2px;
+}
+.rate_comm, .comm_score {
+  float:left;
+}
+.comm_score {
+  margin-left:10px;
+  margin-top:2px;
+  font-size:12px;
+}
+.comm_comm_more {
+  position:relative;
+}
+.comm_more_tab {
+  display:none;
 
+  position:absolute;
+  right:-9px;
+  top:28px;
+  background:url('/images/comm_more_tab.png') no-repeat left top;
+  height:21px;
+  padding-left:26px;
+  width:0;
+  overflow:hidden;
+}
+.comm_more_tab.less {
+  background-position:3px -24px;
+  position:static;
+  float:right;
+  display:inherit;
+}
 .comm_rating{
   background: url('/images/comm_rating_cap.png') top right no-repeat;
 _background: url('/images/comm_rating_cap.gif') top right no-repeat;
@@ -2005,7 +2067,7 @@ font-size: 11px;
 text-align: right;
 background: url('/images/comm_rating.png') top left no-repeat;
 _background: url('/images/comm_rating.gif') top left no-repeat;
-padding: 6px 12px;
+padding: 6px 0px 6px 12px;
 color: #999;
 }
 
@@ -2016,6 +2078,7 @@ display: inline;
 .comm_rating_inner .flag{
 padding-left: 15px;
 }
+
 
 /* Profile Editing */
 /*.inplaceeditor-form{

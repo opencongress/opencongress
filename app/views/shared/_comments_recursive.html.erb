@@ -20,8 +20,8 @@
   <div style="display:none;" class="comment_rating_help" id="useful<%=comment.id.to_s%>">
   	How helpful was this comment for you? Use the slider bar to rate it 1-10, with 10 being very helpful and 1 being least helpful.
   </div>
-
-  <div class="comm_comm">
+ 
+  <div id="comm_comm_<%= comment.id.to_s %>" class="comm_comm">
     <div class="comm_user">
   		
 		<% if comment.user %>
@@ -30,44 +30,10 @@
   			Anonymous 
   		<% end %>
 
-  		<%= comment.created_at.strftime('%b %d, %Y') %> 
+  		<%= comment.created_at.strftime('%m/%d/%Y') %> 
   		<%= comment.created_at.strftime('%I:%M%p').gsub(/^0+/, '').downcase %>
   	</div>
   	<div class="comm_action">
-  	  <%= link_to '<span>Link</span>', url_for(comment.commentable_link.merge({:goto_comment => comment.id})), { :class => 'small_button'} %>
-  		<%= link_to_remote "<span>Reply</span>", :url => {:controller => "comments",
-  			:action => "showcomfield", :parent_id => comment.id,
-  			:object => object.id,
-  			:type => object.class.to_s},
-  			:update => "com_" + comment.id.to_s,
-  			:complete => "Element.toggle('com_" + comment.id.to_s + "');",
-  			:html => { :class => 'small_button' }  %>
-  	</div>	
-  </div>
-						
-  <div class="comm_rating">
-
-
-    <div class="comm_rating_inner">		
-  		Overall Rating: <%=h number_with_precision(comment.average_rating,1) %>&nbsp;&ensp;|&ensp;
-  	  <% if logged_in? %>
-  		  <div class="rate_comm" id="rate_comment_<%= comment.id.to_s%>">
-  				<% if (comment_score = myscores.select{ |s| s.comment_id == comment.id }.first).nil? %>
-  				  Was this comment useful?  
-  					<a href="#" onClick="new Ajax.Updater('rate_comment_<%= comment.id.to_s%>','/comments/rate/<%= comment.id %>?value=10', {asynchronous:true, evalScripts:true}); return false;">Yes</a>&nbsp;or&nbsp;
-  					<a href="#" onClick="new Ajax.Updater('rate_comment_<%= comment.id.to_s%>','/comments/rate/<%= comment.id %>?value=1', {asynchronous:true, evalScripts:true}); return false;">No</a>
-  				<% else %>
-  					You rated this comment: <%= "not " if comment_score.score < 5 %>useful.
-  				<% end %>
-  			</div>
-  		<% else %>
-  		  <%= link_to "Login to Rate", :controller => "account", :action => "login" %>
-  		<% end %>
-		
-  		<% comment_scores = comment.comment_scores %>
-  		<% unless comment_scores.empty? %>
-  		  &nbsp;|&nbsp;&nbsp;<%= comment_scores.select{ |s| s.score > 5 }.size %> of <%= comment_scores.size %> found useful.
-  		<% end %>
   		<% if logged_in? %>
   		  <a href="<%= url_for :controller => "comments", :action => 'flag', :id => comment.id %>" class="flag" id="flag_<%= comment.id.to_s %>"><%= image_tag('/images/flag.png', :alt => 'flag') %></a>
 				<script type="text/javascript">
@@ -101,9 +67,72 @@
 				});
 				</script>
   	  <% end %>
-  	</div>
+  	  <%= link_to '<span>Link</span>', url_for(comment.commentable_link.merge({:goto_comment => comment.id})), { :class => 'small_button'} %>
+  		<%= link_to_remote "<span>Reply</span>", :url => {:controller => "comments",
+  			:action => "showcomfield", :parent_id => comment.id,
+  			:object => object.id,
+  			:type => object.class.to_s},
+  			:update => "com_" + comment.id.to_s,
+  			:complete => "Element.toggle('com_" + comment.id.to_s + "');",
+  			:html => { :class => 'small_button' }  %>
+    
+	  		  <div class="rate_comm" id="rate_comment_<%= comment.id.to_s%>">   
+
+				<% if logged_in? %>
+	  				<% comment_score = myscores.select{ |s| s.comment_id == comment.id }.first %>
+	  					<%= link_to_remote "<span>&minus;</span>", :url => {:controller => "comments", :action => :rate, :id => comment.id, :value => 1}, :html => {:id => 'minus', :class => "small_button#{comment_score.score > 5 ? ' active' : '' unless comment_score.nil?}"} %>
+	  					<%= link_to_remote "<span>+</span>", :url => {:controller => "comments", :action => :rate, :id => comment.id, :value => 10}, :html => {:id => 'plus', :class => "small_button#{comment_score.score < 5 ? ' active' : '' unless comment_score.nil?}"} %>
+
+	<!--
+	<a href="#" class="minus <%= comment_score.score < 5 ? " rated" : "" unless comment_score.nil? %>" onclick="new Ajax.Updater('rate_comment_<%= comment.id.to_s%>','/comments/rate/<%= comment.id %>?value=1', {asynchronous:true, evalScripts:true}); return false;">-</a>
+							<a href="#" class="plus <%= comment_score.score > 5 ? " rated" : "" unless comment_score.nil? %>" onclick="new Ajax.Updater('rate_comment_<%= comment.id.to_s%>','/comments/rate/<%= comment.id %>?value=10', {asynchronous:true, evalScripts:true}); return false;">+</a>
+-->
+			<% else %>
+					<%= link_to("<span>&minus;</span>", {:controller => "account", :action => "login", :modal => true}, :id => 'minus', :class => 'small_button rate_trigger' ) %>
+					<%= link_to("<span>+</span>", {:controller => "account", :action => "login", :modal => true}, :id => 'plus', :class => 'small_button rate_trigger' ) %>
+	  		<% end %>
+
+				<span class="comm_score" id="comm_score_<%= comment.id %>" style="color:<%= integer_to_color(comment.score_count_sum.to_i)%>"><%= comment.score_count_sum %></span>
+
+	  			</div>	
+		
+
+  	</div>		
+    <% unless comment.plus_score_count == 0  && comment.minus_score_count == 0 %>
+		<script type="text/javascript">
+		off_<%= comment.id.to_s%> = false
+		$j(document).ready(function(){
+
+			$j("#comm_comm_<%= comment.id.to_s %>").hover(
+				function(){
+					if ( $j("#rates_more_<%= comment.id %>").is(":hidden")) {
+					$j("#rates_show_<%=comment.id.to_s %>").slideDown("normal");}
+				},
+				function(){
+					t=setTimeout(function(){
+						$j("#rates_show_<%=comment.id.to_s %>").slideUp("normal");
+					}, 2000);
+				}
+			);
+		});
+		</script>
+		<div class="comm_comm_more">
+		<%= link_to_function "&darr;", "Element.hide('rates_show_#{comment.id}');new Effect.BlindDown('rates_more_#{comment.id}');off_#{comment.id.to_s}=true", :id => "rates_show_#{comment.id}", :class => "comm_more_tab" %>
+		</div>
   </div>
-  
+						
+  <div id="rates_more_<%= comment.id %>" class="comm_rating" style="display:none;">
+    <div class="comm_rating_inner">		
+	<%= link_to_function "&uarr;", "new Effect.BlindUp('rates_more_#{comment.id}');Element.show('rates_show_#{comment.id}');off_#{comment.id.to_s}=false", :class => "comm_more_tab less" %>
+  		<span id='comm_overall_<%= comment.id %>'>Overall Rating: <%=h number_with_precision(comment.average_rating,:precision => 1) %>
+  		  &nbsp;|&nbsp;&nbsp;<%= comment.plus_score_count %> of <%= comment.score_count_all %> found useful.</span>
+		  	</div>
+		  </div>
+
+			<% else %>
+			</div>
+		 </div>
+  		<% end %>
 
 	<% if flat && comment.parent_id %>
 		<%= link_to "in reply to #{comment.parent.user ? comment.parent.user.login : "Anonymous"} #{comment.parent.created_at.strftime('%b %d, %Y')} #{comment.parent.created_at.strftime('%I:%M%p').gsub(/^0+/, '').downcase}", url_for(comment.parent.commentable_link.merge({:goto_comment => comment.parent.id})), {:class => 'inreply'} %>

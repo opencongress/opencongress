@@ -568,7 +568,17 @@ EOT
     color_out = "#" + color_hex.join
   return color_out
   end
-  
+
+  def integer_to_color(i)
+    if i > 0
+      "#5b9d39"
+    elsif i < 0
+      "#a61c1c"
+    else
+      "#b2b2b2"
+    end
+  end
+
 	def draw_inline_user_bill_vote(bill)
     bill_vote_images = String.new
     bill_vote_images = inline_determine_support(bill)

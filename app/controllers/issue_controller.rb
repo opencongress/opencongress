@@ -191,7 +191,7 @@ class IssueController < ApplicationController
       @meta_description = "#{@subject.term} on OpenCongress"
       @sidebar_stats_object = @user_object = @comments = @subject
       @page = params[:page] ||= 1   
-      @top_comments = @subject.comments.find(:all,:include => [:comment_scores, :user], :order => "comments.average_rating DESC", :limit => 2)
+      @top_comments = @subject.comments.find(:all,:include => [:user], :order => "comments.plus_score_count - comments.minus_score_count DESC", :limit => 2)
       @atom = {'link' => url_for(:only_path => false, :controller => 'issue', :id => @subject, :action => 'atom'), 'title' => "#{@subject.term} activity"}
     else
       flash[:error] = "Invalid bill URL."

@@ -708,7 +708,7 @@ class PeopleController < ApplicationController
         ["Videos <span>(#{number_with_delimiter(@person.videos.size)})</span>",{:action => 'videos', :id => @person}],
         ["Comments <span>(#{@person.comments.size})</span>",{:action => 'comments', :id => @person}]
       ]
-      @top_comments = @person.comments.find(:all,:include => [:comment_scores, :user], :order => "comments.average_rating DESC", :limit => 2)
+      @top_comments = @person.comments.find(:all,:include => [:user], :order => "comments.plus_score_count - comments.minus_score_count DESC", :limit => 2)
       @atom = {'link' => url_for(:only_path => false, :controller => 'people', :id => @person, :action => 'atom'), 'title' => "#{@person.popular_name} activity"}
       @bookmarking_image = "/images/photos/thumbs_102/#{@person.id}.png"
     else

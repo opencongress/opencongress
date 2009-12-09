@@ -656,7 +656,7 @@ private
         ["Videos <span>(#{number_with_delimiter(@bill.videos.size)})</span>",{:action => 'videos', :id => @bill.ident}],
         ["Comments <span>(#{number_with_delimiter(@comments.comments.size)})</span>",{:action => 'comments', :id => @bill.ident}]
       ])
-      @top_comments = @bill.comments.find(:all,:include => [:comment_scores, :user], :order => "comments.average_rating DESC", :limit => 2)
+      @top_comments = @bill.comments.find(:all,:include => [:user], :order => "comments.plus_score_count - comments.minus_score_count DESC", :limit => 2)
       @bookmarking_image = "/images/fb-bill.jpg"
       @atom = {'link' => url_for(:only_path => false, :controller => 'bill', :id => @bill.ident, :action => 'atom'), 'title' => "#{@bill.title_typenumber_only} activity"}
     else

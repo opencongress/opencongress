@@ -1,11 +1,11 @@
 <!-- <a name="comments"/> -->
 <% 
   if params[:comment_sort] == 'rating' 
-     comments = object.comments.paginate(:page => params[:comment_page], :include => [:comment_scores, :user], :order => "comments.average_rating DESC" )
+     comments = object.comments.paginate(:page => params[:comment_page], :include => [:user], :order => "comments.plus_score_count - comments.minus_score_count DESC" )
   elsif params[:comment_sort] == 'newest'
-    comments = object.comments.paginate(:page => params[:comment_page], :include => [:comment_scores, :user], :order => "comments.created_at DESC" ) 
+    comments = object.comments.paginate(:page => params[:comment_page], :include => [:user], :order => "comments.created_at DESC" ) 
   else
-     comments = object.comments.paginate(:page => params[:comment_page], :include => [:comment_scores, :user], :order => "comments.root_id ASC, comments.lft ASC" ) 
+     comments = object.comments.paginate(:page => params[:comment_page], :include => [:user], :order => "comments.root_id ASC, comments.lft ASC" ) 
   end
 %>
      

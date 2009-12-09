@@ -103,15 +103,58 @@ class CommentsController < ApplicationController
   end
   def rate
     comment = Comment.find_by_id(params[:id])
-    score = current_user.comment_scores.find_or_create_by_comment_id(comment.id)
-    score.score = params[:value]
+    score = current_user.comment_scores.find_by_comment_id(comment.id)
+      unless score
+        score = current_user.comment_scores.create(:user_id => current_user.id, :comment_id => comment.id, :score => params[:value])
+        if score.score > 5
+          comment.plus_score_count = comment.plus_score_count.to_i + 1
+          id = "plus"
+        else
+          comment.minus_score_count = comment.minus_score_count.to_i + 1
+          id = "minus"
+        end
+      else
+        if score.score == params[:value].to_i
+          if score.score > 5
+            comment.plus_score_count = comment.plus_score_count.to_i - 1
+          else
+            comment.minus_score_count = comment.minus_score_count.to_i - 1
+          end
+          score.destroy
+        else 
+          if score.score > 5
+            comment.plus_score_count = comment.plus_score_count.to_i - 1
+            comment.minus_score_count = comment.minus_score_count.to_i + 1
+            id = "minus"
+          else
+            comment.plus_score_count = comment.plus_score_count.to_i + 1
+            comment.minus_score_count = comment.minus_score_count.to_i - 1
+            id = "plus"
+          end
+        score.score = params[:value]
+        end
+      end  
     score.save
     if comment.comment_scores.length >= 6
       comment.average_rating = comment.comment_scores.average(:score)
-      comment.save
     end
+    comment.save
     logger.info params.to_yaml
-    render :text =>  "<font color='red'>Your rating has been saved.</font>"
+   
+    render :update do |page|
+      page.select("#rate_comment_#{comment.id.to_s} a.active").each do |a|
+        a.remove_class_name 'active'
+      end
+      if id
+        page.select("#rate_comment_#{comment.id.to_s} ##{id}").each do |a|
+          a.add_class_name 'active'
+        end
+      end
+      page.replace_html "comm_score_" + comment.id.to_s, "<span id='comm_score_#{comment.id.to_s}' style='color:#{integer_to_color(comment.score_count_sum.to_i)}'>#{comment.score_count_sum.to_s}</span>"      
+      page.replace_html "comm_overall_" + comment.id.to_s, "<span id='rates_more_overall_#{ comment.id }'>Overall Rating: #{h number_with_precision(comment.average_rating,:precision => 1) }
+  		  &nbsp;|&nbsp;&nbsp;#{ comment.plus_score_count } of #{ comment.score_count_all } found useful.</span>"
+  	  page.visual_effect :pulsate, "comm_score_" + comment.id.to_s
+    end
   end
   def filter_by_rating
     redirect_to '/' and return unless params[:type]
@@ -120,11 +163,11 @@ class CommentsController < ApplicationController
     object = Object.const_get(params[:type]).find_by_id(params[:id])
     if object
       if params[:comment_sort] == 'rating' 
-        comments = object.comments.paginate(:page => page, :include => [:comment_scores, :user], :order => "comments.average_rating DESC" )
+        comments = object.comments.paginate(:page => page, :include => [:user], :order => "comments.plus_score_count - comments.minus_score_count DESC" )
       elsif params[:comment_sort] == 'newest'
-        comments = object.comments.paginate(:page => page, :include => [:comment_scores, :user], :order => "comments.created_at DESC" ) 
+        comments = object.comments.paginate(:page => page, :include => [:user], :order => "comments.created_at DESC" ) 
       else
-        comments = object.comments.paginate(:page => page, :include => [:comment_scores, :user], :order => "comments.root_id ASC, comments.lft ASC" ) 
+        comments = object.comments.paginate(:page => page, :include => [:user], :order => "comments.root_id ASC, comments.lft ASC" ) 
       end
       @comments = comments.select{|p| p.average_rating < params[:value].to_f}
       # object.comments.find(:all, :conditions => ["average_rating < ?", params[:value]])

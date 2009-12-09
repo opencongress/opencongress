@@ -73,7 +73,7 @@ h3{ font-size: 13px; }
 
 .clearnone{ clear: none !important;}
 
-.clear{ clear: both;}
+.clear{ clear: both; height: 0 !important;}
 
 .blue{ color: #4b86c0;}
 

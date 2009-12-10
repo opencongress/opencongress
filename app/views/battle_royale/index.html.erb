@@ -26,9 +26,9 @@
 		
 	  <div class="title">
 						<% unless bill.title_popular_only.blank? %>
-            <%= link_to "#{bill.title_typenumber_only} - #{truncate(bill.title_popular_only, :length => 103)}", :controller => 'bill', :action => "show", :id => bill.ident %>        
+            <%= link_to "#{bill.title_typenumber_only} - #{truncate(bill.title_popular_only, :length => 103)}", :controller => 'bill', :action => 'show', :id => bill.ident %>        
 						<% else %>                                 
-						<%= link_to "#{bill.title_typenumber_only}", :controller => 'bill', :action => "show", :id => bill.ident %>        
+						<%= link_to "#{bill.title_typenumber_only}", :controller => 'bill', :action => 'show', :id => bill.ident %>        
          		<% end %>
            
            
@@ -52,9 +52,9 @@
 			</span>
 			
 			<span class="linkage">
-          <%= link_to "<span class='news_11'>News</span>", :controller => "bill", :action => "news", :id => bill.ident %>
-     		  <%= link_to "<span class='blogs_11'>Blogs</span>", :controller => "bill", :action => "blogs", :id => bill.ident %>
-     		  <%= link_to "<span class='comments_11'>Comments</span>", :controller => "bill", :action => "comments", :id => bill.ident %>
+          <%= link_to "<span class='news_11'>News</span>", :controller => 'bill', :action => 'news', :id => bill.ident %>
+     		  <%= link_to "<span class='blogs_11'>Blogs</span>", :controller => 'bill', :action => 'blogs', :id => bill.ident %>
+     		  <%= link_to "<span class='comments_11'>Comments</span>", :controller => 'bill', :action => 'comments', :id => bill.ident %>
      		</span>
         
       </td>

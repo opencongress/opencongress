@@ -69,7 +69,7 @@
     <tr><th>Add Friend</th><th>Name</th><th>Email</th><th>Username</th></tr>
     <% @already.each do |r| %>
       <% unless r.id == current_user.id %>
-      <tr><td id="f_<%=r.login %>" class="itable"><%= add_friend_link_ajax(r, update_div = "f_#{r.login}") %></td><td><%= r.full_name && r.full_name.empty? ? r.full_name : "[none]" %></td><td><%= r.email %></td><td><%= link_to h(r.login), :controller => "profile", :login => r.login, :action => "profile" %></td></tr>
+      <tr><td id="f_<%=r.login %>" class="itable"><%= add_friend_link_ajax(r, update_div = "f_#{r.login}") %></td><td><%= r.full_name && r.full_name.empty? ? r.full_name : "[none]" %></td><td><%= r.email %></td><td><%= link_to(h(r.login), user_profile_path(:login => r.login)) %></td></tr>
     <% end %>
     <% end %>
   </table>

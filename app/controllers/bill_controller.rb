@@ -6,8 +6,8 @@ class BillController < ApplicationController
   before_filter :get_params, :only => [:index, :all, :popular, :pending, :hot, :most_commentary, :readthebill]
   before_filter :bill_profile_shared, :only => [:show, :comments, :money, :votes, :actions, :amendments, :text, :actions_votes, :news_blogs, :videos, :news, :blogs, :news_blogs]
   before_filter :aavtabs, :only => [:actions, :amendments, :votes, :actions_votes]
-  skip_before_filter :store_location, :only => [:bill_vote, :status_text, :bill_vote, :user_stats_ajax,:atom,:atom_blogs,:atom_news,:atom_top20,:atom_top_commentary,:atom_topblogs,:atom_topnews]
-  
+  skip_before_filter :store_location, :only => [:bill_vote, :status_text, :user_stats_ajax,:atom,:atom_blogs,:atom_news,:atom_top20,:atom_top_commentary,:atom_topblogs,:atom_topnews]
+
   TITLE_MAX_LENGTH = 150
 
   def roll_calls
@@ -125,7 +125,7 @@ class BillController < ApplicationController
     @page = "1" unless @page
     @bill_type = params[:bill_type]
 
-    unless read_fragment(:controller => "bill", :action => "type", :bill_type => @bill_type, :page => @page)
+    unless read_fragment(:controller => 'bill', :action => 'type', :bill_type => @bill_type, :page => @page)
 
       @bills = Bill.paginate_all_by_bill_type_and_session(@bill_type, congress, :include => "bill_titles", :order => 'number', :page => @page)
 
@@ -173,7 +173,7 @@ class BillController < ApplicationController
     @show_resolutions = (params[:show_resolutions].blank? || params[:show_resolutions] == 'false') ? false : true
     
     @title_class = 'sort'
-    
+
     case params[:sort]
     when 'rushed'
       @page_title = "Read the Bill - Bills Rushed to Vote"
@@ -201,7 +201,7 @@ class BillController < ApplicationController
       format.js { render :action => 'update'}
     end
   end
-    
+
   def atom
     session, bill_type, number = Bill.ident params[:id]
     @bill = Bill.find_by_session_and_bill_type_and_number session, bill_type, number, :include => :actions
@@ -210,12 +210,12 @@ class BillController < ApplicationController
 
     render :layout => false
   end
-  
+
   def atom_news
     @bill = Bill.find_by_ident(params[:id])
+    expires_in 60.minutes, :public => true
     @commentaries = @bill.news
     @commentary_type = 'news'
-    expires_in 60.minutes, :public => true
 
     render :action => 'commentary_atom', :layout => false
   end
@@ -293,6 +293,7 @@ class BillController < ApplicationController
     respond_to do |format|
       format.html {
         comment_redirect(params[:goto_comment]) and return if params[:goto_comment]
+
         @br_link = Rails.cache.fetch("bill_link_#{@bill.id}", :expires_in => 20.minutes) {
           @bill.br_link
         }
@@ -314,7 +315,7 @@ class BillController < ApplicationController
     @tracking_suggestions = @bill.tracking_suggestions
     @supporting_suggestions = @bill.support_suggestions
     @opposing_suggestions = @bill.oppose_suggestions
-    render :action => "user_stats_ajax", :layout => false 
+    render :action => 'user_stats_ajax', :layout => false 
   end
   
   def text
@@ -486,7 +487,7 @@ class BillController < ApplicationController
   end
   
   def money
-    session, bill_type, number = Bill.ident params[:id]
+    session, bill_type, number = Bill.ident(params[:id])
     if @bill = Bill.find_by_session_and_bill_type_and_number(session, bill_type, number, { :include => [ :bill_titles ]})
       respond_to do |format|
         format.html
@@ -520,27 +521,27 @@ class BillController < ApplicationController
     @page_title += "News Articles for #{@bill.title_typenumber_only}"
    
     if @sort == 'toprated'
-      @atom = {'link' => url_for(:only_path => false, :controller => 'bill', :id => @bill.ident, :action => 'atom_topnews'), 'title' => "#{@bill.title_typenumber_only} highest rated news articles"}
+      @atom = {'link' => url_for(:controller => 'bill', :id => @bill.ident, :action => 'atom_topnews'), 'title' => "#{@bill.title_typenumber_only} highest rated news articles"}
     else
-      @atom = {'link' => url_for(:only_path => false, :controller => 'bill', :id => @bill.ident, :action => 'atom_news'), 'title' => "#{@bill.title_typenumber_only} news articles"}
+      @atom = {'link' => url_for(:controller => 'bill', :id => @bill.ident, :action => 'atom_news'), 'title' => "#{@bill.title_typenumber_only} news articles"}
     end
   end
 
   def topnews
     @news = @bill.news.find(:all, :conditions => "commentaries.average_rating > 5", :limit => 5).paginate :page => @page
     @page_title = "Highest Rated Blog Articles For #{@bill.title_typenumber_only}"
-    @atom = {'link' => url_for(:only_path => false, :controller => 'bill', :id => @bill.ident, :action => 'atom_topnews'), 'title' => "#{@bill.title_typenumber_only} blog articles"}
+    @atom = {'link' => url_for(:controller => 'bill', :id => @bill.ident, :action => 'atom_topnews'), 'title' => "#{@bill.title_typenumber_only} blog articles"}
     render :action => 'news'
   end
   
   def commentary_search
     @page = params[:page]
     @page = "1" unless @page
-    
+
     @commentary_query = params[:q]
     query_stripped = prepare_tsearch_query(@commentary_query)
     @bill = Bill.find_by_ident(params[:id])
-    
+
     if params[:commentary_type] == 'news'
       @commentary_type = 'news'
       @articles = @bill.news.find(:all, :conditions => ["fti_names @@ to_tsquery('english', ?)", query_stripped]).paginate :page => @page
@@ -612,9 +613,9 @@ private
       when "senate"
         @types_from_params = Bill.in_senate
         @types = "senate"
-      else
-        @types = "all"
+      else  
         @types_from_params = Bill.all_types_ordered
+        @types = "all"
       end
       @carousel = [Bill.find_hot_bills('bills.page_views_count desc',{:limit => 12})]
   end

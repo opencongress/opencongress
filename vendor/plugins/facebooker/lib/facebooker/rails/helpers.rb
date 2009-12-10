@@ -523,7 +523,7 @@ module Facebooker
       # <% fb_if_is_app_user(@facebook_user) do %>
       #         Thanks for accepting our terms of service!
       #       <% fb_else do %>
-      #         Hey you haven't agreed to our terms.  <%= link_to("Please accept our terms of service.", :action => "terms_of_service") %>
+      #         Hey you haven't agreed to our terms.  <%= link_to("Please accept our terms of service.", :action => 'terms_of_service') %>
       #       <% end %>
       #<% end %>       
       def fb_if_is_app_user(user=nil,options={},&proc)
@@ -544,7 +544,7 @@ module Facebooker
       # <% fb_if_user_has_added_app(@facebook_user) do %>
       #         Hey you are an app user!
       #       <% fb_else do %>
-      #         Hey you aren't an app user.  <%= link_to("Add App and see the other side.", :action => "added_app") %>
+      #         Hey you aren't an app user.  <%= link_to("Add App and see the other side.", :action => 'added_app') %>
       #       <% end %>
       #<% end %>       
       def fb_if_user_has_added_app(user,options={},&proc)
@@ -562,10 +562,10 @@ module Facebooker
       # user can be a single user or an Array of users
       # Example:
       # <% fb_if_is_user(@check_user) do %>
-      #            <%= fb_name(@facebook_user) %> are one of the users. <%= link_to("Check the other side", :action => "friend") %>
+      #            <%= fb_name(@facebook_user) %> are one of the users. <%= link_to("Check the other side", :action => 'friend') %>
       #       <% fb_else do %>
       #         <%= fb_name(@facebook_user) %>  are not one of the users  <%= fb_name(@check_user) %>
-      #           <%= link_to("Check the other side", :action => "you") %>
+      #           <%= link_to("Check the other side", :action => 'you') %>
       #       <% end %>
       # <% end %>             
       def fb_if_is_user(user,&proc)

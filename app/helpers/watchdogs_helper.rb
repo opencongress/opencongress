@@ -1,18 +1,5 @@
 module WatchdogsHelper
 
-  def url_for_internal(link)
-    case link.notebookable.type.to_s
-    when 'Bill'
-      url_for :controller => 'bill', :action => "show", :id => link.notebookable.ident
-    when 'Subject'
-      url_for :controller => 'issues', :action => 'show', :id => link.notebookable.to_param      
-    when 'Person'
-      url_for :controller => 'people', :action => 'show', :id => link.notebookable.to_param
-    when 'Commentary'
-      link.url
-    end    
-  end
-
   def default_title_from_notebookable(notebookable)
     case notebookable.class.to_s
     when 'Bill'
@@ -24,6 +11,19 @@ module WatchdogsHelper
     when 'Commentary'
       notebookable.title
     end
+  end
+
+  def url_for_internal(link)
+    case link.notebookable.type.to_s
+    when 'Bill'
+      bill_url(link.notebookable.ident)
+    when 'Subject'
+      issue_url(link.notebookable.to_param)
+    when 'Person'
+      person_url(link.notebookable.to_param)
+    when 'Commentary'
+      link.url
+    end    
   end
 
   def get_label
@@ -52,16 +52,7 @@ module WatchdogsHelper
   end
   
   def link_to_internal(link)    
-    case link.notebookable.type.to_s
-    when 'Bill'
-      link_to link.title, :controller => 'bill', :action => "show", :id => link.notebookable.ident
-    when 'Subject'
-      link_to link.title, :controller => 'issues', :action => 'show', :id => link.notebookable.to_param      
-    when 'Person'
-      link_to  link.title, :controller => 'people', :action => 'show', :id => link.notebookable.to_param
-    when 'Commentary'
-      link_to link.title, link.url
-    end    
+    link_to link.title, url_for_internal(link)
   end
   
   def div_height(y)

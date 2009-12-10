@@ -20,7 +20,7 @@
       <td class="centered"><%= u.can_view_special('my_congressional_district') ? u.district_cache.empty? ? "-" : u.district_cache.join(', ') : image_tag("/images/private.png", :alt => "private", :title => "Private") %></td>
       <td class="centered"><%= u.can_view_special('location_allowed') ? u.location.blank? ? "-" : u.location : image_tag("/images/private.png", :alt => "private", :title => "Private") %></td>
       <td class="centered"><%= u.can_view_special('last_login_allowed') ? u.last_login.blank? ? "-" : time_ago_in_words(u.last_login,true) + " ago" : image_tag("/images/private.png", :alt => "private", :title => "Private") %></td>
-      <td class="centered"><%= link_to_if (u.can_view_special('actions_allowed')), u['total_actions'], :controller => "profile", :action => 'actions', :login => u.login %></td>
+      <td class="centered"><%= link_to_if (u.can_view_special('actions_allowed')), u['total_actions'], :controller => 'profile', :action => 'actions', :login => u.login %></td>
       <% if @person %>
         <td class="centered"><%= (u.can_view_special('actions_allowed') && u['object_rating']) ? (u['object_rating'].to_i * 10).to_s + "%" : '-' %></td>
       <% elsif @bill %>
@@ -35,13 +35,13 @@
                     <%=h u.login %> has yet to approve me.
                   <% else %>
                              <%= link_to_remote("Add #{h(u.login)} to Friends", { :update => "fdiv_#{u.id}", 
-                             :url => {:controller => "friends", 
-                             :action => "add", 
+                             :url => {:controller => 'friends', 
+                             :action => 'add', 
                              :login => current_user.login, 
                              :id => u.id}}) %>
                   <% end %>
               <% else %>
-               <%= link_to("Login", {:controller => "account", :action => "login"}) %> to add friends.
+               <%= link_to("Login", login_url) %> to add friends.
               <% end %>
           </div>
       </td>

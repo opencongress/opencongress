@@ -113,7 +113,7 @@ There are two main views tasks that will be directly affected by attachment_fu: 
 There are two parts of the upload form that differ from typical usage.
   1. Include ':multipart => true' in the html options of the form_for tag.
     Example:
-      <% form_for(:attachment_metadata, :url => { :action => "create" }, :html => { :multipart => true }) do |form| %>
+      <% form_for(:attachment_metadata, :url => { :action => 'create' }, :html => { :multipart => true }) do |form| %>
       
   2. Use the file_field helper with :uploaded_data as the field name.
     Example:

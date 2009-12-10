@@ -40,7 +40,7 @@ class BattleRoyaleController < ApplicationController
 #     get_counts
      respond_to do |format|
        format.html {
-         render :action => "index"
+         render :action => 'index'
        }
        format.xml {
          render :xml => @results.to_xml(:methods => [:title_full_common, :status, :ident], 
@@ -93,7 +93,7 @@ class BattleRoyaleController < ApplicationController
 #    get_counts
     respond_to do |format|
      format.html {
-       render :action => "person_by_approval_rating"
+       render :action => 'person_by_approval_rating'
      }
      format.xml {
        render :xml => @results.to_xml(:except => [:bookmark_count_2,:fti_names,:current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, :support_count_2, :vote_count_2]) 
@@ -140,7 +140,7 @@ class BattleRoyaleController < ApplicationController
     
     respond_to do |format|
      format.html {
-       render :action => "person_by_approval_rating"
+       render :action => 'person_by_approval_rating'
      }
      format.xml {
        render :xml => @results.to_xml(:except => [:bookmark_count_2,
@@ -183,7 +183,7 @@ class BattleRoyaleController < ApplicationController
 #    end
     respond_to do |format|
      format.html {
-       render :action => "most_tracked_issues"
+       render :action => 'most_tracked_issues'
      }
      format.xml {
        render :xml => @results.to_xml(:except => [:bookmark_count_2,:fti_names,:current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, :support_count_2, :vote_count_2]) 
@@ -194,7 +194,7 @@ class BattleRoyaleController < ApplicationController
 
   def show_bill_details
     @bill = Bill.find_by_id(params[:id])
-    render :action => "show_bill_details", :layout => false
+    render :action => 'show_bill_details', :layout => false
   end
   
   def br_bill_vote

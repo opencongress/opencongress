@@ -36,7 +36,7 @@ class RedirectSpecController < ApplicationController
   end
 
   def action_with_redirect_which_creates_query_string
-    redirect_to :action => "somewhere", :id => 1111, :param1 => "value1", :param2 => "value2"
+    redirect_to :action => 'somewhere', :id => 1111, :param1 => "value1", :param2 => "value2"
   end
 
   # note: sometimes this is the URL which rails will generate from the hash in
@@ -52,7 +52,7 @@ class RedirectSpecController < ApplicationController
   end
 
   def action_with_redirect_to_unroutable_url_inside_app
-    redirect_to :controller => "nonexistant", :action => "none"
+    redirect_to :controller => 'nonexistant', :action => 'none'
   end
 
   def action_with_method_restriction

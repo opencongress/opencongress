@@ -66,11 +66,11 @@ module ApplicationHelper
   end
                        
   def link_to_person(person)
-    link_to person.name, :controller => 'people', :action => "show", :id => person
+    link_to person.name, :controller => 'people', :action => 'show', :id => person
   end
   
   def link_to_bill(bill)
-    link_to bill.title_full_common, :controller => 'bill', :action => "show", :id => bill.ident
+    link_to bill.title_full_common, bill_url(bill.ident)
   end
 
   def url_for_object(object)
@@ -440,7 +440,7 @@ EOT
   def bill_basic_atom_entry(xml, b, updated_method)
     xml.entry do
       xml.title   b.title_full_common
-      xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'bill', :action => 'show', :id => b.ident)
+      xml.link    "rel" => "alternate", "href" => bill_url(b.ident)
       xml.id      b.atom_id_as_entry
       
       if updated_method
@@ -472,7 +472,7 @@ EOT
     
     xml.entry do
       xml.title   title_preface + a.bill.title_full_common
-      xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'bill', :action => 'show', :id => a.bill.ident)
+      xml.link    "rel" => "alternate", "href" => bill_url(a.bill.ident)
       xml.id      a.atom_id
       xml.updated a.datetime.strftime("%Y-%m-%dT%H:%M:%SZ")
       xml.content "type" => "html" do
@@ -500,8 +500,8 @@ EOT
        f = current_user.friends.find_by_friend_id(friend.id)
        if f.nil? && friend != current_user
          link_to_remote("Add #{friend_login} to Friends", { :update => update_div, 
-                             :url => {:controller => "friends", 
-                             :action => "add", 
+                             :url => {:controller => 'friends', 
+                             :action => 'add', 
                              :login => current_user.login, 
                              :id => friend.id}})
        elsif f.nil? && friend == current_user
@@ -512,7 +512,7 @@ EOT
           "#{friend_login} has yet to approve me"
        end
      else
-        link_to("Login", {:controller => "account", :action => "login"}) + " to add friends"
+        link_to("Login", login_url) + " to add friends"
      end
   end
 
@@ -614,20 +614,20 @@ EOT
 			if logged_in?
 			"" +
 			link_to_remote("Aye",
-			{ :url => {:controller => "battle_royale", :action => "br_bill_vote", :bill => bill.ident, :id => 0}},
+			{ :url => {:controller => 'battle_royale', :action => 'br_bill_vote', :bill => bill.ident, :id => 0}},
 			:class => "aye #{yah}") +
 			"" +
 
 			link_to_remote("Nay",
-			{:url => {:controller => "battle_royale", :action => "br_bill_vote", :bill => bill.ident, :id => 1}},
+			{:url => {:controller => 'battle_royale', :action => 'br_bill_vote', :bill => bill.ident, :id => 1}},
 			:class => "nay #{nah}") +
 			""
       else
-        link_to("Aye", {:controller => "account", :action => "login", :modal => true, :login_action => 0},
+        link_to("Aye", login_url(:modal => true, :login_action => 0),
   			:class => "modal_fire aye #{yah}") +
   			"" +
 
-        link_to("Nay", {:controller => "account", :action => "login", :modal => true, :login_action => 1},
+        link_to("Nay", login_url(:modal => true, :login_action => 1),
   			:class => "modal_fire nay #{nah}") +
   			""
        end
@@ -635,13 +635,13 @@ EOT
 		  if logged_in?
         "<div class='voting_buttons'>" +
           link_to_remote(image_tag('yes.png') + "<span>I Support this Bill</span>",
-  			      {:url => {:controller => "bill", :action => "bill_vote", :bill => bill.ident, :id => 0}},
+  			      {:url => {:controller => 'bill', :action => 'bill_vote', :bill => bill.ident, :id => 0}},
   			      :class => "yes #{yah}") +
         "
                                             
         " +
           link_to_remote(image_tag('no.png') + "<span>I Oppose this Bill</span>",
-  			      {:url => {:controller => "bill", :action => "bill_vote", :bill => bill.ident, :id => 1}},
+  			      {:url => {:controller => 'bill', :action => 'bill_vote', :bill => bill.ident, :id => 1}},
   			      :class => "no #{nah}") +
         "
         </div>
@@ -651,12 +651,12 @@ EOT
       else
         "<div class='voting_buttons'>" +
           link_to(image_tag('yes.png') + "<span>I Support this Bill</span>",
-              {:controller => "account", :action => "login", :modal => true, :login_action => 0}, :class => "vote_trigger yes") + 
+              login_url(:modal => true, :login_action => 0), :class => "vote_trigger yes") + 
         "
                                             
         " +
           link_to(image_tag('no.png') + "<span>I Oppose this Bill</span>",
-              {:controller => "account", :action => "login", :modal => true, :login_action => 1}, :class => "vote_trigger no") +
+              login_url(:modal => true, :login_action => 1), :class => "vote_trigger no") +
         "
         </div>
           <!-- <a href='' class='more learn_trigger'><span>I Want to Learn More</span></a> -->

@@ -53,7 +53,7 @@ class Admin::BillSummariesController < Admin::IndexController
   def addtitle
     if params[:title][:title].blank?
       flash[:error] = "You didn't enter a bill title!"
-      redirect_to :controller => 'bill', :action => 'show', :id => Bill.find_by_id(params[:title][:bill_id]).ident
+      redirect_to bill_url(Bill.find_by_id(params[:title][:bill_id]).ident)
       return
     end
     

@@ -12,13 +12,13 @@
 				<% unless roll.bill.hot_bill_category.nil? %>
 				<img src="/images/icon-hot-bill.gif" class="noborder" style="line-height: .8em;" alt="hot bill" />
 				<% end %>
-				<%= link_to roll.bill.title_typenumber_only, :controller => 'bill', :action => "show", :id => roll.bill.ident %> <%= roll.bill.title_common %>
+				<%= link_to roll.bill.title_typenumber_only, :controller => 'bill', :action => 'show', :id => roll.bill.ident %> <%= roll.bill.title_common %>
 				<% end %>
 			</div>
 			<em><%= roll.question %></em>
 			<% if can_blog? %>
 			<b>Make <%= roll.number %> a hot vote:</b>
-			<% form_for :roll_call, roll, :url => { :controller => :roll_call, :action => "make_hot", :id => roll.id } do |f| %>
+			<% form_for :roll_call, roll, :url => { :controller => :roll_call, :action => 'make_hot', :id => roll.id } do |f| %>
 			Editorial Title: <%= f.text_field :title %>
 			<%= submit_tag "Make Hot Vote" %>
 			<% end %>

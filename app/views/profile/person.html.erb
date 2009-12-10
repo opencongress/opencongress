@@ -4,16 +4,16 @@
 		
 <div id="linkcontent" style="clear:both;padding-top:10px;width:100%;">
 <% unless @bookmarks.nil? || @bookmarks.empty? %>
-<h3><%= @ptype %> I'm Tracking <%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => "user_feeds", :login => @user.login, :action =>  params[:person_type], :key => logged_in? ? current_user.feed_key : nil %></h3>
+<h3><%= @ptype %> I'm Tracking <%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => 'user_feeds', :login => @user.login, :action =>  params[:person_type], :key => logged_in? ? current_user.feed_key : nil %></h3>
 <br />
 <ul>
 	<% @bookmarks.each do |b| %>
 	  <li class="people">
-			<div style="float:right;"><%= button_to("Remove", :action => "remove_bookmark", :id => b.id) if current_user == @user %></div> 
-			<p><span style="font-size:16px;font-weight:bold;"><%= link_to(b.person.name, :controller => "people", :action => "show", :id => b.person.to_param) %></span> 
+			<div style="float:right;"><%= button_to("Remove", :action => 'remove_bookmark', :id => b.id) if current_user == @user %></div> 
+			<p><span style="font-size:16px;font-weight:bold;"><%= link_to(b.person.name, :controller => 'people', :action => 'show', :id => b.person.to_param) %></span> 
                         </p>
 <p>
-Tracked by <%= link_to b.person.bookmarks.count, :controller => "friends", :action => "tracking_person", :id => b.person.ident %> users</p>
+Tracked by <%= link_to b.person.bookmarks.count, :controller => 'friends', :action => 'tracking_person', :id => b.person.ident %> users</p>
 	   <% items = Array.new 
 	       items << b.person.last_x_bills(3).to_a
 	       items.concat(b.person.votes(3).to_a)

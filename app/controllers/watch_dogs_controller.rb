@@ -51,7 +51,7 @@ class WatchDogsController < ApplicationController
         format.html { redirect_to(@watch_dog) }
         format.xml  { render :xml => @watch_dog, :status => :created, :location => @watch_dog }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => 'new' }
         format.xml  { render :xml => @watch_dog.errors, :status => :unprocessable_entity }
       end
     end
@@ -68,7 +68,7 @@ class WatchDogsController < ApplicationController
         format.html { redirect_to(@watch_dog) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => 'edit' }
         format.xml  { render :xml => @watch_dog.errors, :status => :unprocessable_entity }
       end
     end

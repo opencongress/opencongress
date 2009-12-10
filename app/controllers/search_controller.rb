@@ -56,7 +56,7 @@ class SearchController < ApplicationController
 
           # if we match only one, go right to that bill
           if bills_for_title.size == 1
-            redirect_to :controller => 'bill', :action => 'show', :id => bills_for_title[0].ident
+            redirect_to bill_url(bills_for_title[0].ident)
             return
           end
           

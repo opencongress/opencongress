@@ -5,7 +5,7 @@
 <p>The Congress Gossip Blog submit-a-tip form can be a tool for exposing corruption, putting a spotlight on wasteful spending, reporting a piece of news you learned from contacting a Member of Congress, or simply sharing a juicy political tidbit. If you're a political insider, this is an open public forum to get your tips out of the Beltway and into the public eye. Or, if you're a citizen journalist researching the legislative records of Members of Congress, you can use the form below to share what you've found. It's open to everyone, so send us a tip and help build public knowledge about Congress.</p>
 
 <table> 
-<% form_tag :action => "tip" do -%>
+<% form_tag :action => 'tip' do -%>
 <tr><td>Your name</td><td> <%= text_field 'tip', 'name' %></td></tr>
 <tr><td>Your email</td><td> <%= text_field 'tip', 'email' %></td></tr>
 <tr><td>Link (optional)</td><td> <%= text_field 'tip', 'link' %></td></tr>

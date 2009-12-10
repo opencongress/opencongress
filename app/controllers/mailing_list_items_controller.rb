@@ -55,7 +55,7 @@ class MailingListItemsController < ApplicationController
         format.js { render :text => "Added to Email Alerts" }
         format.xml  { render :xml => @mailing_list_item, :status => :created, :location => @mailing_list_item }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => 'new' }
         format.xml  { render :xml => @mailing_list_item.errors, :status => :unprocessable_entity }
       end
     end
@@ -72,7 +72,7 @@ class MailingListItemsController < ApplicationController
         format.html { redirect_to(@mailing_list_item) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => 'edit' }
         format.xml  { render :xml => @mailing_list_item.errors, :status => :unprocessable_entity }
       end
     end

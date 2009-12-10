@@ -68,7 +68,7 @@ require File.dirname(__FILE__) + '/../../../spec_helper'
         should redirect_to('redirect_spec/somewhere')
       end
 
-      params_as_hash = {:action => "somewhere", :id => 1111, :param1 => "value1", :param2 => "value2"}
+      params_as_hash = {:action => 'somewhere', :id => 1111, :param1 => "value1", :param2 => "value2"}
 
       it "redirected to an internal URL containing a query string" do
         get "action_with_redirect_which_creates_query_string"
@@ -233,7 +233,7 @@ require File.dirname(__FILE__) + '/../../../spec_helper'
     
       it "redirected to an internal URL which is unroutable and matched via a hash" do
         get "action_with_redirect_to_unroutable_url_inside_app"
-        route = {:controller => "nonexistant", :action => "none"}
+        route = {:controller => 'nonexistant', :action => 'none'}
         lambda {
           should redirect_to(route)
         }.should raise_error(ActionController::RoutingError, /(no route found to match|No route matches) \"\/nonexistant\/none\" with \{.*\}/)

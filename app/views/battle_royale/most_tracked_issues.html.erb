@@ -17,7 +17,7 @@
   	  <span class="big"><%= link_to issue.term, :controller => 'issue', :action => :show, :id => issue %></span>
 
 
-      <%= link_to "Bills", :controller => "issue", :action => "top_twenty_bills", :id => issue %>&nbsp;&middot;&nbsp;<%= link_to "Comments", :controller => "issue", :action => "comments", :id => issue %>
+      <%= link_to "Bills", :controller => 'issue', :action => 'top_twenty_bills', :id => issue %>&nbsp;&middot;&nbsp;<%= link_to "Comments", :controller => 'issue', :action => 'comments', :id => issue %>
 
       <%=h issue.summary %>
       </td>

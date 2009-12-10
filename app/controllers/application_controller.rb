@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
     if comment.commentable_type == "Article"
       redirect_to comment.commentable_link.merge(:comment_page => comment.page)
     else
-      redirect_to comment.commentable_link.merge(:action => "comments", :comment_page => comment.page, :comment_id => comment_id)
+      redirect_to comment.commentable_link.merge(:action => 'comments', :comment_page => comment.page, :comment_id => comment_id)
     end
     @goto_comment = comment
   end
@@ -81,7 +81,7 @@ class ApplicationController < ActionController::Base
     if logged_in?
       logger.info "USER APP TOS: #{current_user.accepted_tos}"
       unless current_user.accepted_tos == true
-        redirect_to :controller => "/account", :action => "accept_tos"
+        redirect_to :controller => 'account', :action => 'accept_tos'
       end
     end
   end
@@ -89,7 +89,7 @@ class ApplicationController < ActionController::Base
   def is_banned?
     if logged_in?
       if current_user.is_banned == true
-        redirect_to :controller => "/account", :action => "logout"
+        redirect_to logout_url
       end
     end
   end
@@ -104,33 +104,33 @@ class ApplicationController < ActionController::Base
   end
   def admin_login_required
     if !(logged_in? && current_user.user_role.can_administer_users)
-      redirect_to :controller => '/admin', :action => 'index'
+      redirect_to :controller => 'admin', :action => 'index'
     end
   end
   def can_text
     if !(logged_in? && current_user.user_role.can_manage_text)
-      redirect_to :controller => '/admin', :action => 'index'
+      redirect_to :controller => 'admin', :action => 'index'
     end
   end
   def can_moderate
     if !(logged_in? && current_user.user_role.can_moderate_articles)
-      redirect_to :controller => '/admin', :action => 'index'
+      redirect_to :controller => 'admin', :action => 'index'
     end
   end
   def can_blog
     unless (logged_in? && current_user.user_role.can_blog)
-      redirect_to :controller => "/admin", :action => "index"
+      redirect_to :controller => 'admin', :action => 'index'
     end
   end
   def can_stats
     unless (logged_in? && current_user.user_role.can_see_stats)
-      redirect_to :controller => "/admin", :action => "index"
+      redirect_to :controller => 'admin', :action => 'index'
     end
   end
   def no_users
     unless (logged_in? && current_user.user_role.name != "User")
       flash[:notice] = "Permission Denied"
-      redirect_to :controller => "/account", :action => "login"
+      redirect_to login_url
     end
   end
 

@@ -74,7 +74,7 @@
 	<tr class="header">
 		<th colspan="3"><span>Latest Vote</span>
 		<% if @bill.roll_calls.size > 1 %>
-		<%= link_to "View All Votes [#{@bill.roll_calls.size}]", {:action => "votes"}, :class => 'toggle' %>
+		<%= link_to "View All Votes [#{@bill.roll_calls.size}]", {:action => 'votes'}, :class => 'toggle' %>
 		<% end %>
 		</th>
 	</tr>

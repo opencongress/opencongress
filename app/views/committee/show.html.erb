@@ -23,7 +23,7 @@
           <% if @chair %>
           <% conditions += "people.id != #{@chair.id}" %>
           <div class="graph_item">
-            <a href="<%= url_for({:controller => "people", :action => "show", :id => @chair.ident}) %>">
+            <a href="<%= person_url @chair.ident %>">
               <image src="/images/photos/thumbs_125/<%= @chair.id %>.jpeg" width="102px" height="125px"/></a>
 
                 <span class="name"><%= @chair.full_name %></span>
@@ -37,7 +37,7 @@
               <% conditions += " AND people.id != #{@vice_chair.id}" %>
               <% end %>  
               <div class="graph_item">
-                <a href="<%= url_for({:controller => "people", :action => "show", :id => @vice_chair.ident}) %>"><image src="/images/photos/thumbs_125/<%= @vice_chair.id %>.jpeg" width="102px" height="125px"/></a>
+                <a href="<%= person_url @vice_chair.ident %>"><image src="/images/photos/thumbs_125/<%= @vice_chair.id %>.jpeg" width="102px" height="125px"/></a>
                   <span class="name"><%= @vice_chair.full_name %></span>
                   <em>Vice Chair</em>
                 </div>
@@ -49,7 +49,7 @@
                 <% conditions += " AND people.id != #{@ranking_member.id}" %>
                 <% end %>  
                 <div class="graph_item">
-                  <a href="<%= url_for({:controller => "people", :action => "show", :id => @ranking_member.ident}) %>"><image src="/images/photos/thumbs_125/<%= @ranking_member.id %>.jpeg" width="102px" height="125px"/></a>
+                  <a href="<%= person_url @ranking_member.ident %>"><image src="/images/photos/thumbs_125/<%= @ranking_member.id %>.jpeg" width="102px" height="125px"/></a>
                     <span class="name"><%= @ranking_member.full_name %></span>
                     <em>Ranking Member</em>
                   </div>
@@ -57,7 +57,7 @@
 
                   <% @committee.members.find(:all, :conditions => conditions, :order => "people.lastname asc").each do |m| %>
                   <div class="graph_item">
-                    <a href="<%= url_for({:controller => "people", :action => "show", :id => m.ident}) %>"><image src="/images/photos/thumbs_125/<%= m.id %>.jpeg" width="102px" height="125px"/>
+                    <a href="<%= person_url m.ident %>"><image src="/images/photos/thumbs_125/<%= m.id %>.jpeg" width="102px" height="125px"/>
                       <span class="name"><%= m.full_name %></span></a>
                     </div>
                     <% end %>

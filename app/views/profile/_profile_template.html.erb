@@ -13,12 +13,12 @@ dsfsdddsf
 				<h3 class="darkline">Things <%= @user.login %> is Tracking:</h3>
 	<% end %>
 	<div class="what-line"></div>
-  <h5><%= link_to "#{@bookmarks_bill.length} Bills", :controller => "profile", :action => "bills" %></h5>
+  <h5><%= link_to "#{@bookmarks_bill.length} Bills", :controller => 'profile', :action => 'bills' %></h5>
 	<ul class="links_detailed">
 		<% @bookmarks_bill.each do |b| %>
 			<% bill = b.bill %>
 				<li>
-					<%= link_to(bill.title_typenumber_only, :controller => "bill", :action => "show", :id => bill.ident) %>
+					<%= link_to(bill.title_typenumber_only, :controller => 'bill', :action => 'show', :id => bill.ident) %>
 					<ul class="updates">
 						<li><%= toggler("status_#{bill.ident}", 'status updates', 'status updates', 'off', 'on') %></li>
 						<li><%= toggler("news_#{bill.ident}", 'news updates', 'news updates', 'off', 'on') %></li>
@@ -51,27 +51,27 @@ dsfsdddsf
 	<% end %>
 	</ul>
   
-	<h5><%= link_to "#{@bookmarks_sen.length} Senators", :controller => "profile", :action => "person", :person_type => "senators" %></h5>
+	<h5><%= link_to "#{@bookmarks_sen.length} Senators", :controller => 'profile', :action => 'person', :person_type => "senators" %></h5>
 	<ul class="links_detailed">
 		<% @bookmarks_sen.each do |b| %>
 		  <li><%= render :partial => "person_main_detail", :locals => {:b => b} %></li>
 		<% end %>
 	</ul>
 	
-  <h5><%= link_to "#{@bookmarks_rep.length} Representatives", :controller => "profile", :action => "person", :person_type => "representatives" %></h5>
+  <h5><%= link_to "#{@bookmarks_rep.length} Representatives", :controller => 'profile', :action => 'person', :person_type => "representatives" %></h5>
  	<ul class="links_detailed">
 		<% @bookmarks_rep.each do |b| %>
                   <li><%= render :partial => "person_main_detail", :locals => {:b => b} %></li>
 		<% end %>
 	</ul>
 
-	<% link_to "Committees", :controller => "accounts", :action => "committees" %>
-  <% link_to "Industries", :controller => "accounts", :action => "industries" %>
+	<% link_to "Committees", :controller => 'accounts', :action => 'committees' %>
+  <% link_to "Industries", :controller => 'accounts', :action => 'industries' %>
   
-	<h5><%= link_to "#{@bookmarks_issue.length} Issues", :controller => "profile", :action => "issues" %></h5>
+	<h5><%= link_to "#{@bookmarks_issue.length} Issues", :controller => 'profile', :action => 'issues' %></h5>
 	<ul class="links_detailed">
 		<% @bookmarks_issue.each do |b| %>
-		<li><%= link_to(b.subject.term, :controller => "issue", :action => "show", :id => b.subject.to_param) %>:
+		<li><%= link_to(b.subject.term, :controller => 'issue', :action => 'show', :id => b.subject.to_param) %>:
 				<ul class="updates">
 					<li><%= toggler("new_bills_#{b.subject.term}", 'new bills', 'new bills', 'off', 'on') %></li>
 					<li><%= toggler("new_comments_#{b.subject.term}", 'new comments', 'new comments', 'off', 'on') %></li>
@@ -88,7 +88,7 @@ dsfsdddsf
 		<% end %>
 	</ul>
 
-<% link_to "Blogs", :controller => "accounts", :action => "blogs" %> <br/>
+<% link_to "Blogs", :controller => 'accounts', :action => 'blogs' %> <br/>
 
 <% if @user == current_user %>
     <h3 class="darkline">Recent <%=link_to "Friends", friends_path(@user.login) %> History</h3>  
@@ -96,8 +96,8 @@ dsfsdddsf
 <% else %>
 	<h3 class="darkline"><%= @user.login %>'s History</h3>
 <% end %>
-  <h5><%= link_to "My Votes", :controller => "profile", :action => "my_votes" %></h5>
-  <h5><%= link_to "My Comments", :controller => "profile", :action => "comments" %></h5>
-  <% link_to "My Tools", :controller => "accounts", :action => "blogs" %>
-  <% link_to "My Friends", :controller => "accounts", :action => "blogs" %>
+  <h5><%= link_to "My Votes", :controller => 'profile', :action => 'my_votes' %></h5>
+  <h5><%= link_to "My Comments", :controller => 'profile', :action => 'comments' %></h5>
+  <% link_to "My Tools", :controller => 'accounts', :action => 'blogs' %>
+  <% link_to "My Friends", :controller => 'accounts', :action => 'blogs' %>
 

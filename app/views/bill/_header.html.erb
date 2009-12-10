@@ -87,7 +87,7 @@
 <div class="clearfix">
    <% unless @users_tracking.nil? || @users_tracking == 0 %>
     <div style="float:right;width:250px;">
-      <h3 class="dark">Users Tracking [<%= link_to @users_tracking, :controller => "friends", :action => "tracking_bill", :id => @bill.ident %>]</h3>
+      <h3 class="dark">Users Tracking [<%= link_to @users_tracking, :controller => 'friends', :action => 'tracking_bill', :id => @bill.ident %>]</h3>
       <p>Users tracking this bill are also tracking:</p>
 
         <%= other_bills_tracking %>

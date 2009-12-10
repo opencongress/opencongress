@@ -1,7 +1,7 @@
 module IssueHelper
 
   def link_to_subjects(subjects)
-    subjects.map { |s| link_to s.term, :action => "show", :id => s }.to_sentence
+    subjects.map { |s| link_to s.term, :action => 'show', :id => s }.to_sentence
   end
 
   def link_to_ordering(name, action, order)
@@ -13,7 +13,7 @@ module IssueHelper
   end
 
   def link_to_letter(letter)
-    link_to letter, :action => "alphabetical", :id => letter
+    link_to letter, :action => 'alphabetical', :id => letter
   end
 
 end

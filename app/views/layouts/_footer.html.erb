@@ -45,14 +45,14 @@
       					<ul>
 
 									<% if logged_in? %>
-									<li><%= link_to "Tracked Items", :controller => "profile", :action => "items_tracked", :login => current_user.login %></li>
-									<li><%= link_to "Actions", :controller => "profile", :action => "actions", :login => current_user.login %></li>
+									<li><%= link_to "Tracked Items", :controller => 'profile', :action => 'items_tracked', :login => current_user.login %></li>
+									<li><%= link_to "Actions", :controller => 'profile', :action => 'actions', :login => current_user.login %></li>
 									<li><%= link_to "Friends", friends_path(current_user.login)%></li>
 									<li><%= link_to "My Political Notebook", political_notebook_path(current_user.login) %></li>
-									<li><%= link_to "My Profile", :controller => "profile", :login => current_user.login, :action => "profile" %></li>
-									<li><%= link_to "Logout", :controller => "/account", :action => "logout" %></li>
+									<li><%= link_to "My Profile", user_profile_path(:login => current_user.login) %></li>
+									<li><%= link_to "Logout", logout_path %></li>
 									<% else %>
-									<li><%= link_to "Login", :controller => "/account", :action => "login" %></li>
+									<li><%= link_to "Login", login_path %></li>
 									<% end %>
 						</ul>
 					</div>

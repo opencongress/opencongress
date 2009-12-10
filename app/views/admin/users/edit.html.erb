@@ -19,7 +19,7 @@
 <% if @user.definitive_district_object.current_watch_dog && @user.definitive_district_object.current_watch_dog.user  == @user %>
 Is the watchdog for this district <%= @user.definitive_district_object.district_state_text %>
 <% else %>    
-    <%= link_to "Make WatchDog for #{District.find_by_id(@user.definitive_district).state.abbreviation}-#{District.find_by_id(@user.definitive_district).district_number}", :controller => "/admin/users", :action => "make_watch_dog", :id => @user.id %>
+    <%= link_to "Make WatchDog for #{District.find_by_id(@user.definitive_district).state.abbreviation}-#{District.find_by_id(@user.definitive_district).district_number}", :controller => "/admin/users", :action => 'make_watch_dog', :id => @user.id %>
 <% end %>
 <br/><br/>
   <% end %>

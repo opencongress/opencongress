@@ -2,7 +2,7 @@
 
             <% if can_blog? %>
             <p style="text-align:center;">
-               <% form_for :roll_call, @roll_call, :url => { :controller => :roll_call, :action => "make_hot", :id => @roll_call.id } do |f| %>
+               <% form_for :roll_call, @roll_call, :url => { :controller => :roll_call, :action => 'make_hot', :id => @roll_call.id } do |f| %>
                 <b>Make <%= @roll_call.number %> a hot vote</b>: 
                 Editorial Title: <%= f.text_field :title, :size => 80 %>
                 <%= submit_tag "Make Hot Vote" %>

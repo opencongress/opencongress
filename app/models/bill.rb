@@ -346,7 +346,7 @@ class Bill < ActiveRecord::Base
       return nil
     end
   end
-  
+
   def to_light_xml(options = {})
     default_options = {:except => [:rolls, :hot_bill_category_id, :summary, :fti_titles,:bookmark_count_2,
                                    :fti_names,:current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, 

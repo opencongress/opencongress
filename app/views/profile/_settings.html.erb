@@ -1,13 +1,13 @@
 <p><label>RSS feed for all tracked items</label> 
-	<%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => "user_feeds", :login => current_user.login, :action => "tracked_items", :key => current_user.feed_key %>
+	<%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => 'user_feeds', :login => current_user.login, :action => 'tracked_items', :key => current_user.feed_key %>
 </p>
 <p><label>RSS feed of my actions</label> 
-<%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => "user_feeds", :login => current_user.login, :action => "actions", :key => current_user.feed_key %>
+<%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => 'user_feeds', :login => current_user.login, :action => 'actions', :key => current_user.feed_key %>
 </p>
 <p><label>Default Comments Rating Filter</label>
 	<a name="comm_fil"></a>
 	<!--Comments will only display if they have an average rating of--> 
-	<% form_for :user, @user, :url => {:action => "ratings"}, :html => {:style => "display:inline;"} do |f| %>
+	<% form_for :user, @user, :url => {:action => 'ratings'}, :html => {:style => "display:inline;"} do |f| %>
 	<%= f.select :default_filter, [1,2,3,4,5,6,7,8,9,10], {}, {:onChange => "this.form.submit();"} %>
 	<!--or higher.-->
 	<% end %> 
@@ -18,13 +18,13 @@
 	</div>
 </p>				
 <p><label>Get E-Mail updates about OpenCongress?</label>   
-	<% form_for :user, nil, :url => {:controller => "account", :action => "mailing_list", :id => current_user.id}, :html => {:style => "display:inline;"} do |f| %>
+	<% form_for :user, nil, :url => {:controller => 'account', :action => 'mailing_list', :id => current_user.id}, :html => {:style => "display:inline;"} do |f| %>
 	<%= f.check_box :mailing, :onClick => "this.form.submit();" %>
 	<% end %>
 </p>
 <p><%= toggler('change_pass', 'Change Password', 'Close', 'arrow-blue settings') %></p>
 <div id="change_pass" style="display:none;">
-	<% form_for :user, nil, :url => {:controller => "account", :action => "change_pw", :id => current_user.id} do |f| %>
+	<% form_for :user, nil, :url => {:controller => 'account', :action => 'change_pw', :id => current_user.id} do |f| %>
 	<p><label>New Password:</label>
 		<%= f.password_field :password %>
 	</p>

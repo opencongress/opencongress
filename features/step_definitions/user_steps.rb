@@ -1,7 +1,7 @@
 When /^I track a bill$/ do
   @current_user = User.last
   bill = Bill.first
-  visit url_for({:controller => "bill", :action => "show", :id => bill.ident})
+  visit url_for({:controller => 'bill', :action => 'show', :id => bill.ident})
   visit "/profile/track/#{bill.id}?type=Bill"
 end
 

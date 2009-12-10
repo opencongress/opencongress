@@ -16,7 +16,7 @@ module SimpleCaptcha #:nodoc
     #   @user.save
     #  else
     #   flash[:notice] = "captcha did not match"
-    #   redirect_to :action => "myaction"
+    #   redirect_to :action => 'myaction'
     #  end
     def simple_captcha_valid?
       return true if RAILS_ENV == 'test'

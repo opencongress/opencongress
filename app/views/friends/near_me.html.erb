@@ -11,7 +11,7 @@
 <div style="padding:10px;">
 <h3>Users in my State (<%= @ziplookup.state %>)</h3>
 <% @in_state.uniq.each do |is| %>
-<%= link_to h(is.login), :controller => "profile", :action => "profile", :login => h(is.login) %><%= is == @in_state.uniq.last ? "" : ", " %>
+<%= link_to(h(is.login), user_profile_path(:login => is.login)) %><%= is == @in_state.uniq.last ? "" : ", " %>
 <% end %>
 </div>
 
@@ -19,7 +19,7 @@
 <h3>Users in my Congressional District (<%= @ziplookup.state + "-" + @user_district.to_s %>)</h3>
 <% @in_state.uniq.each do |ucd_i| %>
   <% next if ucd_i.district.to_s != @user_district.to_s %>
-  <%= link_to h(ucd_i.login), :controller => "profile", :action => "profile", :login => h(ucd_i.login) %>,&nbsp; 
+  <%= link_to(h(ucd_i.login), user_profile_path(:login => ucd_i.login)) %>,&nbsp; 
 <% end %>
 </div>
 

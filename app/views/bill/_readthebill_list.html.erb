@@ -17,7 +17,7 @@
       <td class="arrow" width="550" style="padding: 5px;">
       
         <% unless bill.hot_bill_category.nil? %><img src="/images/icon-hot-bill.gif" class="noborder" style="line-height: .8em;" alt="hot bill" /><% end %>
-        <%= link_to bill.title_typenumber_only, :controller => 'bill', :action => "show", :id => bill.ident %> <%= bill.title_common %> 
+        <%= link_to bill.title_typenumber_only, :controller => 'bill', :action => 'show', :id => bill.ident %> <%= bill.title_common %> 
         <span class='date'>(<%= bill.session.ordinalize %> congress)</span>
       </td>
       <td style="padding: 5px;"><%= @sort == 'gpo' ? (bill.gpo_date.blank? ?  "unknown *" : Date.parse(bill.gpo_date).strftime("%B %d, %Y")) : bill.bill.introduced_action.formatted_date %> <% if @sort == 'gpo' and bill.id == 54463 %>**<% end %></td>

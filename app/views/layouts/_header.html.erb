@@ -9,7 +9,7 @@
 			<% if logged_in? %>
 		  	  	<a class="ad_search" href="/search">Advanced Search</a>
 
-				Welcome <b><%= link_to h(current_user.login), :controller => "profile", :login => current_user.login, :action => "profile" %></b> |
+				Welcome <b><%= link_to h(current_user.login), user_profile_url(current_user.login) %></b> |
 				
 			  	<% if can_blog? %>
 			    	<% if @user_object %>
@@ -20,12 +20,12 @@
 	  				<% end %>
 				<% end %>   
 			
-			  	<%= link_to "Logout", :controller => "/account", :action => "logout" %>
+			  	<%= link_to "Logout", logout_path %>
 			
 				<% else %>	
 													
 				<%= link_to_function "Search", "['login','login-link','search-toggle'].each(Element.toggle);", :id => "search-toggle", :style => "display:none;" %>
-				<%= link_to_function "Login", "['login','login-link','search-toggle'].each(Element.toggle);", {:controller => "/account", :action => "login"}, :id => "login-link" %> | <%= link_to "Register", :controller => "account", :action => "signup" %>
+				<%= link_to_function "Login", "['login','login-link','search-toggle'].each(Element.toggle);", login_url, :id => "login-link" %> | <%= link_to "Register", :controller => 'account', :action => 'signup' %>
 			<% end %>
 		</div>	
 	</div>

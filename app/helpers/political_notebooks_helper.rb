@@ -28,7 +28,7 @@ module PoliticalNotebooksHelper
   def link_to_internal(link)    
     case link.notebookable.type.to_s
     when 'Bill'
-      link_to link.title, :controller => 'bill', :action => "show", :id => link.notebookable.ident
+      link_to link.title, :controller => 'bill', :action => 'show', :id => link.notebookable.ident
     when 'Subject'
       link_to link.title, :controller => 'issues', :action => 'show', :id => link.notebookable.to_param      
     when 'Person'

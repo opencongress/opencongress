@@ -31,7 +31,7 @@
   <% if current_user.user_role.can_moderate_articles %>
     <br/>
     <h3> Comments </h3>
-    <li><%= link_to 'Bulk Comments Search / Deletion', :controller => "/admin/comments", :action => "comments_search" %></li>
+    <li><%= link_to 'Bulk Comments Search / Deletion', :controller => "/admin/comments", :action => 'comments_search' %></li>
     <li><%= link_to 'Approve/Reject Questionable Blog/News Articles', :controller => 'commentary', :action => 'pending'  %></li>
     <li><%= link_to 'Approve/Reject User Comments', :controller => '/admin/comments', :action => 'index'  %></li>
     <li><%= link_to 'Moderate Flagged Comments', :controller => '/admin/comments', :action => 'index', :flagged_only => true %></li>

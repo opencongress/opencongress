@@ -34,7 +34,7 @@ div.ie6_box {
       </p>
       <input type="image" value="Login" class="floatright margintop behave clear" src="/images/login2.png" />
       <p class="margintop floatleft" style="margin-top: 10px;">
-        <%= link_to "Forgot Password?", :action => "forgot_password" %>
+        <%= link_to "Forgot Password?", :action => 'forgot_password' %>
       </p>
     </div>
 
@@ -53,7 +53,7 @@ div.ie6_box {
   <div class="floatright paddingtopnone">
     <h3 class="make_one">Make me one, right now!</h3>
 
-        <% form_for :user, User.new, :url => {:action => "signup"} do |f| %>
+        <% form_for :user, User.new, :url => {:action => 'signup'} do |f| %>
 
     <div title="Account signup" id="signupform" class="form">
       <%= error_messages_for 'user' %>

@@ -324,7 +324,7 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:id])
     @supporting_suggestions = @person.support_suggestions
     @opposing_suggestions = @person.oppose_suggestions
-    render :action => "user_stats_ajax", :layout => false
+    render :action => 'user_stats_ajax', :layout => false
   end
  
   def news
@@ -339,14 +339,13 @@ class PeopleController < ApplicationController
     else
       @sort = 'newest'
     end
-    
+
     if @sort == 'toprated'
       @atom = {'link' => url_for(:only_path => false, :controller => 'people', :id => @person, :action => 'atom_topnews'), 'title' => "#{@person.name} highest rated news articles"}
     else
       @atom = {'link' => url_for(:only_path => false, :controller => 'people', :id => @person, :action => 'atom_news'), 'title' => "#{@person.name} news articles"}
     end
-    
-    
+
     ## check if cache fragment exists
     unless read_fragment("#{@person.fragment_cache_key}_news_#{@sort}_page_#{@page}")
       if @sort == 'toprated'
@@ -357,7 +356,6 @@ class PeopleController < ApplicationController
         @news = @person.news.paginate :page => @page
       end
     end
-    
 
     @breadcrumb = { 
       1 => { 'text' => "People", 'url' => { :controller => 'people'} },
@@ -432,8 +430,6 @@ class PeopleController < ApplicationController
       end
     end
   end
-  
-  
   
   def videos
     @include_vids_styles = true

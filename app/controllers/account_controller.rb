@@ -1,22 +1,21 @@
 class AccountController < ApplicationController
-  before_filter :login_from_cookie, :except => "reset_password"
-  before_filter :login_required, :only => ["welcome","accept_tos"]
-  after_filter :check_forums, :only => ["login","activate"]
-  after_filter :check_wiki, :only => ["login", "activate"]
-  
-  skip_before_filter :store_location
+  before_filter :login_from_cookie, :except => [:reset_password]
+  before_filter :login_required, :only => [:welcome, :accept_tos]
+  after_filter :check_forums, :only => [:login, :activate]
+  after_filter :check_wiki, :only => [:login, :activate]
 
-  skip_before_filter :has_accepted_tos?, :only => ["accept_tos","logout"]
-  skip_before_filter :is_banned?, :only => ["logout"]
+  skip_before_filter :store_location
+  skip_before_filter :has_accepted_tos?, :only => [:accept_tos, :logout]
+  skip_before_filter :is_banned?, :only => [:logout]
   include OpenIdAuthentication
 
 #  observer :user_observer
 
   def index
-    if current_user.to_s == "false"
-      redirect_to(:action => 'login')
+    unless logged_in?
+      redirect_to(login_path)
     else
-      redirect_to(:controller => "profile", :action => "profile", :login => current_user.login)
+      redirect_to(user_profile_path(:login => current_user.login))
     end
   end
 
@@ -28,7 +27,7 @@ class AccountController < ApplicationController
       redirect_to :action => :index
     end
   end
-  
+
   def get_user_full_name
     if params[:id] == API_KEYS['wiki_callback_key']
       user = User.find(:first, :conditions => ["lower(login) = ?", params[:login].downcase])
@@ -45,7 +44,7 @@ class AccountController < ApplicationController
     
     # Forum Integration
     if params[:modal]
-      render :action => "login_modal", :layout => false
+      render :action => 'login_modal', :layout => false
     end
     
     if params[:ReturnUrl]
@@ -78,11 +77,11 @@ class AccountController < ApplicationController
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
       end
       if self.current_user.fans.find(:first, :conditions => ["confirmed = ? AND created_at > ?", false, self.current_user.previous_login_date])
-        flash[:notice] = "Logged in * " + "<a href='#{url_for(:controller => "friends", :login => self.current_user.login)}'>New Friends Requests!</a> *"
+        flash[:notice] = "Logged in * " + "<a href='#{url_for(:controller => 'friends', :login => self.current_user.login)}'>New Friends Requests!</a> *"
       else
         flash[:notice] = "Logged in successfully"
       end
-      redirect_back_or_default(:controller => 'profile', :action => 'profile', :login => current_user.login)
+      redirect_back_or_default(user_profile_url(current_user.login))
     else
       flash.now[:warning] = "Login failed"
     end
@@ -98,7 +97,7 @@ class AccountController < ApplicationController
         user.save!
         logger.info "USER TOS: #{user.accepted_tos}"
         self.current_user = User.find_by_id(user.id)
-        redirect_back_or_default(:controller => 'profile', :action => 'profile', :login => current_user.login)
+        redirect_back_or_default(user_profile_path(:login => current_user.login))
       end
     end
   end
@@ -112,6 +111,7 @@ class AccountController < ApplicationController
     @user.email = session[:invite].invitee_email unless session[:invite].nil? or request.post?
     
     return unless request.post?
+
     @user.accepted_tos = true
     @user.accepted_tos_at = Time.now
 
@@ -128,7 +128,7 @@ class AccountController < ApplicationController
       session[:invite] = nil
     end
     
-    redirect_to(:controller => '/account', :action => 'confirm', :login => @user.login)
+    redirect_to(:controller => 'account', :action => 'confirm', :login => @user.login)
   rescue ActiveRecord::RecordInvalid
     render :action => 'signup'
   end
@@ -169,11 +169,11 @@ class AccountController < ApplicationController
    @user = User.find_by_activation_code(params[:id])
    if @user and @user.activate
      self.current_user = @user
-     redirect_to(:controller => '/account', :action => 'welcome')
+     redirect_to welcome_url
      return
   else
      flash[:notice] = "We didn't find that confirmation code; maybe you've already activated your account?"
-     redirect_to(:controller => '/account', :action => "signup")
+     redirect_to signup_url
      return
    end
 
@@ -195,9 +195,9 @@ class AccountController < ApplicationController
     if @user = User.find_by_email(params[:user][:email])
       @user.forgot_password
       @user.save!
-#      redirect_back_or_default(:controller => '/account', :action => 'index')
+#      redirect_back_or_default(:controller => 'account', :action => 'index')
       @page_title = "Forgot Password"
-      render :action => "pwmail"
+      render :action => 'pwmail'
     else
       flash[:notice] = "Could not find a user with that email address"
     end
@@ -220,7 +220,7 @@ class AccountController < ApplicationController
       else
         flash[:notice] = "Password mismatch"
       end
-      redirect_back_or_default(:controller => '/account', :action => 'index')
+      redirect_back_or_default(:controller => 'account', :action => 'index')
   end
 
   def profile
@@ -237,7 +237,7 @@ class AccountController < ApplicationController
     else
       flash[:notice] = "Password mismatch"
     end
-    redirect_back_or_default(:controller => '/profile', :action => 'profile', :login => current_user.login)
+    redirect_back_or_default(user_profile_path(:login => current_user.login))
   end
   def mailing_list
    if params[:user][:mailing] && params[:user][:mailing] == "1"
@@ -248,7 +248,7 @@ class AccountController < ApplicationController
      flash[:notice] = "Un-Subscribed from the Mailing List"
    end 
    current_user.save!
-   redirect_back_or_default(:controller => '/profile', :action => 'profile', :login => current_user.login)
+   redirect_back_or_default(user_profile_path(:login => current_user.login))
   end
 
   def why
@@ -259,7 +259,7 @@ class AccountController < ApplicationController
     
     session[:invite] = invite
     
-    redirect_to :controller => 'register'
+    redirect_to signup_url
   end
 
   def new_openid
@@ -393,7 +393,7 @@ class AccountController < ApplicationController
                 logger.info "rock on"
               else 
                 session[:idurl] = identity_url
-                redirect_to :action => "new_openid" and return
+                redirect_to :action => 'new_openid' and return
               end
             end
           end

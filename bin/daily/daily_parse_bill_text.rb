@@ -209,7 +209,7 @@ begin
     Bill.all_types_ordered.each do |bill_type|
       puts "Parsing bill text of type: #{bill_type}"
       
-      type_bills = Bill.find(:all, :conditions => ["bill_type = ? AND session = ? and number='93'", bill_type, DEFAULT_CONGRESS])
+      type_bills = Bill.find(:all, :conditions => ["bill_type = ? AND session = ?", bill_type, DEFAULT_CONGRESS])
       type_bills.each_with_index do |bill, i|
         begin
           puts "Parsing bill text: #{bill.title_typenumber_only} (#{i+1} of #{type_bills.size})"
@@ -248,18 +248,18 @@ begin
             version_file = "#{GOVTRACK_BILLTEXT_PATH}/#{DEFAULT_CONGRESS}/#{bill_type}/#{bill_type}#{bill.number}#{version_array.last[0]}.gen.html"
           
             parse_from_file(bill, version_array.last[0], version_file)
-          rescue
-            puts "Couldn't parse bill text for #{bill.title_typenumber_only}.  Skipping. The error: #{$!}"
-          end
-        else
-          bill_files = Dir.new("#{GOVTRACK_BILLTEXT_PATH}/#{DEFAULT_CONGRESS}/#{bill_type}").entries.select { |f| f.match(/#{bill_type}#{bill.number}[a-z]+[0-9]?\.gen\.html$/) }
+          else
+            bill_files = Dir.new("#{GOVTRACK_BILLTEXT_PATH}/#{DEFAULT_CONGRESS}/#{bill_type}").entries.select { |f| f.match(/#{bill_type}#{bill.number}[a-z]+[0-9]?\.gen\.html$/) }
    
-          bill_files.each do |f|
-            md = /([hs][jcr]?)(\d+)(\w+)\.gen\.html$/.match(f)
-            bill_type, bill_number, text_version = md.captures
+            bill_files.each do |f|
+              md = /([hs][jcr]?)(\d+)(\w+)\.gen\.html$/.match(f)
+              bill_type, bill_number, text_version = md.captures
      
-            parse_from_file(bill, text_version, "#{GOVTRACK_BILLTEXT_PATH}/#{DEFAULT_CONGRESS}/#{bill_type}/#{f}")
+              parse_from_file(bill, text_version, "#{GOVTRACK_BILLTEXT_PATH}/#{DEFAULT_CONGRESS}/#{bill_type}/#{f}")
+            end
           end
+        rescue
+          puts "Couldn't parse bill text for #{bill.title_typenumber_only}.  Skipping. The error: #{$!}"
         end
       end
     end

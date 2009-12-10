@@ -51,7 +51,8 @@ class Bill < ActiveRecord::Base
   
   has_many :bill_interest_groups,
         :include => :crp_interest_group,
-        :order => 'crp_interest_groups.order'
+        :order => 'crp_interest_groups.order',
+        :dependent => :destroy
   has_many :bill_position_organizations, :dependent => :destroy
   
   has_one :wiki_link, :as => "wikiable"

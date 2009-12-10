@@ -749,9 +749,9 @@ class Bill < ActiveRecord::Base
     return @attributes['article_count'] if @attributes['article_count']
     
     if type == 'news'
-      news.find(:all, :conditions => [ "commentaries.date > ?", since.ago]).size
+      self.news.find(:all, :conditions => [ "commentaries.date > ?", since.ago]).size
     else
-      blogs.find(:all, :conditions => [ "commentaries.date > ?", since.ago]).size
+      self.blogs.find(:all, :conditions => [ "commentaries.date > ?", since.ago]).size
     end
   end
   

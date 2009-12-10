@@ -186,12 +186,12 @@ class Person < ActiveRecord::Base
       return [nil,nil]
     end       
   end
-  
-  def Person.list_chamber(chamber, congress, order, limit = nil)
+
+  def self.list_chamber(chamber, congress, order, limit = nil)
     def_count_days = DEFAULT_COUNT_TIME.to_i / 24 / 60 / 60
     lim = limit.nil? ? "" : "LIMIT #{limit}"
-    
-    beer = Person.find_by_sql(["SELECT people.*, 
+
+    Person.find_by_sql(["SELECT people.*, 
        COALESCE(person_approvals.person_approval_avg, 0) as person_approval_average,
        COALESCE(bills_sponsored.sponsored_bills_count, 0) as sponsored_bills_count,
        COALESCE(total_rolls.tcalls, 0) as total_roll_call_votes,

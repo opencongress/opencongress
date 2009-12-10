@@ -13,13 +13,10 @@
 	</div>
 
 	<div id="zipcode_lookup">
-    
     <h3>Find Your <%= person_type_small(@person_type.to_s) %></h3>
-    
-		<form name="zipcodeform" action="/people/zipcodelookup" method="post">
-    
-    <input type="text" name="zip5" size='5' maxlength='5' class="form" value="Enter Zip Code" onfocus="this.value = '';" onblur="if (this.value == ''){this.value = 'Enter Zip Code'};" />
-    <input type="image" src="/images/show_me-trans.png" value="submit" /> 
+    <form name="zipcodeform" action="/people/zipcodelookup" method="post">
+       <input type="text" name="zip5" size='5' maxlength='5' class="form" value="Enter Zip Code" onfocus="this.value = '';" onblur="if (this.value == ''){this.value = 'Enter Zip Code'};" />
+       <input type="image" src="/images/show_me-trans.png" value="submit" /> 
     </form>
     </div>
   <%= render :partial => 'shared/carousel' if @carousel %>

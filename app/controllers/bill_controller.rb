@@ -138,7 +138,6 @@ class BillController < ApplicationController
   end
 
   def most_commentary
-
     @days = days_from_params(params[:days])
     
     if params[:type] == 'news'
@@ -294,14 +293,10 @@ class BillController < ApplicationController
     respond_to do |format|
       format.html {
         comment_redirect(params[:goto_comment]) and return if params[:goto_comment]
-        if ActiveSupport::Cache.lookup_store(:mem_cache_store)
-          cache = ActiveSupport::Cache.lookup_store(:mem_cache_store)
-          @br_link = cache.fetch("bill_link_#{@bill.id}", :expires_in => 20.minutes) {
-            @bill.br_link
-          }
-        else
-          @br_link = @bill.br_link
-        end
+        @br_link = Rails.cache.fetch("bill_link_#{@bill.id}", :expires_in => 20.minutes) {
+          @bill.br_link
+        }
+
         @include_vids_styles = true
         
         @tracking_suggestions = @bill.tracking_suggestions
@@ -359,7 +354,7 @@ class BillController < ApplicationController
       @bill_text = "We're sorry but OpenCongress does not have the full bill text at this time.  Try at <a href='http://thomas.loc.gov/cgi-bin/query/z?c#{@bill.session}:#{@bill.title_typenumber_only}:'>THOMAS</a>."
     end
   end
-  
+
   def print_text
     @bill = Bill.find_by_ident(params[:id])
     @bill_text = ""
@@ -371,7 +366,7 @@ class BillController < ApplicationController
     
     render :layout => false
   end
-  
+
   def actions_votes
     respond_to do |format|
       format.html {
@@ -387,7 +382,7 @@ class BillController < ApplicationController
       }
     end
   end
-  
+
   def amendments
     @amendments = @bill.amendments.paginate(:all, :page => @page, :per_page => 10, :order => ["retreived_date DESC"])
   end
@@ -637,14 +632,14 @@ private
       end
       @meta_keywords = "Congress, #{@bill.sponsor.popular_name unless @bill.sponsor.nil?}, " + @bill.subjects.find(:all, :order => 'bill_count DESC', :limit => 5).collect{|s| s.term}.join(", ")
       @sidebar_stats_object = @user_object = @comments = @topic = @bill
-      @page = params[:page] ||= 1   
+      @page = params[:page] || 1   
+
       if @bill.has_wiki_link?
         @wiki_url = @bill.wiki_url
       elsif logged_in?
         @wiki_create_url = "#{WIKI_BASE_URL}/Special:AddData/Bill?Bill[common_title]=#{CGI::escape(@bill.title_common[0..60])}&Bill[bill_number]=#{@bill.bill_type}#{@bill.number}&Bill[chamber]=#{@bill.is_senate_bill? ? "U.S. Senate" : "U.S.%20House%20of%20Representatives"}&Bill[congress]=#{DEFAULT_CONGRESS}" #prolly should be rewritten as a post handled by a custom sfEditFormPreloadText call?
-      else
-
       end
+
       @tabs = [
         ["Overview",{:action => 'show', :id => @bill.ident}],
         ["Actions <span>(#{number_with_delimiter(@bill.actions.size)})</span> & Votes <span>(#{number_with_delimiter(@bill.roll_calls.size)})</span>",{:action => 'actions_votes', :id => @bill.ident}]

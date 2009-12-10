@@ -47,57 +47,60 @@ class Article < ActiveRecord::Base
       end
   end
   
-  def self.render_types
-    ['markdown', 'html']
-  end
-  
-  def self.recent_articles(limit = 10, offset = 0)
-    self.find(:all, :conditions => "published_flag = true", 
-              :order => 'created_at DESC', :offset => offset, :limit => limit)
-  end
-    
-  def self.frontpage_gossip(number = 4)
-    Article.find :all, :limit => number, :order => "created_at desc", :conditions => 'frontpage = true'
-  end
-  
-  def self.find_by_month_and_year(month, year)
-    Article.find(:all, :conditions => [ "date_part('month', articles.created_at)=? AND 
-                                         date_part('year', articles.created_at)=? AND published_flag=true", month, year],
-                 :order => 'articles.created_at',
-                 :include => [:user, :comments])
-  end
-  
-  def Article.archive_months(limit, offset)
-    Article.find(:all, :limit => limit, :offset => offset,
-                 :select => "DISTINCT to_char(created_at, 'Month YYYY') as display_month,
-                             date_part('year', created_at) as year, date_part('month', created_at) as month",
-                 :order => "year desc, month desc")
-  end
-  
   def formatted_date
     created_at.strftime "%B %e, %Y"
   end
   
-  def self.full_text_search(q, options = {})
-    @s_count = Article.count(:all, :conditions => ["articles.published_flag = 't' AND fti_names @@ to_tsquery('english', ?)", q])
-    
-    # Note: This takes (current_page, per_page, total_entries)
-    # We need to do this so we can put LIMIT and OFFSET inside the subquery.
-    WillPaginate::Collection.create(options[:page], options[:per_page] || DEFAULT_SEARCH_PAGE_SIZE, @s_count) do |pager|
-      # perfom the find.
-      # The subquery is here so we don't run ts_headline on all rows, which takes a long long time...
-      # See http://www.postgresql.org/docs/8.4/static/textsearch-controls.html
-      pager.replace Comment.find_by_sql(["
-        SELECT *,
-          ts_headline(article, ?) as headline
-        FROM (
-          SELECT articles.*, rank(fti_names, ?, 1) as tsearch_rank
-          FROM articles
-          WHERE articles.published_flag = 't' AND
-          (fti_names @@ to_tsquery('english', ?))
-          ORDER BY created_at DESC
-          LIMIT ?
-          OFFSET ?) AS comments", q, q, q, pager.per_page, pager.offset])
+  class << self
+    def render_types
+      ['markdown', 'html']
     end
-  end
+  
+    def recent_articles(limit = 10, offset = 0)
+      Article.find(:all, :conditions => "published_flag = true", 
+                :order => 'created_at DESC', :offset => offset, :limit => limit)
+    end
+    
+    def frontpage_gossip(number = 4)
+      Article.find(:all, :limit => number, :order => "created_at desc", :conditions => 'frontpage = true')
+    end
+  
+    def find_by_month_and_year(month, year)
+      Article.find(:all, :conditions => [ "date_part('month', articles.created_at)=? AND 
+                                           date_part('year', articles.created_at)=? AND published_flag=true", month, year],
+                   :order => 'articles.created_at',
+                   :include => [:user, :comments])
+    end
+  
+    def archive_months(limit, offset)
+      Article.find(:all, :limit => limit, :offset => offset,
+                   :select => "DISTINCT to_char(created_at, 'Month YYYY') as display_month,
+                               date_part('year', created_at) as year, date_part('month', created_at) as month",
+                   :order => "year desc, month desc")
+    end
+  
+    def full_text_search(q, options = {})
+      @s_count = Article.count(:all, :conditions => ["articles.published_flag = 't' AND fti_names @@ to_tsquery('english', ?)", q])
+    
+      # Note: This takes (current_page, per_page, total_entries)
+      # We need to do this so we can put LIMIT and OFFSET inside the subquery.
+      WillPaginate::Collection.create(options[:page], options[:per_page] || DEFAULT_SEARCH_PAGE_SIZE, @s_count) do |pager|
+        # perfom the find.
+        # The subquery is here so we don't run ts_headline on all rows, which takes a long long time...
+        # See http://www.postgresql.org/docs/8.4/static/textsearch-controls.html
+        pager.replace Comment.find_by_sql(["
+          SELECT *,
+            ts_headline(article, ?) as headline
+          FROM (
+            SELECT articles.*, rank(fti_names, ?, 1) as tsearch_rank
+            FROM articles
+            WHERE articles.published_flag = 't' AND
+            (fti_names @@ to_tsquery('english', ?))
+            ORDER BY created_at DESC
+            LIMIT ?
+            OFFSET ?) AS comments", q, q, q, pager.per_page, pager.offset])
+      end
+    end
+  end # class << self
+
 end

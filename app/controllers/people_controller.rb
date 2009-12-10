@@ -36,60 +36,33 @@ class PeopleController < ApplicationController
       wants.js {}
     end
   end
-  
+
   def people_list
     expires_in 20.minutes, :public => true
+
     congress = params[:congress] ? params[:congress].to_i : DEFAULT_CONGRESS
     person_type = (params[:person_type] == 'senators') ? 'sen' : 'rep'
-		#params[:sort] = 'popular' unless params[:days].blank?
     @person_type = (person_type == 'sen') ? :senators : :representatives
-    
-    Person
-    
-    case params[:sort]
-    when 'name'
-      @sort = :name
-      if ActiveSupport::Cache.lookup_store(:mem_cache_store)
-        cache = ActiveSupport::Cache.lookup_store(:mem_cache_store)
-        @people = cache.fetch("people_list_#{@sort.to_s}_#{@person_type.to_s}", :expires_at => 20.minutes) {
-          Person.list_chamber(person_type, congress, "lastname asc")
-        }
+    @sort = (params[:sort] || :state).to_sym
+
+    @sort_by = case @sort
+      when :name
+        'lastname asc'
+      when :popular
+        'view_count desc'
+      when :approval
+        'person_approval_average desc'
       else
-        @people = Person.list_chamber(person_type, congress, "lastname asc")
+        'state, lastname'
       end
-    when 'popular'
+
+    if @sort == :popular || @sort == :approval
       @days = days_from_params(params[:days])
-      @sort = :popular
-      if ActiveSupport::Cache.lookup_store(:mem_cache_store)
-        cache = ActiveSupport::Cache.lookup_store(:mem_cache_store)
-        @people = cache.fetch("people_list_#{@sort.to_s}_#{@days}_#{@person_type.to_s}", :expires_at => 20.minutes) {
-          Person.list_chamber(person_type, congress, "view_count desc")
-        }
-      else
-        @people = Person.list_chamber(person_type, congress, "view_count desc")
-      end
-    when 'approval'
-			@days = days_from_params(params[:days])
-			@sort = :approval
-      if ActiveSupport::Cache.lookup_store(:mem_cache_store)
-        cache = ActiveSupport::Cache.lookup_store(:mem_cache_store)
-        @people = cache.fetch("people_list_#{@sort.to_s}_#{@days}_#{@person_type.to_s}", :expires_at => 20.minutes) {
-          Person.list_chamber(person_type, congress, "person_approval_average desc")
-        }
-      else
-        @people = Person.list_chamber(person_type, congress, "person_approval_average desc")
-      end			
-   	else
-      @sort = :state
-      if ActiveSupport::Cache.lookup_store(:mem_cache_store)
-        cache = ActiveSupport::Cache.lookup_store(:mem_cache_store)
-        @people = cache.fetch("people_list_#{@sort.to_s}_#{@person_type.to_s}", :expires_at => 20.minutes) {
-          Person.list_chamber(person_type, congress, "state, lastname")
-        }
-      else
-        @people = Person.list_chamber(person_type, congress, "state, lastname")
-      end      
     end
+    @people = Rails.cache.fetch("people_list_#{ @sort.to_s }_#{ @person_type.to_s }", :expires_in => 20.minutes) {
+          Person.list_chamber(person_type, congress, @sort_by)
+    }
+
     if @sort == :popular
       @atom = {'link' => url_for(:only_path => false, :controller => 'people', :action => 'atom_top20', :type => person_type), 'title' => "Top 20 Most Viewed #{@person_type.to_s.capitalize}"}
       @page_title = person_type == 'sen' ? "Most Viewed Senators" : "Most Viewed Representatives"
@@ -111,7 +84,6 @@ class PeopleController < ApplicationController
       format.html { render :action => 'list' }
       format.js { render :action => 'update'}
 		end
-		  
   end
 
   def compare
@@ -286,19 +258,9 @@ class PeopleController < ApplicationController
 		  #@top_issues.sort! {|a,b| a[0].term <=> b[0].term }
 		  #logger.warn "TOP ISSUES: #{@top_issues}"
 		  
-		  if ActiveSupport::Cache.lookup_store(:mem_cache_store)
-		  
-  		  cache = ActiveSupport::Cache.lookup_store(:mem_cache_store)
-
-        @br_link = cache.fetch("person_link_#{@person.id}", :expires_in => 20.minutes) {
-           @person.br_link
-        }
-
-      else
-        
-        @br_link = @person.br_link
-        
-      end      
+      @br_link = cache.fetch("person_link_#{@person.id}", :expires_in => 20.minutes) {
+         @person.br_link
+      }
 		  
 		  @include_vids_styles = true
       

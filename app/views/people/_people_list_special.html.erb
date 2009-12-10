@@ -43,15 +43,6 @@
          <%= render :partial => "shared/track_link", :locals => {:object => Person.find_by_id(person.id), :title => person.title_long} %>
       <% end %>
       
-			<!-- tbi 
-			<%# if person.is_hot? %>
-				<div class="temp hot">HOT</div>
-			<%# elsif person.is_cooling? %>
-			<div class="temp cooling">Cooling</div>
-			<%# end %>
-			-->
-		
-	
       <% if @show_article_count %>
         (<%= person.send("#{@commentary_type}_count") %> articles)
       <% end %>

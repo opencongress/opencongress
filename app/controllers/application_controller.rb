@@ -11,6 +11,8 @@ class ApplicationController < ActionController::Base
   before_filter :get_site_text_page
   before_filter :is_banned?
 
+  filter_parameter_logging :password
+
   def paginate_collection(collection, options = {})
     # from http://www.bigbold.com/snippets/posts/show/389
     options[:page] = options[:page] || params[:page] || 1

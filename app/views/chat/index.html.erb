@@ -1,0 +1,16 @@
+<html>
+    <head>
+      <%= javascript_include_tag :defaults, :juggernaut %>
+      <%= juggernaut %>
+    </head>
+    <body>
+      <%= form_remote_tag(
+            :url => { :action => :send_data },
+            :complete => "$('chat_input').value = ''" ) %>
+        <%= text_field_tag( 'chat_input', '', { :size => 20, :id => 'chat_input'} ) %>
+        <%= submit_tag "Add" %>
+      </form>
+      <ul id="chat_data" style="list-style:none">
+      </ul>
+    </body>
+  </html>

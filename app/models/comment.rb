@@ -17,10 +17,9 @@ class Comment < ActiveRecord::Base
   named_scope :users_only, :conditions => ["comments.user_id IS NOT NULL"]
   named_scope :user_bill_support, :include => [:user, {:bill => :bill_votes}], :conditions => ["users.id = bill_votes.id AND users.id = comments.user_id AND bill_votes.support = ?", 0]
   named_scope :user_bill_oppose, :include => [:user, {:bill => :bill_votes}], :conditions => ["users.id = bill_votes.id AND users.id = comments.user_id AND bill_votes.support = ?", 1]
-  named_scope :useful, :conditions => ["comments.average_rating > 5"]
-  named_scope :useless, :conditions => ["comments.average_rating < 5"]
-  named_scope :most_useful, :order => ["average_rating desc"], :limit => 3
-  named_scope :uncensored, :conditions => ["censored != ?", true]
+  named_scope :useful, :conditions => ["comments.plus_score_count - comments.minus_score_count DESC > 0"]
+  named_scope :useless, :conditions => ["comments.plus_score_count - comments.minus_score_count DESC < 0"]
+  named_scope :most_useful, :order => ["comments.plus_score_count - comments.minus_score_count DESC"], :limit => 3  named_scope :uncensored, :conditions => ["censored != ?", true]
   
   apply_simple_captcha
   validates_presence_of :comment, :message => "You must enter a comment."
@@ -29,6 +28,14 @@ class Comment < ActiveRecord::Base
   acts_as_nested_set :scope => :root
 #  acts_as_tree
   
+  def score_count_sum
+    plus_score_count.to_i - minus_score_count.to_i
+  end
+  
+  def score_count_all
+    plus_score_count.to_i + minus_score_count.to_i
+  end
+
   def commentable_link
     return self.parent.commentable_link if self.commentable_type.nil?
 

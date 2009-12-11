@@ -5,7 +5,7 @@
 		<% hot_bill_category.bills.each do |b| %>
 		<li class="<%= bill_category(b) %>">
 			<span><%= render :partial => "shared/track_link", :locals => {:object => b} %></span>
-			<a class="icon_link" href="<%= url_for :controller => 'bill', :action => 'show', :id => b.ident %>">
+			<a class="icon_link" href="<%= bill_url(b.ident) %>">
 
 			<div class="title">
 				<% unless b.title_popular_only.blank? %>

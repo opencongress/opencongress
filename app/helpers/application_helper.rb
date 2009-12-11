@@ -75,11 +75,11 @@ module ApplicationHelper
 
   def url_for_object(object)
     if object.kind_of? Bill
-      url_for :controller => 'bill', :action => 'show', :id => object.ident
+      bill_url(object.ident)
     elsif object.kind_of? Person
-      url_for :controller => 'people', :action => 'show', :id => object
+      person_url(object)
     elsif object.kind_of? Subject
-      url_for :controller => 'issue', :action => 'show', :id => object
+      issue_url(object)
     else
       url_for :controller => object.class.name.downcase, :action => 'show', :id => object
     end

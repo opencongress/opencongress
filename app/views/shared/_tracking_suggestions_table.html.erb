@@ -19,7 +19,7 @@
       <td style="vertical-align:top;">
         <ul class="mini_people_list">
         <% tracking_suggestions[1][:my_people_tracked_facet].each do |p| %>
-          <li><%= link_to p[:object].name, :controller => 'people', :action => 'show', :id => p[:object].ident %> 
+          <li><%= link_to p[:object].name, person_url(p[:object].ident) %> 
             [<%= link_to p[:trackers], :controller => 'friends', :action => 'tracking_person', :id => p[:object].ident %>]</li>
         <% end %>
         </ul>
@@ -29,7 +29,7 @@
       <td style="vertical-align:top;">
         <ul class="mini_bills_list">
         <% tracking_suggestions[1][:my_bills_tracked_facet].each do |p| %>
-          <li><%= link_to p[:object].title_typenumber_only, :controller => 'bill', :action => 'show', :id => p[:object].ident %> <%= truncate_string(p[:object].title_common, 40) %>
+          <li><%= link_to p[:object].title_typenumber_only, bill_url(p[:object].ident) %> <%= truncate_string(p[:object].title_common, 40) %>
             [<%= link_to p[:trackers], :controller => 'friends', :action => 'tracking_bill', :id => p[:object].ident %>]</li>
         <% end %>
         </ul>
@@ -39,7 +39,7 @@
       <td style="vertical-align:top;">
         <ul class="mini_issues_list">
         <% tracking_suggestions[1][:my_issues_tracked_facet].each do |p| %>
-          <li><%= link_to p[:object].term, :controller => 'issue', :action => 'show', :id => p[:object].to_param %> 
+          <li><%= link_to p[:object].term, issue_url(p[:object].to_param) %> 
             [<%= link_to p[:trackers], :controller => 'friends', :action => 'tracking_issue', :id => p[:object].to_param %>]</li>
         <% end %>
         </ul>

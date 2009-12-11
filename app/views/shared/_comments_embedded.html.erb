@@ -4,11 +4,11 @@
 	<li><%=h c.user ? c.user.login : "Anonymous" %> : <%=h c.comment %></li>
 	<% end %>
 		<% if object.is_a?(Bill) %>
-			<%= link_to "#{object.comments.length - 2} More", {:controller => 'bill', :action => 'show', :id => "#{object.ident}", :anchor => "comments"}, :class => "arrow" %>
+			<%= link_to "#{object.comments.length - 2} More", bill_url(:id => object.ident, :anchor => "comments"), :class => "arrow" %>
 		<% elsif object.is_a?(Person) %>
-			<%= link_to "#{object.comments.length - 2} More", {:controller => 'people', :action => 'show', :id => "#{object.to_param}"}, :class => "arrow" %>
+			<%= link_to "#{object.comments.length - 2} More", person_url(object.to_param), :class => "arrow" %>
 		<% elsif object.is_a?(Subject) %>
-		<%= link_to "#{object.comments.length - 2} More", {:controller => 'issue', :action => 'show', :id => "#{object.to_param}"}, :class => "arrow" %>
+		<%= link_to "#{object.comments.length - 2} More", issue_url(object.to_param), :class => "arrow" %>
 		<% end %>
 	<% else %>
 	<li><p>No New Comments</p></li>

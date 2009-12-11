@@ -1,6 +1,6 @@
 <p>
-  Bill Sponsor: <a href="<%= url_for(:only_path => false, :controller => 'people', :action => 'show', :id => @bill.sponsor) %>"><%= @bill.sponsor.name %></a><br />
+  Bill Sponsor: <a href="<%= person_url(@bill.sponsor) %>"><%= @bill.sponsor.name %></a><br />
   <% unless @bill.related_bills.empty? %>
-    Related Bills: <%= @bill.related_bills.collect { |rb| "<a href='#{url_for(:only_path => false, :controller => 'bill', :action => 'show', :id => rb.ident)}'>#{rb.title_typenumber_only}</a>"}.join(", ") %><br />
+    Related Bills: <%= @bill.related_bills.collect { |rb| "<a href=\"#{bill_url(rb.ident)}\">#{rb.title_typenumber_only}</a>"}.join(", ") %><br />
   <% end %>
 </p>

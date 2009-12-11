@@ -62,7 +62,7 @@
 			  
 			  
         <li>
-          <a href="<%= url_for :controller => 'bill', :action => 'show', :id => hb.ident %>">
+          <a href="<%= bill_url(hb.ident) %>">
 		 	<span class="views_count">
       			<span><strong><%= number_with_delimiter(hb.views(DEFAULT_COUNT_TIME)) %></strong> views</span>
          	</span>

@@ -1,5 +1,5 @@
 <div class="small_bill_list">
-	<p><%= link_to("<strong>#{bill.title_typenumber_only}</strong> - #{truncate_string(bill.title_common,150)}", :controller => 'bill', :action => 'show', :id => bill.ident) %></p>
+	<p><%= link_to("<strong>#{bill.title_typenumber_only}</strong> - #{truncate_string(bill.title_common,150)}", bill_url(bill.ident)) %></p>
 	<ul class="updates">
 		<% unless bill.actionn_count.nil? %>
 			<li><%= ajax_toggler("status_#{bill.ident}", "<span>Status Updates (#{bill.actionn_count})</span>",

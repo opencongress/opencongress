@@ -163,7 +163,7 @@ chs=#{size}&chl=Democrats (#{democrat_representatives.count})|Republicans (#{rep
     end
   end
 
-  @@STATE_FOR_ABBREV = { 
+  STATE_FOR_ABBREV = { 
     "AL" => "Alabama",
     "AK" => "Alaska" ,
     "AZ" => "Arizona",
@@ -221,18 +221,19 @@ chs=#{size}&chl=Democrats (#{democrat_representatives.count})|Republicans (#{rep
     "WY" => "Wyoming" }
 
     # Make a reverse map for state names to abbrevs, with downcase'd state names.
-    @@ABBREV_FOR_STATE = @@STATE_FOR_ABBREV.merge(@@STATE_FOR_ABBREV) { |k,ov| ov.downcase }.invert
+    ABBREV_FOR_STATE = STATE_FOR_ABBREV.merge(STATE_FOR_ABBREV) { |k,ov| ov.downcase }.invert
+    PAIRS_SORTED = STATE_FOR_ABBREV.invert.to_a.sort
 
     def self.abbrev_for(name)
-      @@ABBREV_FOR_STATE[name.downcase]
+      ABBREV_FOR_STATE[name.downcase]
     end
 
     def self.for_abbrev(abbr)
       return "" if abbr.blank?
-      @@STATE_FOR_ABBREV[abbr.upcase]
+      STATE_FOR_ABBREV[abbr.upcase]
     end
 
-    @@RESIDENT_FOR_ABBREV = {
+    RESIDENT_FOR_ABBREV = {
     "AL" => "Alabamian", 		  
     "AK" => "Alaskan", 	      
     "AZ" => "Arizonan", 		  
@@ -286,7 +287,7 @@ chs=#{size}&chl=Democrats (#{democrat_representatives.count})|Republicans (#{rep
     "WY" => "Wyomingite" }     
 
   def self.resident_for_abbrev(abbr)
-    @@RESIDENT_FOR_ABBREV[abbr.upcase]
+    RESIDENT_FOR_ABBREV[abbr.upcase]
   end  
 
   

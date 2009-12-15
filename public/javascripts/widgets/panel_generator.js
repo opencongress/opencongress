@@ -11,6 +11,11 @@ function setBillStatusBillId(billId) {
   updateBillStatusFields(); 
 }
 
+function setHealthCareStateAbbrev(state_abbrev) {
+  document.getElementById('panel_state_abbrev').value = state_abbrev;
+  updateHealthCareFields(); 
+}
+
 function setIssueBillsIssueId(issueId) {
   document.getElementById('panel_issue_id').value = issueId;
   updateIssueBillsFields(); 
@@ -22,6 +27,10 @@ function updateSyndicatorFields(changedField) {
 
 function updateBillStatusFields(changedField) {  
   updateFields(changedField, "bill_status");
+}
+
+function updateHealthCareFields(changedField) {  
+  updateFields(changedField, "healthcare");
 }
 
 function updateIssueBillsFields(changedField) {  
@@ -70,72 +79,8 @@ function updateFields(changedField, panelType, generatorRefresh) {
   var previewQuery;
   var theIFrame;
   var frameHeight;
-  var baseCode;
-  
-  if (panelType == 'bill_status')
-  {
-    baseCode = "<script type=\"text/javascript\">\n" +
-                 "oc_host_url = \"#HOSTNAME\";\n" +
-                 "oc_bill_id = \"#BILL_ID\";\n" +
-                 "oc_frame_height = \"#FRAME_HEIGHT\";\n" +
-                 "oc_bgcolor = \"#BGCOLOR\";\n" + 
-                 "oc_textcolor = \"#TEXTCOLOR\";\n" + 
-                 "oc_bordercolor = \"#BORDERCOLOR\";\n" + 
-                 "</script>\n" + 
-                 "<script type=\"text/javascript\" " +
-                 "src=\"#HOSTNAMEjavascripts/bill_status.js\">\n</script>";  
-  }
-  else if (panelType == 'issue_bills') {
-    baseCode = "<script type=\"text/javascript\">\n" +
-                 "oc_host_url = \"#HOSTNAME\";\n" +
-                 "oc_issue_id = \"#ISSUE_ID\";\n" +
-                 "oc_item_type = \"#ITEMTYPE\";\n" + 
-                 "oc_bgcolor = \"#BGCOLOR\";\n" + 
-                 "oc_textcolor = \"#TEXTCOLOR\";\n" + 
-                 "oc_bordercolor = \"#BORDERCOLOR\";\n" + 
-                 "</script>\n" + 
-                 "<script type=\"text/javascript\" " +
-                 "src=\"#HOSTNAMEjavascripts/issue_bills.js\">\n</script>";      
-  }
-  else if (panelType == 'watching')
-  {
-    baseCode = "<script type=\"text/javascript\">\n" +
-                 "oc_host_url = \"#HOSTNAME\";\n" +
-                 "oc_pass_bills = \"#PASSBILLS\";\n" +
-                 "oc_dont_pass_bills = \"#DONTPASSBILLS\";\n" +
-                 "oc_bgcolor = \"#BGCOLOR\";\n" + 
-                 "oc_textcolor = \"#TEXTCOLOR\";\n" + 
-                 "oc_bordercolor = \"#BORDERCOLOR\";\n" + 
-                 "</script>\n" + 
-                 "<script type=\"text/javascript\" " +
-                 "src=\"#HOSTNAMEjavascripts/watching.js\">\n</script>";
-  }
-  else if (panelType == 'mypn')
-  {
-    baseCode = "<script type=\"text/javascript\">\n" +
-                 "oc_mypn_host_url = \"#HOSTNAME\";\n" +
-                 "oc_mypn_user = \"#USER\";\n" +
-                 "oc_mypn_num_items = \"#NUM_ITEMS\";\n" +
-                 "oc_mypn_bgcolor = \"#BGCOLOR\";\n" + 
-                 "oc_mypn_textcolor = \"#TEXTCOLOR\";\n" + 
-                 "oc_mypn_bordercolor = \"#BORDERCOLOR\";\n" + 
-                 "</script>\n" + 
-                 "<script type=\"text/javascript\" " +
-                 "src=\"#HOSTNAMEjavascripts/mypn_widget.js\">\n</script>";
-  }
-  else
-  {
-    baseCode = "<script type=\"text/javascript\">\n" +
-                 "oc_host_url = \"#HOSTNAME\";\n" +
-                 "oc_num_items = \"#NUM_ITEMS\";\n" +
-                 "oc_item_type = \"#ITEMTYPE\";\n" + 
-                 "oc_bgcolor = \"#BGCOLOR\";\n" + 
-                 "oc_textcolor = \"#TEXTCOLOR\";\n" + 
-                 "oc_bordercolor = \"#BORDERCOLOR\";\n" + 
-                 "</script>\n" + 
-                 "<script type=\"text/javascript\" " +
-                 "src=\"#HOSTNAMEjavascripts/syndicator.js\">\n</script>";
-  }
+  var userCode;
+  var scriptName;
 
   if (changedField != null) {
     document.getElementById(changedField).value = document.getElementById(changedField + "_select").value    
@@ -143,11 +88,11 @@ function updateFields(changedField, panelType, generatorRefresh) {
 
   var hostname = document.getElementById('panel_hostname').value;
 
-  var bg_color = document.getElementById('panel_bgcolor').value ?
+  var bg_color = document.getElementById('panel_bgcolor') ?
                  document.getElementById('panel_bgcolor').value : 'ffffff';
-  var textcolor = document.getElementById('panel_textcolor').value ?
+  var textcolor = document.getElementById('panel_textcolor') ?
                   document.getElementById('panel_textcolor').value : '333333';
-  var bordercolor = document.getElementById('panel_bordercolor').value ?
+  var bordercolor = document.getElementById('panel_bordercolor') ?
                     document.getElementById('panel_bordercolor').value : '999999';
 
   if (panelType == 'syndicator')
@@ -171,6 +116,11 @@ function updateFields(changedField, panelType, generatorRefresh) {
                     document.getElementById('panel_item_type').value : 'new-bill';
     frameHeight = 338;
   }
+  else if (panelType == 'healthcare') {
+      var state_abbrev = document.getElementById('panel_state_abbrev') ?
+                     document.getElementById('panel_state_abbrev').value : 'AL';
+    frameHeight = 400;
+  }
   else if (panelType == 'bill_status')
   {
     var bill_id = document.getElementById('panel_bill_id').value ?
@@ -187,12 +137,11 @@ function updateFields(changedField, panelType, generatorRefresh) {
     if (num_dont_pass_bills > 0) {
       frameHeight += 18;
     }
-  }   
-    
-                    
+  }
+
   previewQuery = "bg_color=" + bg_color +
                  "&textcolor=" + textcolor;
-                 
+
   if (panelType == 'syndicator')
   {       
     previewQuery += "&item_type=" + item_type +
@@ -202,20 +151,20 @@ function updateFields(changedField, panelType, generatorRefresh) {
                     "&user=" + user;
   } else if (panelType == 'issue_bills') {
     previewQuery += "&item_type=" + item_type +
-                    "&issue_id=" + issue_id;    
+                    "&issue_id=" + issue_id;
+  } else if (panelType == 'healthcare') {
+    previewQuery = "state=" + state_abbrev;
   } else if (panelType == 'watching') {
     previewQuery += "&pass_bills=" + passBills +
                     "&dont_pass_bills=" + dontPassBills;    
-  }
-  else {
+  } else { /* in what case is this used? */
     previewQuery += "&bill_id=" + bill_id;
   }
-                
+
   theIFrame = document.getElementById(panelType + '_panel');
 
   oldUrl = theIFrame.src;
   theIFrame.src = document.getElementById('panel_path').value + "?" + previewQuery;
-  
 
   if (panelType == 'bill_status')
   { 
@@ -228,7 +177,7 @@ function updateFields(changedField, panelType, generatorRefresh) {
       //}
       theIFrame.onLoad = setTimeout("parent.updateFields(null, 'bill_status', true)", 2000);
     }
-    
+
     if (theIFrame.contentDocument && theIFrame.contentDocument.body.offsetHeight) //ns6 syntax
     {
       frameHeight = theIFrame.contentDocument.body.offsetHeight + 5; 
@@ -238,7 +187,7 @@ function updateFields(changedField, panelType, generatorRefresh) {
       frameHeight = theIFrame.Document.body.scrollHeight;
     }
   }
-  
+
   if (window.navigator.userAgent.indexOf("MSIE")) {
     theIFrame.height = frameHeight + 7;    
   } else {
@@ -246,7 +195,66 @@ function updateFields(changedField, panelType, generatorRefresh) {
   }
   theIFrame.style.borderColor = "#" + bordercolor;
 
-  userCode = baseCode;
+  userCode = "<script type=\"text/javascript\">\n"
+  if (panelType == 'bill_status')
+  {
+    userCode += "oc_host_url = \"#HOSTNAME\";\n" +
+                 "oc_bill_id = \"#BILL_ID\";\n" +
+                 "oc_frame_height = \"#FRAME_HEIGHT\";\n" +
+                 "oc_bgcolor = \"#BGCOLOR\";\n" + 
+                 "oc_textcolor = \"#TEXTCOLOR\";\n" + 
+                 "oc_bordercolor = \"#BORDERCOLOR\";\n";
+    scriptName = "#HOSTNAMEjavascripts/widgets/bill_status.js";
+  }
+  else if (panelType == 'issue_bills') {
+    userCode += "oc_host_url = \"#HOSTNAME\";\n" +
+                 "oc_issue_id = \"#ISSUE_ID\";\n" +
+                 "oc_item_type = \"#ITEMTYPE\";\n" + 
+                 "oc_bgcolor = \"#BGCOLOR\";\n" + 
+                 "oc_textcolor = \"#TEXTCOLOR\";\n" + 
+                 "oc_bordercolor = \"#BORDERCOLOR\";\n";
+    scriptName = "#HOSTNAMEjavascripts/widgets/issue_bills.js";      
+  }
+  else if (panelType == 'watching')
+  {
+    userCode += "oc_host_url = \"#HOSTNAME\";\n" +
+                 "oc_pass_bills = \"#PASSBILLS\";\n" +
+                 "oc_dont_pass_bills = \"#DONTPASSBILLS\";\n" +
+                 "oc_bgcolor = \"#BGCOLOR\";\n" + 
+                 "oc_textcolor = \"#TEXTCOLOR\";\n" + 
+                 "oc_bordercolor = \"#BORDERCOLOR\";\n";
+    scriptName = "#HOSTNAMEjavascripts/widgets/watching.js";
+  }
+  else if (panelType == 'mypn')
+  {
+    userCode += "oc_mypn_host_url = \"#HOSTNAME\";\n" +
+                 "oc_mypn_user = \"#USER\";\n" +
+                 "oc_mypn_num_items = \"#NUM_ITEMS\";\n" +
+                 "oc_mypn_bgcolor = \"#BGCOLOR\";\n" + 
+                 "oc_mypn_textcolor = \"#TEXTCOLOR\";\n" + 
+                 "oc_mypn_bordercolor = \"#BORDERCOLOR\";\n";
+    scriptName = "#HOSTNAMEjavascripts/widgets/mypn_widget.js";
+  }
+  else if (panelType == 'healthcare')
+  {
+    userCode += "oc_host_url = \"#HOSTNAME\";\n" +
+                 "oc_state = \"#STATE_ABBREV\";\n";
+    scriptName = "#HOSTNAMEjavascripts/widgets/healthcare.js";
+  }
+  else
+  {
+    userCode += "oc_host_url = \"#HOSTNAME\";\n" +
+                 "oc_num_items = \"#NUM_ITEMS\";\n" +
+                 "oc_item_type = \"#ITEMTYPE\";\n" + 
+                 "oc_bgcolor = \"#BGCOLOR\";\n" + 
+                 "oc_textcolor = \"#TEXTCOLOR\";\n" + 
+                 "oc_bordercolor = \"#BORDERCOLOR\";\n";
+    scriptName = "#HOSTNAMEjavascripts/widgets/syndicator.js";
+  }
+  userCode += "</script>\n" + 
+               "<script type=\"text/javascript\" " +
+               "src=\"" + scriptName + "\"></script>";
+
   userCode = userCode.replace(/#HOSTNAME/g, hostname);
   if (panelType == 'syndicator')
   {
@@ -257,7 +265,9 @@ function updateFields(changedField, panelType, generatorRefresh) {
     userCode = userCode.replace(/#USER/, user);
   } else if (panelType == 'issue_bills') {
     userCode = userCode.replace(/#ITEMTYPE/, item_type);
-    userCode = userCode.replace(/#ISSUE_ID/, issue_id);    
+    userCode = userCode.replace(/#ISSUE_ID/, issue_id); 
+  } else if (panelType == 'healthcare') {
+      userCode = userCode.replace(/#STATE_ABBREV/, state_abbrev);   
   } else if (panelType == 'watching') {
     userCode = userCode.replace(/#PASSBILLS/, passBills);
     userCode = userCode.replace(/#DONTPASSBILLS/, dontPassBills);
@@ -268,7 +278,7 @@ function updateFields(changedField, panelType, generatorRefresh) {
   userCode = userCode.replace(/#BGCOLOR/, bg_color);
   userCode = userCode.replace(/#TEXTCOLOR/, textcolor);
   userCode = userCode.replace(/#BORDERCOLOR/, bordercolor);
-   
+
   document.getElementById('panel_code').value = userCode;
 }
 

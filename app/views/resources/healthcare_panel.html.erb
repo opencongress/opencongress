@@ -205,8 +205,8 @@ margin-bottom: 10px;
 				<h5 class="bill_title">H.R. 3590 - Patient Protection and Affordable Care Act</h5>
 
    			<%= link_to("View Full Bill Text", url_for(:controller => 'bill', :action => 'text', :id => @senate_bill_ident), :class => "full_text") %>
-   			<!-- <a href="#" class="comments">View Comments by <%= h params[:state] %> users</a> -->
-   			<%= link_to("View Full Roll Call", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "h", :number => "887"), :class => "roll_call") %>
+   			<!-- <a href="#" class="comments">View Comments by <%= h params[:state] %> users</a> 
+   			<%= link_to("View Full Roll Call", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "h", :number => "887"), :class => "roll_call") %> -->
    			<%= link_to("#{ @state_name } Reps Voting Record", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "h", :number => "887", :state => params[:state]), :class => "voting_record") %>
    			<%= link_to("OpenCongress Users in #{ h params[:state ] } tracking this bill (#{ @senate_state_users })", users_tracking_bill_by_state_url(:id => @senate_bill_ident, :state => params[:state]), :class => "tracking") %>
 			

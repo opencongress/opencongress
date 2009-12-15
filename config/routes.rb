@@ -46,8 +46,6 @@ ActionController::Routing::Routes.draw do |map|
   map.users_tracking_bill_by_state 'bill/:id/users_tracking/:state', :controller => 'friends', :action => 'tracking_bill', :state => /\w{2}/
 
   map.with_options :controller => 'bill' do |b|
-    b.connect 'bill/:id/:action'
-    b.connect 'bill/:id/:action.:format'
     b.connect 'bill/all', :action => 'all'
     b.connect 'bill/pending', :action => 'pending'
     b.connect 'bill/popular', :action => 'popular'
@@ -75,6 +73,8 @@ ActionController::Routing::Routes.draw do |map|
     b.connect 'bill/:show_comments/:id/show', :action => 'show'  
     b.connect 'bill/bill_vote/:bill/:id', :action => 'bill_vote'
     b.bill 'bill/:id/show', :action => 'show'
+    b.connect 'bill/:id/:action'
+    b.connect 'bill/:id/:action.:format'
   end
 
   map.with_options :controller => 'people' do |p|

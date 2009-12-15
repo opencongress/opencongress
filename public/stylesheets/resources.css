@@ -62,3 +62,15 @@ padding-bottom: 15px;
 border-bottom: 1px solid #ddd;
 margin: 0 0 0 35px;
 }
+
+#preview_healthcare_panel {
+    display: block;
+    float: left;
+    width: 400px;
+}
+
+#preview_healthcare_code {
+    display: block;
+    float: left;
+    width: 500px;
+}

@@ -1,0 +1,45 @@
+<%= javascript_include_tag 'widgets/panel_generator' %>
+
+<div id="heading">
+  <h2>Make a Health Care Widget</h2>
+</div>
+<div class="padding">
+  <p>
+  This widget keeps your visitors up-to-date with the health care bill.
+  </p>
+
+  <dl class="tool_form healthcare_status">
+    
+   <dt><label for="post_info_url">Select a state:</label></dt>
+   <dd>
+     <%= select("panel", "state_abbrev_select", State::PAIRS_SORTED, { :onChange => "setHealthCareStateAbbrev(document.getElementById('panel_state_abbrev_select').value);" } ) %>
+   </dd>
+
+  <%= submit_tag "Update Panel Preview >> ", { :onClick => "updateHealthCareFields('panel_state_abbrev');" } %>
+
+  <%= hidden_field 'panel', 'state_abbrev', {:value => "AL" } %>
+  <%= hidden_field 'panel', 'path', { :value =>  "/resources/healthcare_panel" } %>
+  <%= hidden_field 'panel', 'hostname', { :value => home_url } %>
+
+  </dl>
+
+  <div id="preview_container">
+  
+  <div id="preview_healthcare_panel">
+  How the panel will look:<br>
+  <iframe id="healthcare_panel" name="oc_healthcare_frame" width="350" scrolling="no" frameborder="0" style="border: 0px solid #999;" allowtransparency="true" hspace="0" vspace="0" marginheight="0" marginwidth="0"></iframe>
+  </div>
+
+  <div id="preview_healthcare_code">
+  Copy and paste this code into your webpage:<br>
+
+  <%= text_area 'panel', 'code', "cols" => 68, "rows" => 20 %>
+
+  </div>
+
+  </div>
+
+  <!-- The following image forces the fields to update on the initial load of the page -->
+  <img src="/images/blank.gif" class="noborder" width="0" height="0" onLoad="updateHealthCareFields();">
+  <br />
+</div>

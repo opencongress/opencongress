@@ -2,7 +2,7 @@
   <% if @roll_call.bill %>
     <% if @roll_call.amendment %>
       <h2>
-        Amendment (<%= @roll_call.amendment.display_number %>) to <%= link_to @roll_call.bill.title_typenumber_only, bill_url(@roll_call.bill.ident) } %>: 
+        Amendment (<%= @roll_call.amendment.display_number %>) to <%= link_to @roll_call.bill.title_typenumber_only, bill_url(@roll_call.bill.ident) %>: 
       <%= @roll_call.bill.title_official %>
       </h2>
     <% else %>

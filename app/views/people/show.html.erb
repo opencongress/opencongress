@@ -107,7 +107,7 @@
     <%= render :partial => "shared/tracking_suggestions_table", 
                :locals => {:object => @person, 
                            :title => @person.full_name, 
-                           :action => "tracking_person", 
+                           :action => 'tracking_person', 
                            :tracking_suggestions => @person_tracking_suggestions} %>
 
   <% end %>
@@ -116,7 +116,7 @@
     <%= render :partial => "shared/support_oppose_tables",
               :locals => {:object => @person,
                           :title => @person.full_name,
-                          :action => "supporting_person",
+                          :action => 'supporting_person',
                           :stance => "supporting",
                           :tracking_suggestions => @supporting_suggestions} %>
   <% end %>
@@ -125,7 +125,7 @@
     <%= render :partial => "shared/support_oppose_tables",
               :locals => {:object => @person,
                           :title => @person.full_name,
-                          :action => "opposing_person",
+                          :action => 'opposing_person',
                           :stance => "opposing",
                           :tracking_suggestions => @opposing_suggestions} %>
   

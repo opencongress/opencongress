@@ -14,8 +14,8 @@
   <% unless logged_in? %>
 
 
-Please <%= link_to "Login", :controller => "account", :action => "login" %> or
-    <%= link_to "Signup", :controller => "account", :action => "signup" %>, unless you wish to post anonymously
+Please <%= link_to "Login", login_url %> or
+    <%= link_to "Signup", signup_url %>, unless you wish to post anonymously
     
     
     <!--

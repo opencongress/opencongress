@@ -63,7 +63,7 @@ class Admin::SiteTextPagesController < Admin::IndexController
         format.html { redirect_to(@site_text_page) }
         format.xml  { render :xml => @site_text_page, :status => :created, :location => @site_text_page }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => 'new' }
         format.xml  { render :xml => @site_text_page.errors, :status => :unprocessable_entity }
       end
     end
@@ -80,7 +80,7 @@ class Admin::SiteTextPagesController < Admin::IndexController
         format.html { redirect_to("/?#{@site_text_page.page_params}") }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => 'edit' }
         format.xml  { render :xml => @site_text_page.errors, :status => :unprocessable_entity }
       end
     end

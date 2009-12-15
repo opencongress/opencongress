@@ -21,7 +21,7 @@
 	<table class="ctable">
 		<tr>
 			<td style="">
-			<% if comment.user %><%= link_to h(comment.user.login), :controller => "profile", :action => "profile", :login => h(comment.user.login) %>'s
+			<% if comment.user %><%= link_to h(comment.user.login), user_profile_path(:login => comment.user.login) %>'s
 				<% else %>
 				Anonymous's
 				<% end %>
@@ -53,7 +53,7 @@
 
 			</td>
 			<% else %>
-			<td><%= link_to "Login to Rate", :controller => "account", :action => "login" %></td>
+			<td><%= link_to "Login to Rate", login_url %></td>
 			<% end %>
 			<% comment_scores = comment.comment_scores %>
 			<% unless comment_scores.empty? %>
@@ -62,7 +62,7 @@
 			<% end %>
 			<% if logged_in? %>
 			<td class="flag" onmouseover="Element.show('flag_help_<%= comment.id.to_s %>');" onmouseout="Element.hide('flag_help_<%= comment.id.to_s %>');">
-			<%= link_to image_tag('/images/flag.png', :alt => 'flag'), :controller => "comments", :action => 'flag', :id => comment.id %>
+			<%= link_to image_tag('/images/flag.png', :alt => 'flag'), :controller => 'comments', :action => 'flag', :id => comment.id %>
 			<%= dbox_start("flag_help_#{comment.id.to_s}", -190, 0, 175, "right")%>
 			Click this flag to mark this comment as inappropriate
 			<%= dbox_end %>

@@ -234,7 +234,7 @@ class ResourcesController < ApplicationController
       
         bill = Bill.find_by_session_and_bill_type_and_number(l[1], Bill.long_type_to_short(l[2]), l[3])
         if bill
-          @text.gsub!(l[0], url_for(:only_path => false, :controller => 'bill', :action => 'show', :id => bill.ident))
+          @text.gsub!(l[0], bill_url(bill.ident))
         else
           @warnings += "Could not find a corresponding bill for <b>#{l[0]}</b><br />"
         end

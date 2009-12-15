@@ -13,7 +13,7 @@
 				<span class="aye">Ayes</span> <%= roll.ayes %>&nbsp;&nbsp;&nbsp;<span class="nay">Nays</span> <%= roll.nays %></a>
 			<% if can_blog? %>
 			<b>Make <%= roll.number %> a hot vote:</b>
-			<% form_for :roll_call, roll, :url => { :controller => :roll_call, :action => "make_hot", :id => roll.id } do |f| %>
+			<% form_for :roll_call, roll, :url => { :controller => :roll_call, :action => 'make_hot', :id => roll.id } do |f| %>
 			Editorial Title: <%= f.text_field :title %>
 			<%= submit_tag "Make Hot Vote" %>
 			<% end %>

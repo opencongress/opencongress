@@ -12,7 +12,7 @@
 <% if @user.id == current_user.id %>
 <div style="float:right;width:100px;">
   <%= image_tag("/images/private.png", :alt => "private", :title => "Private", :id => 'Privacy', :style => "float:left;margin-right:5px;") %>
-<% form_for :privacy_option, @user.privacy_option, :url => {:controller => "/profile", :action => "update_privacy" } do |f| %>
+<% form_for :privacy_option, @user.privacy_option, :url => {:controller => "/profile", :action => 'update_privacy' } do |f| %>
 <%= f.select PrivacyOption.column_names[9].to_sym, [["Public",2],["Friends", 1], ["Private",0]], {}, {:onchange => "this.form.submit();"} %>	
 </div>
 <% end %>
@@ -62,12 +62,12 @@
 			<% @bills_supported.each do |bill| %>
       <tr>
         <td>
-          <%= link_to bill.title_typenumber_only, :controller => 'bill', :action => "show", :id => bill.ident %>
+          <%= link_to bill.title_typenumber_only, bill_url(bill.ident) %>
           <%= bill.title_common %> <span class='date'>(<%= number_to_ordinal(bill.session) %> congress)</span>
         </td>
         <td><%= temp_url_strip(bill.status) %></td>
 				<td><%= bill.last_action.formatted_date %></td>
-				<td><%= button_to("Remove", :action => "remove_vote", :id => bill.id) if current_user == @user %></td>
+				<td><%= button_to("Remove", :action => 'remove_vote', :id => bill.id) if current_user == @user %></td>
 			</tr>
       <% end %>
 
@@ -90,12 +90,12 @@
       <% @bills_opposed.each do |bill| %>
       <tr>
         <td>
-          <%= link_to bill.title_typenumber_only, :controller => 'bill', :action => "show", :id => bill.ident %>
+          <%= link_to bill.title_typenumber_only, :controller => 'bill', :action => 'show', :id => bill.ident %>
           <%= bill.title_common %> <span class='date'>(<%= number_to_ordinal(bill.session) %> congress)</span>
         </td>
         <td><%= temp_url_strip(bill.status) %></td>
         <td><%= bill.last_action.formatted_date %></td>
-        <td><%= button_to("Remove", :action => "remove_vote", :id => bill.id) if current_user == @user %></td>
+        <td><%= button_to("Remove", :action => 'remove_vote', :id => bill.id) if current_user == @user %></td>
       </tr>
       <% end %>
 			<% end %>

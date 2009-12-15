@@ -14,7 +14,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
       case i.class.name
       when 'Bill'
         xml.title   i.sponsor.name + 'Introduced Bill: ' + i.title_typenumber_only
-        xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'bill', :action => 'show', :id => i.ident)
+        xml.link    "rel" => "alternate", "href" => bill_url(i.ident)
         xml.id      i.atom_id_as_entry
         xml.updated Time.at(i.introduced).strftime("%Y-%m-%dT%H:%M:%SZ")
         xml.content "type" => "html" do
@@ -28,7 +28,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
           xml.title   "Vote: '" + i.to_s + "' regarding " + i.roll_call.bill.title_typenumber_only
           xml.content "type" => "html" do
             xml.text! i.person.name + " voted '" + i.to_s + "' on the question: " + 
-              (link_to i.roll_call.question, :only_path => false, :controller => 'roll_call', :action => 'show', :id => i.roll_call) +
+              (link_to(i.roll_call.question, bill_url(i.roll_call)) +
                       " regarding #{link_to i.roll_call.bill.title_full_common, :only_path => false, :controller => 'bill', :action => 'show', :id => i.roll_call.bill.ident}"
           end
         else

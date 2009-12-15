@@ -25,7 +25,7 @@
     <div class="comm_user">
   		
 		<% if comment.user %>
-  		  <%= link_to h(comment.user.login), :controller => "profile", :action => "profile", :login => h(comment.user.login) %>
+  		  <%= link_to h(comment.user.login), user_profile_path(:login => comment.user.login) %>
   		<% else %>
   			Anonymous 
   		<% end %>
@@ -35,7 +35,7 @@
   	</div>
   	<div class="comm_action">
   		<% if logged_in? %>
-  		  <a href="<%= url_for :controller => "comments", :action => 'flag', :id => comment.id %>" class="flag" id="flag_<%= comment.id.to_s %>"><%= image_tag('/images/flag.png', :alt => 'flag') %></a>
+  		  <a href="<%= url_for :controller => 'comments', :action => 'flag', :id => comment.id %>" class="flag" id="flag_<%= comment.id.to_s %>"><%= image_tag('/images/flag.png', :alt => 'flag') %></a>
 				<script type="text/javascript">
 				$j().ready(function(){
 					$j("#flag_<%= comment.id.to_s %>").qtip({
@@ -68,8 +68,8 @@
 				</script>
   	  <% end %>
   	  <%= link_to '<span>Link</span>', url_for(comment.commentable_link.merge({:goto_comment => comment.id})), { :class => 'small_button'} %>
-  		<%= link_to_remote "<span>Reply</span>", :url => {:controller => "comments",
-  			:action => "showcomfield", :parent_id => comment.id,
+  		<%= link_to_remote "<span>Reply</span>", :url => {:controller => 'comments',
+  			:action => 'showcomfield', :parent_id => comment.id,
   			:object => object.id,
   			:type => object.class.to_s},
   			:update => "com_" + comment.id.to_s,
@@ -80,16 +80,16 @@
 
 				<% if logged_in? %>
 	  				<% comment_score = myscores.select{ |s| s.comment_id == comment.id }.first %>
-	  					<%= link_to_remote "<span>&minus;</span>", :url => {:controller => "comments", :action => :rate, :id => comment.id, :value => 1}, :html => {:id => 'minus', :class => "small_button#{comment_score.score > 5 ? ' active' : '' unless comment_score.nil?}"} %>
-	  					<%= link_to_remote "<span>+</span>", :url => {:controller => "comments", :action => :rate, :id => comment.id, :value => 10}, :html => {:id => 'plus', :class => "small_button#{comment_score.score < 5 ? ' active' : '' unless comment_score.nil?}"} %>
+	  					<%= link_to_remote "<span>&minus;</span>", :url => {:controller => 'comments', :action => :rate, :id => comment.id, :value => 1}, :html => {:id => 'minus', :class => "small_button#{comment_score.score > 5 ? ' active' : '' unless comment_score.nil?}"} %>
+	  					<%= link_to_remote "<span>+</span>", :url => {:controller => 'comments', :action => :rate, :id => comment.id, :value => 10}, :html => {:id => 'plus', :class => "small_button#{comment_score.score < 5 ? ' active' : '' unless comment_score.nil?}"} %>
 
 	<!--
 	<a href="#" class="minus <%= comment_score.score < 5 ? " rated" : "" unless comment_score.nil? %>" onclick="new Ajax.Updater('rate_comment_<%= comment.id.to_s%>','/comments/rate/<%= comment.id %>?value=1', {asynchronous:true, evalScripts:true}); return false;">-</a>
 							<a href="#" class="plus <%= comment_score.score > 5 ? " rated" : "" unless comment_score.nil? %>" onclick="new Ajax.Updater('rate_comment_<%= comment.id.to_s%>','/comments/rate/<%= comment.id %>?value=10', {asynchronous:true, evalScripts:true}); return false;">+</a>
 -->
 			<% else %>
-					<%= link_to("<span>&minus;</span>", {:controller => "account", :action => "login", :modal => true}, :id => 'minus', :class => 'small_button rate_trigger' ) %>
-					<%= link_to("<span>+</span>", {:controller => "account", :action => "login", :modal => true}, :id => 'plus', :class => 'small_button rate_trigger' ) %>
+					<%= link_to("<span>&minus;</span>", login_url(:modal => true), :id => 'minus', :class => 'small_button rate_trigger' ) %>
+					<%= link_to("<span>+</span>", login_url(:modal => true), :id => 'plus', :class => 'small_button rate_trigger' ) %>
 	  		<% end %>
 
 				<span class="comm_score" id="comm_score_<%= comment.id %>" style="color:<%= integer_to_color(comment.score_count_sum.to_i)%>"><%= comment.score_count_sum %></span>

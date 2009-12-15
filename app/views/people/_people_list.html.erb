@@ -25,7 +25,7 @@
 			<% end %>
     <li id="p<%= person.id.to_s %>" class="person">
       <%= "<span class='date'>#{(i + 1)}</span>" unless (@sort == :name or @sort == :state or controller.action_name = 'zipcodelookup') %>  
-			<%= link_to("<img src='/images/photos/thumbs_125/" + person.id.to_s + ".jpeg'>", {:controller => "people", :action => "show", :id => person.to_param}) %>
+			<%= link_to("<img src='/images/photos/thumbs_125/" + person.id.to_s + ".jpeg'>", {:controller => 'people', :action => 'show', :id => person.to_param}) %>
       
 			<div class="left details">
 				<a class="name" href="/people/show/<%= person.to_param %>"><%= person.name %> <span><%= person.party %></span></a>

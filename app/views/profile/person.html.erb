@@ -4,16 +4,16 @@
 		
 <div id="linkcontent" style="clear:both;padding-top:10px;width:100%;">
 <% unless @bookmarks.nil? || @bookmarks.empty? %>
-<h3><%= @ptype %> I'm Tracking <%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => "user_feeds", :login => @user.login, :action =>  params[:person_type], :key => logged_in? ? current_user.feed_key : nil %></h3>
+<h3><%= @ptype %> I'm Tracking <%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => 'user_feeds', :login => @user.login, :action =>  params[:person_type], :key => logged_in? ? current_user.feed_key : nil %></h3>
 <br />
 <ul>
 	<% @bookmarks.each do |b| %>
 	  <li class="people">
-			<div style="float:right;"><%= button_to("Remove", :action => "remove_bookmark", :id => b.id) if current_user == @user %></div> 
-			<p><span style="font-size:16px;font-weight:bold;"><%= link_to(b.person.name, :controller => "people", :action => "show", :id => b.person.to_param) %></span> 
+			<div style="float:right;"><%= button_to("Remove", :action => 'remove_bookmark', :id => b.id) if current_user == @user %></div> 
+			<p><span style="font-size:16px;font-weight:bold;"><%= link_to(b.person.name, :controller => 'people', :action => 'show', :id => b.person.to_param) %></span> 
                         </p>
 <p>
-Tracked by <%= link_to b.person.bookmarks.count, :controller => "friends", :action => "tracking_person", :id => b.person.ident %> users</p>
+Tracked by <%= link_to b.person.bookmarks.count, :controller => 'friends', :action => 'tracking_person', :id => b.person.ident %> users</p>
 	   <% items = Array.new 
 	       items << b.person.last_x_bills(3).to_a
 	       items.concat(b.person.votes(3).to_a)
@@ -23,12 +23,12 @@ Tracked by <%= link_to b.person.bookmarks.count, :controller => "friends", :acti
 	   <ul>
 	   <%  items[0..2].each do |i| %>
 	     <% if i.class.name == "Bill" %>
-	       <li style="display:list-item;margin-top:5px;"><%= i.sort_date.to_s(:short) + ' - Introduced Bill: ' + link_to(i.title_typenumber_only, :controller => 'bill', :action => 'show', :id => i.ident) + " : " + i.title_official %>
+	       <li style="display:list-item;margin-top:5px;"><%= i.sort_date.to_s(:short) + ' - Introduced Bill: ' + link_to(i.title_typenumber_only, bill_url(i.ident)) + " : " + i.title_official %>
 	       </li>
 	     <% elsif i.class.name == "RollCallVote" %> 
 	       <li style="display:list-item;margin-top:5px;"><%= i.sort_date.to_s(:short) + ' - ' + "Voted '" + i.to_s + "' on the question: " +
 	              (link_to i.roll_call.question, :only_path => false, :controller => 'roll_call', :action => 'show', :id => i.roll_call) +
-	                      " regarding #{link_to i.roll_call.bill.title_typenumber_only, :only_path => false, :controller => 'bill', :action => 'show', :id => i.roll_call.bill.ident}: #{i.roll_call.bill.title_common}" if i.roll_call.bill  %>
+	                      " regarding #{link_to(i.roll_call.bill.title_typenumber_only, bill_url(i.roll_call.bill.ident))}: #{i.roll_call.bill.title_common}" if i.roll_call.bill  %>
 	       </li>
 	     <% else %>
 	       <li><%= "Vote: '" + i.to_s + "' on the question " + i.roll_call.question %>

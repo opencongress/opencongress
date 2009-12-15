@@ -19,42 +19,42 @@
 	<div class="what-line"></div>
 	<div style="float:right;">
 	<% if @user == current_user %>
-	<% form_for :privacy_option, @user.privacy_option, :url => {:controller => "/profile", :action => "update_privacy" } do |f| %>
+	<% form_for :privacy_option, @user.privacy_option, :url => {:controller => "/profile", :action => 'update_privacy' } do |f| %>
     <%= f.select PrivacyOption.column_names[10].to_sym, [["Public",2],["Friends", 1], ["Private",0]], {}, {:onchange => "this.form.submit();"} %>
 	  <span style = "margin-left:10px;"><%= image_tag("/images/private.png", :alt => "private", :title => "Private", :id => 'Privacy') %></span>
     <% end %>
     <% end %>
     </div>
     <% unless @user.bill_bookmarks.length == 0 %>
-				<h3><%= link_to "Tracking #{@user.bill_bookmarks.length} Bills", :controller => "profile", :action => "bills" %></h3>
+				<h3><%= link_to "Tracking #{@user.bill_bookmarks.length} Bills", :controller => 'profile', :action => 'bills' %></h3>
 			<ul class="links_detailed">
 				<% @bill_items_tracked[0...10].each do |bill| %>
 				  <li class="<%= cycle('odd', 'even')%>"><%= render :partial => "bill_main_detail", :locals => {:bill => bill} %></li>
 		  	<% end %>
 				<% if @bill_items_tracked.length > 10 %>
-					<li class="even"><%= link_to "#{@user.bill_bookmarks.length - 10} more bills", {:controller => "profile", :action => "bills"}, :class => "arrow" %></li>
+					<li class="even"><%= link_to "#{@user.bill_bookmarks.length - 10} more bills", {:controller => 'profile', :action => 'bills'}, :class => "arrow" %></li>
 				<% end %>
 			</ul>
   	<% end %>
 	 <% unless @sen_items_tracked.length == 0 %>
-		<h3><%= link_to "Tracking #{@sen_items_tracked.length} Senators", :controller => "profile", :action => "person", :person_type => "senators" %></h3>
+		<h3><%= link_to "Tracking #{@sen_items_tracked.length} Senators", :controller => 'profile', :action => 'person', :person_type => "senators" %></h3>
 	     <%= render :partial => "person_main_detail", :locals => {:people => @sen_items_tracked[0...10], :show_updates => true }, 
 	                            :person_type => "Senator" %>
 	    <div class="after"></div>
 	 <% end %>
   <% unless @rep_items_tracked.length == 0 %>
-		<h3><%= link_to "Tracking #{@rep_items_tracked.length} Representatives", :controller => "profile", :action => "person", :person_type => "representatives" %></h3>
+		<h3><%= link_to "Tracking #{@rep_items_tracked.length} Representatives", :controller => 'profile', :action => 'person', :person_type => "representatives" %></h3>
 	   <%= render :partial => "person_main_detail", :locals => {:people => @rep_items_tracked[0...10], :show_updates => true}, 
 	                             :person_type => "Senator" %>
 	  <div class="after"></div>
 	<% end %>
 	
 	<% unless @user.bookmarked_committees.length == 0 %>
-		<h3><%= link_to "Tracking #{@user.bookmarked_committees.length} Committees", :controller => "profile", :action => "committees" %></h3>
+		<h3><%= link_to "Tracking #{@user.bookmarked_committees.length} Committees", :controller => 'profile', :action => 'committees' %></h3>
 		<ul class="links_detailed">
 		        <% @user.bookmarked_committees[0...10].each do |committee| %>
 		        <li class="tracking" id="issues_tracked">
-		                <h5><%= link_to(committee.name, :controller => "committee", :action => "show", :id => committee.to_param) %></h5>
+		                <h5><%= link_to(committee.name, :controller => 'committee', :action => 'show', :id => committee.to_param) %></h5>
 		                        <ul class="updates clearfix">
 		                                <% unless committee.new_bills_since(@user).length == 0 %>
 		                                        <li><%= toggler_with_span_class("new_committee_bills_#{committee.id}", "<span>New Bills (#{committee.new_bills_since(@user).length})</span>", '<span>Hide New Bills</span>', 'med_button', 'med_button on') %></li>
@@ -71,14 +71,14 @@
 		                        <div class="update_text" id="new_committee_bills_<%= committee.id %>" style="display:none;">
 		                                <ul>
 		                                <% committee.new_bills_since(@user).each do |bill| %>
-		                                         <li><%= link_to(bill.title_typenumber_only, :controller => "bill", :action => "show", :id => bill.ident) %> - <%= bill.title_common %>
+		                                         <li><%= link_to(bill.title_typenumber_only, bill_url(bill.ident)) %> - <%= bill.title_common %>
 		                                <% end %>
 		                                </ul>
 		                        </div>
 		                        <div class="update_text" id="new_reports_<%= committee.id %>" style="display:none;">
 		                                <ul>
 		                                <% committee.new_reports_since(@user).each do |cr| %>
-		                                         <li><%= link_to(cr.name, {:controller => "committee", :action => "report", :id => cr.to_param}, :popup => true) %> - <%= cr.title.titleize %>
+		                                         <li><%= link_to(cr.name, {:controller => 'committee', :action => 'report', :id => cr.to_param}, :popup => true) %> - <%= cr.title.titleize %>
 		                                <% end %>
 		                                </ul>
 		                        </div>
@@ -87,18 +87,18 @@
 		                        </div>
 		                </li>
 		        <% end %>                <% if @user.bookmarked_committees.length > 10 %>
-		        <li class="even"><%= link_to "#{@user.bookmarked_committees.length - 10} more Committees", {:controller => "profile", :action => "committees"}, :class => "arrow" %></li>
+		        <li class="even"><%= link_to "#{@user.bookmarked_committees.length - 10} more Committees", {:controller => 'profile', :action => 'committees'}, :class => "arrow" %></li>
 		        <% end %>
 					</ul>
 		   <div class="after"></div>   
 	 <% end %>
-  <% link_to "Industries", :controller => "accounts", :action => "industries" %>
+  <% link_to "Industries", :controller => 'accounts', :action => 'industries' %>
   <% unless @user.bookmarked_issues.length == 0 %>
-	<h3><%= link_to "Tracking #{@user.bookmarked_issues.length} Issues", :controller => "profile", :action => "issues" %></h3>
+	<h3><%= link_to "Tracking #{@user.bookmarked_issues.length} Issues", :controller => 'profile', :action => 'issues' %></h3>
 	<ul class="links_detailed">
 		<% @user.bookmarked_issues[0...10].each do |subject| %>
 		<li id="issues_tracked" class="tracking">
-			<h5><%= link_to(subject.term, :controller => "issue", :action => "show", :id => subject.to_param) %></h5>
+			<h5><%= link_to(subject.term, :controller => 'issue', :action => 'show', :id => subject.to_param) %></h5>
 				<ul class="updates clearfix">
 					<% unless subject.new_bills_since(@user).size == 0 %>
 						<li><%= toggler_with_span_class("new_bills_#{subject.term}", "<span>New Bills (#{subject.new_bills_since(@user).length})</span>", '<span>Hide New Bills</span>', 'med_button', 'med_button on') %></li>
@@ -110,7 +110,7 @@
 				<div class="update_text" id="new_bills_<%= subject.term %>" style="display:none;">
 					<ul>
 					<% subject.new_bills_since(@user).each do |bill| %>
-						 <li><%= link_to(bill.title_typenumber_only, :controller => "bill", :action => "show", :id => bill.ident) %> - <%= bill.title_common %>
+						 <li><%= link_to(bill.title_typenumber_only, bill_url(bill.ident)) %> - <%= bill.title_common %>
 					<% end %>
 					</ul>
 				</div>
@@ -120,7 +120,7 @@
 			</li>                    
 		<% end %>
 		<% if @user.bookmarked_issues.length > 10 %>
-	  	<li class="even"><%= link_to "#{@user.bookmarked_issues.length - 10} more Issues", {:controller => "profile", :action => "issues"}, :class => "arrow" %></li>
+	  	<li class="even"><%= link_to "#{@user.bookmarked_issues.length - 10} more Issues", {:controller => 'profile', :action => 'issues'}, :class => "arrow" %></li>
 		<% end %>
 	</ul>
 	<div class="after"></div>		

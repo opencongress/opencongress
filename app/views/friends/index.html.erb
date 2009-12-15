@@ -30,12 +30,12 @@
 	<li><%= link_to h(ra.user.login), user_profile_path(ra.user.login) %>  
 		<% if ra.class.to_s == "BillVote" %>
 		voted <b><%= ra.support == 0 ? "for" : "against" %></b>
-		<%= link_to(ra.bill.title_typenumber_only, :controller => "bill", :action => "show", :id => ra.bill.ident) %>
+		<%= link_to(ra.bill.title_typenumber_only, bill_url(ra.bill.ident)) %>
 		<% elsif ra.class.to_s == "Comment" %>
 		<% if ra.commentable_type == "Bill" %>
-		commented on <%= link_to(ra.bill.title_typenumber_only, :controller => "bill", :action => "show", :id => ra.bill.ident) %>
+		commented on <%= link_to(ra.bill.title_typenumber_only, bill_url(ra.bill.ident)) %>
 		<% elsif ra.commentable_type == "Person" %>
-		commented on <%= link_to ra.person.name, :controller => "people", :action => "show", :id => ra.person.ident %>
+		commented on <%= link_to ra.person.name, person_url(ra.person.ident) %>
 		<% end %>
 		<% end %>
 		about <%= time_ago_in_words(ra.created_at) %> ago
@@ -97,9 +97,9 @@
 		<% else %>
 		<td>[unknown]</td>
 		<% end %>
-		<td><%= link_to "Tracked Items(#{friend.user.bookmarks.count})", :controller => "profile", :login => friend.user.login, :action => "items_tracked" %></td>
-	 	<td style="padding:0px 15px;"><%= link_to "Recent Actions", :controller => "profile", :login => friend.user.login, :action => "actions" %></td>
-		<td><%= link_to h(friend.user.login) + "'s Political Notebook", :controller => "political_notebooks", :login => friend.user.login, :action => "show" %></td>  		
+		<td><%= link_to "Tracked Items(#{friend.user.bookmarks.count})", :controller => 'profile', :login => friend.user.login, :action => 'items_tracked' %></td>
+	 	<td style="padding:0px 15px;"><%= link_to "Recent Actions", :controller => 'profile', :login => friend.user.login, :action => 'actions' %></td>
+		<td><%= link_to h(friend.user.login) + "'s Political Notebook", :controller => 'political_notebooks', :login => friend.user.login, :action => 'show' %></td>  		
 	 
 		<td><%= button_to('Decline', friends_add_deny_path(friend.friend.login,friend.user), :confirm => 'Are you sure?') unless @user != current_user %></td>
 		<td><%= button_to('Accept', friends_add_confirm_path(friend.friend.login,friend.user), :confirm => 'Are you sure?') unless @user != current_user %></td>
@@ -122,7 +122,7 @@
 
 <% if @user == current_user %>
 	<span style="margin:2px 5px 0 20px;float:left;"><%= image_tag("/images/private.png", :alt => "private", :title => "Private") %></span>
-		<% form_for :privacy_option, @user.privacy_option, :url => {:controller => "/profile", :action => "update_privacy" } do |f| %>
+		<% form_for :privacy_option, @user.privacy_option, :url => {:controller => "/profile", :action => 'update_privacy' } do |f| %>
 		  <%= f.select PrivacyOption.column_names[11].to_sym, [["Public",2],["Friends", 1], ["Private",0]], {}, {:onchange => "this.form.submit();"} %>
 		<% end %>
 <% end %>
@@ -168,7 +168,7 @@
 							</tr>	
 							<% end %>
 							<tr>
-								<td><%= link_to "Items Tracked(#{friend.friend.bookmarks.count})", :controller => "profile", :login => friend.friend.login, :action => "items_tracked" %></td>
+								<td><%= link_to "Items Tracked(#{friend.friend.bookmarks.count})", :controller => 'profile', :login => friend.friend.login, :action => 'items_tracked' %></td>
 							</tr>
 							<% end %>
 							</table>
@@ -176,8 +176,8 @@
 						</tr>
 						<tr>
 							<td style="text-align:center;"><%= link_to h(friend.friend.login), user_profile_path(friend.friend.login) %></td>
-							<td style="padding:0px 15px;"><%= link_to "Recent Actions", :controller => "profile", :login => friend.friend.login, :action => "actions" %></td>
-							<td><%= link_to h(friend.friend.login) + "'s Political Notebook", :controller => "political_notebooks", :login => friend.friend.login, :action => "show" %></td>
+							<td style="padding:0px 15px;"><%= link_to "Recent Actions", :controller => 'profile', :login => friend.friend.login, :action => 'actions' %></td>
+							<td><%= link_to h(friend.friend.login) + "'s Political Notebook", :controller => 'political_notebooks', :login => friend.friend.login, :action => 'show' %></td>
 						</tr>
 					</table>
 					<div class="update_text" id="coms_friend_<%= friend.id %>" style="display:none;margin-top:1em;"></div>

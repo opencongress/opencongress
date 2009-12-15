@@ -18,7 +18,7 @@ begin
     request = Net::HTTP::Get.new("/services_open_api/map.bill_list_v1.xml?apikey=#{API_KEYS['maplight']}&jurisdiction=us&session=#{DEFAULT_CONGRESS}&include_organizations=1&has_organizations=1")
     response = http.request(request)
   end
-  
+    
   rex_doc = REXML::Document.new response.body
   elements = rex_doc.elements
   
@@ -90,6 +90,6 @@ begin
     end
   end
 rescue 
-  puts "Error scraping! #{$!.backtrace}"
+  puts "Error scraping! #{$!.backtrace.join("\n")}"
   throw $!
 end

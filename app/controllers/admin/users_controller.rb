@@ -65,19 +65,19 @@ class Admin::UsersController < Admin::IndexController
        wd.is_active = true
        wd.save
      end
-     redirect_to :action => "edit", :id => @user
+     redirect_to :action => 'edit', :id => @user
   end
 
   def resend_confirmation
      @user = User.find_by_id(params[:id])
      UserNotifier.deliver_signup_notification(@user)
-     redirect_to :action => "edit", :id => @user
+     redirect_to :action => 'edit', :id => @user
   end 
 
   def activate_user
     @user = User.find_by_id(params[:id])
     @user.activate
-    redirect_to :action => "edit", :id => @user
+    redirect_to :action => 'edit', :id => @user
   end
 
   def destroy

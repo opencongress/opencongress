@@ -1,10 +1,10 @@
 <li>
   <% if syndicator_item.kind_of? Bill %>
-    <a href="<%= url_for(:only_path => false, :controller => 'bill', :action => 'show', :id => syndicator_item.ident) %>"
+    <a href="<%= bill_url(syndicator_item.ident) %>"
       target="_top">
     <%= truncate(syndicator_item.title_full_common, :length => 60) %></a> 
   <% elsif syndicator_item.kind_of? Person %>
-    <a href="<%= url_for(:only_path => false, :controller => 'people', :action => 'show', :id => syndicator_item) %>"
+    <a href="<%= person_url(syndicator_item) %>"
       target="_top">
     <%=  syndicator_item.name %></a><br />
   <% elsif syndicator_item.kind_of? Committee %>
@@ -12,7 +12,7 @@
       target="_top">
     <%=  syndicator_item.subcommittee_name ? syndicator_item.subcommittee_name : syndicator_item.name %></a><br />
     <% elsif syndicator_item.kind_of? Subject %>
-      <a href="<%= url_for(:only_path => false, :controller => 'issue', :action => 'show', :id => syndicator_item) %>"
+      <a href="<%= issue_url(syndicator_item) %>"
         target="_top">
       <%=  syndicator_item.term %></a><br />
   <% elsif syndicator_item.kind_of? Search %>

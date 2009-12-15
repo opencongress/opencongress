@@ -13,7 +13,7 @@
 	<% if @user == current_user %>
 	<div style="float:right;width:100px;">
 		<span style="margin:2px 5px 0 0px;float:left;"><%= image_tag("/images/private.png", :alt => "private", :title => "Private") %></span>
-			<% form_for :privacy_option, @user.privacy_option, :url => {:controller => "/profile", :action => "update_privacy" } do |f| %>
+			<% form_for :privacy_option, @user.privacy_option, :url => {:controller => "/profile", :action => 'update_privacy' } do |f| %>
 			  <%= f.select :watchdog, [["Public",2],["Friends", 1], ["Private",0]], {}, {:onchange => "this.form.submit();"} %>
 			<% end %>
 	</div>

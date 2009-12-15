@@ -19,7 +19,7 @@ class Comment < ActiveRecord::Base
   named_scope :user_bill_oppose, :include => [:user, {:bill => :bill_votes}], :conditions => ["users.id = bill_votes.id AND users.id = comments.user_id AND bill_votes.support = ?", 1]
   named_scope :useful, :conditions => ["comments.plus_score_count - comments.minus_score_count DESC > 0"]
   named_scope :useless, :conditions => ["comments.plus_score_count - comments.minus_score_count DESC < 0"]
-  named_scope :most_useful, :order => ["comments.plus_score_count - comments.minus_score_count DESC"], :limit => 3
+  named_scope :most_useful, :order => ["comments.plus_score_count - comments.minus_score_count DESC"], :limit => 3  
   named_scope :uncensored, :conditions => ["censored != ?", true]
   
   apply_simple_captcha
@@ -35,8 +35,8 @@ class Comment < ActiveRecord::Base
   
   def score_count_all
     plus_score_count.to_i + minus_score_count.to_i
-  end  
-  
+  end
+
   def commentable_link
     return self.parent.commentable_link if self.commentable_type.nil?
 
@@ -45,16 +45,16 @@ class Comment < ActiveRecord::Base
 
     case self.commentable_type
     when 'Person', 'Committee', 'Article'
-      {:controller => self.commentable_type.pluralize.downcase, :action => "show", :id => specific_object.to_param}
+      {:controller => self.commentable_type.pluralize.downcase, :action => 'show', :id => specific_object.to_param}
     when 'Bill'
-      {:controller => "bill", :action => "show", :id => specific_object.ident}
+      {:controller => 'bill', :action => 'show', :id => specific_object.ident}
     when 'Subject'
-      {:controller => "issue", :action => "show", :id => specific_object.to_param}
+      {:controller => 'issue', :action => 'show', :id => specific_object.to_param}
     when 'BillTextNode'
-      {:controller => "bill", :action => "text", :id => specific_object.bill_text_version.bill.ident, 
+      {:controller => 'bill', :action => 'text', :id => specific_object.bill_text_version.bill.ident, 
               :version => self.commentable.bill_text_version.version, :nid => self.commentable.nid }
     else
-      {:controller => "index" }
+      {:controller => 'index' }
     end
 
   end
@@ -72,20 +72,20 @@ class Comment < ActiveRecord::Base
     specific_object = obj.find_by_id(self.commentable_id)
 
     if self.commentable_type == "Bill"
-      return {:controller => "bill", :action => "show", :id => specific_object.ident, :goto_comment => self.id}
+      return {:controller => 'bill', :action => 'show', :id => specific_object.ident, :goto_comment => self.id}
     elsif self.commentable_type == "Person"
-      return {:controller => "people", :action => "show", :id => specific_object.to_param, :goto_comment => self.id}
+      return {:controller => 'people', :action => 'show', :id => specific_object.to_param, :goto_comment => self.id}
     elsif self.commentable_type == "Subject"
-      return {:controller => "issue", :action => "comments", :id => specific_object.to_param, :comment_page => self.page}
+      return {:controller => 'issue', :action => 'comments', :id => specific_object.to_param, :comment_page => self.page}
     elsif self.commentable_type == "Article"
-      return {:controller => "articles", :action => "view", :id => specific_object.to_param}
+      return {:controller => 'articles', :action => 'view', :id => specific_object.to_param}
     elsif self.commentable_type == "Committee"
-      return {:controller => "committees", :action => "show", :id => specific_object.to_param}      
+      return {:controller => 'committees', :action => 'show', :id => specific_object.to_param}      
     elsif self.commentable_type == "BillTextNode"
-      return {:controller => "bill", :action => "text", :id => specific_object.bill_text_version.bill.ident, 
+      return {:controller => 'bill', :action => 'text', :id => specific_object.bill_text_version.bill.ident, 
               :version => self.commentable.bill_text_version.version, :nid => self.commentable.nid }
     else
-      return {:controller => "index" }
+      return {:controller => 'index' }
     end    
   end
 
@@ -98,18 +98,18 @@ class Comment < ActiveRecord::Base
     if self.commentable_type == "Bill"
       return "/bill/#{specific_object.ident}/show?goto_comment=#{self.id}"
     elsif self.commentable_type == "Person"
-      return {:controller => "people", :action => "comments", :id => specific_object.to_param, :comment_page => self.page}
+      return {:controller => 'people', :action => 'comments', :id => specific_object.to_param, :comment_page => self.page}
     elsif self.commentable_type == "Subject"
-      return {:controller => "issue", :action => "comments", :id => specific_object.to_param, :comment_page => self.page}
+      return {:controller => 'issue', :action => 'comments', :id => specific_object.to_param, :comment_page => self.page}
     elsif self.commentable_type == "Article"
-      return {:controller => "articles", :action => "view", :id => specific_object.to_param}
+      return {:controller => 'articles', :action => 'view', :id => specific_object.to_param}
     elsif self.commentable_type == "Committee"
-      return {:controller => "committees", :action => "show", :id => specific_object.to_param}
+      return {:controller => 'committees', :action => 'show', :id => specific_object.to_param}
     elsif self.commentable_type == "BillTextNode"
-      return {:controller => "bill", :action => "text", :id => specific_object.bill_text_version.bill.ident,
+      return {:controller => 'bill', :action => 'text', :id => specific_object.bill_text_version.bill.ident,
               :version => self.commentable.bill_text_version.version, :nid => self.commentable.nid }
     else
-      return {:controller => "index" }
+      return {:controller => 'index' }
     end
   end
 
@@ -135,7 +135,7 @@ class Comment < ActiveRecord::Base
     elsif self.commentable_type == "Article"
       return specific_object.title
     else
-      return {:controller => "index" }
+      return {:controller => 'index' }
     end
 
   end

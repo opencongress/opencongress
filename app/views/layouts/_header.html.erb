@@ -9,7 +9,7 @@
 			<% if logged_in? %>
 		  	  	<a class="ad_search" href="/search">Advanced Search</a>
 
-				Welcome <b><%= link_to h(current_user.login), :controller => "profile", :login => current_user.login, :action => "profile" %></b> |
+				Welcome <b><%= link_to h(current_user.login), user_profile_url(current_user.login) %></b> |
 				
 			  	<% if can_blog? %>
 			    	<% if @user_object %>
@@ -20,12 +20,12 @@
 	  				<% end %>
 				<% end %>   
 			
-			  	<%= link_to "Logout", :controller => "/account", :action => "logout" %>
+			  	<%= link_to "Logout", logout_path %>
 			
 				<% else %>	
 													
 				<%= link_to_function "Search", "['login','login-link','search-toggle'].each(Element.toggle);", :id => "search-toggle", :style => "display:none;" %>
-				<%= link_to_function "Login", "['login','login-link','search-toggle'].each(Element.toggle);", {:controller => "/account", :action => "login"}, :id => "login-link" %> | <%= link_to "Register", :controller => "account", :action => "signup" %>
+				<%= link_to_function "Login", "['login','login-link','search-toggle'].each(Element.toggle);", login_url, :id => "login-link" %> | <%= link_to "Register", :controller => 'account', :action => 'signup' %>
 			<% end %>
 		</div>	
 	</div>
@@ -97,28 +97,28 @@
 	<div class="left">
 		<div class="right">
 			<ul>
-				<li id="bill_nav"><%= link_to '<span>Bills</span>', :controller => 'bill', :action => :all  %></li>
-				<li id="sens_nav"><%= link_to '<span>Senators</span>', :controller => 'people', :action => :senators  %></li>
-				<li id="reps_nav"><%= link_to '<span>Representatives</span>', :controller => 'people', :action => :representatives  %></li>
-				<li id="vote_nav"><%= link_to '<span>Votes</span>', :controller => 'roll_call' %></li>		
-				<li id="ishu_nav"><%= link_to '<span>Issues</span>', :controller => 'issue' %></li>
-				<li id="comm_nav"><%= link_to '<span>Committees</span>', :controller => 'committee' %></li>
-				<li id="muny_nav"><%= link_to '<span>The Money Trail</span>', :controller => 'money_trail' %></li>
+				<li id="bill_nav"><%= link_to '<span>Bills</span>', :controller => '/bill', :action => :all  %></li>
+				<li id="sens_nav"><%= link_to '<span>Senators</span>', :controller => '/people', :action => :senators  %></li>
+				<li id="reps_nav"><%= link_to '<span>Representatives</span>', :controller => '/people', :action => :representatives  %></li>
+				<li id="vote_nav"><%= link_to '<span>Votes</span>', :controller => '/roll_call' %></li>		
+				<li id="ishu_nav"><%= link_to '<span>Issues</span>', :controller => '/issue' %></li>
+				<li id="comm_nav"><%= link_to '<span>Committees</span>', :controller => '/committee' %></li>
+				<li id="muny_nav"><%= link_to '<span>The Money Trail</span>', :controller => '/money_trail' %></li>
 				<li id="wiki_nav" class="sub"><%= link_to '<span>Wiki</span>', WIKI_BASE_URL  %></li>		
-				<li id="blog_nav" class="sub"><%= link_to '<span>Blog</span>', :controller => 'blog' %></li>
+				<li id="blog_nav" class="sub"><%= link_to '<span>Blog</span>', :controller => '/blog' %></li>
 				<li id="tool_nav" class="sub">		
-				<%= link_to '<span>Resources <img src="/images/tool_arrow-trans.png" alt="&gt;" /></span>', :controller => 'resources' %>
+				<%= link_to '<span>Resources <img src="/images/tool_arrow-trans.png" alt="&gt;" /></span>', :controller => '/resources' %>
 				<ul class="sub">
-					<li id="compare_nav"><%= link_to '<span>Vote Comparison</span>', :controller => 'people', :action => 'compare' %></li> 
+					<li id="compare_nav"><%= link_to '<span>Vote Comparison</span>', :controller => '/people', :action => 'compare' %></li> 
 					<li id="widget_nav"><a href="/resources#widgets"><span>Site Widgets</span></a></li>
-					<li id="states_nav"><%= link_to '<span>States</span>', :controller => 'states' %></li>
+					<li id="states_nav"><%= link_to '<span>States</span>', :controller => '/states' %></li>
 					<li id="howitworks_nav"><a href="/about/howtouse"><span>How-to Use OpenCongress</span></a></li>
 					<li id="twitter_nav"><a href="http://twitter.com/opencongress"><span>Follow Our Twitter</span></a></li>
 					<li id="disc_nav"><%= link_to '<span>Discussion</span>', '/forum/categories.php' %></li>
-					<li id="allresources_nav"><%= link_to '<span><strong>All Resources</strong></span>', :controller => 'resources', :anchor => 'all' %></li>
+					<li id="allresources_nav"><%= link_to '<span><strong>All Resources</strong></span>', :controller => '/resources', :anchor => 'all' %></li>
 				</ul>
 				</li>
-				<li id="battle_nav" class="sub"><%= link_to '<span>Battle Royale</span>', :controller => 'battle_royale' %></li> 
+				<li id="battle_nav" class="sub"><%= link_to '<span>Battle Royale</span>', :controller => '/battle_royale' %></li> 
 
 			</ul>
 		</div>

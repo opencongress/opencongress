@@ -13,7 +13,7 @@
 <%= page_entries_info @users %>
 <br/>
  
-   <% form_tag url_for({:controller => "/admin/users", :action => "list"}), :method => :get do %>
+   <% form_tag url_for({:controller => "/admin/users", :action => 'list'}), :method => :get do %>
     <%= text_field_tag :q, @query, :size => 30 %>
     <%= submit_tag "Search" %>
   <% end %>

@@ -338,7 +338,7 @@ class ApiController < ApplicationController
      u.api_hits.create({:action => params[:action]})
 expires_in 60.minutes, :public => true
     else
-     redirect_to :action => "index"
+     redirect_to :action => 'index'
     end
   end
   

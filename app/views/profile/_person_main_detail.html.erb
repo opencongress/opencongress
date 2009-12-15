@@ -9,7 +9,7 @@
     <li id="p<%= person.id.to_s %>" class="person">
 			<% unless buttons_only %> 
 			  <%= link_to("<img src='/images/photos/thumbs/" + person.id.to_s + ".png' />", 
-			    {:controller => "people", :action => "show", :id => person.to_param}) %>
+			    {:controller => 'people', :action => 'show', :id => person.to_param}) %>
 			<% end %>
       
 			<div class="left details">
@@ -20,14 +20,14 @@
 				<li><% unless person.votes_count.nil? %>	
 					<%= ajax_toggler("new_votes_#{person.ident}", "<span>New Votes (#{person.votes_count})</span>", 
 					                    '<span>Hide New Votes</span>',
-					                     {:action => "tracked_votes", 
+					                     {:action => 'tracked_votes', 
 						                  :id => person.id, 
 						                  :limit => person.votes_count}, 'med_button', 'med_button on') %>
 				<% end %>
 				<% unless person.newss_count.nil? %>
 					<%= ajax_toggler("news_updates_#{person.ident}", "<span>News Updates (#{person.newss_count})</span>",
 					                         '<span>Hide News Updates</span>',
-					                          {:action => "tracked_commentary_news", 
+					                          {:action => 'tracked_commentary_news', 
 							                                       :id => person.id, 
 							                                       :object => "Person",
 							                                       :limit => person.newss_count}, 'med_button', 'med_button on') %>
@@ -35,7 +35,7 @@
 				<% unless person.blogss_count.nil? %>
 					<%= ajax_toggler("blog_updates_#{person.ident}", "<span>Blog Updates (#{person.blogss_count})</span>",
 					                        '<span>Hide Blog Updates</span>',
-					                          {:action => "tracked_commentary_blogs", 
+					                          {:action => 'tracked_commentary_blogs', 
 							                                       :id => person.id, 
 							                                       :object => "Person",
 							                                       :limit => person.blogss_count}, 'med_button', 'med_button on') %>
@@ -65,7 +65,7 @@
   		<% end %>
 				<% if (person.roles.first.enddate < Date.today) && (logged_in? && current_user == @user) %>
 				<div style="padding-top:3px;padding-bottom:3px;">
-				  <em>(This person's Congressional term has ended. You may want to <%= link_to "Remove", :controller => "profile", :action => "remove_person_bookmark", :login => @user.login, :id => person.id %> this person from your tracked items)</em>
+				  <em>(This person's Congressional term has ended. You may want to <%= link_to "Remove", :controller => 'profile', :action => 'remove_person_bookmark', :login => @user.login, :id => person.id %> this person from your tracked items)</em>
 				</div>
 			  <% end %>
 			<div style="clear:both;"></div>

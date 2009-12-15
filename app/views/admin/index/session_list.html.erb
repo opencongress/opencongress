@@ -14,7 +14,7 @@
   </table>
   <br/>
   <h2>Add a session</h2>
-  <% form_for @session, :url => { :action => "session_new" } do |f| %>
+  <% form_for @session, :url => { :action => 'session_new' } do |f| %>
     Date: <%= f.date_select :date %>
     Chamber: <%= f.select :chamber, [['House', 'house'], ['Senate','senate']] %>
     <%= f.submit "Add" %>

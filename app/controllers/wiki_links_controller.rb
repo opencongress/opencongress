@@ -48,7 +48,7 @@ class WikiLinksController < ApplicationController
         format.html { redirect_to(@wiki_link) }
         format.xml  { render :xml => @wiki_link, :status => :created, :location => @wiki_link }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => 'new' }
         format.xml  { render :xml => @wiki_link.errors, :status => :unprocessable_entity }
       end
     end
@@ -65,7 +65,7 @@ class WikiLinksController < ApplicationController
         format.html { redirect_to(@wiki_link) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => 'edit' }
         format.xml  { render :xml => @wiki_link.errors, :status => :unprocessable_entity }
       end
     end

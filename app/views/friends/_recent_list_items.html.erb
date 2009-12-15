@@ -1,19 +1,18 @@
 	<li class="<%= cycle('even','odd') %>">  
 		<% if ra.class.to_s == "BillVote" %>
  		  <span class='<%= ra.support == 0 ? "for" : "against" %>'><strong><%= link_to h(ra.user.login), user_profile_path(ra.user.login) %></strong> voted <span><%= ra.support == 0 ? "for" : "against" %></span>
-		  <%= link_to(ra.bill.title_typenumber_only, :controller => "bill", :action => "show", :id => ra.bill.ident) %></span>
+		  <%= link_to(ra.bill.title_typenumber_only, bill_url(ra.bill.ident)) %></span>
 		<% elsif ra.class.to_s == "Comment" %>
 		  <% if ra.commentable_type == "Bill" %>
 		    <span class="commented"><%= link_to h(ra.user.login), user_profile_path(ra.user.login) %> 
-		    <span>commented</span> on <%= link_to((ra.bill.title_typenumber_only + ", " + truncate_string(ra.bill.title_common, 30)), 
-		                            :controller => "bill", :action => "show", :id => ra.bill.ident) %></span>
+		    <span>commented</span> on <%= link_to((ra.bill.title_typenumber_only + ", " + truncate_string(ra.bill.title_common, 30)), bill_url(ra.bill.ident)) %></span>
 		  <% elsif ra.commentable_type == "Person" %>
 		   <span class="commented"><strong><%= link_to h(ra.user.login), user_profile_path(ra.user.login) %></strong>
-		   <span>commented</span> on <%= link_to ra.person.name, :controller => "people", :action => "show", :id => ra.person.ident %></span>
+		   <span>commented</span> on <%= link_to ra.person.name, :controller => 'people', :action => 'show', :id => ra.person.ident %></span>
 		  <% end %>
 		<% elsif ra.class.to_s == "Friend" %>
-		  <span class="befriended"><strong><%= link_to ra.user.login, :controller => "profile", :login => ra.user.login, :action => "profile" %></strong>
-		  <span>became friends</span> with <%= link_to ra.friend.login, :controller => "profile", :login => ra.friend.login, :action => "profile" %></span>
+		  <span class="befriended"><strong><%= link_to(ra.user.login, user_profile_url(ra.user.login)) %></strong>
+		  <span>became friends</span> with <%= link_to(ra.friend.login, user_profile_url(ra.friend.login)) %></span>
 		<% end %>
 		<span class="time">about <%= time_ago_in_words(ra.created_at) %> ago</span>
 	</li>

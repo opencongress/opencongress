@@ -77,7 +77,7 @@
   			$j('#login_writerep').jqm({ajax:'@href', trigger: 'a#login_writerep_trigger'});
   		});
   		</script>
-      <a href="<%= url_for :controller => "account", :action => "login", :modal => true, :login_action => 'writerep_external' %>" id="login_writerep_trigger" class="writeextrigger">
+      <a href="<%= url_for login_url(:modal => true, :login_action => 'writerep_external') %>" id="login_writerep_trigger" class="writeextrigger">
         <div>
         <span class="write">Write Your</span>
         <span class="who"><%= object.is_house_bill? ? "Representative" : "Senators" %></span>
@@ -134,13 +134,13 @@
 <% if logged_in? %>
 	<% if object.bookmarks.find_by_user_id(current_user.id) == nil %>
 
-		<%= link_to_remote("<span id='b_myoc_txt'>Track With MyOC</span>", :url => {:controller => "profile", 
-			:action => "track", 
+		<%= link_to_remote("<span id='b_myoc_txt'>Track With MyOC</span>", :url => {:controller => 'profile', 
+			:action => 'track', 
 			:id => object.id, 
 			:type => object.class.to_s},
 			:html => { :class => 'large_track', :id => "b_myoc"}) %>
 			<% else %>
-			<a href="<%= url_for :controller => "profile", :action => "remove_#{object.class.to_s.downcase}_bookmark", :login => current_user.login, :id => object.id %>" id='b_myoc' class='large_track tracking' onmouseover="this.firstChild.innerHTML='Stop Tracking';" onmouseout="this.firstChild.innerHTML='Tracking Now';"><span id='b_myoc_txt'>Tracking Now</span></a>
+			<a href="<%= url_for :controller => 'profile', :action => "remove_#{object.class.to_s.downcase}_bookmark", :login => current_user.login, :id => object.id %>" id='b_myoc' class='large_track tracking' onmouseover="this.firstChild.innerHTML='Stop Tracking';" onmouseout="this.firstChild.innerHTML='Tracking Now';"><span id='b_myoc_txt'>Tracking Now</span></a>
 			<% end %>
 			<% else %>
 			<script type="text/javascript">
@@ -148,7 +148,7 @@
 				$j('#login_track').jqm({ajax:'@href', trigger: 'a.track_trigger'});
 			});
 			</script>
-			<%= link_to("<span id='b_myoc_txt'>Track with MyOC</span>", {:controller => "account", :action => "login", :modal => true, :login_action => 'track'}, :class => 'large_track track_trigger', :id => "b_myoc" ) %>
+			<%= link_to("<span id='b_myoc_txt'>Track with MyOC</span>", login_url(:modal => true, :login_action => 'track'), :class => 'large_track track_trigger', :id => "b_myoc" ) %>
 			<div id="login_track" class="jqmWindow"></div>
 	<% end %>
 

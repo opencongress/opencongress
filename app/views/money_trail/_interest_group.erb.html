@@ -2,7 +2,7 @@
 
 <li>
   <%= link_to_remote("#{interest_group.name}", :update => "top_recipients_#{interest_group.id}",
-        :url => { :controller => 'money_trail', :action => "interest_group_top_recipients", :id => interest_group.id, :bill_id => bill.nil? ? '' : bill.id }, :html => {:class => 'expand', :id => "ig_open_#{interest_group.id}"}, :complete => "Element.show('top_recipients_#{interest_group.id}'); Element.hide('ig_open_#{interest_group.id}'); Element.show('ig_close_#{interest_group.id}');") %>
+        :url => { :controller => 'money_trail', :action => 'interest_group_top_recipients', :id => interest_group.id, :bill_id => bill.nil? ? '' : bill.id }, :html => {:class => 'expand', :id => "ig_open_#{interest_group.id}"}, :complete => "Element.show('top_recipients_#{interest_group.id}'); Element.hide('ig_open_#{interest_group.id}'); Element.show('ig_close_#{interest_group.id}');") %>
   <a href="#" class="collapse" id="ig_close_<%= interest_group.id %>" style="display: none;" onclick="Element.hide('top_recipients_<%= interest_group.id %>'); Element.hide('ig_close_<%= interest_group.id %>'); Element.show('ig_open_<%= interest_group.id %>'); return false;"><%= interest_group.name %> (close)</a>     
 </li>
 

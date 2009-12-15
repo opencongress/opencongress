@@ -103,13 +103,19 @@ class Action < ActiveRecord::Base
   def formatted_date
     Time.at(date).utc.strftime("%b %d, %Y")
   end
+
   def formatted_date_short
     Time.at(date).utc.strftime("%b ") + Time.at(date).utc.day.ordinalize    
   end
+
   def date_std
     datetime.strftime('%b %d, %Y')
   end
-
+  
+  def rss_date
+    Time.at(self.date)
+  end
+  
   def atom_id
     "tag:opencongress.org,#{datetime.strftime("%Y-%m-%d")}:/action/#{id}"
   end
@@ -147,10 +153,6 @@ class Action < ActiveRecord::Base
 
   def vetoed_to_s
     "Vetoed on #{self.date_std}. #{self.text}."
-  end
-  
-  def rss_date
-    Time.at(self.date)
   end
   
 end

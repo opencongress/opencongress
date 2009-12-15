@@ -3,7 +3,7 @@
     <%= render :partial => "shared/support_oppose_tables",
               :locals => {:object => @bill,
                           :title => @bill.title_typenumber_only,
-                          :action => "supporting_bill",
+                          :action => 'supporting_bill',
                           :stance => "supporting",
                           :tracking_suggestions => @supporting_suggestions} %>
   <% end %>
@@ -12,7 +12,7 @@
     <%= render :partial => "shared/support_oppose_tables",
               :locals => {:object => @bill,
                           :title => @bill.title_typenumber_only,
-                          :action => "opposing_bill",
+                          :action => 'opposing_bill',
                           :stance => "opposing",
                           :tracking_suggestions => @opposing_suggestions} %>
   

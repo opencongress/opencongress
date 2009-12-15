@@ -93,7 +93,7 @@ class NotebookLinksController < NotebookItemsController
         format.html { redirect_to(@notebook_link) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => 'edit' }
         format.xml  { render :xml => @notebook_link.errors, :status => :unprocessable_entity }
       end
     end

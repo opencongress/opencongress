@@ -1,20 +1,20 @@
 <div class="small_bill_list">
-	<p><%= link_to("<strong>#{bill.title_typenumber_only}</strong> - #{truncate_string(bill.title_common,150)}", :controller => "bill", :action => "show", :id => bill.ident) %></p>
+	<p><%= link_to("<strong>#{bill.title_typenumber_only}</strong> - #{truncate_string(bill.title_common,150)}", bill_url(bill.ident)) %></p>
 	<ul class="updates">
 		<% unless bill.actionn_count.nil? %>
 			<li><%= ajax_toggler("status_#{bill.ident}", "<span>Status Updates (#{bill.actionn_count})</span>",
-			                     '<span>Hide Status Updates</span>', {:action => "tracked_bill_status", :id => bill.id, :limit => bill.actionn_count}, 'med_button', 'med_button on') %></li>
+			                     '<span>Hide Status Updates</span>', {:action => 'tracked_bill_status', :id => bill.id, :limit => bill.actionn_count}, 'med_button', 'med_button on') %></li>
 		<% end %>
 		<% unless bill.newss_count.nil? %>
 			<li><%= ajax_toggler("news_#{bill.ident}", "<span>News Updates (#{bill.newss_count})</span>", 
-			                     '<span>Hide News Updates</span>', {:action => "tracked_commentary_news", 
+			                     '<span>Hide News Updates</span>', {:action => 'tracked_commentary_news', 
 				                                       :id => bill.id, 
 				                                       :object => "Bill",
 				                                       :limit => bill.newss_count}, 'med_button', 'med_button on') %></li>
  		<% end %>
 		<% unless bill.blogss_count.nil? %>
 		  <li><%= ajax_toggler("blog_#{bill.ident}", "<span>Blog Updates (#{bill.blogss_count})</span>", 
-		                     '<span>Hide Blog Updates</span>', {:action => "tracked_commentary_blogs", 
+		                     '<span>Hide Blog Updates</span>', {:action => 'tracked_commentary_blogs', 
 			                                       :id => bill.id, 
 			                                       :object => "Bill",
 			                                       :limit => bill.blogss_count}, 'med_button', 'med_button on') %></li>
@@ -25,7 +25,7 @@
 	</ul>
 	<% if (bill.session == 110 || bill.session == 109) && (logged_in? && current_user == @user) %>
 	<div>
-	  <em>(This bill is from a previous Congress, and is no longer being updated. You may want to <%= link_to "Remove It", :controller => "profile", :action => "remove_bill_bookmark", :login => @user.login, :id => bill.id %> from your tracked items)</em>
+	  <em>(This bill is from a previous Congress, and is no longer being updated. You may want to <%= link_to "Remove It", :controller => 'profile', :action => 'remove_bill_bookmark', :login => @user.login, :id => bill.id %> from your tracked items)</em>
 	</div>
 	<% end %>	
 	<div class="update_text" id="status_<%= bill.ident %>" style="display:none;">

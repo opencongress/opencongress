@@ -10,7 +10,7 @@
     <% if c.user %>
     <td><%= c.user.login %>
      <% if c.user.user_warnings.count > 0 %>
-     <%= link_to "Past Warnings", :controller => "user_warnings", :action => "show", :id => c.user.id %>
+     <%= link_to "Past Warnings", :controller => 'user_warnings', :action => 'show', :id => c.user.id %>
      <% end %>
     </td>
     <% else %>

@@ -1,6 +1,6 @@
 module IndustryHelper
   def link_to_sector(sector)
-    link_to sector.name, :action => "show", :id => sector
+    link_to sector.name, :action => 'show', :id => sector
   end
 
   def industry_recipients_html(person_sectors, top_count)

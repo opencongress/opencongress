@@ -20,7 +20,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
       end
       
       xml.title   title
-      xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'bill', :action => 'show', :id => b.ident)
+      xml.link    "rel" => "alternate", "href" => bill_url(b.ident)
       xml.id      b.atom_id_as_entry
       
       if @sort == 'gpo'        

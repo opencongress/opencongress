@@ -17,7 +17,7 @@ class FriendsController < ApplicationController
      elsif params[:login]
        @results = User.find(:all, :conditions => ["LOWER(login) = ?", params[:login].downcase]) 
      end
-     render :action => "search", :layout => false 
+     render :action => 'search', :layout => false 
   end
 
   def invite_form
@@ -198,7 +198,7 @@ class FriendsController < ApplicationController
   def invite_contacts
     if !simple_captcha_valid?
       flash[:notice] = "SPAM Check Failed"
-      redirect_to :action => "import_contacts"
+      redirect_to :action => 'import_contacts'
       return
     end
     
@@ -226,11 +226,11 @@ Personal Note: #{CGI.escapeHTML(params[:message])}"
 
   def show_recent_comments
     @coms = @user.friends.find_by_id(params[:id]).friend.comments.find(:all, :order => "created_at DESC", :limit => 5)
-    render :action => "show_recent_comments", :layout => false
+    render :action => 'show_recent_comments', :layout => false
   end
   def show_recent_votes
     @votes = @user.friends.find_by_id(params[:id]).friend.bill_votes.find(:all, :order => "created_at DESC", :limit => 5)
-    render :action => "show_recent_votes", :layout => false
+    render :action => 'show_recent_votes', :layout => false
   end
   def add
    if request.post?
@@ -365,7 +365,7 @@ Personal Note: #{CGI.escapeHTML(params[:message])}"
         format.html { redirect_to friend_url(@user.login,@friend) }
         format.xml  { head :created, :location => friend_url(@user.login,@friend) }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => 'new' }
         format.xml  { render :xml => @friend.errors.to_xml }
       end
     end
@@ -382,7 +382,7 @@ Personal Note: #{CGI.escapeHTML(params[:message])}"
         format.html { redirect_to friend_url(@user.login,@friend) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => 'edit' }
         format.xml  { render :xml => @friend.errors.to_xml }
       end
     end

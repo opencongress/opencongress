@@ -11,7 +11,7 @@
 
 	<% if bill_counts[bill_type] > 5 %>
 	<%= link_to "<span>and #{number_with_delimiter(bill_counts[bill_type] - 5)} more...</span>", 
-	{ :action => "list_bill_type", :bill_type => bill_type }, :class => 'med_button med_arrow' %>
+	{ :action => 'list_bill_type', :bill_type => bill_type }, :class => 'med_button med_arrow' %>
 <% end %>
 <% end %>
 <% end %>   
@@ -27,7 +27,7 @@
 
 <% if bill_counts[bill_type] > 5 %>
 <%= link_to "<span>#{number_with_delimiter(bill_counts[bill_type] - 5)} more...</span>", 
-{ :action => "list_bill_type", :bill_type => bill_type }, :class => 'med_button med_arrow' %>
+{ :action => 'list_bill_type', :bill_type => bill_type }, :class => 'med_button med_arrow' %>
 <% end %>
 <% end %>
 <% end %>		        
@@ -44,7 +44,7 @@
 
 <% if bill_counts[bill_type] > 5 %>
 <p class="test">and <%= link_to "#{number_with_delimiter(bill_counts[bill_type] - 5)} more...", 
-{ :action => "list_bill_type", :bill_type => bill_type }, :class => 'arrow' %>
+{ :action => 'list_bill_type', :bill_type => bill_type }, :class => 'arrow' %>
 </p>	 
 <% end %>
 <% end %>

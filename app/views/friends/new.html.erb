@@ -19,7 +19,7 @@
 
 <div id="find_by_email" style="display:none;float:left;margin-top:20px;">
 	<fieldset style="border:0;"><legend>Find User by Email</legend>
-	   <% form_remote_tag :update => "resdiv", :url => {:action => "search"} do %>
+	   <% form_remote_tag :update => "resdiv", :url => {:action => 'search'} do %>
 	     <input type="text" name="email" />
 	     <%= submit_tag "Search" %>
 	    <% end %>
@@ -27,7 +27,7 @@
 </div>
 <div id="find_by_name" style="display:none;float:left;margin-top:20px;">
 	<fieldset style="border:0;"><legend>Find User by Real Name</legend>
-	   <% form_remote_tag :update => "resdiv", :url => {:action => "search"} do %>
+	   <% form_remote_tag :update => "resdiv", :url => {:action => 'search'} do %>
 	     <input type="text" name="name" />
 	     <%= submit_tag "Search" %>
 	    <% end %>
@@ -35,7 +35,7 @@
 </div>
 <div id="find_by_username" style="display:none;float:left;margin-top:20px;">
 	<fieldset style="border:0;"><legend>Find User by Username</legend>
-	   <% form_remote_tag :update => "resdiv", :url => {:action => "search"} do %>
+	   <% form_remote_tag :update => "resdiv", :url => {:action => 'search'} do %>
 	     <input type="text" name="login" />
 	     <%= submit_tag "Search" %>
 	    <% end %>

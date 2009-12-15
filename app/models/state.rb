@@ -107,11 +107,11 @@ class State < ActiveRecord::Base
   def freebase_description
      require 'open-uri'
      require 'json'
-     cache = ActiveSupport::Cache.lookup_store(:mem_cache_store)
-     cache.fetch("state_freebase_desc_#{self.id}") {
+     
+     Rails.cache.fetch("state_freebase_desc_#{self.id}") {
        open(freebase_description_url).read.gsub(/\/(.)\(help(.)info\)/,'/')
      }
-#     JSON.parse(open(freebase_description_url).read)["result"]["guid"]
+
   end
   
   def image_path

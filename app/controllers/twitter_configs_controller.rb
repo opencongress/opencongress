@@ -53,7 +53,7 @@ class TwitterConfigsController < ApplicationController
         format.html { redirect_to(@twitter_config) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => 'edit' }
         format.xml  { render :xml => @twitter_config.errors, :status => :unprocessable_entity }
       end
     end

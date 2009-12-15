@@ -29,7 +29,7 @@
 </div>
 <script type="text/javascript" language="javascript">
 
-   <%= remote_function(:update => "pn_#{commentary.id}", :url => {:controller => "profile", :action => "pn_ajax", :id => commentary.id, :object_type => object.class.to_s, :object_id => object.id}) %> 
+   <%= remote_function(:update => "pn_#{commentary.id}", :url => {:controller => 'profile', :action => 'pn_ajax', :id => commentary.id, :object_type => object.class.to_s, :object_id => object.id}) %> 
     </script>
 
 

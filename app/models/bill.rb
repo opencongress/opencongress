@@ -34,7 +34,6 @@ class Bill < ActiveRecord::Base
 
   has_many :bookmarks, :as => :bookmarkable
   has_many :notebook_links, :as => :notebookable
-  #acts_as_bookmarkable
 
   has_many :committee_meetings_bills
   has_many :committee_meetings, :through => :committee_meetings_bills
@@ -44,12 +43,17 @@ class Bill < ActiveRecord::Base
   has_one :bill_stats
   has_one :bill_fulltext
   
-  has_many :friend_emails, :as => :emailable, :order => 'created_at'
+  has_many :friend_emails,
+        :as => :emailable,
+        :order => 'created_at'
   
   belongs_to :hot_bill_category
   
-  has_many :bill_interest_groups, :include => :crp_interest_group, :order => 'crp_interest_groups.order'
-  has_many :bill_position_organizations
+  has_many :bill_interest_groups,
+        :include => :crp_interest_group,
+        :order => 'crp_interest_groups.order',
+        :dependent => :destroy
+  has_many :bill_position_organizations, :dependent => :destroy
   
   has_one :wiki_link, :as => "wikiable"
   
@@ -64,7 +68,7 @@ class Bill < ActiveRecord::Base
   @@TYPES_ORDERED = [ "s", "sj",  "sc",  "sr", "h", "hj", "hc", "hr" ]
   
   @@INVERTED_TYPES = {"hconres"=>"hc", "hres"=>"hr", "hr"=>"h", "hjres"=>"hj", "sjres"=>"sj", "sconres"=>"sc", "s"=>"s", "sres"=>"sr"}
-  
+
   class << self
     def all_types
       @@TYPES
@@ -343,7 +347,7 @@ class Bill < ActiveRecord::Base
       return nil
     end
   end
-  
+
   def to_light_xml(options = {})
     default_options = {:except => [:rolls, :hot_bill_category_id, :summary, :fti_titles,:bookmark_count_2,
                                    :fti_names,:current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, 
@@ -749,9 +753,9 @@ class Bill < ActiveRecord::Base
     return @attributes['article_count'] if @attributes['article_count']
     
     if type == 'news'
-      news.find(:all, :conditions => [ "commentaries.date > ?", since.ago]).size
+      self.news.find(:all, :conditions => [ "commentaries.date > ?", since.ago]).size
     else
-      blogs.find(:all, :conditions => [ "commentaries.date > ?", since.ago]).size
+      self.blogs.find(:all, :conditions => [ "commentaries.date > ?", since.ago]).size
     end
   end
   

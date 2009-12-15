@@ -2,17 +2,14 @@
 
 		<ul class="profile_nav" id="summaries_nav">
 		  <li class="" id="AboutMe">
-			    <%= link_to "<span>About Me</span>", 
-			           {:controller => "profile", 
-				        :action => "profile", 
-				        :login => @user.login}, 
+			    <%= link_to "<span>About Me</span>", user_profile_path(:login => @user.login),
 				        :class => params[:action] == "profile" ? "arrow_button active" : "arrow_button" %></li>
 			
 			<% if @user.can_view(:my_tracked_items, current_user) %>
 			<li class="" style="" id="ItemsTracked">
 				<%= link_to "<span>Tracked Items</span>", 
-				     {:controller => "profile", 
-					  :action => "items_tracked", 
+				     {:controller => 'profile', 
+					  :action => 'items_tracked', 
 					  :login => @user.login}, 
 					  :class => ["items_tracked", "bills", "person", "committees", "issues"].include?(controller.action_name) ? "arrow_button active" : "arrow_button" %>
 
@@ -22,8 +19,8 @@
 			<% if @user.can_view(:my_actions, current_user) %>
 			<li class="" id="Actions">
 			  <%= link_to "<span>Actions</span>", 
-			          {:controller => "profile", 
-				       :action => "actions", 
+			          {:controller => 'profile', 
+				       :action => 'actions', 
 				       :login => @user.login}, 
 				       :class => params[:action] == "actions" ? "arrow_button active" : "arrow_button" %></li> 
 			<% end %>
@@ -62,7 +59,7 @@
 	  <% @user.user_mailing_list.mailing_list_items.bills.each do |b| %>
 	    <p style="font-size:10px;"><span style="float:right;"><%= link_to "stop", b, :method => :delete %></span>
 	        <%= link_to truncate(b.mailable.title_full_common, :length => 40), 
-	             {:controller => "bill", :action => "show", :id => b.mailable.ident} %></p>
+	             bill_url(b.mailable.ident) %></p>
 	  <% end %>
     <% end %>
 	<% if @user.user_mailing_list.mailing_list_items.people.count > 0 %>
@@ -70,7 +67,7 @@
 	  <% @user.user_mailing_list.mailing_list_items.people.each do |p| %>
 	    <p style="font-size:10px;"><span style="float:right;"><%= link_to "stop", p, :method => :delete %></span>
 	        <%= link_to truncate(p.mailable.title_full_name, :length => 40), 
-	             {:controller => "bill", :action => "show", :id => p.mailable.ident} %></p>
+	             bill_url(p.mailable.ident) %></p>
 	  <% end %>	
 	<% end %>
    </div>	

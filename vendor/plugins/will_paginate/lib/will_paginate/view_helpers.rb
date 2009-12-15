@@ -60,7 +60,7 @@ module WillPaginate
     # Advanced options:
     # * <tt>:param_name</tt> -- parameter name for page number in URLs (default: <tt>:page</tt>)
     # * <tt>:params</tt> -- additional parameters when generating pagination links
-    #   (eg. <tt>:controller => "foo", :action => nil</tt>)
+    #   (eg. <tt>:controller => 'foo', :action => nil</tt>)
     # * <tt>:renderer</tt> -- class name, class or instance of a link renderer (default:
     #   <tt>WillPaginate::LinkRenderer</tt>)
     #

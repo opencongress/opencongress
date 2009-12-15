@@ -18,7 +18,7 @@
 			<% if @user.main_picture %>
 			<%= image_tag "#{BASE_URL}/images/users/" + @user.login + "_m.jpg", :alt => @user.login %>
 			<% if @user == current_user %>
-			<br /><%= link_to "Delete Current Image", {:action => "delete_images"} %>
+			<br /><%= link_to "Delete Current Image", {:action => 'delete_images'} %>
 			<% end %>
 			<% else %>
 			<%= image_tag "/images/anonymous.gif", :alt => "No Picture" %>
@@ -26,7 +26,7 @@
 			<% if @user == current_user %>
 			<br /><%= toggler('ul_pic', 'Upload New Picture', 'close') %>
 			<div id="ul_pic" style="display:none;">
-				<% form_for :user, :url => { :action => "upload_pic" }, :html=>{:multipart=>true, :style=> "display:inline;"} do |form| %>
+				<% form_for :user, :url => { :action => 'upload_pic' }, :html=>{:multipart=>true, :style=> "display:inline;"} do |form| %>
 				<%= file_field "picture", "tmp_file", :size=> 20 %>  
 				<%= submit_tag "Upload" %>
 			</div>
@@ -119,7 +119,7 @@
 				<div id="privacy_settings">
 				<% if @user == current_user %>
 					<div id="phide" style="display:none;">
-					<% form_for :privacy_option, @user.privacy_option, :url => {:controller => "/profile", :action => "update_privacy" } do |f| %>
+					<% form_for :privacy_option, @user.privacy_option, :url => {:controller => "/profile", :action => 'update_privacy' } do |f| %>
 						<%= f.select :my_last_login_date, [["Public",2],["Friends", 1], ["Private",0]] %>
 						<%= f.select :my_full_name, [["Public",2],["Friends", 1], ["Private",0]] %>
 						<%= f.select :my_website, [["Public",2],["Friends", 1], ["Private",0]] %>

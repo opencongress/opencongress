@@ -24,8 +24,8 @@ class Admin::CommentaryController < Admin::IndexController
   end
   
   def clear_cache
-    ActionController::Base.cache_store.clear
-    
+    Rails.cache.clear
+
     flash[:notice] = "memcache cleared."
     
     redirect_to :controller => "/admin/index"

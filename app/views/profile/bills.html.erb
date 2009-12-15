@@ -4,7 +4,7 @@
 	
 <div id="linkcontent" style="clear:both;padding-top:10px;width:100%;">
 <% unless @bookmarks.empty? %>
-	<h3>Bills I'm Tracking <%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => "user_feeds", :login => @user.login, :action => "bills", :key => logged_in? ? current_user.feed_key : nil %></h3>
+	<h3>Bills I'm Tracking <%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => 'user_feeds', :login => @user.login, :action => 'bills', :key => logged_in? ? current_user.feed_key : nil %></h3>
 	    <table class="simple-table2" cellspacing="0">
 	      <tr>
 	        <th scope="col">Bill</th>
@@ -17,17 +17,17 @@
 
 	<% @bookmarks.each do |b| %>
 	<% bill = b.bookmarkable %>
-	<tr><td><%= link_to bill.title_typenumber_only, :controller => 'bill', :action => "show", :id => bill.ident %> <%= bill.title_common %> <span class='date'>(<%= number_to_ordinal(bill.session) %> congress)</span><br/>
+	<tr><td><%= link_to bill.title_typenumber_only, bill_url(bill.ident) %> <%= bill.title_common %> <span class='date'>(<%= number_to_ordinal(bill.session) %> congress)</span><br/>
 	    News: <%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}),
-	              :controller => "bill", :action => 'atom_news', :id => bill.ident %>
+	              :controller => 'bill', :action => 'atom_news', :id => bill.ident %>
 	    Blogs: <%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}),
-	              :controller => "bill", :action => 'atom_blogs', :id => bill.ident %>	    
+	              :controller => 'bill', :action => 'atom_blogs', :id => bill.ident %>	    
 	    </td>
 	            <td><%= temp_url_strip(bill.status) %></td>
 	            <td><%= bill.last_action.formatted_date %></td>
-	            <td style="text-align:center;"><%= link_to bill.bookmarks.length, :controller => "friends", :action => "tracking_bill", :id => bill.ident %></td>
+	            <td style="text-align:center;"><%= link_to bill.bookmarks.length, :controller => 'friends', :action => 'tracking_bill', :id => bill.ident %></td>
               <%= user_bill_vote_string(bill) %>
-	            <td><%= button_to("Remove", :action => "remove_bookmark", :id => b.id) if current_user == @user %></td>
+	            <td><%= button_to("Remove", :action => 'remove_bookmark', :id => b.id) if current_user == @user %></td>
 	</tr>
 	   <tr>
 	    <td style="border-bottom:none;" colspan="4"><p id="vote_message_<%= bill.id.to_s %>" style="display:none;"></p>

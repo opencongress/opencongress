@@ -29,42 +29,42 @@
   <dt>First Name (first_name)</dt>
   <dd>
       Specify the first name of the person<br/>
-      <%= link_to "#{BASE_URL}api/people?first_name=John&key=#{@api_key}", :controller => "api", :key => @api_key, :action => "people", :first_name => "John" %>
+      <%= link_to "#{BASE_URL}api/people?first_name=John&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :first_name => "John" %>
   </dd>
 <dt>Last Name (last_name)</dt>
 <dd>
     Specify the last name of the person<br/>
-    <%= link_to "#{BASE_URL}api/people?last_name=Kerry&key=#{@api_key}", :controller => "api", :key => @api_key, :action => "people", :last_name => "Kerry" %>
+    <%= link_to "#{BASE_URL}api/people?last_name=Kerry&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :last_name => "Kerry" %>
 </dd>
   <dt>OpenCongress ID (person_id)</dt>
   <dd>
       Specify the id of the person<br/>
-      <%= link_to "#{BASE_URL}api/people?id=300056&key=#{@api_key}", :controller => "api", :key => @api_key, :action => "people", :person_id => "300056" %>
+      <%= link_to "#{BASE_URL}api/people?id=300056&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :person_id => "300056" %>
   </dd>
 <dt>Gender (gender)</dt>
 <dd>
     Specify the gender of the person, either 'M' or 'F'<br/>
-    <%= link_to "#{BASE_URL}api/people?gender=M&last_name=Kennedy&key=#{@api_key}", :controller => "api", :key => @api_key, :action => "people", :gender => "M", :last_name => "Kennedy" %>
+    <%= link_to "#{BASE_URL}api/people?gender=M&last_name=Kennedy&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :gender => "M", :last_name => "Kennedy" %>
 </dd>
 <dt>State (state)</dt>
 <dd>
     Specify the two letter state of the person<br/>
-    <%= link_to "#{BASE_URL}api/people?first_name=John&state=AZ&key=#{@api_key}", :controller => "api", :key => @api_key, :action => "people", :first_name => "John", :state => "AZ" %>
+    <%= link_to "#{BASE_URL}api/people?first_name=John&state=AZ&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :first_name => "John", :state => "AZ" %>
 </dd>
 <dt>District (district)</dt>
 <dd>
     Specify the congressional district of the person<br/>
-    <%= link_to "#{BASE_URL}api/people?district=1&state=FL&key=#{@api_key}", :controller => "api", :key => @api_key, :action => "people", :district => "1", :state => "FL" %>
+    <%= link_to "#{BASE_URL}api/people?district=1&state=FL&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :district => "1", :state => "FL" %>
 </dd>
 <dt>Party (party)</dt>
 <dd>
     Specify the political party of the person, either 'Republican', 'Democrat', or 'Independent'<br/>
-    <%= link_to "#{BASE_URL}api/people?party=Republican&state=FL&key=#{@api_key}", :controller => "api", :key => @api_key, :action => "people", :party => "Republican", :state => "FL" %>
+    <%= link_to "#{BASE_URL}api/people?party=Republican&state=FL&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :party => "Republican", :state => "FL" %>
 </dd>
 <dt>User Approval Range (user_approval_from, user_approval_to)</dt>
 <dd>
     Specify an average OpenCongress user approval rating range (0.0 to 10.0)<br/>
-    <%= link_to "#{BASE_URL}api/people?user_approval_from=5.0&user_approval_to=10.0&key=#{@api_key}", :controller => "api", :key => @api_key, :action => "people", :user_approval_from => "5.0", :user_approval_to => "10.0" %>
+    <%= link_to "#{BASE_URL}api/people?user_approval_from=5.0&user_approval_to=10.0&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :user_approval_from => "5.0", :user_approval_to => "10.0" %>
 </dd>
 
   <dt>Senators most in the news this week</dt>
@@ -284,7 +284,7 @@ Here is the page to retrieve all the data on the OpenCongress Wiki, including a 
 
 <div class="br_section">
 <h3>Battle Royale</h3>
-<p>The Battle Royale API shows 30 bills, people, or issues based on the query you provide.  The easiest way to construct a query is to simply visit the <%= link_to "Battle Royale", :controller => "battle_royale", :key => @api_key, :action => "index" %> with a browser, browse to the data you'd want to extract, and click the "XML" button.  You can also build queries from the following information.</p>
+<p>The Battle Royale API shows 30 bills, people, or issues based on the query you provide.  The easiest way to construct a query is to simply visit the <%= link_to "Battle Royale", :controller => 'battle_royale', :key => @api_key, :action => 'index' %> with a browser, browse to the data you'd want to extract, and click the "XML" button.  You can also build queries from the following information.</p>
 
 <p style="font-weight:bold;">All Battle Royale queries take the following parameters:</p>
 <table cellpadding="0" cellspacing="0">

@@ -20,7 +20,7 @@
 							</div>
 							<% end %>
 			 <% else %>
-				<span><%= link_to("Save to Notebook", :controller => "account", :action => "login") %></span>
+				<span><%= link_to("Save to Notebook", login_url) %></span>
 			 <% end %>     
       
 			        
@@ -31,7 +31,7 @@
 		  <% if logged_in? %>
 			Rate
 			<% else %>
-		 <%= link_to("Rate", :controller => "account", :action => "login") %>
+		 <%= link_to("Rate", login_url) %>
 		<% end %>
 	      <span id="comm_rate_ind_<%= @commentary.id.to_s%>" style="display: none;">
 	        <img src="/images/indicator.gif" class="noborder" />

@@ -12,12 +12,12 @@
       <% bill = b.bill %>
       <tr>
         <td>
-          <%= link_to bill.title_typenumber_only, :controller => 'bill', :action => "show", :id => bill.ident %>
+          <%= link_to bill.title_typenumber_only, bill_url(bill.ident) %>
           <%= bill.title_common %> <span class='date'>(<%= number_to_ordinal(bill.session) %> congress)</span>
         </td>
         <td><%= temp_url_strip(bill.status) %></td>
         <td><%= bill.last_action.formatted_date %></td>
-        <td><%= button_to("Remove", :action => "remove_vote", :id => b.id) if current_user == @user %></td>
+        <td><%= button_to("Remove", :action => 'remove_vote', :id => b.id) if current_user == @user %></td>
       </tr>
       <% end %>
     </table>
@@ -32,11 +32,11 @@
       </tr>
       <% @bills_opposed.each do |b| %>
       <% bill = b.bill %>
-      <tr>        <td>          <%= link_to bill.title_typenumber_only, :controller => 'bill', :action => "show", :id => bill.ident %>          <%= bill.title_common %> <span class='date'>(<%= number_to_ordinal(bill.session) %> congress)</span>i
+      <tr>        <td>          <%= link_to bill.title_typenumber_only, bill_url(bill.ident) %>          <%= bill.title_common %> <span class='date'>(<%= number_to_ordinal(bill.session) %> congress)</span>i
         </td>
         <td><%= temp_url_strip(bill.status) %></td>
         <td><%= bill.last_action.formatted_date %></td>
-        <td><%= button_to("Remove", :action => "remove_vote", :id => b.id) if current_user == @user %></td>
+        <td><%= button_to("Remove", :action => 'remove_vote', :id => b.id) if current_user == @user %></td>
       </tr>
       <% end %>
     </table>

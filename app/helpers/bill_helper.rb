@@ -238,8 +238,8 @@ module BillHelper
 		@tracking_suggestions[0..4].each do |t|
 			out += "<table cellspacing='0' cellpadding='0'>"
 			out += "\n<tr><td style='padding-right:5px;'>"
-			out += link_to((truncate t[:bill].title_full_common, :length => 30), {:controller => "bill", :action => "show", :id => t[:bill].ident}) + "</td>\n"
-			out += "<td>[" +  link_to(t[:trackers], {:controller => "friends", :action => "tracking_bill", :id => t[:bill].ident}) + "]</td></tr>\n"
+			out += link_to(truncate(t[:bill].title_full_common, :length => 30), bill_url(t[:bill].ident)) + "</td>\n"
+			out += "<td>[" +  link_to(t[:trackers], {:controller => 'friends', :action => 'tracking_bill', :id => t[:bill].ident}) + "]</td></tr>\n"
 			out += "</table>"
 		end
 		more = num - limit
@@ -247,8 +247,8 @@ module BillHelper
 			out += "<table id='more_tracking_suggestions' cellspacing='0' cellpadding='0' style='display:none;'>\n"
 			@tracking_suggestions[5..num].each do |t|
 					out += "\n<tr><td style='padding-right:5px;'>"
-					out += link_to((truncate t[:bill].title_full_common, :length => 30), {:controller => "bill", :action => "show", :id => t[:bill].ident}) + "</td>\n"
-					out += "<td>[" +  link_to(t[:trackers], {:controller => "friends", :action => "tracking_bill", :id => t[:bill].ident}) + "]</td></tr>\n"
+					out += link_to(truncate(t[:bill].title_full_common, :length => 30), bill_url(t[:bill].ident)) + "</td>\n"
+					out += "<td>[" +  link_to(t[:trackers], {:controller => 'friends', :action => 'tracking_bill', :id => t[:bill].ident}) + "]</td></tr>\n"
 			end
 			out += "</table>\n"
 			out += toggler("more_tracking_suggestions", "#{more} more bills", "Hide Others Tracking", "arrow", "arrow-hide")

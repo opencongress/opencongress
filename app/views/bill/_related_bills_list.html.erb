@@ -22,7 +22,7 @@
         <% unless bill.title_common.blank? -%>
          
 	<li class="<%= bill_category(bill) %>">
-		<a class="icon_link" href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>">
+		<a class="icon_link" href="<%= bill_url(bill.ident) %>">
             <% if commentary_type %>
               <span class="list_count"><%= (i + 1) %></span>
             <% else %>

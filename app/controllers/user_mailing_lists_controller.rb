@@ -47,7 +47,7 @@ class UserMailingListsController < ApplicationController
         format.html { redirect_to(@user_mailing_list) }
         format.xml  { render :xml => @user_mailing_list, :status => :created, :location => @user_mailing_list }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => 'new' }
         format.xml  { render :xml => @user_mailing_list.errors, :status => :unprocessable_entity }
       end
     end
@@ -64,7 +64,7 @@ class UserMailingListsController < ApplicationController
         format.html { redirect_to(@user_mailing_list) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => 'edit' }
         format.xml  { render :xml => @user_mailing_list.errors, :status => :unprocessable_entity }
       end
     end

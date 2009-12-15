@@ -12,7 +12,7 @@
   </div>
   	  </div>
 
-  <h3><%= link_to s.title_full_name_party_state, :controller => "people", :action => :show, :id => s %></h3>
+  <h3><%= link_to s.title_full_name_party_state, :controller => 'people', :action => :show, :id => s %></h3>
   There <%= pluralize_nn(s.users_tracking_from_state_count(@my_state.abbreviation), "is", "are") %> 
   <%= pluralize(s.users_tracking_from_state_count(@my_state.abbreviation), "OpenCongress user", "OpenCongress users") %> in 
   <%= @my_state.abbreviation %> tracking <%= s.full_name %>.<br/>

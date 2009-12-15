@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   skip_before_filter :store_location
-  before_filter :login_required, :only => ["flag", "censor", "ban_ip", "add_comment"]
-  before_filter :admin_login_required, :only => ["censor", "ban_ip"]
+  before_filter :login_required, :only => [:flag, :censor, :ban_ip, :add_comment]
+  before_filter :admin_login_required, :only => [:censor, :ban_ip]
 
   def add_comment
     object = Object.const_get(params[:type]).find_by_id(params[:id])
@@ -39,7 +39,7 @@ class CommentsController < ApplicationController
         else
           if params[:redirect] == 'false'
             render :update do |page|
-              page.replace_html "small_comment", "Your comment has been saved<br />" + link_to("View it Now", @comment.commentable_link.merge(:action => "comments", :comment_page => @comment.page), :class => 'jump_to_comment')
+              page.replace_html "small_comment", "Your comment has been saved<br />" + link_to("View it Now", @comment.commentable_link.merge(:action => 'comments', :comment_page => @comment.page), :class => 'jump_to_comment')
             end
             return
           end
@@ -88,7 +88,7 @@ class CommentsController < ApplicationController
         else
 #        render :partial => "shared/comments3", :locals => {:object => object}
          render :update do |page|
-           page.redirect_to @comment.commentable_link.merge(:action => "comments", :comment_page => @comment.page)
+           page.redirect_to @comment.commentable_link.merge(:action => 'comments', :comment_page => @comment.page)
          end
        end
       end      

@@ -43,7 +43,7 @@ class ProfileController < ApplicationController
   end
 
 
-  def profile
+  def show
     @user = User.find_by_login(params[:login], :include => [:bookmarks]) # => [:bill]}])
     @page_title = "#{@user.login}'s Profile"
 		@title_class = "tab-nav"
@@ -97,7 +97,7 @@ class ProfileController < ApplicationController
   end
   
   def items_tracked
-    @atom = {'link' => url_for(:controller => "user_feeds", :login => @user.login, :action => "tracked_items", :key => logged_in? ? current_user.feed_key : nil)}
+    @atom = {'link' => url_for(:controller => 'user_feeds', :login => @user.login, :action => 'tracked_items', :key => logged_in? ? current_user.feed_key : nil)}
     @hide_atom = true
     @user = User.find_by_login(params[:login], :include => [:bookmarks]) # => [:bill, {:person => :roles}]}])
     @page_title = "#{@user.login}'s Profile"
@@ -221,7 +221,7 @@ class ProfileController < ApplicationController
 
       render :action => "new_link.rxml", :layout => false
     else
-      render :action => "my_votes" 
+      render :action => 'my_votes' 
     end
   end
   
@@ -229,20 +229,20 @@ class ProfileController < ApplicationController
     bill_vote = current_user.bill_votes.find_by_bill_id(params[:id])
     bill_vote.destroy
     flash[:notice] = "Vote Removed"
-    redirect_back_or_default(:action => "index", :login => current_user.login)
+    redirect_back_or_default(:action => 'index', :login => current_user.login)
   end
   def remove_bill_bookmark
     bookmark = current_user.bookmarks.find_by_bookmarkable_type_and_bookmarkable_id("Bill", params[:id])
     bookmark.destroy
     flash[:notice] = "Bill Removed from Tracking"
-    redirect_back_or_default(:action => "items_tracked", :login => current_user.login)
+    redirect_back_or_default(:action => 'items_tracked', :login => current_user.login)
   end
   
   def remove_person_bookmark
     bookmark = current_user.bookmarks.find_by_bookmarkable_type_and_bookmarkable_id("Person", params[:id])
     bookmark.destroy
     flash[:notice] = "Person Removed from Tracking"
-    redirect_back_or_default(:action => "items_tracked", :login => current_user.login)
+    redirect_back_or_default(:action => 'items_tracked', :login => current_user.login)
   end
   
   def remove_bookmark
@@ -250,7 +250,7 @@ class ProfileController < ApplicationController
     if book
       book.destroy
     end
-    redirect_back_or_default(:action => "index", :login => current_user.login)
+    redirect_back_or_default(:action => 'index', :login => current_user.login)
   end
 
   def comments
@@ -362,7 +362,7 @@ class ProfileController < ApplicationController
 
       render :action => "new_link.rxml", :layout => false
     else
-      render :action => "issues"
+      render :action => 'issues'
     end 
 
   end
@@ -387,7 +387,7 @@ class ProfileController < ApplicationController
 
       render :action => "new_link.rxml", :layout => false
     else
-      render :action => "committees"
+      render :action => 'committees'
     end
 
   end
@@ -419,7 +419,7 @@ class ProfileController < ApplicationController
         @user[field] = nil if ( field == "zip_four" && value == "" ) 
         if @user.valid?
           @user.save
-          render :action => "edit_profile", :layout => false
+          render :action => 'edit_profile', :layout => false
         else
           if field == "zip_four"
              render :text => "Must be a 4 digit zip extension"
@@ -448,7 +448,7 @@ class ProfileController < ApplicationController
       end
     else
       render :update do |page|
-        page.redirect_to :controller => "account", :action => "login"
+        page.redirect_to login_url
       end
     end
   end
@@ -458,7 +458,7 @@ class ProfileController < ApplicationController
      params[:privacy_option].delete("user_id")
      @user.privacy_option.update_attributes(params[:privacy_option])
      flash[:notice] = "Privacy Setting Updated"
-     redirect_back_or_default(:controller => "/profile", :login => @user.login, :action => "profile")
+     redirect_back_or_default(user_profile_url(@user.login))
          
   end
 
@@ -479,7 +479,7 @@ class ProfileController < ApplicationController
     user = current_user
     user.update_attribute("main_picture",new_main_file_name)
     user.update_attribute("small_picture", new_small_file_name)
-    redirect_to :controller => "profile", :action => "profile", :login => current_user.login
+    redirect_to user_profile_url(current_user.login)
   end
   def delete_images
     File.delete("public/images/users/" + current_user.main_picture) if (current_user.main_picture && File.exists?("public/images/users/" + current_user.main_picture))
@@ -488,12 +488,12 @@ class ProfileController < ApplicationController
     @user.update_attribute("main_picture",nil)
     @user.update_attribute("small_picture", nil)
 
-    redirect_to :action => "profile", :login => current_user.login
+    redirect_to user_profile_url(current_user.login)
   end
   def hide_field
     @user = current_user
     @user.toggle!(params[:type])
-    redirect_to :action => "profile", :login => current_user.login
+    redirect_to user_profile_url(current_user.login)
   end
   def ratings
     this_rating = params[:user]['default_filter'].to_i
@@ -502,7 +502,7 @@ class ProfileController < ApplicationController
       user = current_user
       user.update_attribute(:default_filter, this_rating)
     end
-    redirect_to :controller => "profile", :action => "profile", :login => current_user.login, :anchor => "comm_fil"
+    redirect_to :controller => 'profile', :action => 'show', :login => current_user.login, :anchor => "comm_fil"
   end
   
   def watchdog

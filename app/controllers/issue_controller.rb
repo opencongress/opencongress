@@ -35,7 +35,7 @@ class IssueController < ApplicationController
     
     render :layout => false
   end
-  
+
   def by_most_viewed
     @sort = :by_most_viewed
 
@@ -144,7 +144,7 @@ class IssueController < ApplicationController
       3 => { 'text' => "Recent Bills", 'url' => { :controller => 'issue', :action => 'top_twenty_bills', :id => @subject } }
     }
   end
- 
+
   def top_viewed_bills
    @subject = Subject.find(params[:id])
    @bills = @subject.most_viewed_bills(20)
@@ -155,7 +155,7 @@ class IssueController < ApplicationController
       3 => { 'text' => "Most Viewed Bills", 'url' => { :controller => 'issue', :action => 'top_twenty_bills', :id => @subject } }
     }
   end
-  
+
   def atom
     @subject = Subject.find(params[:id])
     
@@ -164,16 +164,16 @@ class IssueController < ApplicationController
 
     render :layout => false
   end
-  
+
   def atom_top20
     @issues = Subject.top20_viewed
     expires_in 60.minutes, :public => true
 
     render :action => 'top20_atom', :layout => false
   end
-  
+
   private
-  
+
   def issue_profile_shared
     id = params[:id].to_i
     

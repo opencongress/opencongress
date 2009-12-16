@@ -16,13 +16,13 @@ module ApplicationHelper
 	
   def link_to_item(item, attribute, action, controller = nil, show_views = false, trunc = false)
     link_text = ""
-    link_text += trunc ? "<span class='title'>#{truncate(item.send(attribute), :length => trunc)}</span>" :
-                         "<span class='title'>#{item.send(attribute)}</span>"
+    link_text += trunc ? "<span class=\"title\">#{truncate(item.send(attribute), :length => trunc)}</span>" :
+                         "<span class=\"title\">#{item.send(attribute)}</span>"
     if item.kind_of? Bill
-      link_text +=  "<span class='date><span>#{temp_url_strip(item.status)}</span>#{item.last_action.formatted_date if item.last_action}</span>"
+      link_text +=  "<span class=\"date\"><span>#{temp_url_strip(item.status)}</span>#{item.last_action.formatted_date if item.last_action}</span>"
     end
-    link_text += show_views ? "<span class='views_count'><span>#{item.views(DEFAULT_COUNT_TIME) if show_views}</span> views</span>" : ""
-    
+    link_text += show_views ? "<span class=\"views_count\"><span>#{item.views(DEFAULT_COUNT_TIME) if show_views}</span> views</span>" : ""
+
     if item.kind_of? Bill
       controller ? link_to(link_text, { :action => action, :controller => controller, :id => item.ident }) :
                    link_to(link_text, { :action => action, :id => item.ident })
@@ -38,33 +38,9 @@ module ApplicationHelper
     return "" if parts.empty?
     return parts[0] if parts[1].empty?
     parts[0] +
-      "<span id='#{more_id}'> <li class='small'><a href='javascript:replace("  +
-      "\"#{extra_id}\",\"#{more_id}\")' class='more_link'>#{text_for_more}</a></li></span>" +
-      "<span style='display: none' id='#{extra_id}'>#{parts[1]}</span>"
+      "<span id=\"#{more_id}\"> <li class=\"small\"><a href=\"javascript:replace('#{extra_id}','#{more_id}')\" class=\"more_link\">#{text_for_more}</a></li></span><span style=\"display: none\" id=\"#{extra_id}\">#{parts[1]}</span>"
   end
-	
-	def toggle_partial_list(list, attribute, item_limit, text_for_more, extra_id,
-    more_id, action, controller)
-    parts = split_list(list, attribute, item_limit, action, controller)
-    return "" if parts.empty?
-    return parts[0] if parts[1].empty?
-    parts[0] +
-      "<span id='show_#{extra_id}'><a href=\"javascript:toggle('#{extra_id}')\" class='arrow'>#{text_for_more}</a></span>" +
-      "<div id=\"#{extra_id}\" style='display: none;'>#{parts[1]}</div>" +
-			"<span id='hide_#{extra_id}' style='display: none;'><a href=\"javascript:toggle('#{extra_id}')\" class='arrow-hide'>close</a></span>"
-  end
-	
-	def toggle_partial_list2(list, attribute, item_limit, text_for_more, extra_id,
-    more_id, action, controller)
-    parts = split_list(list, attribute, item_limit, action, controller)
-    return "" if parts.empty?
-    return parts[0] if parts[1].empty?
-    parts[0] +
-      "<li><span id='show_#{extra_id}'><a href=\"javascript:toggle('#{extra_id}')\" class='arrow'>#{text_for_more}</a></span>" +
-      "<ul id=\"#{extra_id}\" style='display: none;'>#{parts[1]}</ul>" +
-			"<span id='hide_#{extra_id}' style='display: none;'><a href=\"javascript:toggle('#{extra_id}')\" class='arrow-hide'>close</a></span></li>"
-  end
-                       
+	                 
   def link_to_person(person)
     link_to person.name, :controller => 'people', :action => 'show', :id => person
   end
@@ -178,7 +154,7 @@ module ApplicationHelper
     else
       random_name = rand(100)
       first_half = "#{str[0..length]}" + link_to_function("...More", "Element.hide('tl_#{random_name}');Element.show('tm_#{random_name}');", :id => "tl_#{random_name}", :class => "arrow biglinks")
-      second_half = "<span style='display:none;' id='tm_#{random_name}'>#{str[length+1..str.length]}</span>"
+      second_half = "<span style=\"display:none;\" id=\"tm_#{random_name}\">#{str[length+1..str.length]}</span>"
       return first_half + second_half
     end
   end
@@ -275,26 +251,26 @@ EOT
 
   def maplight_link(bill = nil)
     if bill
-      "<div class='maplight'><a href='http://maplight.org/'>Campaign contribution data for bills provided by <img src=\"/images/maplight-trans.png\" alt='Maplight.org' /></a></div>"
+      '<div class="maplight"><a href="http://maplight.org">Campaign contribution data for bills provided by <img src="/images/maplight-trans.png" alt="Maplight.org" /></a></div>'
     else
-      "<h3>For more info about the campaign contributions behind the bills in Congress, visit <a class='arrow' target='_blank' href=\"http://maplight.org\"><img class='noborder maplight' src=\"/images/maplight-trans.png\" alt='Maplight.org' /></a>.</h3>"
+      '<h3>For more info about the campaign contributions behind the bills in Congress, visit <a class="arrow" target="_blank" href="http://maplight.org"><img class="noborder maplight" src="/images/maplight-trans.png" alt="Maplight.org" /></a>.</h3>'
     end
   end
   
   def govtrack_button
-    "<div class='credit_button govtrack'><table cellspacing='0' cellpadding='0'><tr><td class='left' /><td class='center'><h3>Data made available by</h3> <a class='i' target='_blank' href=\"http://www.govtrack.us\"><img src=\"/images/govtrack_button.gif\" alt='Govtrack.US' /></a></td><td class='right' /></tr></table></div>"
+    '<div class="credit_button govtrack"><table cellspacing="0" cellpadding="0"><tr><td class="left" /><td class="center"><h3>Data made available by</h3> <a class="i" target="_blank" href="http://www.govtrack.us"><img src="/images/govtrack_button.gif" alt="Govtrack.US" /></a></td><td class="right" /></tr></table></div>'
   end
 
   def openhouse_button
-    "<div class='credit_button openhouse'><table cellspacing='0' cellpadding='0'><tr><td class='left' /><td class='center'><h3>Help Open Congress</h3> <a class='i' target='_blank' href=\"http://www.theopenhouseproject.com/\"><img src=\"/images/openhouse_button.gif\" alt='The OpenHouse Project' /></a></td><td class='right' /></tr></table></div>"
+    '<div class="credit_button openhouse"><table cellspacing="0" cellpadding="0"><tr><td class="left" /><td class="center"><h3>Help Open Congress</h3> <a class="i" target="_blank" href="http://www.theopenhouseproject.com/"><img src="/images/openhouse_button.gif" alt="The OpenHouse Project" /></a></td><td class="right" /></tr></table></div>'
   end
   
   def technorati_button
-    "<a class=\"technorati\" target='_blank' href=\"http://www.technorati.com\">Information made available by <strong>Technorati</strong></a>"
+    '<a class="technorati" target="_blank" href="http://www.technorati.com">Information made available by <strong>Technorati</strong></a>'
   end
 
   def daylife_button
-    "<a class=\"daily_life\" target='_blank' href=\"http://www.daylife.com\">Information made available by <strong>Daily Life</strong></a>"
+    '<a class="daily_life" target="_blank" href=\"http://www.daylife.com\">Information made available by <strong>Daily Life</strong></a>'
   end
 
   def short_date(date)
@@ -334,28 +310,28 @@ EOT
   end
   
   def dropdown_trigger(text_name, trigger_text)
-    "<span class='dropdown_trigger'><a href=\"javascript:dropdown_open('#{text_name}_dropdown')\">#{trigger_text}</a></span>"
+    "<span class=\"dropdown_trigger\"><a href=\"javascript:dropdown_open('#{text_name}_dropdown')\">#{trigger_text}</a></span>"
   end
   
   def dropdown_content(text_name)
     st = SiteText.find_dropdown_text(text_name)
     text = st ? st : ""
     
-    "<div class='dropdown_content' id='#{text_name}_dropdown' style='display: none'><div class='dropdown_close'><a href=\"javascript:dropdown_close('#{text_name}_dropdown')\">close</a></div>#{text}</div>" 
+    "<div class=\"dropdown_content\" id=\"#{text_name}_dropdown\" style=\"display: none\"><div class=\"dropdown_close\"><a href=\"javascript:dropdown_close('#{text_name}_dropdown')\">close</a></div>#{text}</div>" 
   end
   
   def toggler(div_name, show_link_text, hide_link_text, show_link_class = "", hide_link_class = "")
-    "<span class='' id='show_#{div_name}'>" + link_to_function(show_link_text, "Element.show('hide_#{div_name}');Element.hide('show_#{div_name}');new Effect.BlindDown('#{div_name}');", :class => show_link_class) + "</span>" + 
-    "<span class='' id='hide_#{div_name}' style=\"display:none;\">" + link_to_function(hide_link_text, "Element.show('show_#{div_name}');Element.hide('hide_#{div_name}');new Effect.BlindUp('#{div_name}');", :class => hide_link_class) + "</span>"
+    "<span class=\"\" id=\"show_#{div_name}\">" + link_to_function(show_link_text, "Element.show('hide_#{div_name}');Element.hide('show_#{div_name}');new Effect.BlindDown('#{div_name}');", :class => show_link_class) + "</span>" + 
+    "<span class=\"\" id=\"hide_#{div_name}\" style=\"display:none;\">" + link_to_function(hide_link_text, "Element.show('show_#{div_name}');Element.hide('hide_#{div_name}');new Effect.BlindUp('#{div_name}');", :class => hide_link_class) + "</span>"
   end
   
 	def toggler_with_span_class(div_name, show_link_text, hide_link_text, show_link_class = "", hide_link_class = "")
-    "<span class='#{show_link_class}' id='show_#{div_name}'><a href=\"javascript:toggle('#{div_name}')\" class=\"#{show_link_class}\">#{show_link_text}</a></span>" +
-    "<span class='#{hide_link_class}' id='hide_#{div_name}' style='display: none;'><a href=\"javascript:toggle('#{div_name}')\" class=\"#{hide_link_class}\">#{hide_link_text}</a></span>" 
+    "<span class=\"#{show_link_class}\" id=\"show_#{div_name}\"><a href=\"javascript:toggle('#{div_name}')\" class=\"#{show_link_class}\">#{show_link_text}</a></span>" +
+    "<span class=\"#{hide_link_class}\" id=\"hide_#{div_name}\" style=\"display: none;\"><a href=\"javascript:toggle('#{div_name}')\" class=\"#{hide_link_class}\">#{hide_link_text}</a></span>" 
   end
 
   def ajax_toggler(div_name, show_link_text, hide_link_text, field_two, show_link_class = "", hide_link_class = "")
-    "<span class='' id='show_#{div_name}'>" + link_to_remote(show_link_text, {:update => div_name, :url => field_two, :complete => "Element.show('hide_#{div_name}');Element.hide('show_#{div_name}');new Effect.BlindDown('#{div_name}');"}, :class => show_link_class) + "</span>" + 
+    "<span class=\"\" id=\"show_#{div_name}\">" + link_to_remote(show_link_text, {:update => div_name, :url => field_two, :complete => "Element.show('hide_#{div_name}');Element.hide('show_#{div_name}');new Effect.BlindDown('#{div_name}');"}, :class => show_link_class) + "</span>" + 
     " <span class='' id='hide_#{div_name}' style=\"display:none;\">" + link_to_function(hide_link_text, "Element.show('show_#{div_name}');Element.hide('hide_#{div_name}');new Effect.BlindUp('#{div_name}');", :class => hide_link_class) + "</span>"
   end
 	
@@ -377,7 +353,7 @@ EOT
     st = SiteText.find_explain(tag)
     text = st ? st : ""
     
-    "<div class='explain_box'>#{text}</div>"
+    "<div class=\"explain_box\">#{text}</div>"
   end
   
   def site_text_plaintext(tag)
@@ -645,22 +621,22 @@ EOT
   			      :class => "no #{nah}") +
         "
         </div>
-          <!-- <a href='' class='more learn_trigger'><span>I Want to Learn More</span></a> -->
-          <a href='' class='more learn_trigger'><span></span></a>
+          <!-- <a href=\"\" class=\"more learn_trigger\"><span>I Want to Learn More</span></a> -->
+          <a href=\"\" class=\"more learn_trigger\"><span></span></a>
         "
       else
-        "<div class='voting_buttons'>" +
+        '<div class="voting_buttons">' +
           link_to(image_tag('yes.png') + "<span>I Support this Bill</span>",
               login_url(:modal => true, :login_action => 0), :class => "vote_trigger yes") + 
         "
-                                            
+          
         " +
           link_to(image_tag('no.png') + "<span>I Oppose this Bill</span>",
               login_url(:modal => true, :login_action => 1), :class => "vote_trigger no") +
         "
         </div>
-          <!-- <a href='' class='more learn_trigger'><span>I Want to Learn More</span></a> -->
-          <a href='' class='more learn_trigger'><span></span></a>
+          <!-- <a href=\"\" class=\"more learn_trigger\"><span>I Want to Learn More</span></a> -->
+          <a href=\"\" class=\"more learn_trigger\"><span></span></a>
         "        
       end
 		end
@@ -677,8 +653,8 @@ EOT
       result = result.round
     end                    
     color = percent_to_color(result)
-    "<div id='users_result'>
-    <h3 class='clearfix' style='color:#{color};' id='support_#{bill.id.to_s}'>#{result.nil? ? "-" : result}%</h3>
+    "<div id=\"users_result\">
+    <h3 class=\"clearfix\" style=\"color:#{color};\" id=\"support_#{bill.id.to_s}\">#{result.nil? ? "-" : result}%</h3>
     <h4>Users Support Bill</h4>
     <font>#{bs} in favor / #{bo} opposed</font>
     </div>"
@@ -736,7 +712,7 @@ EOT
   end
   
   def dbox_trigger(text_name)
-    "<script type='text/javascript'>
+    "<script type=\"text/javascript\">
     $j().ready(function() {
       $j('##{text_name}')
         .jqDrag('##{text_name}_drag')
@@ -754,55 +730,55 @@ EOT
         .jqmAddClose('##{text_name}_close');
     });
     </script>
-    <a href='#' id='#{text_name}_trigger' class='dbox_trigger'>?</a>"
+    <a href=\"#\" id=\"#{text_name}_trigger\" class=\"dbox_trigger\">?</a>"
   end
   
   def dbox_content(text_name)
     st = SiteText.find_dropdown_text(text_name)
     text = st ? st : ""
-    "<div id='#{text_name}' class='jqmNotice'>
-      <div class='jqmnTitle jqDrag' id='#{text_name}_drag'>
-      <span id='#{text_name}_close' class='dbox_trigger close'>Close</span>
+    "<div id=\"#{text_name}\" class=\"jqmNotice\">
+      <div class=\"jqmnTitle jqDrag\" id=\"#{text_name}_drag\">
+      <span id=\"#{text_name}_close\" class=\"dbox_trigger close\">Close</span>
         <h1>What's this?</h1>
       </div>
-     <div class='jqmnContent'>
+     <div class=\"jqmnContent\">
      <p>#{text}</p>
      </div>
-     <img src='/images/resize.gif' id='#{text_name}_resize' alt='resize' class='dbox_resize' />
+     <img src=\"/images/resize.gif\" id=\"#{text_name}_resize\" alt=\"resize\" class=\"dbox_resize\" />
      </div>"
   end
   
   def dbox_start(div_name, x_off, y_off, width, point = "")
-    out = "<div class='dboxed' id='#{div_name}' style='display:none;'>
-    <div style='position:relative;left:#{x_off.to_s ||= '80'}px;top:#{y_off.to_s ||= '30'}px;width:#{width.to_s}px;'>
-    <table cellpadding='0' cellspacing='0' class='dbox'>
+    out = "<div class=\"dboxed\" id=\"#{div_name}\" style=\"display:none;\">
+    <div style=\"position:relative;left:#{x_off.to_s ||= '80'}px;top:#{y_off.to_s ||= '30'}px;width:#{width.to_s}px;\">
+    <table cellpadding=\"0\" cellspacing=\"0\" class=\"dbox\">
     <tr>
-    <td class='tl #{point}' />
-    <td class='tc' />
-    <td class='tr #{point}'>"
+    <td class=\"tl #{point}\" />
+    <td class=\"tc\" />
+    <td class=\"tr #{point}\">"
     if point == ""
     out +=  link_to_function(image_tag('/images/close.png', :alt => 'Close', :id => "Close", :mouseover => '/images/close_hover.png'), "Element.hide('#{div_name}')")
     end
-    out += "</td>
+    out += '</td>
     </tr>
     <tr>
-    <td class='cl' />
-    <td class='cc'>"
+    <td class="cl" />
+    <td class="cc">'
     return out
   end
 
   def dbox_end
-    "</td>
-    <td class='cr' />
+    '</td>
+    <td class="cr" />
     </tr>
     <tr>
-    <td class='bl' />
-    <td class='bc' />
-    <td class='br' />
+    <td class="bl" />
+    <td class="bc" />
+    <td class="br" />
     </tr>
     </table>
     </div>
-    </div>"
+    </div>'
   end
   
   def make_tabs(tabs)
@@ -842,9 +818,9 @@ EOT
   def meta_description_tag
     # site text always takes precedence over controller-set meta_description
     if @site_text_page && !@site_text_page.meta_description.blank?
-      "<meta name='description' content=\"#{@site_text_page.meta_description}\" />"
+      "<meta name=\"description\" content=\"#{@site_text_page.meta_description}\" />"
     elsif @meta_description
-      "<meta name='description' content=\"#{truncate(strip_tags(@meta_description), :length => 256)}\" />"
+      "<meta name=\"description\" content=\"#{truncate(strip_tags(@meta_description), :length => 256)}\" />"
     else
       ""
     end
@@ -853,9 +829,9 @@ EOT
   def meta_keywords_tag
     # site text always takes precedence over controller-set meta_keywords
     if @site_text_page && !@site_text_page.meta_keywords.blank?
-      "<meta name='keywords' content=\"#{@site_text_page.meta_keywords}\" />"
+      "<meta name=\"keywords\" content=\"#{@site_text_page.meta_keywords}\" />"
     elsif @meta_keywords
-      "<meta name='keywords' content=\"#{strip_tags(@meta_keywords)}\" />"
+      "<meta name=\"keywords\" content=\"#{strip_tags(@meta_keywords)}\" />"
     else
       ""
     end
@@ -883,7 +859,7 @@ EOT
   
   def info_box
     if @site_text_page && !@site_text_page.title_desc.blank?
-      return "<div class='extra_description'>#{@site_text_page.title_desc}</div>"
+      return "<div class=\"extra_description\">#{@site_text_page.title_desc}</div>"
     else
       return ""
     end

@@ -3815,3 +3815,20 @@ span.over{
   float:right;
 }
 
+
+
+.health_box{
+background: url('/images/healthcare_bill.png') left 0px no-repeat;
+padding-left: 100px;
+padding-bottom: 25px;
+padding-top: 17px;
+}
+
+
+.health_box p{
+margin: 0 !important;
+padding: 0 30px 5px 0 !important;
+}
+
+
+

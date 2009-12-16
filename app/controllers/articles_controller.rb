@@ -15,8 +15,8 @@ class ArticlesController < ApplicationController
       @breadcrumb = { 
         1 => { 'text' => "OpenCongress Blog", 'url' => { :controller => 'articles' } }
       }
-         
-      if @tag = CGI.unescape(params[:tag])
+
+      if params[:tag] && @tag = CGI.unescape(params[:tag])
         @articles = Article.find_tagged_with(@tag).paginate(:per_page => 8, :page => params[:page])
         @page_title = "Blog - Articles Tagged '#{@tag}'"
       elsif @month = params[:month]

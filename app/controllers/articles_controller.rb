@@ -93,7 +93,7 @@ class ArticlesController < ApplicationController
         expire_page :controller => '/articles', :action => 'view', :id => @article
         
         flash[:notice] = "Comment added"
-        redirect_to :action => 'view', :id => @article
+        redirect_to article_url(@article)
       else
         flash[:error] = "There was an error adding your comment:<br><ul>"
         @comment.errors.each { |a,m| flash[:error] += "<li>#{m} </li>" }

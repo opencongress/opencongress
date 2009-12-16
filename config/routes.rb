@@ -1,6 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :mailing_list_items
-
   map.resources :watch_dogs
 
   map.resources :states do |s|
@@ -65,6 +64,8 @@ ActionController::Routing::Routes.draw do |map|
     b.connect 'bill/:id/news/search', :action => 'commentary_search', :commentary_type => 'news'
     b.connect 'bill/:id/blogs/search/:page', :action => 'commentary_search', :commentary_type => 'blog'
     b.connect 'bill/:id/news/search/:page', :action => 'commentary_search', :commentary_type => 'news'
+    b.blogs_bill 'bill/:id/blogs', :action => 'blogs'
+    b.news_bill 'bill/:id/news', :action => 'news'
     b.connect 'bill/:id/blogs/:page', :action => 'blogs'
     b.connect 'bill/:id/news/:page', :action => 'news'
     b.connect 'bill/upcoming/:id', :action => 'upcoming'
@@ -85,6 +86,8 @@ ActionController::Routing::Routes.draw do |map|
     p.connect 'people/:show_comments/show/:id', :action => 'show'
     p.connect 'people/wiki/:id', :action => 'wiki'
     p.connect 'people/comments/:id', :action => 'comments'
+    p.news_person 'people/news/:id', :action => 'news'
+    p.blogs_person 'people/blogs/:id', :action => 'blogs'
     p.connect 'people/news/:id/:page', :action => 'news'
     p.connect 'people/blogs/:id/:page', :action => 'blogs'
 
@@ -109,13 +112,17 @@ ActionController::Routing::Routes.draw do |map|
   map.with_options :controller => 'articles' do |a|
     a.blog 'blog', :action => 'list'
     a.connect 'blog/:tag', :action => 'list'
-    a.connect 'articles/view/:id', :action => 'view'
+    a.article 'articles/view/:id', :action => 'view'
     a.connect 'articles/view/:show_comments/:id', :action => 'view' 
     a.connect 'articles/:id/atom', :action => 'article_atom'
   end
 
-  map.issue 'issues/show/:id', :controller => 'issue', :action => 'show'
-  map.connect 'issue/:show_comments/show/:id', :controller => 'issue', :action => 'show'
+  map.with_options :controller => 'issues' do |i|
+    i.issues 'issues'
+    i.issue 'issues/show/:id', :action => 'show'
+    i.connect 'issue/:show_comments/show/:id', :action => 'show'
+  end
+
   map.connect 'industry/:show_comments/show/:id', :controller => 'industry', :action => 'show'
   map.connect 'committee/:show_comments/show/:id', :controller => 'committee', :action => 'show'
   map.connect 'issues/:action/:id', :controller => 'issue'

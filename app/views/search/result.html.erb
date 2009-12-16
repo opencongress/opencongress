@@ -149,7 +149,7 @@
     <ul class="star">
       <% @articles.each do |article| %>
         <li>
-          <%= link_to article.title, :controller => 'articles', :action => 'view', :id => article %>
+          <%= link_to article.title, article_url(article) %>
           <span class="date"><%= article.created_at.to_time.strftime("%B %d, %Y") %></span>
           <p><%= article.headline %></p>
         </li>

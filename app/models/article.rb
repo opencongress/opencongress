@@ -71,8 +71,9 @@ class Article < ActiveRecord::Base
   
     def find_by_month_and_year(month, year)
       Article.find(:all, :conditions => [
-              "date_part('month', articles.created_at)=? AND 
-              date_part('year', articles.created_at)=? AND published_flag=true", month, year],
+              "date_part('month', articles.created_at) = ?
+              AND date_part('year', articles.created_at) = ?
+              AND published_flag = true", month, year],
                    :include => [:user, :comments])
     end
   

@@ -78,9 +78,8 @@ class Article < ActiveRecord::Base
   
     def archive_months(limit, offset)
       Article.with_exclusive_scope { find(:all, :limit => limit, :offset => offset,
-                   :select => "DISTINCT to_char(created_at, 'Month YYYY') as display_month,
-                               date_part('year', created_at) as year, date_part('month', created_at) as month",
-                   :order => "display_month desc, year desc, month desc") }
+                   :select => "DISTINCT date_part('year', created_at) as year, date_part('month', created_at) as month, to_char(created_at, 'Month YYYY') as display_month",
+                   :order => "year desc, month desc, display_month desc") }
     end
   
     def full_text_search(q, options = {})

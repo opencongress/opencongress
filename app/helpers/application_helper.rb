@@ -161,7 +161,7 @@ module ApplicationHelper
       space = text_no_html.index(' ', 400)
             
       "#{text_no_html[0..space]} " + 
-      link_to('More...', {:controller => 'articles', :action => 'view', :id => article}, :class => 'arrow biglinks')
+      link_to('More...', article_url(article), :class => 'arrow biglinks')
     end
   end
   def truncate_string(str, length)

@@ -12,7 +12,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
   @articles.each do |a|
     xml.entry do
       xml.title   a.title
-      xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'articles', :action => 'view', :id => a)
+      xml.link    "rel" => "alternate", "href" => article_url(a)
       xml.id      a.atom_id_as_entry
       xml.updated a.created_at.strftime("%Y-%m-%dT%H:%M:%SZ")
       xml.author  { xml.name a.user.full_name } if a.user.full_name

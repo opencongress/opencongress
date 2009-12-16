@@ -22,8 +22,6 @@ class IssueController < ApplicationController
     end
 
     @page_title = "Issues"
-    #@title_class = "sort"    
-    #@title_desc = SiteText.find_title_desc('issue_index')
   end
 
   def quick_search

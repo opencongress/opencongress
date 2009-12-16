@@ -3,9 +3,9 @@
   <h3>
     <strong class="gossip">
       <% unless summary.title.empty? %>
-        <%= link_to summary.title, { :action => 'view', :id => summary } %> 
+        <%= link_to summary.title, article_url(summary) %> 
       <% else %>
-        <%= link_to 'OpenCongress Blog', { :action => 'view', :id => summary } %>
+        <%= link_to 'OpenCongress Blog', article_url(summary) %>
       <% end %>
     </strong>
   </h3>
@@ -25,13 +25,13 @@
   <% end %>
   
   <div class="blog_buttons">
-    <%= link_to '<span>Permalink</span>', { :action => 'view', :id => summary }, :class => 'med_button blog_perm' %>
+    <%= link_to '<span>Permalink</span>', article_url(summary), :class => 'med_button blog_perm' %>
     <% if summary.comments.count > 0 %>
       <%= link_to  "<span>Comments (#{summary.comments.count.to_s})</span>", 
-                                  { :action => 'view', :id => summary, :anchor => 'comments' },
+                                  article_url(summary, :anchor => 'comments'),
                                     :class => 'med_button med_arrow' %>
     <% else %>
-      <%= link_to '<span>Submit a Comment</span>', { :action => 'view', :id => summary, :anchor => 'add' }, :class => 'med_button blog_submit' %>
+      <%= link_to '<span>Submit a Comment</span>', article_url(summary, :anchor => 'add'), :class => 'med_button blog_submit' %>
     <% end %>
   </div>
   <div class="clear">&nbsp;</div>

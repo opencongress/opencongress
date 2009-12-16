@@ -86,12 +86,10 @@ class Admin::CommentaryController < Admin::IndexController
       @commentary.commentariable.increment!(@commentary.is_news ? :news_article_count : :blog_article_count)
       
       case @commentary.commentariable_type
-      when 'Bill'
-        redirect_to :controller => '/bill', :action => 'show', :id => @commentary.commentariable.ident
-      when 'Person'
-        redirect_to :controller => '/people', :action => 'show', :id => @commentary.commentariable
+      when 'Bill', 'Person'
+        redirect_to polymorphic_url([@commentary.commentariable])
       when 'UpcomingBill'
-        redirect_to :controller => '/bill', :action => 'upcoming', :id => @commentary.commentariable
+        redirect_to :controller => 'bill', :action => 'upcoming', :id => @commentary.commentariable
       else
         render :action => 'list'
       end
@@ -110,12 +108,10 @@ class Admin::CommentaryController < Admin::IndexController
     if @commentary.update_attributes(params[:commentary])
       flash[:notice] = 'Commentary was successfully updated.'
       case @commentary.commentariable_type
-      when 'Bill'
-        redirect_to :controller => '/bill', :action => 'show', :id => @commentary.commentariable.ident
-      when 'Person'
-        redirect_to :controller => '/people', :action => 'show', :id => @commentary.commentariable
+      when 'Bill', 'Person'
+        redirect_to polymorphic_url([@commentary.commentariable])
       when 'UpcomingBill'
-        redirect_to :controller => '/bill', :action => 'upcoming', :id => @commentary.commentariable
+        redirect_to :controller => 'bill', :action => 'upcoming', :id => @commentary.commentariable
       else
         render :action => 'list'
       end
@@ -142,36 +138,19 @@ class Admin::CommentaryController < Admin::IndexController
         logger.info "%%%%%%%%%%%%%%%%%%% #{c_id}"
       end
     end
-    
+
     object.expire_commentary_fragments(c.is_news? ? 'news' : 'blog')
-    
-    case c.commentariable_type
-    when 'Bill'
-      redirect_to :controller => '/bill', :action => (c.is_news? ? 'news' : 'blogs'), :id => c.commentariable.ident
-    when 'Person'
-      redirect_to :controller => '/people', :action => (c.is_news? ? 'news' : 'blogs'), :id => c.commentariable
+
+    redirect_to case c.commentariable_type
+    when 'Bill', 'Person'
+      polymorphic_url([c.commentariable], :action => (c.is_news? ? 'news' : 'blogs'))
     when 'UpcomingBill'
-      redirect_to :controller => '/bill', :action => 'upcoming', :id => c.commentariable
+      { :controller => 'bill', :action => 'upcoming', :id => c.commentariable }
     end
   end
   
   def destroy
     @commentary = Commentary.find(params[:id])
-    
-    case @commentary.commentariable_type
-    when 'Bill'
-      @redirect_controller = '/bill'
-      @redirect_action = 'show'
-      @redirect_id = @commentary.commentariable.ident
-    when 'Person'
-      @redirect_controller = '/people'
-      @redirect_action = 'show'
-      @redirect_id = @commentary.commentariable
-    when 'UpcomingBill'
-      @redirect_controller = '/bill'
-      @redirect_action = 'upcoming'
-      @redirect_id = @commentary.commentariable
-    end 
     
     @commentary.status = 'DELETED'
     @commentary.is_ok = false
@@ -181,6 +160,12 @@ class Admin::CommentaryController < Admin::IndexController
     
     flash[:notice] = 'Commentary was deleted.'    
     
-    redirect_to :controller => @redirect_controller, :action => @redirect_action, :id => @redirect_id
+    redirect_to case @commentary.commentariable_type
+    when 'Bill', 'Person'
+      polymorphic_url([@commentary.commentariable])
+    when 'UpcomingBill'
+      { :controller => 'bill', :action => 'upcoming', :id => @commentary.commentariable }
+    end
+
   end
 end

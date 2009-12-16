@@ -7,8 +7,6 @@ ActionController::Routing::Routes.draw do |map|
     s.resources :districts
   end
 
-#  map.resources :wiki_links, :path_prefix => '/admin'
-
   map.resources :wiki_links, :path_prefix => '/admin'
   map.resource :political_notebook, :path_prefix => '/users/:login/profile', :collection => ['update_privacy'] do |notebook|
     notebook.resources :notebook_links, :collection => ['faceform', 'update']
@@ -116,7 +114,7 @@ ActionController::Routing::Routes.draw do |map|
     a.connect 'articles/:id/atom', :action => 'article_atom'
   end
 
-  map.issue 'issues/show/:id', :controller => 'issue'
+  map.issue 'issues/show/:id', :controller => 'issue', :action => 'show'
   map.connect 'issue/:show_comments/show/:id', :controller => 'issue', :action => 'show'
   map.connect 'industry/:show_comments/show/:id', :controller => 'industry', :action => 'show'
   map.connect 'committee/:show_comments/show/:id', :controller => 'committee', :action => 'show'

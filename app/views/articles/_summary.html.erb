@@ -15,6 +15,15 @@
 <div class="blog-body">
   <%= summary.content_rendered %>
 
+  <% if summary.tags.size > 0 %>
+    <p class="article_tags">
+  	  Article Tags: 
+  	  <% summary.tags.each do |tag| %>
+  		  <%= link_to tag.name, :action => 'list', :tag => CGI::escape(tag.name) %></li>
+  	  <% end rescue nil %>
+    </p>
+  <% end %>
+  
   <div class="blog_buttons">
     <%= link_to '<span>Permalink</span>', { :action => 'view', :id => summary }, :class => 'med_button blog_perm' %>
     <% if summary.comments.count > 0 %>

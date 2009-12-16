@@ -15,9 +15,9 @@ class ArticlesController < ApplicationController
       @breadcrumb = { 
         1 => { 'text' => "OpenCongress Blog", 'url' => { :controller => 'articles' } }
       }
-         
-      if @tag = params[:tag]
-        @articles = Article.find_tagged_with(@tag).paginate(:per_page => 8, :page => params[:page])
+
+      if params[:tag] && @tag = CGI.unescape(params[:tag])
+        @articles = Article.find_tagged_with(@tag).paginate(:page => params[:page])
         @page_title = "Blog - Articles Tagged '#{@tag}'"
       elsif @month = params[:month]
         month, year = @month.split(/-/)
@@ -30,10 +30,10 @@ class ArticlesController < ApplicationController
         
         @page_title = "Blog - #{display_month}"
         @breadcrumb[2] = { 'text' => "#{display_month}", 'url' => "/articles/list?month=#{month}-#{year}"}
-        @articles = Article.find_by_month_and_year(month, year)  
+        @articles = Article.find_by_month_and_year(month, year).paginate(:page => params[:page])
       else      
-        @articles = Article.find(:all, :conditions => 'published_flag = true', 
-                                 :include => :user, :order => 'articles.created_at DESC').paginate(:per_page => 8, :page => params[:page])
+        @articles = Article.paginate(:all, :conditions => 'published_flag = true', 
+                                 :include => :user, :page => params[:page])
         
         @page_title = "Blog"
       end
@@ -62,7 +62,7 @@ class ArticlesController < ApplicationController
     end
     
     def atom
-      @articles = Article.find(:all, :conditions => ['published_flag = true'], :limit => 10, :order => 'created_at DESC')
+      @articles = Article.find(:all, :conditions => ['published_flag = true'], :limit => 10)
       expires_in 60.minutes, :public => true
 
       render :layout => false
@@ -76,7 +76,7 @@ class ArticlesController < ApplicationController
     end
     
     def all_comments_atom
-      @comments = Comment.find(:all, :conditions => "commentable_type = 'Article'", :order => 'created_at DESC', :limit => 20)
+      @comments = Comment.find(:all, :conditions => "commentable_type = 'Article'", :limit => 20)
       expires_in 60.minutes, :public => true
       render :layout => false
     end

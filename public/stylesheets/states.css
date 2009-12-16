@@ -42,3 +42,27 @@ height: 45px;
 .district_description{
 margin-bottom: 30px;
 }
+
+.padding ul{
+padding: 0;
+margin: 0 !important;
+}
+
+
+.padding ul li{
+padding: 0 0 0 20px;
+margin: 0;
+}
+
+
+.user{
+background:transparent url(/images/befriended.png) no-repeat scroll 0 3px;
+}
+
+.bill{
+background:transparent url(/images/tiny_bill.png) no-repeat scroll 0 2px;
+}
+
+.senator{
+background:transparent url(/images/tiny_sen.png) no-repeat scroll 0 2px;
+}

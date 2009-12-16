@@ -719,17 +719,17 @@ EOT
     end             
   end
   
-  def countdown_field(field_id,update_id,max,options = {})
+  def countdown_field(field_id, update_id, max, options = {})
     function = "$('#{update_id}').innerHTML = (#{max} - $F('#{field_id}').length);"
     count_field_tag(field_id,function,options)
   end
 
-  def count_field(field_id,update_id,options = {})
+  def count_field(field_id, update_id, options = {})
     function = "$('#{update_id}').innerHTML = $F('#{field_id}').length;"
     count_field_tag(field_id,function,options)
   end
 
-  def count_field_tag(field_id,function,options = {})  
+  def count_field_tag(field_id, function, options = {})  
     out = javascript_tag function
     out += observe_field(field_id, options.merge(:function => function))
     return out
@@ -840,34 +840,30 @@ EOT
   end
 
   def meta_description_tag
-    tag = ""
-    
     # site text always takes precedence over controller-set meta_description
     if @site_text_page && !@site_text_page.meta_description.blank?
-      tag = "<meta name='description' content=\"#{@site_text_page.meta_description}\" />"
+      "<meta name='description' content=\"#{@site_text_page.meta_description}\" />"
     elsif @meta_description
-      tag = "<meta name='description' content=\"#{truncate(strip_tags(@meta_description), :length => 256)}\" />"
+      "<meta name='description' content=\"#{truncate(strip_tags(@meta_description), :length => 256)}\" />"
+    else
+      ""
     end
-    
-    tag  
   end
   
   def meta_keywords_tag
-    tag = ""
-    
     # site text always takes precedence over controller-set meta_keywords
     if @site_text_page && !@site_text_page.meta_keywords.blank?
-      tag = "<meta name='keywords' content=\"#{@site_text_page.meta_keywords}\" />"
+      "<meta name='keywords' content=\"#{@site_text_page.meta_keywords}\" />"
     elsif @meta_keywords
-      tag = "<meta name='keywords' content=\"#{strip_tags(@meta_keywords)}\" />"
+      "<meta name='keywords' content=\"#{strip_tags(@meta_keywords)}\" />"
+    else
+      ""
     end
-    
-    tag  
   end
   
   def page_title
     title = ""
-    unless (@site_text_page.nil? || @site_text_page.title_tags.blank?)
+    if (!@site_text_page.nil? && !@site_text_page.title_tags.blank?)
       title += "#{@site_text_page.title_tags} - "
     end
     if @page_title

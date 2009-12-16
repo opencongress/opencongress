@@ -10,12 +10,14 @@ border-bottom: 1px solid #ddc7ee;
 
 .show #heading, .by_number #heading {
 min-height: 45px;
-padding-bottom: 50px;
+padding-bottom: 20px;
 background: url(/images/committees_heading.png);
    _background: url(/images/committees_heading.gif);
 border-bottom: 1px solid #ddc7ee;
 float: left;
 width: 945px;
+height: inherit !important;
+line-height: 1.5em;
 margin-bottom: 30px;
 }
 

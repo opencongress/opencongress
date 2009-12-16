@@ -2,6 +2,11 @@ class Article < ActiveRecord::Base
   acts_as_taggable_on :tags
   has_many :comments, :as => :commentable
   belongs_to :user
+  default_scope :order => 'created_at DESC'
+
+  def self.per_page
+    8
+  end
 
   require 'RedCloth'
   
@@ -57,26 +62,25 @@ class Article < ActiveRecord::Base
     end
   
     def recent_articles(limit = 10, offset = 0)
-      Article.find(:all, :conditions => "published_flag = true", 
-                :order => 'created_at DESC', :offset => offset, :limit => limit)
+      Article.find(:all, :conditions => "published_flag = true", :offset => offset, :limit => limit)
     end
     
     def frontpage_gossip(number = 4)
-      Article.find(:all, :limit => number, :order => "created_at desc", :conditions => 'frontpage = true')
+      Article.find(:all, :limit => number, :conditions => 'frontpage = true')
     end
   
     def find_by_month_and_year(month, year)
-      Article.find(:all, :conditions => [ "date_part('month', articles.created_at)=? AND 
-                                           date_part('year', articles.created_at)=? AND published_flag=true", month, year],
-                   :order => 'articles.created_at',
+      Article.find(:all, :conditions => [
+              "date_part('month', articles.created_at)=? AND 
+              date_part('year', articles.created_at)=? AND published_flag=true", month, year],
                    :include => [:user, :comments])
     end
   
     def archive_months(limit, offset)
-      Article.find(:all, :limit => limit, :offset => offset,
+      Article.with_exclusive_scope { find(:all, :limit => limit, :offset => offset,
                    :select => "DISTINCT to_char(created_at, 'Month YYYY') as display_month,
                                date_part('year', created_at) as year, date_part('month', created_at) as month",
-                   :order => "year desc, month desc")
+                   :order => "display_month desc, year desc, month desc") }
     end
   
     def full_text_search(q, options = {})

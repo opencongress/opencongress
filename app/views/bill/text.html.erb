@@ -120,3 +120,12 @@
 <div id="bill_text" style="display:none;">
   <%= @bill_text %>
 </div>
+
+<% unless logged_in? %>
+<script type="text/javascript">
+$j().ready(function() {
+	$j('#login_rate').jqm({ajax:'@href', trigger: 'a.rate_trigger'});
+});
+</script>
+<div id="login_rate" class="jqmWindow"></div>
+<% end %>

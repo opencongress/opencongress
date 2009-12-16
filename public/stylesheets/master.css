@@ -59,6 +59,11 @@ h3{ font-size: 13px; }
 =========================================================
 ///////////////////////////////////////////////////////*/
 
+.extra_description{
+background: url('/images/carousel_dark_bg.png') top left repeat-x;
+border-bottom: 1px solid #aaa;
+}
+
 
 /* clearfix */
 

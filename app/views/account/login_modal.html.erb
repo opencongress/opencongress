@@ -32,7 +32,7 @@ div.ie6_box {
         <label for="user_password">Password:</label>
         <%= f.password_field :password, :size => 30 %>
       </p>
-      <input type="image" value="Login" class="floatright margintop behave clear" src="/images/login2.png" />
+      <input type="image" value="Login" class="floatright margintop behave" style="padding-right: 40px;" src="/images/login2.png" />
       <p class="margintop floatleft" style="margin-top: 10px;">
         <%= link_to "Forgot Password?", :action => 'forgot_password' %>
       </p>
@@ -46,7 +46,7 @@ div.ie6_box {
         <%= text_field_tag :openid_url,nil, :size => 30 %>
       </p>
       <br />
-      <input type="image" value="Login with OpenID" class="floatright margintop behave clear" src="/images/login3.png" />
+      <input type="image" value="Login with OpenID" class="floatright margintop behave" style="padding-right: 40px;" src="/images/login3.png" />
     </div>
     <% end %>
   </div>
@@ -77,16 +77,18 @@ div.ie6_box {
 
       <p class="zip_tell">(required, to find your Members of Congress)</p>
 
-      <div class="clear margintop floatleft behave">	<br/>
-        <%= f.check_box "mailing", :style => "margin-top:-6px;" %>
-        <label class="send" for="user_mailling">Send me major updates about OpenCongress <em>(optional, about one email per month)</em></label>
-      </div>	
+      		<div class="clear margintop behave">
+    			  <%= f.check_box "mailing", :style => "margin-top:-6px;" %>
+    			  <label class="send" for="user_mailling">Send me major updates about OpenCongress <em>(optional, about one email per month)</em></label>
+    		  </div>	
 
 
-      <div class="clear margintop floatleft behave"><%= f.check_box "accept_tos" %>
-        <label class="toss" for "user_accept_tos" %>I agree to the <a href="/about/terms_of_service">Terms of Service</a> and <a href="/about/privacy_policy">Privacy Policy.</a></label>
-      </div>
-      <input type="image" value="Register" class="floatright margintop behave clear" src="/images/register.png" />
+     	    <div class="clear margintop behave">
+     	      <%= f.check_box "accept_tos" %>
+     		    <label class="toss" for "user_accept_tos" %>I agree to the <a href="/about/terms_of_service">Terms of Service</a> and <a href="/about/privacy_policy">Privacy Policy.</a></label>
+      	  </div>
+
+    	<input type="image" value="Register" class="clearleft floatright margintop behave" style="padding-top: 10px;" src="/images/register.png" />
       <div class="clear"><em>We will not share your email address with anyone for any reason.</em></div>
     </div>
     <% end %>

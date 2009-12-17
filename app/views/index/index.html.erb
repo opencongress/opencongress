@@ -104,17 +104,14 @@
 			<p> OpenCongress helps you track all the actions by your elected officials and what people are saying about them. Subscribe to RSS feeds to stay in touch with their latest votes. </p>
 		</form>
 	</div>
-		
-		
 	
 	<div id="second_tier">
-		
 		<h3 class="darkline">Featured Members of Congress <a href="/people/atom/featured" class="feed">Feed</a></h3>
-			
+
 			<% cache("frontpage_featured_senator") do %>
 			<!--frontpage_featured_senator cached: <%= Time.now %> -->
 			<% if @popular_sen_text %>
-			
+
 			<div class="subcol1">
 				<h3>A Most-Viewed Senator</h3>
 				<div class="back"> 
@@ -124,8 +121,7 @@
 					<a href="<%= url_for :controller => 'people', :action => 'show', :id => @popular_sen_text.person %>">
 						<img src="/images/photos/thumbs_73/<%= @popular_sen_text.person.id %>.png" alt="popular senator" />
 					</a>
-        
-        
+
 					<p class="right topline">					
 						<%= link_to "<span>#{@popular_sen_text.person.popular_name}'s Profile</span>", 
 						{ :controller => 'people', :action => 'show', :id => @popular_sen_text.person }, 
@@ -136,14 +132,12 @@
 				</div>
 		  		<span class="cap"></span>
 			</div>
-			
-			
-			
+
 			<%- end %>	
 			<% end %>
 			<% cache("frontpage_featured_representative") do %>
 			<!--frontpage_featured_representative cached: <%= Time.now %> -->
-			
+
 			<% if @popular_rep_text %>
 			<div class="subcol2">		  
 				<h3>A Most-Viewed Representative</h3>
@@ -168,9 +162,7 @@
 		<%-end %>
 		<% end %>
 		<!-- // end most viewed sen/rep -->
-		
-		
-		
+
 <div class="box01 clearfix">
 
 		<h3>Latest Votes</h3>

@@ -40,20 +40,21 @@ class AccountController < ApplicationController
   def login
     if params[:login_action]
       session[:login_action] = {:url => session[:return_to], :action_result => params[:login_action]}
-    end    
-    
+    end
+
     # Forum Integration
     if params[:modal]
       render :action => 'login_modal', :layout => false
     end
-    
+
     if params[:ReturnUrl]
       session[:return_to] = params[:ReturnUrl]
     end
-    
+
     if params[:wiki_return_page]
       session[:return_to] = "#{WIKI_BASE_URL}/#{params[:wiki_return_page]}"
     end
+
     if using_open_id?
        open_id_authentication(params[:openid_url])
     elsif params[:user]
@@ -64,7 +65,7 @@ class AccountController < ApplicationController
     else
       return unless request.post?
     end
-    
+
     if logged_in?
       self.current_user.update_attribute(:previous_login_date, self.current_user.last_login ? self.current_user.last_login : Time.now)
       self.current_user.update_attribute(:last_login, Time.now)

@@ -55,7 +55,7 @@
   <ul style="margin-left:20px;">
     <% @tracking_suggestions.last[:my_bills_tracked_facet].each do |bt| %>
       <% unless bt[:trackers] == 0 %>
-      <li class="bill"><%= link_to bt[:object].title_typenumber_only, :controller => :bill, :action => :show, :id => bt[:object].ident %> 
+      <li class="bill"><%= link_to bt[:object].title_typenumber_only, bill_url(bt[:object].ident) %> 
            - <%= truncate(bt[:object].title_common, :length => 70) %> <em>(<%= bt[:trackers] %> users tracking)</em></li>
       <% end %>
     <% end %>
@@ -68,7 +68,7 @@
   <ul style="margin-left:20px;">
     <% @tracking_suggestions.last[:my_people_tracked_facet].each do |bt| %>
       <% unless bt[:trackers] == 0 %>
-      <li class="senator"><%= link_to bt[:object].title_full_name_party_state, :controller => :people, :action => :show, :id => bt[:object].ident %> 
+      <li class="senator"><%= link_to bt[:object].title_full_name_party_state, person_url(bt[:object].ident) %> 
           <em>(<%= bt[:trackers] %> users tracking)</em></li>
       <% end %>
     <% end %>
@@ -81,7 +81,7 @@
   <ul style="margin-left:20px;">
     <% @tracking_suggestions.last[:my_bills_supported_facet].each do |bt| %>
       <% unless bt[:trackers] == 0 %>
-      <li class="bill"><%= link_to bt[:object].title_typenumber_only, :controller => :bill, :action => :show, :id => bt[:object].ident %> 
+      <li class="bill"><%= link_to bt[:object].title_typenumber_only, bill_url(bt[:object].ident) %> 
            - <%= truncate(bt[:object].title_common, :length => 70) %> <em>(<%= bt[:trackers] %> users supporting)</em></li>
       <% end %>
     <% end %>
@@ -94,7 +94,7 @@
   <ul style="margin-left:20px;">
     <% @tracking_suggestions.last[:my_bills_opposed_facet].each do |bt| %>
       <% unless bt[:trackers] == 0 %>
-      <li class="bill"><%= link_to bt[:object].title_typenumber_only, :controller => :bill, :action => :show, :id => bt[:object].ident %> 
+      <li class="bill"><%= link_to bt[:object].title_typenumber_only, bill_url(bt[:object].ident) %> 
            - <%= truncate(bt[:object].title_common, :length => 70) %> <em>(<%= bt[:trackers] %> users opposing)</em></li>
       <% end %>
     <% end %>
@@ -134,9 +134,9 @@ Otherwise, you can find it by entering your address: <br/>
   <div class="person_box" style="background-color:<%= bgcolor %>;" onclick="self.location.href='<%= state_district_path(@state.abbreviation, d.district) %>';">
    <h3>District <%= d.district %></h3>
    
-   <%= link_to image_tag("http://www.opencongress.org/images/photos/thumbs_50/#{d.id}-50px.jpeg", :style => "float:left;margin-right:5px;", :alt => 'photo'), :controller => 'people', :action => 'show', :id => d.id %>
+   <%= link_to image_tag("http://www.opencongress.org/images/photos/thumbs_50/#{d.id}-50px.jpeg", :style => "float:left;margin-right:5px;", :alt => 'photo'), person_url(d.id) %>
    <p>
-     <%= link_to d.full_name, :controller => 'people', :action => 'show', :id => d.id %><br/>
+     <%= link_to d.full_name, person_url(d.id) %><br/>
      <%= d.party %><br/>
      <% if d.id == @senior_representative.id %>
      <b>Years in Office: <%= d.consecutive_years %></b>

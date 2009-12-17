@@ -5,18 +5,18 @@ module AuthenticatedSystem
     def logged_in?
       current_user != :false
     end
-    
+
     # Accesses the current user from the session.
     def current_user
       @current_user ||= (session[:user] && User.find_by_id(session[:user])) || :false
     end
-    
+
     # Store the given user in the session.
     def current_user=(new_user)
       session[:user] = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user.id
       @current_user = new_user
     end
-    
+
     # Check if the user is authorized.
     #
     # Override this method in your controllers if you want to restrict access
@@ -75,7 +75,7 @@ module AuthenticatedSystem
       end
       false
     end  
-    
+
     # Store the URI of the current request in the session.
     #
     # We can return to this location by calling #redirect_back_or_default.
@@ -84,14 +84,14 @@ module AuthenticatedSystem
         session[:return_to] = request.request_uri
       end
     end
-    
+
     # Redirect to the URI stored by the most recent store_location call or
     # to the passed default.
     def redirect_back_or_default(default)
       session[:return_to] ? redirect_to(session[:return_to]) : redirect_to(default)
       session[:return_to] = nil
     end
-    
+
     # Inclusion hook to make #current_user and #logged_in?
     # available as ActionView helper methods.
     def self.included(base)

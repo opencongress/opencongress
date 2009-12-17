@@ -1,6 +1,6 @@
 class BillController < ApplicationController
   include ActionView::Helpers::NumberHelper
-  
+
   helper :roll_call
 	before_filter :page_view, :only => [:show, :text]
   before_filter :get_params, :only => [:index, :all, :popular, :pending, :hot, :most_commentary, :readthebill]
@@ -279,7 +279,7 @@ class BillController < ApplicationController
   def show_f
     show
   end
-  
+
   def comments
     respond_to do |format|
       format.html {
@@ -287,7 +287,7 @@ class BillController < ApplicationController
       }
     end
   end
-  
+
   def show
     #expires_in 20.minutes, :public => true
     respond_to do |format|

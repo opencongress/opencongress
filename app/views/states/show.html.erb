@@ -33,9 +33,8 @@
 <% end %>  
 </div>
 
-</div>
 
-<p><%= @state.freebase_description %> <em>(More from <%= link_to "Freebase", @state.freebase_link %>)</em></p>
+<p class="district_description"><%= @state.freebase_description %> <em>(More from <%= link_to "Freebase", @state.freebase_link %>)</em></p>
 
 <p style="font-weight:bold;">There are <%= @state.user_count %> OpenCongress users in this state. <% unless logged_in? %><a href="/login">Login</a> or <a href="/register">join</a> OpenCongress to connect with them, it's free and easy.<% end %></p>
 
@@ -44,7 +43,7 @@
   <ul style="margin-left:20px;">
   <% @users.results.compact.each do |u| %>
     <% if u.last_login %>
-    <li><%= link_to u.login, user_profile_path(u.login) %> last logged in <%= time_ago_in_words(u.last_login) %> ago.</li>
+    <li class="user"><%= link_to u.login, user_profile_path(u.login) %> last logged in <%= time_ago_in_words(u.last_login) %> ago.</li>
     <% end %>
   <% end %>    
   </ul>
@@ -56,7 +55,7 @@
   <ul style="margin-left:20px;">
     <% @tracking_suggestions.last[:my_bills_tracked_facet].each do |bt| %>
       <% unless bt[:trackers] == 0 %>
-      <li><%= link_to bt[:object].title_typenumber_only, :controller => :bill, :action => :show, :id => bt[:object].ident %> 
+      <li class="bill"><%= link_to bt[:object].title_typenumber_only, :controller => :bill, :action => :show, :id => bt[:object].ident %> 
            - <%= truncate(bt[:object].title_common, :length => 70) %> <em>(<%= bt[:trackers] %> users tracking)</em></li>
       <% end %>
     <% end %>
@@ -69,7 +68,7 @@
   <ul style="margin-left:20px;">
     <% @tracking_suggestions.last[:my_people_tracked_facet].each do |bt| %>
       <% unless bt[:trackers] == 0 %>
-      <li><%= link_to bt[:object].title_full_name_party_state, :controller => :people, :action => :show, :id => bt[:object].ident %> 
+      <li class="senator"><%= link_to bt[:object].title_full_name_party_state, :controller => :people, :action => :show, :id => bt[:object].ident %> 
           <em>(<%= bt[:trackers] %> users tracking)</em></li>
       <% end %>
     <% end %>
@@ -82,7 +81,7 @@
   <ul style="margin-left:20px;">
     <% @tracking_suggestions.last[:my_bills_supported_facet].each do |bt| %>
       <% unless bt[:trackers] == 0 %>
-      <li><%= link_to bt[:object].title_typenumber_only, :controller => :bill, :action => :show, :id => bt[:object].ident %> 
+      <li class="bill"><%= link_to bt[:object].title_typenumber_only, :controller => :bill, :action => :show, :id => bt[:object].ident %> 
            - <%= truncate(bt[:object].title_common, :length => 70) %> <em>(<%= bt[:trackers] %> users supporting)</em></li>
       <% end %>
     <% end %>
@@ -95,7 +94,7 @@
   <ul style="margin-left:20px;">
     <% @tracking_suggestions.last[:my_bills_opposed_facet].each do |bt| %>
       <% unless bt[:trackers] == 0 %>
-      <li><%= link_to bt[:object].title_typenumber_only, :controller => :bill, :action => :show, :id => bt[:object].ident %> 
+      <li class="bill"><%= link_to bt[:object].title_typenumber_only, :controller => :bill, :action => :show, :id => bt[:object].ident %> 
            - <%= truncate(bt[:object].title_common, :length => 70) %> <em>(<%= bt[:trackers] %> users opposing)</em></li>
       <% end %>
     <% end %>
@@ -135,7 +134,7 @@ Otherwise, you can find it by entering your address: <br/>
   <div class="person_box" style="background-color:<%= bgcolor %>;" onclick="self.location.href='<%= state_district_path(@state.abbreviation, d.district) %>';">
    <h3>District <%= d.district %></h3>
    
-   <%= link_to image_tag("/images/photos/thumbs_50/#{d.id}-50px.jpeg", :style => "float:left;margin-right:5px;", :alt => 'photo'), :controller => 'people', :action => 'show', :id => d.id %>
+   <%= link_to image_tag("http://www.opencongress.org/images/photos/thumbs_50/#{d.id}-50px.jpeg", :style => "float:left;margin-right:5px;", :alt => 'photo'), :controller => 'people', :action => 'show', :id => d.id %>
    <p>
      <%= link_to d.full_name, :controller => 'people', :action => 'show', :id => d.id %><br/>
      <%= d.party %><br/>
@@ -158,6 +157,7 @@ Otherwise, you can find it by entering your address: <br/>
 
 <%= link_to 'Back', states_path %>
 
+</div>
 </div>
 </div>
 

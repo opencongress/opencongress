@@ -208,13 +208,13 @@ background: url(/images/rep_heading_orange.png);
 border-bottom: 1px solid #e7cdbc;	
 height: 45px;
 }
-#heading h2{
+.representatives #heading h2, .senators #heading h2{
 height: 20px;
 float: left;
  font-style: italic;
 font-family: Georgia, Times, serif;
 }
-#heading h2 span{
+ .senators #heading h2 span, .representatives #heading h2 span{
 display: none;
 font-weight: normal;
 font-size: 12px;

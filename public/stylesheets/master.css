@@ -59,6 +59,11 @@ h3{ font-size: 13px; }
 =========================================================
 ///////////////////////////////////////////////////////*/
 
+.extra_description{
+background: url('/images/carousel_dark_bg.png') top left repeat-x;
+border-bottom: 1px solid #aaa;
+}
+
 
 /* clearfix */
 
@@ -73,7 +78,7 @@ h3{ font-size: 13px; }
 
 .clearnone{ clear: none !important;}
 
-.clear{ clear: both;}
+.clear{ clear: both; height: 0 !important;}
 
 .blue{ color: #4b86c0;}
 
@@ -2302,7 +2307,7 @@ _background: url('/images/bill_heading_blue.gif') left top;
 #heading h2{
 padding: 5px 0 0 0;
 float: left;
-height: 20px;
+min-height: 20px;
 font-style: italic;
 font-family: Georgia, Times, serif;
 }
@@ -3809,4 +3814,21 @@ span.over{
   font-size:11px;
   float:right;
 }
+
+
+
+.health_box{
+background: url('/images/healthcare_bill.png') left 0px no-repeat;
+padding-left: 100px;
+padding-bottom: 25px;
+padding-top: 17px;
+}
+
+
+.health_box p{
+margin: 0 !important;
+padding: 0 30px 5px 0 !important;
+}
+
+
 

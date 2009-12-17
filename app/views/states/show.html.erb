@@ -134,7 +134,7 @@ Otherwise, you can find it by entering your address: <br/>
   <div class="person_box" style="background-color:<%= bgcolor %>;" onclick="self.location.href='<%= state_district_path(@state.abbreviation, d.district) %>';">
    <h3>District <%= d.district %></h3>
    
-   <%= link_to image_tag("/images/photos/thumbs_50/#{d.id}-50px.jpeg", :style => "float:left;margin-right:5px;", :alt => 'photo'), :controller => 'people', :action => 'show', :id => d.id %>
+   <%= link_to image_tag("http://www.opencongress.org/images/photos/thumbs_50/#{d.id}-50px.jpeg", :style => "float:left;margin-right:5px;", :alt => 'photo'), :controller => 'people', :action => 'show', :id => d.id %>
    <p>
      <%= link_to d.full_name, :controller => 'people', :action => 'show', :id => d.id %><br/>
      <%= d.party %><br/>

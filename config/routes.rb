@@ -117,7 +117,7 @@ ActionController::Routing::Routes.draw do |map|
     a.connect 'articles/:id/atom', :action => 'article_atom'
   end
 
-  map.with_options :controller => 'issues' do |i|
+  map.with_options :controller => 'issue' do |i|
     i.issues 'issues'
     i.issue 'issues/show/:id', :action => 'show'
     i.connect 'issue/:show_comments/show/:id', :action => 'show'

@@ -6,7 +6,7 @@ class BillController < ApplicationController
   before_filter :get_params, :only => [:index, :all, :popular, :pending, :hot, :most_commentary, :readthebill]
   before_filter :bill_profile_shared, :only => [:show, :comments, :money, :votes, :actions, :amendments, :text, :actions_votes, :news_blogs, :videos, :news, :blogs, :news_blogs]
   before_filter :aavtabs, :only => [:actions, :amendments, :votes, :actions_votes]
-  skip_before_filter :store_location, :only => [:bill_vote, :status_text, :user_stats_ajax,:atom,:atom_blogs,:atom_news,:atom_top20,:atom_top_commentary,:atom_topblogs,:atom_topnews]
+  skip_before_filter :store_location, :only => [:bill_vote, :status_text, :user_stats_ajax, :atom, :atom_blogs, :atom_news, :atom_top20, :atom_top_commentary, :atom_topblogs, :atom_topnews]
 
   TITLE_MAX_LENGTH = 150
 
@@ -660,15 +660,14 @@ private
       redirect_to :action => 'all'
     end    
   end
-  
+
   def aavtabs
     @aavtabs = []
     @aavtabs <<  ["Amendments", {:controller => 'bill', :action => 'amendments', :id => @bill.ident}] unless @bill.amendments.empty?
     @aavtabs <<  ["Actions", {:controller => 'bill', :action => 'actions', :id => @bill.ident}] unless @bill.actions.empty?
     @aavtabs << ["Votes", {:controller => 'bill', :action => 'votes', :id => @bill.ident}] unless @bill.roll_calls.empty?
-
   end
-  
+
   def page_view
     session, bill_type, number = Bill.ident params[:id]
     
@@ -676,7 +675,7 @@ private
       PageView.create_by_hour(@bill, request)
     end
   end
-  
+
   def email_sent(sponsors, no_email)
     if sponsors && sponsors.size > 0
       res = "Email sent to #{sponsors.map(&:name).join(', ')}."

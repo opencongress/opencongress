@@ -6,7 +6,7 @@
       <%= @roll_call.bill.title_official %>
       </h2>
     <% else %>
-      <h2><%= link_to @roll_call.bill.title_typenumber_only, bill_path(@roll_call.bill.ident) %>: <span><%= @roll_call.bill.title_official %></span></h2>
+      <h2><%= link_to @roll_call.bill.title_typenumber_only, bill_path(@roll_call.bill) %>: <span><%= @roll_call.bill.title_official %></span></h2>
     <% end %>
   <% else%>
     <h2><%= @roll_call.question %></h2>

@@ -23,7 +23,7 @@
   <% @referred_bills.each do |b| %>
   <tr>
     <td>
-      <%= link_to b.bill.title_full_common, bill_path(b.bill.ident) %>
+      <%= link_to b.bill.title_full_common, bill_path(b.bill) %>
     </td>
     <td><%= b.count %></td>
   </tr>

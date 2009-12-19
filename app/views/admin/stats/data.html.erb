@@ -12,12 +12,12 @@
   </tr>
   <tr>
     <td>Newest news for bill</td>
-    <td><%= link_to @newest_bill_news.commentariable.title_typenumber_only, news_bill_path(@newest_bill_news.commentariable.ident) %></td>
+    <td><%= link_to @newest_bill_news.commentariable.title_typenumber_only, news_bill_path(@newest_bill_news.commentariable) %></td>
     <td bgcolor="<%= bgcolor_for_commentary_date(@newest_bill_news.date) %>"><%= @newest_bill_news.date %></td>
   </tr>
   <tr>
     <td>Newest blog for bill</td>
-    <td><%= link_to @newest_bill_blog.commentariable.title_typenumber_only, blogs_bill_path(@newest_bill_blog.commentariable.ident) %></td>
+    <td><%= link_to @newest_bill_blog.commentariable.title_typenumber_only, blogs_bill_path(@newest_bill_blog.commentariable) %></td>
     <td bgcolor="<%= bgcolor_for_commentary_date(@newest_bill_blog.date) %>"><%= @newest_bill_blog.date %></td>
   </tr>
 </table>

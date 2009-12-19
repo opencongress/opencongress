@@ -220,7 +220,7 @@ class ResourcesController < ApplicationController
       
         bill = Bill.find_by_session_and_bill_type_and_number(l[1], Bill.long_type_to_short(l[2]), l[3])
         if bill
-          @text.gsub!(l[0], bill_path(bill.ident))
+          @text.gsub!(l[0], bill_path(bill))
         else
           @warnings += "Could not find a corresponding bill for <b>#{l[0]}</b><br />"
         end

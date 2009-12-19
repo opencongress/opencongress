@@ -46,12 +46,12 @@ module ApplicationHelper
   end
   
   def link_to_bill(bill)
-    link_to bill.title_full_common, bill_url(bill.ident)
+    link_to bill.title_full_common, bill_url(bill)
   end
 
   def url_for_object(object)
     if object.kind_of? Bill
-      bill_url(object.ident)
+      bill_url(object)
     elsif object.kind_of? Person
       person_url(object)
     elsif object.kind_of? Subject
@@ -416,7 +416,7 @@ EOT
   def bill_basic_atom_entry(xml, b, updated_method)
     xml.entry do
       xml.title   b.title_full_common
-      xml.link    "rel" => "alternate", "href" => bill_url(b.ident)
+      xml.link    "rel" => "alternate", "href" => bill_url(b)
       xml.id      b.atom_id_as_entry
       
       if updated_method
@@ -448,7 +448,7 @@ EOT
     
     xml.entry do
       xml.title   title_preface + a.bill.title_full_common
-      xml.link    "rel" => "alternate", "href" => bill_url(a.bill.ident)
+      xml.link    "rel" => "alternate", "href" => bill_url(a.bill)
       xml.id      a.atom_id
       xml.updated a.datetime.strftime("%Y-%m-%dT%H:%M:%SZ")
       xml.content "type" => "html" do

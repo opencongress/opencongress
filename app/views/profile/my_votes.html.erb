@@ -12,7 +12,7 @@
       <% bill = b.bill %>
       <tr>
         <td>
-          <%= link_to bill.title_typenumber_only, bill_path(bill.ident) %>
+          <%= link_to bill.title_typenumber_only, bill_path(bill) %>
           <%= bill.title_common %> <span class='date'>(<%= number_to_ordinal(bill.session) %> congress)</span>
         </td>
         <td><%= temp_url_strip(bill.status) %></td>
@@ -32,7 +32,7 @@
       </tr>
       <% @bills_opposed.each do |b| %>
       <% bill = b.bill %>
-      <tr>        <td>          <%= link_to bill.title_typenumber_only, bill_path(bill.ident) %>          <%= bill.title_common %> <span class='date'>(<%= number_to_ordinal(bill.session) %> congress)</span>i
+      <tr>        <td>          <%= link_to bill.title_typenumber_only, bill_path(bill) %>          <%= bill.title_common %> <span class='date'>(<%= number_to_ordinal(bill.session) %> congress)</span>i
         </td>
         <td><%= temp_url_strip(bill.status) %></td>
         <td><%= bill.last_action.formatted_date %></td>

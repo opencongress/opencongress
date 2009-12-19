@@ -4,7 +4,7 @@
 <% @votes.each do |v| %>
 <% bill = v.bill %>
           <%= v.support == 0 ? "Supporting: " : "Opposing: " %>
-          <%= link_to bill.title_typenumber_only, bill_path(bill.ident) %>
+          <%= link_to bill.title_typenumber_only, bill_path(bill) %>
           <%= bill.title_common %></span>
         <br/>
 <% end %>

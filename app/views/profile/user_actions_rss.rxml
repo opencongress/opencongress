@@ -21,11 +21,11 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
           end
         when 'Bill'
           xml.title   'Tracking ' + i.bookmarkable.title_typenumber_only + (i.bookmarkable.title_short == i.bookmarkable.title_typenumber_only ? "" : ": " + i.bookmarkable.title_short)
-          xml.link    "rel" => "alternate", "href" => bill_url(i.bookmarkable.ident)
+          xml.link    "rel" => "alternate", "href" => bill_url(i.bookmarkable)
           xml.id      i.bookmarkable.atom_id_as_entry
           xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
           xml.content "type" => "html" do
-            xml.text! i.bookmarkable.title_official + "<br/>View #{link_to "Bill", bill_url(i.bookmarkable.ident)} on OpenCongress"
+            xml.text! i.bookmarkable.title_official + "<br/>View #{link_to "Bill", bill_url(i.bookmarkable)} on OpenCongress"
           end
         when 'Subject'
           xml.title   'Tracking the Issue of ' + i.bookmarkable.term
@@ -48,11 +48,11 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
           end
         when 'Bill'
           xml.title   'Commented on: ' + i.commentable.title_typenumber_only + (i.commentable.title_short == i.commentable.title_typenumber_only ? "" : ": " + i.commentable.title_short)
-          xml.link    "rel" => "alternate", "href" => bill_url(i.commentable.ident)
+          xml.link    "rel" => "alternate", "href" => bill_url(i.commentable)
           xml.id      i.commentable.atom_id_as_entry
           xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
           xml.content "type" => "html" do
-            xml.text! "#{@user.login} wrote: #{i.comment}<br/>View #{link_to "Bill", bill_url(i.commentable.ident)} on OpenCongress"
+            xml.text! "#{@user.login} wrote: #{i.comment}<br/>View #{link_to "Bill", bill_url(i.commentable)} on OpenCongress"
           end
         when 'Subject'
           xml.title   'Commented on the Issue of ' + i.commentable.term
@@ -77,7 +77,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
           xml.id      i.bill.atom_id_as_entry
           xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
           xml.content "type" => "html" do
-            xml.text! i.bill.title_official + "<br/>View #{link_to "Bill", bill_url(i.bill.ident)} on OpenCongress"
+            xml.text! i.bill.title_official + "<br/>View #{link_to "Bill", bill_url(i.bill)} on OpenCongress"
           end
         when 'PersonApproval'
           xml.title   "Gave " + i.person.title_full_name_party_state + " a #{i.rating * 10}% Approval Rating"

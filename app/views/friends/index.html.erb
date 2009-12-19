@@ -30,10 +30,10 @@
 	<li><%= link_to h(ra.user.login), user_profile_path(ra.user.login) %>  
 		<% if ra.class.to_s == "BillVote" %>
 		voted <b><%= ra.support == 0 ? "for" : "against" %></b>
-		<%= link_to(ra.bill.title_typenumber_only, bill_path(ra.bill.ident)) %>
+		<%= link_to(ra.bill.title_typenumber_only, bill_path(ra.bill)) %>
 		<% elsif ra.class.to_s == "Comment" %>
 		<% if ra.commentable_type == "Bill" %>
-		commented on <%= link_to(ra.bill.title_typenumber_only, bill_path(ra.bill.ident)) %>
+		commented on <%= link_to(ra.bill.title_typenumber_only, bill_path(ra.bill)) %>
 		<% elsif ra.commentable_type == "Person" %>
 		commented on <%= link_to ra.person.name, person_url(ra.person.ident) %>
 		<% end %>

@@ -16,7 +16,7 @@ module WatchdogsHelper
   def url_for_internal(link)
     case link.notebookable.type.to_s
     when 'Bill'
-      bill_url(link.notebookable.ident)
+      bill_url(link.notebookable)
     when 'Subject'
       issue_url(link.notebookable.to_param)
     when 'Person'

@@ -18,7 +18,7 @@ dsfsdddsf
 		<% @bookmarks_bill.each do |b| %>
 			<% bill = b.bill %>
 				<li>
-					<%= link_to(bill.title_typenumber_only, bill_path(bill.ident)) %>
+					<%= link_to(bill.title_typenumber_only, bill_path(bill)) %>
 					<ul class="updates">
 						<li><%= toggler("status_#{bill.ident}", 'status updates', 'status updates', 'off', 'on') %></li>
 						<li><%= toggler("news_#{bill.ident}", 'news updates', 'news updates', 'off', 'on') %></li>

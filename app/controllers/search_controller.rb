@@ -56,7 +56,7 @@ class SearchController < ApplicationController
 
           # if we match only one, go right to that bill
           if bills_for_title.size == 1
-            redirect_to bill_path(bills_for_title[0].ident)
+            redirect_to bill_path(bills_for_title[0])
             return
           end
           

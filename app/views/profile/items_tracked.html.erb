@@ -71,7 +71,7 @@
 		                        <div class="update_text" id="new_committee_bills_<%= committee.id %>" style="display:none;">
 		                                <ul>
 		                                <% committee.new_bills_since(@user).each do |bill| %>
-		                                         <li><%= link_to(bill.title_typenumber_only, bill_url(bill.ident)) %> - <%= bill.title_common %>
+		                                         <li><%= link_to(bill.title_typenumber_only, bill_path(bill.ident)) %> - <%= bill.title_common %>
 		                                <% end %>
 		                                </ul>
 		                        </div>
@@ -110,7 +110,7 @@
 				<div class="update_text" id="new_bills_<%= subject.term %>" style="display:none;">
 					<ul>
 					<% subject.new_bills_since(@user).each do |bill| %>
-						 <li><%= link_to(bill.title_typenumber_only, bill_url(bill.ident)) %> - <%= bill.title_common %>
+						 <li><%= link_to(bill.title_typenumber_only, bill_path(bill.ident)) %> - <%= bill.title_common %>
 					<% end %>
 					</ul>
 				</div>

@@ -101,7 +101,7 @@ class PeopleListener
     enddate = as['enddate']
     enddate = Date.strptime(enddate, "%Y-%m-%d") if enddate && (enddate != '0000-00-00')
     
-    role = Role.find_or_create_by_person_id_and_startdate_and_enddate(@person.id, startdate, enddate)
+    role = Role.find_or_initialize_by_person_id_and_startdate_and_enddate(@person.id, startdate, enddate)
     role.role_type = as['type']
     role.party = as['party']
     role.state = as['state']
@@ -121,7 +121,7 @@ class PeopleListener
     comms = Committee.find_by_query(name, subcommittee_name)
     if !comms.empty? && comms.size == 1
       comm = comms.first
-      cp = CommitteePerson.find_or_create_by_person_id_and_committee_id(@person.id, comm.id)
+      cp = CommitteePerson.find_or_initialize_by_person_id_and_committee_id(@person.id, comm.id)
       if !as['role'].nil? && !as['role'].blank?
         cp.role = as['role']
       end

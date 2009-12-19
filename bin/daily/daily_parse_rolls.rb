@@ -33,7 +33,7 @@ roll_files.each do |f|
         os.date = Time.at(os.when.to_i)
         updated = Time.parse(os.updated)
       
-        roll = RollCall.find_or_create_by_date_and_number(os.date, os.roll.to_i)
+        roll = RollCall.find_or_initialize_by_date_and_number(os.date, os.roll.to_i)
         #puts "O: #{roll.updated}; N: #{updated}"
         if (roll.updated && roll.updated == updated && !force_parse) 
           raise NoUpdateException, "Skipping roll call...already parsed, no new info."
@@ -97,7 +97,7 @@ roll_files.each do |f|
 
         person = Person.find_by_id(os.voter_id)
         if person
-          rcv = RollCallVote.find_or_create_by_roll_call_id_and_person_id(roll.id, person.id)
+          rcv = RollCallVote.find_or_initialize_by_roll_call_id_and_person_id(roll.id, person.id)
           rcv.vote = os.vote
           rcv.save
         end

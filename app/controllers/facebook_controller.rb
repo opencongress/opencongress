@@ -126,7 +126,7 @@ class FacebookController < ApplicationController
   def get_facebook_user
     facebook_user_object = facebook_session.user
     @facebook_user = FacebookUser.find_or_create_by_facebook_uid(facebook_user_object.uid)
-    @facebook_user.update_attribute('facebook_session_key', facebook_session.session_key)
+    @facebook_user.update_attribute(:facebook_session_key, facebook_session.session_key)
     
     # also set the request format to FBML
     request.format = :fbml

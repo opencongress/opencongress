@@ -1,6 +1,5 @@
 <div id="us-map">
-
-  <img src="/images/us_map.png" width="700" height="450" border="0" alt="" usemap="#us_map_Map" />
+  <%= image_tag 'us_map.png', :width => '700', :height => '450', :border => '0', :usemap => '#us_map_Map' %>
   <map name="us_map_Map" id="us_map_Map">
   <area shape="rect" alt="" coords="546,198,566,211" href="<%= url_for :anchor => "WV" %>"  onclick="$j('#map').jqmHide();" />
   <area shape="rect" alt="" coords="184,388,281,446" href="<%= url_for :anchor => "HI" %>"  onclick="$j('#map').jqmHide();" />

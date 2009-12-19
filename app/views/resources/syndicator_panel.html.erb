@@ -33,7 +33,7 @@
       <div class="syndicator_items">		
 
         <div style="font-weight: bold;line-height: 1.1em;text-align: center;margin-top:5px;">
-          <%= @title %> <a href="<%= @feed_link %>" target="_top"><img src="/images/feed-icon-10x10.png" border=0></a>
+          <%= @title %> <%= link_to(image_tag('feed-icon-10x10.png', :border => '0'), @feed_link, :target => '_top')%>
         </div>
         <br />
         <ul>

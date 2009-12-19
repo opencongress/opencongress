@@ -602,7 +602,7 @@ class PeopleController < ApplicationController
   # Rate your approval of person  
   def rate
     person = Person.find_by_id(params[:id])
-    score = current_user.person_approvals.find_or_create_by_person_id(person.id)
+    score = current_user.person_approvals.find_or_initialize_by_person_id(person.id)
     score.rating = params[:value]
     score.save
     if person.person_approvals.length > 5
@@ -679,7 +679,7 @@ class PeopleController < ApplicationController
   
   def can_text
     if !(logged_in? && current_user.user_role.can_manage_text)
-      redirect_to :controller => '/admin', :action => 'index'
+      redirect_to admin_url
     end
   end
 

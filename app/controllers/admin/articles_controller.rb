@@ -30,10 +30,10 @@ class Admin::ArticlesController < Admin::IndexController
         @article.user_id = current_user.id
         @article.save
         
-        expire_page :controller => '/blog'
-        expire_page :controller => '/articles'
-        expire_page :controller => '/index'
-        expire_page :controller => '/articles', :action => 'view', :id => @article
+        expire_page :controller => 'blog'
+        expire_page :controller => 'articles'
+        expire_page :controller => 'index'
+        expire_page :controller => 'articles', :action => 'view', :id => @article
         
         flash[:notice] = 'Article was successfully created.'
         redirect_to :action => 'list'
@@ -61,10 +61,10 @@ class Admin::ArticlesController < Admin::IndexController
       @article = Article.find(params[:id])
       if @article.update_attributes(params[:article])
         
-        expire_page :controller => '/blog'
-        expire_page :controller => '/articles'
-        expire_page :controller => '/index'
-        expire_page :controller => '/articles', :action => 'view', :id => @article
+        expire_page :controller => 'blog'
+        expire_page :controller => 'articles'
+        expire_page :controller => 'index'
+        expire_page :controller => 'articles', :action => 'view', :id => @article
         
         flash[:notice] = 'Article was successfully updated.'
         redirect_to :action => 'show', :id => @article

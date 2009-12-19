@@ -118,7 +118,7 @@ class BillController < ApplicationController
       format.js { render :action => 'update'}
     end
   end
-  
+
   def list_bill_type
     congress = params[:congress] ? params[:congress] : DEFAULT_CONGRESS
     @page = params[:page]
@@ -158,7 +158,7 @@ class BillController < ApplicationController
       format.js { render :action => 'update'}
     end
   end
-  
+
   def upcoming
     @upcoming_bill = UpcomingBill.find(params[:id])
     @page_title = @upcoming_bill.title
@@ -168,7 +168,7 @@ class BillController < ApplicationController
       format.js { render :action => 'update'}
     end
   end
-  
+
   def readthebill
     @show_resolutions = (params[:show_resolutions].blank? || params[:show_resolutions] == 'false') ? false : true
     
@@ -228,7 +228,7 @@ class BillController < ApplicationController
 
     render :action => 'commentary_atom', :layout => false
   end
-  
+
   def atom_topnews
     @bill = Bill.find_by_ident(params[:id])
     @commentaries = @bill.news.find(:all, :conditions => "commentaries.average_rating > 5", :limit => 5)
@@ -274,7 +274,6 @@ class BillController < ApplicationController
     render :action => 'top20_atom', :layout => false
   end
 
-  
   # this action is to show a non-cached version of 'show'
   def show_f
     show
@@ -447,7 +446,7 @@ class BillController < ApplicationController
       end
     end
   end
-  
+
   def blogs
     if params[:sort] == 'toprated'
       @sort = 'toprated'
@@ -476,7 +475,7 @@ class BillController < ApplicationController
       @atom = {'link' => url_for(:only_path => false, :controller => 'bill', :id => @bill.ident, :action => 'atom_blogs'), 'title' => "#{@bill.title_typenumber_only} blog articles"}
     end
   end
-  
+
   def topblogs
     @blogs = @bill.blogs.find(:all, :conditions => "commentaries.average_rating > 5", :limit => 5).paginate :page => @page
 
@@ -485,7 +484,7 @@ class BillController < ApplicationController
     @atom = {'link' => url_for(:only_path => false, :controller => 'bill', :id => @bill.ident, :action => 'atom_topblogs'), 'title' => "#{@bill.title_typenumber_only} blog articles"}
     render :action => 'blogs'
   end
-  
+
   def money
     session, bill_type, number = Bill.ident(params[:id])
     if @bill = Bill.find_by_session_and_bill_type_and_number(session, bill_type, number, { :include => [ :bill_titles ]})
@@ -497,7 +496,7 @@ class BillController < ApplicationController
       redirect_to :action => 'all'
     end
   end
-  
+
   def news
     if params[:sort] == 'toprated'
       @sort = 'toprated'
@@ -506,7 +505,7 @@ class BillController < ApplicationController
     else
       @sort = 'newest'
     end
-    
+
     unless read_fragment("#{@bill.fragment_cache_key}_news_#{@sort}_page_#{@page}")
       if @sort == 'toprated'
         @news = @bill.news.find(:all, :order => 'commentaries.average_rating IS NOT NULL DESC').paginate :page => @page
@@ -516,7 +515,7 @@ class BillController < ApplicationController
         @news = @bill.news.paginate :page => params[:page]
       end
     end
-    
+
     @page_title = (@sort == 'toprated') ? "Highest Rated " : ""
     @page_title += "News Articles for #{@bill.title_typenumber_only}"
    
@@ -533,7 +532,7 @@ class BillController < ApplicationController
     @atom = {'link' => url_for(:controller => 'bill', :id => @bill.ident, :action => 'atom_topnews'), 'title' => "#{@bill.title_typenumber_only} blog articles"}
     render :action => 'news'
   end
-  
+
   def commentary_search
     @page = params[:page]
     @page = "1" unless @page

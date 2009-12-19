@@ -37,7 +37,7 @@ class ArticlesController < ApplicationController
         
         @page_title = "Blog"
       end
-      
+
       @atom = {'link' => 'http://feeds.feedburner.com/OpenCongressCongressGossipBlog', 'title' => "OpenCongress Blog"}
       @related_gossip = Gossip.latest(3)
       
@@ -88,9 +88,9 @@ class ArticlesController < ApplicationController
       @comment.commentable_type = 'Article'
       @comment.commentable_id = @article.id     
       if @comment.save
-        expire_page :controller => '/blog'
-        expire_page :controller => '/articles'
-        expire_page :controller => '/articles', :action => 'view', :id => @article
+        expire_page :controller => 'blog'
+        expire_page :controller => 'articles'
+        expire_page :controller => 'articles', :action => 'view', :id => @article
         
         flash[:notice] = "Comment added"
         redirect_to article_url(@article)

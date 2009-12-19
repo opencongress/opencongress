@@ -59,7 +59,7 @@
 	  <% @user.user_mailing_list.mailing_list_items.bills.each do |b| %>
 	    <p style="font-size:10px;"><span style="float:right;"><%= link_to "stop", b, :method => :delete %></span>
 	        <%= link_to truncate(b.mailable.title_full_common, :length => 40), 
-	             bill_url(b.mailable.ident) %></p>
+	             bill_path(b.mailable.ident) %></p>
 	  <% end %>
     <% end %>
 	<% if @user.user_mailing_list.mailing_list_items.people.count > 0 %>
@@ -67,7 +67,7 @@
 	  <% @user.user_mailing_list.mailing_list_items.people.each do |p| %>
 	    <p style="font-size:10px;"><span style="float:right;"><%= link_to "stop", p, :method => :delete %></span>
 	        <%= link_to truncate(p.mailable.title_full_name, :length => 40), 
-	             bill_url(p.mailable.ident) %></p>
+	             bill_path(p.mailable.ident) %></p>
 	  <% end %>	
 	<% end %>
    </div>	

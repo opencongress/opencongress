@@ -16,7 +16,7 @@
 							</script>     
 							<span id="addmypn_<%= @object.class %>_<%= @object.id %>"><a href="#" class="trigger_<%= @commentary.id.to_s %>" >Save</a></span>
 							<div class="jqmWindow" id="faceform_<%= @commentary.id.to_s %>">
-							 <img src="/images/indicator.gif" class="noborder" /> 
+							 <%= image_tag 'indicator.gif', :class => 'noborder' %> 
 							</div>
 							<% end %>
 			 <% else %>
@@ -34,7 +34,7 @@
 		 <%= link_to("Rate", login_url) %>
 		<% end %>
 	      <span id="comm_rate_ind_<%= @commentary.id.to_s%>" style="display: none;">
-	        <img src="/images/indicator.gif" class="noborder" />
+	        <%= image_tag 'indicator.gif', :class => 'noborder' %> 
 	      </span>
 	    </span>
 	</td>

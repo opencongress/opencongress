@@ -6,7 +6,7 @@ class CommentaryController < ApplicationController
     
     unless current_user == :false
       commentary = Commentary.find_by_id(params[:id])
-      score = current_user.commentary_ratings.find_or_create_by_commentary_id(commentary.id)
+      score = current_user.commentary_ratings.find_or_initialize_by_commentary_id(commentary.id)
       score.rating = params[:value]
       score.save
 

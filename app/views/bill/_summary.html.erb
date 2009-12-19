@@ -1,6 +1,6 @@
 <div id="bill_summary">
   <h4>
-    <%= link_to summary.title_typenumber_only, bill_url(summary.ident) %>
+    <%= link_to summary.title_typenumber_only, bill_path(summary) %>
   </h4>
   <%= summary.title_common rescue nil %>
   <ul class="stars-inline">

@@ -287,7 +287,7 @@ class AccountController < ApplicationController
          session[:invite] = nil
        end
 
-       redirect_to(:controller => '/account', :action => 'confirm', :login => @user.login)
+       redirect_to confirmation_url(@user.login)
      rescue ActiveRecord::RecordInvalid
        render :action => 'new_openid'
      end
@@ -415,11 +415,11 @@ class AccountController < ApplicationController
           bill = Bill.find_by_ident(ident)
           if bill
             if session[:login_action][:action_result].to_i == 0
-              b = BillVote.find_or_create_by_user_id_and_bill_id(current_user.id, bill.id)
+              b = BillVote.find_or_initialize_by_user_id_and_bill_id(current_user.id, bill.id)
               b.support = 0
               b.save
             elsif session[:login_action][:action_result].to_i == 1
-              b = BillVote.find_or_create_by_user_id_and_bill_id(current_user.id, bill.id)
+              b = BillVote.find_or_initialize_by_user_id_and_bill_id(current_user.id, bill.id)
               b.support = 1
               b.save
             end

@@ -19,9 +19,9 @@
 		  <span class="count bill"><%= count %></span>
 
 		<% if bill.is_vote_hot?(@perc_diff_in_days,bill.vote_count_2.to_f, bill.vote_count_1.to_f, @range) %>
-		   <img src='/images/hot.jpg' style="border:0;vertical-align:middle;"/>
+		   <%= image_tag 'hot.jpg', :style => 'border:0;vertical-align:middle;' %>
 		<% elsif bill.is_vote_cold?(@perc_diff_in_days,bill.vote_count_2.to_f, bill.vote_count_1.to_f, @range) %>
-		   <img src='/images/cold.jpg' style="border:0;vertical-align:middle;"/>
+		   <%= image_tag 'cold.jpg', :style => 'border:0;vertical-align:middle;' %>
 		<% end %>
 		
 	  <div class="title">

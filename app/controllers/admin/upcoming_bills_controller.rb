@@ -40,7 +40,7 @@ class Admin::UpcomingBillsController < Admin::IndexController
     @upcoming_bill = UpcomingBill.find(params[:id])
     if @upcoming_bill.update_attributes(params[:upcoming_bill])
       flash[:notice] = 'UpcomingBill was successfully updated.'
-      redirect_to :controller => '/bill', :action => 'upcoming', :id => @upcoming_bill
+      redirect_to :controller => 'bill', :action => 'upcoming', :id => @upcoming_bill
     else
       render :action => 'edit'
     end

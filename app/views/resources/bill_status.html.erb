@@ -71,6 +71,6 @@
   </div>
 
   <!-- The following image forces the fields to update on the initial load of the page -->
-  <img src="/images/blank.gif" class="noborder" width="0" height="0" onLoad="updateBillStatusFields();">
+  <%= image_tag 'blank.gif', :class => 'noborder', :width => '0', :height => '0', :onLoad => 'updateBillStatusFields();' %>
   <br />
 </div>

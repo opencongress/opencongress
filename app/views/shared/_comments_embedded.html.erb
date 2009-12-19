@@ -4,7 +4,7 @@
 	<li><%=h c.user ? c.user.login : "Anonymous" %> : <%=h c.comment %></li>
 	<% end %>
 		<% if object.is_a?(Bill) %>
-			<%= link_to "#{object.comments.length - 2} More", bill_url(:id => object.ident, :anchor => "comments"), :class => "arrow" %>
+			<%= link_to "#{object.comments.length - 2} More", bill_path(:id => object.ident, :anchor => "comments"), :class => "arrow" %>
 		<% elsif object.is_a?(Person) %>
 			<%= link_to "#{object.comments.length - 2} More", person_url(object.to_param), :class => "arrow" %>
 		<% elsif object.is_a?(Subject) %>

@@ -274,7 +274,7 @@ Personal Note: #{CGI.escapeHTML(params[:message])}"
       invited_user = User.find_by_email(email)
       if invited_user
         if (invited_user != current_user) and (current_user.friends.find_by_id(invited_user.id).nil?)
-          fr = current_user.friends.find_or_create_by_friend_id_and_user_id(invited_user.id, current_user.id)
+          fr = current_user.friends.find_or_initialize_by_friend_id_and_user_id(invited_user.id, current_user.id)
           fr.confirmed = false
           fr.save
         end

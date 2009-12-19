@@ -7,7 +7,7 @@
     </select>
   </form>
   <p style="margin: 10px 0;"><a href="/admin/stats/bills.csv<%= "?session=#{@session}" if @session %>">All Bill Data in CSV Format</a> (Right Click and "Save File..." Will take a minute to load.)</p>
-  
+
   <%= will_paginate @bills %>
   <table>
     <tr>
@@ -26,10 +26,10 @@
       <td><strong><%= number_with_delimiter(@total_ayes) %></strong></td>
       <td><strong><%= number_with_delimiter(@total_nays) %></strong></td>
     </tr>
-    
+
     <% @bills.each do |b| %>
       <tr>
-        <td><%= link_to b.title_typenumber_only, :controller => '/bill', :action => 'show', :id => b.ident %></td>
+        <td><%= link_to b.title_typenumber_only, bill_path(b.ident) %></td>
         <td><%= number_with_delimiter(b.views) %></td>
         <td><%= number_with_delimiter(b.bookmarks.length) %></td>
         <td><%= number_with_delimiter(b.comments.size) %></td>

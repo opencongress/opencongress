@@ -133,7 +133,7 @@ class ProfileController < ApplicationController
     @person = Person.find_by_id(params[:id])
     @limit = params[:limit].to_i
     @limit > 30 ? @limit = 30 : @limit = @limit
-    "<h3 class='darkline'>Recent Voting History </h3>" + 
+    '<h3 class="darkline">Recent Voting History </h3>' + 
     render(:partial => 'people/voting_history', :locals => { :votes => @person.votes(@limit.to_i) }) + 
     '<p><a href="/people/voting_history/<%= person.to_param %>"><img src="/images/btn-voting-history.gif" class="noborder"></a></p>'
   end

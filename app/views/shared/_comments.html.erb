@@ -2,7 +2,7 @@
 <div id="comments">
   <% if object.comments.size > 0 %>
 	<h3 class="darkline">Comments 
-	  <a href="/articles/<%= object.id %>/atom"><img src="/images/feed.jpg" class="noborder"></a></h3>
+      <%= link_to(image_tag('feed.jpg', :class => 'noborder'), "/articles/#{object.id}/atom") %></h3>
 		<% object.comments.each do |comment| %>
 			<div class="comment">
 			  <p>

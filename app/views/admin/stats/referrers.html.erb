@@ -23,7 +23,7 @@
   <% @referred_bills.each do |b| %>
   <tr>
     <td>
-      <%= link_to b.bill.title_full_common, { :controller => '/bill', :action => 'show', :id => b.bill.ident } %>
+      <%= link_to b.bill.title_full_common, bill_path(b.bill.ident) %>
     </td>
     <td><%= b.count %></td>
   </tr>
@@ -38,7 +38,7 @@
   </tr>
   <% @referred_people.each do |p| %>
   <tr>
-    <td><%= link_to p.person.name, { :controller => '/people', :action => 'show', :id => p.person } %></td>
+    <td><%= link_to p.person.name, person_url(p.person) %></td>
     <td><%= p.count %></td>
   </tr>
   <% end %>

@@ -23,15 +23,15 @@ IO.foreach(file) do |line|
     sector.gsub!(/\"/, '')
     sector_long.gsub!(/\"/, '')
     
-    s = CrpSector.find_or_create_by_name(sector)
+    s = CrpSector.find_or_initialize_by_name(sector)
     s.display_name = sector_long
     s.save
     
-    i = CrpIndustry.find_or_create_by_name(industry)
+    i = CrpIndustry.find_or_initialize_by_name(industry)
     i.crp_sector = s
     i.save
     
-    g = CrpInterestGroup.find_or_create_by_osid(id)
+    g = CrpInterestGroup.find_or_initialize_by_osid(id)
     g.name = name
     g.order = order
     g.crp_industry = i

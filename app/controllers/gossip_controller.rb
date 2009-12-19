@@ -77,7 +77,7 @@ class GossipController < ApplicationController
   private
   def can_gossip
     if !(logged_in? && current_user.user_role.can_manage_text)
-      redirect_to :controller => '/gossip', :action => 'index'
+      redirect_to :controller => 'gossip', :action => 'index'
     end
   end
 end

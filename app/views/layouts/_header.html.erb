@@ -31,13 +31,13 @@
 	</div>
 
 
-	<h1><a class="logo" href="/" title="link to the home page"><img src="/images/open-congress.png" alt="OpenCongress -" /><%= "#{@page_title_prefix} - " if @page_title_prefix %><%= truncate(@page_title, :length => 100) %> <%= truncate(@head_title, :length => 90) if @head_title %></a></h1>
+	<h1><a class="logo" href="/" title="link to the home page"><%= image_tag 'open-congress.png', :alt => 'OpenCongress -' %><%= "#{@page_title_prefix} - " if @page_title_prefix %><%= truncate(@page_title, :length => 100) %> <%= truncate(@head_title, :length => 90) if @head_title %></a></h1>
 
 	
 	<div class="right">
 
 		<span id="autocomplete-spin" style="display: none;">
-			<img src="/images/spin.gif" alt="Working..." />
+			<%= image_tag 'spin.gif', :alt => 'Working...' %>
 		</span>
       
 		<div id="login" style="display:none;">
@@ -97,28 +97,28 @@
 	<div class="left">
 		<div class="right">
 			<ul>
-				<li id="bill_nav"><%= link_to '<span>Bills</span>', :controller => '/bill', :action => :all  %></li>
-				<li id="sens_nav"><%= link_to '<span>Senators</span>', :controller => '/people', :action => :senators  %></li>
-				<li id="reps_nav"><%= link_to '<span>Representatives</span>', :controller => '/people', :action => :representatives  %></li>
-				<li id="vote_nav"><%= link_to '<span>Votes</span>', :controller => '/roll_call' %></li>		
-				<li id="ishu_nav"><%= link_to '<span>Issues</span>', :controller => '/issue' %></li>
-				<li id="comm_nav"><%= link_to '<span>Committees</span>', :controller => '/committee' %></li>
-				<li id="muny_nav"><%= link_to '<span>The Money Trail</span>', :controller => '/money_trail' %></li>
+				<li id="bill_nav"><%= link_to '<span>Bills</span>', :controller => 'bill', :action => :all  %></li>
+				<li id="sens_nav"><%= link_to '<span>Senators</span>', :controller => 'people', :action => :senators  %></li>
+				<li id="reps_nav"><%= link_to '<span>Representatives</span>', :controller => 'people', :action => :representatives  %></li>
+				<li id="vote_nav"><%= link_to '<span>Votes</span>', :controller => 'roll_call' %></li>		
+				<li id="ishu_nav"><%= link_to '<span>Issues</span>', :controller => 'issue' %></li>
+				<li id="comm_nav"><%= link_to '<span>Committees</span>', :controller => 'committee' %></li>
+				<li id="muny_nav"><%= link_to '<span>The Money Trail</span>', :controller => 'money_trail' %></li>
 				<li id="wiki_nav" class="sub"><%= link_to '<span>Wiki</span>', WIKI_BASE_URL  %></li>		
-				<li id="blog_nav" class="sub"><%= link_to '<span>Blog</span>', :controller => '/blog' %></li>
+				<li id="blog_nav" class="sub"><%= link_to '<span>Blog</span>', blog_url %></li>
 				<li id="tool_nav" class="sub">		
-				<%= link_to '<span>Resources <img src="/images/tool_arrow-trans.png" alt="&gt;" /></span>', :controller => '/resources' %>
+				<%= link_to '<span>Resources ' + image_tag('tool_arrow-trans.png', :alt => '&gt;') + '</span>', tools_path %>
 				<ul class="sub">
-					<li id="compare_nav"><%= link_to '<span>Vote Comparison</span>', :controller => '/people', :action => 'compare' %></li> 
+					<li id="compare_nav"><%= link_to '<span>Vote Comparison</span>', :controller => 'people', :action => 'compare' %></li> 
 					<li id="widget_nav"><a href="/resources#widgets"><span>Site Widgets</span></a></li>
-					<li id="states_nav"><%= link_to '<span>States</span>', :controller => '/states' %></li>
+					<li id="states_nav"><%= link_to '<span>States</span>', states_path %></li>
 					<li id="howitworks_nav"><a href="/about/howtouse"><span>How-to Use OpenCongress</span></a></li>
 					<li id="twitter_nav"><a href="http://twitter.com/opencongress"><span>Follow Our Twitter</span></a></li>
 					<li id="disc_nav"><%= link_to '<span>Discussion</span>', '/forum/categories.php' %></li>
-					<li id="allresources_nav"><%= link_to '<span><strong>All Resources</strong></span>', :controller => '/resources', :anchor => 'all' %></li>
+					<li id="allresources_nav"><%= link_to '<span><strong>All Resources</strong></span>', tools_path(:anchor => 'all') %></li>
 				</ul>
 				</li>
-				<li id="battle_nav" class="sub"><%= link_to '<span>Battle Royale</span>', :controller => '/battle_royale' %></li> 
+				<li id="battle_nav" class="sub"><%= link_to '<span>Battle Royale</span>', :controller => 'battle_royale' %></li> 
 
 			</ul>
 		</div>

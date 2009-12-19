@@ -11,7 +11,6 @@ class Admin::HotBillsController < Admin::IndexController
       if params[:bill][:hot_bill_category_id] == 'new'
         unless params[:hot_bill_category][:name].blank?
           c = HotBillCategory.find_or_create_by_name(params[:hot_bill_category][:name])
-          c.save
           
           bill.hot_bill_category = c
           
@@ -24,9 +23,9 @@ class Admin::HotBillsController < Admin::IndexController
       bill.plain_language_summary = params[:bill][:plain_language_summary]
       bill.save
       
-      redirect_to :controller => '/bill', :action => 'show', :id => bill.ident
+      redirect_to bill_path(bill)
     else
-      redirect_to :controller => 'index'
+      redirect_to home_url
     end
   end
   

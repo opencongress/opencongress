@@ -1,6 +1,16 @@
 class ResourcesController < ApplicationController
+  # The actions associated with the panels themselves,
+  # mapped to the panel type we'll use to record them in PanelReferrers.
+  PANEL_ACTIONS = {
+    'syndicator_panel' => 'SYNDICATOR',
+    'watching_panel' => 'IM_WATCHING',
+    'bill_status_panel' => 'BILL_STATUS',
+    'issue_bills_panel' => 'ISSUE_BILLS',
+    'healthcare_panel' => 'HEALTHCARE'}
+
   before_filter :login_required, :only => "writerep"
   skip_before_filter :store_location, :except => [:index]
+  after_filter :record_referrer, :only => PANEL_ACTIONS.keys
 
   def index
     @page_title = "OpenCongress Resources"
@@ -83,12 +93,6 @@ class ResourcesController < ApplicationController
       end
     end
     
-    unless (/opencongress\.org/.match(request.referer)  or !request.referer)
-      ref = PanelReferrer.find_or_create_by_referrer_url_and_panel_type(request.referer, 'SYNDICATOR')
-      ref.views += 1
-      ref.save
-    end
-    
     render :layout => false
   end
   
@@ -108,12 +112,6 @@ class ResourcesController < ApplicationController
     @dont_pass_bills = dont_pass_bills_idents.collect { |i| Bill.find_by_ident(i) }
     
     @num_items = @pass_bills.size + @dont_pass_bills.size
-    
-    unless (/opencongress\.org/.match(request.referer)  or !request.referer)
-      ref = PanelReferrer.find_or_create_by_referrer_url_and_panel_type(request.referer, 'IM_WATCHING')
-      ref.views += 1
-      ref.save
-    end
     
     render :layout => false
   end
@@ -149,12 +147,6 @@ class ResourcesController < ApplicationController
     @textcolor = params[:textcolor] || '333333'
     
     @bill = Bill.find_by_ident(params[:bill_id]) if params[:bill_id] and !params[:bill_id].empty?
-    
-    unless (/opencongress\.org/.match(request.referer) or !request.referer)
-      ref = PanelReferrer.find_or_create_by_referrer_url_and_panel_type(request.referer, 'BILL_STATUS')
-      ref.views += 1
-      ref.save
-    end
     
     render :layout => false
   end
@@ -194,12 +186,6 @@ class ResourcesController < ApplicationController
     
     @more_text = "More Bills"
     
-    unless (/opencongress\.org/.match(request.referer) or !request.referer)
-      ref = PanelReferrer.find_or_create_by_referrer_url_and_panel_type(request.referer, 'ISSUE_BILLS')
-      ref.views += 1
-      ref.save
-    end
-    
     render :layout => false
   end
   
@@ -234,7 +220,7 @@ class ResourcesController < ApplicationController
       
         bill = Bill.find_by_session_and_bill_type_and_number(l[1], Bill.long_type_to_short(l[2]), l[3])
         if bill
-          @text.gsub!(l[0], bill_url(bill.ident))
+          @text.gsub!(l[0], bill_path(bill.ident))
         else
           @warnings += "Could not find a corresponding bill for <b>#{l[0]}</b><br />"
         end
@@ -520,4 +506,13 @@ class ResourcesController < ApplicationController
       end
     end
   end
+  
+  private
+    def record_referrer
+      unless (/opencongress\.org/.match(request.referer) or !request.referer)
+        ref = PanelReferrer.find_or_initialize_by_referrer_url_and_panel_type(request.referer, PANEL_ACTIONS[action_name])
+        ref.views += 1
+        ref.save
+      end
+    end
 end

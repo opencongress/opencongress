@@ -72,7 +72,7 @@ class IssueController < ApplicationController
     @title_desc = SiteText.find_title_desc('issue_index')
     
     @breadcrumb = { 
-      1 => { 'text' => "Issues", 'url' => { :controller => 'issue'} }
+      1 => { 'text' => "Issues", 'url' => { :controller => 'issue' } }
     }
     render :action => 'index'
   end

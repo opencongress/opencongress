@@ -45,10 +45,10 @@ amendments.each do |amdt|
     root.each_element("actions/*") do |e|
       attrs = e.attributes
       date = attrs["date"].to_i
-      act = AmendmentAction.find_or_create_by_amendment_id_and_date(amdt.id, date)
+      act = AmendmentAction.find_or_initialize_by_amendment_id_and_date(amdt.id, date)
       e.each_element("reference") do |e|
         aref = e.attributes["ref"]
-        ref = Refer.find_or_create_by_ref(aref)
+        ref = Refer.find_or_initialize_by_ref(aref)
         ref.label = e.attributes["label"]
         ref.action = act
         ref.save

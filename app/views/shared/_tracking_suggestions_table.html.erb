@@ -29,7 +29,7 @@
       <td style="vertical-align:top;">
         <ul class="mini_bills_list">
         <% tracking_suggestions[1][:my_bills_tracked_facet].each do |p| %>
-          <li><%= link_to p[:object].title_typenumber_only, bill_url(p[:object].ident) %> <%= truncate_string(p[:object].title_common, 40) %>
+          <li><%= link_to p[:object].title_typenumber_only, bill_path(p[:object].ident) %> <%= truncate_string(p[:object].title_common, 40) %>
             [<%= link_to p[:trackers], :controller => 'friends', :action => 'tracking_bill', :id => p[:object].ident %>]</li>
         <% end %>
         </ul>

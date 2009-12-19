@@ -84,7 +84,7 @@ bill_files.each do |f|
     
     es.each("bill/introduced") do |e|
       attrs = e.attributes
-      act = BillAction.find_or_create_by_action_type_and_bill_id("introduced", bill.id)
+      act = BillAction.find_or_initialize_by_action_type_and_bill_id("introduced", bill.id)
       time = attrs["date"].to_i
       act.datetime = Time.at(time).utc.to_date #could be a problem
       if act.date.nil? || act.datetime.nil? || time != act.date
@@ -118,7 +118,6 @@ bill_files.each do |f|
     es.each("bill/titles/title") do |e|
       as = e.attributes
       t = BillTitle.find_or_create_by_bill_id_and_title_type_and_as_and_title(bill.id, as["type"], as["as"], e.text)
-      t.save
     end
 
     es.each("bill/actions") do |all|
@@ -136,7 +135,7 @@ bill_files.each do |f|
         end
         
         action_times << time
-        act = BillAction.find_or_create_by_bill_id_and_action_type_and_date_and_text(bill.id, e.name, time, text)
+        act = BillAction.find_or_initialize_by_bill_id_and_action_type_and_date_and_text(bill.id, e.name, time, text)
         if attrs["datetime"]
           # hack because THOMAS/govtrack has bad data for this bill
           if text =~ /Sponsor introductory remarks on measure\. \(CR H1252\)/
@@ -209,7 +208,7 @@ bill_files.each do |f|
         bill_id = bill.id
         related_bill_id = related_bill.id
         
-        br = BillRelation.find_or_create_by_bill_id_and_related_bill_id(bill_id, related_bill_id)
+        br = BillRelation.find_or_initialize_by_bill_id_and_related_bill_id(bill_id, related_bill_id)
         br.relation = as["relation"]
         br.save
       end
@@ -234,7 +233,6 @@ bill_files.each do |f|
     es.each("bill/amendments/amendment") do |e|
       number = e.attributes["number"]
       a = Amendment.find_or_create_by_bill_id_and_number(bill.id, number)
-      a.save
       #we don't seem to have any use for amendments, is that correct?
     end
 
@@ -278,7 +276,7 @@ related_bills.keys.each do |rb|
   if related_bill.nil?
     puts "Error! Unknown related bill: #{rb.inspect}"
   else
-    br = BillRelation.find_or_create_by_bill_id_and_related_bill_id(bill.id, related_bill.id)
+    br = BillRelation.find_or_initialize_by_bill_id_and_related_bill_id(bill.id, related_bill.id)
     br.relation = rb[2]
     br.save
   end

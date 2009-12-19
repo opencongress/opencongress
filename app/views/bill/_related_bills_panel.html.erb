@@ -3,7 +3,7 @@
       <h2>Most Viewed</h2><span class="days">&#40;Past Seven Days&#41;</span>          
       <% related_bills.each do |rb| %>
       <div class="last">
-            <%= link_to rb.title_full_common, bill_url(rb.ident) %>
+            <%= link_to rb.title_full_common, bill_path(rb) %>
             <em>(<%= rb.views(DEFAULT_COUNT_TIME) %> views)</em><br />
             <span class="date">Introduced on <%= Time.at(rb.introduced).strftime("%B %d, %Y") %> by the <%= rb.chamber.capitalize %></span><br />
             

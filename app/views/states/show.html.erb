@@ -55,7 +55,7 @@
   <ul style="margin-left:20px;">
     <% @tracking_suggestions.last[:my_bills_tracked_facet].each do |bt| %>
       <% unless bt[:trackers] == 0 %>
-      <li class="bill"><%= link_to bt[:object].title_typenumber_only, bill_url(bt[:object].ident) %> 
+      <li class="bill"><%= link_to bt[:object].title_typenumber_only, bill_path(bt[:object].ident) %> 
            - <%= truncate(bt[:object].title_common, :length => 70) %> <em>(<%= bt[:trackers] %> users tracking)</em></li>
       <% end %>
     <% end %>
@@ -81,7 +81,7 @@
   <ul style="margin-left:20px;">
     <% @tracking_suggestions.last[:my_bills_supported_facet].each do |bt| %>
       <% unless bt[:trackers] == 0 %>
-      <li class="bill"><%= link_to bt[:object].title_typenumber_only, bill_url(bt[:object].ident) %> 
+      <li class="bill"><%= link_to bt[:object].title_typenumber_only, bill_path(bt[:object].ident) %> 
            - <%= truncate(bt[:object].title_common, :length => 70) %> <em>(<%= bt[:trackers] %> users supporting)</em></li>
       <% end %>
     <% end %>
@@ -94,7 +94,7 @@
   <ul style="margin-left:20px;">
     <% @tracking_suggestions.last[:my_bills_opposed_facet].each do |bt| %>
       <% unless bt[:trackers] == 0 %>
-      <li class="bill"><%= link_to bt[:object].title_typenumber_only, bill_url(bt[:object].ident) %> 
+      <li class="bill"><%= link_to bt[:object].title_typenumber_only, bill_path(bt[:object].ident) %> 
            - <%= truncate(bt[:object].title_common, :length => 70) %> <em>(<%= bt[:trackers] %> users opposing)</em></li>
       <% end %>
     <% end %>

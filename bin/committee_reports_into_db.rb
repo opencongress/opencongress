@@ -99,7 +99,7 @@ structs.each do |s|
     committee_id = comm.id
   end
   
-  cr = CommitteeReport.find_or_create_by_name_and_index(s.reportname, s.index)
+  cr = CommitteeReport.find_or_initialize_by_name_and_index(s.reportname, s.index)
   cr.title = s.title
   cr.congress = congress
   cr.number = report_number

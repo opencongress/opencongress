@@ -163,7 +163,7 @@
 	<% vo = v[1].first %>
 	<tr>
 		<td class="billlist">
-			<img src="/images/icon-hot-bill.gif" class="noborder" style="line-height: .8em;" alt="hot bill" />
+			<%= image_tag 'icon-hot-bill.gif', :class => 'noborder', :style => 'line-height: .8em;', :alt => 'hot bill' %>
 		
 		
 			<%= link_to vo.short_identifier, :controller => :bill, :action => :show, :id => vo.bill.ident %>
@@ -234,8 +234,8 @@
 		<div class="cbox-bottom">
 			<div class="cbox-top">
 				<div class="cbox clearfix first">
-					<img src="/images/smallc1.png" alt="person" style="float:right;margin:0px 10px 10px 0;" />
-					<img src="/images/smallc2.png" alt="person" style="float:left;margin:0px 0 10px 10px;" />
+					<%= image_tag 'smallc1.png', :alt => 'person', :style => 'float:right;margin:0px 10px 10px 0;' %>
+					<%= image_tag 'smallc2.png', :alt => 'person', :style => 'float:left;margin:0px 0 10px 10px;' %>
 					<% form_tag('/people/compare', :method => :get) do %>
 					<% if params[:representatives] %>
 					<%= hidden_field_tag "representatives", "true" %>

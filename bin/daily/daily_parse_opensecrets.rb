@@ -54,7 +54,7 @@ Person.all_sitting.each do |p|
       
       s = Sector.find_or_create_by_name(sector)
       sectors[sector] ||= s
-      ps = PersonSector.find_or_create_by_person_id_and_sector_id_and_cycle(p.id, s.id, CURRENT_OPENSECRETS_CYCLE)
+      ps = PersonSector.find_or_initialize_by_person_id_and_sector_id_and_cycle(p.id, s.id, CURRENT_OPENSECRETS_CYCLE)
       ps.total = total
       ps.save
     end
@@ -67,7 +67,7 @@ Person.all_sitting.each do |p|
       c = contribs[contributor] || Contributor.find_or_create_by_name(e.elements['contributor'].text)
       contribs[contributor] ||= c
       
-      pcc = PersonCycleContribution.find_or_create_by_person_id_and_cycle(p.id, CURRENT_OPENSECRETS_CYCLE)
+      pcc = PersonCycleContribution.find_or_initialize_by_person_id_and_cycle(p.id, CURRENT_OPENSECRETS_CYCLE)
       pcc.top_contributor = c
       pcc.top_contributor_amount = amount
       pcc.save
@@ -77,7 +77,7 @@ Person.all_sitting.each do |p|
       #puts "Total: #{e.elements['total'].text}"
       
       total_raised = e.elements['total'].text
-      pcc = PersonCycleContribution.find_or_create_by_person_id_and_cycle(p.id, CURRENT_OPENSECRETS_CYCLE)
+      pcc = PersonCycleContribution.find_or_initialize_by_person_id_and_cycle(p.id, CURRENT_OPENSECRETS_CYCLE)
       pcc.total_raised = total_raised
       pcc.save
     end

@@ -1,5 +1,6 @@
 <div id="feed">
   <h4 <% if @content_for_sortby %>style="text-align: right; background-position: 6.5em 50%;"<% end %>>
     Track with ATOM:&nbsp;
-  <a href="<%= feed['link'] %>"><img src="/images/feed.jpg" class="feed-button" alt="feed" /></a></h4>
+  <%= link_to(image_tag('feed.jpg', :class => 'feed-button', :alt => 'feed'), feed['link']) %>
+  </h4>
 </div>

@@ -31,7 +31,7 @@ begin
       orgs = []
       bigs = []
       bill_e.each_element("organizations/organization") do |org_e|
-        org = BillPositionOrganization.find_or_create_by_bill_id_and_maplight_organization_id(bill.id, org_e.elements['organization_id'].text)
+        org = BillPositionOrganization.find_or_initialize_by_bill_id_and_maplight_organization_id(bill.id, org_e.elements['organization_id'].text)
         org.name = org_e.elements['name'].text
         org.disposition = org_e.elements['disposition'].text
         org.citation = org_e.elements['citation'].text
@@ -41,7 +41,7 @@ begin
         unless org_e.elements['disposition'].text.blank? or org_e.elements['catcode'].text.blank?
           ig = CrpInterestGroup.find_by_osid(org_e.elements['catcode'].text)
           if ig
-            big = BillInterestGroup.find_or_create_by_bill_id_and_crp_interest_group_id(bill.id, ig.id)
+            big = BillInterestGroup.find_or_initialize_by_bill_id_and_crp_interest_group_id(bill.id, ig.id)
             big.disposition = org_e.elements['disposition'].text
             big.save
             
@@ -58,7 +58,7 @@ begin
         ig = CrpInterestGroup.find_by_name(CGI.unescapeHTML(g.inner_html))
         if ig and not bigs.include?(ig)
           puts "SUPPORTS: #{ig.name}"
-          big = BillInterestGroup.find_or_create_by_bill_id_and_crp_interest_group_id(bill.id, ig.id)
+          big = BillInterestGroup.find_or_initialize_by_bill_id_and_crp_interest_group_id(bill.id, ig.id)
           big.disposition = 'support'
           big.save
           
@@ -72,7 +72,7 @@ begin
         ig = CrpInterestGroup.find_by_name(CGI.unescapeHTML(g.inner_html))
         if ig and not bigs.include?(ig)
           puts "OPPOSES: #{ig.name}"
-          big = BillInterestGroup.find_or_create_by_bill_id_and_crp_interest_group_id(bill.id, ig.id)
+          big = BillInterestGroup.find_or_initialize_by_bill_id_and_crp_interest_group_id(bill.id, ig.id)
           big.disposition = 'oppose'
           big.save
           

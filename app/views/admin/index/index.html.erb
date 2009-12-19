@@ -4,7 +4,7 @@
   <% if current_user.user_role.can_blog %>
     <br/>
     <h3> Blog </h3>
-    <li><%= link_to 'Blog', :controller => 'articles', :action => :list  %> </li> 
+    <li><%= link_to 'Blog', blog_url  %> </li> 
     <li><%= link_to 'Edit Blogroll', :controller => 'articles', :action => 'edit_blogroll'  %> </li> 
     <li><%= link_to 'Thunderdome', :controller => 'thunderdome', :action => 'index' %></li>
     <li><%= link_to 'House and Senate Sessions', :controller => 'index', :action => 'session_list' %></li>
@@ -25,17 +25,17 @@
     <li><%= link_to 'Edit Bill Plain Language Summaries', :controller => 'bill_summaries' %></li>
     <li><%= link_to 'Manage Site Text', :controller => 'site_text', :action => :list  %></li>  
     <li><%= link_to 'Manage Sidebars', :controller => 'sidebars', :action => :list  %></li>  
-    <li><%= link_to 'Manage Frontpage Featured People', :controller => 'featured_people'  %></li>  
-    <li><%= link_to 'Manage Gossip', '/gossip/admin'  %></li>  
+    <li><%= link_to 'Manage Frontpage Featured People', :controller => 'featured_people'  %></li>
+    <li><%= link_to 'Manage Gossip', '/gossip/admin' %></li>
   <% end %>
   <% if current_user.user_role.can_moderate_articles %>
     <br/>
     <h3> Comments </h3>
-    <li><%= link_to 'Bulk Comments Search / Deletion', :controller => "/admin/comments", :action => 'comments_search' %></li>
-    <li><%= link_to 'Approve/Reject Questionable Blog/News Articles', :controller => 'commentary', :action => 'pending'  %></li>
-    <li><%= link_to 'Approve/Reject User Comments', :controller => '/admin/comments', :action => 'index'  %></li>
-    <li><%= link_to 'Moderate Flagged Comments', :controller => '/admin/comments', :action => 'index', :flagged_only => true %></li>
-    <li><%= link_to 'Clear Cache', :controller => '/admin/commentary', :action => 'clear_cache' %></li>
+    <li><%= link_to 'Bulk Comments Search / Deletion', :controller => 'admin/comments', :action => 'comments_search' %></li>
+    <li><%= link_to 'Approve/Reject Questionable Blog/News Articles', :controller => 'commentary', :action => 'pending' %></li>
+    <li><%= link_to 'Approve/Reject User Comments', :controller => 'admin/comments', :action => 'index' %></li>
+    <li><%= link_to 'Moderate Flagged Comments', :controller => 'admin/comments', :action => 'index', :flagged_only => true %></li>
+    <li><%= link_to 'Clear Cache', :controller => 'admin/commentary', :action => 'clear_cache' %></li>
   <% end %>
   <% if current_user.user_role.can_see_stats %>
     <br />

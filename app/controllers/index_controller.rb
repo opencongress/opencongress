@@ -46,7 +46,7 @@ class IndexController < ApplicationController
 	end
 	
 	def s1796_redirect
-	  redirect_to bill_url('111-s1796')
+	  redirect_to bill_path('111-s1796')
 	end
 	
 	def senate_health_care_bill_111

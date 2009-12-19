@@ -53,7 +53,7 @@ class Admin::BillSummariesController < Admin::IndexController
   def addtitle
     if params[:title][:title].blank?
       flash[:error] = "You didn't enter a bill title!"
-      redirect_to bill_url(Bill.find_by_id(params[:title][:bill_id]).ident)
+      redirect_to bill_path(Bill.find_by_id(params[:title][:bill_id]))
       return
     end
     
@@ -145,7 +145,7 @@ class Admin::BillSummariesController < Admin::IndexController
       @bill.save
       
       flash[:notice] = "#{@bill.title_typenumber_only} #{@bill.is_frontpage_hot? ? 'added to' : 'removed from'} homepage."
-      redirect_to :controller => '/bill', :action => 'show', :id => @bill.ident
+      redirect_to bill_path(@bill)
     else
       flash[:error] = "Bill not found!"
       redirect_to :controller => 'admin/index'

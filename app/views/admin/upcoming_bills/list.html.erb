@@ -12,7 +12,7 @@
   <% for column in UpcomingBill.content_columns %>
     <td><%=h upcoming_bill.send(column.name) %></td>
   <% end %>
-    <td><%= link_to 'Show', :controller => '/bill', :action => 'upcoming', :id => upcoming_bill %></td>
+    <td><%= link_to 'Show', :controller => 'bill', :action => 'upcoming', :id => upcoming_bill %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => upcoming_bill %></td>
     <td><%= link_to 'Destroy', { :action => 'destroy', :id => upcoming_bill }, :confirm => 'Are you sure?', :method => :post %></td>
   </tr>

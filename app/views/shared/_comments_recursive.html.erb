@@ -138,7 +138,7 @@
     <div class="comment_pic"><img src="/images/users/<%= h(comment.user.login) %>_s.jpg" />
 		<% unless comment.user.user_role.id ==  0 %>
            <br/>
-		   <img src="/images/staff.png" alt="staff"/>
+		   <%= image_tag 'staff.png', :alt => "OpenCongress Staff" %>
 		 <% end %>
 	</div>
   <% else %>

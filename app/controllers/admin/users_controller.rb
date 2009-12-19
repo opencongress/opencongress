@@ -61,7 +61,7 @@ class Admin::UsersController < Admin::IndexController
      @user = User.find_by_id(params[:id])
      if @user.definitive_district
        WatchDog.destroy_all("district_id = #{@user.definitive_district}")
-       wd =  WatchDog.find_or_create_by_district_id_and_user_id(@user.definitive_district, @user.id)
+       wd =  WatchDog.find_or_initialize_by_district_id_and_user_id(@user.definitive_district, @user.id)
        wd.is_active = true
        wd.save
      end

@@ -44,7 +44,7 @@ class MailingListItemsController < ApplicationController
   # POST /mailing_list_items
   # POST /mailing_list_items.xml
   def create
-    @mailing_list_item = @user_ml.mailing_list_items.find_or_create_by_mailable_type_and_mailable_id(params[:mailing_list_item][:mailable_type],params[:mailing_list_item][:mailable_id])
+    @mailing_list_item = @user_ml.mailing_list_items.find_or_initialize_by_mailable_type_and_mailable_id(params[:mailing_list_item][:mailable_type],params[:mailing_list_item][:mailable_id])
 
     respond_to do |format|
       if @mailing_list_item.save

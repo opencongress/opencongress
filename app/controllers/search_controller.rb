@@ -72,7 +72,7 @@ class SearchController < ApplicationController
                                     query_stripped.upcase, query_stripped.upcase ])  
                    
           if people_for_name.size == 1
-            redirect_to :controller => 'people', :action => 'show', :id => people_for_name[0]
+            redirect_to person_url(people_for_name[0])
             return
           end
           

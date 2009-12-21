@@ -516,12 +516,13 @@ ENDUSAGE
             # Set content encoding for gzipped items
 					  if ['gz', 'cssgz', 'jsgz'].any? { |t| fType == t }
               headers['Content-Encoding'] = 'gzip'
-              if File.basename(@path)[/[^.]*\.[^.]*$/] == '.css.gz' || fType == 'cssgz'
-    						headers['Content-Type'] = 'text/css'
-    					elsif File.basename(@path)[/[^.]*\.[^.]*$/] == '.js.gz' || fType == 'jsgz'
-                headers['Content-Type'] = 'application/x-javascript'
-  					  end
 				    end
+
+            if File.basename(@path)[-7,7] == '.css.gz' || fType == 'cssgz' || fType == 'css'
+  						headers['Content-Type'] = 'text/css'
+  					elsif File.basename(@path)[-6,6] == '.js.gz' || fType == 'jsgz' || fType == 'js'
+              headers['Content-Type'] = 'application/x-javascript'
+					  end
 
             #
 				    # Set far future expiration on javascripts and stylesheets
@@ -543,6 +544,8 @@ ENDUSAGE
 					headers['Expires'] = $S3syncOptions['--expires'] if $S3syncOptions['--expires']
 					headers['Cache-Control'] = $S3syncOptions['--cache-control'] if $S3syncOptions['--cache-control']
 					headers['Content-Encoding'] = $S3syncOptions['--content-encoding'] if $S3syncOptions['--content-encoding']
+
+					$stderr.puts @path + ": " + headers.inspect
 					@result = S3sync.S3try(:put, @bucket, @path, s3o, headers)
 					theStream.close if (theStream and not theStream.closed?)
 				#rescue NoMethodError

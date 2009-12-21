@@ -1,4 +1,7 @@
 AWS_ACCESS_KEY_ID: "xxx"
 AWS_SECRET_ACCESS_KEY: "xxx"
-asset_host_name: "assets%d.opencongress.org"     
+asset_host_name: "a%d.opencongress.org"     
 # dry_run: false # Set to true if you want to test the asset_host uploading without doing anything on Amazon S3
+
+# Here's approximately how the sync command ends up running inside capistrano:
+# cd vendor/plugins/synch_s3_asset_host/s3sync && ./s3sync.rb --recursive --config-file ../../../../config/synch_s3_asset_host.yml --exclude "\.svn|\.gitignore|\.DS_Store|system" --public-read ../../../../public/ a0.opencongress.org:

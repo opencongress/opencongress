@@ -24,10 +24,10 @@ set :git_shallow_clone, 1
 default_run_options[:pty] = true
 set :use_sudo, true
 
-desc "Link the images"
 
 namespace :deploy do
 
+  desc "Link the images"
   task :link_images do
     run "cp #{deploy_to}/#{shared_dir}/database.yml #{current_release}/config/database.yml"
     run "cp #{deploy_to}/#{shared_dir}/api_keys.yml #{current_release}/config/api_keys.yml"
@@ -50,11 +50,12 @@ namespace :deploy do
     sudo "chmod -R 777 #{current_release}/public/forum/extensions"
   end
 
+  desc "Compile CSS & JS for public/assets/ (see assets.yml)"
   task :jammit do
-    # Compile CSS & JS for public/assets/ (see assets.yml)
     run "cd #{current_release}; /opt/rubye/bin/jammit"
   end
 
+  desc "Restart Passenger"
   task :restart do
     sudo "touch #{deploy_to}/current/tmp/restart.txt"
   end

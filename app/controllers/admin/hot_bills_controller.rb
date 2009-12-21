@@ -25,7 +25,7 @@ class Admin::HotBillsController < Admin::IndexController
       
       redirect_to bill_path(bill)
     else
-      redirect_to home_url
+      redirect_to home_path
     end
   end
   

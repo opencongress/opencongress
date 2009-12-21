@@ -287,7 +287,7 @@ class AccountController < ApplicationController
          session[:invite] = nil
        end
 
-       redirect_to confirmation_url(@user.login)
+       redirect_to confirmation_path(@user.login)
      rescue ActiveRecord::RecordInvalid
        render :action => 'new_openid'
      end

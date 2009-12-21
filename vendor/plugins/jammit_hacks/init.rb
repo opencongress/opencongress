@@ -15,7 +15,7 @@ unless ActionController::Base.asset_host.blank?
     # except in development, where it references the individual scripts.
     def include_javascripts(*packages)
       tags = packages.map do |pack|
-        Jammit.package_assets ? Jammit.asset_url(pack, (defined?(request.env['HTTP_ACCEPT_ENCODING']) && request.env['HTTP_ACCEPT_ENCODING'].scan('gzip').length > 0 ? :jsgz : :js)) : Jammit.packager.individual_urls(pack.to_sym, :js)
+        Jammit.package_assets ? Jammit.asset_url(pack, (defined?(request.env['HTTP_ACCEPT_ENCODING']) && !request.env['HTTP_ACCEPT_ENCODING'].blank? && request.env['HTTP_ACCEPT_ENCODING'].scan('gzip').length > 0 ? :jsgz : :js)) : Jammit.packager.individual_urls(pack.to_sym, :js)
       end
       javascript_include_tag(tags.flatten)
     end
@@ -24,7 +24,7 @@ unless ActionController::Base.asset_host.blank?
   
     # HTML tags for the stylesheet packages.
     def packaged_stylesheets(packages, options)
-      tags_with_options(packages, options) {|p| Jammit.asset_url(p, (defined?(request.env['HTTP_ACCEPT_ENCODING']) && request.env['HTTP_ACCEPT_ENCODING'].scan('gzip').length > 0 ? :cssgz : :css)) }
+      tags_with_options(packages, options) {|p| Jammit.asset_url(p, (defined?(request.env['HTTP_ACCEPT_ENCODING']) && !request.env['HTTP_ACCEPT_ENCODING'].blank? && request.env['HTTP_ACCEPT_ENCODING'].scan('gzip').length > 0 ? :cssgz : :css)) }
     end
 
   end

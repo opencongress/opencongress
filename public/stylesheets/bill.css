@@ -87,14 +87,14 @@ table#votes tbody tr, table#amendments tbody tr, table#actions tbody tr{
 margin: 0px;
 }
 .actionz{
-background: url(//images/action.png) 12px 12px no-repeat;
-   _background: url(//images/action.gif) 12px 12px no-repeat;
+background: url(/images/action.png) 12px 12px no-repeat;
+   _background: url(/images/action.gif) 12px 12px no-repeat;
 font-weight: bold;	
 padding: 0px 20px 0 40px;
 }
 table#votes span.date {
-  background: url(//images/action.png) left center no-repeat;
-   _background: url(//images/action.gif) left center no-repeat;  
+  background: url(/images/action.png) left center no-repeat;
+   _background: url(/images/action.gif) left center no-repeat;  
   padding: 5px 20px 5px 40px;
 } 
 table#votes td.action {
@@ -114,8 +114,8 @@ padding: 0px
 }
 
 .amendments{
-background: url(//images/amendment.png) 12px 11px no-repeat;
-   _background: url(//images/amendment.gif) 12px 11px no-repeat;
+background: url(/images/amendment.png) 12px 11px no-repeat;
+   _background: url(/images/amendment.gif) 12px 11px no-repeat;
 padding: 0px 20px 0 40px;
 }
 
@@ -1647,8 +1647,8 @@ text-decoration: none;
 
 .action_button .dater{
 font-weight: bold;
-background: url('//images/action.png') 5px 14px no-repeat !important;
-   _background: url('//images/action.gif') 5px 14px no-repeat !important;
+background: url('/images/action.png') 5px 14px no-repeat !important;
+   _background: url('/images/action.gif') 5px 14px no-repeat !important;
 padding: 0 20px 0 30px;
 }
 

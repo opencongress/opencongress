@@ -53,6 +53,11 @@ namespace :deploy do
   desc "Compile CSS & JS for public/assets/ (see assets.yml)"
   task :jammit do
     run "cd #{current_release}; /opt/rubye/bin/jammit"
+
+    # .gz filenames do not work in safari; we need to rename these files.
+    # .cssjz and .jsjz are special extensions recognized by the S3 syncher so it
+    # will do the right thing with respect to the Content-Type and Content-Encoding headers.
+    run "cd #{current_release}/public/assets; for f in *.css.gz; do mv $f `basename $f .css.gz`.cssgz; done; for f in *.js.gz; do mv $f `basename $f .js.gz`.jsgz; done"
   end
 
   desc "Restart Passenger"

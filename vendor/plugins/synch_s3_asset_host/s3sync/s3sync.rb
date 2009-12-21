@@ -518,9 +518,15 @@ ENDUSAGE
               headers['Content-Encoding'] = 'gzip'
 				    end
 
-            if File.basename(@path)[-7,7] == '.css.gz' || fType == 'cssgz' || fType == 'css'
+					  if defined?($mimeTypes) and (mType = $mimeTypes[fType]) and mType != ''
+  						debug("Mime type: #{mType}")
+  						headers['Content-Type'] = mType
+  					end
+            
+            # Override content type for these special extensions...
+            if fType == 'cssgz' || fType == 'css'
   						headers['Content-Type'] = 'text/css'
-  					elsif File.basename(@path)[-6,6] == '.js.gz' || fType == 'jsgz' || fType == 'js'
+  					elsif fType == 'jsgz' || fType == 'js'
               headers['Content-Type'] = 'application/x-javascript'
 					  end
 
@@ -536,10 +542,6 @@ ENDUSAGE
 				      headers['Expires'] = Time.gm(Time.now.year + 3).strftime("%a, %d %b %Y %H:%M:%S GMT")
 				    end
 
-					  if defined?($mimeTypes) and (mType = $mimeTypes[fType]) and mType != ''
-  						debug("Mime type: #{mType}")
-  						headers['Content-Type'] = mType
-  					end
           end
 					headers['Expires'] = $S3syncOptions['--expires'] if $S3syncOptions['--expires']
 					headers['Cache-Control'] = $S3syncOptions['--cache-control'] if $S3syncOptions['--cache-control']

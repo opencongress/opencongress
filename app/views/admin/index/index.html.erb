@@ -4,7 +4,7 @@
   <% if current_user.user_role.can_blog %>
     <br/>
     <h3> Blog </h3>
-    <li><%= link_to 'Blog', blog_url  %> </li> 
+    <li><%= link_to 'Blog', :controller => 'articles', :action => :list %> </li> 
     <li><%= link_to 'Edit Blogroll', :controller => 'articles', :action => 'edit_blogroll'  %> </li> 
     <li><%= link_to 'Thunderdome', :controller => 'thunderdome', :action => 'index' %></li>
     <li><%= link_to 'House and Senate Sessions', :controller => 'index', :action => 'session_list' %></li>

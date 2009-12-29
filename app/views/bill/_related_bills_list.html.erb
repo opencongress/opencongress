@@ -1,4 +1,5 @@
 <% show_views ||= true %>
+<% show_views = (show_views == 'off') ? false : true %>
 <% commentary_type ||= false %>
 <% show_track_link ||= false %>
 <% show_congress_session ||= false %>
@@ -6,17 +7,6 @@
 <ul class="bills_list">
 
   <% if related_bills_list.size > 0 %>
-    <!-- <table class="simple-table2" cellspacing="0">
-      <tr>
-        <% if show_views or commentary_type %><th></th><% end %>
-        <th align="left" scope="col">Bill</th>
-        <th scope="col">Status</th>
-        <th scope="col">Last Action</th>     
-        <% if show_views %><th scope="col">Views</th><% end %>
-        <% if commentary_type %><th scope="col">Articles</th><% end %>
-        <% if show_track_link %><th scope="col">Track This</th><% end %>
-      </tr>
-     -->
 
       <% related_bills_list.each_with_index do |bill, i| -%>
         <% unless bill.title_common.blank? -%>
@@ -69,24 +59,18 @@
                        
             
             <% if commentary_type %>
-              <span>
-                <%= bill.commentary_count(commentary_type, DEFAULT_COUNT_TIME) %>
+              <span class='session'>
+                <%= number_with_delimiter(bill.commentary_count(commentary_type, DEFAULT_COUNT_TIME)) %> Articles
               </span>
             <% end %>
 						</a>
             <% if show_track_link %><span><%= render :partial => "shared/track_link", :locals => {:object => bill} %></span><% end %>
 
         <% end %>
-        <!-- DEBUGGING
-        <% if bill.tmp_search_desc %>
-          <%= bill.tmp_search_desc %>
-        <% end %>
-        /DEBUGGING -->
       
        </li>
       
       <% end -%>
-   <!-- </table> -->
   <% else %>
     <h3>No Bills Found</h3>
   <% end %>

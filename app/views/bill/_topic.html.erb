@@ -41,6 +41,7 @@
   <%= link_to "Add/Edit Plain Language Summary", :controller => 'admin/bill_summaries', :action => 'edit', :id => @bill.ident %>  
   <%= link_to "Select Default Title",  :controller => 'admin/bill_summaries', :action => 'defaulttitle', :id => @bill.ident %>  
   <%= link_to "Add Related Bill (Different Session)",  :controller => 'admin/bill_summaries', :action => 'session_relations', :bill_id => @bill.ident %>
+  <%= link_to "New news/blog article", :controller => 'admin/commentary', :action => 'new', :commentariable_type => 'Bill', :commentariable_id => @bill.id %>
   <%= link_to @bill.is_frontpage_hot? ? "Remove from frontpage" : "Add to frontpage",  :controller => 'admin/bill_summaries', :action => 'toggle_frontpage_hot', :bill_id => @bill.ident %>
   <br style="clear: both;"/>
   <a href="#" onclick="Element.show('addtitle_form'); return false;">Add a Title</a>   

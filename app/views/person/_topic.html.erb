@@ -1,5 +1,4 @@
 <div class="people_header clearfix" style=" background: url(/images/photos/thumbs_102/<%= @person.id %>.png) 610px bottom no-repeat;">
-  
 	<div id="name">
     <h3><em><%= @person.title_common %> <%= @person.full_name %></em></h3>
     <h5>
@@ -37,6 +36,12 @@
   <% end %> 
 
 </div>
+
+<% if admin_logged_in? %>
+  <div style="padding-left: 30px;">
+    <%= link_to "New news/blog article", :controller => 'admin/commentary', :action => 'new', :commentariable_type => 'Person', :commentariable_id => @person.id %>
+  </div>
+<% end %>
 
 <div id="tabs"> 
 	<ul class="un">

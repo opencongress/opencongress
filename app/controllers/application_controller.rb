@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
 
   def days_from_params(days)
     days = days.to_i if (days && !days.kind_of?(Integer))
-    return (days && ((days == 7) || (days == 14) || (days == 30))) ? days.days : DEFAULT_COUNT_TIME
+    return (days && ((days == 7) || (days == 14) || (days == 30) || (days == 365))) ? days.days : DEFAULT_COUNT_TIME
   end
 
   def rescue_action_in_public(exception)

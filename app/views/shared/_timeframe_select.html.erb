@@ -9,5 +9,8 @@
 	<li class="<%= @days == 30.days ? "selected" : "" %>">
 		<%= link_to "30 days", :days => 30, :sort => @sort %>
 	</li>
+	<li class="<%= @days == 365.days ? "selected" : "" %>">
+		<%= link_to "Past Year", :days => 365, :sort => @sort %>
+	</li>
 </ul>
 <!-- // timeframe-->

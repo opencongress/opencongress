@@ -7,9 +7,7 @@ class GossipController < ApplicationController
     @page_title = "Congress Gossip"
     @gossip = Gossip.latest(10)
     @atom = {'link' => url_for(:only_path => false, :controller => 'gossip', :action => 'atom'), 'title' => "Gossip from the OC"}
-    @breadcrumb = { 
-      1 => { 'text' => "Gossip", 'url' => { :controller => 'gossip'} }
-    }
+
   end
 
   def submit

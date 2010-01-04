@@ -2,8 +2,6 @@ class CommentaryController < ApplicationController
   skip_before_filter :store_location, :only => [:rate]
 
   def rate
-    @learn_off = true
-    
     unless current_user == :false
       commentary = Commentary.find_by_id(params[:id])
       score = current_user.commentary_ratings.find_or_initialize_by_commentary_id(commentary.id)

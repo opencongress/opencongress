@@ -52,9 +52,6 @@ class IssueController < ApplicationController
     @title_class = "sort"
     @title_desc = SiteText.find_title_desc('issue_index')
 
-    @breadcrumb = { 
-      1 => { 'text' => "Issues", 'url' => { :controller => 'issue'} }
-    }
     render :action => 'index'
   end
 
@@ -70,10 +67,7 @@ class IssueController < ApplicationController
     @page_title = "Issues"
     @title_class = "sort"
     @title_desc = SiteText.find_title_desc('issue_index')
-    
-    @breadcrumb = { 
-      1 => { 'text' => "Issues", 'url' => { :controller => 'issue' } }
-    }
+
     render :action => 'index'
   end
 
@@ -97,10 +91,6 @@ class IssueController < ApplicationController
 
           comment_redirect(params[:goto_comment]) and return if params[:goto_comment]
 
-    @breadcrumb = { 
-      1 => { 'text' => "Issues", 'url' => { :controller => 'issue'} },
-      2 => { 'text' => @subject.term, 'url' => { :controller => 'issue', :action => 'show', :id => @subject } }
-    }
     @atom = {'link' => url_for(:only_path => false, :controller => 'issue', :id => @subject, :action => 'atom'), 'title' => "Major Bill Actions in #{@subject.term}"}
 		@hide_atom = true
 
@@ -138,22 +128,14 @@ class IssueController < ApplicationController
     @bills = @subject.latest_bills(20)
     
     @page_title = "#{@subject.term} - Recent Bills"
-    @breadcrumb = { 
-      1 => { 'text' => "Issues", 'url' => { :controller => 'issue'} },
-      2 => { 'text' => @subject.term, 'url' => { :controller => 'issue', :action => 'show', :id => @subject } },
-      3 => { 'text' => "Recent Bills", 'url' => { :controller => 'issue', :action => 'top_twenty_bills', :id => @subject } }
-    }
+
   end
 
   def top_viewed_bills
    @subject = Subject.find(params[:id])
    @bills = @subject.most_viewed_bills(20)
    @page_title = "#{@subject.term} - Most Viewed Bills"
-    @breadcrumb = {
-      1 => { 'text' => "Issues", 'url' => { :controller => 'issue'} },
-      2 => { 'text' => @subject.term, 'url' => { :controller => 'issue', :action => 'show', :id => @subject } },
-      3 => { 'text' => "Most Viewed Bills", 'url' => { :controller => 'issue', :action => 'top_twenty_bills', :id => @subject } }
-    }
+
   end
 
   def atom

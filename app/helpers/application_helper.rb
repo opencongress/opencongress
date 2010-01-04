@@ -60,43 +60,6 @@ module ApplicationHelper
       url_for :controller => object.class.name.downcase, :action => 'show', :id => object
     end
   end
-  
-  def breadcrumb
-    if @breadcrumb
-      @breadcrumb[0] = { 'text' => "HOME", 'url' => "/" }  
-      @breadcrumb = @breadcrumb.sort
-            
-      crumbs = []
-      @breadcrumb.each do |index, link_hash|
-        crumbs << link_to(link_hash['text'], link_hash['url'])
-      end
-    else
-      # try to figure out breadcrumb as best as we can
-      klass = controller.class
-      home_link = link_to "HOME", "/"
-      controller_name = klass.controller_path.singularize.pluralize
-      controller_link = link_to controller_name.capitalize, :controller => klass.controller_name 
-      if controller.params[:id].nil?
-        action_link = link_to controller.action_name.capitalize, :controller => klass.controller_name, :action => controller.action_name
-      else
-        id = controller.params[:id].sub(/^\d+_/, "")
-        action_link = link_to id, :controller => klass.controller_name, :action => controller.action_name,  :id => controller.params[:id]
-      end
-    
-      crumbs = [home_link, controller_link, action_link]
-    end
-    
-    styled_crumbs = []
-    crumbs.each do |c|
-      unless c == crumbs.last
-        styled_crumbs << "<em>" + c + "</em> "
-      else
-        styled_crumbs << "<strong>" + c + "</strong>"
-      end
-    end
-    
-    "You are here : " + styled_crumbs.join("<span>&gt;</span>")
-  end
 
   def pagination_nav(pages, options = {})
     out = ""

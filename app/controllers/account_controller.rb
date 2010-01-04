@@ -188,9 +188,6 @@ class AccountController < ApplicationController
   end
 
   def forgot_password
-    @breadcrumb = {
-      1 => { 'text' => "Forgot Password", 'url' => "/account/forgot_password" }
-    }
 
     return unless request.post?
     if @user = User.find_by_email(params[:user][:email])
@@ -207,9 +204,7 @@ class AccountController < ApplicationController
   def reset_password
     redirect_to '/account/forgot_password' and return if params[:id].blank?
     @user = User.find_by_password_reset_code(params[:id])
-    @breadcrumb = {
-      1 => { 'text' => "Reset Password", 'url' => "/account/reset_password" }
-    }
+
     raise if @user.nil?
     return if @user unless request.post?
       if (params[:user][:password] == params[:user][:password_confirmation])

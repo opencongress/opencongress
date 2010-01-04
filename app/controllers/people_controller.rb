@@ -10,9 +10,7 @@ class PeopleController < ApplicationController
   
   def index
     @page_title = "Senators and Representatives"
-    @breadcrumb = { 
-      1 => { 'text' => "People", 'url' => { :controller => 'people'} }
-    }
+
   end
 
   def send_person
@@ -132,10 +130,7 @@ class PeopleController < ApplicationController
   end
   
   def most_commentary
-    @breadcrumb = {
-      1 => { 'text' => "People", 'url' => "/people" },
-    }
-    
+
     @days = days_from_params(params[:days])
     
     if params[:person_type] == 'representatives'
@@ -143,7 +138,6 @@ class PeopleController < ApplicationController
 			@person_type = :representatives
       @page_title = "Representatives Most Written About "
       bc_url = '/people/representatives'
-      @breadcrumb[2] = { 'text' => "Representatives", 'url' => bc_url }
       @atom = {
         'link' => "/people/representatives/atom/most/", 
         'title' => "Top 20 Representatives Most Written About "
@@ -153,7 +147,6 @@ class PeopleController < ApplicationController
 			@person_type = :senators
       @page_title = "Senators Most Written About "
       bc_url = '/people/senators'
-      @breadcrumb[2] = { 'text' => "Senators", 'url' => bc_url }
       @atom = {
         'link' => "/people/senators/atom/most/", 
         'title' => "Top 20 Senators Most Written About "
@@ -165,13 +158,11 @@ class PeopleController < ApplicationController
       @page_title += "In The News"
       @atom['link'] += "news"
       @atom['title'] += "In the News"
-      @breadcrumb[3] = { 'text' => "Most In News", 'url' => "#{bc_url}/most/in_news" }
     else
       @commentary_type = 'blog'
       @page_title += "On Blogs"
       @atom['link'] += "blog"
       @atom['title'] += "On Blogs"
-      @breadcrumb[3] = { 'text' => "Most In Blogs", 'url' => "#{bc_url}/most/in_news" }
     end
     
     @sort = @commentary_type
@@ -268,10 +259,6 @@ class PeopleController < ApplicationController
       @person_tracking_suggestions = @person.tracking_suggestions
       @supporting_suggestions = @person.support_suggestions
       @opposing_suggestions = @person.oppose_suggestions
-      @breadcrumb = { 
-        1 => { 'text' => "People", 'url' => { :controller => 'people'} },
-        2 => { 'text' => @person.name, 'url' => { :controller => 'people', :action => 'show', :id => @person } }
-      }
       @atom = {'link' => url_for(:only_path => false, :controller => 'people', :action => 'atom', :id => @person), 'title' => "Track " + @person.name}
  		@hide_atom = true
       }
@@ -301,13 +288,9 @@ class PeopleController < ApplicationController
    @page_title = @person.title_full_name
    link = @person.wiki_url
    
-   @breadcrumb = { 
-        1 => { 'text' => "People", 'url' => { :controller => 'people'} },
-        2 => { 'text' => @person.name, 'url' => { :controller => 'people', :action => 'show', :id => @person } }
-      }
-      @atom = {'link' => url_for(:only_path => false, :controller => 'people', :action => 'atom', :id => @person), 'title' => "Track " + @person.name}
-            @hide_atom = true
-            @meta_description = "OpenCongress profile of #{@person.name}"
+    @atom = {'link' => url_for(:only_path => false, :controller => 'people', :action => 'atom', :id => @person), 'title' => "Track " + @person.name}
+          @hide_atom = true
+          @meta_description = "OpenCongress profile of #{@person.name}"
     
     doc = Hpricot(open(link))
     if doc
@@ -357,12 +340,6 @@ class PeopleController < ApplicationController
       end
     end
 
-    @breadcrumb = { 
-      1 => { 'text' => "People", 'url' => { :controller => 'people'} },
-      2 => { 'text' => @person.name, 'url' => { :controller => 'people', :action => 'show', :id => @person } },
-      3 => { 'text' => "News Articles", 'url' => { :controller => 'people', :action => 'news', :id => @person, :sort => @sort } }
-    }
-  
     @page_title = "#{@person.full_name} In The News"
     @page_title +=  " (Highest Rated)" if (@sort == 'toprated')
   end
@@ -396,13 +373,7 @@ class PeopleController < ApplicationController
         @blogs = @person.blogs.paginate :page => @page
       end
     end
-      
 
-    @breadcrumb = { 
-      1 => { 'text' => "People", 'url' => { :controller => 'people'} },
-      2 => { 'text' => @person.name, 'url' => { :controller => 'people', :action => 'show', :id => @person } },
-      3 => { 'text' => "Blog Articles", 'url' => { :controller => 'people', :action => 'blogs', :id => @person, :sort => @sort  } }
-    }
     @page_title = "#{@person.full_name} In The Blogs"
     @page_title +=  " (Highest Rated)" if (@sort == 'toprated')
   end

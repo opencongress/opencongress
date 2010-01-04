@@ -11,7 +11,6 @@ class Admin::CommentsController < Admin::IndexController
       @page_title = "Comment Moderation"
       @teh_comments = Comment.paginate_by_ok_and_censored(nil,false, :order => "created_at ASC", :page => params[:page], :per_page => 100)
     end
-    @learn_off = true
   end
   
   def comments_search

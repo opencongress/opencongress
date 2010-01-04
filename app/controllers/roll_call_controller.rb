@@ -143,7 +143,6 @@ class RollCallController < ApplicationController
   
   def sublist
     @roll_call = RollCall.find(params[:id])
-    @learn_off = true
     
     if params[:vote] == 'Aye'
       @vote = 'Aye'
@@ -170,7 +169,6 @@ class RollCallController < ApplicationController
 
   def index
     redirect_to :action => 'all'
-    @learn_off = true
   end
 
   def all
@@ -196,11 +194,7 @@ class RollCallController < ApplicationController
     @carousel = [PageView.popular('RollCall', DEFAULT_COUNT_TIME).slice(0..9)] 
     @page_title = 'All Roll Calls'
     @title_desc = SiteText.find_title_desc('roll_call_all')
-    
-    @breadcrumb = { 
-      1 => { 'text' => "Roll Calls", 'url' => { :controller => 'roll_call'} },
-      2 => { 'text' => "All", 'url' => { :controller => 'roll_call', :action => 'all'} }
-    }   
+  
     @atom = {'link' => url_for(:only_path => false, :controller => 'roll_call', :action => 'atom'), 'title' => "Recent Roll Calls"}
   end
   

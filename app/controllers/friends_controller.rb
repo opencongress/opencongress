@@ -168,11 +168,6 @@ class FriendsController < ApplicationController
   def import_contacts
     @page_title = "#{@user.login}'s Profile"
 		@title_class = "tab-nav"
-    @breadcrumb = {
-      1 => { 'text' => "Profile: #{@user.login}", 'url' => "/users/#{@user.login}/profile" },
-      2 => { 'text' => "Friends", 'url' => "/users/#{@user.login}/profile/friends" },
-      3 => { 'text' => "Find or Add", 'url' => "/users/#{@user.login}/profile/friends/add"}
-    }
 
     if request.post? && params[:from]
       @results = []
@@ -307,10 +302,6 @@ Personal Note: #{CGI.escapeHTML(params[:message])}"
     @page_title = "#{@user.login}'s Profile"
 		@profile_nav = @user
 		@title_class = "tab-nav"
-		@breadcrumb = {
-      1 => { 'text' => "Profile: #{@user.login}", 'url' => "/users/#{@user.login}/profile" },
-      2 => { 'text' => "Friends", 'url' => "/users/#{@user.login}/profile/friends" }
-    }
 
     respond_to do |format|
       format.html # index.rhtml
@@ -335,22 +326,11 @@ Personal Note: #{CGI.escapeHTML(params[:message])}"
     @page_title = "#{@user.login}'s Profile"
 		@title_class = "tab-nav"
 		@profile_nav = @user
-		@breadcrumb = {
-      1 => { 'text' => "Profile: #{@user.login}", 'url' => "/users/#{@user.login}/profile" },
-      2 => { 'text' => "Friends", 'url' => "/users/#{@user.login}/profile/friends" },
-      3 => { 'text' => "Find or Add", 'url' => "/users/#{@user.login}/profile/friends/add"}
-    }
-
   end
 
   # GET /friends/1;edit
   def edit
     @page_title = "Edit a Friend"
-    @breadcrumb = {
-      1 => { 'text' => "Profile: #{@user.login}", 'url' => "/users/#{@user.login}/profile" },
-      2 => { 'text' => "Friends", 'url' => "/users/#{@user.login}/profile/friends" },
-      3 => { 'text' => "Edit", 'url' => "/users/#{@user.login}/profile/friends/edit"}
-    }
     @friend = @user.friends.find(params[:id])
   end
 

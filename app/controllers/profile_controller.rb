@@ -42,17 +42,12 @@ class ProfileController < ApplicationController
     end
   end
 
-
   def show
     @user = User.find_by_login(params[:login], :include => [:bookmarks]) # => [:bill]}])
     @page_title = "#{@user.login}'s Profile"
 		@title_class = "tab-nav"
     @profile_nav = @user
 
-		@breadcrumb = {
-      1 => { 'text' => "Profile: #{@user.login}", 'url' => "/users/#{@user.login}/profile" }
-    }
-  	@learn_off = true
   	if logged_in? && (current_user.id == @user.id) && @user.zipcode && @user.zip_four
   	  zd = ZipcodeDistrict.zip_lookup(@user.zipcode, (@user.zip_four ? @user.zip_four : nil)).first
       unless zd.nil?
@@ -63,6 +58,10 @@ class ProfileController < ApplicationController
   	else
   	  @cd_text = "(Add Zip +4)"
   	end
+	end
+	
+	def howtouse
+		@page_title = "Ways To Use \"My OpenCongress\""
 	end
 	
 	def user_actions_rss
@@ -89,10 +88,7 @@ class ProfileController < ApplicationController
                       ORDER BY b.created_at", :per_page=>20, :page => params[:o_page])
 		
 		@title_class = "tab-nav"
-    @breadcrumb = {
-      1 => { 'text' => "Profile: #{@user.login}", 'url' => "/users/#{@user.login}/profile" },
-      2 => { 'text' => "Actions", 'url' => "/users/#{@user.login}/profile/actions" }
-    }
+
 	  @my_comments = Comment.paginate(:all, :conditions => ["user_id = ?", @user.id], :order => "created_at DESC", :page => params[:page])
   end
   
@@ -103,10 +99,7 @@ class ProfileController < ApplicationController
     @page_title = "#{@user.login}'s Profile"
     @profile_nav = @user
 		@title_class = "tab-nav"
-		@breadcrumb = {
-      1 => { 'text' => "Profile: #{@user.login}", 'url' => "/users/#{@user.login}/profile" },
-      2 => { 'text' => "Items Tracked", 'url' => "/users/#{@user.login}/profile/items_tracked" }
-    }
+
 		@senators, @reps = Person.find_current_congresspeople_by_zipcode(@user.zipcode, @user.zip_four) if ( logged_in? && @user == current_user && !(@user.zipcode.nil? || @user.zipcode.empty?))
     if logged_in? && current_user.id == @user.id
       mailing_list = UserMailingList.find_or_create_by_user_id(@user.id)
@@ -184,10 +177,7 @@ class ProfileController < ApplicationController
     @user = User.find_by_login(params[:login])
     @page_title = "Profile of #{@user.login} - Bills Tracked"
     @bookmarks = Bookmark.find_bookmarked_bills_by_user(@user.id)
-    @breadcrumb = {
-      1 => { 'text' => "Profile: #{@user.login}", 'url' => "/users/#{@user.login}/profile" },
-      2 => { 'text' => "Bills", 'url' => "/users/#{@user.login}/profile/bills" }
-    }
+
     if params[:format]
 
       expires_in 60.minutes, :public => true
@@ -205,10 +195,6 @@ class ProfileController < ApplicationController
     @bill_votes = @bills_supported.concat(@bills_opposed)
 
 
-    @breadcrumb = {
-      1 => { 'text' => "Profile: #{@user.login}", 'url' => "/users/#{@user.login}/profile" },
-      2 => { 'text' => "Bills Supported", 'url' => "/users/#{@user.login}/profile/my_votes" }
-    }
     if params[:format]
       @title = "Bills #{params[:login]} supports & opposes"
       @items = []
@@ -257,10 +243,7 @@ class ProfileController < ApplicationController
     @user = User.find_by_login(params[:login])
     @page_title = "Profile of #{@user.login} - Comments"
 #    @comments = Comment.find(:all, :conditions => ["user_id = ?", @user.id], :order => "created_at DESC", :page => {:size => 10, :current => params[:page]})
-    @breadcrumb = {
-      1 => { 'text' => "Profile: #{@user.login}", 'url' => "/users/#{@user.login}/profile" },
-      2 => { 'text' => "Comments", 'url' => "/users/#{@user.login}/profile/comments" }
-    }
+
     if params[:format]
       @comments = Comment.find(:all, :conditions => ["user_id = ?", @user.id], :order => "created_at DESC", :limit => 20)
       expires_in 60.minutes, :public => true
@@ -270,6 +253,7 @@ class ProfileController < ApplicationController
       render :action => "comments.html.erb"
     end
   end
+  
   def person
     role_type = String.new
     case params[:person_type]
@@ -283,11 +267,8 @@ class ProfileController < ApplicationController
     @page_title = "Profile of #{@user.login} - #{params[:person_type].capitalize} Tracked"
     @bookmarks = @user.representative_bookmarks if role_type == "rep" 
     @bookmarks = @user.senator_bookmarks if role_type == "sen"
-    @breadcrumb = {
-      1 => { 'text' => "Profile: #{@user.login}", 'url' => "/users/#{@user.login}/profile" },
-      2 => { 'text' => @ptype, 'url' => "/users/#{@user.login}/profile/#{@ptype.downcase}" }
-    }
-		@learn_off = true
+
+
     if params[:format]
       expires_in 60.minutes, :public => true
 
@@ -346,10 +327,7 @@ class ProfileController < ApplicationController
     @user = User.find_by_login(params[:login])
     @page_title = "Profile of #{@user.login} - Issues tracked"
     @bookmarks = Bookmark.find(:all, :conditions => ["bookmarkable_type = ? AND user_id = ?", "Subject", @user.id])
-    @breadcrumb = {
-      1 => { 'text' => "Profile: #{@user.login}", 'url' => "/users/#{@user.login}/profile" },
-      2 => { 'text' => "Issues", 'url' => "/users/#{@user.login}/profile/issues" }
-    }
+
     if params[:format]
       @title = "Issues I'm Tracking"
       @items = []
@@ -371,10 +349,8 @@ class ProfileController < ApplicationController
     @user = User.find_by_login(params[:login])
     @page_title = "Profile of #{@user.login} - Committees tracked"
     @bookmarks = Bookmark.find(:all, :conditions => ["bookmarkable_type = ? AND user_id = ?", "Committee", @user.id])
-    @breadcrumb = {
-      1 => { 'text' => "Profile: #{@user.login}", 'url' => "/users/#{@user.login}/profile" },
-      2 => { 'text' => "Issues", 'url' => "/users/#{@user.login}/profile/committees" }
-    }
+
+
     if params[:format]
       @title = "Commitees I'm Tracking"
       @items = []
@@ -393,13 +369,6 @@ class ProfileController < ApplicationController
   end
 
 
-	def howtouse
-		@page_title = "Ways To Use \"My OpenCongress\""
-		@learn_off = true
-    @breadcrumb = { 
-      1 => { 'text' => "Ways To Use My OpenCongress", 'url' => { :controller => 'profile', :action => 'howtouse'} }
-    }
-	end
   def edit_profile
     if logged_in?
      @user = current_user

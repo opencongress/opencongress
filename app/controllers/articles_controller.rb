@@ -12,9 +12,6 @@ class ArticlesController < ApplicationController
     end
     
     def list
-      @breadcrumb = { 
-        1 => { 'text' => "OpenCongress Blog", 'url' => { :controller => 'articles' } }
-      }
 
       if params[:tag] && @tag = CGI.unescape(params[:tag])
         @articles = Article.find_tagged_with(@tag).paginate(:page => params[:page])
@@ -29,7 +26,7 @@ class ArticlesController < ApplicationController
         display_month = "#{Time.mktime(year, month).strftime("%B %Y")}"
         
         @page_title = "Blog - #{display_month}"
-        @breadcrumb[2] = { 'text' => "#{display_month}", 'url' => "/articles/list?month=#{month}-#{year}"}
+
         @articles = Article.find_by_month_and_year(month, year).paginate(:page => params[:page])
       else      
         @articles = Article.paginate(:all, :conditions => 'published_flag = true', 

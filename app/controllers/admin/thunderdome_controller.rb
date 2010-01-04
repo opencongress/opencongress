@@ -1,7 +1,6 @@
 class Admin::ThunderdomeController < ApplicationController
 
   def index
-   @learn_off = true
    @current_bill_battle = BillBattle.find_by_active(true)
      if request.post?
        @first = Bill.find_by_ident(params[:bill_1])

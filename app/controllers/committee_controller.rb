@@ -12,10 +12,7 @@ class CommitteeController < ApplicationController
     @page_title =  "Committees"
     @title_class = "sort"
     @title_desc = SiteText.find_title_desc('committee_index')
-    
-    @breadcrumb = { 
-      1 => { 'text' => "Committees", 'url' => { :controller => 'committee'} }
-    }
+
   end
 
   def show
@@ -66,10 +63,6 @@ class CommitteeController < ApplicationController
     @title_class = "sort"
     @title_desc = SiteText.find_title_desc('committee_index')
     
-    @breadcrumb = { 
-      1 => { 'text' => "Committees", 'url' => { :controller => 'committee'} },
-      2 => { 'text' => @page_title, 'url' => { :controller => 'committee', :action => 'by_chamber', :id => @chamber } }
-    }
   end
 
   def by_most_viewed
@@ -86,11 +79,7 @@ class CommitteeController < ApplicationController
     @page_title = "Most Viewed Committees"
     @title_class = "sort"
     @title_desc = SiteText.find_title_desc('committee_index')
-    
-    @breadcrumb = { 
-      1 => { 'text' => "Committees", 'url' => { :controller => 'committee'} },
-      2 => { 'text' => "Most Viewed", 'url' => { :controller => 'committee', :action => 'by_most_viewed'} }
-    }
+
   end
   
   def report
@@ -118,8 +107,5 @@ class CommitteeController < ApplicationController
   def nodata
     @page_title = "Committee Data Forthcoming"
     
-    @breadcrumb = { 
-      1 => { 'text' => "Committees", 'url' => { :controller => 'committee'} }
-    }
   end
 end

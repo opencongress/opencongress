@@ -130,13 +130,7 @@ class SearchController < ApplicationController
         end
       end
     end
-    
-    @learn_off = true
-    @breadcrumb = { 
-      1 => { 'text' => "Search", 'url' => { :controller => 'search'} },
-      2 => { 'text' => "Results", 'url' => { :controller => 'search'} }
-    }
-    
+
   end
   
   def result_ajax
@@ -167,6 +161,5 @@ class SearchController < ApplicationController
  		@searches = Search.top_search_terms(100,@days).paginate :page => @page
     @title_class = "sort"    
 		@page_title = "Top Search Terms"
-  	@learn_off = true
   end
 end

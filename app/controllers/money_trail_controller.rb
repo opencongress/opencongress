@@ -3,11 +3,6 @@ class MoneyTrailController < ApplicationController
   def show
     @sector = Sector.find(params[:id])
     @people = @sector.people
-    @learn_off = true
-    @breadcrumb = { 
-      1 => { 'text' => "Industries", 'url' => { :controller => 'industry'} },
-      2 => { 'text' => @sector.name, 'url' => { :controller => 'committee', :action => 'show', :id => @sector } }
-    }
 
     @page_title = @sector.name
     @title_class = 'sort'
@@ -20,17 +15,11 @@ class MoneyTrailController < ApplicationController
     @sort = :popular
     
     @sectors = PageView.popular('Sector', DEFAULT_COUNT_TIME)
-    @learn_off = true
     
     @page_title = "Most Viewed Industry Sectors"
     @title_class = 'sort'
     @title_desc = SiteText.find_title_desc('industry_index')
     
-    @breadcrumb = { 
-      1 => { 'text' => "Industries", 'url' => { :controller => 'industry'} },
-      2 => { 'text' => "Most Viewed", 'url' => { :controller => 'industry', :action => 'by_most_viewed'} }
-    }
-
     @custom_sidebar = Sidebar.find_by_page_and_enabled('industry_index', true)   
     
     render :action => 'index'
@@ -62,8 +51,6 @@ class MoneyTrailController < ApplicationController
     sector = Sector.find(params[:id], :include => { :person_sectors => :person })
     @person_sector_list = sector.person_sectors
     @id = sector.id
-    
-    @learn_off = true
       
     respond_to do |wants|
       wants.js

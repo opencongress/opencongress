@@ -5,14 +5,13 @@ class ArticlesController < ApplicationController
 
   skip_before_filter :store_location, :except => [:index, :list, :view]
   before_filter :get_blogroll
-    
+
   public           
     def index
       return list
     end
-    
-    def list
 
+    def list
       if params[:tag] && @tag = CGI.unescape(params[:tag])
         @articles = Article.find_tagged_with(@tag).paginate(:page => params[:page])
         @page_title = "Blog - Articles Tagged '#{@tag}'"

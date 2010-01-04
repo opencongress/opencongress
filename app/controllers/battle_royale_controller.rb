@@ -238,7 +238,7 @@ class BattleRoyaleController < ApplicationController
   private
 
   def get_range
-    @head_title = "Battle Royale - What's Popular in Congress"
+    @page_title = "Battle Royale - What's Popular in Congress"
     params[:timeframe] ||= "30days"
     case params[:timeframe]
       when "1day"

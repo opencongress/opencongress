@@ -1,7 +1,6 @@
 # Methods added to this helper will be available to all templates in
 # the application.
 module ApplicationHelper
-
   def split_list(list, attribute, item_limit, action, controller = nil, show_views = false, trunc = false)
     item_limit = list.size if item_limit > list.size
     list.empty? ? [] :
@@ -799,7 +798,7 @@ EOT
       ""
     end
   end
-  
+
   def page_title
     title = ""
     unless @site_text_page.nil? || @site_text_page.title_tags.blank?
@@ -819,7 +818,7 @@ EOT
     title += "OpenCongress"                                   
     return title
   end 
-  
+
   def info_box
     if @site_text_page && !@site_text_page.title_desc.blank?
       return "<div class=\"extra_description\">#{@site_text_page.title_desc}</div>"

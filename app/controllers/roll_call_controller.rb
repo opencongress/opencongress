@@ -7,6 +7,13 @@ class RollCallController < ApplicationController
   
   @@VOTE_TYPES = { "+" => "Aye", "-" => "Nay", "0" => "Abstain" }
   @@VOTE_VALS = @@VOTE_TYPES.invert
+  
+  @@PIE_OPTIONS = {
+    :start_angle => 270,
+    :no_labels => true,
+    :tip => "#label#\n(Click for Details)",
+    :gradient_fill => false
+  }
 
   def master_piechart_data
     @roll_call = RollCall.find_by_id(params[:id])
@@ -30,25 +37,20 @@ class RollCallController < ApplicationController
     end
     
     pie = OFC2::Pie.new(
-      :no_labels => true,
-      :gradient_fill => false,
-      :alpha => 0.8,
-      :start_angle => 270,
-      :animate =>  [OFC2::PieFade.new, OFC2::PieBounce.new],
-      :tip => "#label#\n(Click for Details)",
-      :values => vals,
-      :radius => 80
+      @@PIE_OPTIONS.merge({
+        :alpha => 0.8,
+        :animate => [OFC2::PieFade.new, OFC2::PieBounce.new],
+        :values => vals,
+        :radius => 80
+      })
     )
     pie_shadow = OFC2::Pie.new(
-      :no_labels => true,
-      :gradient_fill => false,
-      :alpha => 0.5,
-      :shadow => true,
-      :start_angle => 270,
-      #:animate =>  [OFC2::PieFade.new, OFC2::PieBounce.new],
-      :tip => "#label#\n(Click for Details)",
-      :values => vals,
-      :radius => 80
+      @@PIE_OPTIONS.merge({
+        :alpha => 0.5,
+        :shadow => true,
+        :values => vals,
+        :radius => 80
+      })
     )
     pie.colours = colors
     chart = OFC2::Graph.new
@@ -64,51 +66,47 @@ class RollCallController < ApplicationController
     @roll_call = RollCall.find_by_id(params[:id])
     radius = params[:radius] ||= 80
     votes = @roll_call.roll_call_votes.select { |rcv| rcv.vote == params[:breakdown_type] }
-  
+
     disclaimer_note = params[:disclaimer_off].blank? ? "**" : ""
-    
+
     democrat_votes = votes.select { |rcv| rcv.person.party == 'Democrat' if rcv.person }
     republican_votes = votes.select { |rcv| rcv.person.party == 'Republican' if rcv.person }
     other_votes_size = votes.size - democrat_votes.size - republican_votes.size
-    
+
     vals = []
     colors = []
-    
+
     if republican_votes.size > 0
       vals << OFC2::PieValue.new(:value => republican_votes.size, :label => "Republican (#{republican_votes.size})", :on_click => "openRollCallOverlay('Republican_#{@@VOTE_TYPES[params[:breakdown_type]]}')")
       colors << "#F84835"
     end
-    
+
     if democrat_votes.size > 0
       vals << OFC2::PieValue.new(:value => democrat_votes.size, :label => "Democrat (#{democrat_votes.size})", :on_click => "openRollCallOverlay('Democrat_#{@@VOTE_TYPES[params[:breakdown_type]]}')")
       colors << "#5D77DA"
     end
-    
+
     if other_votes_size > 0
       vals << OFC2::PieValue.new(:value => other_votes_size, :label =>"Other (#{other_votes_size})", :on_click => "openRollCallOverlay('Other_#{@@VOTE_TYPES[params[:breakdown_type]]}')")
       colors << "#DDDDDD"
     end
-    
+
      pie = OFC2::Pie.new(
-      :no_labels => true,
-      :gradient_fill => false,
-      :alpha => 0.8,
-      :start_angle => 270,
-      :animate =>  [OFC2::PieFade.new, OFC2::PieBounce.new],
-      :tip => "#label#\n(Click for Details)",
-      :values => vals,
-      :radius => radius
+      @@PIE_OPTIONS.merge({
+        :alpha => 0.8,
+        :animate => [OFC2::PieFade.new, OFC2::PieBounce.new],
+        :values => vals,
+        :radius => radius
+      })
     )
     pie_shadow = OFC2::Pie.new(
-      :no_labels => true,
-      :gradient_fill => false,
-      :alpha => 0.5,
-      :shadow => true,
-      :start_angle => 270,
-      :animate =>  [OFC2::PieFade.new, OFC2::PieBounce.new],
-      :tip => "#label#\n(Click for Details)",
-      :values => vals,
-      :radius => radius
+      @@PIE_OPTIONS.merge({
+        :alpha => 0.5,
+        :shadow => true,
+        :animate =>  [OFC2::PieFade.new, OFC2::PieBounce.new],
+        :values => vals,
+        :radius => radius
+      })
     )
     pie.colours = colors
     chart = OFC2::Graph.new
@@ -118,7 +116,6 @@ class RollCallController < ApplicationController
     chart.bg_colour = '#FFFFFF'
 
     render :text => chart.render
-
   end
   
   def show

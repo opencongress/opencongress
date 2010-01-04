@@ -30,10 +30,8 @@
 		</div>	
 	</div>
 
-
 	<h1><a class="logo" href="/" title="link to the home page"><%= image_tag 'open-congress.png', :alt => 'OpenCongress -' %><%= "#{@page_title_prefix} - " if @page_title_prefix %><%= truncate(@page_title, :length => 100) %> <%= truncate(@head_title, :length => 90) if @head_title %></a></h1>
 
-	
 	<div class="right">
 
 		<span id="autocomplete-spin" style="display: none;">
@@ -41,7 +39,7 @@
 		</span>
       
 		<div id="login" style="display:none;">
-			<form action='/login' method='post'>
+			<form action="/login" method="post">
 				<input id="login_field" name="user[login]" size="10" type="text" value="username" onfocus="if (this.value==this.defaultValue) this.value='';" />
 				<input id="password_field" name="user[password]" size="10" type="password" value="Password" onfocus="if (this.value==this.defaultValue) this.value='';" />
 				<input name="commit" type="image" src="/images/login.png" value="Login" />
@@ -49,7 +47,6 @@
 												
 			<a href="/login">OpenID Login</a>
 		</div>
-
 
 	 	<div id="search">
 			<form action="/search/result" id="form-search" method="get">

@@ -1,5 +1,4 @@
 class ScrapeToolsController < ApplicationController
-
   require 'hpricot'
   require 'open-uri'
   require 'timeout'
@@ -7,17 +6,8 @@ class ScrapeToolsController < ApplicationController
   def get_url_title
     title = ""
     unless params[:url].blank?
-      url = params[:url]
-      regex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/    
-      if url =~ regex
-        begin
-          Timeout::timeout(3) {
-            doc = Hpricot(open(url))
-            title = (doc/"title").inner_html
-          }
-        rescue Timeout::Error
-          title = ""
-        end
+      if doc = get_xml_url(params[:url])
+        title = (doc/"title").inner_html
       end
     end
     render :text => title
@@ -26,14 +16,27 @@ class ScrapeToolsController < ApplicationController
   def get_youtube_embed
     embed = ""
     unless params[:url].blank?
-      url = params[:url]
-      regex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/    
-      if url =~ regex
-        doc = Hpricot(open(url))
+      if doc = get_xml_url(params[:url])
         doc.at("input#embed_code")['value']
         embed = CGI::unescapeHTML(doc.at("input#embed_code")['value'])
       end
     end
     render :text => embed
   end
+
+  private
+
+  def get_xml_url(u)
+    regex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/    
+    if u =~ regex
+      begin
+        Timeout::timeout(3) {
+          Hpricot(open(u))
+        }
+      rescue Timeout::Error
+        nil
+      end
+    end
+  end
+
 end

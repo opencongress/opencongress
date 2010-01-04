@@ -1,9 +1,6 @@
 class SearchController < ApplicationController
   include ActionView::Helpers::TextHelper
-  
-  caches_page :tips
-  
-  
+    
   def index 
     @page_title = "Search OpenCongress"
   end

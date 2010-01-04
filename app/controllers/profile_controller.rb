@@ -118,7 +118,7 @@ class ProfileController < ApplicationController
     @bill = Bill.find_by_id(params[:id])
     @limit = params[:limit].to_i
     @limit > 5 ? @limit = 5 : @limit = @limit
-    "<h3 class='darkline'>Recent Actions</h3>" + 
+    '<h3 class="darkline">Recent Actions</h3>' + 
     render(:partial => 'bill/action_list_recent', :locals => { :actions => @bill.actions.find(:all, :limit => @limit) })
   end
   
@@ -171,8 +171,6 @@ class ProfileController < ApplicationController
     end
   end
 
-
-  
   def bills
     @user = User.find_by_login(params[:login])
     @page_title = "Profile of #{@user.login} - Bills Tracked"
@@ -185,8 +183,8 @@ class ProfileController < ApplicationController
     else
       render :action => "bills.html.erb"
     end
-
   end
+  
   def my_votes
     @user = User.find_by_login(params[:login])
     @page_title = "Profile of #{@user.login} - Bills Voted On"
@@ -217,6 +215,7 @@ class ProfileController < ApplicationController
     flash[:notice] = "Vote Removed"
     redirect_back_or_default(:action => 'index', :login => current_user.login)
   end
+  
   def remove_bill_bookmark
     bookmark = current_user.bookmarks.find_by_bookmarkable_type_and_bookmarkable_id("Bill", params[:id])
     bookmark.destroy
@@ -376,11 +375,7 @@ class ProfileController < ApplicationController
      value = params[:value]  
 
      case field
-     when "user_role"
-       render :text => "Nice Try"
-     when "user_role_id"
-       render :text => "Nice Try"
-     when "login"
+     when "user_role", "user_role_id", "login"
        render :text => "Nope"
      else
         @user[field] = value
@@ -399,6 +394,7 @@ class ProfileController < ApplicationController
      end
     end
   end
+  
   def track
     if logged_in?
       object = Object.const_get(params[:type])
@@ -450,6 +446,7 @@ class ProfileController < ApplicationController
     user.update_attribute("small_picture", new_small_file_name)
     redirect_to user_profile_url(current_user.login)
   end
+  
   def delete_images
     File.delete("public/images/users/" + current_user.main_picture) if (current_user.main_picture && File.exists?("public/images/users/" + current_user.main_picture))
     File.delete("public/images/users/" + current_user.small_picture) if (current_user.small_picture && File.exists?("public/images/users/" + current_user.small_picture))
@@ -459,11 +456,13 @@ class ProfileController < ApplicationController
 
     redirect_to user_profile_url(current_user.login)
   end
+  
   def hide_field
     @user = current_user
     @user.toggle!(params[:type])
     redirect_to user_profile_url(current_user.login)
   end
+  
   def ratings
     this_rating = params[:user]['default_filter'].to_i
     logger.info(this_rating.to_s + " DEFAU")

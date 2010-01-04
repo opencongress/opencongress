@@ -198,6 +198,7 @@ ActionController::Routing::Routes.draw do |map|
   map.tools 'tools', :controller => 'resources'
 
   # Temporary home for api URLS
+  map.api 'api', :controller => 'api', :action => 'index'
   map.connect 'api/bill/text_summary/:id', :controller => 'bill', :action => 'status_text'
   map.connect 'api/roll_call/text_summary/:id', :controller => 'roll_call', :action => 'summary_text'  
 

@@ -9,4 +9,36 @@ height: 45px;
 margin-bottom: 10px;
 }
 
+div.col1 {
+    float: left;
+    width: 600px;
+}
 
+div.col2 {
+    padding-left: 15px;
+    width: 317px;
+    float: left;
+}
+
+ul.pointy li:before {
+    content: "\00BB \0020";
+}
+
+ol {
+    list-style-type: decimal;
+    padding-left: 3em;
+}
+
+.code {
+    display: block;
+    background: rgb(238, 238, 238);
+    margin-bottom: 1em;
+    padding: 7px 15px;
+    width: 90%;
+    overflow: auto;
+}
+
+.code pre {
+    font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', monospace;
+    font-size: 9pt;
+}

@@ -1,69 +1,21 @@
-# OpenCongress - a Ruby on Rails application for displaying information about Congress
-#
-# Copyright (C) 2005-2009 Participatory Politics Foundation
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+OpenCongress - a Ruby on Rails application for displaying information about Congress
 
-== OpenCongress Rails Project
+For installation instructions, visit http://www.opencongress.org/about/code.
 
--- Installing OpenCongress --
+----
 
-First of all, the OpenCongress project is a PostgreSQL only project.  Don't have delusions of using MySQL with it or you will be hurtin.  Since I personally had little experience with Postgres before this, I will include some tips for all you Mysql only guys and gals out there.
+Copyright (c) 2005-2010 Participatory Politics Foundation
 
-Here is what you have to do to get OpenCongress close to working on your personal machine :
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
 
-  1. install postgresql
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-  2. install tsearch in contrib
-
-  3. gem install ferret, bluecloth, simple-rss, postgres-pr
-
-  4. copy config/database.sample to config/database.yml and edit it
-
-  5. create the databases
-	createdb opencongress_dev
-	opencongress_dev < db/tsearch2.sql
-  	createdb opencongress_test
-
-  6. rake migrate
-
---
-
-Next, you will have to get the data from govtrack and fill in your database with the parsed govtrack data
-
-  mkdir /data/govtrack/111
-  cd /data/govtrack/111
-  rsync -az govtrack.us::govtrackdata/us/111/bills .
-  rsync -az govtrack.us::govtrackdata/us/111/repstats .
-  rsync -az govtrack.us::govtrackdata/us/111/bills.index.xml .
-  rsync -az govtrack.us::govtrackdata/us/111/committeeschedule.xml .
-  rsync -az govtrack.us::govtrackdata/us/111/rolls .
-
-Now, you will have to actually parse the data
-
-  ruby bin/govtrack_parse_people.rb
-  ruby bin/govtrack_parse_bills.rb 
-  ruby bin/govtrack_parse_committees.rb 
-  ruby bin/govtrack_parse_committee_schedules.rb 
-  ruby parse_individual_bills.rb 
-
---
-
-Now, just run 'mongrel_rails start' and you should have something going on localhost:3000 - have fun!
-
-Lastly, some Postgres tips:
-  
-  starting pg:  pg_ctl -D data -l logfile start
-  accessing pg from the command line : psql opencongress_dev
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA

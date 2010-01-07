@@ -59,6 +59,23 @@ module ApplicationHelper
       url_for :controller => object.class.name.downcase, :action => 'show', :id => object
     end
   end
+ 
+  def url_for_internal(link)
+    case link.notebookable.type.to_s
+    when 'Bill'
+      bill_url(link.notebookable)
+    when 'Subject'
+      issue_url(link.notebookable.to_param)
+    when 'Person'
+      person_url(link.notebookable.to_param)
+    when 'Commentary'
+      link.url
+    end    
+  end
+
+  def link_to_internal(link)    
+    link_to link.title, url_for_internal(link)
+  end
 
   def pagination_nav(pages, options = {})
     out = ""

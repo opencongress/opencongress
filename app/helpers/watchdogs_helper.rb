@@ -13,19 +13,6 @@ module WatchdogsHelper
     end
   end
 
-  def url_for_internal(link)
-    case link.notebookable.type.to_s
-    when 'Bill'
-      bill_url(link.notebookable)
-    when 'Subject'
-      issue_url(link.notebookable.to_param)
-    when 'Person'
-      person_url(link.notebookable.to_param)
-    when 'Commentary'
-      link.url
-    end    
-  end
-
   def get_label
     @label = ""
     if @type
@@ -50,11 +37,7 @@ module WatchdogsHelper
   def image_for(file, size = '') 
     image_tag("#{BASE_URL}#{file.public_filename(size)}")
   end
-  
-  def link_to_internal(link)    
-    link_to link.title, url_for_internal(link)
-  end
-  
+    
   def div_height(y)
     ymod = y % 24
     div_y = (24 - ymod) + y

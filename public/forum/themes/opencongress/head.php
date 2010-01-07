@@ -68,7 +68,7 @@ echo $HeadString . '
           $this->Context->Session->User->Name,
             $this->Context->GetDefinition('SignedInAsX')).' (<a href="'.$this->Context->Configuration['SIGNOUT_URL'].'">'.$this->Context->GetDefinition('SignOut').'</a>)';
         } else {
-          echo $this->Context->GetDefinition('NotSignedIn').' (<a href="'.AppendUrlParameters($this->Context->Configuration['SIGNIN_URL'], 'ReturnUrl='.$_SERVER['SCRIPT_URI']).'">'.$this->Context->GetDefinition('SignIn').'</a>)';
+          echo $this->Context->GetDefinition('NotSignedIn').' (<a href="'.AppendUrlParameters($this->Context->Configuration['SIGNIN_URL'], 'ReturnUrl='.$this->Context->Configuration['BASE_URL']).'categories.php">'.$this->Context->GetDefinition('SignIn').'</a>)';
         }
         ?>
       </p>

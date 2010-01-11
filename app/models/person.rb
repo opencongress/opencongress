@@ -1311,10 +1311,7 @@ class Person < ActiveRecord::Base
   def self.full_text_search(q, options = {})
     current = options[:only_current] ? " AND (people.title='Rep.' OR people.title='Sen.')" : ""
     
-    people = Person.paginate_by_sql(["SELECT people.*, rank(fti_names, ?, 1) as tsearch_rank FROM people 
-                                 WHERE people.fti_names @@ to_tsquery('english', ?) #{current}
-                                 ORDER BY people.lastname", q, q],
-                                 :per_page => DEFAULT_SEARCH_PAGE_SIZE, :page => options[:page])
+    people = Person.paginate_by_sql(["SELECT people.*, rank(fti_names, ?, 1) as tsearch_rank FROM people WHERE people.fti_names @@ to_tsquery('english', ?) #{current} ORDER BY people.lastname", q, q], :per_page => DEFAULT_SEARCH_PAGE_SIZE, :page => options[:page])
     people     
   end
 

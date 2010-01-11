@@ -110,8 +110,8 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.with_options :controller => 'articles' do |a|
-    a.blog 'blog', :action => 'list'
-    a.connect 'blog/:tag', :action => 'list'
+    a.blogs 'blog', :action => 'list'
+    a.blog 'blog/:tag', :action => 'list'
     a.article 'articles/view/:id', :action => 'view'
     a.connect 'articles/view/:show_comments/:id', :action => 'view' 
     a.connect 'articles/:id/atom', :action => 'article_atom'

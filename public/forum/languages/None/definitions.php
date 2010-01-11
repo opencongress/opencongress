@@ -1,4 +1,0 @@
-<?php
-// Blank Language file
-
-?>

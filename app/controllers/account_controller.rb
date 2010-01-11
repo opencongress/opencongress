@@ -1,7 +1,6 @@
 class AccountController < ApplicationController
   before_filter :login_from_cookie, :except => [:reset_password]
   before_filter :login_required, :only => [:welcome, :accept_tos]
-  after_filter :check_forums, :only => [:login, :activate]
   after_filter :check_wiki, :only => [:login, :activate]
 
   skip_before_filter :store_location
@@ -146,9 +145,6 @@ class AccountController < ApplicationController
     self.current_user.forget_me if logged_in?
     cookies.delete :auth_token
     cookies.delete '_session_id'
-    # Forum Integration
-    cookies.delete 'lussumocookieone'
-    cookies.delete 'lussumocookietwo'
     cookies.delete 'ocloggedin'
     cookies['PHPSESSID'] = {:value => '', :path => '/', :expires => Time.at(0), :domain => ".www.opencongress.org" }
     cookies['PHPSESSID'] = {:value => '', :path => '/', :expires => Time.at(0), :domain => ".opencongress.org" }
@@ -289,23 +285,6 @@ class AccountController < ApplicationController
     end
   end
   
-  def check_forums
-   if logged_in?
-     begin
-       fuser = Forum.find(:first, :conditions => ["Name = ?", current_user.login])
-       unless fuser
-          fuser = Forum.create({:Name => current_user.login, :Password => current_user.crypted_password, :RoleID => 3, :DateFirstVisit => Time.new(), :DateLastActive => Time.new()})
-       end
-       vkey = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
-       fuser.VerificationKey = vkey
-       fuser.save
-       cookies[:lussumocookieone] = fuser.UserID.to_s
-       cookies[:lussumocookietwo] = vkey
-     rescue
-     end
-   end
-  end
-
   def check_wiki
     if logged_in?
       begin

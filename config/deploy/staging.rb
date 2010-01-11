@@ -15,7 +15,6 @@ namespace :deploy do
   end
 end
 
-
 after "deploy:update_code", "deploy:symlinks"
 
 # We can control solr on staging, just not on production because

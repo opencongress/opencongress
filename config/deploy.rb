@@ -24,9 +24,7 @@ set :git_shallow_clone, 1
 default_run_options[:pty] = true
 set :use_sudo, true
 
-
 namespace :deploy do
-
   desc "Link the images"
   task :link_images do
     run "cp #{deploy_to}/#{shared_dir}/database.yml #{current_release}/config/database.yml"

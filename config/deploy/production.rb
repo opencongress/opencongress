@@ -1,7 +1,4 @@
-#
-# I dream of stable branches.
-#
-# set :branch, "stable"
+set :branch, "production"
 
 role :web, "75.126.164.19", :asset_host_syncher => true
 role :web, "74.86.203.130"

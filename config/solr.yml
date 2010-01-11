@@ -12,10 +12,6 @@ staging:
 production:
   url: http://10.13.219.6:8983/oc-solr-prod
 
-#production:
-#  url: http://localhost:8983/oc-solr-prod
-
-  
 morgan:
   url: http://localhost:8984/solr
 

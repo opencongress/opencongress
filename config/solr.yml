@@ -7,7 +7,7 @@ development:
   url: http://localhost:8982/solr
 
 staging:
-  url: http://localhost:8982/oc-solr-dev
+  url: http://localhost:8982/solr
 
 production:
   url: http://10.13.219.6:8983/oc-solr-prod

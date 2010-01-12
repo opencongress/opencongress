@@ -1,4 +1,4 @@
-var fHeight = 420;
+var fHeight = 396;
 if (window.navigator.userAgent.indexOf("MSIE")) {
 	fHeight += 7;
 }

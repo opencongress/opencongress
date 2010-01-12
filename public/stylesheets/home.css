@@ -497,7 +497,7 @@ float: right;
 
 .clear{
 clear: both;
-height: 30px;
+height: 0px;
 }
 
 #pitch{

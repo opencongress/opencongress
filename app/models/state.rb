@@ -222,6 +222,8 @@ chs=#{size}&chl=Democrats (#{democrat_representatives.count})|Republicans (#{rep
 
     # Make a reverse map for state names to abbrevs, with downcase'd state names.
     ABBREV_FOR_STATE = STATE_FOR_ABBREV.merge(STATE_FOR_ABBREV) { |k,ov| ov.downcase }.invert
+
+    # This is great for select lists
     PAIRS_SORTED = STATE_FOR_ABBREV.invert.to_a.sort
 
     def self.abbrev_for(name)
@@ -229,7 +231,7 @@ chs=#{size}&chl=Democrats (#{democrat_representatives.count})|Republicans (#{rep
     end
 
     def self.for_abbrev(abbr)
-      return "" if abbr.blank?
+      return nil if abbr.blank?
       STATE_FOR_ABBREV[abbr.upcase]
     end
 

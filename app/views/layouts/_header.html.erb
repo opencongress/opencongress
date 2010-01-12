@@ -102,7 +102,7 @@
 				<li id="comm_nav"><%= link_to '<span>Committees</span>', :controller => 'committee' %></li>
 				<li id="muny_nav"><%= link_to '<span>The Money Trail</span>', :controller => 'money_trail' %></li>
 				<li id="wiki_nav" class="sub"><%= link_to '<span>Wiki</span>', WIKI_BASE_URL  %></li>		
-				<li id="blog_nav" class="sub"><%= link_to '<span>Blog</span>', blog_url %></li>
+				<li id="blog_nav" class="sub"><%= link_to '<span>Blog</span>', blogs_url %></li>
 				<li id="tool_nav" class="sub">		
 				<%= link_to '<span>Resources ' + image_tag('tool_arrow-trans.png', :alt => '&gt;') + '</span>', tools_path %>
 				<ul class="sub">
@@ -111,7 +111,6 @@
 					<li id="states_nav"><%= link_to '<span>States</span>', states_path %></li>
 					<li id="howitworks_nav"><a href="/about/howtouse"><span>How-to Use OpenCongress</span></a></li>
 					<li id="twitter_nav"><a href="http://twitter.com/opencongress"><span>Follow Our Twitter</span></a></li>
-					<li id="disc_nav"><%= link_to '<span>Discussion</span>', '/forum/categories.php' %></li>
 					<li id="allresources_nav"><%= link_to '<span><strong>All Resources</strong></span>', tools_path(:anchor => 'all') %></li>
 				</ul>
 				</li>

@@ -1,9 +1,0 @@
-Hello {name},
-
-A new comment/discussion was posted on a topic you've subscribed to:
-
-Watch this discusion here: {topic_url}
-
-You won't get another message until you've visited the forum.
-
-{support_name}

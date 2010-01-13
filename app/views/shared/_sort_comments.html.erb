@@ -1,13 +1,14 @@
 <ul id="sort" class="sort_comments">
 <h4>Sort By</h4>
-    <li id="oldest" class="<%= (params[:comment_sort] == 'oldest' || params[:comment_sort].blank?) ? "active" : "" %>">
-    	<%= link_to "<span>Oldest First</span>", :comment_sort => 'oldest' %>
+    <li id="newest" class="<%= (params[:comment_sort] == 'newest' || params[:comment_sort].blank?) ? "active" : "" %>">
+    	<%= link_to "<span>Newest First</span>", :comment_sort => 'newest' %>
     </li>
-		<li id="newest" class="<%= params[:comment_sort] == 'newest' ? "active" : "" %>">
-			<%= link_to "<span>Newest First</span>", :comment_sort => 'newest' %>
+		<li id="oldest" class="<%= params[:comment_sort] == 'oldest' ? "active" : "" %>">
+			<%= link_to "<span>Oldest First</span>", :comment_sort => 'oldest' %>
 	 	</li>
 
 		<li id="rating" class="<%= params[:comment_sort] == 'rating' ? "active" : "" %>">
 			<%= link_to "<span>Highest Rated</span>", :comment_sort => 'rating' %>
 		</li>
+		
 </ul>

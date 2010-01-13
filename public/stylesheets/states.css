@@ -2,6 +2,30 @@
 
 }
 
+.col3 {
+    float: left;
+    display: block;
+    width: 200px;
+}
+
+.col1, .col2 {
+    float: left;
+    display: block;
+    width: 346px;
+    padding-right: 10px;
+}
+
+.col12 {
+float: left;
+display: block;
+width: 712px;
+padding-right: 20px;
+}
+
+li.person {
+    height: 50px;
+}
+
 .person_box{
 float: left;
 width: 165px;
@@ -43,6 +67,28 @@ height: 45px;
 margin-bottom: 30px;
 }
 
+div.meta {
+    font-size: 11px;
+    color: #888;
+}
+
+div.meta a:link, div.meta a {
+    font-weight: bold;
+    text-decoration: none;
+    padding-right: 5px;
+}
+
+div.meta span {
+    padding-right: 5px;
+}
+
+.callout {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #eee;
+    font-weight: bold;
+}
+
 .padding ul{
 padding: 0;
 margin: 0 !important;
@@ -50,19 +96,16 @@ margin: 0 !important;
 
 
 .padding ul li{
-padding: 0 0 0 20px;
+padding: 0 0 6px 0px;
 margin: 0;
 }
 
-
-.user{
-background:transparent url(/images/befriended.png) no-repeat scroll 0 3px;
-}
-
-.bill{
+.bill {
+padding-left: 20px;
 background:transparent url(/images/tiny_bill.png) no-repeat scroll 0 2px;
 }
 
-.senator{
+.rep {
+padding-left: 20px;
 background:transparent url(/images/tiny_sen.png) no-repeat scroll 0 2px;
 }

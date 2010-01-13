@@ -71,14 +71,16 @@ ActionController::Routing::Routes.draw do |map|
     b.connect 'bill/upcoming/:id', :action => 'upcoming'
     b.connect 'bill/:show_comments/:id/show', :action => 'show'  
     b.connect 'bill/bill_vote/:bill/:id', :action => 'bill_vote'
+    b.bill_text 'bill/:id/text', :action => 'text'
+    b.bill_comments 'bill/:id/comments', :action => 'comments'
     b.bill 'bill/:id/show', :action => 'show'
     b.connect 'bill/:id/:action'
     b.connect 'bill/:id/:action.:format'
   end
 
   map.with_options :controller => 'people' do |p|
-    p.connect 'people/senators', :action => 'people_list', :person_type => 'senators'
-    p.connect 'people/representatives', :action => 'people_list', :person_type => 'representatives'
+    p.senators 'people/senators', :action => 'people_list', :person_type => 'senators'
+    p.representatives 'people/representatives', :action => 'people_list', :person_type => 'representatives'
     p.connect 'people/:person_type/most/:type', :action => 'most_commentary'
     p.connect 'people/:person_type/atom/most/:type', :action => 'atom_top_commentary'
     p.connect 'people/atom/featured', :action => 'atom_featured'

@@ -1,12 +1,20 @@
 <h3 class='dark'>Recent Posts</h3>
-<ul class="star">
+<ul class="recent_posts">
   <% Article.recent_articles(5, (params[:page].nil? || params[:page] == 1) ? 8 : 0).each do |p| %>
-    <li><a href="/articles/view/<%= p.to_param %>"><%= p.title %></a>, <%= p.created_at.strftime("%B %d, %Y")%></li>
+    <li>
+    <a href="/articles/view/<%= p.to_param %>">
+
+     <%= truncate(p.title, :length => 35) %>
+    
+    
+    <span><%= p.created_at.strftime("%B %d, %Y")%></span>
+    </a>
+    </li>
   <% end %>
 </ul>
 
 <h3 class='dark'>Archives</h3>
-<ul class="star">
+<ul class="archives">
   <% Article.archive_months(5, 0).each do |m| %>
     <li><a href="/articles/list?month=<%= m.month %>-<%= m.year %>"><%= m.display_month %></a></li>
   <% end %>

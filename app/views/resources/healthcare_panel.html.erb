@@ -202,9 +202,9 @@ h5.bill_title a:link {
 			<h4>Senate Version <span class="passed">Passed on Dec. 24th, 2009</span></h4>
 			<h5 class="bill_title"><%= link_to "H.R. 3590 - Patient Protection and Affordable Care Act", bill_url(@senate_bill_ident), :target => "_blank" %></h5>
    		<%= link_to("Read and comment on the bill text", url_for(:controller => 'bill', :action => 'text', :id => @senate_bill_ident), :class => "full_text", :target => "_blank") %>   			
-   			<%= link_to("Full vote result (60-39)", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "s", :number => "3590"), :class => "roll_call", :target => "_blank") %>
+   			<%= link_to("Full vote result (60-39)", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "s", :number => "396"), :class => "roll_call", :target => "_blank") %>
 			<% if @state_name %>
-   			<%= link_to("How #{ @state_name } Senators voted", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "h", :number => "887", :state => params[:state]), :class => "voting_record", :target => "_blank") %>
+   			<%= link_to("How #{ @state_name } Senators voted", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "s", :number => "396", :state => params[:state]), :class => "voting_record", :target => "_blank") %>
 		   <% end %>
 		</div>
       

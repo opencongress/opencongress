@@ -9,7 +9,6 @@ class Comment < ActiveRecord::Base
     c.belongs_to :sector
     c.belongs_to :committee
     c.belongs_to :subject
-    c.belongs_to :bill_battle
     c.belongs_to :upcoming_bill
   end
   has_many :comment_scores

@@ -12,15 +12,19 @@
     <p>
   <% end %>
 <% else %>
-<p style="margin-bottom:25px;">
-<% if all_size > news_max %>
-  <a href="<%= url_for more_url %>" class="toggle">View All (<%= number_with_delimiter(all_size) %>)</a>
-<% end %>
-<% unless top_url.nil? %>
-&nbsp;|&nbsp;
-  <a href="<%= url_for top_url %>" class="toggle">View Top Rated</a><br />
-<% end %>
-</p>
+  <p style="margin-bottom:25px;">
+  <% if all_size > news_max %>
+    <a href="<%= url_for more_url %>" class="toggle">View All (<%= number_with_delimiter(all_size) %>)</a>
+  <% end %>
+  <% unless top_url.nil? %>
+  &nbsp;|&nbsp;
+    <a href="<%= url_for top_url %>" class="toggle">View Top Rated</a><br />
+  <% end %>
+  </p>
+  
+  <script type="text/javascript" language="javascript">
+    new Ajax.Request('/commentary/pn_ajax_multiple?object_ids=<%= news[0..news_max].collect{ |a| a.id }.join(",") %>', {asynchronous:true, evalScripts:true}); 
+  </script>
 
 <% end %>
 <% if @sort == 'toprated' %>

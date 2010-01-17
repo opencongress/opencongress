@@ -26,12 +26,8 @@
   <% end %>
 </em></div> 
 <div id="pn_<%= commentary.id %>">
+  <%= render :partial => 'shared/commentary_options', :locals => { :object => object, :commentary => commentary, :is_logged_in => false } %>
 </div>
-<script type="text/javascript" language="javascript">
-
-   <%= remote_function(:update => "pn_#{commentary.id}", :url => {:controller => 'profile', :action => 'pn_ajax', :id => commentary.id, :object_type => object.class.to_s, :object_id => object.id}) %> 
-    </script>
-
 
   <div id="about_commentary_ratings_<%= commentary.id.to_s %>" style="display: none; margin-bottom: 5px;">
     Did you find this article useful? Your opinion counts - together, we're finding the very best news and blog coverage about Congress available on the web.

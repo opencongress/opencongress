@@ -37,9 +37,7 @@
     <% else %>
 
       <% end %>
-  
-  
-     
+
      <div><em>Required percentage of 'Aye' votes:</em> <%= @roll_call.required %> <span class="fontweightnormal"><%= numeric_percentage(@roll_call) %></span></div>
      
       <% if @roll_call.total_votes > 0 %>

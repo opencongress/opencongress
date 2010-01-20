@@ -15,23 +15,28 @@
 <% end %>
 
 
-
-
 <div id="roll_call_details">
   
-  <%= render :partial => 'roll_call_details_header'%>
-  
+  <% if @state_name %>
+  <p><strong><%= link_to '&larr; Full roll call', roll_call_path %></strong></p>
+  <br />
+  <h3 class="darkline">Votes by <%= person_type %> in <%= @state_name %></h3>
+  <%= render :partial => 'person_votes', :locals => { :votes => @roll_call.roll_call_votes.for_state(@state_abbrev) } %>
+
+  <% else %>
+  <%= render :partial => 'roll_call_details_header' %>
   <div class="cols-box clearfix">
     <div class="col1">
-      <% if @state_name %>
-         <h3 class="darkline">Votes by <%= person_type %> in <%= @state_name %></h3>
-         <%= render :partial => 'person_votes', :locals => { :votes => @roll_call.roll_call_votes.for_state(@state_abbrev) } %>
-      <% else %>
-         <h3 class="darkline">Votes by <%= person_type %></h3>
-         <%= render :partial => 'person_votes', :locals => { :votes => @roll_call.roll_call_votes } %>
-      <% end %>
-      <p>** Because of incomplete data from newly elected Representatives, party breakdown visualizations may be inaccurate by one or two votes.</p>
+       <h3 class="darkline">Votes by <%= person_type %></h3>
+       <%= render :partial => 'person_votes', :locals => { :votes => @roll_call.roll_call_votes } %>
+  <% end %>
+  
+   <% unless @state_name %>
+
+   <p>** Because of incomplete data, party breakdown visualizations may be inaccurate by one or two votes.</p>
+
     </div>
+  
     <div class="col2">
       <h3 class="darkline">Vote Result</h3>
       <%= roll_call_master_sublists(person_type) %>
@@ -49,5 +54,6 @@
       <div id='roll_call_Abstain_chart'><%= @abstain_chart %></div>
     </div>
   </div>
+  <% end %>
 </div>
   

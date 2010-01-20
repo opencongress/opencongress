@@ -18,6 +18,10 @@
     <a href="<%= url_for top_url %>" class="toggle">View Top Rated</a><br />
   <% end %>
   </p>
+  
+  <script type="text/javascript" language="javascript">
+    new Ajax.Request('/commentary/pn_ajax_multiple?object_ids=<%= blogs[0..blog_max].collect{ |a| a.id }.join(",") %>', {asynchronous:true, evalScripts:true}); 
+  </script>
 <% end %>
 
 <% if @sort == 'toprated' %>

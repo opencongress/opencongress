@@ -1,0 +1,3 @@
+@commentaries.each do |c| 
+  page.replace_html "pn_#{c.id}", :partial => 'shared/commentary_options', :locals => { :object => c.commentariable, :commentary => c, :is_logged_in => (current_user == :false ? false : true) }
+end

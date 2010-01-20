@@ -80,7 +80,7 @@ module AuthenticatedSystem
     #
     # We can return to this location by calling #redirect_back_or_default.
     def store_location
-      unless request.request_uri =~ /^\/stylesheets/ || request.request_uri =~ /^\/images/
+      unless request.request_uri =~ /^\/stylesheets/ || request.request_uri =~ /^\/images/ || request.xhr?
         session[:return_to] = request.request_uri
       end
     end

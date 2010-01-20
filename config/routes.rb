@@ -190,7 +190,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.with_options :controller => 'roll_call', :action => 'by_number',
                     :year => /\d{4}/, :chamber => /[hs]/, :number => /\d+/ do |rc|
-    rc.connect 'vote/:year/:chamber/:number'
+    rc.roll_call 'vote/:year/:chamber/:number'
     rc.connect "vote/:year/:chamber/:number/:state", :state => /\w{2}/
   end
 

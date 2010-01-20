@@ -339,7 +339,7 @@ class ResourcesController < ApplicationController
     end
     render :layout => false
   end
-  
+
   def district_from_address
     @district = ZipcodeDistrict.from_address(params[:address])
     

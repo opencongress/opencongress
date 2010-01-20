@@ -11,8 +11,6 @@
      <%= select("panel", "state_abbrev_select", State::PAIRS_SORTED, {:include_blank => "National"}, { :onChange => "setHealthCareStateAbbrev(document.getElementById('panel_state_abbrev_select').value);" } ) %>
    </dd>
 
-  <%= submit_tag "Update Panel Preview >> ", { :onClick => "updateHealthCareFields('panel_state_abbrev');" } %>
-
   <%= hidden_field 'panel', 'state_abbrev', { :value => "" } %>
   <%= hidden_field 'panel', 'path', { :value =>  "/resources/healthcare_panel" } %>
   <%= hidden_field 'panel', 'hostname', { :value => home_url } %>

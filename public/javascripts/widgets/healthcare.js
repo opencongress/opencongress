@@ -1,4 +1,7 @@
 var fHeight = 396;
+if (typeof oc_state != "undefined") {
+    fHeight += 42;
+}
 if (window.navigator.userAgent.indexOf("MSIE")) {
 	fHeight += 7;
 }

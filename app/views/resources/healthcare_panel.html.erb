@@ -70,15 +70,14 @@
 .healthcare_widget .blog_coverage {
    display: block;
    background: url(<%= image_path 'widgets/button.png' %>) no-repeat;
-   height: 53px;
-   padding-top: 10px;
+   height: 40px;
+   padding-top: 20px;
 }
 
 .healthcare_widget .blog_coverage a {
    display: block;
    color: #333;
    padding: 0 0 0 15px;
-   line-height: 15px;
    font-weight: bold;
    font-size: 12px;
    text-decoration: none;
@@ -196,6 +195,7 @@ h5.bill_title a:link {
 			<% if @state_name %>
    			<%= link_to("How #{ @state_name } Reps voted", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "h", :number => "887", :state => params[:state]), :class => "voting_record", :target => "_blank") %>
          <% end %>
+         <%= link_to("People watching this bill", bill_url(@house_bill_ident, :anchor => "users_tracking"), :class => "tracking", :target => "_blank")%>
 		</div>
 
 		<div class="senate">
@@ -206,11 +206,11 @@ h5.bill_title a:link {
 			<% if @state_name %>
    			<%= link_to("How #{ @state_name } Senators voted", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "s", :number => "396", :state => params[:state]), :class => "voting_record", :target => "_blank") %>
 		   <% end %>
+		   <%= link_to("People watching this bill", bill_url(@senate_bill_ident, :anchor => "users_tracking"), :class => "tracking", :target => "_blank")%>
 		</div>
       
    </div> <!-- Guts -->
    <div class="blog_coverage">
-   	<%= link_to "What's next? Find out with our blog coverage", blog_url(:tag => 'Health+Care'), :target => "_blank" %>
    	<% if @state_name %>
    	<%= link_to "What's hot with people in your state?", state_url(params[:state]), :class => "hot", :target => "_blank" %>
       <% else %>

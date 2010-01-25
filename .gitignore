@@ -4,6 +4,7 @@ tmp/**/*
 tmp/*
 db/schema.rb
 public/assets/*
+vendor/gems/*
 vendor/plugins/acts_as_solr/solr/tmp/*
 vendor/plugins/acts_as_solr/solr/solr/**/*
 vendor/plugins/acts_as_solr/solr/logs/*

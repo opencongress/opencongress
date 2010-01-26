@@ -2,8 +2,8 @@ class PolymorphicPageviews < ActiveRecord::Migration
   def self.up
     # migration was run locally and dumped/imported into live
     
-    #add_column :page_views, :viewable_id, :integer
-    #add_column :page_views, :viewable_type, :string
+    add_column :page_views, :viewable_id, :integer
+    add_column :page_views, :viewable_type, :string
     
     #execute "UPDATE page_views SET viewable_id=bill_id, viewable_type='Bill' WHERE type='BillView'"
     #execute "UPDATE page_views SET viewable_id=person_id, viewable_type='Person' WHERE (type='RepresentativeView' OR type='SenatorView')"
@@ -20,7 +20,7 @@ class PolymorphicPageviews < ActiveRecord::Migration
     
     add_index :page_views, [:viewable_id, :viewable_type, :created_at ]
     add_index :page_views, [:viewable_type, :created_at ]
-    add_index :page_views, :ip_address
+    #add_index :page_views, :ip_address
     
     execute "ANALYZE page_views"
   end

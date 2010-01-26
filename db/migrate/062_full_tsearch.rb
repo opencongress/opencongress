@@ -37,7 +37,7 @@ class FullTsearch < ActiveRecord::Migration
     
     add_index :roll_call_votes, :roll_call_id
     
-    execute "VACUUM FULL ANALYZE"
+    #execute "VACUUM FULL ANALYZE"
   end
 
   def self.down

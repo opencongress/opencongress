@@ -2,6 +2,7 @@ class WikiBill
 
   require 'hpricot'
   require 'open-uri'
+  require 'timeout'
 
   attr_accessor :summary
 
@@ -9,7 +10,9 @@ class WikiBill
     puts url
     @url = url
     begin
-      doc = Hpricot(open(url))
+      Timeout::timeout(3) {
+        doc = Hpricot(open(url))
+      }
       summary_content = (doc/"#Article_summary") 
       summary_content.search("sup").remove
       unless summary_content.blank?

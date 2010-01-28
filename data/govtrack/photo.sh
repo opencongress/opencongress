@@ -17,7 +17,7 @@ then
 fi
 
 echo "\n\nrsyncing govtrack photos at `date`" >> log/govtrack-photo-rsync.log
-rsync -avz --progress --exclude '*px.jpeg' govtrack.us::govtrackdata/photos . >> log/govtrack-photo-rsync.log
+rsync -avz --exclude '*px.jpeg' govtrack.us::govtrackdata/photos . >> log/govtrack-photo-rsync.log
 cd photos
 
 sizes=( 42 73 102 )

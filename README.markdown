@@ -18,7 +18,7 @@ so for Ubuntu:
 
 or Mac OS X:
 
-	sudo port install postgresql84 postgresql84-doc postgresql84-server ImageMagick
+	sudo port install postgresql84 postgresql84-doc postgresql84-server ImageMagick md5sha1sum
 
 Follow the instructions from the port install for initializing your database
 
@@ -71,6 +71,7 @@ Now you can start the solr server and run the database migrations
 
 ### D. Data
    
+
 Run `rake update:all` to fetch and parse all available data sources. This process will take a very long time. Take a look at /lib/tasks/daily.rake for all the rake tasks if you want to run them individually.
 
 Now just a `script/server` and you should be running

@@ -17,7 +17,7 @@ then
 fi
 
 echo "\n\nrsyncing govtrack at `date`" >> log/govtrack-rsync.log
-rsync -avz --progress govtrack.us::govtrackdata/us/people.xml . >> log/govtrack-rsync.log
-rsync -avz --progress govtrack.us::govtrackdata/us/111 . >> log/govtrack-rsync.log
-rsync -avz --progress govtrack.us::govtrackdata/us/bills.text/111 ./bills.text/ >> log/govtrack-rsync.log
-rsync -avz --progress govtrack.us::govtrackdata/us/bills.text.cmp/111 ./bills.text.cmp/ >> log/govtrack-rsync.log
+rsync -avz govtrack.us::govtrackdata/us/people.xml . >> log/govtrack-rsync.log
+rsync -avz govtrack.us::govtrackdata/us/111 . >> log/govtrack-rsync.log
+rsync -avz govtrack.us::govtrackdata/us/bills.text/111 ./bills.text/ >> log/govtrack-rsync.log
+rsync -avz govtrack.us::govtrackdata/us/bills.text.cmp/111 ./bills.text.cmp/ >> log/govtrack-rsync.log

@@ -9,5 +9,6 @@ maplight: xxx
 wiki_pass: xxx
 wiki_key: xxx
 wiki_callback_key: xxx
-app_key: xxx
-oc_session_secret_key: xxx
+app_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+oc_session_secret_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+

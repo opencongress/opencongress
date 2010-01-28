@@ -18,9 +18,10 @@ config.action_view.debug_rjs                         = true
 
 MINI_MAILER_FROM = "alert@dev.opencongress.org"
 
-GOVTRACK_DATA_PATH = "#{RAILS_ROOT}/data/govtrack/#{DEFAULT_CONGRESS}"
-GOVTRACK_BILLTEXT_PATH = "#{RAILS_ROOT}/data/govtrack/bills.text"
-COMMITTEE_REPORTS_PATH = "#{RAILS_ROOT}/data/committee_reports/"
-OPENSECRETS_DATA_PATH = "#{RAILS_ROOT}/data/opensecrets/"
-OC_BILLTEXT_PATH = "#{RAILS_ROOT}/data/opencongress/bills.text"
-GOVTRACK_BILLTEXT_DIFF_PATH = "#{RAILS_ROOT}/data/govtrack/bills.text.cmp"
+DATA_PATH = "#{RAILS_ROOT}/data"    
+GOVTRACK_DATA_PATH = "#{DATA_PATH}/govtrack/#{DEFAULT_CONGRESS}"
+GOVTRACK_BILLTEXT_PATH = "#{DATA_PATH}/govtrack/bills.text"
+COMMITTEE_REPORTS_PATH = "#{DATA_PATH}/committee_reports/"
+OPENSECRETS_DATA_PATH = "#{DATA_PATH}/opensecrets/"
+OC_BILLTEXT_PATH = "#{DATA_PATH}/opencongress/bills.text"
+GOVTRACK_BILLTEXT_DIFF_PATH = "#{DATA_PATH}/govtrack/bills.text.cmp"

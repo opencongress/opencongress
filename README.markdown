@@ -10,19 +10,27 @@
 
 Start by installing all the packages you might need.
 
-Ubuntu:
+so for Ubuntu:
 
 	sudo apt-get install postgresql postgresql-client postgresql-contrib libpq-dev ruby1.8 ruby1.8-dev 		rubygems libopenssl-ruby imagemagick libmagick9-dev gcj-4.4-jre
 
-Mac OSX:
+---
+
+or Mac OS X:
 
 	sudo port install postgresql84 postgresql84-doc postgresql84-server ImageMagick
+
+Follow the instructions from the port install for initializing your database
+
+---
 
 
 Then grab the gems you need:
 
 	sudo gem install rails --version 2.3.2
-	sudo gem install hpricot jammit json pg RedCloth ruby-openid simple-rss rmagick htmlentities
+	sudo gem install hpricot htree jammit json pg RedCloth ruby-openid simple-rss rmagick htmlentities
+
+*note for os x you may need to specify additional compile options for the pg gem. Make sure pg_config is in PATH and run* `sudo env ARCHFLAGS="-arch x86_64" gem install pg`
 
 ### B. DB setup
 
@@ -63,22 +71,9 @@ Now you can start the solr server and run the database migrations
 
 ### D. Data
    
-Next, you will have to get the data from govtrack and fill in your database with the parse.
+Run `rake update:all` to fetch and parse all available data sources. This process will take a very long time. Take a look at /lib/tasks/daily.rake for all the rake tasks if you want to run them individually.
 
-	mkdir -p data/govtrack/111
-	rsync -az govtrack.us::govtrackdata/us/111/bills data/govtrack/111
-	rsync -az govtrack.us::govtrackdata/us/111/repstats data/govtrack/111
-	rsync -az govtrack.us::govtrackdata/us/111/bills.index.xml data/govtrack/111
-	rsync -az govtrack.us::govtrackdata/us/111/committeeschedule.xml data/govtrack/111
-	rsync -az govtrack.us::govtrackdata/us/111/rolls data/govtrack/111
-
-Now, you will have to actually parse the data
-
-	ruby bin/govtrack_parse_people.rb
-	ruby bin/govtrack_parse_bills.rb
-	ruby bin/govtrack_parse_committees.rb
-	ruby bin/govtrack_parse_committee_schedules.rb
-	ruby parse_individual_bills.rb
+Now just a `script/server` and you should be running
 
 ---
 

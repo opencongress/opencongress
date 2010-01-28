@@ -1,8 +1,13 @@
 technorati_api_key: xxx
-app_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 daylife_access_key: xxx
 daylife_secret: xxx
-bounce_api: xxx
-maplight: xxx
+twitter_consumer: xxx
+twitter_secret: xxx
 sunlightlabs_key: xxx
-
+opensecrets_api_key: xxx
+maplight: xxx
+wiki_pass: xxx
+wiki_key: xxx
+wiki_callback_key: xxx
+app_key: xxx
+oc_session_secret_key: xxx

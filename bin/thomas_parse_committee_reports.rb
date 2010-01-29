@@ -31,7 +31,7 @@ count = 0
 CommitteeReport.transaction {
 
   dirs.each do |dir|
-    path = "#{base_path}#{dir}/"
+    path = "#{base_path}/#{dir}/"
     puts path
     lines = File.open(path + "log.txt").readlines
     structs = lines.map do |l| 

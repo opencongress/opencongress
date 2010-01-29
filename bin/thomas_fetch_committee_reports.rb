@@ -10,6 +10,12 @@ require 'open-uri'
 require 'fileutils'
 
 $base_path = COMMITTEE_REPORTS_PATH
+types = ["#{$base_path}/house","#{$base_path}/senate","#{$base_path}/conference","#{$base_path}/joint"]
+types.each do |t|
+  unless FileTest.directory?(t)
+    Dir.mkdir(t)
+  end
+end
 
 house_reports_url = "http://thomas.loc.gov/cgi-bin/cpquery/L?cp%d:list/cp%dch.lst:"
 senate_reports_url = "http://thomas.loc.gov/cgi-bin/cpquery/L?cp%d:./list/cp%dcs.lst:"
@@ -37,7 +43,7 @@ class Parser
 
   def parse(url_base, type)
     reports = []
-    log = File.open "#{$base_path}#{type}/log.txt", "w+"
+    log = File.open "#{$base_path}/#{type}/log.txt", "w+"
 
     Generator.new(&gen).each do |i|
       url = url_base % [congress, congress]
@@ -53,7 +59,7 @@ class Parser
         next if md.nil?
         reportname, dbname = md.captures[0].split(/\./)
         report_url = (printable_base % [reportname, dbname])
-        filename = "#{$base_path}#{type}/#{num}.#{reportname}.#{dbname}.html" 
+        filename = "#{$base_path}/#{type}/#{num}.#{reportname}.#{dbname}.html" 
         log.puts "#{num}\t#{name}\t#{reportname}\t#{dbname}\t#{filename}"
         log.flush
         unless File.exists? filename

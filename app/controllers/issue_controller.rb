@@ -116,7 +116,11 @@ class IssueController < ApplicationController
     @page_title = @subject.term
     @meta_description = "#{@subject.term}-related bills and votes in the U.S. Congress."
     @comments = @subject
-    @latest_bills = @subject.latest_bills(10, params[:page].blank? ? 1 : params[:page])
+    if params[:filter] == 'enacted'
+      @bills = @subject.passed_bills(10, params[:page].blank? ? 1 : params[:page])
+    else
+      @bills = @subject.latest_bills(10, params[:page].blank? ? 1 : params[:page])
+    end
     @top_comments = @subject.comments.find(:all,:include => [:comment_scores, :user], :order => "comments.average_rating DESC", :limit => 2)
     @atom = {'link' => url_for(:only_path => false, :controller => 'issue', :id => @subject, :action => 'atom'), 'title' => "Major Bill Actions in #{@subject.term}"}
 		@hide_atom = true

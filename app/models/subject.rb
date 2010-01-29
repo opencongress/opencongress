@@ -304,6 +304,11 @@ class Subject < ActiveRecord::Base
                :order => 'bills.lastaction DESC').paginate(:per_page => num, :page => page)
   end
 
+  def passed_bills(num, page = 1, congress = DEFAULT_CONGRESS)
+    bills.find(:all, :include => :actions, :conditions => ["bills.session=? AND actions.action_type='enacted'", congress], 
+               :order => 'actions.datetime DESC').paginate(:per_page => num, :page => page)
+  end
+
   def newest_bills(num, congress = DEFAULT_CONGRESS)
     bills.find(:all, :conditions => ['bills.session = ?', congress], :order => 'bills.introduced DESC', :limit => num);
   end

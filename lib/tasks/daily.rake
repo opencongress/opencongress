@@ -70,6 +70,8 @@ namespace :update do
         Person.transaction {
           load 'bin/daily/daily_parse_people.rb'
         }
+      else
+        puts "nothing to update"
       end
     rescue Exception => e
       if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')

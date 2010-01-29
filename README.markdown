@@ -71,8 +71,9 @@ Now you can start the solr server and run the database migrations
 
 ### D. Data
    
+create some dirs for data
 
-Run `rake update:all` to fetch and parse all available data sources. This process will take a very long time. Take a look at /lib/tasks/daily.rake for all the rake tasks if you want to run them individually.
+Make sure all your data paths are set and exist in your environment file then run `rake update:all` to fetch and parse all available data sources. This process will take a very long time. Take a look at /lib/tasks/daily.rake for all the rake tasks if you want to run them individually.
 
 Now just a `script/server` and you should be running
 

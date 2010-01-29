@@ -10,6 +10,12 @@ require 'open-uri'
 require 'fileutils'
 
 $base_path = COMMITTEE_REPORTS_PATH
+types = ["#{$base_path}/house","#{$base_path}/senate","#{$base_path}/conference","#{$base_path}/joint"]
+types.each do |t|
+  unless FileTest.directory?(t)
+    Dir.mkdir(t)
+  end
+end
 
 house_reports_url = "http://thomas.loc.gov/cgi-bin/cpquery/L?cp%d:list/cp%dch.lst:"
 senate_reports_url = "http://thomas.loc.gov/cgi-bin/cpquery/L?cp%d:./list/cp%dcs.lst:"

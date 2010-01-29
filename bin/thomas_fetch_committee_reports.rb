@@ -59,7 +59,7 @@ class Parser
         next if md.nil?
         reportname, dbname = md.captures[0].split(/\./)
         report_url = (printable_base % [reportname, dbname])
-        filename = "#{$base_path}#{type}/#{num}.#{reportname}.#{dbname}.html" 
+        filename = "#{$base_path}/#{type}/#{num}.#{reportname}.#{dbname}.html" 
         log.puts "#{num}\t#{name}\t#{reportname}\t#{dbname}\t#{filename}"
         log.flush
         unless File.exists? filename

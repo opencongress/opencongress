@@ -43,7 +43,7 @@ class Parser
 
   def parse(url_base, type)
     reports = []
-    log = File.open "#{$base_path}#{type}/log.txt", "w+"
+    log = File.open "#{$base_path}/#{type}/log.txt", "w+"
 
     Generator.new(&gen).each do |i|
       url = url_base % [congress, congress]

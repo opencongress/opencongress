@@ -1,4 +1,4 @@
-# Settings specified here will take precedence over those in config/environment.rb
+P# Settings specified here will take precedence over those in config/environment.rb
 
 # The production environment is meant for finished, "live" apps.
 # Code is not reloaded between requests
@@ -32,7 +32,7 @@ BASE_URL = 'http://dev.opencongress.org/'
 
 GOVTRACK_DATA_PATH = "/data/govtrack/#{DEFAULT_CONGRESS}"
 GOVTRACK_BILLTEXT_PATH = "/data/govtrack/bills.text"
-COMMITTEE_REPORTS_PATH = '/data/committee_reports/'
+COMMITTEE_REPORTS_PATH = '/data/committee_reports'
 OPENSECRETS_DATA_PATH = '/data/opensecrets/'
 OC_BILLTEXT_PATH = '/data/opencongress/bills.text'
 GOVTRACK_BILLTEXT_DIFF_PATH = "/data/govtrack/bills.text.cmp"

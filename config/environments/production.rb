@@ -41,7 +41,7 @@ end
 DATA_PATH = "/data"
 GOVTRACK_DATA_PATH = "#{DATA_PATH}/govtrack/#{DEFAULT_CONGRESS}"
 GOVTRACK_BILLTEXT_PATH = "#{DATA_PATH}/govtrack/bills.text"
-COMMITTEE_REPORTS_PATH = "#{DATA_PATH}/committee_reports/"
+COMMITTEE_REPORTS_PATH = "#{DATA_PATH}/committee_reports"
 OPENSECRETS_DATA_PATH = "#{DATA_PATH}/opensecrets/"
 OC_BILLTEXT_PATH = "#{DATA_PATH}/opencongress/bills.text"
 GOVTRACK_BILLTEXT_DIFF_PATH = "#{DATA_PATH}/govtrack/bills.text.cmp"

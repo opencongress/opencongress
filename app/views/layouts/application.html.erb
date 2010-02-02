@@ -13,7 +13,11 @@
 
   <%= include_stylesheets :application, :media => 'all' %>
   
-  <%= @admin_styles ? stylesheet_link_tag('admin') : stylesheet_link_tag(controller.controller_name) %>
+  <%= stylesheet_link_tag('admin') if @admin_styles %>
+
+  <% unless @admin_styles %>
+      <%= stylesheet_link_tag(controller.controller_name) if FileTest.exist?(RAILS_ROOT + "/public/stylesheets/" + controller.controller_name + ".css") %>
+  <% end %>
 
   <%= stylesheet_link_tag 'vids' if @include_vids_styles %>
   <%= stylesheet_link_tag 'jquery.jcarousel' if @carousel %>
@@ -30,6 +34,8 @@
   <%= javascript_include_tag 'jquery.jcarousel' if @carousel %>
   <%= javascript_include_tag 'swfobject' if (@roll_call || @roll_calls) %>
   <%= javascript_include_tag 'http://metavid.org/w/js2/mwEmbed/jsScriptLoader.php?class=mv_embed' if @include_vids_styles %>
+
+  <%= yield(:header) %>
 
   <% if @atom %>
   <link rel="alternate" type="application/atom+xml" title="<%= @atom['title'] %> actions" href="<%= @atom['link'] %>" />

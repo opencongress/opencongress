@@ -35,7 +35,7 @@ do
 	do    	  
 convert $i \
      \( +clone  -threshold -1 \
-        -draw 'fill black polygon 0,0 0,8 8,0 fill white circle 8,8 8,0' \
+        -draw 'fill black polygon 0,0 0,30 30,0 fill white circle 30,30 30,0' \
         \( +clone -flip \) -compose Multiply -composite \
         \( +clone -flop \) -compose Multiply -composite \
      \) +matte -compose CopyOpacity -composite -thumbnail ${sizes[size]} -depth 8 -quality 95 thumbs_${sizes[size]}/`basename $i jpeg`png

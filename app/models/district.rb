@@ -1,6 +1,7 @@
 class District < ActiveRecord::Base
-  belongs_to :state
+  # district_number 0 is reserved for at-large districts
 
+  belongs_to :state
   has_many :watch_dogs
   has_one :current_watch_dog, :class_name => "WatchDog", :conditions => ["is_active = ?", true], :order => "created_at desc"
 

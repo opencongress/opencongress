@@ -12,7 +12,7 @@ class AddDateToReports
 
     dirs.each do |a|
       puts "==== DOING #{a} ===="
-      log_file = File.open("/data/committee_reports/#{a}/log.txt")
+      log_file = File.open("#{DATA_PATH}/committee_reports/#{a}/log.txt")
       log_file.each do |line|
         parsed_line = line.chomp.split(/\t/)
         file_name = "/#{parsed_line[4][1..-1]}"

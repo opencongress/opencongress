@@ -13,7 +13,7 @@ require 'ostruct'
 #
 # A few important constants.
 #
-API_KEYS = YAML::load(File.open("config/api_keys.yml"))
+API_KEYS = YAML::load(File.open(File.join(File.dirname(__FILE__), 'api_keys.yml')))
 
 # hash to associate a congress to start date
 # note: these are not exact dates but correspond to govtrack

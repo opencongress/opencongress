@@ -47,9 +47,7 @@ namespace :update do
 
   task :bills => :environment do
     begin
-      Bill.transaction {
-        load 'bin/daily/daily_parse_bills.rb'
-      }
+      load 'bin/daily/daily_parse_bills.rb'
     rescue Exception => e
       Emailer.deliver_rake_error(e, "Error parsing bills!")
       throw e

@@ -84,9 +84,7 @@ namespace :update do
 
   task :bills => :environment do
     begin
-      Bill.transaction {
-        load 'bin/daily/daily_parse_bills.rb'
-      }
+      load 'bin/daily/daily_parse_bills.rb'
     rescue Exception => e
       if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
         Emailer.deliver_rake_error(e, "Error parsing bills!")

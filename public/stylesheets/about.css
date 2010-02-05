@@ -64,3 +64,20 @@ p.highlight {
     padding: 5px;
     margin-left: -5px;
 }
+pre {
+  background-color:#FAFAFF;
+  border:1px solid #DEDEDE;
+  color:#444444;
+  line-height:18px;
+  margin:5px 0;
+  overflow:auto;
+  padding:8px;
+  white-space: normal;
+}
+code {
+  font-size:11px;
+  white-space: normal;
+}
+.hidden {
+  display:none;
+}

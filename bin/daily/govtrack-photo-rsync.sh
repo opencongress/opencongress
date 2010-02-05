@@ -6,18 +6,20 @@ else
   echo 'data dir not found! fix DATA_PATH in your environment file'
   exit
 fi
-cd $1/govtrack
-if [ ! -d "log" ]
+if [ ! -d "$data/govtrack/log" ]
 then
-  mkdir log
+  mkdir -p $data/govtrack/log
 fi
-if [ ! -e "log/govtrack-photo-rsync.log" ]
+
+if [ ! -e "$data/govtrack/log/govtrack-photo-rsync.log" ]
 then
-  touch log/govtrack-photo-rsync.log
+  touch $data/govtrack/log/govtrack-photo-rsync.log
 fi
+cd $data/govtrack
 
 echo "\n\nrsyncing govtrack photos at `date`" >> log/govtrack-photo-rsync.log
 rsync -avz --exclude '*px.jpeg' govtrack.us::govtrackdata/photos . >> log/govtrack-photo-rsync.log
+
 cd photos
 
 sizes=( 42 73 102 )

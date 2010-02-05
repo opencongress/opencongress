@@ -3,10 +3,7 @@ namespace :update do
 
   task :rsync => :environment do
     begin
-      wd = getwd
-      cd "#{DATA_PATH}/govtrack/"
-      system "sh update.sh #{DATA_PATH}"
-      cd wd
+      system "sh #{RAILS_ROOT}/bin/daily/govtrack-rsync.sh #{DATA_PATH}"
     rescue Exception => e
       if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
         Emailer.deliver_rake_error(e, "Error rsyncing govtrack data!")
@@ -19,13 +16,10 @@ namespace :update do
 
   task :photos => :environment do
     begin
-      wd = getwd
-      cd "#{DATA_PATH}/govtrack/"
-      system "sh photo.sh #{DATA_PATH}"
+      system "sh #{RAILS_ROOT}/bin/daily/govtrack-photo-rsync.sh #{DATA_PATH}"
       unless (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
         system "ln -s -i -F #{DATA_PATH}/govtrack/photos #{RAILS_ROOT}/public/images/photos"
       end
-      cd wd
     rescue Exception => e
       if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
         Emailer.deliver_rake_error(e, "Error updating photos!")

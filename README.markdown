@@ -1,4 +1,4 @@
-<div class="hidden">
+<div class="hideme">
 <h2> OpenCongress - a Ruby on Rails application for displaying information about Congress</h2>
 
 <h4><a href="http://participatorypolitics.lighthouseapp.com/projects/35587-opencongress">Lighthouse Project Page</a></h4>
@@ -81,7 +81,7 @@ Make sure all your data paths are set and exist in your environment file then ru
 
 Now just a `script/server` and you should be running
  
-<div class="hidden"> 
+<div class="hideme"> 
 
 <hr />
 

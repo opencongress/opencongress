@@ -5,7 +5,7 @@
 <hr />
 
 </div>
-## Install Notes
+## Getting started with our code
 
 ### A. Dependencies
 
@@ -17,7 +17,7 @@ so for Ubuntu:
 
 ---
 
-or Mac OS X:
+or Mac OS X, start by installing [MacPorts](http://www.macports.org/), then run:
 
 	sudo port install postgresql84 postgresql84-doc postgresql84-server ImageMagick md5sha1sum
 
@@ -33,7 +33,7 @@ Then grab the gems you need:
 sudo gem install bluecloth hpricot htree jammit json pg RedCloth ruby-openid simple-rss rmagick htmlentities</code>
 </pre>
 
-*note for os x you may need to specify additional compile options for the pg gem. Make sure pg_config is in PATH and run* `sudo env ARCHFLAGS="-arch x86_64" gem install pg`
+__Note for OS X:__ *You may need to specify additional compile options for the pg gem. Make sure pg_config is in PATH and run* `sudo env ARCHFLAGS="-arch x86_64" gem install pg`
 
 ### B. DB setup
 

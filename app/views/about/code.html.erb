@@ -13,12 +13,24 @@
 <h2>Using OpenCongress data in your app</h2>
 <p>You can use OpenCongress data in your applications, provided you meet the licensing requirements (shown at right). <%= link_to "Our API", api_path %> and <%= link_to "RSS feeds", "/about/rss" %> provide all the data on OpenCongress, from official bill info to news and blog coverage to user-generated votes on bills and more.</p>
 
-<h2>Getting started with our code</h2>
 <div><%= @readme %></div>
-   <h2>Contact Us</h2>
-   <p>Want to work on OpenCongress, show off your use of our API, or just say hello? Send us an e-mail (<script type="text/javascript">m("develop","opencongress","org","1");</script>) with a short note of introduction. We don't bite.</p>
-   <%= render :partial => 'licensing_terms' %>
-</div>
+
+</div><div class="col2">
+   <h2>Quick links</h2>
+      <p>OpenCongress is written with <a href="http://rubyonrails.com">Ruby on Rails</a>, backed by a <a href="http://www.postgresql.org">PostgreSQL</a> database and <a href="http://lucene.apache.org/solr/">Solr</a> full-text indexing. Our <a href="http://wiki.opencongress.org">Wiki</a> runs on <a href="http://semantic-mediawiki.org">Semantic MediaWiki</a>.</p>
+   <ul class="pointy">
+      <li><%= link_to 'Data API docs', api_path %> &amp; <%= link_to 'RSS feeds', '/about/rss' %></li>
+      <li><%= link_to 'GitHub repository', 'http://github.org/opencongress/opencongress' %></li>
+      <li><%= link_to 'Lighthouse tracking', 'https://participatorypolitics.lighthouseapp.com/projects/35587-opencongress/overview' %></li>
+      <li><%= link_to 'Development roadmap', 'https://participatorypolitics.lighthouseapp.com/projects/35587/roadmap' %></li>
+      <li><%= link_to 'Developer e-mail list', 'http://lists.ppolitics.org/listinfo.cgi/develop-ppolitics.org' %></li>
+      <li>IRC: chat.freenode.net channel #opencongress</li>
+   </ul>
+   <br />
+      <h2>Contact Us</h2>
+      <p>Want to work on OpenCongress, show off your use of our API, or just say hello? Send us an e-mail (<script type="text/javascript">m("develop","opencongress","org","1");</script>) with a short note of introduction. We don't bite.</p>
+      <%= render :partial => 'licensing_terms' %>
+   </div>
 
 </div>
 </div>

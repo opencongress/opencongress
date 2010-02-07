@@ -10,7 +10,7 @@ if __FILE__ == $0
 end
 
 # You probably don't have this file in this spot.
-FILE_NAME = "/data/govtrack/110/geo/centers.json"
+FILE_NAME = File.join(DATA_PATH, "govtrack/110/geo/centers.json")
 
 puts "Updating district centerpoints..."
 i = IO.read(FILE_NAME)
@@ -22,7 +22,7 @@ states.each do |state|
   if state[2].nil?
     state[2] = 0
   end
-  if d = District.find(:first, :include => [:state], :conditions => ['states.abbreviation = ? and district_number = ?', state[0].upcase, state[1].to_i])
+  if d = District.find(:first, :include => [:state], :conditions => ['states.abbreviation = ? and district_number = ?', state[0].upcase, state[2].to_i])
     d.update_attributes(:center_lat => state[4].to_f, :center_lng => state[3].to_f)
   end
 end

@@ -1,7 +1,10 @@
 #!/bin/bash
+# We expect this file to exist in bin/ under the Rails install.
+# Data will then go into data/
 
 #DEBUG="echo"
-DATADIR="/data/govtrack/110/geo"
+SCRIPT_PATH=$(cd ${0%/*} && pwd -P)
+DATADIR="${1}/govtrack/110/geo"
 
 function download {
   echo "Downloading govtrack district centerpoints..."

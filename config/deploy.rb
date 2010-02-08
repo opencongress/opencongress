@@ -33,6 +33,7 @@ namespace :deploy do
     run "ln -s #{deploy_to}/#{shared_dir}/states #{current_release}/public/images/states"
     run "ln -s #{deploy_to}/#{shared_dir}/districts #{current_release}/public/images/districts"
     run "ln -s #{deploy_to}/#{shared_dir}/user_images #{current_release}/public/images/users"
+    run "ln -s #{deploy_to}/#{shared_dir}/blog #{current_release}/public/images/blog"
     run "ln -s /data/govtrack/109/repstats/images/people #{current_release}/public/images/people"
     run "ln -s /data/govtrack/photos #{current_release}/public/images/photos"
     run "ln -s #{deploy_to}/#{shared_dir}/notebook_items #{current_release}/public/"

@@ -116,3 +116,6 @@ float: right;
 
 
 
+#friends.tracking_bill #heading, #friends.tracking_committee, #friends.tracking_issue, #friends.tracking_person  {
+  height:72px;
+}

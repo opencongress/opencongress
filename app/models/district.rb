@@ -171,57 +171,6 @@ class District < ActiveRecord::Base
 
   end
 
-  
-  def image_path
-    dis = ""
-    case district_number 
-      when 1..9
-        dis = "0#{district_number}"
-      when 0
-        dis = "01"
-      else
-        dis = "#{district_number}"
-    end
-    return "public/images/districts/#{image_name}"
-  end
-  
-  def image_name
-
-    dis = ""
-    case district_number 
-      when 1..9
-        dis = "0#{district_number}"
-      when 0
-        dis = "01"
-      else
-        dis = "#{district_number}"
-    end
-
-    return "cd109_#{self.state.abbreviation}#{dis}.gif"
-
-
-  end
-  
-  def census_path
-    unless self.state.abbreviation == "DC"
-      return "http://ftp2.census.gov/geo/maps/cong_dist/cd109_gen/cd_based/#{self.state.name.titleize}/#{self.image_name}"
-    else
-      return "http://ftp2.census.gov/geo/maps/cong_dist/cd109_gen/cd_based/District_of_Columbia/#{self.image_name}"
-    end      
-  end
-  
-  def image_exists?
-    File.exists?(self.image_path)
-  end
-
- def m_thumb_path
-    "/images/districts/thumbs_250/#{self.image_name}"
-  end
-
-  def s_thumb_path
-    "/images/districs/thumbs_250/#{self.image_name}"
-  end
-  
   def rep
     Person.rep.find_by_state_and_district(self.state.abbreviation, district_number.to_s)
   end

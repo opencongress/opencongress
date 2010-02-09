@@ -38,7 +38,7 @@ ol {
     overflow: auto;
 }
 
-.codeblock pre {
+.codeblock pre, pre code {
     font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', monospace;
     font-size: 9pt;
 }
@@ -74,7 +74,7 @@ pre {
   padding:8px;
   white-space: normal;
 }
-code {
+pre code {
   font-size:11px;
   white-space: normal;
 }

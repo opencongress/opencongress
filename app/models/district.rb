@@ -161,13 +161,17 @@ class District < ActiveRecord::Base
   def freebase_description_url
     "http://www.freebase.com/api/trans/blurb#{self.freebase_guid}?maxlength=800"
   end
-  
+
   def freebase_description
      require 'open-uri'
      require 'json'
-     Rails.cache.fetch("district_freebase_desc_#{self.id}") {
+   begin
+    Rails.cache.fetch("district_freebase_desc_#{self.id}") {
         open(freebase_description_url).read.gsub(/\/(.)\(help(.)info\)/,'/')
      }
+   rescue
+    "Sorry, we couldn't connect to Freebase to give you the description of this district."
+   end
 
   end
 

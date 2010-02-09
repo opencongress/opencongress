@@ -92,9 +92,9 @@ module RollCallHelper
         votes = roll_call.roll_call_votes.select { |rcv| (rcv.vote == vote_type && rcv.person && rcv.person.party != 'Democrat' && rcv.person.party != 'Republican') }
       end
       
-      out += "<script type=\"text/javascript\">$j().ready(function(){$j('##{party}_#{vote_names[vote_type]}').jqm();});</script>"
-      out += "<div id='#{party}_#{vote_names[vote_type]}' class='jqmWindow scrolling'>\n"
-      out += "<div class='ie'><a href='#' class='jqmClose'>Close</a></div><h4>#{party}s Voting '#{vote_names[vote_type]}'</h4>\n"
+      out += %Q{<script type="text/javascript">$j().ready(function(){$j('##{party}_#{vote_names[vote_type]}').jqm();});</script>
+      <div id="#{party}_#{vote_names[vote_type]}" class="jqmWindow scrolling">
+      <div class="ie"><a href="#" class="jqmClose">Close</a></div><h4>#{party}s Voting '#{vote_names[vote_type]}'</h4>}
       votes.each { |v| out += "#{link_to_person v.person}<br />\n" }
       out += "</div>\n"
     end

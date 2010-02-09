@@ -97,7 +97,7 @@ module ProfileHelper
         unless rc_votes.empty?
           out_ar = []
           rc_votes.each do |rcv|
-            out_ar << (rcv.vote == "+" ? "Aye" : ( rcv.vote == "-" ? "Nay" : "Abstain" )) + " <span style='font-size:10px;font-style:italics;'>" + rcv.roll_call.roll_type + "</span>"
+            out_ar << (rcv.vote == "+" ? "Aye" : ( rcv.vote == "-" ? "Nay" : "Abstain" )) + ' <span style="font-size:10px;font-style:italics;">' + rcv.roll_call.roll_type + '</span>'
           end
           out << out_ar.join('<br/>')
         end
@@ -107,7 +107,7 @@ module ProfileHelper
             if (vote_origin.where == "h" && person.title == "Rep.") || (vote_origin.where == "s" && person.title == "Sen.")
                 if vote_origin.how == "by Unanimous Consent"
                   out << (vote_origin.result == "pass" ? "Aye" : "Nay")
-                  out << "<span style='font-size:10px;font-style:italics;'> (unanimous)</span>"
+                  out << '<span style="font-size:10px;font-style:italics;"> (unanimous)</span>'
                 end
             end
         end
@@ -115,7 +115,7 @@ module ProfileHelper
               if (vote_other.where == "h" && person.title == "Rep.") || (vote_other.where == "s" && person.title == "Sen.")
                 if vote_other.how == "by Unanimous Consent"
                   out << (vote_other.result == "pass" ? "Aye" : "Nay")
-                  out << "<span style='font-size:10px;font-style:italics;'> (unanimous)</span>"
+                  out << '<span style="font-size:10px;font-style:italics;"> (unanimous)</span>'
               end
             end
         end

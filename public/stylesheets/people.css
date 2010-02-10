@@ -486,6 +486,7 @@ padding: 10px 0 4px;
 }
 #sponsor_stats li {
   float:left;
+  clear:left;
   padding-left:25px;
   background: url(/images/sprites.png) -279px -93px no-repeat;
    _background: url(/images/sprites.gif) -279px -93px no-repeat;

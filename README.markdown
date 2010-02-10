@@ -9,7 +9,7 @@
 
 ### A. Dependencies
 
-Start by installing all the packages you might need.
+Start by installing all the packages required by OpenCongress.
 
 so for Ubuntu:
 

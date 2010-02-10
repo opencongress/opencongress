@@ -112,7 +112,7 @@ class InitialSchema < ActiveRecord::Migration
       t.column "action_type", :string # 'action' or 'vote' or 'calendar'
       t.column "date", :integer # UNIX datetime
       t.column "datetime", :datetime
-      t.column "text", :string
+      t.column "text", :text
       t.column "how", :string # vote
       t.column "where", :string # vote
       t.column "vote_type", :string # vote

@@ -1,6 +1,6 @@
 class State < ActiveRecord::Base
   has_many :districts
-  
+
   has_many :representatives, :class_name => "Person", :finder_sql => 'SELECT people.* from people LEFT OUTER JOIN roles ON roles.person_id = people.id WHERE people.state = \'#{self.abbreviation}\' AND roles.role_type=\'rep\' AND roles.enddate > \'#{Time.new.to_s(:db)}\' ORDER BY people.district::text::integer', :counter_sql => 'SELECT COUNT(people.id) from people LEFT OUTER JOIN roles ON roles.person_id = people.id WHERE people.state = \'#{self.abbreviation}\' AND roles.role_type=\'rep\' AND roles.enddate > \'#{Time.new.to_s(:db)}\''
 
   has_many :senators, :class_name => "Person", :finder_sql => 'SELECT people.* from people LEFT OUTER JOIN roles ON roles.person_id = people.id WHERE people.state = \'#{self.abbreviation}\' AND roles.role_type=\'sen\' AND roles.enddate > \'#{Time.new.to_s(:db)}\' ORDER BY people.district::text::integer', :counter_sql => 'SELECT COUNT(people.id) from people LEFT OUTER JOIN roles ON roles.person_id = people.id WHERE people.state = \'#{self.abbreviation}\' AND roles.role_type=\'sen\' AND roles.enddate > \'#{Time.new.to_s(:db)}\''

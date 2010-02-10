@@ -107,6 +107,15 @@
 </div>
 
 
+<% unless @commented_nodes.empty? %>
+  <p>Most commented sections:</p>
+  <ul>
+    <% @commented_nodes.each do |n| %>
+      <li><%= link_to "Paragraph #{number_with_delimiter(n.paragraph_number)} (#{n.comment_count} comments)", :controller => 'bill', :action => 'text', :id => @bill.ident, :version => @version.version, :nid => n.nid %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 </div> <!-- end topic -->
 
 <div id="bill_text_loading" >

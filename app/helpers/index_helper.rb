@@ -11,9 +11,8 @@ module IndexHelper
       #text.gsub!(/"/, "\\\"")
       #text.gsub!(/'/, "&apos;")
       
-      "<span id='gossip_more'>#{text_no_html[0..space]} <a href='javascript:replace("  +
-      "\"gossip_extra\",\"gossip_more\")' >continued...</a></span>" +
-      "<span id=\"gossip_extra\" style='display: none'>#{text}</span>"
+      %Q{<span id="gossip_more"">#{text_no_html[0..space]} <a href="javascript:replace('gossip_extra', 'gossip_more')">continued...</a></span>
+      <span id="gossip_extra" style="display: none">#{text}</span>}
     end
   end
   
@@ -63,13 +62,13 @@ module IndexHelper
 		if rcall.has_key?(result)
 			image_tag rcall.fetch(result), :alt => result, :title => result 
 		else
-			"<span class='result'>#{result}</span>"
+			'<span class="result">#{result}</span>'
 		end
 	end
 
   def session_div(chamber, session)
-    out = "<div class='#{chamber}_sesh #{(session and session.today?) ? 'in_session' : 'out_session'}'>"
-    out += "<strong>#{chamber.capitalize}:</strong> "
+    out = %Q{<div class="#{chamber}_sesh #{(session and session.today?) ? 'in_session' : 'out_session'}">}
+      + "<strong>#{chamber.capitalize}:</strong> "
     if session and session.today? 
       out += "In Session"
     elsif session
@@ -83,6 +82,6 @@ module IndexHelper
   def recess_div(session)
     return if session.date < Date.today
     
-    "<div class='recess next_recess'>#{session.is_in_session ? 'Next Recess' : 'Returns'}: #{session.date.strftime('%B %d')}</div>"
+    %Q{<div class="recess next_recess">#{session.is_in_session ? 'Next Recess' : 'Returns'}: #{session.date.strftime('%B %d')}</div>}
   end
 end

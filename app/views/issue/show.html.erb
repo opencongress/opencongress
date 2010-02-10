@@ -5,6 +5,13 @@
 <div class="padding">
 
 <a href="/bill/hot" class="med_button floatright clearnone"><span>View Hot Bills By Issues Area</span></a>
+<div class="floatright clearnone">
+  <form id="timeframe_select" action="" method="get">
+  <select name="filter" onchange="submit();">
+  <%= options_for_select([['Most Recent','recent'], ['Has Become Law','enacted']], params[:filter]) %>
+  </select>
+  </form>
+</div>
 <a href="/issues" class="med_button floatleft clearnone"><span>Back to All Issues</span></a>
 
 <div style="float:right;">
@@ -23,10 +30,10 @@
 <%= link_to_subjects @related_subjects %>
 <% end %>
 
-<% unless @latest_bills.empty? %>
-  <div class="clear"><%= will_paginate @latest_bills %></div>
-  <%= render :partial => "bill/related_bills_list", :locals => {:related_bills_list => @latest_bills, :subject => @subject } -%>
-  <%= will_paginate @latest_bills %>
+<% unless @bills.empty? %>
+  <div class="clear"><%= will_paginate @bills %></div>
+  <%= render :partial => "bill/related_bills_list", :locals => {:related_bills_list => @bills, :subject => @subject } -%>
+  <%= will_paginate @bills %>
 <% else %>
   <div class="padding">
   <p class="behave">No bills at this time. The Congressional Research Service -- the official

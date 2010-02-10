@@ -343,7 +343,8 @@ class BillController < ApplicationController
     @page_title = "Text of #{@bill.title_typenumber_only} as #{@version.pretty_version}"
 
     @nid = params[:nid].blank? ? nil : params[:nid]     
-    @commented_nodes = @version.bill_text_nodes.find(:all, :include => :comments)
+    @commented_nodes = @version.top_comment_nodes
+    
 
     begin
       # open html from file

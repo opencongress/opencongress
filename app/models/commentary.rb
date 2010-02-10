@@ -11,10 +11,6 @@ require 'htmlentities'
   cattr_reader :per_page
   @@per_page = 30
 
-  if RAILS_ENV == 'staging' #set default to 7 days from latest dump
-    DEFAULT_COUNT_TIME = (Time.now-((Commentary.find(:first, :order => 'date desc').date)-7.days)).seconds.ago
-  end
-  
   #decode htmlentities
   def title_d
     d = HTMLEntities.new

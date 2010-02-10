@@ -20,7 +20,7 @@ Person.all_sitting.each do |p|
   if p.osid
     puts "Getting OpenSecrets data for #{p.name}"
     
-    path = "/api/index.php?method=opencongress&cycle=#{CURRENT_OPENSECRETS_CYCLE}&cid=#{p.osid}&apikey=573ba044995d1dad7746b593629a7246"
+    path = "/api/index.php?method=opencongress&cycle=#{CURRENT_OPENSECRETS_CYCLE}&cid=#{p.osid}&apikey=#{API_KEYS['opensecrets_api_key']}"
     
     success = false
     badcount = 0

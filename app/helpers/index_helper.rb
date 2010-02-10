@@ -67,8 +67,7 @@ module IndexHelper
 	end
 
   def session_div(chamber, session)
-    out = %Q{<div class="#{chamber}_sesh #{(session and session.today?) ? 'in_session' : 'out_session'}">}
-      + "<strong>#{chamber.capitalize}:</strong> "
+    out = %Q{<div class="#{chamber}_sesh #{(session and session.today?) ? 'in_session' : 'out_session'}"><strong>#{chamber.capitalize}:</strong> }
     if session and session.today? 
       out += "In Session"
     elsif session

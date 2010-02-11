@@ -491,6 +491,9 @@ padding: 10px 0 4px;
   background: url(/images/sprites.png) -279px -93px no-repeat;
    _background: url(/images/sprites.gif) -279px -93px no-repeat;
 margin-bottom: 6px;
+}                        
+#voting-similarities {
+  min-height:100px;
 }
 .pie_votes{
 padding-left: 25px;

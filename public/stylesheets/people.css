@@ -743,12 +743,10 @@ body#people.compare h3{
 	margin-top: 20px;
 }
 
-
 body#people.compare .padding .left{
 float: left;
 width: 45%;
 }
-
 
 body#people.compare .padding .right{
 width: 52%;
@@ -762,12 +760,10 @@ padding-right: 140px;
 float: left;
 }
 
-
 .explains ul{
 	list-style: circle;
 	padding-left: 17px;	
 }
-
 
 .explains2{
 width: 48%;
@@ -916,7 +912,6 @@ ul.inline li{
 	padding-right: 10px;
 	display: inline;
 }
-
 .bills #sort, .news_blogs #sort{
 float: right;
 width: 358px;

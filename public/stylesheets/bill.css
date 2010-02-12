@@ -1692,7 +1692,7 @@ font-weight: bold;
   background:url("/images/bill/tracking_count.png") no-repeat right -16px;
 }
 .tracking_count span {
-  padding:1px 0 2px 5px;
+  padding:1px 0 1px 5px;
   background:url("/images/bill/tracking_count.png") no-repeat 0 0;  
   text-decoration: underline;
 }

@@ -876,6 +876,7 @@ text-decoration: underline;
 display: block;
 overflow: hidden;
 float: left;
+width: 420px;
 }
 
 .indent li a .datedark{

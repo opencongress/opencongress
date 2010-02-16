@@ -1,12 +1,17 @@
-<form action="/search/result" id="form-search" method="get">
-  <div id="search">
-  	<div class="search">
-  		<label for="search-field">Search</label>
-  		<input name="q" id="search-field" type="text" value="<%= @query.blank? ? '' : @query %>" />
-  		<input type="image" src="/images/search_submit.png" name="submit" id="search_submit" value="Search">
-  	</div>	
-  </div>
-	  
+ 
+ 	
+ 	<div class="search_info">
+ 	
+ 	<h4>Advanced Search Options</h4>
+ 	
+ 	<p>Use the options to the right to narrow down your search results.</p>
+ 	
+ 	
+ 	</div>
+ 	
+ 
+ 
+ 
   <div id="sessions">
     <p>Sessions:</p>
     <% AVAILABLE_CONGRESSES.each do |c| %>
@@ -24,8 +29,7 @@
 	  <input checked="checked" id="search_issues" name="search_issues" type="checkbox" value="1" /> <label for="search_issues">Issues</label><br />
 	  <input checked="checked" id="search_comments" name="search_comments" type="checkbox" value="1" /> <label for="search_reps">User Comments</label><br />
 	  <!-- ><input checked="checked" id="search_commentary" name="search_commentary" type="checkbox" value="1" /> <label for="search_reps">News &amp; Blogs</label><br /> -->
-	  <input checked="checked" id="search_commentary" name="search_gossip_blog" type="checkbox" value="1" /> <label for="search_reps">OpenCongress Gossip Blog</label>
+	  <input checked="checked" id="search_commentary" name="search_gossip_blog" type="checkbox" value="1" /> <label for="search_reps">OpenCongress Blog</label>
 
 	  <span id="search_indicator" style="display: none"><%= image_tag 'indicator.gif', :class => 'noborder' %></span>
 	</div>
-</form>

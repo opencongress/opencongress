@@ -14,13 +14,13 @@
     <p>
           <img class="frontpage-blog-image" src="<%= most_recent.frontpage_image_url %>">
 
-    <%= truncate(most_recent.excerpt, :length => 398) %>
+    <%= truncate(most_recent.excerpt, :length => 1200) %>
     <%= link_to('More...', article_url(most_recent), :class => 'arrow biglinks') %>
    </p>
 <% end %>
 
 
-<h3 class="recent">Recent Blog Posts</h3>
+<h3 class="recent">More Recent Blog Posts</h3>
 <ul class="indent">
   <% articles.each_with_index do |g, i| -%>
     <li class="<%= (i.modulo(2) == 0) ? 'light' : 'dark' %>">

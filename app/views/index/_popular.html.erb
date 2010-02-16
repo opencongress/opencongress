@@ -5,7 +5,7 @@
 
 
 		<% popular.each do |bill| %>
-		 	<ul>
+		 	<ul class="medium_bill_list">
 
         <li>
         	<a href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>">
@@ -34,7 +34,7 @@
 <% when "pis" %>
 
     
-			<ul class="folder-small">
+		 	<ul class="medium_bill_list">
         <% @popular_issues.each do |i| %>
           <li>
             <a href="<%= url_for :controller => 'issue', :action => 'show', :id => i %>">
@@ -56,7 +56,7 @@
 
       
       <% current_search = 0 %>
-      <ul>
+		 	<ul class="medium_bill_list">
       <% @hot_bills.each do |hb|%>
 
 			  
@@ -94,11 +94,6 @@
       </ul>
 		
 		
-		
-		<%# link_to '<span>More Popular Searches</span>', { :controller => 'search', :action => 'popular' }, :class => 'med_button med_arrow' %>
-		<%= link_to '<span>More Hot Bills</span>', { :controller => 'bill', :action => 'hot' }, :class => 'med_button med_arrow' %>
-
-
-<% end %>
+		<% end %>
 
 <!-- // end of list boxes -->

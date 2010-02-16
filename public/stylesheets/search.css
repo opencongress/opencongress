@@ -47,22 +47,6 @@ padding: 6px 0 0 20px;
 }
 
 
-#search .floatleft{
-margin-right: 30px;
-width: 293px;
-}
-
-#sessions{
-float: right;width: 203px;
-
-}
-
-#search_in{
-float: right;
-width: 203px;
-border: 1px
-}
-
 
 .comments_search li{
 float: left;

@@ -70,15 +70,14 @@
 .healthcare_widget .blog_coverage {
    display: block;
    background: url(<%= image_path 'widgets/button.png' %>) no-repeat;
-   height: 53px;
-   padding-top: 10px;
+   height: 40px;
+   padding-top: 20px;
 }
 
 .healthcare_widget .blog_coverage a {
    display: block;
    color: #333;
    padding: 0 0 0 15px;
-   line-height: 15px;
    font-weight: bold;
    font-size: 12px;
    text-decoration: none;
@@ -106,6 +105,13 @@
    color: #555;
    float: left;
 }
+
+
+.full_text {
+padding-top: 10px;
+}
+
+
 
 
 .comments {
@@ -187,30 +193,39 @@ h5.bill_title a:link {
 
 	<div class="guts">
 		<div class="house">
-			<h4>House Version <span class="passed">Passed on Nov. 7th, 2009</span></h4>
+			<h4>House Version: <%= link_to "H.R. 3962", bill_url(@house_bill_ident), :target => "_blank" %></h4>
 			
-				<h5 class="bill_title"><%= link_to "H.R. 3962 - Affordable Health Care for America Act", bill_url(@house_bill_ident), :target => "_blank" %></h5>
+			
+				<h5 class="bill_title"><%= link_to "Affordable Health Care for America Act", bill_url(@house_bill_ident), :target => "_blank" %></h5>
+			
+							<span>Latest Action: <span class="passed">Passed on Nov. 7th, 2009</span></span>
+
 			
 			<%= link_to("Read and comment on the bill text", url_for(:controller => 'bill', :action => 'text', :id => @house_bill_ident), :class => "full_text", :target => "_blank") %>
    			<%= link_to("Full vote result (220-215)", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "h", :number => "887"), :class => "roll_call", :target => "_blank") %>
 			<% if @state_name %>
    			<%= link_to("How #{ @state_name } Reps voted", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "h", :number => "887", :state => params[:state]), :class => "voting_record", :target => "_blank") %>
          <% end %>
+         <%= link_to("People watching this bill are also watching...", bill_url(@house_bill_ident, :anchor => "users_tracking"), :class => "tracking", :target => "_blank")%>
 		</div>
 
 		<div class="senate">
-			<h4>Senate Version <span class="passed">Passed on Dec. 24th, 2009</span></h4>
-			<h5 class="bill_title"><%= link_to "H.R. 3590 - Patient Protection and Affordable Care Act", bill_url(@senate_bill_ident), :target => "_blank" %></h5>
+			<h4>Senate Version <%= link_to "H.R. 3590", bill_url(@senate_bill_ident), :target => "_blank" %></h4>
+			
+			<h5 class="bill_title"><%= link_to "Patient Protection and Affordable Care Act", bill_url(@senate_bill_ident), :target => "_blank" %></h5>
+   		
+   		<span>Latest Action:  <span class="passed">Passed on Dec. 24th, 2009</span></span>
+   		
    		<%= link_to("Read and comment on the bill text", url_for(:controller => 'bill', :action => 'text', :id => @senate_bill_ident), :class => "full_text", :target => "_blank") %>   			
    			<%= link_to("Full vote result (60-39)", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "s", :number => "396"), :class => "roll_call", :target => "_blank") %>
 			<% if @state_name %>
    			<%= link_to("How #{ @state_name } Senators voted", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "s", :number => "396", :state => params[:state]), :class => "voting_record", :target => "_blank") %>
 		   <% end %>
+		   <%= link_to("People watching this bill are also watching...", bill_url(@senate_bill_ident, :anchor => "users_tracking"), :class => "tracking", :target => "_blank")%>
 		</div>
       
    </div> <!-- Guts -->
    <div class="blog_coverage">
-   	<%= link_to "What's next? Find out with our blog coverage", blog_url(:tag => 'Health+Care'), :target => "_blank" %>
    	<% if @state_name %>
    	<%= link_to "What's hot with people in your state?", state_url(params[:state]), :class => "hot", :target => "_blank" %>
       <% else %>

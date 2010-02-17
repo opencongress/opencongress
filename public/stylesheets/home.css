@@ -44,6 +44,9 @@ padding: 0;
 margin: 0;
 font-weight: bold;
 font-size: 12px;
+width: 355px;
+display: block;
+overflow: hidden;
 }
 
 
@@ -75,7 +78,6 @@ padding: 0;
 background: url('/images/small_bill.png') 15px 15px no-repeat;
 margin: 0;
 color: #333;
-
 display: block;
 border-top: 1px solid #ccc;
 }
@@ -876,7 +878,6 @@ text-decoration: underline;
 display: block;
 overflow: hidden;
 float: left;
-width: 420px;
 }
 
 .indent li a .datedark{

@@ -5,7 +5,7 @@
 
 
 		<% popular.each do |bill| %>
-		 	<ul class="medium_bill_list">
+		 	<ul class="medium_bill_list editorial_list">
 
         <li>
         	<a href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>">
@@ -34,7 +34,7 @@
 <% when "pis" %>
 
     
-		 	<ul class="medium_bill_list">
+		 	<ul class="medium_bill_list editorial_list">
         <% @popular_issues.each do |i| %>
           <li>
             <a href="<%= url_for :controller => 'issue', :action => 'show', :id => i %>">
@@ -56,7 +56,7 @@
 
       
       <% current_search = 0 %>
-		 	<ul class="medium_bill_list">
+		 	<ul class="medium_bill_list editorial_list">
       <% @hot_bills.each do |hb|%>
 
 			  

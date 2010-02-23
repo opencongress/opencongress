@@ -2,6 +2,7 @@
    table.credits {
       width: 100%;
       empty-cells: show;
+      margin: 20px 0;
       border-collapse: collapse;
    }
    #col1, #col2 {
@@ -17,10 +18,10 @@
    table.credits caption {
       font-weight: bold;
    }
-   p {
+   .padding p {
       padding-top: 1em;
    }
-   ul {
+   .padding ul {
       padding: 1em 0 0 2em;
       list-style: disc outside;
    }
@@ -30,16 +31,41 @@
       margin-top: 0;
    }
    div.padding {
-      width: 600px;
       margin: 0px auto;
+   }
+   p u b, p strong u{
+   font-size: 14px;
+   margin-top: 20px;
+   display: block;
+   }
+   #heading h2{
+   padding-top: 14px !important;
+   padding-left: 18px;
+   }
+  
+  
+   #heading p{
+   padding-top: 15px;
+   padding-left: 18px;
+   }
+   
+   
+   h3{
+  
+   font-size: 16px;
    }
 </style>
 
-<div class="padding">
-   <div class="center">
-      <h2>The President's Proposal<br />
-      February 22, 2010</h2>
+<div id="content">
+<div class="inner">
+
+   <div id="heading">
+      <h2>The President's Proposal</h2>
+      <p>February 22, 2010</p>
    </div>
+
+<div class="padding">
+
 <h3>
    The President's Proposal puts American families and small business owners in control of their own health care.
 </h3>
@@ -338,4 +364,6 @@
 <p>
    Learn more about the President's Proposal at <a href="http://www.whitehouse.gov/health-care-meeting">http://www.whitehouse.gov/health-care-meeting</a>.
 </p>
+</div>
+</div>
 </div>

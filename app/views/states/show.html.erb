@@ -43,7 +43,7 @@
     <% @tracking_suggestions.last[:my_people_tracked_facet].each do |bt| %>
       <% unless bt[:trackers] == 0 %>
       <li class="person">
-         <%= link_to image_tag("http://www.opencongress.org/images/photos/thumbs_50/#{bt[:object].id}-50px.jpeg", :style =>"float:left;margin-right:5px;", :alt => 'photo'), person_url(bt[:object].ident) %>
+         <a href="<%= person_url(bt[:object].ident) %>"><img src="/images/photos/thumbs_42/<%= bt[:object].id %>.png" alt="photo" style="float:left;margin-right:5px;" /></a>
          <%= link_to bt[:object].title_full_name_party_state, person_url(bt[:object].ident) %><br />
           <div class="meta"><span><%= bt[:trackers] %> followers</span>
              <span><%= pluralize(bt[:object].consecutive_years, 'year') %> in office</span></div>

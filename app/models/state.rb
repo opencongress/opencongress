@@ -1,6 +1,6 @@
 class State < ActiveRecord::Base
   has_many :districts
-  
+
   has_many :representatives, :class_name => "Person", :finder_sql => 'SELECT people.* from people LEFT OUTER JOIN roles ON roles.person_id = people.id WHERE people.state = \'#{self.abbreviation}\' AND roles.role_type=\'rep\' AND roles.enddate > \'#{Time.new.to_s(:db)}\' ORDER BY people.district::text::integer', :counter_sql => 'SELECT COUNT(people.id) from people LEFT OUTER JOIN roles ON roles.person_id = people.id WHERE people.state = \'#{self.abbreviation}\' AND roles.role_type=\'rep\' AND roles.enddate > \'#{Time.new.to_s(:db)}\''
 
   has_many :senators, :class_name => "Person", :finder_sql => 'SELECT people.* from people LEFT OUTER JOIN roles ON roles.person_id = people.id WHERE people.state = \'#{self.abbreviation}\' AND roles.role_type=\'sen\' AND roles.enddate > \'#{Time.new.to_s(:db)}\' ORDER BY people.district::text::integer', :counter_sql => 'SELECT COUNT(people.id) from people LEFT OUTER JOIN roles ON roles.person_id = people.id WHERE people.state = \'#{self.abbreviation}\' AND roles.role_type=\'sen\' AND roles.enddate > \'#{Time.new.to_s(:db)}\''
@@ -165,10 +165,10 @@ chs=#{size}&chl=Democrats (#{democrat_representatives.count})|Republicans (#{rep
 
   STATE_FOR_ABBREV = { 
     "AL" => "Alabama",
-    "AK" => "Alaska" ,
+    "AK" => "Alaska",
+    "AS" => "American Samoa",
     "AZ" => "Arizona",
-    "AR" => "Arkansas",
-    "AS" => "American Samoa",    
+    "AR" => "Arkansas",  
     "CA" => "California",
     "CO" => "Colorado",
     "CT" => "Connecticut",
@@ -238,14 +238,16 @@ chs=#{size}&chl=Democrats (#{democrat_representatives.count})|Republicans (#{rep
     RESIDENT_FOR_ABBREV = {
     "AL" => "Alabamian", 		  
     "AK" => "Alaskan", 	      
+    "AR" => "Arkansan",
     "AZ" => "Arizonan", 		  
-    "AR" => "Arkansan", 		  
+    "AS" => "American Samoan",
     "CA" => "Californian", 	  
     "CO" => "Coloradan",   
     "CT" => "Connecticuter", 	  
     "DE" => "Delawarean", 	      
     "FL" => "Floridian", 		  
-    "GA" => "Georgian", 	      
+    "GA" => "Georgian",
+    "GU" => "Guamanian",	      
     "HI" => "Hawaiian", 		  
     "ID" => "Idahoan", 	      
     "IL" => "Illinoisan", 	      

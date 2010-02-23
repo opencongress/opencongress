@@ -1,6 +1,8 @@
+**.DS_Store
 log/*.log
 tmp/**/*
 tmp/*
+data/*
 db/schema.rb
 public/assets/*
 vendor/plugins/acts_as_solr/solr/tmp/*

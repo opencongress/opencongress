@@ -486,10 +486,14 @@ padding: 10px 0 4px;
 }
 #sponsor_stats li {
   float:left;
+  clear:left;
   padding-left:25px;
   background: url(/images/sprites.png) -279px -93px no-repeat;
    _background: url(/images/sprites.gif) -279px -93px no-repeat;
 margin-bottom: 6px;
+}                        
+#voting-similarities {
+  min-height:115px;
 }
 .pie_votes{
 padding-left: 25px;
@@ -739,12 +743,10 @@ body#people.compare h3{
 	margin-top: 20px;
 }
 
-
 body#people.compare .padding .left{
 float: left;
 width: 45%;
 }
-
 
 body#people.compare .padding .right{
 width: 52%;
@@ -758,12 +760,10 @@ padding-right: 140px;
 float: left;
 }
 
-
 .explains ul{
 	list-style: circle;
 	padding-left: 17px;	
 }
-
 
 .explains2{
 width: 48%;
@@ -912,7 +912,6 @@ ul.inline li{
 	padding-right: 10px;
 	display: inline;
 }
-
 .bills #sort, .news_blogs #sort{
 float: right;
 width: 358px;

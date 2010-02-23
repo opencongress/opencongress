@@ -11,9 +11,7 @@ module IndustryHelper
 
   def display_related_bills(person_sectors)
     return "No contributions" unless person_sectors.size > 0
-    "<a href='#' id='person_sector_link' onclick='change_vis_text(\"person_sectors\", " +
-      "\"person_sector_link\", \"Show contributions\", \"Hide contributions\");return false'>" +
-      "Hide contributions</a>"
+    %q{<a href="#" id="person_sector_link" onclick="change_vis_text('person_sectors', 'person_sector_link', 'Show contributions', 'Hide contributions');return false">Hide contributions</a>}
   end
 
   def grand_total(person_sectors)

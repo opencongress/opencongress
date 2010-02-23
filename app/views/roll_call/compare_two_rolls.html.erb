@@ -20,7 +20,7 @@
   </tr>
   <% @people.each do |p| %>
     <tr>
-      <td><img src="/images/photos/thumbs_50/<%= p.id %>.jpeg" height=50><%= link_to_person(p) %></td>
+      <td><img src="/images/photos/thumbs_42/<%= p.id %>.png" alt="photo" ><%= link_to_person(p) %></td>
       <td><%= vote_name(p.vote1) %></td>
       <td><%= vote_name(p.vote2) %></td>
       <td><%= link_to 'News Coverage', {:controller => 'people', :action => 'news', :id => p}, :class => 'arrow' %></td>

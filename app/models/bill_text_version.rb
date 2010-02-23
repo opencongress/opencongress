@@ -80,4 +80,12 @@ class BillTextVersion < ActiveRecord::Base
   def pretty_version
     @@VERSION_NAMES[self.version]
   end
+  
+  def top_comment_nodes(limit = 3)
+    BillTextNode.find_by_sql(["SELECT bill_text_nodes.id, bill_text_nodes.nid, count(comments.id) as comment_count
+                  FROM bill_text_nodes INNER JOIN comments ON bill_text_nodes.id=comments.commentable_id 
+                  WHERE bill_text_nodes.bill_text_version_id=? AND comments.commentable_type='BillTextNode' 
+                  GROUP BY bill_text_nodes.id, bill_text_nodes.nid ORDER BY count(comments.id) DESC LIMIT ?;", self.id, limit])
+  end
+  
 end

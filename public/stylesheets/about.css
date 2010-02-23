@@ -38,7 +38,7 @@ ol {
     overflow: auto;
 }
 
-.codeblock pre {
+.codeblock pre, pre code {
     font-family: 'Bitstream Vera Sans Mono', Monaco, 'Courier New', monospace;
     font-size: 9pt;
 }
@@ -63,4 +63,21 @@ p.highlight {
     background-color: #eee;
     padding: 5px;
     margin-left: -5px;
+}
+pre {
+  background-color:#FAFAFF;
+  border:1px solid #DEDEDE;
+  color:#444444;
+  line-height:18px;
+  margin:5px 0;
+  overflow:auto;
+  padding:8px;
+  white-space: normal;
+}
+pre code {
+  font-size:11px;
+  white-space: normal;
+}
+.hideme {
+  display:none;
 }

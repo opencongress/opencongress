@@ -207,6 +207,7 @@ h5.bill_title a:link {
    			<%= link_to("How #{ @state_name } Reps voted", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "h", :number => "887", :state => params[:state]), :class => "voting_record", :target => "_blank") %>
          <% end %>
          <%= link_to("People watching this bill are also watching...", bill_url(@house_bill_ident, :anchor => "users_tracking"), :class => "tracking", :target => "_blank")%>
+
 		</div>
 
 		<div class="senate">
@@ -222,7 +223,7 @@ h5.bill_title a:link {
    			<%= link_to("How #{ @state_name } Senators voted", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "s", :number => "396", :state => params[:state]), :class => "voting_record", :target => "_blank") %>
 		   <% end %>
 		   <%= link_to("People watching this bill are also watching...", bill_url(@senate_bill_ident, :anchor => "users_tracking"), :class => "tracking", :target => "_blank")%>
-		</div>
+
       
    </div> <!-- Guts -->
    <div class="blog_coverage">

@@ -13,7 +13,7 @@
 		<% end %>
 		<div class="details">
 			<% unless @bill.sponsor.nil? %>
-			  <%= link_to("<img src='/images/photos/thumbs/" + @bill.sponsor.id.to_s + ".png'>", person_url(@bill.sponsor)) %>
+			  <%= link_to("<img src='/images/photos/thumbs_42/" + @bill.sponsor.id.to_s + ".png'>", person_url(@bill.sponsor)) %>
 			<p><%= @bill.sponsor.title_long %></p>
 			<%= link_to(@bill.sponsor.full_name, person_url(@bill.sponsor)) %>
 			<p><%= @bill.sponsor.party_and_state %></p>

@@ -2,11 +2,10 @@
 <% 
   if params[:comment_sort] == 'rating' 
      comments = object.comments.paginate(:page => params[:comment_page], :include => [:user], :order => "comments.plus_score_count - comments.minus_score_count DESC" )
-  elsif params[:comment_sort] == 'oldest'
-    comments = object.comments.paginate(:page => params[:comment_page], :include => [:user], :order => "comments.root_id ASC, comments.lft ASC" ) 
+  elsif params[:comment_sort] == 'newest'
+    comments = object.comments.paginate(:page => params[:comment_page], :include => [:user], :order => "comments.created_at DESC" ) 
   else
-    comments = object.comments.paginate(:page => params[:comment_page], :include => [:user], :order => "comments.root_id DESC, comments.lft ASC" ) 
-
+     comments = object.comments.paginate(:page => params[:comment_page], :include => [:user], :order => "comments.root_id ASC, comments.lft ASC" ) 
   end
 %>
      
@@ -27,7 +26,7 @@
       <%= will_paginate comments, :param_name => 'comment_page', :params => { :controller => object.display_object_name.downcase, :action => 'comments', :id => ((object.display_object_name == 'Bill') ? object.ident : object.id), :navtab => 'comments', :comment_sort => params[:comment_sort], :anchor => 'comments'} %>
     <% end %>
     <br />
-    <% if params[:comment_sort] == 'rating' %>
+    <% if (params[:comment_sort] == 'newest' || params[:comment_sort] == 'rating') # just display a flat list since nesting doesn't make sense when sort=newest, likewise for rating %>
       <% comments.each do |node| %>
         <%= render :partial => 'shared/comments_recursive', :locals => {:object => object, :comment => node, :myscores => myscores, :flat => true} %>
       <% end %>

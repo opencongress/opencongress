@@ -1,6 +1,7 @@
 class District < ActiveRecord::Base
-  belongs_to :state
+  # district_number 0 is reserved for at-large districts
 
+  belongs_to :state
   has_many :watch_dogs
   has_one :current_watch_dog, :class_name => "WatchDog", :conditions => ["is_active = ?", true], :order => "created_at desc"
 
@@ -160,67 +161,20 @@ class District < ActiveRecord::Base
   def freebase_description_url
     "http://www.freebase.com/api/trans/blurb#{self.freebase_guid}?maxlength=800"
   end
-  
+
   def freebase_description
      require 'open-uri'
      require 'json'
-     Rails.cache.fetch("district_freebase_desc_#{self.id}") {
+   begin
+    Rails.cache.fetch("district_freebase_desc_#{self.id}") {
         open(freebase_description_url).read.gsub(/\/(.)\(help(.)info\)/,'/')
      }
+   rescue
+    "Sorry, we couldn't connect to Freebase to give you the description of this district."
+   end
 
   end
 
-  
-  def image_path
-    dis = ""
-    case district_number 
-      when 1..9
-        dis = "0#{district_number}"
-      when 0
-        dis = "01"
-      else
-        dis = "#{district_number}"
-    end
-    return "public/images/districts/#{image_name}"
-  end
-  
-  def image_name
-
-    dis = ""
-    case district_number 
-      when 1..9
-        dis = "0#{district_number}"
-      when 0
-        dis = "01"
-      else
-        dis = "#{district_number}"
-    end
-
-    return "cd109_#{self.state.abbreviation}#{dis}.gif"
-
-
-  end
-  
-  def census_path
-    unless self.state.abbreviation == "DC"
-      return "http://ftp2.census.gov/geo/maps/cong_dist/cd109_gen/cd_based/#{self.state.name.titleize}/#{self.image_name}"
-    else
-      return "http://ftp2.census.gov/geo/maps/cong_dist/cd109_gen/cd_based/District_of_Columbia/#{self.image_name}"
-    end      
-  end
-  
-  def image_exists?
-    File.exists?(self.image_path)
-  end
-
- def m_thumb_path
-    "/images/districts/thumbs_250/#{self.image_name}"
-  end
-
-  def s_thumb_path
-    "/images/districs/thumbs_250/#{self.image_name}"
-  end
-  
   def rep
     Person.rep.find_by_state_and_district(self.state.abbreviation, district_number.to_s)
   end

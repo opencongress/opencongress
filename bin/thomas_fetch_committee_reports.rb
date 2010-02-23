@@ -5,56 +5,60 @@ if __FILE__ == $0
 end
 
 require 'hpricot'
-require 'generator'
 require 'open-uri'
 require 'fileutils'
 
 $base_path = COMMITTEE_REPORTS_PATH
+types = ["#{$base_path}/house","#{$base_path}/senate","#{$base_path}/conference","#{$base_path}/joint"]
+types.each do |t|
+  unless FileTest.directory?(t)
+    Dir.mkdir(t)
+  end
+end
 
 house_reports_url = "http://thomas.loc.gov/cgi-bin/cpquery/L?cp%d:list/cp%dch.lst:"
 senate_reports_url = "http://thomas.loc.gov/cgi-bin/cpquery/L?cp%d:./list/cp%dcs.lst:"
 conference_reports_url = "http://thomas.loc.gov/cgi-bin/cpquery/L?cp%d:./list/cp%dco.lst:"
 joint_reports_url = "http://thomas.loc.gov/cgi-bin/cpquery/L?cp%d:./list/cp%dcj.lst:"
 
-class Generator
-  attr_accessor :i
-end
-
 class Parser
-  attr_reader :gen, :congress, :printable_base
+  attr_reader :gen, :congress, :printable_base, :rows_per_page
 
   def initialize
-    @gen = proc do |g| 
-      g.i = 1 if g.i.nil?
-      while true
-        g.yield g.i
-        g.i += 50
-      end
-    end
     @congress = DEFAULT_CONGRESS
     @printable_base = "http://thomas.loc.gov/cgi-bin/cpquery/T?&report=%s&dbname=%s&"
+    @rows_per_page = 50
   end
 
   def parse(url_base, type)
     reports = []
-    log = File.open "#{$base_path}#{type}/log.txt", "w+"
+    log = File.open "#{$base_path}/#{type}/log.txt", "w+"
+    
+    entry_num = 0
 
-    Generator.new(&gen).each do |i|
+    # This loops through the pages of results from THOMAS.
+    # We'll exit when we see less than 50 entries on a given page.
+    while true
       url = url_base % [congress, congress]
-      current_url = url + i.to_s
+      current_url = url + entry_num.to_s
       puts current_url
       doc = Hpricot(open(current_url))
-      reports = ((doc/:table/:tr)).select { |elm| (elm/:td).size == 5 }
+      
+      # We're looking at each row of the HTML table on the reports index page
+      all_reports = ((doc/:table/:tr))
+      reports = all_reports.select { |elm| (elm/:td).size == 5 }
+
       reports.each do |tr|
         entries = tr/:td
-        num = entries[0].inner_html.to_i
+        entry_num = entries[0].inner_html.to_i
         name = entries[1].inner_html
         md = (entries[2]/:a).to_html.match(/report=(.*?)\&/)
         next if md.nil?
+
         reportname, dbname = md.captures[0].split(/\./)
         report_url = (printable_base % [reportname, dbname])
-        filename = "#{$base_path}#{type}/#{num}.#{reportname}.#{dbname}.html" 
-        log.puts "#{num}\t#{name}\t#{reportname}\t#{dbname}\t#{filename}"
+        filename = "#{$base_path}/#{type}/#{entry_num}.#{reportname}.#{dbname}.html" 
+        log.puts "#{entry_num}\t#{name}\t#{reportname}\t#{dbname}\t#{filename}"
         log.flush
         unless File.exists? filename
           report = Hpricot(open(report_url))
@@ -66,10 +70,16 @@ class Parser
           end
         end #unless
       end #reports.each
-      if reports.size < 50
+      
+      # If we ended on #46, let's fetch #47 next time around.
+      entry_num += 1;
+      
+      if all_reports.size < rows_per_page
         break
       end
-    end
+
+    end # while true
+    
     log.close
   end
 end

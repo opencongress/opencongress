@@ -11,5 +11,8 @@ class BillTextNode < ActiveRecord::Base
    "#{self.bill_text_version_id}-#{self.nid}"
   end
 
-
+  def paragraph_number
+    stuff = nid.split(/:/)
+    stuff[2]
+  end
 end

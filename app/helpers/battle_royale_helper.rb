@@ -2,7 +2,7 @@ module BattleRoyaleHelper
 
 	def bill_status_table(bill = @bill)
 		status_hash = bill.bill_status_hash
-		text = "<div class='bill-status-box'><table border='0' cellpadding='0' cellspacing='0' id='bill-status'>"
+		text = %Q{<div class="bill-status-box"><table border="0" cellpadding="0" cellspacing="0" id="bill-status">}
 		i = 0
 		text += "<tr>"
 		status_hash['steps'].each do |s|
@@ -10,16 +10,15 @@ module BattleRoyaleHelper
 			# i += 1
 			#else
 			if i != 0
-				text += "<td rowspan='2' class='divide'><img src='/images/#{s['result']}.gif' alt='result'></td>"
+				text += %Q{<td rowspan="2" class="divide"><img src="/images/#{s['result']}.gif" alt="result"></td>}
 			end
-			text += "<td class='#{s['class']}'>#{s['text']}</td>"
-			#text += (status_hash['current_step'] == i) ? "<td class='latest'><em class='intro'>Latest action:</em></td>" : "<td class='noborder'><div>&nbsp;</div></td>"
+			text += %Q{<td class="#{s['class']}">#{s['text']}</td>}
 			i += 1
 		end
 		text += "</tr><tr>"
 		i = 0
 		status_hash['steps'].each do |s|
-			text += s['date'] ? "<td class='#{s['class']}'>#{s['date'].strftime('%B %d, %Y')}</td>" : "<td class='#{s['class']}'></td>"
+			text += s['date'] ? %Q{<td class="#{s['class']}">#{s['date'].strftime('%B %d, %Y')}</td>} : %Q{<td class="#{s['class']}"></td>}
 			i += 1
 		end    
     text += "</tr></table></div>"

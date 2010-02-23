@@ -53,4 +53,9 @@ class IndexController < ApplicationController
 	  @page_title = 'Senate Health Care Bill - Health Care Reform'
 	  render :layout => 'application'
 	end
+	
+	def senate_health_care_bill_111
+	  @page_title = 'The President\'s Proposal - Health Care Reform'
+	end
+	
 end

@@ -206,7 +206,9 @@ ActionController::Routing::Routes.draw do |map|
 
   # Temporary routes for health care legislation
   map.connect 'baucus_bill_health_care.html', :controller => 'index', :action => 's1796_redirect'
+  map.connect 'presidents_health_care_proposal', :controller => 'index', :action => 'presidents_health_care_proposal'
   map.connect 'senate_health_care_bill', :controller => 'bill', :action => 'text', :id => '111-h3590', :version => 'ocas'
+
 
   # Install the default route as the lowest priority.
   map.connect ':controller/:action/:id'

@@ -26,7 +26,10 @@ class AboutController < ApplicationController
     @page_title = 'OpenCongress for Developers'
     require 'bluecloth'
     @readme = BlueCloth.new(File.open("#{RAILS_ROOT}/README.markdown").read).to_html
-
+  end
+  
+  def developer_job
+    @page_title = "OpenCongress is looking for a Rails developer!"
   end
 
   def beta_feedback

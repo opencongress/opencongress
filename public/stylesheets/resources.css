@@ -12,7 +12,9 @@ width: inherit !important;
 }
 
 
-
+.healthcare_panel{
+height: 900px;
+}
 
 hr{
 display: none;

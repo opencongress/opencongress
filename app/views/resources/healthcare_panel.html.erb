@@ -59,6 +59,8 @@ color: #333;
 
 .healthcare_widget .senate {
    margin-top: 15px;
+   border-bottom: 1px solid #ddd;
+   padding-bottom: 15px;
 }
 
 .healthcare_widget .senate .status {
@@ -206,8 +208,7 @@ h5.bill_title a:link {
 							<span>Latest Action: <span class="passed">Passed on Nov. 7th, 2009</span></span>
 
 			
-			<%= link_to("Read and comment on the bill text", url_for(:controller => 'bill', :action => 'text', :id => @house_bill_ident), :class => "full_text", :target => "_blank") %>
-   			<%= link_to("Full vote result (220-215)", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "h", :number => "887"), :class => "roll_call", :target => "_blank") %>
+<%= link_to("Read and comment on the bill text", url_for(:controller => 'bill', :action => 'text', :id => @house_bill_ident, :anchor => 'most_commented'), :class => "full_text", :target => "_blank") %>   			<%= link_to("Full vote result (220-215)", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "h", :number => "887"), :class => "roll_call", :target => "_blank") %>
 			<% if @state_name %>
    			<%= link_to("How #{ @state_name } Reps voted", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "h", :number => "887", :state => params[:state]), :class => "voting_record", :target => "_blank") %>
          <% end %>
@@ -222,7 +223,7 @@ h5.bill_title a:link {
    		
    		<span>Latest Action:  <span class="passed">Passed on Dec. 24th, 2009</span></span>
    		
-   		<%= link_to("Read and comment on the bill text", url_for(:controller => 'bill', :action => 'text', :id => @senate_bill_ident), :class => "full_text", :target => "_blank") %>   			
+   		<%= link_to("Read and comment on the bill text", url_for(:controller => 'bill', :action => 'text', :id => @senate_bill_ident, :anchor => 'most_commented'), :class => "full_text", :target => "_blank") %>   			
    			<%= link_to("Full vote result (60-39)", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "s", :number => "396"), :class => "roll_call", :target => "_blank") %>
 			<% if @state_name %>
    			<%= link_to("How #{ @state_name } Senators voted", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "s", :number => "396", :state => params[:state]), :class => "voting_record", :target => "_blank") %>
@@ -233,6 +234,7 @@ h5.bill_title a:link {
 				<div class="senate"> 
 					<h4>White House Version - <a href="http://www.opencongress.org/presidents_health_care_proposal">President Obama's Proposal</a></h4>
 					<span>Latest Action: Made Public Feb. 22, 2010</span>
+					<br />
 					<a href="#">Read the 11-page Outline</a>
 				</div>
       

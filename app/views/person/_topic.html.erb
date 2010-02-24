@@ -3,9 +3,9 @@
     <h3><em><%= @person.title_common %> <%= @person.full_name %></em></h3>
     <h5>
       <%= @person.party %> &nbsp;&bull;&nbsp;
-      <%= "#{number_to_ordinal(@person.district)} District, " if (@person.representative? && @person.district != '0')%>
+      <%= "#{@person.district.ordinalize} District, " if (@person.representative? && @person.district != '0')%>
       <%= "#{State.for_abbrev(@person.state)} &nbsp;&bull;&nbsp;" unless @person.state.blank? %> 
-      <%= @person.is_sitting? ? "#{number_to_ordinal(@person.consecutive_roles.size)} Term" : "#{@person.consecutive_roles.size} Terms" %> &nbsp;&bull;&nbsp;
+      <%= @person.is_sitting? ? "#{@person.consecutive_roles.size.ordinalize} Term" : "#{@person.consecutive_roles.size} Terms" %> &nbsp;&bull;&nbsp;
       Sworn In <%= @person.consecutive_roles.last.startdate.strftime("%Y") %>
     </h5>
   </div>

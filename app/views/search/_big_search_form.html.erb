@@ -12,10 +12,9 @@
   <div id="sessions">
     <p>Sessions:</p>
     <% AVAILABLE_CONGRESSES.each do |c| %>
-      <%= check_box_tag "search_congress[#{c}]", "#{c}", c == DEFAULT_CONGRESS ? true : false %> <%= number_to_ordinal(c) %> Congress<br />
+      <%= check_box_tag "search_congress[#{c}]", "#{c}", c == DEFAULT_CONGRESS ? true : false %> <%= c.ordinalize %> Congress<br />
     <% end %>
   </div>
-		
 		
 	<div id="search_in">
 	  <p>Search in:</p>

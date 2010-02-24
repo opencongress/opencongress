@@ -22,7 +22,7 @@
 <% unless @bill.title_popular_only.blank? %>
   <h3 class="official-title"><%= em_official_title %></h3>
 <% end %> 
-<span class="date"><%= @bill.session == DEFAULT_CONGRESS ? 'current' : 'previous' %> <%= number_to_ordinal(@bill.session) %> session of congress</span>
+<span class="date"><%= @bill.session == DEFAULT_CONGRESS ? 'current' : 'previous' %> <%= @bill.session.ordinalize %> session of congress</span>
 
 <% unless @bill.plain_language_summary.blank? %>
   <div class='explain_box bill'>

@@ -27,7 +27,7 @@
 
 <div class="title">
 <!--
-<span class="date"><%= @bill.session == DEFAULT_CONGRESS ? 'current' : 'previous' %> <%= number_to_ordinal(@bill.session) %> session of congress</span>
+<span class="date"><%= @bill.session == DEFAULT_CONGRESS ? 'current' : 'previous' %> <%= @bill.session.ordinalize %> session of congress</span>
 -->
 <h1><a href="/bill/<%= @bill.ident %>/show"><span><%= @bill.title_typenumber_only %></span></a> - <%= @bill.title_common %></h1>
 

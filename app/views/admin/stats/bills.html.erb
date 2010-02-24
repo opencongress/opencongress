@@ -19,7 +19,7 @@
       <th>"Nay" votes</th>
     </tr>
     <tr>
-      <td><strong>Totals for <%= number_to_ordinal(@session) %> Congress</strong></td>
+      <td><strong>Totals for <%= @session.ordinalize %> Congress</strong></td>
       <td><strong><%= number_with_delimiter(@total_pageviews) %></strong></td>
       <td><strong><%= number_with_delimiter(@total_bookmarks) %></strong></td>
       <td><strong><%= number_with_delimiter(@total_comments) %></strong></td>

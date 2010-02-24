@@ -71,7 +71,7 @@ module IndexHelper
     if session and session.today? 
       out += "In Session"
     elsif session
-      out += "Returns #{session.date.strftime("%b")}. #{number_to_ordinal(session.date.day)}"
+      out += "Returns #{session.date.strftime("%b")}. #{session.date.day.ordinalize}"
     else
       out += "Not In Session"
     end

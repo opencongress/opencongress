@@ -63,7 +63,7 @@
       <tr>
         <td>
           <%= link_to bill.title_typenumber_only, bill_path(bill) %>
-          <%= bill.title_common %> <span class='date'>(<%= number_to_ordinal(bill.session) %> congress)</span>
+          <%= bill.title_common %> <span class='date'>(<%= bill.session.ordinalize %> congress)</span>
         </td>
         <td><%= temp_url_strip(bill.status) %></td>
 				<td><%= bill.last_action.formatted_date %></td>
@@ -91,7 +91,7 @@
       <tr>
         <td>
           <%= link_to bill.title_typenumber_only, :controller => 'bill', :action => 'show', :id => bill.ident %>
-          <%= bill.title_common %> <span class='date'>(<%= number_to_ordinal(bill.session) %> congress)</span>
+          <%= bill.title_common %> <span class='date'>(<%= bill.session.ordinalize %> congress)</span>
         </td>
         <td><%= temp_url_strip(bill.status) %></td>
         <td><%= bill.last_action.formatted_date %></td>

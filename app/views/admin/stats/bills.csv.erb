@@ -1,4 +1,4 @@
-# OpenCongress Bill Data for the <%= number_to_ordinal(@session) %> Congress
+# OpenCongress Bill Data for the <%= @session.ordinalize %> Congress
 Bill,Views,Tracking,Comments,"Aye" votes,"Nay" votes
 Totals,<%= @total_pageviews %>,<%= @total_bookmarks %>,<%= @total_comments %>,<%= @total_ayes %>,<%= @total_nays %>
 <% @bills.each do |b| -%>

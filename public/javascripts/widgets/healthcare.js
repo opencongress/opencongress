@@ -1,4 +1,4 @@
-var fHeight = 596;
+var fHeight = 526;
 if (typeof oc_state != "undefined") {
     fHeight += 42;
 }

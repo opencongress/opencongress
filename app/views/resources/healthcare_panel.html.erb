@@ -42,7 +42,7 @@ color: #333;
 .healthcare_widget .guts {
    border-left: 1px solid #ddd;
    border-right: 1px solid #ddd;
-   padding: 15px;
+   padding: 15px 15px 0;
 }
 
 .healthcare_widget .guts h4 {
@@ -105,14 +105,13 @@ color: #333;
    color: #ccc;
 }
 
-.full_text, .comments, .roll_call, .voting_record, .tracking {
-   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 4px no-repeat;
+.full_text, .comments, .roll_call, .voting_record, .tracking, .pres_bill {
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 14px no-repeat;
    padding-left: 18px;
    line-height: 1.8em;
    color: #555;
    float: left;
 }
-
 
 .full_text {
 padding-top: 10px;
@@ -237,7 +236,6 @@ h5.bill_title a:link {
 					<br />
 					<a href="#">Read the 11-page Outline</a>
 				</div>
-      
    </div> <!-- Guts -->
    <div class="blog_coverage">
    	<% if @state_name %>

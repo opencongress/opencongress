@@ -1,4 +1,9 @@
 
+
+#heading p{
+padding: 6px 0 0 20px;
+}
+
 #content img{
 float: right;
 margin-bottom: 20px;
@@ -23,6 +28,23 @@ display: none;
 .inner{
 
 }
+
+
+.healthcare_status{
+padding: 12px 10px 10px 15px;
+margin-bottom: 25px;
+background: #eee;
+float: right;
+width: 505px;
+border: 1px solid #ddd;
+}
+
+.healthcare_status dt{
+font-weight: bold;
+float: left;
+padding: 0 20px 0 0;
+}
+
 
 hr{
 clear: both;
@@ -57,6 +79,13 @@ height: 360px;
 overflow: hidden;
 }
 
+textarea#panel_code{
+width: 514px;
+margin-top: 10px;
+padding: 8px;
+border: 1px solid #999;
+height: 120px;
+}
 
 .inner h1{
 clear: both;
@@ -69,6 +98,15 @@ margin: 0 0 0 35px;
     display: block;
     float: left;
     width: 400px;
+}
+
+img.noborder{
+display: none;
+}
+
+
+#preview_healthcare_panel iframe {
+margin-top: 10px;
 }
 
 #preview_healthcare_code {

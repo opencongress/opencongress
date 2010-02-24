@@ -72,9 +72,8 @@ module BillHelper
 
   def display_related_bills
     return "No related bills" unless @bill.related_bills.size > 0
-    "<a href='#' id='bill_related_link' onclick='change_vis_text(\"bill_related_bills\", " +
-      "\"bill_related_link\", \"Show related bills\", \"Hide related bills\");return false'>" +
-      "Show related bills</a>"
+
+    %Q{<a href="#" id="bill_related_link" onclick="change_vis_text('bill_related_bills', 'bill_related_link', 'Show related bills', 'Hide related bills');return false">Show related bills</a>}
   end
 
 	def bill_related_list 
@@ -116,7 +115,7 @@ module BillHelper
         });
         </script>"
         
-        out += summary_no_html[0..290] + "<span id=\"bill_summary_extra\" class='jqmWindow scrolling'><div class=\"ie\"><a href=\"#\" class=\"jqmClose\">Close</a></div><h3>Official Summary</h3>#{summary}<br /><br /></span>...<a href='#' class='summary_trigger more'><strong>Read the Rest</strong></a>"
+        out += summary_no_html[0..290] + %Q{<span id="bill_summary_extra" class='jqmWindow scrolling'><div class="ie"><a href="#" class="jqmClose">Close</a></div><h3>Official Summary</h3>#{summary}<br /><br /></span>...<a href="#" class="summary_trigger more"><strong>Read the Rest</strong></a>}
       end
     end
   end
@@ -186,30 +185,29 @@ module BillHelper
             current = ' current'
           end
         end
-        text += "<td class='divide #{s['class']}#{current}'><span>&nbsp;</span></td><td class='#{s['class']}'>"
+        text += %Q{<td class="divide #{s['class']}#{current}"><span>&nbsp;</span></td><td class="#{s['class']}">}
         unless s['roll_id'].blank?
-          text += "<a href=/roll_call/show/#{s['roll_id']}>"
+          text += %Q{<a href="/roll_call/show/#{s['roll_id']}">}
         end  
-        text += "<table class='info' cellpadding='0' cellspacing='0'><tr><td>#{s['text'].gsub(/\s/, "<br/>")}</td></tr>"
+        text += %Q{<table class="info" cellpadding="0" cellspacing="0"><tr><td>#{s['text'].gsub(/\s/, "<br/>")}</td></tr>}
         text += "</table>"
         unless s['roll_id'].blank?
           text += "</a>"
         end
-        text += "</td>"
+        text += '</td>'
 			  if s.has_value?('Failed')
-			    text += "<td class='close'></td>"
+			    text += '<td class="close"></td>'
 			  end
   		end
   	end
-    text += "</tr></table><br />\n"
-    
-		text += "<table border='0' cellpadding='0' cellspacing='0' id='bill-status-dates'>"
-		text += "<tr>"
+    text += '</tr></table><br />
+        <table border="0" cellpadding="0" cellspacing="0" id="bill-status-dates">
+        <tr>'
     pending = false
 		status_hash['steps'].each do |s|
     current = ''
       if s.has_value?('Bill Becomes Law') || s.has_value?('Bill Is Law') || s.has_value?('Resolution Passed')
-        text += "<td class='divide #{s['class']}'><span>&nbsp;</span></td>"
+        text += %Q{<td class="divide #{s['class']}"><span>&nbsp;</span></td>}
       else
         if pending == false
           if s['result'] == 'Pending'
@@ -217,16 +215,14 @@ module BillHelper
             current = ' current'
           end
         end
-        text += "<td class='divide #{s['class']}#{current}'><span class=\"hump\">&nbsp;</span></td><td class='#{s['class']}'>"
-        text += "<table class='info' cellpadding='0' cellspacing='0'><tr><td><strong>#{s['date'] ? s['date'].strftime('%m/%d/%y') : "<span class='empty'>&nbsp;</span>"}</strong></td></tr>"
-        text += "</table>"
-        text += "</td>"
+        text += %Q{<td class="divide #{s['class']}#{current}"><span class="hump">&nbsp;</span></td><td class="#{s['class']}">
+          <table class="info" cellpadding="0" cellspacing="0"><tr><td><strong>#{s['date'] ? s['date'].strftime('%m/%d/%y') : '<span class="empty">&nbsp;</span>'}</strong></td></tr></table></td>}
 			  if s.has_value?('Failed')
-			    text += "<td class='close'></td>"
+			    text += '<td class="close"></td>'
 			  end
   		end
   	end
-    text += "</tr></table><br />\n"
+    text += "</tr></table><br />"
     
     return text
   end
@@ -236,19 +232,24 @@ module BillHelper
 		num = @tracking_suggestions.length
 		limit = 5
 		@tracking_suggestions[0..4].each do |t|
-			out += "<table cellspacing='0' cellpadding='0'>"
-			out += "\n<tr><td style='padding-right:5px;'>"
-			out += link_to(truncate(t[:bill].title_full_common, :length => 30), bill_url(t[:bill])) + "</td>\n"
-			out += "<td>[" +  link_to(t[:trackers], {:controller => 'friends', :action => 'tracking_bill', :id => t[:bill].ident}) + "]</td></tr>\n"
-			out += "</table>"
+			out += '<table cellspacing="0" cellpadding="0">
+              <tr><td style="padding-right:5px;">' +
+          + link_to(truncate(t[:bill].title_full_common, :length => 30), bill_url(t[:bill]))
+          + "</td><td>["
+          + link_to(t[:trackers], {:controller => 'friends', :action => 'tracking_bill', :id => t[:bill].ident})
+          + "]</td></tr>"
+		      + "</table>"
 		end
 		more = num - limit
 		if more > 0
-			out += "<table id='more_tracking_suggestions' cellspacing='0' cellpadding='0' style='display:none;'>\n"
+			out += '<table id="more_tracking_suggestions" cellspacing="0" cellpadding="0" style="display:none;">'
 			@tracking_suggestions[5..num].each do |t|
-					out += "\n<tr><td style='padding-right:5px;'>"
-					out += link_to(truncate(t[:bill].title_full_common, :length => 30), bill_url(t[:bill])) + "</td>\n"
-					out += "<td>[" +  link_to(t[:trackers], {:controller => 'friends', :action => 'tracking_bill', :id => t[:bill].ident}) + "]</td></tr>\n"
+					out += '<tr><td style="padding-right:5px;">'
+					    + link_to(truncate(t[:bill].title_full_common, :length => 30), bill_url(t[:bill]))
+					    + "</td>\n"
+					    + "<td>["
+					    + link_to(t[:trackers], {:controller => 'friends', :action => 'tracking_bill', :id => t[:bill].ident})
+					    + "]</td></tr>\n"
 			end
 			out += "</table>\n"
 			out += toggler("more_tracking_suggestions", "#{more} more bills", "Hide Others Tracking", "arrow", "arrow-hide")

@@ -1,9 +1,7 @@
 #blog{
 width: 383px;
 float: left;
-margin-top: 20px;
-background: url(/images/home_blog_bottom.png) left bottom no-repeat;
-   _background: url(/images/home_blog_bottom.gif) left bottom no-repeat;
+margin-top: 13px;
 }
 
 
@@ -24,23 +22,98 @@ font-size: 12px !important;
 .rightside{
 padding-top: 1px;
 float: right;
-width: 575px;
+width: 431px;
 }
 
 
+
+
+.medium_bill_list{
+padding: 0;
+margin: 0;
+}
+
+.medium_bill_list li a{
+text-decoration: none;
+padding: 13px 0 10px 60px;
+}
+
+
+.medium_bill_list li a span.title{
+padding: 0;
+margin: 0;
+font-weight: bold;
+font-size: 12px;
+width: 355px;
+display: block;
+overflow: hidden;
+}
+
+
+.medium_bill_list li a span.little_status{
+padding: 0;
+margin: 0;
+font-weight: normal;
+font-size: 11px;
+}
+
+
+.medium_bill_list li a p{
+padding: 0;
+margin: 0;
+color: #888;
+font-weight: normal;
+font-size: 11px;
+text-decoration: none;
+}
+
+
+.editorial_list li{
+background: #f7feef url('/images/editorial_bg.png') 0 bottom repeat-x;
+margin: 0;
+padding: 0;
+}
+
+.editorial_list li a{
+background: url('/images/small_bill.png') 15px 15px no-repeat;
+margin: 0;
+color: #333;
+display: block;
+border-top: 1px solid #ccc;
+}
+
+
+.editorial_list li a:hover{
+cursor: pointer;
+background: #f7feef url('/images/small_bill.png') 15px 15px no-repeat;
+}
+
+.editorial{
+background: url('/images/red_grad.png') repeat-x;
+
+}
+
 .healthcare_bills{
-padding-top: 20px;
-	float: right;
-background: url('/images/healthcare_bill.png') 0 54px no-repeat;
-width: 540px;	
+padding: 20px 0 20px 20px;
+width: 982px;
+height:36px;
+background: url('/images/healthcare_bill.png') 17px 14px no-repeat;
 margin-right: 30px;	
-border-top: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
+}
+
+.healthcare_bills h2{
+padding-left: 77px;
+float: left;
+font-size: 12px;
+width: 80px;
 }
 
 
 .healthcare_bills div{
-padding-left: 85px;	
+padding-left: 30px;	
 padding-bottom: 11px;
+float: left;
 font-weight: bold;
 }
 
@@ -54,34 +127,36 @@ cursor: pointer;
 .healthcare_bills div span{
 font-weight: normal;
 display: block;
+color: #999;
 }
 
 
+
+
 .congress_status{
-/*
-background: url('/images/congress_status.png') left top no-repeat;
-*/
-width: 578px;
-margin: 26px 0px 0 0px;
-font-size: 11px;
+background: url('/images/today.png') left bottom repeat-x;
+margin: 0px;
+font-size: 12px;
+min-height: 103px;
 }
 
 
 .congress_status h2{
-font-size: 11px;
-margin: 0 !important;
-padding: 8px 0px 13px 7px !important;
-font-family: Arial, Helvetica, sans-serif !important;
-display: block;
-float: left;
-font-style: normal !important;
+background-position: 0 -1px;
+line-height: 2.7em;
+border: 0;
+border-bottom: 1px solid #ccc;
+background: url(/images/blog_bg.png) left bottom no-repeat;
 }
 
 .congress_status h2 span{
 font-family: Arial, Helvetica, sans-serif;
 font-size: 11px !important;
 display: inline !important;
-padding: 13px 6px 13px 6px !important;
+float: right;
+font-weight: normal;
+color: #888;
+padding: 0px 10px 0px 6px !important;
 font-style: italic !important;
 }
 
@@ -93,10 +168,9 @@ width: 122px;
 }
 
 .house_sesh{
-float: left;
 padding: 8px 0 0 35px;
 width: 132px;
-
+margin-top: 4px;
 }
 
 .senate_sesh{
@@ -126,6 +200,100 @@ padding: 0px 0 8px 0px;
 }
 
 
+.small_heading{
+font-size: 12px;
+background: url(/images/blog_bg.png) left bottom no-repeat;
+clear: both;
+line-height: 2.5em;
+padding: 0 0 0 10px;
+margin: 0;
+border-top: 1px solid #ddd;
+}
+
+
+
+
+.small_heading a{
+float: right;
+padding-right: 10px;
+}
+
+
+.small_heading span{
+font-weight: bold;
+cursor: pointer;
+padding: 10px 5px;
+position: relative;
+}
+
+
+
+.small_heading span:hover ul.tabs{
+display: block;
+position: absolute;
+
+}
+
+
+
+.small_heading ul.tabs{
+margin: 10px 0 0 0;
+padding: 0px 4px 4px 4px;
+position: absolute;
+top: 23px;
+width: 161px;
+display: none;
+left: -9px;
+	background: url('/images/dropdown.png') left bottom no-repeat;
+}
+
+
+.small_heading ul.tabs li{
+margin: 0;
+padding: 0;
+clear: both;
+float: left;
+width: 100%;
+}
+
+
+.small_heading ul.tabs li a{
+margin: 0;
+padding: 0 ;
+float: left;
+width: 100%;
+font-size: 11px;
+font-weight: normal;
+text-decoration: none;
+}
+
+
+.small_heading ul.tabs li a:hover{
+background: #ddd;
+}
+
+
+.small_heading ul.tabs li span{
+margin: 0;
+padding: 0 0 0 10px;
+display: block;
+font-weight: normal;
+}
+
+
+
+
+
+.top_area{
+background: url(/images/blog_bg.png) left bottom no-repeat;
+border-bottom: 1px solid #ccc;
+}
+
+
+.just_for_a_border{
+background: url(/images/line.gif) 570px bottom repeat-y;
+}
+
 
 #blog img.frontpage-blog-image{
 clear: left;
@@ -138,10 +306,11 @@ padding: 3px;
 
 .blog_list{
 padding-top: 0 !important;
-padding-left: 20px;
 float: left;
-margin-left: 10px;
-width: 383px;
+width: 570px;
+position: relative;
+
+padding: 0 0 50px;
 }
 
 .blog_list .clear{
@@ -152,13 +321,10 @@ height: 18px;
 
 .blog_list h2{
 float: left;
-width: 363px;
-margin: 0 10px;
+width: 510px;
+margin: 0 30px;
 height: 47px;
 overflow: hidden;
-/*
-background: url(/images/home_blog_top.png) left 0 no-repeat;
-*/
 }
 
 .blog_list h2 .text{
@@ -170,41 +336,50 @@ padding: 15px 0px 15px;
 }
 
 .blog_list h2 .feed{
-margin: 16px 16px;
+margin: 13px 0 16px;
 }
 
 .blog_list #blog .back{
-/*
-background: url(/images/home_blog_back.png) left 0 repeat-y;
-*/
+padding: 0 20px;
 clear: both;
+width: 518px;
 }
 
 
-div.blog_list .back h3.recent{
-background: url(/images/home_blog_top.png) left 0 no-repeat;
-   _background: url(/images/home_blog_top.gif) left 0 no-repeat;
-margin: 0 !important;
-padding-left: 15px !important;
+
+.blog_list .med_button{
+clear: none !important;
+float: right;
+margin-left: 14px;
 }
 
+.blog_list .med_button span{
+padding-top: 6px;
+padding-bottom: 5px;
+}
+.blog_list h2{
+border-bottom: 1px solid #ddd;
+}
+
+.blog_list h2.icon .feed-button{
+float: right;
+}
 
 .blog_list #blog p{
-padding: 0px 0px 17px 10px;
+padding: 0px 0px 25px 10px;
 min-height: 182px;
 margin: 0 2px;
 font-size: 14px;
 clear: left;
 color: #555;
-width: 360px;
 line-height: 1.5em;
-overflow: hidden; /*
-background: url(/images/home_blog_ul.png) left bottom repeat-x;
-*/
+overflow: hidden; 
+
 }
 
 .blog_list #blog h3{
 padding: 15px 10px;
+
 }
 
 .blog_list #blog h3 .date{
@@ -212,21 +387,24 @@ display: block;
 color: #666;
 font-size: 11px;
 clear: both;
+margin-bottom: 10px;
 float: left;
 }
 
-.blog_list #blog h3 .gossip{
+.blog_list #blog h3 strong.gossip a{
 float: left;
-padding: 0 0 3px 0;
-}
-
-.gossip a{
+font-size: 22px;
+padding: 0 0 0px 0;
+text-decoration: none;
 color: #333;
 font-weight: normal;
-font-size: 18px;
-line-height: 1.5em;
+line-height: 1.3em;
 display: block;
 margin-bottom: 5px;
+}
+
+.blog_list #blog h3 strong.gossip a:hover{
+text-decoration: underline;
 }
 
 #ts li a{
@@ -331,8 +509,8 @@ background: url('/images/small_button.png') left -23px no-repeat;
 #second_tier{
 clear: both;
 float: right;
-width: 966px;
-padding: 35px 0 35px 35px;
+width: 100%;
+
 }
 
 
@@ -437,11 +615,20 @@ clear: both;}
 
 #find{
 clear: both;
-padding: 45px 0px 5px 55px;
-background: url(/images/find_rep.png) 30px 30px no-repeat;
-   _background: url(/images/find_rep.gif) 30px 30px no-repeat;
+padding: 30px 0px 5px 27px;
+background: url(/images/track_them.jpg) 0px -2px no-repeat;
 float: left;
-width: 919px;
+width: 975px;
+height: 91px;
+border-bottom: 1px solid #999;
+}
+
+#find form{
+padding: 17px 0px 0 70px;
+height: 50px;
+width: 424px;
+float: left;
+background: url(/images/find_bg.png) 0px 0px no-repeat;
 }
 
 .enter_zip{
@@ -462,7 +649,7 @@ display: none;
 }
 
 #find p{
-font-size: 10px;
+font-size: 12px;
 float: left;
 padding: 0px 0 0 14px;
 width: 430px;
@@ -470,30 +657,24 @@ width: 430px;
 
 
 #find h2{
-clear: both;
-padding-right: 36px;
+padding-right: 20px;
 float: left;
 font-size: 13px;
-line-height: 3.2em;
+line-height: 1.3em;
+width: 100px;
 }
 
 #find_rep input{
-margin: 5px 20px 0 0;
-
+margin-top: 3px;
 }
 
 .enter_zip{
 width: 130px;
+margin-right: 20px;
 }
 
 
-.blog_list h2{
-border-bottom: 1px solid #ddd;
-}
 
-.blog_list h2.icon .feed-button{
-float: right;
-}
 
 .clear{
 clear: both;
@@ -512,84 +693,56 @@ border-bottom: 1px solid #abd1e2;
 border-top: 1px solid #ddedf5;
 }
 
-.subcol1 .back{
-min-height: 310px;
-padding: 15px 20px 20px;
-background: url(/images/home_sen_back.png) left 0 repeat-y;
-   _background: url(/images/home_sen_back.gif) left 0 repeat-y;
+
+
+
+.featured_members{
+background: #e0f4cf;
+padding-bottom: 60px;
+float: left;
+width: 570px;
 }
 
+.featured_members h3.darkline{
+background: url(/images/small_heading.png) left bottom repeat-x;
+line-height: 2.4em;
+padding-left: 30px;
+}
 
-
-.subcol1 img, .subcol2 img{
+.featured_members h3.darkline a.feed{
 float: right;
-}
-
-.subcol1 .med_button, .subcol2 .med_button{
-float: left;
-margin-bottom: 8px;
+margin-right: 30px;
 }
 
 
-
-.subcol1 p.clearfix, .subcol2 p.clearfix{
-float: left;
-overflow: hidden;
-height: 230px;
+.subcol1, .subcol2{
+width: 220px;
+margin: 10px 30px 0;
 }
 
-
-.subcol1 p.topline, .subcol2 p.topline{
-float: left;
-padding-top: 13px;
+.subcol1 p, .subcol2 p{
+font-size: 11px;
+line-height: 1.5em;
 }
 
 
 
-.subcol1 h3{
-font-size: 14px;
-font-weight: normal;
-color: #9ea16a;
-padding: 16px 20px 15px;
-margin: 0;
-background: url(/images/home_tops.png) left 0 no-repeat;
-   _background: url(/images/home_tops.gif) left 0 no-repeat;
+
+.box01{
+width: 431px;
+border-left: 1px solid #ddd;
 }
 
-.subcol2 .back{
-min-height: 310px;
-background: url(/images/home_rep_back.png) left 0 repeat-y;
-   _background: url(/images/home_rep_back.gif) left 0 repeat-y;
-padding: 15px 20px 20px;
-}
-
-
-.subcol2 h3{
-font-size: 14px;
-padding: 16px 20px 15px;
-margin: 0;
-font-weight: normal;
-color: #928250;
-background: url(/images/home_tops.png) left -59px;
-   _background: url(/images/home_tops.gif) left -59px; no-repeat;
-}
 
 .box01 .back{
-padding: 0px 0px 13px 0px;
-min-height: 330px;
-background: url(/images/home_vote_back.png) left 0 repeat-y;
-   _background: url(/images/home_vote_back.gif) left 0 repeat-y;
 }
 
 
 .box01 h3{
-font-size: 14px;
-font-weight: normal;
-padding: 16px 20px 15px;
+background: url(/images/small_heading.png) left bottom repeat-x;
+line-height: 2.4em;
+padding-left: 30px;
 margin: 0;
-color: #ac80af;
-background: url(/images/home_tops.png) left -118px no-repeat;
-   _background: url(/images/home_tops.gif) left -118px no-repeat;
 }
 
 
@@ -599,77 +752,65 @@ margin: 18px 18px 0 0;
 }
 
 
-.box01 .cap{
-background: url(/images/home_bottoms.png) -1px -24px no-repeat;
-   _background: url(/images/home_bottoms.gif) -1px -24px no-repeat;
-   _overflow:hidden;
-padding-top: 10px;
-width: 100%;
-float: left;
-}
-
-
-.subcol1 .cap{
-background: url(/images/home_bottoms.png) 0px 0px no-repeat;
-   _background: url(/images/home_bottoms.gif) 0px 0px no-repeat;
-   _overflow:hidden;
-padding-top: 10px;
-width: 100%;
-float: left;
-}
-
-
-
-.subcol2 .cap{
-background: url(/images/home_bottoms.png) -1px -13px no-repeat;
-   _background: url(/images/home_bottoms.gif) -1px -13px no-repeat;
-   _overflow:hidden;
-padding-top: 10px;
-width: 100%;
-float: left;
-}
-
 
 
 .latest_votes{
-padding: 0;
-margin: 0;
+padding: 0 !important;
+margin: 0 !important;
+
 }
+
 .latest_votes li {
-  margin:0 1px;
+  margin:0px;
 }
+
 .latest_votes li a {
 display: block;
-padding: 10px 20px;
-min-height:74px;
+padding: 13px 20px 13px 60px;
+float: left;
+width: 351px;
 cursor:pointer;
-margin: 0 3px 0 2px;
+color: #6e6083;
+margin: 0px;
 border-bottom: 1px solid #e8def8;
 text-decoration:none;
+background: #f8f3ff url('/images/small_bill.png') 15px 15px no-repeat;
 }
 
 .latest_votes a:hover{
-background-color: #f8f3ff;
+background: #f8f3ff url('/images/small_bill.png') 15px 15px no-repeat;
 }
 
 
-.latest_votes a{
+.latest_votes a span{
 font-weight: bold;
-color: #6e6083;
-}
 
+}
 
 .latest_votes .date{
-float: right;
 color: #c7bed6;
+float: right;
+font-size: 11px;
 }
 
 .latest_votes .type{
 display: block;
 font-style: italic;
+font-weight: normal;
 font-size: 11px;
-padding: 2px 0 0 0;
+padding: 0px 0 0 0;
 color: #9280ad;
+clear: both;
+float: left;
+
+}
+
+
+
+.latest_votes .votes{
+float: left;
+font-size: 11px;
+padding-right: 10px;
 }
 
 
@@ -696,11 +837,15 @@ font-weight: bold;
 display: inline;
 }
 
+
+
+div.blog_list .back h3.recent{
+margin: 0 !important;
+padding: 0px 0 10px 14px !important;
+}
+
 .indent {
-margin: 0px 0px 0;
-background: url(/images/home_blog_back.png) left 0 repeat-y;
-   _background: url(/images/home_blog_back.gif) left 0 repeat-y;
-float: left;
+margin: 0px 0px 0 12px;
 }
 	
 .indent li{
@@ -708,33 +853,29 @@ padding: 0 2px;
 }
 
 .indent li.dark a{
-background: #f9f9f9 url('/images/home_blog_icon.png') 20px 5px no-repeat;
-   _background: #f9f9f9 url('/images/home_blog_icon.gif') 20px 5px no-repeat;
+
 }
 
 
 .indent li a{
 display: block;
-padding: 4px 20px 4px 45px;
+padding: 3px 0px 0px 25px;
 float: left;
 text-decoration: none;
-background: url('/images/home_blog_icon.png') 20px 5px no-repeat;
-   _background: url('/images/home_blog_icon.gif') 20px 5px no-repeat;
+background: url('/images/home_blog_icon.png') 0px 6px no-repeat;
 clear: both;
-width: 315px;
+width: 475px;
+line-height: 2em;
 border-bottom: 1px solid #ddd;
 }
 
 .indent li a:hover{
-background: #efefef url('/images/home_blog_icon.png') 20px 5px no-repeat;
-   _background: #efefef url('/images/home_blog_icon.gif') 20px 5px no-repeat;
-
+background: #efefef url('/images/home_blog_icon.png') 0px 6px no-repeat;
 text-decoration: underline;
 }
 
 .indent li a .blog_headline{
 display: block;
-height: 1.3em;
 overflow: hidden;
 float: left;
 }
@@ -744,138 +885,6 @@ display: block;
 float: right;
 }
 
-
-div.pop_bills{
-width: 544px;
-clear: both;
-float: right;
-margin-top: 30px;
-margin-right: 30px;
-background: url(/images/home_bill_bottom.png) left bottom no-repeat;
-   _background: url(/images/home_bill_bottom.gif) left bottom no-repeat;
-padding-bottom: 8px;
-}
-
-
-
-.pop_bills div div ul {
-padding: 0px !important;
-float: left;
-}
-
-.pop_bills div div ul li {
-padding-left: 2px;
-
-}
-
-
-.pop_bills div div ul li a{
-float: left;
-width: 475px;
-background: url(/images/small_bill.png) 14px 13px no-repeat;
-   _background: url(/images/small_bill.gif) 14px 13px no-repeat;
-color: #3d5975;
-text-decoration: none;
-padding: 11px 10px 11px 55px;
-display: block;
-border-bottom: 1px solid #e2ebf4;
-}
-
-.pop_bills div div ul li a:hover{
-text-decoration: none;
-background: #fbfdff url(/images/small_bill.png) 14px 13px no-repeat;
-   _background: #fbfdff url(/images/small_bill.gif) 14px 13px no-repeat;
-text-decoration: underline;
-color: #555;
-}
-
-
-
-.pop_bills div div ul li a .title{
-font-weight: bold;
-float: left;
-display: block;
-font-size: 13px;
-height: 1.4em;
-overflow: hidden;
-}
-
-.pop_bills div div ul li a .title span{
-font-weight: normal;
-}
-
-.pop_bills div div ul li a .date{
-display: block;
-float: left;
-clear: left;
-}
-
-.pop_bills div div ul li a .date span{
-font-weight: bold;
-font-size: 11px;
-}
-
-.pop_bills div div ul li a .views_count{
-display: block;
-float: right;
-font-size: 14px;
-color: #288c09;
-margin: 0px;
-padding-right: 7px;
-background: url(/images/views.png) right top no-repeat;
-   _background: url(/images/views.gif) right top no-repeat;
-}
-
-.pop_bills div div ul li a .views_count span{
-background: url(/images/views.png) left top no-repeat;
-   _background: url(/images/views.gif) left top no-repeat;
-display: block;
-padding: 9px 4px 9px 11px;
-}
-
-.pop_bills div div ul li a .views_count span strong{ 
-font-weight: bold;
-}
-
-.pop_bills .med_button{
-clear: both;
-float: right;
-margin: 10px 10px 4px;
-font-weight: bold;
-}
-
-
-
-div.pop_bills .back{
-background: url(/images/home_bill_back.png) left 0 repeat-y;
-   _background: url(/images/home_bill_back.gif) left 0 repeat-y;
-clear: both;
-min-height: 402px;
-}
-
-
-
-div.pop_bills div.clear{
-height: 1px;
-}
-
-div.pop_bills .bill_top{
-padding: 13px 0px 11px 20px;
-float: left;
-width: 524px;
-background: url(/images/home_bill_cap.png) left 0 no-repeat;
-   _background: url(/images/home_bill_cap.gif) left 0 no-repeat;
-}
-
-
-div.pop_bills .bill_top h2{
-margin: 0;
-padding: 0;
-color: #6c92bd;
-font-size: 14px;
-float: left;
-padding-top: 3px;
-}
 
 
 
@@ -952,20 +961,13 @@ min-height: 205px;
 
 }
 
-.blog_list .med_button{
-clear: none !important;
-float: right;
-margin-left: 14px;
-}
-
-.blog_list .med_button span{
-padding-top: 6px;
-padding-bottom: 5px;
-}
 
 .blog_buttons{
-float: right;
-padding-top: 20px;
+padding: 5px;
+position: absolute;
+bottom: 0;
+
+width: 550px;
 }
 	
 a.med_button span{
@@ -1038,3 +1040,32 @@ margin-bottom:12px;
 .b-bill:hover{
 background: url(/images/b-bill.png) 0 -56px;
 }
+
+
+p.topline{
+float: left;
+width: 100%;
+margin-bottom: 15px;
+}
+
+
+p.topline .img_a{
+min-height: 100px;
+float: left !important;
+
+}
+
+
+p.topline .med_button{
+float: right;
+clear: none !important;
+margin-bottom: 8px;
+}
+
+
+p.topline .med_button span{
+padding-top: 8px;
+padding-bottom: 6px;
+}
+
+

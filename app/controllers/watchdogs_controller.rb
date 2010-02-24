@@ -34,7 +34,6 @@ class WatchdogsController < ApplicationController
      @items = @items.concat(@item_comments).sort {|b,a| a.created_at <=> b.created_at}
 
      @watchdogs = WatchDog.find(:all, :include => [:user, {:district => :state}], :order => "states.abbreviation asc, districts.district_number asc")
-
   end
 
   def find

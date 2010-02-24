@@ -29,13 +29,13 @@ end
 
 BASE_URL = 'http://dev.opencongress.org/'
 
-
-GOVTRACK_DATA_PATH = "/data/govtrack/#{DEFAULT_CONGRESS}"
-GOVTRACK_BILLTEXT_PATH = "/data/govtrack/bills.text"
-COMMITTEE_REPORTS_PATH = '/data/committee_reports'
-OPENSECRETS_DATA_PATH = '/data/opensecrets/'
-OC_BILLTEXT_PATH = '/data/opencongress/bills.text'
-GOVTRACK_BILLTEXT_DIFF_PATH = "/data/govtrack/bills.text.cmp"
+DATA_PATH = "/data"
+GOVTRACK_DATA_PATH = "#{DATA_PATH}/govtrack/#{DEFAULT_CONGRESS}"
+GOVTRACK_BILLTEXT_PATH = "#{DATA_PATH}/govtrack/bills.text"
+COMMITTEE_REPORTS_PATH = "#{DATA_PATH}/committee_reports"
+OPENSECRETS_DATA_PATH = "#{DATA_PATH}/opensecrets/"
+OC_BILLTEXT_PATH = "#{DATA_PATH}/opencongress/bills.text"
+GOVTRACK_BILLTEXT_DIFF_PATH = "#{DATA_PATH}/govtrack/bills.text.cmp"
 
 # the following API key is for OpenCongress production use only!
 TECHNORATI_API_KEY = API_KEYS['technorati_api_key']

@@ -14,13 +14,13 @@ require 'iconv'
 
 
 
-# get all senate bills
+# Get all senate bills for the current congress.
 bills = Bill.find_all_by_session_and_bill_type(DEFAULT_CONGRESS, 's')
 i=0
 bills.each do |b|
   i += 1
   puts "Checking senate bill #{i}/#{bills.size}"
-  
+
   b.commentaries.each do |c|    
     c.status = c.senate_bill_strict_validity
     c.save

@@ -1,8 +1,9 @@
-
+<div id="heading">
 <div class="explain_box">
 This is a list of all the users tracking <%= @issue.term %> who have made their pages of Tracked Items public. Some users may be tracking <%= @issue.term %>, but have made their pages private or friends-only. For more info, click on the usernames below and view their profile pages of Actions. You may find people with expertise in your interests or opinions that you value. Invite them to be your friend, and their latest actions will appear in your profile's page of Friends.  
 </div>
-
+</div>
+<div class="padding">
 <% if @users.empty? %>
   <p>Nobody is tracking that Issue</p>
 <% else %>
@@ -33,4 +34,4 @@ This is a list of all the users tracking <%= @issue.term %> who have made their 
   <%= render :partial => "tracking_tables" %>
 
 <% end %>
-  
+</div>

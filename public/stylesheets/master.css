@@ -154,16 +154,17 @@ border-bottom: 1px solid #aaa;
 #login{
 	position: absolute;
 	padding: 0px;
-	background: #fff;
-	/*margin-left: -20px;*/
-	width: 292px;
+z-index: 456782323;
+background: #fff url('/images/top_bar.png') -830px -32px no-repeat;
+	margin-left: -30px;
+	width: 315px;
 	}
 
 
 
 #header{
-	padding:0px 0 30px 0;
-	height: 84px;
+	padding:0px 0 8px 0;
+
 	}
 
 
@@ -201,7 +202,7 @@ border-bottom: 1px solid #aaa;
 #header .right{
 	text-align:right;
 	width:290px;
-	margin: 23px 10px 0;
+	margin: 23px 0px 0;
 	float: right;
 	}
 
@@ -277,8 +278,142 @@ a.logo:hover{
 	}
 	
 
-#search{
-margin-top: 3px;
+
+
+#show_advanced, #hide_advanced {
+float: left;
+margin-top: 4px;
+}
+
+
+#show_advanced .ad_search_down, #hide_advanced .ad_search_up {
+background: url('/images/wrench.png') no-repeat;
+width: 20px;
+overflow: hidden;
+padding-top: 23px;
+height: 0;
+width: 60px;
+margin-left: 13px;
+display: block;
+}
+
+
+#show_advanced .ad_search_down:hover  {
+background: url('/images/wrench.png') 0 -30px no-repeat;
+width: 20px;
+overflow: hidden;
+padding-top: 23px;
+height: 0;
+width: 60px;
+margin-left: 0px;
+display: block;
+}
+
+
+#hide_advanced .ad_search_up, #show_advanced .ad_search_down:active {
+background: url('/images/wrench.png') 0 -59px no-repeat;
+margin-left: 0px !important;
+}
+
+
+
+
+#advanced{
+float: right;
+clear: both;
+margin: 10px 1px 0 0;
+width: 1000px;
+
+padding: 0px;
+border: 1px solid #ddd;
+}
+
+
+
+
+#advanced .search_info {
+font-size: 16px;
+float: left;
+width: 280px;
+background: url('/images/mag.png') 30px 25px no-repeat;
+line-height: 1.2em;
+}
+
+
+
+#advanced .search_info p{
+font-size: 13px;
+padding: 0px 0 0 90px;
+float: left;
+width: 280px;
+line-height: 1.2em;
+margin:0;
+}
+
+
+#advanced h4{
+font-size: 16px;
+padding-left: 60px;
+width: 300px;
+margin: 25px 30px 10px;
+}
+
+
+
+div#search{
+margin: 4px 0 0 0;
+float: right;
+width: 330px;
+position: relative;
+}
+
+
+
+
+#search form{
+float: right;
+position: absolute;
+left: 33px;
+}
+
+
+
+
+#search .floatleft{
+margin-right: 30px;
+width: 293px;
+}
+
+
+#sessions,
+#search_in {
+border-left: 1px solid #ccc;
+min-height: 200px;
+float: right;
+width: 250px;
+}
+
+
+#sessions p,
+#search_in p{
+background: #eee;
+padding: 5px 8px;
+font-weight: bold;
+margin-bottom: 10px;
+}
+
+#sessions input,
+#search_in input{
+margin: 5px 10px !important;
+float: left;
+clear: both;
+}
+
+
+#sessions label,
+#search_in label{
+margin: 4px 0 0;
+float: left;
 }
 
 
@@ -3370,8 +3505,8 @@ border-bottom: 1px solid #ddd;
 #autocomplete-spin{
 float: left;
 position: absolute;
-margin-left: -281px;
-margin-top: 8px;
+margin-left: 2px;
+margin-top: 11px;
 z-index: 1000;
 }
 
@@ -3437,12 +3572,6 @@ font-weight: bold;
 float: left;
 }
 
-div.pop_bills .back{
-background: url(/images/home_bill_back.png) left 0 repeat-y;
-_background: url(/images/home_bill_back.gif) left 0 repeat-y;
-clear: both;
-min-height: 402px;
-}
 
 #twitter_nav a span{
 background: url(/images/twitter.png) 10px 8px no-repeat !important;
@@ -3529,7 +3658,7 @@ _background: url('/images/forms.gif') 0px 0px no-repeat;
 padding: 7px;
 border: none;
 width: 100px;
-margin: 0 5px 0 0;
+margin: 0 15px 0 0;
 float: left;
 }
 
@@ -3537,7 +3666,7 @@ float: left;
 clear: both;
 display: block;
 font-size: 11px;
-padding: 4px 0 0;
+padding: 8px 0 0;
 }
 
 #signupform{
@@ -3614,11 +3743,7 @@ padding: 8px 0 0 0 !important;
 padding: 7px 0 0 0 !important; 
 }
 
-.ad_search{
-color: #888;
-padding: 5px 0px 0 4px;
-font-size: 11px !important;
-}
+
 .seo{
 float: right;
 padding: 5px 0 0 0;

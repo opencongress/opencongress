@@ -23,7 +23,7 @@ def metavid_item_to_video(item, person = nil)
     v.title = item.text('title')
     v.source = 'metavid'
   
-    v.embed = "<video roe='#{embed}'></video>"
+    v.embed = %Q{<video roe="#{embed}"></video>}
     
     # pull the date from the title
     md = /\d+-\d+-\d+/.match(v.title)  
@@ -99,7 +99,7 @@ def youtube_item_to_video(item, person = nil)
       end
     end 
     
-    v.embed = "<object width=\"425\" height=\"344\"><param name=\"movie\" value=\"http://www.youtube.com/v/#{yt_id}&hl=en&fs=1\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/#{yt_id}&hl=en&fs=1\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"425\" height=\"344\"></embed></object>" 
+    v.embed = %Q{<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/#{yt_id}&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/#{yt_id}&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>}
     v.video_date = Date.parse(item.text('pubDate'))
   
     #puts "DESC: #{item.text('description')}"

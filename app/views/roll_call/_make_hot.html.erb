@@ -1,0 +1,15 @@
+<% if can_blog? %>
+  <div class="padding">
+  <% if make_hot.is_hot? %>
+    <% form_for :roll_call, make_hot, :url => { :controller => :roll_call, :action => 'make_not_hot', :id => make_hot.id } do |f| %>
+      <%= submit_tag "Remove From Hot Votes" %>
+    <% end %>
+  <% else%>
+    <b>Make <%= make_hot.number %> a hot vote:</b>
+    <% form_for :roll_call, make_hot, :url => { :controller => :roll_call, :action => 'make_hot', :id => make_hot.id } do |f| %>
+      Editorial Title: <%= f.text_field :title %>
+      <%= submit_tag "Make Hot Vote" %>
+    <% end %>
+  <% end %>
+  </div>
+<% end %>

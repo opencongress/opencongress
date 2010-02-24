@@ -138,6 +138,13 @@ class RollCallController < ApplicationController
     redirect_back_or_default("/roll_call/show/#{@roll_call.id}")
   end
   
+  def make_not_hot
+    @roll_call = RollCall.find_by_id(params[:id])
+    @roll_call.is_hot = false
+    @roll_call.save
+    redirect_back_or_default("/roll_call/show/#{@roll_call.id}")
+  end
+  
   def sublist
     @roll_call = RollCall.find(params[:id])
     

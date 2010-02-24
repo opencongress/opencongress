@@ -16,13 +16,7 @@
 				<% end %>
 			</div>
 			<em><%= roll.question %></em>
-			<% if can_blog? %>
-			<b>Make <%= roll.number %> a hot vote:</b>
-			<% form_for :roll_call, roll, :url => { :controller => :roll_call, :action => 'make_hot', :id => roll.id } do |f| %>
-			Editorial Title: <%= f.text_field :title %>
-			<%= submit_tag "Make Hot Vote" %>
-			<% end %>
-			<% end %>
+			<%= render :partial => 'roll_call/make_hot', :object => roll %>
 			<%= roll.ayes %>
 			<%= roll.nays %>
 			<%= roll.result %>

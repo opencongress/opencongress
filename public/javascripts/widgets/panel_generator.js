@@ -119,7 +119,7 @@ function updateFields(changedField, panelType, generatorRefresh) {
   else if (panelType == 'healthcare') {
       var state_abbrev = document.getElementById('panel_state_abbrev') ?
                      document.getElementById('panel_state_abbrev').value : '';
-    frameHeight = 438;
+    frameHeight = 580;
   }
   else if (panelType == 'bill_status')
   {

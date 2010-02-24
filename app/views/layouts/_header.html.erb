@@ -6,6 +6,7 @@
 		</p>
 		
 		<div id="user_account">
+		   <%= link_to "We're looking for web developers!", '/about/developer_job' %> | 
 			<% if logged_in? %>
 
 				Welcome <b><%= link_to h(current_user.login), user_profile_url(current_user.login) %></b> |

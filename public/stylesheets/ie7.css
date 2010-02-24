@@ -297,3 +297,11 @@ td#pim.pset {
 .replytri img {
   top:-2px;
 }
+.tracking_count a {
+  padding-bottom:1px;
+}
+.tracking_count a span {
+  line-height:15px;
+  padding-top:0px;
+  padding-bottom:2px;
+}

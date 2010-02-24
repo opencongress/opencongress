@@ -4,20 +4,14 @@
 </li>
 		<% rolls.each do |roll| %>  
 		<li>
-			<a href="/roll_call/show/<%= roll.id %>">
+			<a href="<%= roll.vote_url %>">
+      <%= render :partial => 'roll_call/make_hot', :object => roll %>
 			<% unless roll.bill.nil? %>
 				<span><%= roll.bill.title_full_common %></span>
 				<% end %>
 				<span class="type"><%= get_result_image(roll.result) %> <%= roll.question %></span>
 				<span class="date"><%= roll.date.strftime("%b %d, %Y") %></span>
 				<span class="aye">Ayes</span> <%= roll.ayes %>&nbsp;&nbsp;&nbsp;<span class="nay">Nays</span> <%= roll.nays %></a>
-			<% if can_blog? %>
-			<b>Make <%= roll.number %> a hot vote:</b>
-			<% form_for :roll_call, roll, :url => { :controller => :roll_call, :action => 'make_hot', :id => roll.id } do |f| %>
-			Editorial Title: <%= f.text_field :title %>
-			<%= submit_tag "Make Hot Vote" %>
-			<% end %>
-			<% end %>
 		 </li>
 		<% end %>
 		<% else %>

@@ -46,57 +46,43 @@
 												
 			<a href="/login">or Login with your OpenID</a>
 		</div>
-
-	 	<div id="search">
-
-
-<%= toggler("advanced", "Click to Show", "Click to Hide", "ad_search_down", "ad_search_up") %>
-
-
-			<form action="/search/result" id="form-search" method="get">
-				<div class="search">
-					<label for="search-field">Search</label>
-					<input name="q" id="search-field" type="text" value="<%= @query.blank? ? '' : @query %>" />
-					<input type="image" src="/images/search_submit.gif" name="submit" id="search_submit" value="Search" />
-					<input id="search_congress_111" name="search_congress[111]" type="hidden" value="111" /> 
-					<input id="search_bills" name="search_bills" type="hidden" value="1" />
-					<input id="search_people" name="search_people" type="hidden" value="1" />
-					<input id="search_committees" name="search_committees" type="hidden" value="1" />
-					<input id="search_issues" name="search_issues" type="hidden" value="1" />
-					<input id="search_comments" name="search_comments" type="hidden" value="1" />
-					<input id="search_gossip_blog" name="search_gossip_blog" type="hidden" value="0" />
-				</div>
 		
-			<div id="search-autocomplete-choices" class="autocomplete"></div>
-		</div>
+		<form action="/search/result" id="form-search" method="get">
+   	 	<div id="search">
 
-		
+         <%= toggler("advanced", "Click to Show", "Click to Hide", "ad_search_down", "ad_search_up") %>
 
+   				<div class="search">
+   					<label for="search-field">Search</label>
+   					<input name="q" id="search-field" type="text" value="<%= @query.blank? ? '' : @query %>" />
+   					<input type="image" src="/images/search_submit.gif" name="submit" id="search_submit" value="Search" />
+   				</div>
+
+   			<div id="search-autocomplete-choices" class="autocomplete"></div>
+   		</div>
+
+   		<script type="text/javascript">
+   		new Ajax.Autocompleter("search-field", "search-autocomplete-choices", "/search/autocomplete", {
+   		  paramName: "value", 
+   		  minChars: 3, 
+   		  indicator: 'autocomplete-spin'
+   		});
+   		</script>
 		
+   	</div> 
 		
-		<script type="text/javascript">
-		new Ajax.Autocompleter("search-field", "search-autocomplete-choices", "/search/autocomplete", {
-		  paramName: "value", 
-		  minChars: 3, 
-		  indicator: 'autocomplete-spin'
-		});
-		</script>
-		
-	</div> 
-		
-	<div class="tagline">
+   	<div class="tagline">
 
 		
-		<p>Everyone can be an <strong>insider</strong></p>
-		<a class="learn_it" href="/#pitch">Learn how</a> to track, comment, and share	
-	</div>
+   		<p>Everyone can be an <strong>insider</strong></p>
+   		<a class="learn_it" href="/#pitch">Learn how</a> to track, comment, and share	
+   	</div>
 
+      <div id="advanced" style="display: none;">
+      		  <%= render :partial => 'search/big_search_form' %>
+      </div>
 
-
-<div id="advanced" style="display: none;">
-		  <%= render :partial => 'search/big_search_form' %></div>
 </form>
-
 
 </div> <!-- // header -->
 

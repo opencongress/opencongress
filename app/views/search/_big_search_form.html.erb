@@ -9,13 +9,10 @@
  	
  	</div>
  	
- 
- 
- 
   <div id="sessions">
     <p>Sessions:</p>
     <% AVAILABLE_CONGRESSES.each do |c| %>
-      <%= check_box_tag "search_congress[#{c}]", "#{c}", true %> <%= number_to_ordinal(c) %> Congress<br />
+      <%= check_box_tag "search_congress[#{c}]", "#{c}", c == DEFAULT_CONGRESS ? true : false %> <%= number_to_ordinal(c) %> Congress<br />
     <% end %>
   </div>
 		
@@ -28,8 +25,7 @@
 	  <input checked="checked" id="search_committees" name="search_committees" type="checkbox" value="1" /><label for="search_committees"> Committees</label><br />
 	  <input checked="checked" id="search_issues" name="search_issues" type="checkbox" value="1" /> <label for="search_issues">Issues</label><br />
 	  <input checked="checked" id="search_comments" name="search_comments" type="checkbox" value="1" /> <label for="search_reps">User Comments</label><br />
-	  <!-- ><input checked="checked" id="search_commentary" name="search_commentary" type="checkbox" value="1" /> <label for="search_reps">News &amp; Blogs</label><br /> -->
-	  <input checked="checked" id="search_commentary" name="search_gossip_blog" type="checkbox" value="1" /> <label for="search_reps">OpenCongress Blog</label>
+	  <input id="search_commentary" name="search_gossip_blog" type="checkbox" value="1" /> <label for="search_reps">OpenCongress Blog</label>
 
 	  <span id="search_indicator" style="display: none"><%= image_tag 'indicator.gif', :class => 'noborder' %></span>
 	</div>

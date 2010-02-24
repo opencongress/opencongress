@@ -111,7 +111,11 @@
   <p>Most commented sections:</p>
   <ul>
     <% @commented_nodes.each do |n| %>
-      <li><%= link_to "Paragraph #{number_with_delimiter(n.paragraph_number)} (#{n.comment_count} comments)", :controller => 'bill', :action => 'text', :id => @bill.ident, :version => @version.version, :nid => n.nid %></li>
+      <li>
+        <a href="#" onClick="BillText.highlightNode('<%= n.nid %>'); return false;">
+          Paragraph <%= number_with_delimiter(n.paragraph_number) %> (<%= n.comment_count %> comments)
+        </a>
+      </li>
     <% end %>
   </ul>
 <% end %>

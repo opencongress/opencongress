@@ -949,7 +949,7 @@ class Bill < ActiveRecord::Base
     title ? "#{title.title}" : "#{type_name}#{number}"
   end
   
-  def title_typenumber_only # just the type and number, ie H.R.1591
+  def typenumber # just the type and number, ie H.R.1591
     "#{type_name}#{number}"
   end
 
@@ -982,7 +982,7 @@ class Bill < ActiveRecord::Base
   end
   
   def title_for_share
-    title_typenumber_only
+    typenumber
   end
 
   # methods for progress
@@ -1201,10 +1201,9 @@ class Bill < ActiveRecord::Base
   end
 
   def obj_title
-    title_typenumber_only
+    typenumber
   end
 
-  
   private
 
   def official_title

@@ -58,7 +58,7 @@
       <div id="bill_status">
         <div class="syndicator_items">		
 			<div id="title">
-            	<h1><%= @bill.title_typenumber_only %> <a href="/bill/<%= @bill.ident %>/atom" target="_top"><%= image_tag 'feed-icon-10x10.png', :border => '0' %></a></h1>
+            	<h1><%= @bill.typenumber %> <a href="/bill/<%= @bill.ident %>/atom" target="_top"><%= image_tag 'feed-icon-10x10.png', :border => '0' %></a></h1>
 
 				<p><%= @bill.title_common %></p>
 			</div>

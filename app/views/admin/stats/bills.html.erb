@@ -29,7 +29,7 @@
 
     <% @bills.each do |b| %>
       <tr>
-        <td><%= link_to b.title_typenumber_only, bill_path(b) %></td>
+        <td><%= link_to b.typenumber, bill_path(b) %></td>
         <td><%= number_with_delimiter(b.views) %></td>
         <td><%= number_with_delimiter(b.bookmarks.length) %></td>
         <td><%= number_with_delimiter(b.comments.size) %></td>

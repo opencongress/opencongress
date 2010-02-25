@@ -7,13 +7,13 @@
 <div class="col1" id ="news_list">
 	<h4 class="short">News Coverage</h5>
   <%= render :partial => 'shared/news', :object => @news,
-    :locals => { :limit => 10, :all_size => @bill.news_article_count, :default_title => @bill.title_typenumber_only, :short => true,
+    :locals => { :limit => 10, :all_size => @bill.news_article_count, :default_title => @bill.typenumber, :short => true,
                  :more_url => { :controller => 'bill', :action => 'news', :id => @bill.ident } } %>
 </div>
 <div class="col2" id="blogs_list">
 	<h4 class="short">Blog Coverage</h5>
 							  <%= render :partial => 'shared/blogs', :object => @blogs,
-							    :locals => { :limit => 10, :all_size => @bill.blog_article_count, :default_title => @bill.title_typenumber_only, :short => true,
+							    :locals => { :limit => 10, :all_size => @bill.blog_article_count, :default_title => @bill.typenumber, :short => true,
 							                 :more_url => { :controller => 'bill', :action => 'blogs', :id => @bill.ident } } %>
 </div>
 <% end %>

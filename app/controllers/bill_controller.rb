@@ -325,7 +325,7 @@ class BillController < ApplicationController
     # build the list of versions
     @versions = @bill.bill_text_versions.find(:all, :conditions => "bill_text_versions.previous_version IS NULL")
     if @versions.empty?
-      @bill_text = "We're sorry but OpenCongress does not have the full bill text at this time.  Try at <a href='http://thomas.loc.gov/cgi-bin/query/z?c#{@bill.session}:#{@bill.title_typenumber_only}:'>THOMAS</a>."
+      @bill_text = "We're sorry but OpenCongress does not have the full bill text at this time.  Try at <a href='http://thomas.loc.gov/cgi-bin/query/z?c#{@bill.session}:#{@bill.typenumber}:'>THOMAS</a>."
       @commented_nodes = []
       return
     end
@@ -340,7 +340,7 @@ class BillController < ApplicationController
     end
     @version = @versions.last if @version.nil?
 
-    @page_title = "Text of #{@bill.title_typenumber_only} as #{@version.pretty_version}"
+    @page_title = "Text of #{@bill.typenumber} as #{@version.pretty_version}"
 
     @nid = params[:nid].blank? ? nil : params[:nid]     
     @commented_nodes = @version.top_comment_nodes
@@ -352,7 +352,7 @@ class BillController < ApplicationController
       
       @bill_text = File.open(path).read
     rescue
-      @bill_text = "We're sorry but OpenCongress does not have the full bill text at this time.  Try at <a href='http://thomas.loc.gov/cgi-bin/query/z?c#{@bill.session}:#{@bill.title_typenumber_only}:'>THOMAS</a>."
+      @bill_text = "We're sorry but OpenCongress does not have the full bill text at this time.  Try at <a href='http://thomas.loc.gov/cgi-bin/query/z?c#{@bill.session}:#{@bill.typenumber}:'>THOMAS</a>."
     end
   end
 
@@ -468,21 +468,21 @@ class BillController < ApplicationController
     end
     
     @page_title = (@sort == 'toprated') ? "Highest Rated " : ""
-    @page_title += "Blog Articles for #{@bill.title_typenumber_only}"
+    @page_title += "Blog Articles for #{@bill.typenumber}"
     
     if @sort == 'toprated'
-      @atom = {'link' => url_for(:only_path => false, :controller => 'bill', :id => @bill.ident, :action => 'atom_topblogs'), 'title' => "#{@bill.title_typenumber_only} highest rated blog articles"}
+      @atom = {'link' => url_for(:only_path => false, :controller => 'bill', :id => @bill.ident, :action => 'atom_topblogs'), 'title' => "#{@bill.typenumber} highest rated blog articles"}
     else
-      @atom = {'link' => url_for(:only_path => false, :controller => 'bill', :id => @bill.ident, :action => 'atom_blogs'), 'title' => "#{@bill.title_typenumber_only} blog articles"}
+      @atom = {'link' => url_for(:only_path => false, :controller => 'bill', :id => @bill.ident, :action => 'atom_blogs'), 'title' => "#{@bill.typenumber} blog articles"}
     end
   end
 
   def topblogs
     @blogs = @bill.blogs.find(:all, :conditions => "commentaries.average_rating > 5", :limit => 5).paginate :page => @page
 
-    @page_title = "Highest Rated Blog Articles For #{@bill.title_typenumber_only}"
+    @page_title = "Highest Rated Blog Articles For #{@bill.typenumber}"
     
-    @atom = {'link' => url_for(:only_path => false, :controller => 'bill', :id => @bill.ident, :action => 'atom_topblogs'), 'title' => "#{@bill.title_typenumber_only} blog articles"}
+    @atom = {'link' => url_for(:only_path => false, :controller => 'bill', :id => @bill.ident, :action => 'atom_topblogs'), 'title' => "#{@bill.typenumber} blog articles"}
     render :action => 'blogs'
   end
 
@@ -518,19 +518,19 @@ class BillController < ApplicationController
     end
 
     @page_title = (@sort == 'toprated') ? "Highest Rated " : ""
-    @page_title += "News Articles for #{@bill.title_typenumber_only}"
+    @page_title += "News Articles for #{@bill.typenumber}"
    
     if @sort == 'toprated'
-      @atom = {'link' => url_for(:controller => 'bill', :id => @bill.ident, :action => 'atom_topnews'), 'title' => "#{@bill.title_typenumber_only} highest rated news articles"}
+      @atom = {'link' => url_for(:controller => 'bill', :id => @bill.ident, :action => 'atom_topnews'), 'title' => "#{@bill.typenumber} highest rated news articles"}
     else
-      @atom = {'link' => url_for(:controller => 'bill', :id => @bill.ident, :action => 'atom_news'), 'title' => "#{@bill.title_typenumber_only} news articles"}
+      @atom = {'link' => url_for(:controller => 'bill', :id => @bill.ident, :action => 'atom_news'), 'title' => "#{@bill.typenumber} news articles"}
     end
   end
 
   def topnews
     @news = @bill.news.find(:all, :conditions => "commentaries.average_rating > 5", :limit => 5).paginate :page => @page
-    @page_title = "Highest Rated Blog Articles For #{@bill.title_typenumber_only}"
-    @atom = {'link' => url_for(:controller => 'bill', :id => @bill.ident, :action => 'atom_topnews'), 'title' => "#{@bill.title_typenumber_only} blog articles"}
+    @page_title = "Highest Rated Blog Articles For #{@bill.typenumber}"
+    @atom = {'link' => url_for(:controller => 'bill', :id => @bill.ident, :action => 'atom_topnews'), 'title' => "#{@bill.typenumber} blog articles"}
     render :action => 'news'
   end
 
@@ -550,12 +550,12 @@ class BillController < ApplicationController
       @articles = @bill.blogs.find(:all, :conditions => ["fti_names @@ to_tsquery('english', ?)", query_stripped]).paginate :page => @page
     end
     
-    @page_title = "Search #{@commentary_type.capitalize} for bill #{@bill.title_typenumber_only}"
+    @page_title = "Search #{@commentary_type.capitalize} for bill #{@bill.typenumber}"
   end
 
   def videos
     @include_vids_styles = true
-    @page_title = "Videos of #{@bill.title_typenumber_only}"
+    @page_title = "Videos of #{@bill.typenumber}"
     @videos = @bill.videos.paginate :page => params[:page]
   end
 
@@ -624,7 +624,7 @@ private
     session, bill_type, number = Bill.ident params[:id]
     if @bill = Bill.find_by_session_and_bill_type_and_number(session, bill_type, number, { :include => [ :bill_titles ]})
       @page_title_prefix = "U.S. Congress"
-      @page_title = @bill.title_typenumber_only
+      @page_title = @bill.typenumber
       @head_title = @bill.title_common
       if @bill.plain_language_summary.blank?
         @meta_description = "Official government data, breaking news and blog coverage, public comments and user community for #{@bill.title_full_common}"
@@ -654,7 +654,7 @@ private
       ])
       @top_comments = @bill.comments.find(:all,:include => [:user], :order => "comments.plus_score_count - comments.minus_score_count DESC", :limit => 2)
       @bookmarking_image = "/images/fb-bill.jpg"
-      @atom = {'link' => url_for(:only_path => false, :controller => 'bill', :id => @bill.ident, :action => 'atom'), 'title' => "#{@bill.title_typenumber_only} activity"}
+      @atom = {'link' => url_for(:only_path => false, :controller => 'bill', :id => @bill.ident, :action => 'atom'), 'title' => "#{@bill.typenumber} activity"}
     else
       flash[:error] = "Invalid bill URL."
       redirect_to :action => 'all'

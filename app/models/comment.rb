@@ -126,7 +126,7 @@ class Comment < ActiveRecord::Base
     obj = Object.const_get(self.commentable_type)
     specific_object = obj.find_by_id(self.commentable_id)
     if self.commentable_type == "Bill"
-      return specific_object.title_typenumber_only
+      return specific_object.typenumber
     elsif self.commentable_type == "Person"
       return specific_object.name
     elsif self.commentable_type == "Subject"

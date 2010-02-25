@@ -9,7 +9,7 @@
 <% end %>
 
 <% if @commentary.commentariable_type == 'Bill' %>
-  <p><label for="commentary_bill">Associated Bill:</label> <%= @commentary.commentariable.title_typenumber_only %><br/>
+  <p><label for="commentary_bill">Associated Bill:</label> <%= @commentary.commentariable.typenumber %><br/>
 <% end %>
 
 <% if @commentary.commentariable_type == 'UpcomingBill' %>

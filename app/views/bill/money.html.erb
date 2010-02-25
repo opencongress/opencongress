@@ -28,7 +28,7 @@
   <% end %>
 
   <% unless @bill.bill_position_organizations.select{|g| g.disposition == 'support'}.empty? %>
-    <h3>Specific Organizations Supporting <%= @bill.title_typenumber_only %></h3>
+    <h3>Specific Organizations Supporting <%= @bill.typenumber %></h3>
     <ul>
     <% @bill.bill_position_organizations.select{|g| g.disposition == 'support'}.each do |org| %>
       <li><%= org.name %></li>
@@ -64,7 +64,7 @@
   <% end %>
   
   <% unless @bill.bill_position_organizations.select{|g| g.disposition == 'oppose'}.empty? %>
-    <h3>Specific Organizations Opposing <%= @bill.title_typenumber_only %></h3>
+    <h3>Specific Organizations Opposing <%= @bill.typenumber %></h3>
     <ul>
       <% @bill.bill_position_organizations.select{|g| g.disposition == 'oppose'}.each do |org| %>
      	 <li><%= org.name %></li>

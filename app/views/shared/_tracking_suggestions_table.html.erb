@@ -10,7 +10,7 @@
   </h3>
   <table>
     <tr>
-      <% unless tracking_suggestions[1][:my_bills_tracked_facet].blank? %><th style="width:400px;text-align:left;">Bills</th><% end %>
+      <% unless tracking_suggestions[1][:my_bills_tracked_facet].blank? %><th style="width:380px;text-align:left;">Bills</th><% end %>
       <% unless tracking_suggestions[1][:my_people_tracked_facet].blank? %><th style="width:280px;text-align:left;">People</th><% end %>
       <% unless tracking_suggestions[1][:my_issues_tracked_facet].blank? %><th style="width:280px;text-align:left;">Issues</th><% end %>
     </tr>
@@ -19,8 +19,8 @@
       <td style="vertical-align:top;">
         <ul class="mini_bills_list">
         <% tracking_suggestions[1][:my_bills_tracked_facet].each do |p| %>
-          <li><span class="tracking_count"><%= link_to "<span>#{p[:trackers]}</span>", :controller => 'friends', :action => 'tracking_bill', :id => p[:object].ident %></span>
-<%= link_to p[:object].title_typenumber_only, bill_path(p[:object]) %> <%= truncate_string(p[:object].title_common, 20) %></li>
+          <li><%= link_to p[:object].typenumber, bill_path(p[:object]) %> <%= truncate_string(p[:object].title_common, 20) %>
+            <div class="tracking_count"><%= link_to "<span>#{p[:trackers]}</span>", :controller => 'friends', :action => 'tracking_bill', :id => p[:object].ident %></li></div>
         <% end %>
         </ul>
       </td>
@@ -29,9 +29,8 @@
       <td style="vertical-align:top;">
         <ul class="mini_people_list">
         <% tracking_suggestions[1][:my_people_tracked_facet].each do |p| %>
-          <li><span class="tracking_count"><%= link_to "<span>#{p[:trackers]}</span>", :controller => 'friends', :action => 'tracking_person', :id => p[:object].ident %></span>
-						<%= link_to "#{p[:object].short_name} <i>[#{p[:object].party_and_state}]</i>", person_url(p[:object].ident) %>
-            </li>
+          <li><%= link_to "#{p[:object].short_name} <i>[#{p[:object].party_and_state}]</i>", person_url(p[:object].ident) %>
+            <div class="tracking_count"><%= link_to "<span>#{p[:trackers]}</span>", :controller => 'friends', :action => 'tracking_person', :id => p[:object].ident %></div></li>
         <% end %>
         </ul>
       </td>
@@ -40,9 +39,8 @@
       <td style="vertical-align:top;">
         <ul class="mini_issues_list">
         <% tracking_suggestions[1][:my_issues_tracked_facet].each do |p| %>
-          <li><span class="tracking_count"><%= link_to "<span>#{p[:trackers]}</span>", :controller => 'friends', :action => 'tracking_issue', :id => p[:object].to_param %></span>
-					<%= link_to p[:object].term, issue_url(p[:object].to_param) %> 
-            </li>
+          <li><%= link_to p[:object].term, issue_url(p[:object].to_param) %> 
+            <div class="tracking_count"><%= link_to "<span>#{p[:trackers]}</span>", :controller => 'friends', :action => 'tracking_issue', :id => p[:object].to_param %></li></div>
         <% end %>
         </ul>
       </td>

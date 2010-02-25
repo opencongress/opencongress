@@ -12,7 +12,7 @@
 				<% unless roll.bill.hot_bill_category.nil? %>
 				<%= image_tag 'icon-hot-bill.gif', :class => 'noborder', :style => 'line-height: .8em;', :alt => 'hot bill' %>
 				<% end %>
-				<%= link_to roll.bill.title_typenumber_only, bill_path(roll.bill) %> <%= roll.bill.title_common %>
+				<%= link_to roll.bill.typenumber, bill_path(roll.bill) %> <%= roll.bill.title_common %>
 				<% end %>
 			</div>
 			<em><%= roll.question %></em>

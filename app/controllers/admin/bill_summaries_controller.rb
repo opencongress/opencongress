@@ -46,7 +46,7 @@ class Admin::BillSummariesController < Admin::IndexController
     @bill.plain_language_summary = params[:bill][:plain_language_summary]
     @bill.save
     
-    flash[:notice] = "#{@bill.title_typenumber_only} has been updated"
+    flash[:notice] = "#{@bill.typenumber} has been updated"
     redirect_to :action => 'index'
   end
   
@@ -88,7 +88,7 @@ class Admin::BillSummariesController < Admin::IndexController
     end
         
     if params[:default_title][:title_id] == 'none'
-      flash[:notice] = "No default title set for bill #{@bill.title_typenumber_only}"
+      flash[:notice] = "No default title set for bill #{@bill.typenumber}"
     else
       bt = BillTitle.find_by_id(params[:default_title][:title_id])
       
@@ -144,7 +144,7 @@ class Admin::BillSummariesController < Admin::IndexController
       @bill.is_frontpage_hot = !@bill.is_frontpage_hot?
       @bill.save
       
-      flash[:notice] = "#{@bill.title_typenumber_only} #{@bill.is_frontpage_hot? ? 'added to' : 'removed from'} homepage."
+      flash[:notice] = "#{@bill.typenumber} #{@bill.is_frontpage_hot? ? 'added to' : 'removed from'} homepage."
       redirect_to bill_path(@bill)
     else
       flash[:error] = "Bill not found!"

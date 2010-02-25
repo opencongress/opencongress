@@ -40,15 +40,15 @@ module BillHelper
   end
 
   def title
-    "#{@bill.title_typenumber_only}: #{@bill.title_official}"
+    "#{@bill.typenumber}: #{@bill.title_official}"
   end
 
   def em_title
-    "#{@bill.title_typenumber_only}: <em>#{@bill.title_official}</em>"
+    "#{@bill.typenumber}: <em>#{@bill.title_official}</em>"
   end
 
   def official_title
-    @bill.title_official.blank? ? "#{@bill.title_typenumber_only}" : "#{@bill.title_official}"
+    @bill.title_official.blank? ? "#{@bill.typenumber}" : "#{@bill.title_official}"
   end
 
   def bill_titles_html
@@ -143,7 +143,7 @@ module BillHelper
 	end
     
   def bill_full_text_link
-    #"http://thomas.loc.gov/cgi-bin/query/z?c#{@bill.session}:#{@bill.title_typenumber_only}:"
+    #"http://thomas.loc.gov/cgi-bin/query/z?c#{@bill.session}:#{@bill.typenumber}:"
     url_for :controller => 'bill', :action => 'text', :id => @bill.ident
   end
 

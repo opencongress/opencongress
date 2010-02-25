@@ -23,7 +23,7 @@
      <ul>
        <% @tracking_suggestions.last[:my_bills_tracked_facet].each do |bt| %>
          <% unless bt[:trackers] == 0 %>
-         <li><%= link_to bt[:object].title_typenumber_only, bill_path(bt[:object]) %> - <%= truncate(bt[:object].title_common, :length => 50) %>
+         <li><%= link_to bt[:object].typenumber, bill_path(bt[:object]) %> - <%= truncate(bt[:object].title_common, :length => 50) %>
               <br />
               <div class="meta"><%= link_to "#{bt[:trackers]} followers", users_tracking_bill_by_state_path(bt[:object], @state.abbreviation) %>
               <%= link_to pluralize(bt[:object].comments.count, 'comment'), bill_comments_path(bt[:object]) %> 
@@ -112,7 +112,7 @@
      <ul style="margin-left:20px;">
        <% @tracking_suggestions.last[:my_bills_supported_facet].each do |bt| %>
          <% unless bt[:trackers] == 0 %>
-         <li class="bill"><%= link_to bt[:object].title_typenumber_only, bill_path(bt[:object]) %> - <%= truncate(bt[:object].title_common, :length => 50) %>
+         <li class="bill"><%= link_to bt[:object].typenumber, bill_path(bt[:object]) %> - <%= truncate(bt[:object].title_common, :length => 50) %>
               <br />
               <div class="meta"><%= bt[:trackers] %> users support</div></li>
          <% end %>
@@ -128,7 +128,7 @@
      <ul style="margin-left:20px;">
        <% @tracking_suggestions.last[:my_bills_opposed_facet].each do |bt| %>
          <% unless bt[:trackers] == 0 %>
-         <li class="bill"><%= link_to bt[:object].title_typenumber_only, bill_path(bt[:object]) %> - <%= truncate(bt[:object].title_common, :length => 50) %>
+         <li class="bill"><%= link_to bt[:object].typenumber, bill_path(bt[:object]) %> - <%= truncate(bt[:object].title_common, :length => 50) %>
               <br />
               <div class="meta"><%= bt[:trackers] %> users oppose</div></li>
          <% end %>

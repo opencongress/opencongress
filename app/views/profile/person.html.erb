@@ -23,12 +23,12 @@ Tracked by <%= link_to b.person.bookmarks.count, :controller => 'friends', :acti
 	   <ul>
 	   <%  items[0..2].each do |i| %>
 	     <% if i.class.name == "Bill" %>
-	       <li style="display:list-item;margin-top:5px;"><%= i.sort_date.to_s(:short) + ' - Introduced Bill: ' + link_to(i.title_typenumber_only, bill_path(i.ident)) + " : " + i.title_official %>
+	       <li style="display:list-item;margin-top:5px;"><%= i.sort_date.to_s(:short) + ' - Introduced Bill: ' + link_to(i.typenumber, bill_path(i.ident)) + " : " + i.title_official %>
 	       </li>
 	     <% elsif i.class.name == "RollCallVote" %> 
 	       <li style="display:list-item;margin-top:5px;"><%= i.sort_date.to_s(:short) + ' - ' + "Voted '" + i.to_s + "' on the question: " +
 	              (link_to i.roll_call.question, :only_path => false, :controller => 'roll_call', :action => 'show', :id => i.roll_call) +
-	                      " regarding #{link_to(i.roll_call.bill.title_typenumber_only, bill_path(i.roll_call.bill))}: #{i.roll_call.bill.title_common}" if i.roll_call.bill  %>
+	                      " regarding #{link_to(i.roll_call.bill.typenumber, bill_path(i.roll_call.bill))}: #{i.roll_call.bill.title_common}" if i.roll_call.bill  %>
 	       </li>
 	     <% else %>
 	       <li><%= "Vote: '" + i.to_s + "' on the question " + i.roll_call.question %>

@@ -104,7 +104,7 @@ end
     if self.amendment
        self.amendment.display_number
     else
-       self.bill.title_typenumber_only
+       self.bill.typenumber
     end        
   end
   

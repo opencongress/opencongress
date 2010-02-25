@@ -65,7 +65,7 @@
         <% end %>
         
 				<% unless @tracking_suggestions[0] == 0 %>
-				  <a href="#users_tracking" class="users_button"><span>Users Tracking <%= @bill.title_typenumber_only %> (<%= @tracking_suggestions[0] %>)</span></a>
+				  <a href="#users_tracking" class="users_button"><span>Users Tracking <%= @bill.typenumber %> (<%= @tracking_suggestions[0] %>)</span></a>
 				<% end %>
 
 	</div>
@@ -121,7 +121,7 @@
 				  <a name="news"></a>
   				<%=
   				  render :partial => 'shared/news', :object => @bill.news.find(:all, :limit => 3),
-  				  :locals => { :limit => 3, :all_size => @bill.news_article_count, :default_title => @bill.title_typenumber_only,
+  				  :locals => { :limit => 3, :all_size => @bill.news_article_count, :default_title => @bill.typenumber,
   					:more_url => { :controller => 'bill', :action => 'news', :id => @bill.ident },
   					:top_url => { :controller => 'bill', :action => 'news', :id => @bill.ident, :sort => 'toprated' } }
   				%>
@@ -140,7 +140,7 @@
 
   				<%=
   				  render :partial => 'shared/blogs', :object => @bill.blogs.find(:all, :limit => 3),
-  				  :locals => { :limit => 3, :all_size => @bill.blog_article_count, :default_title => @bill.title_typenumber_only,
+  				  :locals => { :limit => 3, :all_size => @bill.blog_article_count, :default_title => @bill.typenumber,
   					:more_url => { :controller => 'bill', :action => 'blogs', :id => @bill.ident },
   					:top_url => { :controller => 'bill', :action => 'blogs', :id => @bill.ident, :sort => 'toprated' } }
   				%>
@@ -154,7 +154,7 @@
   <% unless @tracking_suggestions[0] == 0 %>
     <%= render :partial => "shared/tracking_suggestions_table",
                :locals => {:object => @bill,
-                           :title => @bill.title_typenumber_only,
+                           :title => @bill.typenumber,
                            :action => 'tracking_bill',
                            :tracking_suggestions => @tracking_suggestions} %>
 
@@ -165,7 +165,7 @@
 			<% unless @supporting_suggestions[0] == 0 %>
 		    <%= render :partial => "shared/support_oppose_tables",
 		              :locals => {:object => @bill,
-		                          :title => @bill.title_typenumber_only,
+		                          :title => @bill.typenumber,
 		                          :action => 'supporting_bill',
 		                          :stance => "supporting",
 		                          :tracking_suggestions => @supporting_suggestions} %>
@@ -174,7 +174,7 @@
 		  <% unless @opposing_suggestions[0] == 0 %>
 		    <%= render :partial => "shared/support_oppose_tables",
 		              :locals => {:object => @bill,
-		                          :title => @bill.title_typenumber_only,
+		                          :title => @bill.typenumber,
 		                          :action => 'opposing_bill',
 		                          :stance => "opposing",
 		                          :tracking_suggestions => @opposing_suggestions} %>

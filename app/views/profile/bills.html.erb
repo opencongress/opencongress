@@ -17,7 +17,7 @@
 
 	<% @bookmarks.each do |b| %>
 	<% bill = b.bookmarkable %>
-	<tr><td><%= link_to bill.title_typenumber_only, bill_path(bill) %> <%= bill.title_common %> <span class='date'>(<%= bill.session.ordinalize %> congress)</span><br/>
+	<tr><td><%= link_to bill.typenumber, bill_path(bill) %> <%= bill.title_common %> <span class='date'>(<%= bill.session.ordinalize %> congress)</span><br/>
 	    News: <%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}),
 	              :controller => 'bill', :action => 'atom_news', :id => bill.ident %>
 	    Blogs: <%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}),

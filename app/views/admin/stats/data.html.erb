@@ -12,12 +12,12 @@
   </tr>
   <tr>
     <td>Newest news for bill</td>
-    <td><%= link_to @newest_bill_news.commentariable.title_typenumber_only, news_bill_path(@newest_bill_news.commentariable) %></td>
+    <td><%= link_to @newest_bill_news.commentariable.typenumber, news_bill_path(@newest_bill_news.commentariable) %></td>
     <td bgcolor="<%= bgcolor_for_commentary_date(@newest_bill_news.date) %>"><%= @newest_bill_news.date %></td>
   </tr>
   <tr>
     <td>Newest blog for bill</td>
-    <td><%= link_to @newest_bill_blog.commentariable.title_typenumber_only, blogs_bill_path(@newest_bill_blog.commentariable) %></td>
+    <td><%= link_to @newest_bill_blog.commentariable.typenumber, blogs_bill_path(@newest_bill_blog.commentariable) %></td>
     <td bgcolor="<%= bgcolor_for_commentary_date(@newest_bill_blog.date) %>"><%= @newest_bill_blog.date %></td>
   </tr>
 </table>
@@ -27,7 +27,7 @@
 <table border=1 cellpadding=8>
   <tr>
     <td>Latest bill action:</td>
-    <td><%= link_to((@newest_action.amendment.nil? ? @newest_action.bill.title_typenumber_only : @newest_action.amendment.bill.title_typenumber_only), bill_url(@newest_action.bill.ident)) %>: <%= @newest_action.text %></td>
+    <td><%= link_to((@newest_action.amendment.nil? ? @newest_action.bill.typenumber : @newest_action.amendment.bill.typenumber), bill_url(@newest_action.bill.ident)) %>: <%= @newest_action.text %></td>
     <td bgcolor="<%= bgcolor_for_govtrack_date(@newest_action.datetime) %>"><%= @newest_action.datetime %></td>
   </tr>
   <tr>

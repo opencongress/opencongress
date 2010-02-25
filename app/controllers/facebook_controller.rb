@@ -59,7 +59,7 @@ class FacebookController < ApplicationController
     unless fub.errors.empty?
       flash.now[:error] = fub.errors.on "bill_id"
     else
-      flash.now[:notice] = "#{@bill.title_typenumber_only} has been added to your profile."
+      flash.now[:notice] = "#{@bill.typenumber} has been added to your profile."
       FacebookPublisher.deliver_profile_update(@facebook_user, facebook_session.user)
       FacebookPublisher.register_bill_to_feed
       FacebookPublisher.deliver_bill_to_feed(facebook_session.user, @bill, fub.action_for_tracking_type)
@@ -77,7 +77,7 @@ class FacebookController < ApplicationController
     @facebook_user.facebook_user_bills.delete(@fub)
     
     FacebookPublisher.deliver_profile_update(@facebook_user, facebook_session.user)
-    flash.now[:notice] = "#{bill.title_typenumber_only} has been removed from your profile."
+    flash.now[:notice] = "#{bill.typenumber} has been removed from your profile."
     
     respond_to do |format|
       format.fbml { render :partial => 'billeditor', :layout => false }

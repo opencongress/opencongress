@@ -212,7 +212,7 @@ begin
       type_bills = Bill.find(:all, :conditions => ["bill_type = ? AND session = ?", bill_type, DEFAULT_CONGRESS])
       type_bills.each_with_index do |bill, i|
         begin
-          puts "Parsing bill text: #{bill.title_typenumber_only} (#{i+1} of #{type_bills.size})"
+          puts "Parsing bill text: #{bill.typenumber} (#{i+1} of #{type_bills.size})"
     
           # first see if there are multiple versions of the bill
           bill_version_files = Dir.new("#{GOVTRACK_BILLTEXT_DIFF_PATH}/#{DEFAULT_CONGRESS}/#{bill_type}").entries.select { |f| f.match(/#{bill_type}#{bill.number}_(.*)\.xml$/) }
@@ -259,7 +259,7 @@ begin
             end
           end
         rescue
-          puts "Couldn't parse bill text for #{bill.title_typenumber_only}.  Skipping. The error: #{$!}"
+          puts "Couldn't parse bill text for #{bill.typenumber}.  Skipping. The error: #{$!}"
         end
       end
     end

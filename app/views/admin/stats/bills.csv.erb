@@ -2,5 +2,5 @@
 Bill,Views,Tracking,Comments,"Aye" votes,"Nay" votes
 Totals,<%= @total_pageviews %>,<%= @total_bookmarks %>,<%= @total_comments %>,<%= @total_ayes %>,<%= @total_nays %>
 <% @bills.each do |b| -%>
-<%= b.title_typenumber_only %>,<%= b.views %>,<%= b.bookmarks.length %>,<%= b.comments.size %>,<%= b.bill_votes.count(:all, :conditions => "support = 0") %>,<%= b.bill_votes.count(:all, :conditions => "support = 1") %>
+<%= b.typenumber %>,<%= b.views %>,<%= b.bookmarks.length %>,<%= b.comments.size %>,<%= b.bill_votes.count(:all, :conditions => "support = 0") %>,<%= b.bill_votes.count(:all, :conditions => "support = 1") %>
 <% end -%>

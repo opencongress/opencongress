@@ -51,9 +51,9 @@ $j(document).ready(function() {
 				
 		<div class="title">
 			<% unless b.title_popular_only.blank? %>
-			<span class="a"><%= "#{b.title_typenumber_only} - #{truncate(b.title_popular_only, :length => 103)}" %></span>
+			<span class="a"><%= "#{b.typenumber} - #{truncate(b.title_popular_only, :length => 103)}" %></span>
 			<% else %>                                 
-			<span class="a"><%= "#{b.title_typenumber_only}" %></span>
+			<span class="a"><%= "#{b.typenumber}" %></span>
 			<% end %>
 			<p>
 			<% if b.plain_language_summary %>

@@ -1,7 +1,7 @@
 <div class="addbill_row">
   <form id="addbillform<%= billaddform.id %>" method="post">
     <div class="addbill_cell" style="width: 200px; padding-right:7px;">
-      <b><%= billaddform.title_typenumber_only %></b> - <%= billaddform.title_common %><br />
+      <b><%= billaddform.typenumber %></b> - <%= billaddform.title_common %><br />
       <a href="<%= url_for({ :only_path => false, :canvas => false, :controller => 'bill', :action => 'show', :id => billaddform.ident }) %>">View Bill on OpenCongress >></a>
     </div>
     

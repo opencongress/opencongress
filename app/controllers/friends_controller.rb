@@ -29,7 +29,7 @@ class FriendsController < ApplicationController
 		@object = @bill
 		@users_solr = User.find_users_tracking_bill(@bill)
     @users = User.find_for_tracking_table(current_user, @bill, @users_solr.docs)
-		@page_title = "Users tracking #{@bill.title_typenumber_only}"
+		@page_title = "Users tracking #{@bill.typenumber}"
 
 		if params[:state]
 		  @state_abbrev = params[:state]
@@ -129,7 +129,7 @@ class FriendsController < ApplicationController
 		@object = @bill
     @users_solr = User.find_users_supporting_bill(@bill)
     @users = User.find_for_tracking_table(current_user, @bill, @users_solr.docs)
- 		@page_title = "Users Supporting #{@bill.title_typenumber_only}"
+ 		@page_title = "Users Supporting #{@bill.typenumber}"
 
 		if logged_in? && !current_user.zipcode.blank?
 		  @in_my_state_solr = User.find_users_in_states_supporting(current_user.state_cache, @bill, 1000)
@@ -144,7 +144,7 @@ class FriendsController < ApplicationController
 		@object = @bill
     @users_solr = User.find_users_opposing_bill(@bill)
     @users = User.find_for_tracking_table(current_user, @bill, @users_solr.docs)
- 		@page_title = "Users Opposing #{@bill.title_typenumber_only}"
+ 		@page_title = "Users Opposing #{@bill.typenumber}"
 
 		if logged_in? && !current_user.zipcode.blank?
 		  @in_my_state_solr = User.find_users_in_states_opposing(current_user.state_cache, @bill, 1000)

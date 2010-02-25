@@ -7,7 +7,7 @@
   <div id="news_list">
     <p><%= will_paginate @news, :params => { :sort => @sort } %></p>
     <%= render :partial => 'shared/news', :object => @news,
-      :locals => { :limit => @news.size, :all_size => @bill.news_article_count, :default_title => @bill.title_typenumber_only,
+      :locals => { :limit => @news.size, :all_size => @bill.news_article_count, :default_title => @bill.typenumber,
                    :more_url => { :controller => 'bill', :action => 'news', :id => @bill.ident } } %>
     <p><%= will_paginate @news, :params => { :sort => @sort } %></p>
   </div>

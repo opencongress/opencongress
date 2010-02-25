@@ -11,7 +11,7 @@ class MoreMetaCounts < ActiveRecord::Migration
         b.news_article_count = b.article_count
         b.save
     
-        puts "Bill (news): #{b.session}, #{b.title_typenumber_only}: #{b.news_article_count}"
+        puts "Bill (news): #{b.session}, #{b.typenumber}: #{b.news_article_count}"
       end
     
       bills = Bill.find_by_most_commentary('blog', 100000, 10.years, c)
@@ -19,7 +19,7 @@ class MoreMetaCounts < ActiveRecord::Migration
         b.blog_article_count = b.article_count
         b.save
     
-        puts "Bill (blog): #{b.session}, #{b.title_typenumber_only}: #{b.blog_article_count}"
+        puts "Bill (blog): #{b.session}, #{b.typenumber}: #{b.blog_article_count}"
       end
     end
 

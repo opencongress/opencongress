@@ -357,7 +357,7 @@ module CommentaryParser
   end
 
   def CommentaryParser.bill_query(bill)
-    URI.escape(bill.title_typenumber_only)
+    URI.escape(bill.typenumber)
   end
 
   def CommentaryParser.person_query(person)
@@ -391,7 +391,7 @@ module CommentaryParser
     i = 0 
     bills.each do |b|
       i += 1
-      puts "Finding commentary for bill: #{b.title_typenumber_only} #{i}/#{bills.size} (all bills)"
+      puts "Finding commentary for bill: #{b.typenumber} #{i}/#{bills.size} (all bills)"
 
       do_queries(bill_query(b), b)
     end
@@ -413,7 +413,7 @@ module CommentaryParser
     i = 0 
     bills.each do |b|
       i += 1
-      puts "Finding commentary for bill: #{b.title_typenumber_only} #{i}/#{bills.size} (popular/recent activity)"
+      puts "Finding commentary for bill: #{b.typenumber} #{i}/#{bills.size} (popular/recent activity)"
 
       do_queries(bill_query(b), b)
     end

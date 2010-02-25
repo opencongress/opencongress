@@ -12,7 +12,7 @@ class TotalPageViews < ActiveRecord::Migration
         b.page_views_count = b.view_count
         b.save
       
-        puts "Bill: #{b.session}, #{b.title_typenumber_only}: #{b.page_views_count}"
+        puts "Bill: #{b.session}, #{b.typenumber}: #{b.page_views_count}"
       end
     end
     

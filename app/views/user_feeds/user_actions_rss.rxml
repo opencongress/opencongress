@@ -20,7 +20,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
             xml.text! "View profile for #{link_to i.bookmarkable.title_full_name_party_state, :controller => 'people', :action => 'show', :id => i.bookmarkable.ident}"
           end
         when 'Bill'
-          xml.title   'Tracking ' + i.bookmarkable.title_typenumber_only + (i.bookmarkable.title_short == i.bookmarkable.title_typenumber_only ? "" : ": " + i.bookmarkable.title_short)
+          xml.title   'Tracking ' + i.bookmarkable.typenumber + (i.bookmarkable.title_short == i.bookmarkable.typenumber ? "" : ": " + i.bookmarkable.title_short)
           xml.link    "rel" => "alternate", "href" => bill_url(i.bookmarkable)
           xml.id      i.bookmarkable.atom_id_as_entry
           xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -47,7 +47,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
             xml.text! "#{@user.login} wrote: #{i.comment}<br/>View #{link_to "Person", person_url(i.commentable.ident) } on OpenCongress"
           end
         when 'Bill'
-          xml.title   'Commented on: ' + i.commentable.title_typenumber_only + (i.commentable.title_short == i.commentable.title_typenumber_only ? "" : ": " + i.commentable.title_short)
+          xml.title   'Commented on: ' + i.commentable.typenumber + (i.commentable.title_short == i.commentable.typenumber ? "" : ": " + i.commentable.title_short)
           xml.link    "rel" => "alternate", "href" => bill_url(i.commentable)
           xml.id      i.commentable.atom_id_as_entry
           xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -72,7 +72,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
           end
         end
         when 'BillVote'
-          xml.title   "Voted #{i.support == 0 ? "Aye" : "Nay"} on: " + i.bill.title_typenumber_only + (i.bill.title_short == i.bill.title_typenumber_only ? "" : ": " + i.bill.title_short)
+          xml.title   "Voted #{i.support == 0 ? "Aye" : "Nay"} on: " + i.bill.typenumber + (i.bill.title_short == i.bill.typenumber ? "" : ": " + i.bill.title_short)
           xml.link    "rel" => "alternate", "href" => bill_url(i.bill)
           xml.id      i.bill.atom_id_as_entry
           xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")

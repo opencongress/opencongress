@@ -137,19 +137,19 @@ require 'htmlentities'
   def senate_bill_strict_validity
     # we don't want 'S.123' to match things like this: "..roadside bombs. 123 more were killed..."
     if (/\w*['|(&#8217;)]?s(\.)?(\s)*#{self.commentariable.number}/.match("#{self.excerpt} #{self.title}"))
-      #puts "BAD! (#{b.title_typenumber_only}) #{c.excerpt} TITLE: #{c.title}"
+      #puts "BAD! (#{b.typenumber}) #{c.excerpt} TITLE: #{c.title}"
       return 'FALSE POSITIVE'
     else
       # at least make sure we match 'S.123' or 'S. 123'
       if (/S\.( )?#{self.commentariable.number}/.match("#{self.excerpt} #{self.title}"))
-        #puts "SEEMS GOOD! (#{b.title_typenumber_only}) #{c.excerpt} TITLE: #{c.title}"
+        #puts "SEEMS GOOD! (#{b.typenumber}) #{c.excerpt} TITLE: #{c.title}"
         return 'OK'
       # make things that match 'S 123' pending
       elsif (/S( )?#{self.commentariable.number}/.match("#{self.excerpt} #{self.title}"))
-        #puts "POSSIBLE! (#{b.title_typenumber_only}) #{c.excerpt} TITLE: #{c.title}"
+        #puts "POSSIBLE! (#{b.typenumber}) #{c.excerpt} TITLE: #{c.title}"
         return 'PENDING'
       else
-        #puts "BAD! (#{b.title_typenumber_only}) #{c.excerpt} TITLE: #{c.title}"      
+        #puts "BAD! (#{b.typenumber}) #{c.excerpt} TITLE: #{c.title}"      
         return 'FALSE POSITIVE'         
       end
     end

@@ -1,4 +1,3 @@
-
 <div class="blog-title">
   <h3>
     <strong class="gossip">
@@ -19,7 +18,7 @@
     <p class="article_tags">
   	  Article Tags: 
   	  <% summary.tags.each do |tag| %>
-  		  <%= link_to tag.name, :action => 'list', :tag => CGI::escape(tag.name) %></li>
+  		  <%= link_to tag.name, :action => 'list', :tag => CGI::escape(tag.name) %>
   	  <% end rescue nil %>
     </p>
   <% end %>

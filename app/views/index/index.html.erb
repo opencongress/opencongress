@@ -25,89 +25,46 @@
 		</div>
 
 <div class="just_for_a_border">
-
-
-
-
-	
 	<div class="rightside">
-	
-	  
 		<div class="congress_status">
 	  	 	<h2 class="small_heading">Today in Congress <span><%= Date.today.strftime("%B %d, %Y") %></span></h2>
 	  		<%= session_div('house', @sessions[:house_session]) %>
 	  		<%= session_div('senate', @sessions[:senate_session])%>	
 	  	</div>
-	 
-	 
-
 		
-		<h2 class="small_heading">Now in Congress</h2>
-		
-		
-		
+		<h2 class="small_heading">Bills in the News</h2>
 			<ul class="medium_bill_list editorial_list">
-				<li>
-					<a href="#">
-						
-						<span class="title">H.R. 3962: Affordable Health Care for America Act</span>
-						
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>					
-						
-						<span class="little_status"><strong>Introduced</strong> January 23, 2010</span>
-	
-						
-					</a>
-				</li>		
-				<li>
-					<a href="#">
-						
-						<span class="title">H.R. 3962: Affordable Health Care for America Act</span>
-						
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>					
-						
-						<span class="little_status"><strong>Introduced</strong> January 23, 2010</span>
-	
-						
-					</a>
-				</li>		
-								<li>
-					<a href="#">
-						
-						<span class="title">H.R. 3962: Affordable Health Care for America Act</span>
-						
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>					
-						
-						<span class="little_status"><strong>Introduced</strong> January 23, 2010</span>
-	
-						
-					</a>
-				</li>		
+			   <% cache("frontpage_bill_mostviewed", :expires_in => 3.hours) do %>
+				<!-- frontpage_bill_mostviewed: <%= Time.now %> -->
+				<% @popular_bills.each do |bill| %>
+				 <li>
+              	<a href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>">
+                	<span class="title"><%= bill.typenumber %> - <span><%= truncate(bill.title_common, :length => 45) rescue nil %></span></span>
+                  <p><%= bill.caption || truncate(bill.plain_language_summary, :length => 100) %></p>
+                  <span class="little_status"><strong><%= temp_url_strip(bill.status) %></strong> <%= bill.last_action.formatted_date if bill.last_action %></span>
+      	      	</a>
+      		</li>
+            <% end %>
+				<!-- /frontpage_bill_mostviewed -->
+				<% end %>
 		</ul>
-	
-	
 
-<div class="small_heading">Most-Viewed 
-
-<span>Bills
-	
-				
+<div class="small_heading">
+<span>Most-Viewed Bills
 					<ul class="tabs">
-						<li id="tslink" class="here"><%= link_to_function('<span>Hot Bills</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('ts');Element.addClassName('tslink','here');Element.removeClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('pslink','here');Element.removeClassName('prlink','here');Element.removeClassName('pislink','here');") %></li>
+						<!--<li id="tslink" class="here"><%= link_to_function('<span>Hot Bills</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('ts');Element.addClassName('tslink','here');Element.removeClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('pslink','here');Element.removeClassName('prlink','here');Element.removeClassName('pislink','here');") %></li> -->
 						<li id="bvlink"><%= link_to_function('<span>Most-Viewed Bills</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('bv');Element.addClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('pslink','here');Element.removeClassName('prlink','here');Element.removeClassName('pislink','here');Element.removeClassName('tslink','here');") %></li>
 						<li id="bnlink"><%= link_to_function('<span>Newest Bills</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('bn');Element.addClassName('bnlink','here');Element.removeClassName('bvlink','here');Element.removeClassName('pslink','here');Element.removeClassName('prlink','here');Element.removeClassName('pislink','here');Element.removeClassName('tslink','here');") %></li>
-						<li id="pslink"><%= link_to_function('<span>Top Senators</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('ps');Element.addClassName('pslink','here');Element.removeClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('prlink','here');Element.removeClassName('pislink','here');Element.removeClassName('tslink','here');") %></li>
-						<li id="prlink"><%= link_to_function('<span>Top Reps</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('pr');Element.addClassName('prlink','here');Element.removeClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('pslink','here');Element.removeClassName('pislink','here');Element.removeClassName('tslink','here');") %></li>
-						<li id="pislink"><%= link_to_function('<span>Top Issues</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('pis');Element.addClassName('pislink','here');Element.removeClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('pslink','here');Element.removeClassName('prlink','here');Element.removeClassName('tslink','here');") %></li>
+						<li id="pslink"><%= link_to_function('<span>Most-Viewed Senators</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('ps');Element.addClassName('pslink','here');Element.removeClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('prlink','here');Element.removeClassName('pislink','here');Element.removeClassName('tslink','here');") %></li>
+						<li id="prlink"><%= link_to_function('<span>Most-Viewed Reps</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('pr');Element.addClassName('prlink','here');Element.removeClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('pslink','here');Element.removeClassName('pislink','here');Element.removeClassName('tslink','here');") %></li>
+						<li id="pislink"><%= link_to_function('<span>Most-Viewed Issues</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('pis');Element.addClassName('pislink','here');Element.removeClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('pslink','here');Element.removeClassName('prlink','here');Element.removeClassName('tslink','here');") %></li>
 					</ul>
-				
+
 				</span>
 		<%# link_to '<span>More Popular Searches</span>', { :controller => 'search', :action => 'popular' }, :class => '' %>
 		<%= link_to '<span>More Hot Bills</span>', { :controller => 'bill', :action => 'hot' }, :class => '' %>
 </div>
 
-
-					 
 					<div id="bv" style="display:none;">
 					<% cache("frontpage_bill_mostviewed", :expires_in => 3.hours) do %>
 					<!-- frontpage_bill_mostviewed: <%= Time.now %> -->
@@ -115,7 +72,7 @@
 					<!-- /frontpage_bill_mostviewed -->
 					<% end %>
 					</div>
-				
+
 					<div id="bn" style="display:none;">
 					<% cache("frontpage_bill_newest", :expires_in => 3.hours) do %>
 					<!-- frontpage_bill_newest: <%= Time.now %> -->
@@ -123,7 +80,7 @@
 					<!-- /frontpage_bill_newest -->
 					<% end %>
 					</div>
-				
+
 					<div id="ps" style="display:none;">
 					<% cache("frontpage_person_topsenators", :expires_in => 3.hours) do %>
 					<!-- frontpage_person_topsenators: <%= Time.now %> -->
@@ -155,38 +112,23 @@
 					<!-- /frontpage_top_searches -->
 					<% end %>
 					</div>
-				
 
-	
 
 		<h2 class="small_heading">Newly Introduced</h2>
 			<ul class="medium_bill_list editorial_list">
-				<li>
-					<a href="#">
-						
-						<span class="title">H.R. 3962: Affordable Health Care for America Act</span>
-						
-						<p>Optional Description</p>					
-						
-						<span class="little_status"><strong>Introduced</strong> January 23, 2010</span>
-	
-						
-					</a>
-				</li>		
-				<li>
-					<a href="#">
-						
-						<span class="title">H.R. 3962: Affordable Health Care for America Act</span>
-						
-						<p>Optional Description</p>					
-						
-						<span class="little_status"><strong>Introduced</strong> January 23, 2010</span>
-	
-						
-					</a>
-				</li>		
-										
-
+			   <% cache("frontpage_bill_newest", :expires_in => 3.hours) do %>
+				<!-- frontpage_bill_newest: <%= Time.now %> -->
+				<% @newest_bills.each do |bill| %>
+				 <li>
+              	<a href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>">
+                	<span class="title"><%= bill.typenumber %> - <span><%= truncate(bill.title_common, :length => 45) rescue nil %></span></span>
+                  <p><%= bill.caption || truncate(bill.plain_language_summary, :length => 100) %></p>
+                  <span class="little_status"><strong><%= temp_url_strip(bill.status) %></strong> <%= bill.last_action.formatted_date if bill.last_action %></span>
+      	      	</a>
+      		</li>
+            <% end %>
+				<!-- /frontpage_bill_newest -->
+				<% end %>
 			</ul>
 	
 

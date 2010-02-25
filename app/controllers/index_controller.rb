@@ -6,7 +6,7 @@ class IndexController < ApplicationController
       @popular_bills = PageView.popular('Bill', DEFAULT_COUNT_TIME, 6) || Bill.find(:first)
     end
     unless read_fragment("frontpage_bill_newest")
-      @newest_bills = Bill.find(:all, :order => 'introduced DESC', :limit => 6)
+      @newest_bills = Bill.find(:all, :order => 'introduced DESC', :limit => 4)
     end
     unless read_fragment("frontpage_issue_mostviewed")
       @popular_issues = PageView.popular('Subject', DEFAULT_COUNT_TIME, 6) || Issue.find(:first)
@@ -19,7 +19,6 @@ class IndexController < ApplicationController
     end
     unless read_fragment("frontpage_top_searches")
       @hot_bills = PageView.popular('Bill', DEFAULT_COUNT_TIME, 6, DEFAULT_CONGRESS, true) || Bill.find(:first)
-      
     end
     unless read_fragment("frontpage_featured_senator")    
       @popular_sen_text = FeaturedPerson.senator
@@ -44,16 +43,16 @@ class IndexController < ApplicationController
 			page.replace_html 'popular', :partial => "index/popular", :locals => {:object => @object}
 		end
 	end
-	
+
 	def s1796_redirect
 	  redirect_to bill_path('111-s1796')
 	end
-	
+
 	def senate_health_care_bill_111
 	  @page_title = 'Senate Health Care Bill - Health Care Reform'
 	  render :layout => 'application'
 	end
-	
+
 	def senate_health_care_bill_111
 	  @page_title = 'The President\'s Proposal - Health Care Reform'
 	end

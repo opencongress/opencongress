@@ -31,7 +31,7 @@ class Admin::BillSummariesController < Admin::IndexController
   end
   
   def edit
-    @page_title = "Bill Plain Language Summaries"
+    @page_title = "Bill Summaries"
     @bill = Bill.find_by_ident(params[:id])
     
     unless @bill
@@ -41,11 +41,11 @@ class Admin::BillSummariesController < Admin::IndexController
   end
   
   def update
-    @bill = Bill.find_by_ident(params[:bill][:ident])
+    @bill = Bill.find_by_ident(params[:id])
     
-    @bill.plain_language_summary = params[:bill][:plain_language_summary]
+    @bill.update_attributes(params[:bill])
     @bill.save
-    
+
     flash[:notice] = "#{@bill.typenumber} has been updated"
     redirect_to :action => 'index'
   end

@@ -1,9 +1,10 @@
-Edit Plan Language Summary for <%= @bill.typenumber %>
+Edit Summaries for <%= @bill.typenumber %>
 
 <% form_tag :action => 'update', :id => @bill.ident do -%>
-  <p>
-  <%= text_area 'bill', 'plain_language_summary', :rows => 15 %></p>
-  <%= hidden_field 'bill', 'ident' %>
+  <p>Plain Language Summary</p>
+  <%= text_area :bill, :plain_language_summary, :rows => 15 %></p>
+  <p>Caption</p>
+  <%= text_area :bill, :caption, :rows => 5 %>
   
   <p><%= submit_tag 'Edit' %></p>
 <% end %>

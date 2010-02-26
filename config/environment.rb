@@ -36,7 +36,7 @@ TECHNORATI_API_KEY = API_KEYS['technorati_api_key']
 
 
 # Ban file
-BAN_FILE = '/usr/local/apache2/conf/extra/banned_users.txt'
+BAN_FILE = '/u/apps/opencongress/shared/files/banned_users.txt'
 
 # URLs you should know about
 BASE_URL = 'http://www.opencongress.org/'

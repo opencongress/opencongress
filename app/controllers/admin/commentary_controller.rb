@@ -78,7 +78,7 @@ class Admin::CommentaryController < Admin::IndexController
     @commentary = Commentary.new(params[:commentary])
     @commentary.status = 'OK'
     @commentary.is_ok = true
-    
+
     if @commentary.save
       flash[:notice] = 'Commentary was successfully created.'
       @commentary.commentariable.expire_commentary_fragments(@commentary.is_news? ? 'news' : 'blog')
@@ -128,12 +128,10 @@ class Admin::CommentaryController < Admin::IndexController
     @commentary_ids.each do |c_id|
       c = Commentary.find_by_id(c_id)
       if c
-        c.status = 'DELETED'
-        c.is_ok = false
-        c.save
-        
+        bc = BadCommentary.new(:url => c.url, :commentariable_id => c.commentariable_id, :commentariable_type => c.commentariable_type, :date => c.date)
+        bc.save
+        c.destroy
         c.commentariable.decrement!(c.is_news ? :news_article_count : :blog_article_count)
-        
         object = c.commentariable unless object
         logger.info "%%%%%%%%%%%%%%%%%%% #{c_id}"
       end
@@ -151,15 +149,11 @@ class Admin::CommentaryController < Admin::IndexController
   
   def destroy
     @commentary = Commentary.find(params[:id])
-    
-    @commentary.status = 'DELETED'
-    @commentary.is_ok = false
-    @commentary.save
-    
+    bc = BadCommentary.new(:url => @commentary.url, :commentariable_id => @commentary.commentariable_id, :commentariable_type => @commentary.commentariable_type, :date => @commentary.date)
+    bc.save
+    @commentary.destroy
     @commentary.commentariable.decrement!(@commentary.is_news ? :news_article_count : :blog_article_count)
-    
     flash[:notice] = 'Commentary was deleted.'    
-    
     redirect_to case @commentary.commentariable_type
     when 'Bill', 'Person'
       polymorphic_url([@commentary.commentariable])

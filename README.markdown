@@ -20,7 +20,7 @@ so for Ubuntu:
 
 or Mac OS X, start by installing [MacPorts](http://www.macports.org/), then run:
 
-	sudo port install postgresql84 postgresql84-doc postgresql84-server ImageMagick md5sha1sum
+	sudo port install postgresql84 postgresql84-doc postgresql84-server ImageMagick md5sha1sum wget
 
 Follow the instructions from the port install for initializing your database
 

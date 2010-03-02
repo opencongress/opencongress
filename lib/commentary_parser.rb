@@ -9,7 +9,6 @@ require 'hpricot'
 require 'open-uri'
 require 'iconv'
 require 'digest/md5'
-#require 'htmlentities'
 
 module CommentaryParser
   USERAGENT = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.1) Gecko/20060111 Firefox/1.5.0.1'
@@ -35,9 +34,8 @@ module CommentaryParser
 
   def CommentaryParser.is_dupe(i, lookup_object)
     # check to see if this item is already in the DB
-    c = Commentary.find(:first, :conditions => [ 'url=? AND commentariable_type=? AND commentariable_id=?', i.url, lookup_object.class.to_s, lookup_object.id])
-
-    if c
+    c = Commentary.find_by_sql(["SELECT * FROM (SELECT commentaries.url, commentaries.commentariable_type, commentaries.commentariable_id FROM commentaries UNION ALL SELECT bad_commentaries.url, bad_commentaries.commentariable_type, bad_commentaries.commentariable_id FROM bad_commentaries) AS c WHERE c.url=? AND c.commentariable_type=? AND c.commentariable_id=? LIMIT 1", i.url, lookup_object.class.to_s, lookup_object.id])
+    unless c.empty?
       puts "Item (URL) already in database"
       return true
     else
@@ -46,7 +44,6 @@ module CommentaryParser
   end
     
   def CommentaryParser.save_item(i, lookup_object, type, scraped_from)
-    #htmlentity = HTMLEntities.new 
         
     saved = false
     commentary_type = i.commentary_type.nil? ? type : i.commentary_type
@@ -56,11 +53,10 @@ module CommentaryParser
     
       c.commentariable = lookup_object
       c.is_news = (commentary_type == 'news') ? true : false
-      c.is_ok = false
+      #c.is_ok = false
       c.url = i.url
       if i.title
         c.title = i.title.gsub(/<\/?[^>]*>/, "")
-        #c.title = htmlentity.decode(c.title)
       end
       c.scraped_from = scraped_from
       c.source_url = i.source_url unless (scraped_from == 'google news')
@@ -80,7 +76,6 @@ module CommentaryParser
       else
         # strip any HTML from the excerpt
         c.excerpt = i.excerpt.gsub(/<\/?[^>]*>/, "")[0..255]
-        #c.excerpt = htmlentity.decode(c.excerpt)
         
         if m_matches = /(\d+) minute(s*) ago/.match(i.date)
           c.date = (Time.now - (m_matches[1].to_i * 60)).to_date
@@ -118,7 +113,7 @@ module CommentaryParser
         begin
           if c.commentariable_type == 'Bill' && c.commentariable.bill_type == 's' && ((status = c.senate_bill_strict_validity) != 'OK')
             c.status = status
-            puts "Article failed strict check because it is a senate bill."
+            puts "Article failed strict check because it is a senate bill. #{c.status}"
           else
             if c.article_valid?
               c.status = 'OK'
@@ -129,16 +124,26 @@ module CommentaryParser
               #puts "Article failed verification."
             end
           end
-        
-          unless c.save && lookup_object.save
-            puts "Couldn't save item: " + c.errors
+          
+          if (c.status == 'OK' || c.status == 'PENDING') 
+            unless c.save && lookup_object.save
+              puts "Couldn't save item: " + c.errors
+            else
+              saved = true
+              puts "Saved #{commentary_type} item.  URL: #{c.url}"
+            
+              c.commentariable.increment!(c.is_news ? :news_article_count : :blog_article_count) if c.is_ok?            
+              #puts "ITEM: #{c.inspect}"
+            end
           else
-            saved = true
-            puts "Saved #{commentary_type} item.  URL: #{c.url}"
+            bc = BadCommentary.new(:url => c.url, :commentariable_id => c.commentariable_id, :commentariable_type => c.commentariable_type, :date => c.date)
+            unless bc.save
+              puts "Couldn't save bad commentary item: " + c.errors + "\n" + bc.inspect
+            else
+              saved = true
+              puts "Saved bad commentary: #{commentary_type} item.  URL: #{c.url}"
+            end
             
-            c.commentariable.increment!(c.is_news ? :news_article_count : :blog_article_count) if c.is_ok?
-            
-            #puts "ITEM: #{c.inspect}"
           end
         rescue 
           puts "Exception trying to save item: #{$!}\n#{c.inspect}"

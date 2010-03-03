@@ -405,7 +405,7 @@ class BillController < ApplicationController
       require 'hpricot'
       require 'mediacloth'
       require 'open-uri'
-      wiki_url = "#{WIKI_BASE_URL}/api.php?action=query&prop=revisions&titles=Economic_Stimulus_Bill_of_2008&rvprop=timestamp|content&format=xml"
+      wiki_url = "http://#{WIKI_HOST}/w/api.php?action=query&prop=revisions&titles=Economic_Stimulus_Bill_of_2008&rvprop=timestamp|content&format=xml"
       session, bill_type, number = Bill.ident params[:id]
       if @bill = Bill.find_by_session_and_bill_type_and_number(session, bill_type, number, { :include => [ :bill_titles ]})
          #unwise = %w({ } | \ ^ [ ] `)

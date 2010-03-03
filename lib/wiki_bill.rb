@@ -10,7 +10,7 @@ class WikiBill
     puts url
     @url = url
     begin
-      Timeout::timeout(3) {
+      Timeout::timeout(1) {
         doc = Hpricot(open(url))
       }
       summary_content = (doc/"#Article_summary") 

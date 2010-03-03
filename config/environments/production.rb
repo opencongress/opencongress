@@ -38,6 +38,9 @@ if defined?(PhusionPassenger)
     end
 end
 
+WIKI_HOST = 'wiki-internal'
+WIKI_BASE_URL = "http://#{WIKI_HOST}/wiki"
+
 DATA_PATH = "/data"
 GOVTRACK_DATA_PATH = "#{DATA_PATH}/govtrack/#{DEFAULT_CONGRESS}"
 GOVTRACK_BILLTEXT_PATH = "#{DATA_PATH}/govtrack/bills.text"

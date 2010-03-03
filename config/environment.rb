@@ -40,8 +40,6 @@ BAN_FILE = '/u/apps/opencongress/shared/files/banned_users.txt'
 
 # URLs you should know about
 BASE_URL = 'http://www.opencongress.org/'
-WIKI_BASE_URL = 'http://wiki.opencongress.org/wiki'
-
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')

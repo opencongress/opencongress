@@ -29,6 +29,9 @@ end
 
 BASE_URL = 'http://dev.opencongress.org/'
 
+WIKI_HOST = 'www.opencongress.org'
+WIKI_BASE_URL = "http://#{WIKI_HOST}/wiki"
+
 DATA_PATH = "/data"
 GOVTRACK_DATA_PATH = "#{DATA_PATH}/govtrack/#{DEFAULT_CONGRESS}"
 GOVTRACK_BILLTEXT_PATH = "#{DATA_PATH}/govtrack/bills.text"
@@ -40,6 +43,5 @@ GOVTRACK_BILLTEXT_DIFF_PATH = "#{DATA_PATH}/govtrack/bills.text.cmp"
 # the following API key is for OpenCongress production use only!
 TECHNORATI_API_KEY = API_KEYS['technorati_api_key']
 
-WIKI_BASE_URL = "http://wiki-dev.opencongress.org"
 MINI_MAILER_FROM = "alerts@dev.opencongress.org"
 

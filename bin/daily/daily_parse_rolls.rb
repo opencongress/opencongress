@@ -30,7 +30,7 @@ roll_files.each do |f|
     begin
       es.each("roll") do |e|
         os = OpenStruct.new(e.attributes)
-        os.date = Time.at(os.when.to_i)
+        os.date = Time.parse(os.datetime)
         updated = Time.parse(os.updated)
       
         roll = RollCall.find_or_initialize_by_date_and_number(os.date, os.roll.to_i)

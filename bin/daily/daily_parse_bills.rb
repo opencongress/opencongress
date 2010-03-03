@@ -86,13 +86,12 @@ bill_files.each do |f|
       es.each("bill/introduced") do |e|
         attrs = e.attributes
         act = BillAction.find_or_initialize_by_action_type_and_bill_id("introduced", bill.id)
-        time = attrs["date"].to_i
-        act.datetime = Time.at(time).utc.to_date #could be a problem
+        datetime = DateTime.parse(attrs["datetime"])
+        time = Time.parse(attrs["datetime"]).to_i
+        act.datetime = datetime
         if act.date.nil? || act.datetime.nil? || time != act.date
           act.date = time
-          if attrs["datetime"]
-            act.datetime = DateTime.parse(attrs["datetime"])
-          end
+          act.datetime = DateTime.parse(attrs["datetime"])
         end
         if time != bill.introduced
           bill.introduced = time
@@ -132,21 +131,19 @@ bill_files.each do |f|
           if text =~ /Sponsor introductory remarks on measure\. \(CR H1252\)/
             time = 1234396800
           else
-            time = attrs["date"].to_i
+            time = Time.parse(attrs["datetime"]).to_i
           end
         
           action_times << time
           act = BillAction.find_or_initialize_by_bill_id_and_action_type_and_date_and_text(bill.id, e.name, time, text)
-          if attrs["datetime"]
-            # hack because THOMAS/govtrack has bad data for this bill
-            if text =~ /Sponsor introductory remarks on measure\. \(CR H1252\)/
-              act.datetime = '2009-02-12'            
-            else
-              act.datetime = DateTime.parse(attrs["datetime"])
-            end
+
+          # hack because THOMAS/govtrack has bad data for this bill
+          if text =~ /Sponsor introductory remarks on measure\. \(CR H1252\)/
+            act.datetime = '2009-02-12'            
           else
-            act.datetime = Time.at(time).utc.to_date #could be a problem
+            act.datetime = DateTime.parse(attrs["datetime"])
           end
+
           act.how = attrs["how"]
           act.where = attrs["where"]
           if e.name == "vote"

@@ -32,19 +32,19 @@ amendments.each do |amdt|
     root.each_element("status") do |e| 
       as = e.attributes
       amdt.status = e.text
-      amdt.status_date = as["date"].to_i
+      amdt.status_date = Time.parse(as["datetime"]).to_i
       amdt.status_datetime = DateTime.parse(as["datetime"])
     end
     root.each_element("offered") do |e|
       as = e.attributes
-      amdt.offered_date = as["date"].to_i
+      amdt.offered_date = Time.parse(as["datetime"]).to_i
       amdt.offered_datetime = DateTime.parse(as["datetime"])
     end
     root.each_element("description") {|e| amdt.description = e.text}
     root.each_element("purpose") {|e| amdt.purpose = e.text}
     root.each_element("actions/*") do |e|
       attrs = e.attributes
-      date = attrs["date"].to_i
+      date = Time.parse(attrs["datetime"]).to_i
       act = AmendmentAction.find_or_initialize_by_amendment_id_and_date(amdt.id, date)
       e.each_element("reference") do |e|
         aref = e.attributes["ref"]

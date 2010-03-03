@@ -5,14 +5,14 @@
 	<title><%= @page_title %></title>
 
 	<style media="all" type="text/css">
-
 .healthcare_widget {
-   background: url(<%= image_path 'widgets/bg.png' %>) no-repeat;
-   width: 348px;
+   background: url(/images/widgets/small_healthcare_widg_bg.png) no-repeat;
+   width: 161px;
    font-family: Arial, Helvetica, sans-serif;
    padding: 0px;
-   font-size: 6px;
+font-size: 10px;
 }
+
 
 
 .healthcare_widget a{
@@ -26,41 +26,43 @@ color: #333;
 
 .healthcare_widget .title h3 {
    margin: 0;
-   font-size: 15px;
+   font-size: 11px;
    color: #a82222;
-   padding: 18px 0 0 68px;
+   padding: 12px 0 10px 15px;
+border-bottom: 1px solid #ddd;
 }
 
 
 .healthcare_widget .title p {
    margin: 0;
-   padding: 2px 0 0 68px;
+   padding: 8px 0 8px 15px;
    font-size: 11px;
+
 }
 
 
 .healthcare_widget .guts {
    border-left: 1px solid #ddd;
    border-right: 1px solid #ddd;
-   padding: 15px 15px 0;
+   padding: 15px 0px 0;
 }
 
 .healthcare_widget .guts h4 {
    margin: 0;
-   padding: 0 0 10px 0;
-   font-size: 11px;
+   padding: 0 0 6px 0;
+   font-size: 10px;
    color: #136b9e;
 }
 
 .healthcare_widget .house {
    border-bottom: 1px solid #ddd;
-   padding-bottom: 15px;
+   padding: 0px 0 15px 15px;
 }
 
 .healthcare_widget .senate {
    margin-top: 15px;
    border-bottom: 1px solid #ddd;
-   padding-bottom: 15px;
+   padding: 0px 0 15px 15px;
 }
 
 .healthcare_widget .senate .status {
@@ -76,17 +78,20 @@ color: #333;
 
 .healthcare_widget .blog_coverage {
    display: block;
-   background: url(<%= image_path 'widgets/button.png' %>) no-repeat;
-   height: 40px;
-   padding-top: 20px;
+   background: url(/images/widgets/small_healthcare_widg_bottom.png) bottom no-repeat;
+padding-bottom: 10px;
+
 }
 
 .healthcare_widget .blog_coverage a {
    display: block;
    color: #333;
-   padding: 0 0 0 15px;
+margin: 0;
+   padding: 10px 0 0 15px;
    font-weight: bold;
-   font-size: 12px;
+   font-size: 11px;
+border-left: 1px solid #ddd;
+border-right: 1px solid #ddd;
    text-decoration: none;
 }
 
@@ -96,8 +101,8 @@ color: #333;
 
 .passed {
    color: #4a862a;
-   padding-left: 23px;
-   background: url(<%= image_path 'widgets/widget_icons.png' %>) 7px -114px no-repeat;
+   padding-left: 16px;
+   background: url(/images/widgets/widget_icons.png?1262045908) 0px -114px no-repeat;
 }
 
 .introduced {
@@ -106,7 +111,7 @@ color: #333;
 }
 
 .full_text, .comments, .roll_call, .voting_record, .tracking, .pres_bill {
-   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 14px no-repeat;
+   background: url(/images/widgets/widget_icons.png?1262045908) 0 14px no-repeat;
    padding-left: 18px;
    line-height: 1.8em;
    color: #555;
@@ -150,13 +155,13 @@ padding-top: 10px;
 
 .democrat {
    padding-left: 20px;
-   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 -139px no-repeat;
+   background: url(/images/widgets/widget_icons.png?1262045908) 0 -139px no-repeat;
 }
 
 
 .republican {
    padding-left: 20px;
-   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 -168px no-repeat;
+   background: url(/images/widgets/widget_icons.png?1262045908) 0 -168px no-repeat;
 }
 
 .status ul {
@@ -182,6 +187,8 @@ h5.bill_title a:link {
    color: black;
 }
 
+
+
 	</style>
 </head>
 <body>
@@ -189,7 +196,7 @@ h5.bill_title a:link {
 
 <div class="healthcare_widget">
 	<div class="title">
-		<h3>Health Care Reform in Congress</h3>
+		<h3>Health Care Congress</h3>
 		<% if @state_name %>
 		   <p>What People in <strong><%= @state_name %></strong> Are Saying on <%= link_to "OpenCongress", home_url, :target => "_blank" %></p>
       <% else %>
@@ -204,37 +211,24 @@ h5.bill_title a:link {
 			
 				<h5 class="bill_title"><%= link_to "Affordable Health Care for America Act", bill_url(@house_bill_ident), :target => "_blank" %></h5>
 			
-							<span>Latest Action: <span class="passed">Passed on Nov. 7th, 2009</span></span>
+							<span><span class="passed">Passed on Nov. 7th, 2009</span></span>
 
-			
-<%= link_to("Read and comment on the bill text", url_for(:controller => 'bill', :action => 'text', :id => @house_bill_ident, :anchor => 'most_commented'), :class => "full_text", :target => "_blank") %>   			<%= link_to("Full vote result (220-215)", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "h", :number => "887"), :class => "roll_call", :target => "_blank") %>
-			<% if @state_name %>
-   			<%= link_to("How #{ @state_name } Reps voted", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "h", :number => "887", :state => params[:state]), :class => "voting_record", :target => "_blank") %>
-         <% end %>
-         <%= link_to("People watching this bill are also watching...", bill_url(@house_bill_ident, :anchor => "users_tracking"), :class => "tracking", :target => "_blank")%>
-
-		</div>
+			</div>
 
 		<div class="senate">
 			<h4>Senate Version <%= link_to "H.R. 3590", bill_url(@senate_bill_ident), :target => "_blank" %></h4>
 			
 			<h5 class="bill_title"><%= link_to "Patient Protection and Affordable Care Act", bill_url(@senate_bill_ident), :target => "_blank" %></h5>
    		
-   		<span>Latest Action:  <span class="passed">Passed on Dec. 24th, 2009</span></span>
+   		<span><span class="passed">Passed on Dec. 24th, 2009</span></span>
    		
-   		<%= link_to("Read and comment on the bill text", url_for(:controller => 'bill', :action => 'text', :id => @senate_bill_ident, :anchor => 'most_commented'), :class => "full_text", :target => "_blank") %>   			
-   			<%= link_to("Full vote result (60-39)", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "s", :number => "396"), :class => "roll_call", :target => "_blank") %>
-			<% if @state_name %>
-   			<%= link_to("How #{ @state_name } Senators voted", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "s", :number => "396", :state => params[:state]), :class => "voting_record", :target => "_blank") %>
-		   <% end %>
-		   <%= link_to("People watching this bill are also watching...", bill_url(@senate_bill_ident, :anchor => "users_tracking"), :class => "tracking", :target => "_blank")%>
-				</div>
+ 				</div>
 				
 				<div class="senate"> 
-					<h4>White House Version - <a href="http://www.opencongress.org/presidents_health_care_proposal">President Obama's Proposal</a></h4>
-					<span>Latest Action: Made Public Feb. 22, 2010</span>
+					<h4>White House Version:</h4>
+					<h5 class="bill_title"><a href="http://www.opencongress.org/presidents_health_care_proposal">President Obama's Proposal</a></h5>
+					<span>Made Public Feb. 22, 2010</span>
 					<br />
-					<a href="#">Read the 11-page Outline</a>
 				</div>
    </div> <!-- Guts -->
    <div class="blog_coverage">

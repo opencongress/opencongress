@@ -259,6 +259,10 @@ class ResourcesController < ApplicationController
     render :layout => false
   end
   
+  def healthcare_panel_sm
+    healthcare_panel
+  end
+  
   def email_friend_send
     @success = false
     if !simple_captcha_valid?

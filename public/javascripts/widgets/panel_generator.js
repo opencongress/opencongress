@@ -16,6 +16,11 @@ function setHealthCareStateAbbrev(state_abbrev) {
   updateHealthCareFields(); 
 }
 
+function setHealthCarePath(path) {
+  document.getElementById('panel_path').value = path;
+  updateHealthCareFields();
+}
+
 function setIssueBillsIssueId(issueId) {
   document.getElementById('panel_issue_id').value = issueId;
   updateIssueBillsFields(); 
@@ -118,7 +123,9 @@ function updateFields(changedField, panelType, generatorRefresh) {
   }
   else if (panelType == 'healthcare') {
       var state_abbrev = document.getElementById('panel_state_abbrev') ?
-                     document.getElementById('panel_state_abbrev').value : '';
+                     document.getElementById('panel_state_abbrev').value : ''    ;
+     var path = document.getElementById('panel_path') ?
+                    document.getElementById('panel_path').value : 'healthcare_panel';
     frameHeight = 580;
   }
   else if (panelType == 'bill_status')
@@ -237,6 +244,7 @@ function updateFields(changedField, panelType, generatorRefresh) {
     if (state_abbrev) {
         userCode += "oc_state = \"#STATE_ABBREV\";\n";
     }
+    userCode += "oc_path = \"#PATH\";\n";
     scriptName = "#HOSTNAMEjavascripts/widgets/healthcare.js";
   }
   else
@@ -265,6 +273,7 @@ function updateFields(changedField, panelType, generatorRefresh) {
     userCode = userCode.replace(/#ISSUE_ID/, issue_id); 
   } else if (panelType == 'healthcare') {
       userCode = userCode.replace(/#STATE_ABBREV/, state_abbrev);   
+      userCode = userCode.replace(/#PATH/, path);
   } else if (panelType == 'watching') {
     userCode = userCode.replace(/#PASSBILLS/, passBills);
     userCode = userCode.replace(/#DONTPASSBILLS/, dontPassBills);

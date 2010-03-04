@@ -13,14 +13,18 @@ class WikiBill
       Timeout::timeout(3) {
         doc = Hpricot(open(url))
       }
-      summary_content = (doc/"#Article_summary") 
-      summary_content.search("sup").remove
-      unless summary_content.blank?
-         @summary = summary_content.inner_html
+      unless doc.blank?
+        summary_content = (doc/"#Article_summary") 
+        summary_content.search("sup").remove
+        unless summary_content.blank?
+           @summary = summary_content.inner_html
+        else
+           @summary = nil
+        end
       else
-         @summary = nil
+        @summary = nil
       end
-    rescue
+    rescue Timeout::Error
       @summary = nil
     end 
   end

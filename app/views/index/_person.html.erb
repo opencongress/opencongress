@@ -1,0 +1,14 @@
+ <li>
+   <a href="<%= url_for :controller => 'people', :action => 'show', :id => person %>">
+
+     <span class="views_count">
+       <span><strong><%= number_with_delimiter(person.views(DEFAULT_COUNT_TIME)) %></strong> views</span>
+     </span>
+     
+     <span class="title"><%= person.senator? ? 'Senator' : 'Representative' %> <%= person.popular_name %></span>
+     <span class="date">
+       <span><%= person.party %>, <%= State.for_abbrev(person.state)%></span> 
+     </span>
+
+   </a>
+ </li>

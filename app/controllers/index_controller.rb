@@ -9,7 +9,7 @@ class IndexController < ApplicationController
       @newest_bills = Bill.find(:all, :order => 'introduced DESC', :limit => 4)
     end
     unless read_fragment("frontpage_issue_mostviewed")
-      @popular_issues = PageView.popular('Subject', DEFAULT_COUNT_TIME, 6) || Issue.find(:first)
+      @popular_issues = PageView.popular('Subject', DEFAULT_COUNT_TIME, 6) || Subject.find(:first)
     end
     unless read_fragment("frontpage_person_topsenators")
       @popular_senators = Person.list_chamber('sen', DEFAULT_CONGRESS, "view_count desc", 6)

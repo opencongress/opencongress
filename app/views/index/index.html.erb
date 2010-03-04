@@ -52,23 +52,26 @@
 <div class="small_heading">
 <span>Most-Viewed Bills
 					<ul class="tabs">
-						<!--<li id="tslink" class="here"><%= link_to_function('<span>Hot Bills</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('ts');Element.addClassName('tslink','here');Element.removeClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('pslink','here');Element.removeClassName('prlink','here');Element.removeClassName('pislink','here');") %></li> -->
-						<li id="bvlink"><%= link_to_function('<span>Most-Viewed Bills</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('bv');Element.addClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('pslink','here');Element.removeClassName('prlink','here');Element.removeClassName('pislink','here');Element.removeClassName('tslink','here');") %></li>
-						<li id="bnlink"><%= link_to_function('<span>Newest Bills</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('bn');Element.addClassName('bnlink','here');Element.removeClassName('bvlink','here');Element.removeClassName('pslink','here');Element.removeClassName('prlink','here');Element.removeClassName('pislink','here');Element.removeClassName('tslink','here');") %></li>
-						<li id="pslink"><%= link_to_function('<span>Most-Viewed Senators</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('ps');Element.addClassName('pslink','here');Element.removeClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('prlink','here');Element.removeClassName('pislink','here');Element.removeClassName('tslink','here');") %></li>
-						<li id="prlink"><%= link_to_function('<span>Most-Viewed Reps</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('pr');Element.addClassName('prlink','here');Element.removeClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('pslink','here');Element.removeClassName('pislink','here');Element.removeClassName('tslink','here');") %></li>
-						<li id="pislink"><%= link_to_function('<span>Most-Viewed Issues</span>', "['bv','bn','ps','pr','pis','ts'].each(Element.hide);Element.show('pis');Element.addClassName('pislink','here');Element.removeClassName('bvlink','here');Element.removeClassName('bnlink','here');Element.removeClassName('pslink','here');Element.removeClassName('prlink','here');Element.removeClassName('tslink','here');") %></li>
+						<li id="bvlink"><%= link_to_function('<span>Most-Viewed Bills</span>', "switchBillTab('bv');") %></li>
+						<li id="bnlink"><%= link_to_function('<span>Newest Bills</span>', "switchBillTab('bn')") %></li>
+						<li id="pslink"><%= link_to_function('<span>Most-Viewed Senators</span>', "switchBillTab('ps');") %></li>
+						<li id="prlink"><%= link_to_function('<span>Most-Viewed Reps</span>', "switchBillTab('pr');") %></li>
+						<li id="pislink"><%= link_to_function('<span>Most-Viewed Issues</span>', "switchBillTab('pis');") %></li>
 					</ul>
 
 				</span>
-		<%# link_to '<span>More Popular Searches</span>', { :controller => 'search', :action => 'popular' }, :class => '' %>
 		<%= link_to '<span>More Hot Bills</span>', { :controller => 'bill', :action => 'hot' }, :class => '' %>
 </div>
+            <div id="bill_tabs">
 
-					<div id="bv" style="display:none;">
+					<div id="bv">
 					<% cache("frontpage_bill_mostviewed", :expires_in => 3.hours) do %>
 					<!-- frontpage_bill_mostviewed: <%= Time.now %> -->
-					<%= render :partial => 'popular', :locals => {:object => @popular_bills, :type => "bv"} %>
+             	<ul class="medium_bill_list editorial_list">
+   					<%= render :partial => 'bill', :collection => @popular_bills %>
+      			</ul>
+      			<a href="/bill/most/viewed" class="med_button med_arrow"><span>More Most-Viewed Bills</span></a>
+               <div class="clear">&nbsp;</div>
 					<!-- /frontpage_bill_mostviewed -->
 					<% end %>
 					</div>
@@ -76,7 +79,11 @@
 					<div id="bn" style="display:none;">
 					<% cache("frontpage_bill_newest", :expires_in => 3.hours) do %>
 					<!-- frontpage_bill_newest: <%= Time.now %> -->
-					<%= render :partial => 'popular', :locals => {:object => @newest_bills, :type => "bn"} %>
+             	<ul class="medium_bill_list editorial_list">
+   					<%= render :partial => 'bill', :collection => @newest_bills %>
+               </ul>
+      	 		<a href="/bill/most/viewed" class="med_button med_arrow"><span>More New Bills</span></a>
+               <div class="clear">&nbsp;</div>
 					<!-- /frontpage_bill_newest -->
 					<% end %>
 					</div>
@@ -84,35 +91,37 @@
 					<div id="ps" style="display:none;">
 					<% cache("frontpage_person_topsenators", :expires_in => 3.hours) do %>
 					<!-- frontpage_person_topsenators: <%= Time.now %> -->
-					<%= render :partial => 'top_people', :object => @popular_senators, :locals => { :person_type => 'senators'} %>
+               <ul class="medium_bill_list">
+   					<%= render :partial => 'person', :collection => @popular_senators %>
 					<!-- /frontpage_person_topsenators -->
+   				</ul>
+               <a href="/people/senators?sort=popular" class="med_button med_arrow"><span>More Senators</span></a>
 					<% end %>
 					</div>
 			
 					<div id="pr" style="display:none;">
 					<% cache("frontpage_person_topreps", :expires_in => 3.hours) do %>
 					<!-- frontpage_person_topreps: <%= Time.now %> -->
-					<%= render :partial => 'top_people', :object => @popular_reps, :locals => { :person_type => 'representatives'} %>
+               <ul class="medium_bill_list">
+      				<%= render :partial => 'person', :collection => @popular_reps %>
+					</ul>
+               <a href="/people/representatives?sort=popular" class="med_button med_arrow"><span>More Representatives</span></a>
 					<!-- /frontpage_person_topreps -->
 					<% end %>
 					</div>
-					
+
 					<div id="pis" style="display:none;">
 					<% cache("frontpage_issue_mostviewed", :expires_in => 3.hours) do %>
 					<!-- frontpage_issue_mostviewed: <%= Time.now %> -->
-					<%= render :partial => 'popular', :locals => {:object => @popular_issues, :type => "pis"} %>
+               <ul class="medium_bill_list editorial_list">
+   					<%= render :partial => 'issue', :collection => @popular_issues %>
+               </ul>
+               <%= link_to '<span>More Issue Areas</span>', { :controller => 'issue' }, :class => 'med_button med_arrow' %>
 					<!-- /frontpage_issue_mostviewed -->
 					<% end %>
 					</div>
 					
-					<div id="ts">
-					<% cache("frontpage_top_searches", :expires_in => 2.hours) do %>
-					<!-- frontpage_top_searches: <%= Time.now %> -->
-					<%= render :partial => 'popular', :locals => {:object => @popular_searches, :type => 'ts'} %>
-					<!-- /frontpage_top_searches -->
-					<% end %>
-					</div>
-
+            </div>
 
 		<h2 class="small_heading">Newly Introduced</h2>
 			<ul class="medium_bill_list editorial_list">

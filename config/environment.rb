@@ -6,7 +6,7 @@ ENV['RAILS_ENV'] ||= 'development'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
 
-RAILS_GEM_VERSION = '2.3.2'
+RAILS_GEM_VERSION = '2.3.5'
 
 require 'yaml'
 require 'ostruct'

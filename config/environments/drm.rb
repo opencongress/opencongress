@@ -17,5 +17,3 @@ config.action_controller.perform_caching             = false
 config.action_view.debug_rjs                         = true
 
 MINI_MAILER_FROM = "alert@dev.opencongress.org"
-WIKI_HOST = 'www.opencongress.org'
-WIKI_BASE_URL = "http://#{WIKI_HOST}/wiki"

@@ -29,9 +29,6 @@ end
 
 BASE_URL = 'http://dev.opencongress.org/'
 
-WIKI_HOST = 'www.opencongress.org'
-WIKI_BASE_URL = "http://#{WIKI_HOST}/wiki"
-
 DATA_PATH = "/data"
 GOVTRACK_DATA_PATH = "#{DATA_PATH}/govtrack/#{DEFAULT_CONGRESS}"
 GOVTRACK_BILLTEXT_PATH = "#{DATA_PATH}/govtrack/bills.text"

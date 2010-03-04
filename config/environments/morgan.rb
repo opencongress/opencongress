@@ -20,5 +20,3 @@ config.action_view.debug_rjs                         = true
 config.action_mailer.raise_delivery_errors = true
 
 BASE_URL = 'http://morgan.dev.opencongress.org/'
-WIKI_HOST = 'www.opencongress.org'
-WIKI_BASE_URL = "http://#{WIKI_HOST}/wiki"

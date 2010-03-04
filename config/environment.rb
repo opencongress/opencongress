@@ -116,6 +116,12 @@ require 'action_controller/integration'
 # Used across the site for things like "This bill was viewed 30,212 in the last 7 days"
 DEFAULT_COUNT_TIME = 7.days
 
+# TODO: Use wiki-internal to get wiki content on production rather
+# than going through the proxy server (twice)
+WIKI_HOST = 'wwww.opencongress.org'
+WIKI_BASE_URL = "http://#{WIKI_HOST}/wiki"
+
+
 WillPaginate::ViewHelpers.pagination_options[:renderer] = 'SpanLinkRenderer'      
 WillPaginate::ViewHelpers.pagination_options[:previous_label] = 'Previous'
 WillPaginate::ViewHelpers.pagination_options[:next_label] = 'Next'

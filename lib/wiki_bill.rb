@@ -10,7 +10,8 @@ class WikiBill
     puts url
     @url = url
     begin
-      Timeout::timeout(1) {
+      doc = nil
+      Timeout::timeout(3) {
         doc = Hpricot(open(url))
       }
       unless doc.blank?

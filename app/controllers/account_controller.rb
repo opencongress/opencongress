@@ -302,7 +302,7 @@ class AccountController < ApplicationController
 
         http = Net::HTTP.new(Rails.env.production? ? 'wiki-internal' : WIKI_HOST, 80)
 
-        path = "/wiki/index.php?title=Special:UserLogin&returnto=Main_Page"
+        path = "/w/index.php?title=Special:UserLogin&returnto=Main_Page"
         resp, data = http.post(path,data,headers)
 
         returned_cookies = resp['set-cookie'].split(',')

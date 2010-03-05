@@ -28,6 +28,42 @@ class IndexController < ApplicationController
     end
     
     @sessions = CongressSession.sessions
+    
+    @index_tabs = [{:title => 'Most-Viewed Bills',
+            :partial => 'bill',
+            :collection => @popular_bills,
+            :id => "bv",
+            :link => '/bill/most/viewed',
+            :cache => 'frontpage_bill_mostviewed'},
+            {:title => 'Newest Bills',
+            :partial => 'bill',
+            :collection => @newest_bills,
+            :id => 'bn',
+            :style => 'display: none;',
+            :link => '/bill/most/viewed',
+            :cache => 'frontpage_bill_newest'},
+            {:title => 'Most-Viewed Senators',
+            :partial => 'person',
+            :collection => @popular_senators,
+            :id => 'ps',
+            :style => 'display: none;',
+            :link => '/people/senators?sort=popular',
+            :cache => 'frontpage_person_topsenators'},
+            {:title => 'Most-Viewed Reps',
+            :partial => 'person',
+            :collection => @popular_reps,
+            :link => '/people/representatives?sort=popular',
+            :style => 'display: none;',
+            :id => 'pr',
+            :cache => 'frontpage_person_topreps'},
+            {:title => 'Most-Viewed Issues',
+            :partial => 'issue',
+            :collection => @popular_issues,
+            :style => 'display: none;',
+            :id => 'pis',
+            :link => '/issues',
+            :cache => 'frontpage_issue_mostviewed'}]
+    
   end
   
   def notfound

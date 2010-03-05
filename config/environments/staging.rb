@@ -40,6 +40,5 @@ GOVTRACK_BILLTEXT_DIFF_PATH = "#{DATA_PATH}/govtrack/bills.text.cmp"
 # the following API key is for OpenCongress production use only!
 TECHNORATI_API_KEY = API_KEYS['technorati_api_key']
 
-WIKI_BASE_URL = "http://wiki-dev.opencongress.org"
 MINI_MAILER_FROM = "alerts@dev.opencongress.org"
 

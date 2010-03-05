@@ -1,9 +1,9 @@
-function switchBillTab(to) {
+function switchBillTab(to, title) {
     allTabs = Element.childElements('bill_tabs')
     allTabs.each(function(t) {
        Element.hide(t)
     });
     Element.show(to);
-//    Element.addClassName(to + 'link','here');
+    $('popular_ul_title').innerHTML = title;
 
 }

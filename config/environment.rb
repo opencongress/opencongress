@@ -36,12 +36,10 @@ TECHNORATI_API_KEY = API_KEYS['technorati_api_key']
 
 
 # Ban file
-BAN_FILE = '/usr/local/apache2/conf/extra/banned_users.txt'
+BAN_FILE = '/u/apps/opencongress/shared/files/banned_users.txt'
 
 # URLs you should know about
 BASE_URL = 'http://www.opencongress.org/'
-WIKI_BASE_URL = 'http://wiki.opencongress.org/wiki'
-
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -117,6 +115,12 @@ require 'action_controller/integration'
 
 # Used across the site for things like "This bill was viewed 30,212 in the last 7 days"
 DEFAULT_COUNT_TIME = 7.days
+
+# TODO: Use wiki-internal to get wiki content on production rather
+# than going through the proxy server (twice)
+WIKI_HOST = 'www.opencongress.org'
+WIKI_BASE_URL = "http://#{WIKI_HOST}/wiki"
+
 
 WillPaginate::ViewHelpers.pagination_options[:renderer] = 'SpanLinkRenderer'      
 WillPaginate::ViewHelpers.pagination_options[:previous_label] = 'Previous'

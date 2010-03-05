@@ -50,77 +50,30 @@
 		</ul>
 
 <div class="small_heading">
-<span>Most-Viewed Bills
+<span><span id="popular_ul_title">Most-Viewed Bills</span>
 					<ul class="tabs">
-						<li id="bvlink"><%= link_to_function('<span>Most-Viewed Bills</span>', "switchBillTab('bv');") %></li>
-						<li id="bnlink"><%= link_to_function('<span>Newest Bills</span>', "switchBillTab('bn')") %></li>
-						<li id="pslink"><%= link_to_function('<span>Most-Viewed Senators</span>', "switchBillTab('ps');") %></li>
-						<li id="prlink"><%= link_to_function('<span>Most-Viewed Reps</span>', "switchBillTab('pr');") %></li>
-						<li id="pislink"><%= link_to_function('<span>Most-Viewed Issues</span>', "switchBillTab('pis');") %></li>
+					   <% @index_tabs.each do |tab| %>
+						<li id="<%= tab[:id] %>link"><%= link_to_function("<span>#{tab[:title]}</span>", "switchBillTab('#{tab[:id]}', '#{tab[:title]}');") %></li>
+						<% end %>
 					</ul>
-
-				</span>
+</span>
 		<%= link_to '<span>More Hot Bills</span>', { :controller => 'bill', :action => 'hot' }, :class => '' %>
 </div>
             <div id="bill_tabs">
-
-					<div id="bv">
-					<% cache("frontpage_bill_mostviewed", :expires_in => 3.hours) do %>
-					<!-- frontpage_bill_mostviewed: <%= Time.now %> -->
-             	<ul class="medium_bill_list editorial_list">
-   					<%= render :partial => 'bill', :collection => @popular_bills %>
-      			</ul>
-      			<a href="/bill/most/viewed" class="med_button med_arrow"><span>More Most-Viewed Bills</span></a>
-               <div class="clear">&nbsp;</div>
-					<!-- /frontpage_bill_mostviewed -->
-					<% end %>
-					</div>
-
-					<div id="bn" style="display:none;">
-					<% cache("frontpage_bill_newest", :expires_in => 3.hours) do %>
-					<!-- frontpage_bill_newest: <%= Time.now %> -->
-             	<ul class="medium_bill_list editorial_list">
-   					<%= render :partial => 'bill', :collection => @newest_bills %>
-               </ul>
-      	 		<a href="/bill/most/viewed" class="med_button med_arrow"><span>More New Bills</span></a>
-               <div class="clear">&nbsp;</div>
-					<!-- /frontpage_bill_newest -->
-					<% end %>
-					</div>
-
-					<div id="ps" style="display:none;">
-					<% cache("frontpage_person_topsenators", :expires_in => 3.hours) do %>
-					<!-- frontpage_person_topsenators: <%= Time.now %> -->
-               <ul class="medium_bill_list">
-   					<%= render :partial => 'person', :collection => @popular_senators %>
-					<!-- /frontpage_person_topsenators -->
-   				</ul>
-               <a href="/people/senators?sort=popular" class="med_button med_arrow"><span>More Senators</span></a>
-					<% end %>
-					</div>
-			
-					<div id="pr" style="display:none;">
-					<% cache("frontpage_person_topreps", :expires_in => 3.hours) do %>
-					<!-- frontpage_person_topreps: <%= Time.now %> -->
-               <ul class="medium_bill_list">
-      				<%= render :partial => 'person', :collection => @popular_reps %>
-					</ul>
-               <a href="/people/representatives?sort=popular" class="med_button med_arrow"><span>More Representatives</span></a>
-					<!-- /frontpage_person_topreps -->
-					<% end %>
-					</div>
-
-					<div id="pis" style="display:none;">
-					<% cache("frontpage_issue_mostviewed", :expires_in => 3.hours) do %>
-					<!-- frontpage_issue_mostviewed: <%= Time.now %> -->
+               <% @index_tabs.each do |tab| %>
+               <div id="<%= tab[:id] %>" style="<%= tab[:style] %>">
+               <% cache(tab[:cache], :expires_in => 3.hours) do %>
+               <!-- <%= tab[:cache] %>: <%= Time.now %> -->
                <ul class="medium_bill_list editorial_list">
-   					<%= render :partial => 'issue', :collection => @popular_issues %>
+               	<%= render :partial => tab[:partial], :collection => tab[:collection] %>
                </ul>
-               <%= link_to '<span>More Issue Areas</span>', { :controller => 'issue' }, :class => 'med_button med_arrow' %>
-					<!-- /frontpage_issue_mostviewed -->
-					<% end %>
-					</div>
-					
+               <a href="<%= tab[:link] %>" class="med_button med_arrow"><span>More <%= tab[:title] %></span></a>
+               <div class="clear">&nbsp;</div>
+               <!-- /frontpage_bill_mostviewed -->
+               <% end %>
+               </div>
+               <% end %>
+               
             </div>
 
 		<h2 class="small_heading">Newly Introduced</h2>

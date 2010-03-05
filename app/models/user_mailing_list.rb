@@ -28,7 +28,7 @@ class UserMailingList < ActiveRecord::Base
 
 
   def self.send_all_updates(since = nil)
-    if RAILS_ENV=="production"
+    if Rails.env.production?
       self.all_ok.each do |s|
         s.send_message(since)
       end

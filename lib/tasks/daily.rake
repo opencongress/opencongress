@@ -5,7 +5,7 @@ namespace :update do
     begin
       system "sh #{RAILS_ROOT}/bin/daily/govtrack-rsync.sh #{DATA_PATH}"
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error rsyncing govtrack data!")
       else
         puts "Error rsyncing govtrack data!"
@@ -17,11 +17,11 @@ namespace :update do
   task :photos => :environment do
     begin
       system "sh #{RAILS_ROOT}/bin/daily/govtrack-photo-rsync.sh #{DATA_PATH}"
-      unless (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      unless (['production', 'staging'].include?(Rails.env))
         system "ln -s -i -F #{DATA_PATH}/govtrack/photos #{RAILS_ROOT}/public/images/photos"
       end
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error updating photos!")
       else
         puts "Error updating photos!"
@@ -34,7 +34,7 @@ namespace :update do
     begin
       load 'bin/daily/daily_parse_bioguide.rb'
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error updating from bioguide!")
       else
         puts "Error updating from bioguide!"
@@ -47,7 +47,7 @@ namespace :update do
     begin
       load 'bin/daily/daily_parse_video.rb'
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error getting video data!")
       else
         puts "Error getting video data!"
@@ -68,7 +68,7 @@ namespace :update do
         puts "nothing to update"
       end
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error parsing people!")
       else
         puts "Error parsing people!"
@@ -80,7 +80,7 @@ namespace :update do
     begin
       load 'bin/daily/daily_parse_bills.rb'
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error parsing bills!")
       else
         puts "Error parsing bills!"
@@ -93,7 +93,7 @@ namespace :update do
     begin
       load 'bin/daily/daily_parse_bill_text.rb'
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error parsing bill text!")
       else
         puts "Error parsing bill text!"
@@ -114,7 +114,7 @@ namespace :update do
     begin
       load 'bin/daily/daily_gpo_billtext_timestamps.rb'
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error parsing GPO timestamps!")
       else
         puts "Error parsing GPO timestamps!"
@@ -129,7 +129,7 @@ namespace :update do
         load 'bin/daily/daily_parse_amendments.rb'
       }
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error parsing amendments!")
       else
         puts "Error parsing amendments!"
@@ -144,7 +144,7 @@ namespace :update do
         load 'bin/thomas_parse_committee_reports.rb'
       }
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error parsing committee reports!")
       else
         puts "Error parsing committee reports!"
@@ -160,7 +160,7 @@ namespace :update do
         load 'bin/thomas_parse_committee_reports.rb'
       }
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error parsing committee reports!")
       else
         puts "Error parsing committee reports!"
@@ -175,7 +175,7 @@ namespace :update do
         load 'bin/daily/daily_parse_opensecrets.rb'
       }
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error parsing open secrets!")
       else
         puts "Error parsing open secrets! Maybe an invalid api key?"
@@ -190,7 +190,7 @@ namespace :update do
         load 'bin/govtrack_parse_committee_schedules.rb'
       }
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error parsing committee schedule!")
       else
         puts "Error parsing committee schedule!"
@@ -205,7 +205,7 @@ namespace :update do
         load 'bin/parse_today_in_congress.rb'
       }
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error parsing today in Congress!")
       else
         puts "Error parsing today in Congress!"
@@ -218,7 +218,7 @@ namespace :update do
     begin
       load 'bin/daily/daily_parse_rolls.rb'
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error parsing roll calls!")
       else
         puts "Error parsing roll calls!"
@@ -231,7 +231,7 @@ namespace :update do
     begin
       load 'bin/daily/person_voting_similarities.rb'
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error compiling voting similarities!")
       else
         puts "Error compiling voting similarities!"
@@ -244,7 +244,7 @@ namespace :update do
     begin
       load 'bin/daily/sponsored_bill_stats.rb'
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error compiling sponsored bill stats!")
       else
         puts "Error compiling sponsored bill stats!"
@@ -271,7 +271,7 @@ namespace :update do
         end
       }
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error running gossip!")
       else
         puts "Error running gossip!"
@@ -293,7 +293,7 @@ namespace :update do
         b.send :expire_govtrack_fragments
       end
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error expiring cached bill fragments!")
       else
         puts "Error expiring cached bill fragments!"
@@ -313,7 +313,7 @@ namespace :update do
         p.send :expire_govtrack_fragments
       end
     rescue Exception => e
-      if (RAILS_ENV == 'production' || RAILS_ENV == 'staging')
+      if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error expiring cached person fragments!")
       else
         puts "Error expiring cached person fragments!"

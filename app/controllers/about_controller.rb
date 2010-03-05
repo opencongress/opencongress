@@ -25,7 +25,7 @@ class AboutController < ApplicationController
   def code
     @page_title = 'OpenCongress for Developers'
     require 'bluecloth'
-    @readme = BlueCloth.new(File.open("#{RAILS_ROOT}/README.markdown").read).to_html
+    @readme = BlueCloth.new(Rails.root.join("README.markdown").read).to_html
   end
   
   def developer_job

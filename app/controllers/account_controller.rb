@@ -300,7 +300,7 @@ class AccountController < ApplicationController
           'Content-Type' => 'application/x-www-form-urlencoded'
         }
 
-        http = Net::HTTP.new(WIKI_HOST, 80)
+        http = Net::HTTP.new(Rails.env.production? ? 'wiki-internal' : WIKI_HOST, 80)
 
         path = "/wiki/index.php?title=Special:UserLogin&returnto=Main_Page"
         resp, data = http.post(path,data,headers)

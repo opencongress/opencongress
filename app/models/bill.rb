@@ -197,7 +197,7 @@ class Bill < ActiveRecord::Base
   
   def recent_activity_mini_list(since = nil)
     host = "dev.opencongress.org"
-    host = "www.opencongress.org" if RAILS_ENV=="production"
+    host = "www.opencongress.org" if Rails.env.production?
     
     items = []
     self.recent_activity(since).each do |i|
@@ -373,7 +373,7 @@ class Bill < ActiveRecord::Base
     # return bill actions since last X
     def find_changes_since_for_bills_tracked(current_user)
        time_since = current_user.previous_login_date || 20.days.ago
-       time_since = 200.days.ago if RAILS_ENV == "development"
+       time_since = 200.days.ago if Rails.env.development?
        ids = current_user.bill_bookmarks.collect{|p| p.bookmarkable_id}
        find_by_sql(["select bills.*, total_actions.action_count as actionn_count,
                         total_blogs.blog_count as blogss_count, total_news.news_count as newss_count,
@@ -411,7 +411,7 @@ class Bill < ActiveRecord::Base
     # return bill actions since last X
     def find_user_data_for_tracked_bill(bill, current_user)
        time_since = current_user.previous_login_date || 20.days.ago
-       time_since = 200.days.ago if RAILS_ENV == "development"
+       time_since = 200.days.ago if Rails.env.development?
        find_by_id(bill.id,
                       :select => "bills.*, (select count(actions.id) from actions where actions.datetime > '#{time_since.to_s(:db)}' AND bill_id = #{bill.id} ) as action_count,
                           (select count(commentaries.id) FROM commentaries 
@@ -949,7 +949,7 @@ class Bill < ActiveRecord::Base
     title ? "#{title.title}" : "#{type_name}#{number}"
   end
   
-  def title_typenumber_only # just the type and number, ie H.R.1591
+  def typenumber # just the type and number, ie H.R.1591
     "#{type_name}#{number}"
   end
 
@@ -982,7 +982,7 @@ class Bill < ActiveRecord::Base
   end
   
   def title_for_share
-    title_typenumber_only
+    typenumber
   end
 
   # methods for progress
@@ -1201,10 +1201,9 @@ class Bill < ActiveRecord::Base
   end
 
   def obj_title
-    title_typenumber_only
+    typenumber
   end
 
-  
   private
 
   def official_title

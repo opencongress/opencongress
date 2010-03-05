@@ -18,7 +18,7 @@ class CommitteeController < ApplicationController
   def show
     @committee = Committee.find(params[:id], :include => :reports)
 
-    if @committee.has_wiki_link? # && RAILS_ENV != "production"
+    if @committee.has_wiki_link? # && !Rails.env.production?
       @wiki_tab = true
       @wiki_url = @committee.wiki_url
     end

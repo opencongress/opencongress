@@ -16,7 +16,7 @@ module IGOpeople
   end
 end
 
-if ['development','test'].include?(RAILS_ENV)
+if Rails.env.development? || Rails.env.test?
   ActionController::Routing::RouteSet.send(:include, 
       IGOpeople::Routing::BorkOnNamedRouteClash)
 end

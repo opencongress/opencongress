@@ -315,7 +315,7 @@ class Subject < ActiveRecord::Base
 
   def new_bills_since(current_user, congress = DEFAULT_CONGRESS)
     time_since = current_user.previous_login_date
-    time_since = 200.days.ago if RAILS_ENV == "development"
+    time_since = 200.days.ago if Rails.env.development?
     
     bills.find(:all, :include => [:actions], 
                      :conditions => ['bills.session = ? AND actions.datetime > ? AND actions.action_type = ?', congress, time_since, 'introduced'], 

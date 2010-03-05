@@ -25,17 +25,87 @@ float: right;
 width: 431px;
 }
 
+#bill_tabs{
+position: relative;
+z-index: 5456789;
+}
 
+.more_{
+position: absolute;
+top: -23px;
+right: 10px;
+}
+
+
+.add_facebook{
+padding-top: 20px;
+overflow: hidden;
+float: right;
+width: 116px;
+height: 0;
+background: url('/images/add_facebook.png') left -23px no-repeat;
+margin: 13px 0 0 0;
+}
+
+.add_facebook:hover{
+padding-top: 20px;
+overflow: hidden;
+float: right;
+height: 0;
+background: url('/images/add_facebook.png') left top no-repeat;
+}
+
+
+.tweet_us{
+padding-top: 20px;
+overflow: hidden;
+width: 106px;
+float: right;
+height: 0;
+margin: 13px 0 0 0;
+background: url('/images/tweet_us.png') left -23px no-repeat;
+
+}
+
+.tweet_us:hover{
+padding-top: 20px;
+overflow: hidden;
+float: right;
+height: 0;
+background: url('/images/tweet_us.png') left top no-repeat;
+}
 
 
 .medium_bill_list{
 padding: 0;
 margin: 0;
+
 }
 
 .medium_bill_list li a{
 text-decoration: none;
-padding: 13px 0 10px 60px;
+padding: 13px 0 13px 60px;
+display: block;
+}
+
+
+.medium_bill_list li.bill {
+border-top: 1px solid #9bd0e1;
+border-bottom: 1px solid #e7f9ff;
+background:  url('/images/bill_small_list.png') 0 bottom repeat-x;
+}
+
+
+.medium_bill_list li.bill:hover{
+border-top: 1px solid #9bd0e1;
+border-bottom: 1px solid #e7f9ff;
+background:  url('/images/bill_small_list.png') 0 30px repeat-x;
+}
+
+.medium_bill_list li.people {
+border-top: 1px solid #d1c591;
+border-bottom: 1px solid #fffef8;
+background:  url('/images/people_small_list.png') 0 bottom repeat-x;
 }
 
 
@@ -52,6 +122,7 @@ overflow: hidden;
 
 .medium_bill_list li a span.little_status{
 padding: 0;
+
 margin: 0;
 font-weight: normal;
 font-size: 11px;
@@ -156,6 +227,7 @@ display: inline !important;
 float: right;
 font-weight: normal;
 color: #888;
+background: 0;
 padding: 0px 10px 0px 6px !important;
 font-style: italic !important;
 }
@@ -222,8 +294,13 @@ padding-right: 10px;
 .small_heading span{
 font-weight: bold;
 cursor: pointer;
-padding: 10px 5px;
+padding: 10px 10px 10px 0px;
 position: relative;
+background: url(/images/arrows.png) right -12px no-repeat;
+}
+
+.small_heading span span{
+background: none;
 }
 
 
@@ -231,13 +308,14 @@ position: relative;
 .small_heading span:hover ul.tabs{
 display: block;
 position: absolute;
-
+z-index: 324567883;
+margin-left: 10px;
 }
 
 
 
 .small_heading ul.tabs{
-margin: 10px 0 0 0;
+margin: 9px 0 0 0;
 padding: 0px 4px 4px 4px;
 position: absolute;
 top: 23px;
@@ -336,7 +414,8 @@ padding: 15px 0px 15px;
 }
 
 .blog_list h2 .feed{
-margin: 13px 0 16px;
+margin: 13px 0 0 16px;
+float: left !important;
 }
 
 .blog_list #blog .back{
@@ -522,7 +601,17 @@ margin-right: 10px;
 
 .box01{
 width: 304px;
+position: relative;
 float: left;
+}
+
+
+.box01 .more_{
+top: 6px;
+}
+
+.box01 h3{
+padding-left: 15px !important;
 }
 
 
@@ -619,6 +708,7 @@ padding: 30px 0px 5px 27px;
 background: url(/images/track_them.jpg) 0px -2px no-repeat;
 float: left;
 width: 975px;
+
 height: 91px;
 border-bottom: 1px solid #999;
 }
@@ -649,10 +739,11 @@ display: none;
 }
 
 #find p{
-font-size: 12px;
+font-size: 14px;
 float: left;
 padding: 0px 0 0 14px;
 width: 430px;
+line-height: 1.5em;
 }
 
 

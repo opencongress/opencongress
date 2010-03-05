@@ -1,4 +1,4 @@
-        <li>
+        <li class="bill">
         	<a href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>">
           	<span class="title"><%= bill.typenumber %> - <span><%= truncate(bill.title_common, :length => 45) rescue nil %></span></span>
           	<span class="date">

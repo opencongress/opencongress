@@ -57,17 +57,17 @@
 						<% end %>
 					</ul>
 </span>
-		<%= link_to '<span>More Hot Bills</span>', { :controller => 'bill', :action => 'hot' }, :class => '' %>
+
 </div>
             <div id="bill_tabs">
                <% @index_tabs.each do |tab| %>
                <div id="<%= tab[:id] %>" style="<%= tab[:style] %>">
                <% cache(tab[:cache], :expires_in => 3.hours) do %>
                <!-- <%= tab[:cache] %>: <%= Time.now %> -->
-               <ul class="medium_bill_list editorial_list">
+               <ul class="medium_bill_list">
                	<%= render :partial => tab[:partial], :collection => tab[:collection] %>
                </ul>
-               <a href="<%= tab[:link] %>" class="med_button med_arrow"><span>More <%= tab[:title] %></span></a>
+               <a href="<%= tab[:link] %>" class="more_"><span>More <%= tab[:title] %></span></a>
                <div class="clear">&nbsp;</div>
                <!-- /frontpage_bill_mostviewed -->
                <% end %>
@@ -76,23 +76,7 @@
                
             </div>
 
-		<h2 class="small_heading">Newly Introduced</h2>
-			<ul class="medium_bill_list editorial_list">
-			   <% cache("frontpage_bill_newest", :expires_in => 3.hours) do %>
-				<!-- frontpage_bill_newest: <%= Time.now %> -->
-				<% @newest_bills.each do |bill| %>
-				 <li>
-              	<a href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>">
-                	<span class="title"><%= bill.typenumber %> - <span><%= truncate(bill.title_common, :length => 45) rescue nil %></span></span>
-                  <p><%= bill.caption || truncate(bill.plain_language_summary, :length => 100) %></p>
-                  <span class="little_status"><strong><%= temp_url_strip(bill.status) %></strong> <%= bill.last_action.formatted_date if bill.last_action %></span>
-      	      	</a>
-      		</li>
-            <% end %>
-				<!-- /frontpage_bill_newest -->
-				<% end %>
-			</ul>
-	
+			
 
 	
 		</div>
@@ -119,7 +103,7 @@
 			<input type="image" src="/images/show_me-trans.png" alt="Find My Reps" />
 		</form>
 		
-					<p> OpenCongress helps you track all the actions by your elected officials and what people are saying about them. Subscribe to RSS feeds to stay in touch with their latest votes. </p>
+					<p> OpenCongress helps you track all the actions by your elected officials and what people are saying about them. <br />Subscribe to RSS feeds to stay in touch with their latest votes. </p>
 
 	</div>
 	
@@ -199,7 +183,7 @@
 
 		<h3>Latest Votes</h3>
 		<ul class="latest_votes">
-			<% RollCall.latest_votes_for_unique_bills(4).each do |r| %>
+			<% RollCall.latest_votes_for_unique_bills(5).each do |r| %>
 			<li>
 				<a href="<%= r.vote_url %>">
 				<span><%= truncate(r.bill.title_full_common, :length => 58) %></span><br />
@@ -213,7 +197,7 @@
 				</li>
 				<% end %>
 			</ul>	
-			<%= link_to '<span>More Recent Votes</span>', { :controller => 'roll_call', :action => :all}, :class => 'med_button med_arrow' %>
+			<%= link_to '<span>More Recent Votes</span>', { :controller => 'roll_call', :action => :all}, :class => 'more_' %>
 	
 </div>
 

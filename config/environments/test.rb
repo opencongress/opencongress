@@ -20,7 +20,3 @@ config.action_mailer.delivery_method = :test
 
 config.gem 'rspec',         :lib => 'spec'
 config.gem "cucumber"
-
-BASE_URL = 'http://dev.opencongress.org/'
-WIKI_BASE_URL = 'http://dev.opencongress.org/wiki'
-

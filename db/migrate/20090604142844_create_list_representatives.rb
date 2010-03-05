@@ -1,6 +1,6 @@
 class CreateListRepresentatives < ActiveRecord::Migration
   def self.up
-    if RAILS_ENV == "production"
+    if Rails.env.production?
      execute 'create or replace view list_representatives as SELECT people.*, 
    	       COALESCE(person_approvals.person_approval_avg, 0) as person_approval_average,
    	       COALESCE(bills_sponsored.sponsored_bills_count, 0) as sponsored_bills_count,

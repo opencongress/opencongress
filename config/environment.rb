@@ -118,7 +118,7 @@ DEFAULT_COUNT_TIME = 7.days
 
 # TODO: Use wiki-internal to get wiki content on production rather
 # than going through the proxy server (twice)
-WIKI_HOST = 'wwww.opencongress.org'
+WIKI_HOST = 'www.opencongress.org'
 WIKI_BASE_URL = "http://#{WIKI_HOST}/wiki"
 
 

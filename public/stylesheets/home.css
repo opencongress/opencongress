@@ -1,3 +1,4 @@
+
 #blog{
 width: 383px;
 float: left;
@@ -369,6 +370,7 @@ border-bottom: 1px solid #ccc;
 
 
 .just_for_a_border{
+position: relative;
 background: url(/images/line.gif) 570px bottom repeat-y;
 }
 
@@ -386,8 +388,7 @@ padding: 3px;
 padding-top: 0 !important;
 float: left;
 width: 570px;
-position: relative;
-
+position: static;
 padding: 0 0 50px;
 }
 
@@ -969,6 +970,8 @@ text-decoration: underline;
 display: block;
 overflow: hidden;
 float: left;
+width: 420px;
+height: 20px;
 }
 
 .indent li a .datedark{
@@ -1057,7 +1060,6 @@ min-height: 205px;
 padding: 5px;
 position: absolute;
 bottom: 0;
-
 width: 550px;
 }
 	
@@ -1158,5 +1160,3 @@ p.topline .med_button span{
 padding-top: 8px;
 padding-bottom: 6px;
 }
-
-

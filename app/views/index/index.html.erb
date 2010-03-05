@@ -29,7 +29,10 @@
 		<div class="congress_status">
 	  	 	<h2 class="small_heading">Today in Congress <span><%= Date.today.strftime("%B %d, %Y") %></span></h2>
 	  		<%= session_div('house', @sessions[:house_session]) %>
-	  		<%= session_div('senate', @sessions[:senate_session])%>	
+	  		<%= session_div('senate', @sessions[:senate_session])%>
+	  		
+	  		<a href="#" class="more_">See full schedule</a>
+	  			
 	  	</div>
 		
 		<h2 class="small_heading">Bills in the News</h2>

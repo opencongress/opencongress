@@ -273,6 +273,8 @@ padding: 0px 0 8px 0px;
 }
 
 
+
+
 .small_heading{
 font-size: 12px;
 background: url(/images/blog_bg.png) left bottom no-repeat;
@@ -463,13 +465,20 @@ padding: 15px 10px;
 }
 
 .blog_list #blog h3 .date{
-display: block;
 color: #666;
 font-size: 11px;
 clear: both;
-margin-bottom: 10px;
-float: left;
+padding: 0 5px;
+
 }
+
+
+.by{
+display: block;
+clear: both;
+}
+
+
 
 .blog_list #blog h3 strong.gossip a{
 float: left;

@@ -18,7 +18,7 @@
 
          <div class="just_for_a_border">
          	<div class="rightside">
-               <% cache("frontpage_rightside", :expires_in => 3.hours) do %>
+               <%# cache("frontpage_rightside", :expires_in => 3.hours) do %>
                	<div class="congress_status">
             	  	 	<h2 class="small_heading">Today in Congress <span><%= Date.today.strftime("%B %d, %Y") %></span></h2>
             	  		<%= session_div('house', @sessions[:house_session]) %>
@@ -56,9 +56,9 @@
                      <% end %>
                   </div>
                </div><!-- rightside -->
-            <% end # rightside cache %>
+            <%# end # rightside cache %>
          </div><!-- just for a border -->
-	
+
          <div class="blog_list">
       		<%= render :partial => 'articles/frontpage', :locals => { :articles => Article.frontpage_gossip } %>
       		<!-- // end of blog entries -->
@@ -75,9 +75,9 @@
          </form>
          <p>OpenCongress helps you track all the actions by your elected officials and what people are saying about them. <br />Subscribe to RSS feeds to stay in touch with their latest votes. </p>
    	</div>
-	
+
    	<div id="second_tier">
-   		<% cache("frontpage_featured_members") do %>
+   		<%# cache("frontpage_featured_members") do %>
    		<!--frontpage_featured_members cached: <%= Time.now %> -->
       	<div class="featured_members">   
       		<h3 class="darkline">Featured Members of Congress <a href="/people/atom/featured" class="feed">Feed</a></h3>
@@ -103,10 +103,9 @@
       				</div><!-- back -->
       		  		<span class="cap"></span>
       			</div><!-- subcol1 -->
-
    			<% end %>
-   			<% if @popular_rep_text %>
 
+   			<% if @popular_rep_text %>
       			<div class="subcol2">		  
       				<h3>A Most-Viewed Representative</h3>
       				<div class="back"> 
@@ -129,11 +128,11 @@
          			<span class="cap"></span>
          		</div><!-- subcol2 -->
 
-      		<%-end %>
+      		<% end %>
       		<!-- // end most viewed sen/rep -->
-		
+
    		</div><!-- featured members -->
-   		<% end # rep cache %>
+   		<%# end # rep cache %>
 
          <div class="box01 clearfix">
       		<h3>Latest Votes</h3>
@@ -153,7 +152,7 @@
    				<% end %>
       			</ul>	
       			<%= link_to '<span>More Recent Votes</span>', { :controller => 'roll_call', :action => :all}, :class => 'more_' %>
-         </div>
+         </div><!-- second tier -->
 
       	<div id="pitch">
       		<div id="home_pitch">

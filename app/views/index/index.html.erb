@@ -55,10 +55,8 @@
                      </div>
                      <% end %>
                   </div>
-         
-               </div>
+               </div><!-- rightside -->
             <% end # rightside cache %>
-
          </div><!-- just for a border -->
 	
          <div class="blog_list">
@@ -75,9 +73,7 @@
             <input class="enter_zip" type="text" name="zip5" size='5' maxlength='5' value="Enter Your Zip" onfocus="this.value='';"/>
             <input type="image" src="/images/show_me-trans.png" alt="Find My Reps" />
          </form>
-		
          <p>OpenCongress helps you track all the actions by your elected officials and what people are saying about them. <br />Subscribe to RSS feeds to stay in touch with their latest votes. </p>
-
    	</div>
 	
    	<div id="second_tier">
@@ -136,25 +132,25 @@
       		<%-end %>
       		<!-- // end most viewed sen/rep -->
 		
-   		</div>
+   		</div><!-- featured members -->
    		<% end # rep cache %>
 
          <div class="box01 clearfix">
       		<h3>Latest Votes</h3>
       		<ul class="latest_votes">
       			<% RollCall.latest_votes_for_unique_bills(5).each do |r| %>
-      			<li>
-      				<a href="<%= r.vote_url %>">
-      				<span><%= truncate(r.bill.title_full_common, :length => 58) %></span><br />
+         			<li>
+         				<a href="<%= r.vote_url %>">
+         				<span><%= truncate(r.bill.title_full_common, :length => 58) %></span><br />
 		
-      				<span class="votes"><span class="aye">Ayes</span> <%= r.ayes %>&nbsp;&nbsp;&nbsp;<span class="nay">Nays</span> <%= r.nays %></span>
-      				<span class="date"><%= r.date.strftime("%b %d, %Y") %></span>
+         				<span class="votes"><span class="aye">Ayes</span> <%= r.ayes %>&nbsp;&nbsp;&nbsp;<span class="nay">Nays</span> <%= r.nays %></span>
+         				<span class="date"><%= r.date.strftime("%b %d, %Y") %></span>
 
-      				<span class="type"><%= get_result_image(r.result) %> <%= r.roll_type %></span>
+         				<span class="type"><%= get_result_image(r.result) %> <%= r.roll_type %></span>
 
       					</a>
       				</li>
-      				<% end %>
+   				<% end %>
       			</ul>	
       			<%= link_to '<span>More Recent Votes</span>', { :controller => 'roll_call', :action => :all}, :class => 'more_' %>
          </div>
@@ -188,7 +184,7 @@
       				</li>
 				
       			</ul> 
-      		</div>
+      		</div><!-- home pitch -->
       	</div><!-- // end pitch -->
 		
       	<div class="about_oc">		
@@ -203,7 +199,7 @@
       		<p>Watch a video overview of OpenCongress, the information we offer, and ways you can use the site. This screencast was graciously created by Ryanne Hodson and Jay Dedman of <a href="http://ryanishungry.com/">RyanIsHungry.com</a> as a volunteer project.</p>
       		-->
 
-         </div>
+         </div><!-- about OC -->
 
       	<div class="use_oc">
       		<h3>Get Updates with Our E-mail List</h3>
@@ -224,8 +220,8 @@
 
       		<h3>Contact Us</h3>
       		<p>We are always interested in hearing from you: How do you use the site? What would make it more useful?  Have you found a bug? Email us with feedback: <script type="text/javascript">m("writeus","opencongress","org","1");</script>. If you support the mission of OpenCongress and would like to help, volunteers are encouraged to join our open-source development team. Whether you're a web developer, a graphic designer, a political blogger, or a person with ideas about how to make Congress more open, <a href="/contact">contact us</a> anytime to get involved.</p>	
-         </div>
+         </div><!-- use OC -->
          <div class="clear">&nbsp;</div>
-      </div>
+      </div><!-- second tier -->
    </div><!-- inner -->
 </div> <!-- content -->

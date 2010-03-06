@@ -4,11 +4,7 @@ class IndexController < ApplicationController
   def index
     unless read_fragment("frontpage_rightside")
       @popular_bills = PageView.popular('Bill', DEFAULT_COUNT_TIME, 6)
-      @newest_bills = Bill.find(:all, :order => 'introduced DESC', :limit => 4)
-      @popular_issues = PageView.popular('Subject', DEFAULT_COUNT_TIME, 6)
-      @popular_senators = Person.list_chamber('sen', DEFAULT_CONGRESS, "view_count desc", 6)
-      @popular_reps = Person.list_chamber('rep', DEFAULT_CONGRESS, "view_count desc", 6)
-
+      
       @index_tabs = [{:title => 'Most-Viewed Bills',
               :partial => 'bill',
               :collection => @popular_bills,
@@ -17,28 +13,28 @@ class IndexController < ApplicationController
               :cache => 'frontpage_bill_mostviewed'},
               {:title => 'Newest Bills',
               :partial => 'bill',
-              :collection => @newest_bills,
+              :collection => Bill.find(:all, :order => 'introduced DESC', :limit => 4),
               :id => 'bn',
               :style => 'display: none;',
               :link => '/bill/most/viewed',
               :cache => 'frontpage_bill_newest'},
               {:title => 'Most-Viewed Senators',
               :partial => 'person',
-              :collection => @popular_senators,
+              :collection => Person.list_chamber('sen', DEFAULT_CONGRESS, "view_count desc", 6),
               :id => 'ps',
               :style => 'display: none;',
               :link => '/people/senators?sort=popular',
               :cache => 'frontpage_person_topsenators'},
               {:title => 'Most-Viewed Reps',
               :partial => 'person',
-              :collection => @popular_reps,
+              :collection => Person.list_chamber('rep', DEFAULT_CONGRESS, "view_count desc", 6),
               :link => '/people/representatives?sort=popular',
               :style => 'display: none;',
               :id => 'pr',
               :cache => 'frontpage_person_topreps'},
               {:title => 'Most-Viewed Issues',
               :partial => 'issue',
-              :collection => @popular_issues,
+              :collection => PageView.popular('Subject', DEFAULT_COUNT_TIME, 6),
               :style => 'display: none;',
               :id => 'pis',
               :link => '/issues',

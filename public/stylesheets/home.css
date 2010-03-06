@@ -39,6 +39,9 @@ color: #777;
 }
 
 
+
+
+
 .add_facebook{
 padding-top: 20px;
 overflow: hidden;
@@ -105,13 +108,34 @@ background: url('/images/small_bill.png') 15px 15px no-repeat;
 .medium_bill_list li.bill:hover{
 border-top: 1px solid #9bd0e1;
 border-bottom: 1px solid #e7f9ff;
-background:  url('/images/bill_small_list.png') 0 30px repeat-x;
+background: #e7f9ff url('/images/bill_small_list.png') 0 90px repeat-x;
 }
 
 .medium_bill_list li.people {
 border-top: 1px solid #d1c591;
 border-bottom: 1px solid #fffef8;
 background:  url('/images/people_small_list.png') 0 bottom repeat-x;
+}
+
+.medium_bill_list li.people:hover {
+
+background: #fffef8 url('/images/people_small_list.png') 0 bottom repeat-x !important;
+}
+
+
+.medium_bill_list li.issue {
+border-top: 1px solid #bfe2e3;
+border-bottom: 1px solid #ebffff;
+background:  url('/images/issue_small_list.png') 0 bottom repeat-x;
+}
+
+.medium_bill_list li.issue a{
+padding-bottom: 22px;
+}
+
+.medium_bill_list li.issue:hover {
+
+background: #e7f7f7 url('/images/issue_small_list.png') 0 bottom repeat-x !important;
 }
 
 
@@ -472,12 +496,17 @@ padding: 15px 10px;
 }
 
 .blog_list #blog h3 .date{
-display: block;
 color: #666;
 font-size: 11px;
 clear: both;
 margin-bottom: 10px;
-float: left;
+padding: 0 5px;
+}
+
+
+.by{
+display: block;
+clear: both;
 }
 
 .blog_list #blog h3 strong.gossip a{
@@ -527,7 +556,7 @@ background: url('/images/big_people_icon.png') 18px 15px no-repeat;
 }
 
 #pr li a:hover, #ps li a:hover, #pis li a:hover{
-background-color: #fbfdff ;
+
 
 }
 

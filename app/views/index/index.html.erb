@@ -57,15 +57,16 @@
                   </div>
                </div><!-- rightside -->
             <%# end # rightside cache %>
+
+            <div class="blog_list">
+         		<%= render :partial => 'articles/frontpage', :locals => { :articles => Article.frontpage_gossip } %>
+         		<!-- // end of blog entries -->
+         	</div>
+
+            <div class="clear">&nbsp;</div>
          </div><!-- just for a border -->
-
-         <div class="blog_list">
-      		<%= render :partial => 'articles/frontpage', :locals => { :articles => Article.frontpage_gossip } %>
-      		<!-- // end of blog entries -->
-      	</div>
-
-         <div class="clear">&nbsp;</div>
       </div><!-- top_area -->	
+
 
       <div id="find">
       	<form id="find_rep" action="/person/zipcodelookup">

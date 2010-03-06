@@ -35,6 +35,7 @@ z-index: 5456789;
 position: absolute;
 top: -23px;
 right: 10px;
+color: #777;
 }
 
 
@@ -94,6 +95,10 @@ display: block;
 border-top: 1px solid #9bd0e1;
 border-bottom: 1px solid #e7f9ff;
 background:  url('/images/bill_small_list.png') 0 bottom repeat-x;
+}
+
+.medium_bill_list li.bill a{
+background: url('/images/small_bill.png') 15px 15px no-repeat;
 }
 
 
@@ -225,12 +230,16 @@ background: url(/images/blog_bg.png) left bottom no-repeat;
 font-family: Arial, Helvetica, sans-serif;
 font-size: 11px !important;
 display: inline !important;
-float: right;
 font-weight: normal;
 color: #888;
 background: 0;
 padding: 0px 10px 0px 6px !important;
 font-style: italic !important;
+}
+
+
+.congress_status .more_{
+top: 8px
 }
 
 .next_recess{
@@ -271,8 +280,6 @@ background: url('/images/session_status.png') left -100px no-repeat;
 .back em.date{
 padding: 0px 0 8px 0px;
 }
-
-
 
 
 .small_heading{
@@ -465,20 +472,13 @@ padding: 15px 10px;
 }
 
 .blog_list #blog h3 .date{
+display: block;
 color: #666;
 font-size: 11px;
 clear: both;
-padding: 0 5px;
-
+margin-bottom: 10px;
+float: left;
 }
-
-
-.by{
-display: block;
-clear: both;
-}
-
-
 
 .blog_list #blog h3 strong.gossip a{
 float: left;

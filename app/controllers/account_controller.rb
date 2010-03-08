@@ -300,9 +300,9 @@ class AccountController < ApplicationController
           'Content-Type' => 'application/x-www-form-urlencoded'
         }
 
-        http = Net::HTTP.new(RAILS_ENV == 'production' ? 'wiki.opencongress.org' : WIKI_BASE_URL.gsub(/http:\/\//,''), 80)
+        http = Net::HTTP.new(Rails.env.production? ? 'wiki-internal' : WIKI_HOST, 80)
 
-        path = "/index.php?title=Special:UserLogin&returnto=Main_Page"
+        path = "/w/index.php?title=Special:UserLogin&returnto=Main_Page"
         resp, data = http.post(path,data,headers)
 
         returned_cookies = resp['set-cookie'].split(',')

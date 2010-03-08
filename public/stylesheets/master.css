@@ -363,17 +363,19 @@ margin: 25px 30px 10px;
 div#search{
 margin: 4px 0 0 0;
 float: right;
-width: 330px;
+width: 323px;
 position: relative;
+
 }
 
 
+.search_button{
+position: absolute;
+right: 0;
+}
 
 
 #search form{
-float: right;
-position: absolute;
-left: 33px;
 }
 
 
@@ -452,6 +454,8 @@ div.search label{ display: none !important;}
 	color:#060606;
 	float: left;
 	font-size:13px;
+position: absolute;
+left: 33px;
 	display:block;
 	border:0 none;
 	text-align:right;
@@ -3503,9 +3507,8 @@ border-bottom: 1px solid #ddd;
 }
 
 #autocomplete-spin{
-float: left;
 position: absolute;
-margin-left: 2px;
+margin-left: 8px;
 margin-top: 11px;
 z-index: 1000;
 }

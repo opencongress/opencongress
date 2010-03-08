@@ -83,14 +83,14 @@
 	</div>
 	<% end %>
 
+        <% cache("bill_wiki_summary_#{@bill.id}", :expires_in => 6.hours) do %>
+        <!-- bill_wiki_summary_<%= @bill.id %>: <%= Time.now %> -->
 	<ul id="summaries_nav">
 		<li id="wiki_button" <%= @bill.wiki_summary.blank? ? '' : "class='active'" %>><%= link_to_function "<span>Wiki Summary</span>", "Element.hide('summary');Element.show('wiki_summary');Element.removeClassName('official_button', 'active');Element.addClassName('wiki_button','active');" %></li>
 		<li id="official_button" <%= @bill.wiki_summary.blank? ? "class='active'" : '' %>><%= link_to_function "<span>Official Summary</span>", "Element.hide('wiki_summary');Element.show('summary');Element.removeClassName('wiki_button', 'active');Element.addClassName('official_button','active');" %></li>
 	</ul>
 
 	<div id="summaries">
-	  <% cache("bill_wiki_summary_#{@bill.id}", :expires_in => 6.hours) do %>
-	    <!-- bill_wiki_summary_<%= @bill.id %>: <%= Time.now %> -->
 		  <div id="wiki_summary" <%= @bill.wiki_summary.blank? ? "style='display:none;'" : "" %>>
 		    <% if @bill.wiki_summary %>
 			    <p><%= @bill.wiki_summary  %></p>
@@ -103,8 +103,8 @@
   		<div id="summary" class="clearfix" <%= @bill.wiki_summary.blank? ? "" : "style='display:none;'" %>>
   			<div class="official_summary"><%= bill_summary_with_more %></div>
 		  </div>                      
-		<% end %>
 	</div>
+	<% end %>
 
 		<div class="clearfix"></div>       
 		<br />                      

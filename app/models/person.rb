@@ -639,7 +639,7 @@ class Person < ActiveRecord::Base
   
   def recent_activity_mini_list(since = nil)
     host = "dev.opencongress.org"
-    host = "www.opencongress.org" if RAILS_ENV=="production"
+    host = "www.opencongress.org" if Rails.env.production?
     
     items = []
     self.recent_activity(since).each do |i|
@@ -767,7 +767,7 @@ class Person < ActiveRecord::Base
   # return bill actions since last X
   def self.find_user_data_for_tracked_person(person, current_user)
      time_since = current_user.previous_login_date || 20.days.ago
-     time_since = 200.days.ago if RAILS_ENV == "development"
+     time_since = 200.days.ago if Rails.env.development?
      find_by_id(person.id,
                     :select => "people.*, 
                                 (select count(roll_call_votes.id) FROM roll_call_votes
@@ -795,7 +795,7 @@ class Person < ActiveRecord::Base
   # return bill actions since last X
   def self.find_changes_since_for_senators_tracked(current_user)
      time_since = current_user.previous_login_date || 20.days.ago
-     time_since = 200.days.ago if RAILS_ENV == "development"
+     time_since = 200.days.ago if Rails.env.development?
      ids = current_user.senator_bookmarks.collect{|p| p.bookmarkable_id}
      return [] if ids.empty?
      find_by_sql("select people.*, total_actions.action_count as votes_count,
@@ -835,7 +835,7 @@ class Person < ActiveRecord::Base
   # return bill actions since last X
   def self.find_changes_since_for_representatives_tracked(current_user)
      time_since = current_user.previous_login_date || 20.days.ago
-     time_since = 200.days.ago if RAILS_ENV == "development"
+     time_since = 200.days.ago if Rails.env.development?
      ids = current_user.representative_bookmarks.collect{|p| p.bookmarkable_id}
      return [] if ids.empty?
      find_by_sql("select people.*, total_actions.action_count as votes_count,

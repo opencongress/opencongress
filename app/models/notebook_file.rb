@@ -18,7 +18,7 @@ class NotebookFile < NotebookItem
   end
   
   def filesytem_path
-    RAILS_ROOT + "/public" + public_filename
+    Rails.root.join("public", public_filename)
   end
 
   def item_div(size, item_id)

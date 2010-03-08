@@ -1,3 +1,4 @@
+
 #blog{
 width: 383px;
 float: left;
@@ -25,17 +26,116 @@ float: right;
 width: 431px;
 }
 
+#bill_tabs{
+position: relative;
+z-index: 5456789;
+}
 
+.more_{
+position: absolute;
+top: -23px;
+right: 10px;
+color: #777;
+}
+
+
+
+
+
+.add_facebook{
+padding-top: 20px;
+overflow: hidden;
+float: right;
+width: 116px;
+height: 0;
+background: url('/images/add_facebook.png') left -23px no-repeat;
+margin: 13px 0 0 0;
+}
+
+.add_facebook:hover{
+padding-top: 20px;
+overflow: hidden;
+float: right;
+height: 0;
+background: url('/images/add_facebook.png') left top no-repeat;
+}
+
+
+.tweet_us{
+padding-top: 20px;
+overflow: hidden;
+width: 106px;
+float: right;
+height: 0;
+margin: 13px 0 0 0;
+background: url('/images/tweet_us.png') left -23px no-repeat;
+
+}
+
+.tweet_us:hover{
+padding-top: 20px;
+overflow: hidden;
+float: right;
+height: 0;
+background: url('/images/tweet_us.png') left top no-repeat;
+}
 
 
 .medium_bill_list{
 padding: 0;
 margin: 0;
+
 }
 
 .medium_bill_list li a{
 text-decoration: none;
-padding: 13px 0 10px 60px;
+padding: 13px 0 13px 60px;
+display: block;
+}
+
+
+.medium_bill_list li.bill {
+border-top: 1px solid #9bd0e1;
+border-bottom: 1px solid #e7f9ff;
+background:  url('/images/bill_small_list.png') 0 bottom repeat-x;
+}
+
+.medium_bill_list li.bill a{
+background: url('/images/small_bill.png') 15px 15px no-repeat;
+}
+
+
+.medium_bill_list li.bill:hover{
+border-top: 1px solid #9bd0e1;
+border-bottom: 1px solid #e7f9ff;
+background: #e7f9ff url('/images/bill_small_list.png') 0 90px repeat-x;
+}
+
+.medium_bill_list li.people {
+border-top: 1px solid #d1c591;
+border-bottom: 1px solid #fffef8;
+background:  url('/images/people_small_list.png') 0 bottom repeat-x;
+}
+
+.medium_bill_list li.people:hover {
+
+background: #fffef8 url('/images/people_small_list.png') 0 bottom repeat-x !important;
+}
+
+
+.medium_bill_list li.issue {
+border-top: 1px solid #bfe2e3;
+border-bottom: 1px solid #ebffff;
+background:  url('/images/issue_small_list.png') 0 bottom repeat-x;
+}
+
+.medium_bill_list li.issue a{
+padding-bottom: 22px;
+}
+
+.medium_bill_list li.issue:hover {
+
+background: #e7f7f7 url('/images/issue_small_list.png') 0 bottom repeat-x !important;
 }
 
 
@@ -52,6 +152,7 @@ overflow: hidden;
 
 .medium_bill_list li a span.little_status{
 padding: 0;
+
 margin: 0;
 font-weight: normal;
 font-size: 11px;
@@ -153,11 +254,16 @@ background: url(/images/blog_bg.png) left bottom no-repeat;
 font-family: Arial, Helvetica, sans-serif;
 font-size: 11px !important;
 display: inline !important;
-float: right;
 font-weight: normal;
 color: #888;
+background: 0;
 padding: 0px 10px 0px 6px !important;
 font-style: italic !important;
+}
+
+
+.congress_status .more_{
+top: 8px
 }
 
 .next_recess{
@@ -222,8 +328,13 @@ padding-right: 10px;
 .small_heading span{
 font-weight: bold;
 cursor: pointer;
-padding: 10px 5px;
+padding: 10px 10px 10px 0px;
 position: relative;
+background: url(/images/arrows.png) right -12px no-repeat;
+}
+
+.small_heading span span{
+background: none;
 }
 
 
@@ -231,13 +342,14 @@ position: relative;
 .small_heading span:hover ul.tabs{
 display: block;
 position: absolute;
-
+z-index: 324567883;
+margin-left: 10px;
 }
 
 
 
 .small_heading ul.tabs{
-margin: 10px 0 0 0;
+margin: 9px 0 0 0;
 padding: 0px 4px 4px 4px;
 position: absolute;
 top: 23px;
@@ -291,6 +403,7 @@ border-bottom: 1px solid #ccc;
 
 
 .just_for_a_border{
+position: relative;
 background: url(/images/line.gif) 570px bottom repeat-y;
 }
 
@@ -308,8 +421,7 @@ padding: 3px;
 padding-top: 0 !important;
 float: left;
 width: 570px;
-position: relative;
-
+position: static;
 padding: 0 0 50px;
 }
 
@@ -336,7 +448,8 @@ padding: 15px 0px 15px;
 }
 
 .blog_list h2 .feed{
-margin: 13px 0 16px;
+margin: 13px 0 0 16px;
+float: left !important;
 }
 
 .blog_list #blog .back{
@@ -383,12 +496,17 @@ padding: 15px 10px;
 }
 
 .blog_list #blog h3 .date{
-display: block;
 color: #666;
 font-size: 11px;
 clear: both;
 margin-bottom: 10px;
-float: left;
+padding: 0 5px;
+}
+
+
+.by{
+display: block;
+clear: both;
 }
 
 .blog_list #blog h3 strong.gossip a{
@@ -438,7 +556,7 @@ background: url('/images/big_people_icon.png') 18px 15px no-repeat;
 }
 
 #pr li a:hover, #ps li a:hover, #pis li a:hover{
-background-color: #fbfdff ;
+
 
 }
 
@@ -522,7 +640,17 @@ margin-right: 10px;
 
 .box01{
 width: 304px;
+position: relative;
 float: left;
+}
+
+
+.box01 .more_{
+top: 6px;
+}
+
+.box01 h3{
+padding-left: 15px !important;
 }
 
 
@@ -619,6 +747,7 @@ padding: 30px 0px 5px 27px;
 background: url(/images/track_them.jpg) 0px -2px no-repeat;
 float: left;
 width: 975px;
+
 height: 91px;
 border-bottom: 1px solid #999;
 }
@@ -649,10 +778,11 @@ display: none;
 }
 
 #find p{
-font-size: 12px;
+font-size: 14px;
 float: left;
 padding: 0px 0 0 14px;
 width: 430px;
+line-height: 1.5em;
 }
 
 
@@ -878,6 +1008,8 @@ text-decoration: underline;
 display: block;
 overflow: hidden;
 float: left;
+width: 420px;
+height: 20px;
 }
 
 .indent li a .datedark{
@@ -966,7 +1098,6 @@ min-height: 205px;
 padding: 5px;
 position: absolute;
 bottom: 0;
-
 width: 550px;
 }
 	
@@ -1067,5 +1198,3 @@ p.topline .med_button span{
 padding-top: 8px;
 padding-bottom: 6px;
 }
-
-

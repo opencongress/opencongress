@@ -718,7 +718,7 @@ class User < ActiveRecord::Base
    
    def comment_warn(comment, admin)
      self.user_warnings.create({:warning_message => "Comment Warning for Comment #{comment.id}", :warned_by => admin.id})
-     if RAILS_ENV == "production"
+     if Rails.env.production?
        UserNotifier.deliver_comment_warning(self, comment)
      end
    end

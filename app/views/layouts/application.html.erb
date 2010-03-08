@@ -17,7 +17,7 @@
   <%= stylesheet_link_tag('admin') if @admin_styles %>
 
   <% unless @admin_styles %>
-      <%= stylesheet_link_tag(controller.controller_name) if FileTest.exist?(RAILS_ROOT + "/public/stylesheets/" + controller.controller_name + ".css") %>
+      <%= stylesheet_link_tag(controller.controller_name) if FileTest.exist?(Rails.root.join("public", "stylesheets", controller.controller_name + ".css")) %>
   <% end %>
 
   <%= stylesheet_link_tag 'vids' if @include_vids_styles %>
@@ -133,7 +133,7 @@
   </div> <!-- // top bar -->
     
   
-  <% if ENV['RAILS_ENV'] == 'production' %>
+  <% if Rails.env.production? %>
    <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-1208819-1"]);_gaq.push(["_trackPageview"]);(function(){var a=document.createElement("script");a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";a.setAttribute("async","true");document.documentElement.firstChild.appendChild(a)})();</script>
   <% end %>
   

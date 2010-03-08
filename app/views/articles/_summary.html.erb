@@ -9,22 +9,21 @@
     </strong>
   </h3>
   <span class="blog-date"><b><%= summary.formatted_date %></b> - by <%= summary.user.full_name if summary.user %></span>
+  <% if summary.tags.size > 0 %>
+    <div class="article_tags">
+  	  <% summary.tags.each do |tag| %>
+  		  <%= link_to "<span class='blog_tag'>#{tag.name}</span>", :action => 'list', :tag => CGI::escape(tag.name) %>
+  	  <% end rescue nil %>
+    </div>
+  <% end %>
 </div>
 
 <div class="blog-body">
-  <%= summary.content_rendered %>
-
-  <% if summary.tags.size > 0 %>
-    <p class="article_tags">
-  	  Article Tags: 
-  	  <% summary.tags.each do |tag| %>
-  		  <%= link_to tag.name, :action => 'list', :tag => CGI::escape(tag.name) %>
-  	  <% end rescue nil %>
-    </p>
-  <% end %>
+  <img class="blogpage-blog-image" src="<%= summary.frontpage_image_url %>">
+  <p><%= summary.excerpt_for_blog_page %></p> 
   
   <div class="blog_buttons">
-    <%= link_to '<span>Permalink</span>', article_url(summary), :class => 'med_button blog_perm' %>
+    <%= link_to '<span>Full Article »</span>', article_url(summary), :class => 'med_button blog_perm' %>
     <% if summary.comments.count > 0 %>
       <%= link_to  "<span>Comments (#{summary.comments.count.to_s})</span>", 
                                   article_url(summary, :anchor => 'comments'),
@@ -34,4 +33,6 @@
     <% end %>
   </div>
   <div class="clear">&nbsp;</div>
+
+
 </div>

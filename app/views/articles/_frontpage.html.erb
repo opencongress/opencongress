@@ -14,7 +14,7 @@
     <p>
           <img class="frontpage-blog-image" src="<%= most_recent.frontpage_image_url %>">
 
-    <%= truncate(most_recent.excerpt, :length => 1200) %>
+    <%= most_recent.excerpt %>
     <%= link_to('More...', article_url(most_recent), :class => 'arrow biglinks') %>
    </p>
 <% end %>

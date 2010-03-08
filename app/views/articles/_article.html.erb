@@ -9,23 +9,40 @@
     </strong>
   </h3>
   <span class="blog-date"><b><%= article.formatted_date %></b> - by <%= article.user.full_name %></span>
+
 </div>
 
 <div class="blog-body">
   <%= article.content_rendered %>
 
+  <div class="blog_social_ref">Like this post? Stay in touch by following us on <a href="http://twitter.com/opencongress">Twitter</a> or joining us on <a href="http://www.facebook.com/OpenCongress">Facebook</a>.</div>
+  
   <% if article.tags.size > 0 %>
-    <p class="article_tags">
-  	  Article Tags: 
+    <p>
   	  <% article.tags.each do |tag| %>
-  		  <%= link_to tag.name, :action => 'list', :tag => CGI::escape(tag.name) %>
+  		  <%= link_to "<span class='blog_tag'>#{tag.name}</span>", :action => 'list', :tag => CGI::escape(tag.name) %>
   	  <% end rescue nil %>
     </p>
   <% end %>
   
   <div class="blog_buttons">
+    
     <%= link_to '<span>Permalink</span>', article_url(article), :class => 'med_button' %>
+    
+    <p class="rss-feeds">
+    <a href="http://feeds.feedburner.com/OpenCongressCongressGossipBlog" class="feed">Blog Feed</a>
+    <a href="/articles/all_comments_atom" class="feed">Comments Feed</a> 
+    <a href="/about/rss">More RSS Feeds</a>
+    </p>
+    
+    <span id="share-tool" class="share"><script type="text/javascript">iBeginShare.attachLink('share-tool', {
+        link: '<%= article_url(article) %>',
+        title: '<%= CGI.escape(article.title) %>',
+        link_style: 'button'
+    });</script></span>
+    
   </div>
+
   <div class="clear">&nbsp;</div>
 </div>
 

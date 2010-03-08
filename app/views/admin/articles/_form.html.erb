@@ -1,12 +1,24 @@
+<script type="text/javascript" src="/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+
+<script type="text/javascript">
+tinyMCE.init({
+	mode : "textareas",
+	theme : "advanced",
+	editor_selector : "mceEnabled"
+});
+</script>
+
+
+
 <%= error_messages_for 'article' %>
 
 <!--[form:article]-->
-	
+<div class='padding'>	
 <p><label for="article_title">Title</label><br/>
 <%= text_field 'article', 'title'  %></p> 
 
 <p><label for="article_article">Article</label><br/>
-<%= text_area 'article', 'article', :rows => 25, :cols => 60  %></p>
+<%= text_area 'article', 'article', :rows => 40, :cols => 120, :class => "mceEnabled"  %></p>
 
 <p><label for="article_excerpt">Excerpt (required)</label><br />
 This will appear on the homepage and may contain links.<br />
@@ -27,5 +39,6 @@ This will appear on the homepage and may contain links.<br />
 <p><label for="article_frontpage_flag">Frontpage</label><br/>
 <%= check_box 'article', 'frontpage'  %></p>
 
+</div>
 <!--[eoform:article]-->
 

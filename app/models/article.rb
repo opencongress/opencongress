@@ -44,6 +44,14 @@ class Article < ActiveRecord::Base
     self.article.gsub(/<\/?[^>]*>/, "")
   end
   
+  def excerpt_for_blog_page
+    unless excerpt.blank?
+      return excerpt
+    else
+      return "#{html_stripped[0..500]}..."
+    end
+  end
+  
   def icon
     return case content_type
       when 'archive' then 'icons/page_white_compressed.png'

@@ -193,6 +193,12 @@ width: 587px;
 margin: 0 14px 10px;
 }
 
+.blog_social_ref {
+  padding: 10px 0 0;
+  width: 587px;
+  margin: 0 14px 10px;
+  font-size: 11px;
+}
 
 .blog_buttons a {
 text-decoration: none;
@@ -204,6 +210,10 @@ float: right !important;
 clear: none !important;
 }
 
+.blog_buttons .share {
+  margin-top: 3px;
+  float: right;
+}
 
 .blog_buttons a span {
 padding-top: 5px;
@@ -457,6 +467,22 @@ color: #999;
 line-height: 1em;
 }
 
+.blog_tag {
+  background-color: rgb(225, 226, 227);
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 10px;
+  padding: 2px 3px;
 
+}
+
+img.blogpage-blog-image{
+clear: left;
+width: 180px !important;
+float: right;
+margin: 15px 0px 10px 20px;
+border: 1px solid #ccc;
+padding: 3px;
+}
 
 

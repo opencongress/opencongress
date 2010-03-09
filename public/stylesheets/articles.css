@@ -83,6 +83,15 @@ font-family: Georgia, Times, serif;
 float: left;
 }
 
+.blog_title a:link, .blog_title a:visited {
+    text-decoration: none;
+    color: #333;
+}
+
+.blog_title a:hover {
+    text-decoration: underline;
+    color: #666;
+}
 
 .blog-title a {
 padding: 0px;

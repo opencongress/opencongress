@@ -15,14 +15,14 @@
 <div class="blog-body">
   <%= article.content_rendered %>
 
-  <div class="blog_social_ref">Like this post? Stay in touch by following us on <a href="http://twitter.com/opencongress">Twitter</a>, joining us on <a href="http://www.facebook.com/OpenCongress">Facebook</a>    <a href="http://feeds.feedburner.com/OpenCongressCongressGossipBlog">or Subscribing with RSS</a>.</div>
+  <div class="blog_social_ref">Like this post? Stay in touch by following us on <a href="http://twitter.com/opencongress">Twitter</a>, joining us on <a href="http://www.facebook.com/OpenCongress">Facebook</a>, <a href="http://feeds.feedburner.com/OpenCongressCongressGossipBlog">or by Subscribing with RSS</a>.</div>
   
   <% if article.tags.size > 0 %>
-    <p>
+    <div class="article_tags">
   	  <% article.tags.each do |tag| %>
   		  <%= link_to "<span class='blog_tag'>#{tag.name}</span>", :action => 'list', :tag => CGI::escape(tag.name) %>
   	  <% end rescue nil %>
-    </p>
+    </div>
   <% end %>
   
   <div class="blog_buttons">

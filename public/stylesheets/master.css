@@ -3893,7 +3893,12 @@ border-right: none !important;
 
 ///////////////////////////////////////////*/
 
-@media screen and (-webkit-min-device-pixel-ratio:0){ 
+
+
+@media all and/*! YUI-Compresser */(min-width: 0px) { /* disable it on webkit */
+body:not(:root:root) select.flag-22x14 {
+
+
 #search_submit{
 margin-top: 2px;
 }
@@ -3906,7 +3911,13 @@ margin-top: 14px;
 z-index: 1000;
 }
 
+
 }
+}
+
+
+
+
 
 #bill_list a{
 border-bottom: 0 !important;

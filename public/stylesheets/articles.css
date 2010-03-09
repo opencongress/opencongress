@@ -1,5 +1,8 @@
+
+
+
 .blog-title {
-padding: 50px 50px 0px;
+padding: 35px 35px 0px;
 border: 1px solid #ddd;
 border-bottom: 0;
 background: #fff;
@@ -83,6 +86,15 @@ font-family: Georgia, Times, serif;
 float: left;
 }
 
+.blog_title a:link, .blog_title a:visited {
+    text-decoration: none;
+    color: #333;
+}
+
+.blog_title a:hover {
+    text-decoration: underline;
+    color: #666;
+}
 
 .blog-title a {
 padding: 0px;
@@ -98,14 +110,14 @@ li.comments {
 }
 
 .blog-body {
-padding: 0 35px 10px;
+padding: 10px 35px 10px;
 font-size: 14px;
 color: #3f3f3f;
 line-height: 1.4em;
 border: 1px solid #ddd;
 color: #555;
 border-top: 0;
-margin: 0 0 0 15px;
+margin: 0 0 30px 15px;
 background: #fff;
 }
 
@@ -129,7 +141,7 @@ padding: 0;
 
 .blog-body p {
 padding: 13px 0px 10px !important;
-margin: 0 15px;
+margin: 0px;
 }
 
 .blog-body table {
@@ -200,10 +212,21 @@ margin: 0 14px 10px;
 }
 
 .blog_social_ref {
-  padding: 10px 0 0;
+  padding: 15px ;
   width: 587px;
-  margin: 0 14px 10px;
-  font-size: 11px;
+  margin: 14px 0px;
+  font-size: 12px;
+color: #999;
+
+
+line-height: 1em;
+  background-color: #f8f8f8;
+
+
+border: 1px solid #eee;
+
+-moz-border-radius: 4px
+
 }
 
 .blog_buttons a {
@@ -237,8 +260,19 @@ clear: none;
 margin: 0;
 }
 
+.full_article, .comments_link{
+float: left;
+margin: 10px 0 30px;
+}
+
+
+.comments_link{
+
+margin: 10px 0 0 15px;
+}
+
 .article_tags {
-padding: 15px 0;
+padding: 0px ;
 clear: both;
 float: left;
 width: 100%;
@@ -249,13 +283,14 @@ width: 100%;
 text-decoration: none;
 color: #999;
 float: left;
-margin: 1px 2px;
+margin: 3px 3px;
 line-height: 1em;
   background-color: #f8f8f8;
   text-transform: uppercase;
   font-size: 10px;
 border: 1px solid #eee;
   padding: 4px 6px;
+-moz-border-radius: 4px
 }
 
 

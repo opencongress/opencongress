@@ -59,7 +59,7 @@
             <% end %>
 
             <div class="blog_list">
-         		<%= render :partial => 'articles/frontpage', :locals => { :articles => Article.frontpage_gossip } %>
+         		<%= render :partial => 'articles/frontpage', :locals => { :articles => Article.frontpage_gossip(7) } %>
          		<!-- // end of blog entries -->
          	</div>
 

@@ -453,6 +453,18 @@ clear: both;
 width: 518px;
 }
 
+blockquote {
+padding: 20px;
+color: #5d5d5d;
+margin: 10px 20px 20px;
+background: #f7fcff;
+line-height: 1.5em;
+border: 1px solid #e9f6ff;
+border-left: 5px solid #d4e6f2;
+border-bottom: 1px solid #d4e6f2;
+font-size: 14px;
+}
+
 
 
 .blog_list .med_button{
@@ -475,14 +487,11 @@ float: right;
 
 .blog_list #blog p{
 padding: 0px 0px 25px 10px;
-min-height: 182px;
 margin: 0 2px;
 font-size: 14px;
-clear: left;
 color: #555;
 line-height: 1.5em;
-overflow: hidden; 
-
+ 
 }
 
 .blog_list #blog h3{

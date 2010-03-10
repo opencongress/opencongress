@@ -105,10 +105,10 @@ class PeopleController < ApplicationController
     logger.info @vote_together.to_yaml
     @hot_votes = RollCall.find(:all, :select => "DISTINCT roll_calls.id", :include => [:roll_call_votes, :bill],
                   :conditions => ['roll_call_votes.person_id IN (?)
-                                   AND is_hot = ?',
+                                   AND is_hot = ? AND bill_id IS NOT NULL',
                   [@person1.id,@person2.id], true]).sort_by(&:bill_id).group_by(&:bill_id)
     @cold_votes = RollCall.find(:all, :select => "DISTINCT roll_calls.id", :include => [:roll_call_votes, :bill],
-                  :conditions => ['roll_call_votes.person_id IN (?)
+                  :conditions => ['roll_call_votes.person_id IN (?) AND bill_id IS NOT NULL
                                    AND ( question LIKE ? OR question LIKE ? OR question LIKE ? )
                                    AND bills.hot_bill_category_id IS NULL AND ( roll_calls.is_hot IS NULL OR roll_calls.is_hot = ?)',
                   [@person1.id,@person2.id], "On Passage%", "On Motion to Concur in Senate Amendments", "On Concurring %", false]).sort_by(&:bill_id).group_by(&:bill_id)

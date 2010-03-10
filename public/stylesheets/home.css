@@ -337,16 +337,12 @@ background: url(/images/arrows.png) right -12px no-repeat;
 background: none;
 }
 
-
-
-.small_heading span:hover ul.tabs{
-display: block;
+.small_heading_hover{
+display: block !important;
 position: absolute;
 z-index: 324567883;
 margin-left: 10px;
 }
-
-
 
 .small_heading ul.tabs{
 margin: 9px 0 0 0;
@@ -356,7 +352,7 @@ top: 23px;
 width: 161px;
 display: none;
 left: -9px;
-	background: url('/images/dropdown.png') left bottom no-repeat;
+background: url('/images/dropdown.png') left bottom no-repeat;
 }
 
 

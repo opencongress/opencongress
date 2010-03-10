@@ -24,19 +24,19 @@
             	  		<%= session_div('house', @sessions[:house_session]) %>
             	  		<%= session_div('senate', @sessions[:senate_session])%>	
             	  	</div>
-	
+
             		<h2 class="small_heading">Bills in the News</h2>
          			<ul class="medium_bill_list editorial_list">
          				<% @popular_bills.each do |bill| %>
          				   <li>
-         				    <a href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>"><span class="title"><%= bill.typenumber %> - <span><%= truncate(bill.title_common, :length => 45) rescue nil %></span></span><p><%= bill.caption || truncate(bill.plain_language_summary, :length => 100) %></p><span class="little_status"><strong><%= temp_url_strip(bill.status) %></strong> <%= bill.last_action.formatted_date if bill.last_action %></span></a>
+         				    <a href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>"><span class="title"><%= bill.typenumber %> - <span><%= truncate(bill.title_common, :length => 45) rescue nil %></span></span><p><%= bill.caption.blank? ? truncate(bill.plain_language_summary, :length => 100) : bill.caption %></p><span class="little_status"><strong><%= temp_url_strip(bill.status) %></strong> <%= bill.last_action.formatted_date if bill.last_action %></span></a>
                         </li>
          				<% end %>
          		   </ul>
 
                   <div class="small_heading">
                      <span><span id="popular_ul_title">Most-Viewed Bills</span>
-      					<ul class="tabs">
+      					<ul class="tabs" id="bill_tab_select">
       					   <% @index_tabs.each do |tab| %>
       						<li id="<%= tab[:id] %>link"><%= link_to_function("<span>#{tab[:title]}</span>", "switchBillTab('#{tab[:id]}', '#{tab[:title]}');") %></li>
       						<% end %>
@@ -66,7 +66,6 @@
             <div class="clear">&nbsp;</div>
          </div><!-- just for a border -->
       </div><!-- top_area -->	
-
 
       <div id="find">
       	<form id="find_rep" action="/person/zipcodelookup">

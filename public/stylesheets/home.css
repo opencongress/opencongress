@@ -409,7 +409,6 @@ background: url(/images/line.gif) 570px bottom repeat-y;
 
 
 #blog img.frontpage-blog-image{
-clear: left;
 width: 180px !important;
 float: right;
 margin: 0 0px 10px 20px;

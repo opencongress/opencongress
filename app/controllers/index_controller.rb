@@ -3,11 +3,11 @@ class IndexController < ApplicationController
   
   def index
     unless read_fragment("frontpage_rightside")
-      @popular_bills = PageView.popular('Bill', DEFAULT_COUNT_TIME, 6)
+      @popular_bills = PageView.popular('Bill', DEFAULT_COUNT_TIME, 6, DEFAULT_CONGRESS, true)
       
       @index_tabs = [{:title => 'Most-Viewed Bills',
               :partial => 'bill',
-              :collection => @popular_bills,
+              :collection => PageView.popular('Bill', DEFAULT_COUNT_TIME, 6),
               :id => "bv",
               :link => '/bill/most/viewed',
               :cache => 'frontpage_bill_mostviewed'},

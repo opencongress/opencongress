@@ -35,7 +35,7 @@
          		   </ul>
 
                   <div class="small_heading">
-                     <span><span id="popular_ul_title">Most-Viewed Bills</span>
+                     <span><span id="popular_ul_title">Newest Bills</span>
       					<ul class="tabs" id="bill_tab_select">
       					   <% @index_tabs.each do |tab| %>
       						<li id="<%= tab[:id] %>link"><%= link_to_function("<span>#{tab[:title]}</span>", "switchBillTab('#{tab[:id]}', '#{tab[:title]}');") %></li>

@@ -39,7 +39,14 @@ color: #777;
 }
 
 
-
+.full_article{
+float: right;
+margin-bottom: 20px;
+font-size: 15px;
+font-weight: bold;
+padding-right: 20px;
+background: url('/images/arrows.png') right -44px no-repeat;
+}
 
 
 .add_facebook{

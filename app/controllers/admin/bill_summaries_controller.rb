@@ -1,5 +1,6 @@
 class Admin::BillSummariesController < Admin::IndexController
   before_filter :can_blog
+  after_filter :expire_frontpage_cache, :only => [:update, :addtitle, :updatedefaulttitle, :toggle_frontpage_hot]
 
   def index
     @page_title = "Bill Plain Language Summaries"
@@ -45,7 +46,7 @@ class Admin::BillSummariesController < Admin::IndexController
     
     @bill.update_attributes(params[:bill])
     @bill.save
-
+    
     flash[:notice] = "#{@bill.typenumber} has been updated"
     redirect_to :action => 'index'
   end
@@ -152,4 +153,10 @@ class Admin::BillSummariesController < Admin::IndexController
     end
   end
   
+  private
+  
+  def expire_frontpage_cache
+    # We may show this bill on the homepage, so expire that.
+    expire_fragment("frontpage_rightside")
+  end
 end

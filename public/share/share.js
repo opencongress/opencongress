@@ -299,7 +299,8 @@ var iBeginShare = function() {
 			if (obj.getBoundingClientRect) {
 				var bounds = obj.getBoundingClientRect();
 				curleft += bounds.left - 2;
-				curtop += bounds.top + document.documentElement.scrollTop - 2;
+				scroll = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
+				curtop += bounds.top + scroll - 2;
 			}
 			else if (obj.offsetParent) {
 				do {

@@ -29,7 +29,7 @@
          			<ul class="medium_bill_list editorial_list">
          				<% @popular_bills.each do |bill| %>
          				   <li>
-         				    <a href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>"><span class="title"><%= bill.typenumber %> - <span><%= truncate(bill.title_common, :length => 45) rescue nil %></span></span><p><%= bill.caption.blank? ? truncate(bill.plain_language_summary, :length => 100) : bill.caption %></p><span class="little_status"><strong><%= temp_url_strip(bill.status) %></strong> <%= bill.last_action.formatted_date if bill.last_action %></span></a>
+         				    <a href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>"><span class="title"><%= bill.typenumber %> - <span><%= truncate(bill.title_common, :length => 45) rescue nil %></span></span><p><%= bill.caption.blank? ? truncate(strip_tags(bill.plain_language_summary), :length => 100) : bill.caption %></p><span class="little_status"><strong><%= temp_url_strip(bill.status) %></strong> <%= bill.last_action.formatted_date if bill.last_action %></span></a>
                         </li>
          				<% end %>
          		   </ul>

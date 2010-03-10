@@ -13,7 +13,10 @@
 </div>
 
 <div class="blog-body">
-  <img class="blogpage-blog-image" src="<%= summary.frontpage_image_url %>">
+  <% unless summary.frontpage_image_url.blank? %>
+    <img class="blogpage-blog-image" src="<%= summary.frontpage_image_url %>">
+  <% end %>
+  
   <p><%= summary.excerpt_for_blog_page %></p> 
     
     

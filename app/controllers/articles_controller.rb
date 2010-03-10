@@ -13,7 +13,7 @@ class ArticlesController < ApplicationController
 
     def list
       if params[:tag] && @tag = CGI.unescape(params[:tag])
-        @articles = Article.find_tagged_with(@tag).paginate(:page => params[:page])
+        @articles = Article.find_tagged_with(@tag).paginate(:page => params[:page], :per_page => 15)
         @page_title = "Blog - Articles Tagged '#{@tag}'"
       elsif @month = params[:month]
         month, year = @month.split(/-/)
@@ -26,10 +26,10 @@ class ArticlesController < ApplicationController
         
         @page_title = "Blog - #{display_month}"
 
-        @articles = Article.find_by_month_and_year(month, year).paginate(:page => params[:page])
+        @articles = Article.find_by_month_and_year(month, year).paginate(:page => params[:page], :per_page => 15)
       else      
         @articles = Article.paginate(:all, :conditions => 'published_flag = true', 
-                                 :include => :user, :page => params[:page])
+                                 :include => :user, :page => params[:page], :per_page => 15)
         
         @page_title = "Blog"
       end

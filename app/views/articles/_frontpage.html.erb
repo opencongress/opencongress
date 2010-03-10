@@ -17,14 +17,12 @@
     <em class="date"><%= most_recent.formatted_date %></em></span>
   </h3>
 
-    <% unless (most_recent.frontpage_image_url.nil? || most_recent.frontpage_image_url.empty?) %>
+    <% unless most_recent.frontpage_image_url.blank? %>
+      <img class="frontpage-blog-image" src="<%= most_recent.frontpage_image_url %>">
     <% end %>
-    <p>
-          <img class="frontpage-blog-image" src="<%= most_recent.frontpage_image_url %>">
 
     <%= most_recent.excerpt %>
-    <%= link_to('More...', article_url(most_recent), :class => 'arrow biglinks') %>
-   </p>
+    <%= link_to('<div style="margin: 0 0 20px 25px; font-weight: bold;">More...</div>', article_url(most_recent)) %>
 <% end %>
 
 

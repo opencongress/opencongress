@@ -3894,11 +3894,8 @@ border-right: none !important;
 ///////////////////////////////////////////*/
 
 
-
 @media all and/*! YUI-Compresser */(min-width: 0px) { /* disable it on webkit */
 body:not(:root:root) select.flag-22x14 {
-
-
 #search_submit{
 margin-top: 2px;
 }
@@ -3910,8 +3907,6 @@ margin-left: 10px;
 margin-top: 14px;
 z-index: 1000;
 }
-
-
 }
 }
 

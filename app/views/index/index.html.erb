@@ -20,7 +20,7 @@
             <% cache("frontpage_rightside", :expires_in => 3.hours) do %>
          	<div class="rightside">
                	<div class="congress_status">
-            	  	 	<h2 class="small_heading">Today in Congress <span><%= Date.today.strftime("%B %d, %Y") %></span></h2>
+            	  	 	<h2 class="small_heading">Today in Congress<span><%= Date.today.strftime("%B %d, %Y") %></span></h2>
             	  		<%= session_div('house', @sessions[:house_session]) %>
             	  		<%= session_div('senate', @sessions[:senate_session])%>	
             	  	</div>

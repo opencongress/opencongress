@@ -1,10 +1,10 @@
 class CongressSession < ActiveRecord::Base
   def CongressSession.house_session
-    find(:first, :conditions => [ "date >=? AND chamber='house' AND is_in_session='t'", Date.today])
+    find(:first, :conditions => ["date >=? AND chamber='house' AND is_in_session='t'", Date.today])
   end
 
   def CongressSession.senate_session
-    find(:first, :conditions => [ "date >=? AND chamber='senate' AND is_in_session='t'", Date.today])
+    find(:first, :conditions => ["date >=? AND chamber='senate' AND is_in_session='t'", Date.today])
   end
   
   def CongressSession.recess_session

@@ -1,5 +1,6 @@
-*{
+.just_for_a_border, .just_for_a_border *{
 border: 1px solid !important;
+zoom:1;
 }
 
 

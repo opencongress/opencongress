@@ -106,28 +106,27 @@ class AccountController < ApplicationController
    @page_title = "Create a New Account"
 
     logger.info session.inspect
-    
+
     @user = User.new(params[:user])
     @user.email = session[:invite].invitee_email unless session[:invite].nil? or request.post?
-    
+
     return unless request.post?
 
     @user.accepted_tos = true
     @user.accepted_tos_at = Time.now
-
 
     if @user.zipcode
       @senators, @reps = Person.find_current_congresspeople_by_zipcode(@user.zipcode, @user.zip_four)
       @user.representative_id = @reps.first.id if (@reps && @reps.length == 1)
     end  
     @user.save!
-    
+
     # check for an invitation
     if session[:invite]
       Friend.create_confirmed_friendship(@user, session[:invite].inviter)
       session[:invite] = nil
     end
-    
+
     redirect_to(:controller => 'account', :action => 'confirm', :login => @user.login)
   rescue ActiveRecord::RecordInvalid
     render :action => 'signup'

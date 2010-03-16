@@ -162,7 +162,7 @@ class FriendsController < ApplicationController
     @user_district = @ziplookup.district
     @in_state = []
     @in_state = @user.find_other_users_in_state(@ziplookup.state) if @user.zipcode
-    
+    @in_district = @user.find_other_users_in_district(@ziplookup.state, @user_district) if @user.zipcode && @user_district
   end
 
   def import_contacts

@@ -31,9 +31,8 @@ class Friend < ActiveRecord::Base
     end
 
     ra.compact.sort_by{|p| p.created_at}.reverse
-
   end
-  
+
   def self.create_confirmed_friendship(u1, u2)
     Friend.create({:friend_id => u1.id, :user_id => u2.id, :confirmed => true, :confirmed_at => Time.new})
     Friend.create({:friend_id => u2.id, :user_id => u1.id, :confirmed => true, :confirmed_at => Time.new})

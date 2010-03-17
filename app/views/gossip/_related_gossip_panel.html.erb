@@ -14,7 +14,12 @@
 
       </div>
       <div class="clearfix margintop">
-      <h3><%= link_to 'Demand Question Time!', '/resources/question_time' %></h3>
+      
+      
+      <h3><%= link_to '<span>Demand Question Time!</span>', '/resources/question_time', :class => 'med_button'  %></h3>
+      
+      <br />
+      <br />      
       <h3>Find us at</h3>
 			<a class="med_button twitter" href="http://twitter.com/opencongress"><span><%= image_tag 'twitter_logo.png' %></span></a>
 			<a class="med_button facebook" href="http://www.facebook.com/OpenCongress"><span><%= image_tag 'facebook_badge.png', :alt=>'Find our Facebook' %></span></a>			
@@ -39,7 +44,12 @@
          -->
           <p class="tip">You can submit a tip anonymously, or attributed to your own name and e-mail, whichever you prefer. <a href="/gossip">Read more</a> about submitting a tip.</p>    
          
-         <p><%= link_to '<span>Submit a tip</span>', { :controller => 'gossip', :action => 'submit' }, :class => 'med_button' %></p><br /><br /><br />
+         
+         
+         <p><%= link_to '<span>Submit a tip</span>', { :controller => 'gossip', :action => 'submit' }, :class => 'med_button' %></p>
+         
+         
+         <br /><br /><br />
        
       <%= render :partial => 'articles/archives' %>
        
@@ -49,7 +59,16 @@
             <%= @blogroll.article %>
           </ul>
         
+     <br />
+			<h3>See our Twitter List</h3> 
+			<a href="http://twitter.com/#/list/OpenCongress/congress-watchers">Congress Watchers</a>
+      
+
+
       </div>
+      
+ 
+      
     <!-- // related-box-->
   </div>
 </div>

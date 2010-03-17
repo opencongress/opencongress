@@ -1,0 +1,42 @@
+<%= javascript_include_tag 'widgets/panel_generator' %>
+<div id="heading">
+  <h2><%= @page_title = 'Make a Health Care Widget' %></h2>  <p>This widget keeps you up-to-date with the major health care reform bills in Congress.</p>
+
+</div>
+<div class="padding">
+  <dl class="tool_form healthcare_status">
+   <dt><label for="state_abbrev_select">Select a region:</label></dt>
+   <dd>
+     <%= select("panel", "state_abbrev_select", State::PAIRS_SORTED, {:include_blank => "National"}, { :onChange => "setHealthCareStateAbbrev(document.getElementById('panel_state_abbrev_select').value);" } ) %>
+   </dd>
+   <dt><label for="path_select">Size:</label></dt>
+   <dd>
+     <%= select("panel", "path_select", [['Large', 'climate_change_panel'], ["Small", 'climate_change_panel_sm']], {}, { :onChange => "setHealthCarePath(document.getElementById('panel_path_select').value);" } ) %>
+   </dd>
+
+  <%= hidden_field 'panel', 'state_abbrev', { :value => "" } %>
+  <%= hidden_field 'panel', 'path', { :value =>  "healthcare_panel" } %>
+  <%= hidden_field 'panel', 'hostname', { :value => home_url } %>
+
+  </dl>
+
+  <div id="preview_container">
+  
+  <div id="preview_healthcare_panel">
+  How the panel will look:<br>
+  <iframe id="healthcare_panel" name="oc_healthcare_frame" width="350" scrolling="no" frameborder="0" style="border: 0px solid #999;" allowtransparency="true" hspace="0" vspace="0" marginheight="0" marginwidth="0"></iframe>
+  </div>
+
+  <div id="preview_healthcare_code">
+  Copy and paste this code into your webpage:<br>
+
+  <%= text_area 'panel', 'code', "cols" => 68, "rows" => 20 %>
+
+  </div>
+
+  </div>
+
+  <!-- The following image forces the fields to update on the initial load of the page -->
+  <%= image_tag 'blank.gif', :class => 'noborder', :width => '0', :height => '0', :onLoad => 'updateHealthCareFields();' %>
+  <br />
+</div>

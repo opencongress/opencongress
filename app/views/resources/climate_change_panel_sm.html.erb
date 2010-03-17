@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><%= @page_title %></title>
+
+	<style media="all" type="text/css">
+.healthcare_widget {
+   background: url(/images/widgets/small_healthcare_widg_bg.png) no-repeat;
+   width: 161px;
+   font-family: Arial, Helvetica, sans-serif;
+   padding: 0px;
+font-size: 10px;
+}
+
+
+
+.healthcare_widget a{
+color: #333;
+}
+
+.healthcare_widget .title {
+   border-bottom: 1px solid #ddd;
+   min-height: 69px;
+}
+
+.healthcare_widget .title h3 {
+   margin: 0;
+   font-size: 11px;
+   color: #a82222;
+   padding: 12px 0 10px 15px;
+border-bottom: 1px solid #ddd;
+}
+
+
+.healthcare_widget .title p {
+   margin: 0;
+   padding: 8px 0 8px 15px;
+   font-size: 11px;
+
+}
+
+
+.healthcare_widget .guts {
+   border-left: 1px solid #ddd;
+   border-right: 1px solid #ddd;
+   padding: 15px 0px 0;
+}
+
+.healthcare_widget .guts h4 {
+   margin: 0;
+   padding: 0 0 6px 0;
+   font-size: 10px;
+   color: #136b9e;
+}
+
+.healthcare_widget .house {
+   border-bottom: 1px solid #ddd;
+   padding: 0px 0 15px 15px;
+}
+
+.healthcare_widget .senate {
+   margin-top: 15px;
+   border-bottom: 1px solid #ddd;
+   padding: 0px 0 15px 15px;
+}
+
+.healthcare_widget .senate .status {
+   padding: 15px;
+   background: #e9f2e4;
+}
+
+.healthcare_widget .senate .status h5 {
+   margin: 0 0 10px 0;
+   font-size: 12px;
+   color: #49643c;
+}
+
+.healthcare_widget .blog_coverage {
+   display: block;
+   background: url(/images/widgets/small_healthcare_widg_bottom.png) bottom no-repeat;
+padding-bottom: 10px;
+
+}
+
+.healthcare_widget .blog_coverage a {
+   display: block;
+   color: #333;
+margin: 0;
+   padding: 10px 0 0 15px;
+   font-weight: bold;
+   font-size: 11px;
+border-left: 1px solid #ddd;
+border-right: 1px solid #ddd;
+   text-decoration: none;
+}
+
+.blog_coverage a:hover, .healthcare_widget a:hover {
+   color: #000;
+}
+
+.passed {
+   color: #4a862a;
+   padding-left: 16px;
+   background: url(/images/widgets/widget_icons.png?1262045908) 0px -114px no-repeat;
+}
+
+.introduced {
+   padding-left: 10px;
+   color: #ccc;
+}
+
+.full_text, .comments, .roll_call, .voting_record, .tracking, .pres_bill {
+   background: url(/images/widgets/widget_icons.png?1262045908) 0 14px no-repeat;
+   padding-left: 18px;
+   line-height: 1.8em;
+   color: #555;
+   float: left;
+}
+
+.full_text {
+padding-top: 10px;
+}
+
+
+
+
+.comments {
+   background-position: 0 -84px;
+}
+
+.roll_call {
+   background-position: 0 -27px;
+   display: block;
+   float: none;
+   clear: both;
+}
+
+
+.voting_record {
+   background-position: 1px -27px;
+   display: block;
+   float: none;
+   clear: both;
+}
+
+
+.tracking {
+   background-position: 0 -57px;
+   display: block;
+   float: none;
+   clear: both;
+}
+
+
+.democrat {
+   padding-left: 20px;
+   background: url(/images/widgets/widget_icons.png?1262045908) 0 -139px no-repeat;
+}
+
+
+.republican {
+   padding-left: 20px;
+   background: url(/images/widgets/widget_icons.png?1262045908) 0 -168px no-repeat;
+}
+
+.status ul {
+   padding: 0;
+   margin: 0 0 10px 0;
+}
+
+
+.status ul li {
+   margin-bottom: 3px;
+   list-style: none;
+}
+
+
+h5.bill_title {
+   margin: 0;
+   font-size: 12px;
+   margin-bottom: 10px;
+}
+
+h5.bill_title a:visited,
+h5.bill_title a:link {
+   color: black;
+}
+
+
+
+	</style>
+</head>
+<body>
+
+
+<div class="healthcare_widget">
+	<div class="title">
+		<h3>Health Care Congress</h3>
+		<% if @state_name %>
+		   <p>What People in <strong><%= @state_name %></strong> Are Saying on <%= link_to "OpenCongress", home_url, :target => "_blank" %></p>
+      <% else %>
+         <p>What People Are Saying on <%= link_to "OpenCongress", home_url, :target => "_blank" %></p>
+      <% end %>
+	</div>
+
+	<div class="guts">
+		<div class="house">
+			<h4>House Version: <%= link_to "H.R. 3962", bill_url(@house_bill_ident), :target => "_blank" %></h4>
+			
+			
+				<h5 class="bill_title"><%= link_to "Affordable Health Care for America Act", bill_url(@house_bill_ident), :target => "_blank" %></h5>
+			
+							<span><span class="passed">Passed on Nov. 7th, 2009</span></span>
+
+			</div>
+
+		<div class="senate">
+			<h4>Senate Version <%= link_to "H.R. 3590", bill_url(@senate_bill_ident), :target => "_blank" %></h4>
+			
+			<h5 class="bill_title"><%= link_to "Patient Protection and Affordable Care Act", bill_url(@senate_bill_ident), :target => "_blank" %></h5>
+   		
+   		<span><span class="passed">Passed on Dec. 24th, 2009</span></span>
+   		
+ 				</div>
+				
+				<div class="senate"> 
+					<h4>White House Version:</h4>
+					<h5 class="bill_title"><a href="http://www.opencongress.org/presidents_health_care_proposal">President Obama's Proposal</a></h5>
+					<span>Made Public Feb. 22, 2010</span>
+					<br />
+				</div>
+   </div> <!-- Guts -->
+   <div class="blog_coverage">
+   	<% if @state_name %>
+   	<%= link_to "What's hot with people in your state?", state_url(params[:state]), :class => "hot", :target => "_blank" %>
+      <% else %>
+   	<%= link_to "What's hot with people in your state?", states_url, :class => "hot", :target => "_blank" %>
+      <% end %>
+   </div>
+
+</div> <!-- End Widget -->
+
+</body>
+</html>

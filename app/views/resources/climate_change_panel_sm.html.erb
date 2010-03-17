@@ -206,19 +206,19 @@ h5.bill_title a:link {
 
 	<div class="guts">
 		<div class="house">
-			<h4>House Version: <%= link_to "H.R. 3962", bill_url(@house_bill_ident), :target => "_blank" %></h4>
+			<h4>House Version: (link)</h4>
 			
 			
-				<h5 class="bill_title"><%= link_to "Affordable Health Care for America Act", bill_url(@house_bill_ident), :target => "_blank" %></h5>
+				<h5 class="bill_title">(link)</h5>
 			
 							<span><span class="passed">Passed on Nov. 7th, 2009</span></span>
 
 			</div>
 
 		<div class="senate">
-			<h4>Senate Version <%= link_to "H.R. 3590", bill_url(@senate_bill_ident), :target => "_blank" %></h4>
+			<h4>Senate Version (link)</h4>
 			
-			<h5 class="bill_title"><%= link_to "Patient Protection and Affordable Care Act", bill_url(@senate_bill_ident), :target => "_blank" %></h5>
+			<h5 class="bill_title">(link)</h5>
    		
    		<span><span class="passed">Passed on Dec. 24th, 2009</span></span>
    		
@@ -231,13 +231,7 @@ h5.bill_title a:link {
 					<br />
 				</div>
    </div> <!-- Guts -->
-   <div class="blog_coverage">
-   	<% if @state_name %>
-   	<%= link_to "What's hot with people in your state?", state_url(params[:state]), :class => "hot", :target => "_blank" %>
-      <% else %>
-   	<%= link_to "What's hot with people in your state?", states_url, :class => "hot", :target => "_blank" %>
-      <% end %>
-   </div>
+
 
 </div> <!-- End Widget -->
 

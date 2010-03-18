@@ -74,4 +74,8 @@ class IndexController < ApplicationController
 	  @page_title = 'The President\'s Proposal - Health Care Reform'
 	end
 	
+	def house_reconciliation
+	  @page_title = 'Health Care Bill - H.R. 4872 - Reconciliation Act of 2010 - OpenCongress'
+	end
+	
 end

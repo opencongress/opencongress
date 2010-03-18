@@ -263,6 +263,15 @@ class ResourcesController < ApplicationController
     healthcare_panel
   end
   
+  def climate_change_panel
+    @page_title = "Climate Change Widget"
+    render :layout => false
+  end
+
+  def climate_change_panel_sm
+    climate_change_panel
+  end
+  
   def email_friend_send
     @success = false
     if !simple_captcha_valid?

@@ -7,8 +7,8 @@
 	<style media="all" type="text/css">
 
 .healthcare_widget {
-   background: url(http://a3.opencongress.org/images/widgets/bg.png?1267060449) no-repeat;
-   width: 348px;
+   background: url(<%= image_path 'widgets/bg-320.png' %>) no-repeat;
+   width: 320px;
    font-family: Arial, Helvetica, sans-serif;
    padding: 0px;
    font-size: 12px;
@@ -76,8 +76,9 @@ color: #333;
 
 .healthcare_widget .blog_coverage {
    display: block;
-   background: url(http://a0.opencongress.org/images/widgets/button.png?1267060449) no-repeat;
+   background: url(<%= image_path 'widgets/button-320.png' %>) no-repeat;
    height: 40px;
+   width: 320px;
    padding-top: 20px;
 }
 
@@ -97,7 +98,7 @@ color: #333;
 .passed {
    color: #4a862a;
    padding-left: 23px;
-   background: url(http://a0.opencongress.org/images/widgets/widget_icons.png?1267060449) 7px -114px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 7px -114px no-repeat;
 }
 
 .introduced {
@@ -106,7 +107,7 @@ color: #333;
 }
 
 .full_text, .comments, .roll_call, .voting_record, .tracking {
-   background: url(http://a2.opencongress.org/images/widgets/widget_icons.png?1267060449) 0 14px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 14px no-repeat;
    padding-left: 18px;
    line-height: 1.8em;
    color: #555;
@@ -118,7 +119,7 @@ padding-top: 10px;
 }
 
 .pres_bill {
-   background: url(http://a3.opencongress.org/images/widgets/widget_icons.png?1267060449) 0 5px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 5px no-repeat;
 clear: both;
 margin-bottom: 0px;
 display: block;
@@ -159,13 +160,13 @@ line-height: 2em;
 
 .democrat {
    padding-left: 20px;
-   background: url(http://a2.opencongress.org/images/widgets/widget_icons.png?1267060449) 0 -139px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 -139px no-repeat;
 }
 
 
 .republican {
    padding-left: 20px;
-   background: url(http://a3.opencongress.org/images/widgets/widget_icons.png?1267060449) 0 -168px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 -168px no-repeat;
 }
 
 .status ul {

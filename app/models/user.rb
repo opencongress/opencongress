@@ -307,8 +307,14 @@ class User < ActiveRecord::Base
   end
 
   def find_other_users_in_state(state)
-    User.find_by_sql(["select distinct(users.id), users.login, MAX(zds.district) as district, zds.state from users INNER JOIN (select zipcode_districts.zip5, zipcode_districts.district , zipcode_districts.state from zipcode_districts where zipcode_districts.state = ?) as zds on zds.zip5 = users.zipcode group by users.id,users.login,zds.state;", state])
+    User.find_by_sql(['select distinct users.id, users.login from users where state_cache like ?;', "%#{state}%"])
   end
+
+  def find_other_users_in_district(state, district)
+    User.find_by_sql(['select distinct users.id, users.login from users where district_cache like ?;', "%#{state}-#{district}%"])
+  end
+
+  
   def senator_bookmarks_count
     current_user.bookmarks.count(:all, :include => [{:person => :roles}], :conditions => ["roles.role_type = ?", "sen"])
   end
@@ -674,7 +680,7 @@ class User < ActiveRecord::Base
 
   # These create and unset the fields required for remembering users between browser closes
   def remember_me
-    self.remember_token_expires_at = 2.weeks.from_now.utc
+    self.remember_token_expires_at = 8.weeks.from_now.utc
     self.remember_token            = encrypt("#{email}--#{remember_token_expires_at}")
     save(false)
   end

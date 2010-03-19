@@ -28,7 +28,7 @@ def tree_walk(element, version, in_inline = false, in_removed = false)
       element.parent.delete(element)
     end
   end
-    
+
   element.elements.to_a.each do |e|
     case e.name
     when 'changed'
@@ -43,13 +43,13 @@ def tree_walk(element, version, in_inline = false, in_removed = false)
        e.attributes['class'] = 'bill_text_changed_to'
     when 'inserted'
       e.attributes['class'] = "bill_text_inserted"
-      
+
       e.name = in_inline ? 'span' : 'div'
     when 'removed'
       e.attributes['class'] = "bill_text_removed"
       e.attributes['style'] = "display: none;"
       removed = true
-      
+
       e.name = in_inline ? 'span' : 'div'
     when 'p'
       e.name = 'span' if in_inline
@@ -61,31 +61,30 @@ def tree_walk(element, version, in_inline = false, in_removed = false)
         e.attributes['style'] = "font-size: 14px; font-weight:bold;"
       end
     end
-      
+
     unless e.attributes['nid'].nil? or e.name == 'h2' or e.name == 'h3' or e.name == 'h4' or in_removed
       e.attributes['class'] = 'bill_text_section'
       e.attributes['id'] = "bill_text_section_#{e.attributes['nid']}"
       e.attributes['onmouseover'] = "BillText.mouseOverSection('#{e.attributes['nid']}');" 
       e.attributes['onmouseout'] = "BillText.mouseOutSection('#{e.attributes['nid']}');"
-            
+
       menu = Element.new "span"
       menu.attributes['class'] = 'bill_text_section_menu'
       menu.attributes['id'] = "bill_text_section_menu_#{e.attributes['nid']}"
       menu.attributes['style'] = 'display:none;'
-      
+
       comments_show = Element.new "a"
       comments_show.attributes['href'] = "#"
       comments_show.attributes['id'] = "show_comments_link_#{e.attributes['nid']}"
       comments_show.attributes['class'] = "small_button pushright"
       comments_show.attributes['onClick'] = "BillText.showComments(#{version.id}, '#{e.attributes['nid']}'); return false;"
       comments_show.text = ""
-      
+
       comments_show_span = Element.new "span"
       comments_show_span.text = "Comments"
-      
+
       comments_show.elements << comments_show_span
-      
-      
+
       comments_hide = Element.new "a"
       comments_hide.attributes['href'] = "#"
       comments_hide.attributes['id'] = "close_comments_link_#{e.attributes['nid']}"
@@ -93,24 +92,22 @@ def tree_walk(element, version, in_inline = false, in_removed = false)
       comments_hide.attributes['style'] = 'display:none;'
       comments_hide.attributes['onClick'] = "BillText.closeComments(#{version.id}, '#{e.attributes['nid']}'); return false;"
       comments_hide.text = ""
-      
+
       comments_hide_span = Element.new "span"
       comments_hide_span.text = "Close Comments"
-      
-      comments_hide.elements << comments_hide_span
 
+      comments_hide.elements << comments_hide_span
 
       permalink = Element.new "a"
       permalink.attributes['href'] = "?version=#{version.version}&nid=#{e.attributes['nid']}"
       permalink.attributes['id'] = "permalink_#{e.attributes['nid']}"
       permalink.attributes['class'] = "small_button"
       permalink.text = ""
-            
+
       permalink_span = Element.new "span"
       permalink_span.text = "Permalink"
-      
-      permalink.elements << permalink_span
 
+      permalink.elements << permalink_span
     
       comments = Element.new "div"
       comments.attributes['id'] = "bill_text_comments_#{e.attributes['nid']}"
@@ -129,15 +126,15 @@ def tree_walk(element, version, in_inline = false, in_removed = false)
       # img.attributes['src'] = '/images/flat-loader.gif'
       # 
       # comments.elements << img
-      
+
       menu.elements << comments_show
       menu.elements << comments_hide
       menu.elements << permalink
-      
+
       e.elements << menu
       e.elements << comments
     end
-    
+
     tree_walk(e, version, (in_inline or (e.name  =~ /p|em|h2|h3|h4/)), (in_removed or removed))
   end
 end

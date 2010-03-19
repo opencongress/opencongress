@@ -5,14 +5,14 @@
 	<title><%= @page_title %></title>
 
 	<style media="all" type="text/css">
+
 .healthcare_widget {
-   background: url(/images/widgets/small_healthcare_widg_bg.png) no-repeat;
-   width: 161px;
+   background: url(http://a3.opencongress.org/images/widgets/bg.png?1267060449) no-repeat;
+   width: 348px;
    font-family: Arial, Helvetica, sans-serif;
    padding: 0px;
-font-size: 10px;
+   font-size: 12px;
 }
-
 
 
 .healthcare_widget a{
@@ -26,43 +26,41 @@ color: #333;
 
 .healthcare_widget .title h3 {
    margin: 0;
-   font-size: 11px;
+   font-size: 15px;
    color: #a82222;
-   padding: 12px 0 10px 15px;
-border-bottom: 1px solid #ddd;
+   padding: 18px 0 0 68px;
 }
 
 
 .healthcare_widget .title p {
    margin: 0;
-   padding: 8px 0 8px 15px;
+   padding: 2px 0 0 68px;
    font-size: 11px;
-
 }
 
 
 .healthcare_widget .guts {
    border-left: 1px solid #ddd;
    border-right: 1px solid #ddd;
-   padding: 15px 0px 0;
+   padding: 15px 15px 0;
 }
 
 .healthcare_widget .guts h4 {
    margin: 0;
-   padding: 0 0 6px 0;
-   font-size: 10px;
+   padding: 0 0 10px 0;
+   font-size: 11px;
    color: #136b9e;
 }
 
 .healthcare_widget .house {
    border-bottom: 1px solid #ddd;
-   padding: 0px 0 15px 15px;
+   padding-bottom: 15px;
 }
 
 .healthcare_widget .senate {
    margin-top: 15px;
    border-bottom: 1px solid #ddd;
-   padding: 0px 0 15px 15px;
+   padding-bottom: 15px;
 }
 
 .healthcare_widget .senate .status {
@@ -78,20 +76,17 @@ border-bottom: 1px solid #ddd;
 
 .healthcare_widget .blog_coverage {
    display: block;
-   background: url(/images/widgets/small_healthcare_widg_bottom.png) bottom no-repeat;
-padding-bottom: 10px;
-
+   background: url(http://a0.opencongress.org/images/widgets/button.png?1267060449) no-repeat;
+   height: 40px;
+   padding-top: 20px;
 }
 
 .healthcare_widget .blog_coverage a {
    display: block;
    color: #333;
-margin: 0;
-   padding: 10px 0 0 15px;
+   padding: 0 0 0 15px;
    font-weight: bold;
-   font-size: 11px;
-border-left: 1px solid #ddd;
-border-right: 1px solid #ddd;
+   font-size: 12px;
    text-decoration: none;
 }
 
@@ -101,8 +96,8 @@ border-right: 1px solid #ddd;
 
 .passed {
    color: #4a862a;
-   padding-left: 16px;
-   background: url(/images/widgets/widget_icons.png?1262045908) 0px -114px no-repeat;
+   padding-left: 23px;
+   background: url(http://a0.opencongress.org/images/widgets/widget_icons.png?1267060449) 7px -114px no-repeat;
 }
 
 .introduced {
@@ -110,8 +105,8 @@ border-right: 1px solid #ddd;
    color: #ccc;
 }
 
-.full_text, .comments, .roll_call, .voting_record, .tracking, .pres_bill {
-   background: url(/images/widgets/widget_icons.png?1262045908) 0 14px no-repeat;
+.full_text, .comments, .roll_call, .voting_record, .tracking {
+   background: url(http://a2.opencongress.org/images/widgets/widget_icons.png?1267060449) 0 14px no-repeat;
    padding-left: 18px;
    line-height: 1.8em;
    color: #555;
@@ -120,6 +115,15 @@ border-right: 1px solid #ddd;
 
 .full_text {
 padding-top: 10px;
+}
+
+.pres_bill {
+   background: url(http://a3.opencongress.org/images/widgets/widget_icons.png?1267060449) 0 5px no-repeat;
+clear: both;
+margin-bottom: 0px;
+display: block;
+padding-left: 16px;
+line-height: 2em;
 }
 
 
@@ -155,13 +159,13 @@ padding-top: 10px;
 
 .democrat {
    padding-left: 20px;
-   background: url(/images/widgets/widget_icons.png?1262045908) 0 -139px no-repeat;
+   background: url(http://a2.opencongress.org/images/widgets/widget_icons.png?1267060449) 0 -139px no-repeat;
 }
 
 
 .republican {
    padding-left: 20px;
-   background: url(/images/widgets/widget_icons.png?1262045908) 0 -168px no-repeat;
+   background: url(http://a3.opencongress.org/images/widgets/widget_icons.png?1267060449) 0 -168px no-repeat;
 }
 
 .status ul {
@@ -188,7 +192,6 @@ h5.bill_title a:link {
 }
 
 
-
 	</style>
 </head>
 <body>
@@ -196,7 +199,7 @@ h5.bill_title a:link {
 
 <div class="healthcare_widget">
 	<div class="title">
-		<h3>Health Care Congress</h3>
+		<h3>Health Care Reform in Congress</h3>
 		<% if @state_name %>
 		   <p>What People in <strong><%= @state_name %></strong> Are Saying on <%= link_to "OpenCongress", home_url, :target => "_blank" %></p>
       <% else %>
@@ -206,38 +209,30 @@ h5.bill_title a:link {
 
 	<div class="guts">
 		<div class="house">
-			<h4>House Version: <%= link_to "H.R. 3962", bill_url(@house_bill_ident), :target => "_blank" %></h4>
+			<h4>House Version: </h4>
 			
 			
-				<h5 class="bill_title"><%= link_to "Affordable Health Care for America Act", bill_url(@house_bill_ident), :target => "_blank" %></h5>
+				<h5 class="bill_title">Bill title</h5>
 			
-							<span><span class="passed">Passed on Nov. 7th, 2009</span></span>
+							<span>Latest Action: <span class="passed">Passed on Nov. 7th, 2009</span></span>
 
-			</div>
+		</div>
 
 		<div class="senate">
-			<h4>Senate Version <%= link_to "H.R. 3590", bill_url(@senate_bill_ident), :target => "_blank" %></h4>
+			<h4>Senate Version (link)</h4>
 			
-			<h5 class="bill_title"><%= link_to "Patient Protection and Affordable Care Act", bill_url(@senate_bill_ident), :target => "_blank" %></h5>
+			<h5 class="bill_title">(link)</h5>
    		
-   		<span><span class="passed">Passed on Dec. 24th, 2009</span></span>
+   		<span>Latest Action:  <span class="passed">Passed on Dec. 24th, 2009</span></span>
    		
- 				</div>
-
-				<div class="senate"> 
-					<h4><a href="http://www.opencongress.org/bill/111-h4872/show" target="_blank">House Reconciliation Bill</a></h4>
-					<span>Vote likely Mar 21, 2010</span>
-					<br />
 				</div>
-
+				
+				<div class="senate"> 
+					<h4>White House Version - <a href="http://www.opencongress.org/presidents_health_care_proposal" target="_blank">President Obama's Proposal</a></h4>
+					<span>Latest Action: Made Public Feb. 22, 2010</span>
+					<a class="pres_bill" href="http://www.opencongress.org/presidents_health_care_proposal" target="_blank">Read the 11-page proposal for a final bill</a>
+				</div>
    </div> <!-- Guts -->
-   <div class="blog_coverage">
-   	<% if @state_name %>
-   	<%= link_to "What's hot with people in your state?", state_url(params[:state]), :class => "hot", :target => "_blank" %>
-      <% else %>
-   	<%= link_to "What's hot with people in your state?", states_url, :class => "hot", :target => "_blank" %>
-      <% end %>
-   </div>
 
 </div> <!-- End Widget -->
 

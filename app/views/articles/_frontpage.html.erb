@@ -22,11 +22,10 @@
     <% end %>
 
     <%= most_recent.excerpt %>
-    <%= link_to('<div style="margin: 0 0 20px 25px; font-weight: bold;">More...</div>', article_url(most_recent)) %>
-<% end %>
+<%= link_to('<span>Read Full Article</span>', article_url(most_recent), {:class => "full_article"}) %><% end %>
 
 
-<h3 class="recent">More Recent Blog Posts</h3>
+<h3 class="recent clear">More Recent Blog Posts</h3>
 <ul class="indent">
   <% articles.each_with_index do |g, i| -%>
     <li class="<%= (i.modulo(2) == 0) ? 'light' : 'dark' %>">

@@ -10,16 +10,15 @@
 
 <div style="padding:10px;">
 <h3>Users in my State (<%= @ziplookup.state %>)</h3>
-<% @in_state.uniq.each do |is| %>
-<%= link_to(h(is.login), user_profile_path(:login => is.login)) %><%= is == @in_state.uniq.last ? "" : ", " %>
+<% @in_state.each do |is| %>
+<%= link_to(h(is.login), user_profile_path(:login => is.login)) %><%= is == @in_state.last ? "" : ", " %>
 <% end %>
 </div>
 
 <div style="padding:10px;">
 <h3>Users in my Congressional District (<%= @ziplookup.state + "-" + @user_district.to_s %>)</h3>
-<% @in_state.uniq.each do |ucd_i| %>
-  <% next if ucd_i.district.to_s != @user_district.to_s %>
-  <%= link_to(h(ucd_i.login), user_profile_path(:login => ucd_i.login)) %>,&nbsp; 
+<% @in_district.each do |user| %>
+  <%= link_to(h(user.login), user_profile_path(user)) %><%= user == @in_state.last ? "" : ", " %>
 <% end %>
 </div>
 

@@ -20,7 +20,7 @@
             <% cache("frontpage_rightside", :expires_in => 3.hours) do %>
          	<div class="rightside">
                	<div class="congress_status">
-            	  	 	<h2 class="small_heading">Today in Congress <span><%= Date.today.strftime("%B %d, %Y") %></span></h2>
+            	  	 	<h2 class="small_heading">Today in Congress<span><%= Date.today.strftime("%B %d, %Y") %></span></h2>
             	  		<%= session_div('house', @sessions[:house_session]) %>
             	  		<%= session_div('senate', @sessions[:senate_session])%>	
             	  	</div>
@@ -35,7 +35,7 @@
          		   </ul>
 
                   <div class="small_heading">
-                     <span><span id="popular_ul_title">Most-Viewed Bills</span>
+                     <span><span id="popular_ul_title">Newest Bills</span>
       					<ul class="tabs" id="bill_tab_select">
       					   <% @index_tabs.each do |tab| %>
       						<li id="<%= tab[:id] %>link"><%= link_to_function("<span>#{tab[:title]}</span>", "switchBillTab('#{tab[:id]}', '#{tab[:title]}');") %></li>
@@ -59,7 +59,7 @@
             <% end %>
 
             <div class="blog_list">
-         		<%= render :partial => 'articles/frontpage', :locals => { :articles => Article.frontpage_gossip } %>
+         		<%= render :partial => 'articles/frontpage', :locals => { :articles => Article.frontpage_gossip(7) } %>
          		<!-- // end of blog entries -->
          	</div>
 

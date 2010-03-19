@@ -59,6 +59,23 @@ h3{ font-size: 13px; }
 =========================================================
 ///////////////////////////////////////////////////////*/
 
+
+.leftcolumn{
+width: 430px;
+float: left;
+}
+
+
+.rightcolumn{
+width: 430px;
+float: right;
+}
+
+
+.normal_p{
+margin-bottom: 15px;
+}
+
 .extra_description{
 background: url('/images/carousel_dark_bg.png') top left repeat-x;
 border-bottom: 1px solid #aaa;

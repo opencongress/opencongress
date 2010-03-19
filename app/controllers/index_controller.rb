@@ -3,42 +3,38 @@ class IndexController < ApplicationController
   
   def index
     unless read_fragment("frontpage_rightside")
-      @popular_bills = PageView.popular('Bill', DEFAULT_COUNT_TIME, 6)
+      @popular_bills = PageView.popular('Bill', DEFAULT_COUNT_TIME, 6, DEFAULT_CONGRESS, true)
       
-      @index_tabs = [{:title => 'Most-Viewed Bills',
-              :partial => 'bill',
-              :collection => @popular_bills,
-              :id => "bv",
-              :link => '/bill/most/viewed',
-              :cache => 'frontpage_bill_mostviewed'},
+      @index_tabs = [
               {:title => 'Newest Bills',
               :partial => 'bill',
-              :collection => Bill.find(:all, :order => 'introduced DESC', :limit => 4),
+              :collection => Bill.find(:all, :order => 'introduced DESC', :limit => 3),
               :id => 'bn',
-              :style => 'display: none;',
+              :link => '/bill/most/viewed'},
+              {:title => 'Most-Viewed Bills',
+              :partial => 'bill',
+              :collection => PageView.popular('Bill', DEFAULT_COUNT_TIME, 3),
+              :id => "bv",
               :link => '/bill/most/viewed',
-              :cache => 'frontpage_bill_newest'},
+              :style => 'display: none;'},
               {:title => 'Most-Viewed Senators',
               :partial => 'person',
-              :collection => Person.list_chamber('sen', DEFAULT_CONGRESS, "view_count desc", 6),
+              :collection => Person.list_chamber('sen', DEFAULT_CONGRESS, "view_count desc", 3),
               :id => 'ps',
               :style => 'display: none;',
-              :link => '/people/senators?sort=popular',
-              :cache => 'frontpage_person_topsenators'},
+              :link => '/people/senators?sort=popular'},
               {:title => 'Most-Viewed Reps',
               :partial => 'person',
-              :collection => Person.list_chamber('rep', DEFAULT_CONGRESS, "view_count desc", 6),
+              :collection => Person.list_chamber('rep', DEFAULT_CONGRESS, "view_count desc", 3),
               :link => '/people/representatives?sort=popular',
               :style => 'display: none;',
-              :id => 'pr',
-              :cache => 'frontpage_person_topreps'},
+              :id => 'pr'},
               {:title => 'Most-Viewed Issues',
               :partial => 'issue',
-              :collection => PageView.popular('Subject', DEFAULT_COUNT_TIME, 6),
+              :collection => PageView.popular('Subject', DEFAULT_COUNT_TIME, 3),
               :style => 'display: none;',
               :id => 'pis',
-              :link => '/issues',
-              :cache => 'frontpage_issue_mostviewed'}]
+              :link => '/issues'}]
 
     end
     
@@ -76,6 +72,12 @@ class IndexController < ApplicationController
 
 	def senate_health_care_bill_111
 	  @page_title = 'The President\'s Proposal - Health Care Reform'
+	  render :layout => 'application'
+	end
+	
+	def house_reconciliation
+	  @page_title = 'Health Care Bill Text - H.R. 4872 - Reconciliation Act of 2010'
+	  render :layout => 'application'
 	end
 	
 end

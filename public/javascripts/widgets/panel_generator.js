@@ -126,7 +126,7 @@ function updateFields(changedField, panelType, generatorRefresh) {
                      document.getElementById('panel_state_abbrev').value : ''    ;
      var path = document.getElementById('panel_path') ?
                     document.getElementById('panel_path').value : 'healthcare_panel';
-    frameHeight = 580;
+    frameHeight = 630;
   }
   else if (panelType == 'bill_status')
   {

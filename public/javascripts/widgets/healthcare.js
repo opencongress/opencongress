@@ -1,6 +1,6 @@
 var fHeight = 0;
 if (oc_path == "healthcare_panel") {
-    fHeight = 536;
+    fHeight = 538;
     fWidth = 348;
     if (typeof oc_state != "undefined") {
         fHeight += 42;

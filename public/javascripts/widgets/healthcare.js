@@ -1,12 +1,12 @@
 var fHeight = 0;
 if (oc_path == "healthcare_panel") {
-    fHeight = 627;
+    fHeight = 536;
     fWidth = 348;
     if (typeof oc_state != "undefined") {
         fHeight += 42;
     }
 } else if (oc_path == "healthcare_panel_sm") {
-    fHeight = 470;
+    fHeight = 373;
     fWidth = 161;
 }
 if (window.navigator.userAgent.indexOf("MSIE")) {

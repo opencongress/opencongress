@@ -71,7 +71,7 @@ class IndexController < ApplicationController
 	end
 
 	def house_reconciliation
-	  redirect_to bill_text_url('111-hr4872')
+	  redirect_to bill_text_url('111-h4872')
 	end
 
 end

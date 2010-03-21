@@ -66,12 +66,18 @@ class IndexController < ApplicationController
 	end
 
 	def senate_health_care_bill_111
-	  @page_title = 'The President\'s Proposal - Health Care Reform'
+	  @page_title = 'Senate Health Care Bill - Health Care Reform'
 	  render :layout => 'application'
 	end
 
-	def house_reconciliation
-	  redirect_to bill_text_url('111-h4872')
+	def senate_health_care_bill_111
+	  @page_title = 'The President\'s Proposal - Health Care Reform'
+	  render :layout => 'application'
 	end
-
+	
+	def house_reconciliation
+	  @page_title = 'Health Care Bill Text - H.R. 4872 - Reconciliation Act of 2010'
+	  render :layout => 'application'
+	end
+	
 end

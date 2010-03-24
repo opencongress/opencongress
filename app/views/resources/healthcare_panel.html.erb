@@ -7,8 +7,8 @@
 	<style media="all" type="text/css">
 
 .healthcare_widget {
-   background: url(http://a3.opencongress.org/images/widgets/bg.png?1267060449) no-repeat;
-   width: 348px;
+   background: url(<%= image_path 'widgets/bg-320.png' %>) no-repeat;
+   width: 320px;
    font-family: Arial, Helvetica, sans-serif;
    padding: 0px;
    font-size: 12px;
@@ -76,8 +76,9 @@ color: #333;
 
 .healthcare_widget .blog_coverage {
    display: block;
-   background: url(http://a0.opencongress.org/images/widgets/button.png?1267060449) no-repeat;
+   background: url(<%= image_path 'widgets/button-320.png' %>) no-repeat;
    height: 40px;
+   width: 320px;
    padding-top: 20px;
 }
 
@@ -97,7 +98,7 @@ color: #333;
 .passed {
    color: #4a862a;
    padding-left: 23px;
-   background: url(http://a0.opencongress.org/images/widgets/widget_icons.png?1267060449) 7px -114px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 7px -114px no-repeat;
 }
 
 .introduced {
@@ -106,7 +107,7 @@ color: #333;
 }
 
 .full_text, .comments, .roll_call, .voting_record, .tracking {
-   background: url(http://a2.opencongress.org/images/widgets/widget_icons.png?1267060449) 0 14px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 14px no-repeat;
    padding-left: 18px;
    line-height: 1.8em;
    color: #555;
@@ -118,7 +119,7 @@ padding-top: 10px;
 }
 
 .pres_bill {
-   background: url(http://a3.opencongress.org/images/widgets/widget_icons.png?1267060449) 0 5px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 5px no-repeat;
 clear: both;
 margin-bottom: 0px;
 display: block;
@@ -159,13 +160,13 @@ line-height: 2em;
 
 .democrat {
    padding-left: 20px;
-   background: url(http://a2.opencongress.org/images/widgets/widget_icons.png?1267060449) 0 -139px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 -139px no-repeat;
 }
 
 
 .republican {
    padding-left: 20px;
-   background: url(http://a3.opencongress.org/images/widgets/widget_icons.png?1267060449) 0 -168px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 -168px no-repeat;
 }
 
 .status ul {
@@ -214,7 +215,7 @@ h5.bill_title a:link {
 			
 				<h5 class="bill_title"><%= link_to "Affordable Health Care for America Act", bill_url(@house_bill_ident), :target => "_blank" %></h5>
 			
-							<span>Latest Action: <span class="passed">Passed on Nov. 7th, 2009</span></span>
+							<span>Latest Action: <span class="passed">Passed on Nov. 7, 2009</span></span>
 
 			
 <%= link_to("Read and comment on the bill text", url_for(:controller => 'bill', :action => 'text', :id => @house_bill_ident, :anchor => 'most_commented'), :class => "full_text", :target => "_blank") %>   			<%= link_to("Full vote result (220-215)", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "h", :number => "887"), :class => "roll_call", :target => "_blank") %>
@@ -230,7 +231,7 @@ h5.bill_title a:link {
 			
 			<h5 class="bill_title"><%= link_to "Patient Protection and Affordable Care Act", bill_url(@senate_bill_ident), :target => "_blank" %></h5>
    		
-   		<span>Latest Action:  <span class="passed">Passed on Dec. 24th, 2009</span></span>
+   		<span>Latest Action:  <span class="passed">Passed on Dec. 24, 2009</span></span>
    		
    		<%= link_to("Read and comment on the bill text", url_for(:controller => 'bill', :action => 'text', :id => @senate_bill_ident, :anchor => 'most_commented'), :class => "full_text", :target => "_blank") %>   			
    			<%= link_to("Full vote result (60-39)", url_for(:controller => 'roll_call', :action => 'by_number', :year => "2009", :chamber => "s", :number => "396"), :class => "roll_call", :target => "_blank") %>
@@ -239,12 +240,13 @@ h5.bill_title a:link {
 		   <% end %>
 		   <%= link_to("People watching this bill are also watching...", bill_url(@senate_bill_ident, :anchor => "users_tracking"), :class => "tracking", :target => "_blank")%>
 				</div>
-				
-				<div class="senate"> 
-					<h4>White House Version - <a href="http://www.opencongress.org/presidents_health_care_proposal" target="_blank">President Obama's Proposal</a></h4>
-					<span>Latest Action: Made Public Feb. 22, 2010</span>
-					<a class="pres_bill" href="http://www.opencongress.org/presidents_health_care_proposal" target="_blank">Read the 11-page proposal for a final bill</a>
+
+   			<div class="senate"> 
+					<h5 class="bill_title"><a href="http://www.opencongress.org/bill/111-h4872/show" target="_blank">H.R. 4872 - Reconciliation Act of 2010</a></h5>
+					<span>3/21/10: Passed House by a vote of 220-211</span>
+					<a class="pres_bill" href="http://www.opencongress.org/house_reconciliation" target="_blank">Read the full bill text</a>
 				</div>
+
    </div> <!-- Guts -->
    <div class="blog_coverage">
    	<% if @state_name %>

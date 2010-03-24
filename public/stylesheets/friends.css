@@ -119,3 +119,21 @@ float: right;
 #friends.tracking_bill #heading, #friends.tracking_committee, #friends.tracking_issue, #friends.tracking_person  {
   height:72px;
 }
+
+.tracking_bill table{
+border: 1px solid #ddd;
+}
+.tracking_bill table td{
+border-bottom: 1px solid #ddd;
+padding: 10px;
+font-size: 11px;
+}
+
+.tracking_bill table th{
+background: #fefefe;
+border-bottom: 1px solid #ddd;
+padding: 10px 0 10px 10px;
+}
+
+
+

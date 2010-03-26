@@ -7,4 +7,10 @@
       <tr><td><%= ig.name %></td><td>$<%= number_with_delimiter(ig.contrib_total) %></td></tr>
     <% end %>
   </table>
+
+  <div class="partner_logo">
+  <%= link_to image_tag('partners/opensecrets.png'), "http://opensecrets.org" %>
+  <p>Campaign contribution data provided by <%= link_to "OpenSecrets.org", "http://OpenSecrets.org" %>,<br />the nonpartisan guideto money in politics.</p>
+  </div>
+  
 </div>

@@ -10,7 +10,10 @@
 		    <% link = @bill ? "/comments/atom/bill/#{@bill.id}" : "/comments/atom/person/#{@person.id}" %>
 		    <a href="<%= link %>" class="feed">Feed</a>
 		  <% end %>
+		  			    <a href="/articles/all_comments_atom" class="feed comment_feed">Comments Feed</a> 
+
 			<%= dbox_trigger('about_comments') %>
+
 		</h2>                            
 		<div class="dboxed">
 			<%= dbox_content("about_comments") %>

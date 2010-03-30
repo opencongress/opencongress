@@ -3101,98 +3101,99 @@ background:url('/images/sprites.png') 0 0 no-repeat;
 _background:url('/images/sprites.gif') 0 0 no-repeat;
 }
 
-.subscribe li, .share_icons li{
-margin-right: 5px;
-height: 26px;
+ul.subscribe li, ul.share_icons li{
+margin: 0 5px 0 0;
+list-style: none !important;
+height: 26px !important;
 float: left;
 }
 
-.subscribe li a:hover{
+li a:hover{
 background-position: 1px -21px;
 }
 
-.subscribe .newsgator a{
+.newsgator a{
 background-position: -52px -21px;
 }
-.subscribe .newsgator a:hover{
+.newsgator a:hover{
 background-position: -52px 0px;
 }
 
-.subscribe .bloglines a{
+.bloglines a{
 background-position: -75px -21px;
 }
-.subscribe .bloglines a:hover{
+.bloglines a:hover{
 background-position: -75px 0px;
 }
 
-.subscribe .netvibes a{
+.netvibes a{
 background-position: -97px -21px;
 }
-.subscribe .netvibes a:hover{
+.netvibes a:hover{
 background-position: -97px 0px;
 }
 
-.subscribe .yahoo a{
+.yahoo a{
 background-position: -119px -21px;
 }
-.subscribe .yahoo a:hover{
+.yahoo a:hover{
 background-position: -119px 0px;
 }
 
-.subscribe .google a{
+.google a{
 background-position: -141px -21px;
 }
-.subscribe .google a:hover{
+.google a:hover{
 background-position: -141px 0px;
 }
 
-.subscribe .rss_link a{
+.rss_link a{
 background-position: -163px -21px;
 }
-.subscribe .rss_link a:hover{
+.rss_link a:hover{
 background-position: -163px 0px;
 }
 
-.share_icons .reddit a{
+.reddit a{
 background-position: -185px -21px;
 }
-.share_icons .reddit a:hover{
+.reddit a:hover{
 background-position: -185px 0px;
 }
 
-.share_icons .digg a{
+.digg a{
 background-position: -207px -21px;
 }
 
-.share_icons .digg a:hover{
+.digg a:hover{
 background-position: -207px 0px;
 }
 
-.share_icons .facebook a{
+.facebook a{
 background-position: -249px -21px;
 }
-.share_icons .facebook a:hover{
+.facebook a:hover{
 background-position: -249px 0px;
 }
 
-.share_icons .stumble a{
+.stumble a{
 background-position: -228px -21px;
 }
-.share_icons .stumble a:hover{
+.stumble a:hover{
 background-position: -228px 0px;
 }
 
-.share_icons .mixx a{
+.mixx a{
 background-position: -271px -21px;
 }
-.share_icons .mixx a:hover{
+.mixx a:hover{
 background-position: -271px 0px;
 }
 
-.share_icons .twitter a{
+.twitter a{
 background-position: -294px -21px;
 }
-.share_icons .twitter a:hover{
+.twitter a:hover{
 background-position: -294px 0px;
 }
 

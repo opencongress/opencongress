@@ -14,9 +14,52 @@
 
 <div class="blog-body">
   <%= article.content_rendered %>
-
+  
   <div class="blog_social_ref">Like this post? Stay in touch by following us on <a href="http://twitter.com/opencongress">Twitter</a>, joining us on <a href="http://www.facebook.com/OpenCongress">Facebook</a>, <a href="http://feeds.feedburner.com/OpenCongressCongressGossipBlog">or by Subscribing with RSS</a>.</div>
   
+
+  <div class="share_blog">
+    <%= link_to '<span>Permalink</span>', article_url(article), :class => 'med_button' %>
+    
+    <h2>Share This Article</h2>
+    
+    
+    
+
+		<ul class="share_icons">
+			<li class="reddit"><a href="#">Reddit</a></li>
+			<li class="twitter"><a href="#">Twitter</a></li>
+			<li class="facebook"><a href="#">Facebook</a></li>
+			<li class="digg"><a href="#">Digg</a></li>
+		  <li class="yahoo"><a href="http://add.my.yahoo.com/rss?url=http%3A%2F%2Flocalhost%3A3000%2Fbill%2F111-h3200%2Fatom">Yahoo</a></li>
+	    <li class="google"><a href="http://fusion.google.com/add?feedurl=http%3A%2F%2Flocalhost%3A3000%2Fbill%2F111-h3200%2Fatom">Google</a></li>  
+	    <li class="bloglines"><a href="http://www.bloglines.com/sub/http://localhost:3000/bill/111-h3200/atom">Bloglines</a></li>
+	    <li class="newsgator"><a href="http://www.newsgator.com/ngs/subscriber/subext.aspx?url=http%3A%2F%2Flocalhost%3A3000%2Fbill%2F111-h3200%2Fatom">Newsgator</a></li>
+	    <li class="netvibes"><a href="http://www.netvibes.com/subscribe.php?url=http%3A%2F%2Flocalhost%3A3000%2Fbill%2F111-h3200%2Fatom">Netvibes</a></li>
+		</ul>
+
+    <span id="share-tool" class="share">
+    		<script type="text/javascript">
+    			iBeginShare.attachLink('share-tool', {
+        	link: '<%= article_url(article) %>',
+        	title: '<%= CGI.escape(article.title) %>',
+        	link_style: 'button'
+    			});
+    		</script>
+    </span>
+    
+
+  
+  
+  
+
+  
+  <div class="clearfix">&nbsp;</div>
+  
+  </div>
+
+
+    
   <% if article.tags.size > 0 %>
     <div class="article_tags">
   	  <% article.tags.each do |tag| %>
@@ -25,20 +68,7 @@
     </div>
   <% end %>
   
-  <div class="blog_buttons">
-    
-    <%= link_to '<span>Permalink</span>', article_url(article), :class => 'med_button' %>
-    
 
-    <a href="/articles/all_comments_atom" class="feed comment_feed">Comments Feed</a> 
-    
-    <span id="share-tool" class="share"><script type="text/javascript">iBeginShare.attachLink('share-tool', {
-        link: '<%= article_url(article) %>',
-        title: '<%= CGI.escape(article.title) %>',
-        link_style: 'button'
-    });</script></span>
-    
-  </div>
 
   <div class="clear">&nbsp;</div>
 </div>

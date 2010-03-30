@@ -213,20 +213,14 @@ margin: 0 14px 10px;
 
 .blog_social_ref {
   padding: 15px ;
-  width: 587px;
-  margin: 14px 0px;
+  margin: 14px 0px 0;
   font-size: 12px;
 color: #999;
 
-
 line-height: 1em;
-  background-color: #f8f8f8;
-
-
+  background-color: #fff;
 border: 1px solid #eee;
-
 -moz-border-radius: 4px
-
 }
 
 .blog_buttons a {
@@ -272,7 +266,8 @@ margin: 10px 0 0 15px;
 }
 
 .article_tags {
-padding: 0px ;
+padding: 0px;
+margin-top: 20px;
 clear: both;
 float: left;
 width: 100%;
@@ -286,11 +281,11 @@ float: left;
 margin: 3px 3px;
 line-height: 1em;
   background-color: #f8f8f8;
-  text-transform: uppercase;
+
   font-size: 10px;
-border: 1px solid #eee;
-  padding: 4px 6px;
--moz-border-radius: 4px
+border: 1px solid #fff;
+  padding: 4px 12px;
+-moz-border-radius: 10px;
 }
 
 
@@ -543,4 +538,58 @@ border: 1px solid #ccc;
 padding: 3px;
 }
 
+
+.comments_title .comment_feed{
+float: right;
+margin: 0;
+}
+
+#articles.view div#wrapper div#content.clearfix div.inner .blog-body div.share_blog ul.share_icons{
+float: left !important;
+margin: 8px 0 0 20px !important;
+padding:0 !important;
+clear: none !important;
+}
+
+
+#articles.view div#wrapper div#content.clearfix div.inner .blog-body div.share_blog ul.share_icons li{
+list-style: none !important;
+height: 19px !important;
+padding: 0 !important;
+}
+
+.share_blog {
+  padding: 15px ;
+  margin: 14px 0px;
+  font-size: 12px;
+color: #999;
+line-height: 1em;
+  background-color: #f8f8f8;
+border: 1px solid #eee;
+-moz-border-radius: 4px
+}
+
+
+.share_blog .med_button{
+text-decoration: none;
+line-height: 1.5em;
+float: right;
+clear: none !important;
+}
+
+
+
+.share_blog h2{
+margin: 8px 0 0 10px;
+padding: 0;
+font-size: 13px;
+clear: none !important;
+line-height: 1.5em;
+float: left !important;
+}
+
+.share-link{
+margin-top: 2px !important;
+background: url(/images/more.png) 0 6px no-repeat !important;
+}
 

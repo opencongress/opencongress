@@ -42,6 +42,15 @@ clear: none !important;
 }
 
 
+.sub_blog{
+font-size: 14px;
+background: url(/images/rss_icon.png) left center no-repeat;
+padding-left: 23px;
+text-decoration: none;
+display: block;
+margin-bottom: 30px;
+}
+
 .comment_feed{
 margin-top: 5px;
 float: left;

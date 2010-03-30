@@ -5,6 +5,7 @@
  * For licensing please see readme.html (MIT Open Source License)
 */
 
+
 var iBeginShare = function() {
 	var _pub = {
 		// Change this to your base URL
@@ -44,6 +45,10 @@ var iBeginShare = function() {
 		is_mac: navigator.userAgent.indexOf('Macintosh') != -1,
 		http: null,
 
+    shortenedUrl: '',
+    waitObj: "",
+    waitParams: '',
+    
 		/**
 		 * Generic function to enable the default PHP logging platform
 		 * This has to be called after `base_url` is set.
@@ -73,6 +78,7 @@ var iBeginShare = function() {
 				}
 				else el.setAttribute(key, params[key]);
 			}
+			
 			if (params.children) for (var i=0; i<params.children.length; i++) el.appendChild(params.children[i]);
 			return el;
 		},
@@ -257,6 +263,20 @@ var iBeginShare = function() {
 			containers.box.style.display = 'none';
 			_pub.addClass(containers.box, 'share-box-show');
 		},
+		
+		shortenUrl: function(data) {
+            var s = '';
+            var first_result;
+            // Results are keyed by longUrl, so we need to grab the first one.
+            for     (var r in data.results) {
+                    first_result = data.results[r]; break;
+            }
+            //alert( first_result['shortUrl'].toString());
+            _pub.shortenedUrl = first_result['shortUrl'].toString();
+            
+            iBeginShare.showAfterUrl(_pub.waitObj, _pub.waitParams);
+    },
+    
 		/**
 		 * Shows the share box and (if obj is present) positions
 		 * it relative to the container.
@@ -264,7 +284,14 @@ var iBeginShare = function() {
 		 * @param {Object} params
 		 */
 		show: function(obj, params) {
-			// if no plugins are active bail
+			_pub.waitObj = obj;
+			_pub.waitParams = params;
+			
+			BitlyClient.shorten(params.link, 'iBeginShare.shortenUrl');
+		},
+
+    showAfterUrl: function(obj, params) {
+      // if no plugins are active bail
 			if (!_pub.plugins.list.length) return false;
 			// if the current link is active bail
 			if (active.link == obj) return false;
@@ -275,6 +302,8 @@ var iBeginShare = function() {
 			if (!params.title) params.title = document.title;
 			if (!params.skin) params.skin = _pub.default_skin;
 			
+      params.link = _pub.shortenedUrl;
+    
 			// hide it first to stop the bug where active button still shows
 			if (active.link) _pub.hide();
 
@@ -583,7 +612,7 @@ var iBeginShare = function() {
 						render: function(callback, params) {
 							current_page = null;
 							link = encodeURIComponent(params.link);
-							title = encodeURIComponent(params.title);
+							title = params.title;
 
 							var total_pages = Math.ceil(services.length/(lines_per_page*bookmarks_per_line));
 							

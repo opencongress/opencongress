@@ -181,6 +181,9 @@ class Bill < ActiveRecord::Base
   end
 
   def wiki_summary
+    # Temporarily turned off wiki summaries -CT
+    return nil
+
     w = nil
     unless wiki_url.blank?
       w = WikiBill.new(self.wiki_url.gsub('wiki-dev', 'www')).summary

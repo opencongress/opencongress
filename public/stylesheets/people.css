@@ -1086,3 +1086,17 @@ margin-top: 10px;
   font-size:11px;
   margin-top:15px;
 }
+
+.partner_logo {
+   margin-top: 2em;
+}
+
+.partner_logo p {
+    padding-top: 10px;
+    font-style: italic;
+}
+
+.partner_logo img {
+    float: left;
+    padding-right: 20px;
+}

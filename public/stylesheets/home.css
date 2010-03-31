@@ -56,9 +56,9 @@ background: url('/images/arrows.png') right -44px no-repeat;
 padding-top: 20px;
 overflow: hidden;
 float: right;
-width: 116px;
+width: 136px;
 height: 0;
-background: url('/images/add_facebook.png') left -23px no-repeat;
+background: url('/images/fbt.png') left -23px no-repeat;
 margin: 13px 0 0 0;
 }
 
@@ -67,18 +67,18 @@ padding-top: 20px;
 overflow: hidden;
 float: right;
 height: 0;
-background: url('/images/add_facebook.png') left top no-repeat;
+background: url('/images/fbt.png') left top no-repeat;
 }
 
 
 .tweet_us{
 padding-top: 20px;
 overflow: hidden;
-width: 106px;
+width: 103px;
 float: right;
 height: 0;
 margin: 13px 0 0 0;
-background: url('/images/tweet_us.png') left -23px no-repeat;
+background: url('/images/fbt.png') right -23px no-repeat;
 
 }
 
@@ -87,7 +87,7 @@ padding-top: 20px;
 overflow: hidden;
 float: right;
 height: 0;
-background: url('/images/tweet_us.png') left top no-repeat;
+background: url('/images/fbt.png') right top no-repeat;
 }
 
 

@@ -104,11 +104,11 @@
 </div>
 
 
-<% unless @commented_nodes.empty? %>
+<% unless @top_nodes.empty? %>
 <div id="most_commented">
   <p>Most commented sections:</p>
   <ul>
-    <% @commented_nodes.each do |n| %>
+    <% @top_nodes.each do |n| %>
       <li>
         <a href="#" onClick="BillText.highlightNode('<%= n.nid %>'); return false;">
           Paragraph <%= number_with_delimiter(n.paragraph_number) %> (<%= n.comment_count %> comments)

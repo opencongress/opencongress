@@ -11,17 +11,62 @@
 }
 #wrapper {
    padding-left: 10px;
+position: relative;
+}
+
+
+body{
+padding-top: 100px;
+}
+
+
+h1{
+float: left;
+width: 300px;
+
+}
+
+#content{
+float: left;
+width: 700px;
+clear: none;
+border-top: 1px solid #ccc;
+border-bottom: 1px solid #ccc;
+}
+
+
+.donate_big{
+background: url(/images/donate_big.png) 0 0 no-repeat;
+position: absolute;
+height: 0;
+padding-top: 100px;
+overflow: hidden;
+left: 30px;
+top: 100px;
+width: 250px;
+}
+
+
+.donate_big:hover{
+background: url(/images/donate_big.png) 0 -100px no-repeat;
 }
 </style>
 
 </head>
 <body class="index">
+   
+   
    <div id="wrapper">
       <h1><a class="logo" href="/" title="link to the home page"><img src="http://a0.opencongress.org/images/open-congress.png" alt="OpenCongress -" />About Open Congress </a></h1>
-   </div>
+      
+      <a href="https://npo.networkforgood.org/Donate/Donate.aspx?npoSubscriptionId=1002425" class="donate_big">Donate Now!</a>
+      
+      
    <div id="content" class="clearfix">
       <div class="inner">
-         <div id="heading" style="height: 45px;"><h2>We're over capacity!</h2></div>
+         <div id="heading" style="height: 45px;">
+         
+         <h2>We're over capacity!</h2></div>
 
          <div class="padding pretty-text">
             <p>Sorry, we're getting more traffic right now than we can handle! Please wait a moment and try again.</p>
@@ -33,6 +78,8 @@
             <p>Put broadly, the main problem we seek to address with OpenCongress is that the Congressional legislative process is largely closed-off from timely and meaningful public input. For most people, finding out what's really happening in our democratically-elected Congress is a difficult and discouraging task. The rules by which bills become laws are notoriously arcane. What's more, Congress offers few channels for people to make their voices heard on consequential publicy policy matters before, during, and after the legislative process. This disconnect results in deep-seated public disapproval of Congress -- and worse, malignant apathy about politics as a whole.</p>
          </div>
       </div>
+   </div>
+   
    </div>
 
    <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-1208819-1"]);_gaq.push(["_trackPageview"]);(function(){var a=document.createElement("script");a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";a.setAttribute("async","true");document.documentElement.firstChild.appendChild(a)})();</script>

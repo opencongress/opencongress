@@ -70,9 +70,9 @@
 	            <li><strong>Sponsor:</strong> <%= @bill.sponsor.name %></li>
 	      		</ul>
 			<div id="links">
-            	<%= link_to 'View Bill >>', bill_path(@bill) %><br />
-	            <%= link_to 'News Coverage', news_bill_path(@bill) %> | 
-	            <%= link_to 'Blog Coverage', blogs_bill_path(@bill) %>
+            	<%= link_to 'View Bill >>', bill_path(@bill), :target => '_top' %><br />
+	            <%= link_to 'News Coverage', news_bill_path(@bill), :target => '_top' %> | 
+	            <%= link_to 'Blog Coverage', blogs_bill_path(@bill), :target => '_top' %>
 			</div>
 			<div id="powered">
 	            	<span>Powered by <%= link_to 'OpenCongress', home_url, :target => '_top' %></span>

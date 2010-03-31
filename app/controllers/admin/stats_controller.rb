@@ -321,6 +321,8 @@ class Admin::StatsController < Admin::IndexController
  
     @latest_roll_call_date_govtrack = RollCall.latest_roll_call_date_on_govtrack
     @latest_roll_call_oc = RollCall.find(:first, :order => 'date DESC')
+    
+    @latest_bill_text = BillTextVersion.find(:first, :conditions => 'file_timestamp IS NOT NULL', :order => 'file_timestamp DESC')
   
     @page_title = "OpenCongress Data Status"
   end

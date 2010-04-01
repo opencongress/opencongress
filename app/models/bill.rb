@@ -182,9 +182,6 @@ class Bill < ActiveRecord::Base
   end
 
   def wiki_summary
-    # Temporarily turned off wiki summaries -CT
-    return nil
-
     w = nil
     if self.wiki_summary_holder.nil? and !self.wiki_link.blank?
       w = Wiki.summary_text_for(self.wiki_link.name)

@@ -61,6 +61,8 @@ class Bill < ActiveRecord::Base
   
   attr_accessor :search_relevancy
   attr_accessor :tmp_search_desc
+  
+  attr_accessor :wiki_summary_holder
 
   @@DISPLAY_OBJECT_NAME = 'Bill'
                                             
@@ -167,7 +169,6 @@ class Bill < ActiveRecord::Base
   end
 
   def wiki_url
-  
     link = ""
     
     unless self.wiki_link
@@ -182,10 +183,16 @@ class Bill < ActiveRecord::Base
 
   def wiki_summary
     w = nil
-    unless wiki_url.blank?
-      w = WikiBill.new(self.wiki_url.gsub('wiki-dev', 'www')).summary
+    if self.wiki_summary_holder.nil? and !self.wiki_link.blank?
+      w = Wiki.summary_text_for(self.wiki_link.name)
+      if w.blank?
+        wiki_summary_holder = ''
+      else
+        wiki_summary_holder = w
+      end
     end
-    return w
+    
+    return wiki_summary_holder
   end
 
   def recent_activity(since = nil)

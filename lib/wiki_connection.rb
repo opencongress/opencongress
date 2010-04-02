@@ -2,7 +2,7 @@ class Wiki < ActiveRecord::Base
   # This is not in app/models because it's not a real model.
   # But you could subclass this there if you wanted to use wiki tables in Rails.
   # eg. "class Page < Wiki" would use the wiki connection.
-  require 'MediaCloth'
+  require 'mediacloth'
   require 'hpricot'
   
   establish_connection :oc_wiki

@@ -1,3 +1,4 @@
+
 <div class="blog-title">
   <h3>
     <strong class="gossip">
@@ -27,16 +28,19 @@
     
 
 		<ul class="share_icons">
-			<li class="reddit"><a href="#">Reddit</a></li>
-			<li class="twitter"><a href="#">Twitter</a></li>
-			<li class="facebook"><a href="#">Facebook</a></li>
-			<li class="digg"><a href="#">Digg</a></li>
-		  <li class="yahoo"><a href="http://add.my.yahoo.com/rss?url=http%3A%2F%2Flocalhost%3A3000%2Fbill%2F111-h3200%2Fatom">Yahoo</a></li>
-	    <li class="google"><a href="http://fusion.google.com/add?feedurl=http%3A%2F%2Flocalhost%3A3000%2Fbill%2F111-h3200%2Fatom">Google</a></li>  
-	    <li class="bloglines"><a href="http://www.bloglines.com/sub/http://localhost:3000/bill/111-h3200/atom">Bloglines</a></li>
-	    <li class="newsgator"><a href="http://www.newsgator.com/ngs/subscriber/subext.aspx?url=http%3A%2F%2Flocalhost%3A3000%2Fbill%2F111-h3200%2Fatom">Newsgator</a></li>
-	    <li class="netvibes"><a href="http://www.netvibes.com/subscribe.php?url=http%3A%2F%2Flocalhost%3A3000%2Fbill%2F111-h3200%2Fatom">Netvibes</a></li>
+<li class="reddit"><a target="_blank" href="http://www.reddit.com/submit?url=<%=u article_url(article) %>&title=<%=u article.title %>">Reddit</a></li>	
+
 		</ul>
+
+<a name="fb_share" type="button_count" href="http://www.facebook.com/sharer.php">Share</a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+
+<script type="text/javascript">
+tweetmeme_style = 'compact';
+</script>
+<script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+
+<script src="http://widgets.digg.com/buttons.js" type="text/javascript"></script>
+<a class="DiggThisButton DiggCompact"></a>
 
     <span id="share-tool" class="share">
     		<script type="text/javascript">

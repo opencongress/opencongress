@@ -1,5 +1,5 @@
 <div class="people_header clearfix" style=" background: url(/images/photos/thumbs_102/<%= @person.id %>.png) 610px bottom no-repeat;">
-	<div id="name">
+  <div id="name">
     <h3><em><%= @person.title_common %> <%= @person.full_name %></em></h3>
     <h5>
       <%= @person.party %> &nbsp;&bull;&nbsp;
@@ -9,42 +9,44 @@
       Sworn In <%= @person.consecutive_roles.last.startdate.strftime("%Y") %>
     </h5>
   </div>
-  
-	<div id="term">
-		<em><%= @person.is_sitting? ? "Current Term" : "Last Term" %></em>
-		<strong><%= "#{@person.roles_sorted.first.startdate.year} - #{@person.roles_sorted.first.enddate.year}" %></strong>
-		<%  if @person.roles_sorted.size > 1 %>
-		<%= toggler("rolehistory_list", "View All", "Hide")%>
-		<ul id="rolehistory_list" style="display:none;"> 
-			<% @person.roles_sorted[1..@person.roles_sorted.size].each do |role| %>
-			<li><strong><%= "#{role.startdate.year} - #{role.enddate.year}" %></strong></li>
-			<% end %>
-  	</ul>
-<% end %>
+
+  <div id="term">
+    <em><%= @person.is_sitting? ? "Current Term" : "Last Term" %></em>
+    <strong><%= "#{@person.roles_sorted.first.startdate.year} - #{@person.roles_sorted.first.enddate.year}" %></strong>
+    <%  if @person.roles_sorted.size > 1 %>
+    <%= toggler("rolehistory_list", "View All", "Hide")%>
+    <ul id="rolehistory_list" style="display:none;"> 
+      <% @person.roles_sorted[1..@person.roles_sorted.size].each do |role| %>
+      <li><strong><%= "#{role.startdate.year} - #{role.enddate.year}" %></strong></li>
+      <% end %>
+    </ul>
+    <% end %>
   </div>  
 
-<% unless @person.person_stats.nil? %>
-      <ul id="sponsor_stats" class="clearfix">
-        <%= sponsored_bill_stats %>
-      </ul>
-
+  <% unless @person.person_stats.nil? %>
+    <ul id="sponsor_stats" class="clearfix">
+      <%= sponsored_bill_stats %>
+    </ul>
   <% end %>
-<% unless (voting_similarities_html = top_voting_similarities).empty? %>
+  
+  <% unless (voting_similarities_html = top_voting_similarities).empty? %>
     <!-- Should be popup <%# site_text_explain('voting_similarities')%> -->
-
-        <%= voting_similarities_html %>
+    <%= voting_similarities_html %>
   <% end %> 
-
+  
+  <% unless @bio_summary.blank? %> 
+    <%= @bio_summary %>
+  <% end %>
 </div>
 
 <% if admin_logged_in? %>
-  <div style="padding-left: 30px;">
-    <%= link_to "New news/blog article", :controller => 'admin/commentary', :action => 'new', :commentariable_type => 'Person', :commentariable_id => @person.id %>
-  </div>
+<div style="padding-left: 30px;">
+  <%= link_to "New news/blog article", :controller => 'admin/commentary', :action => 'new', :commentariable_type => 'Person', :commentariable_id => @person.id %>
+</div>
 <% end %>
 
 <div id="tabs"> 
-	<ul class="un">
-	<%= make_tabs(@tabs) %>
-	</ul>
+  <ul class="un">
+    <%= make_tabs(@tabs) %>
+  </ul>
 </div>

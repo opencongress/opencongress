@@ -424,7 +424,34 @@ class Person < ActiveRecord::Base
 
   end
 
-
+  def wiki_bio_summary
+    article_name = self.wiki_link.nil? ? "#{firstname}_#{lastname}" : self.wiki_link.name
+    
+    bio = Wiki.biography_text_for(article_name)
+    unless bio.blank?
+      more_link = "<a class='wiki_bio_more' href='#{WIKI_BASE_URL}/#{article_name}\#Biography'>Read More...</a></p>"
+      
+      # get first two sections
+      first = bio.index(/<br\s\/><br\s\/>/)
+      if first
+        second = bio.index(/<br\s\/><br\s\/>/, (first + 16))
+        
+        if second
+          summary = bio[0..(second-1)]
+          summary += " #{more_link}</p>"
+        else
+          summary = bio.gsub(/<\/p>/, " #{more_link}</p>")
+        end
+      else
+        return nil
+      end
+    else
+      return nil
+    end
+    
+    summary
+  end
+  
   # Battle Royale
   def Person.find_all_by_most_tracked_for_range(range, options)
     range = 630720000 if range.nil?

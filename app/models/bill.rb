@@ -88,7 +88,7 @@ class Bill < ActiveRecord::Base
       @@TYPES_ORDERED[4..7]
     end
   end
-
+  
   def before_save
     # update the bill fulltext search table
     

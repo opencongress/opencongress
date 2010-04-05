@@ -195,6 +195,12 @@ class Bill < ActiveRecord::Base
     return wiki_summary_holder
   end
 
+  def text_comments_count
+    Bill.count_by_sql(["SELECT count(*) FROM bill_text_versions INNER JOIN bill_text_nodes ON bill_text_nodes.bill_text_version_id=bill_text_versions.id 
+                  INNER JOIN comments ON comments.commentable_id=bill_text_nodes.id 
+                  WHERE bill_text_versions.bill_id=? AND comments.commentable_type='BillTextNode'", self.id])
+  end
+  
   def recent_activity(since = nil)
     items = []
     actions.find(:all, :conditions => ["created_at >= ?", since], :order => "datetime desc")

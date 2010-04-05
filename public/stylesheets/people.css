@@ -1100,3 +1100,7 @@ margin-top: 10px;
     float: left;
     padding-right: 20px;
 }
+
+.bio_summary {
+  width: 560px;
+}

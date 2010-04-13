@@ -3101,6 +3101,11 @@ background:url('/images/sprites.png') 0 0 no-repeat;
 _background:url('/images/sprites.gif') 0 0 no-repeat;
 }
 
+li.subscribe ul li{
+float: left !important;
+margin-right: 5px;
+}
+
 ul.subscribe li, ul.share_icons li{
 margin: 0 5px 0 0;
 list-style: none !important;

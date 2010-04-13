@@ -7,7 +7,7 @@
 	<style media="all" type="text/css">
 
 .healthcare_widget {
-   background: url(<%= image_path 'widgets/bg-320.png' %>) no-repeat;
+   background: url(<%= image_path 'widgets/healthcare_bg.png' %>) no-repeat;
    width: 320px;
    font-family: Arial, Helvetica, sans-serif;
    padding: 0px;
@@ -20,7 +20,7 @@ color: #333;
 }
 
 .healthcare_widget .title {
-   border-bottom: 1px solid #ddd;
+   border-bottom: 1px solid #999;
    min-height: 69px;
 }
 
@@ -40,8 +40,10 @@ color: #333;
 
 
 .healthcare_widget .guts {
-   border-left: 1px solid #ddd;
-   border-right: 1px solid #ddd;
+   background: #fff url(<%= image_path 'widgets/healthcare_bg.png' %>) -1px -70px no-repeat;
+
+   border-left: 1px solid #999;
+   border-right: 1px solid #999;
    padding: 15px 15px 0;
 }
 

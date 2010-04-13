@@ -195,7 +195,7 @@ h5.bill_title a:link {
 
 <div class="healthcare_widget">
 	<div class="title">
-		<h3>Health Care Congress</h3>
+		<h3>Financial Congress</h3>
 		<% if @state_name %>
 		   <p>What People in <strong><%= @state_name %></strong> Are Saying on <%= link_to "OpenCongress", home_url, :target => "_blank" %></p>
       <% else %>
@@ -205,30 +205,23 @@ h5.bill_title a:link {
 
 	<div class="guts">
 		<div class="house">
-			<h4>House Version: <%= link_to "H.R. 3962", bill_url(@house_bill_ident), :target => "_blank" %></h4>
+		<h4>House Version: <a href="http://www.opencongress.org/bill/111-h4173/show">H.R.4173</a></h4>
 			
 			
-				<h5 class="bill_title"><%= link_to "Affordable Health Care for America Act", bill_url(@house_bill_ident), :target => "_blank" %></h5>
+				<h5 class="bill_title"><a href="http://www.opencongress.org/bill/111-h4173/show">Wall Street Reform and Consumer Protection Act of 2009</a></h5>
 			
-							<span><span class="passed">Passed on Nov. 7th, 2009</span></span>
+					<span><span class="passed">Passed on December 11, 2009</span></span>
+								
+
 
 			</div>
 
 		<div class="senate">
-			<h4>Senate Version <%= link_to "H.R. 3590", bill_url(@senate_bill_ident), :target => "_blank" %></h4>
+			<h4><a href="http://www.opencongress.org/articles/view/1519-State-of-Play-Senate-Financial-Reform-">Senate Version Final bill not yet introduced.</a></h4>
+   		
+   		 		</div>
+
 			
-			<h5 class="bill_title"><%= link_to "Patient Protection and Affordable Care Act", bill_url(@senate_bill_ident), :target => "_blank" %></h5>
-   		
-   		<span><span class="passed">Passed on Dec. 24th, 2009</span></span>
-   		
- 				</div>
-
-				<div class="senate"> 
-					<h4><a href="http://www.opencongress.org/bill/111-h4872/show" target="_blank">House Reconciliation Bill</a></h4>
-					<span class="passed">3/21/10: Passed House by vote 220-211</span>
-					<br />
-				</div>
-
    </div> <!-- Guts -->
    <div class="blog_coverage">
    	<% if @state_name %>

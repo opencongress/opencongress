@@ -4,36 +4,56 @@
 
 </div>
 <div class="padding">
-  <dl class="tool_form healthcare_status">
-   <dt><label for="state_abbrev_select">Select a region:</label></dt>
-   <dd>
-     <%= select("panel", "state_abbrev_select", State::PAIRS_SORTED, {:include_blank => "National"}, { :onChange => "setHealthCareStateAbbrev(document.getElementById('panel_state_abbrev_select').value);" } ) %>
-   </dd>
-   <dt><label for="path_select">Size:</label></dt>
-   <dd>
-     <%= select("panel", "path_select", [['Large', 'healthcare_panel'], ["Small", 'healthcare_panel_sm']], {}, { :onChange => "setHealthCarePath(document.getElementById('panel_path_select').value);" } ) %>
-   </dd>
+  
+  
+  <div id="customize_container">
+  		  <h2 class="preview_healthcare_panel_title">Customize</h2>
 
-  <%= hidden_field 'panel', 'state_abbrev', { :value => "" } %>
-  <%= hidden_field 'panel', 'path', { :value =>  "healthcare_panel" } %>
-  <%= hidden_field 'panel', 'hostname', { :value => home_url } %>
+		  <dl class="tool_form healthcare_status">
+		   <dt><label for="state_abbrev_select">Select a Region:</label></dt>
+		   <dd>
+		     <%= select("panel", "state_abbrev_select", State::PAIRS_SORTED, {:include_blank => "National"}, { :onChange => "setHealthCareStateAbbrev(document.getElementById('panel_state_abbrev_select').value);" } ) %>
+		   </dd>
+		   <dt><label for="path_select">Select a Size:</label></dt>
+		   <dd>
+		     <%= select("panel", "path_select", [['Large', 'healthcare_panel'], ["Small", 'healthcare_panel_sm']], {}, { :onChange => "setHealthCarePath(document.getElementById('panel_path_select').value);" } ) %>
+		   </dd>
+			
+			  <%= hidden_field 'panel', 'state_abbrev', { :value => "" } %>
+			  <%= hidden_field 'panel', 'path', { :value =>  "healthcare_panel" } %>
+			  <%= hidden_field 'panel', 'hostname', { :value => home_url } %>
+			
+		  </dl>
+		      		  <h2 class="preview_healthcare_panel_title clear">Embed</h2>
 
-  </dl>
+		 
+		  <div id="preview_healthcare_code">
+			  Copy and paste this code into your webpage:<br>
+			  <%= text_area 'panel', 'code', "cols" => 68, "rows" => 20 %>
+		  </div>
+		  
+		  
+		  
+		           <%= toggler("more_widgets", "<span>More Widgets</span>", "<span>Hide Extra Widgets</span>", "more_down", "more_up") %>
+
+  				
+  				<ul id="more_widgets" style="display: none">
+  			
+  					<li><a href="healthcare" class="healthcare">Healthcare Reform Widget</a></li>
+  					<li><a href="financial" class="financial">Financial Reform Widget</a></li>
+  					<li><a href="climate" class="climate">Climate Change Widget</a></li>
+  				
+					  				
+  				</ul>
+  </div>
+  
+  
 
   <div id="preview_container">
-  
-  <div id="preview_healthcare_panel">
-  How the panel will look:<br>
-  <iframe id="healthcare_panel" name="oc_healthcare_frame" width="350" scrolling="no" frameborder="0" style="border: 0px solid #999;" allowtransparency="true" hspace="0" vspace="0" marginheight="0" marginwidth="0"></iframe>
-  </div>
-
-  <div id="preview_healthcare_code">
-  Copy and paste this code into your webpage:<br>
-
-  <%= text_area 'panel', 'code', "cols" => 68, "rows" => 20 %>
-
-  </div>
-
+	  <div id="preview_healthcare_panel">
+  <h2 id="preview_title">Healthcare Reform Widget Preview</h2>
+		  <iframe id="healthcare_panel" name="oc_healthcare_frame" width="350" scrolling="no" frameborder="0" style="border: 0px solid #999;" allowtransparency="true" hspace="0" vspace="0" marginheight="0" marginwidth="0"></iframe>
+	  </div>
   </div>
 
   <!-- The following image forces the fields to update on the initial load of the page -->

@@ -1,6 +1,6 @@
 <%= javascript_include_tag 'widgets/panel_generator' %>
 <div id="heading">
-  <h2><%= @page_title = 'Make a Climate Change Widget' %></h2>  <p>This widget keeps you up-to-date with the major climate change bills in Congress.</p>
+  <h2><%= @page_title = 'Make a Financial Reform Widget' %></h2>  <p>This widget keeps you up-to-date with the major financial reform bills in Congress.</p>
 
 </div>
 <div class="padding">
@@ -17,11 +17,11 @@
    </dd>
    <dt><label for="path_select">Select a Size:</label></dt>
    <dd>
-     <%= select("panel", "path_select", [['Large', 'climate_change_panel'], ["Small", 'climate_change_panel_sm']], {}, { :onChange => "setHealthCarePath(document.getElementById('panel_path_select').value);" } ) %>
+     <%= select("panel", "path_select", [['Large', 'financial_reform_panel'], ["Small", 'financial_reform_panel_sm']], {}, { :onChange => "setHealthCarePath(document.getElementById('panel_path_select').value);" } ) %>
    </dd>
 
   <%= hidden_field 'panel', 'state_abbrev', { :value => "" } %>
-  <%= hidden_field 'panel', 'path', { :value =>  "climate_change_panel" } %>
+  <%= hidden_field 'panel', 'path', { :value =>  "financial_reform_panel" } %>
   <%= hidden_field 'panel', 'hostname', { :value => home_url } %>
 
   </dl>
@@ -35,9 +35,6 @@
   <%= text_area 'panel', 'code', "cols" => 68, "rows" => 20 %>
 
   </div>
-  
-  
-
 
          <%= toggler("more_widgets", "<span>More Widgets</span>", "<span>Hide Extra Widgets</span>", "more_down", "more_up") %>
 
@@ -50,22 +47,16 @@
   				
 					  				
   				</ul>
-  				
-  				
-  				
+
+  
   </div>
   
-
-
   
-
-
-
 
   <div id="preview_container">
   
   <div id="preview_healthcare_panel">
-  <h2 id="preview_title">Climate Change Widget Preview</h2>
+  <h2 id="preview_title">Financial Reform Widget Preview</h2>
     <iframe id="healthcare_panel" name="oc_healthcare_frame" width="350" scrolling="no" frameborder="0" style="border: 0px solid #999;" allowtransparency="true" hspace="0" vspace="0" marginheight="0" marginwidth="0"></iframe>
   </div>
 

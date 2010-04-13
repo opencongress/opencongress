@@ -271,6 +271,17 @@ class ResourcesController < ApplicationController
   def climate_change_panel_sm
     climate_change_panel
   end
+ 
+ 
+  def financial_reform_panel
+    @page_title = "Financial Reform Widget"
+    render :layout => false
+  end
+
+  def financial_reform_panel_sm
+    financial_reform_panel
+  end
+ 
   
   def email_friend_send
     @success = false

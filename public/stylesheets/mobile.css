@@ -1,0 +1,131 @@
+body {
+font-size: 14px;
+padding: 0;
+margin: 0;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.top_bar{
+width: 300px;
+}
+
+h1{
+font-size: 18px;
+padding: 15px;
+background: #fcfcfc;
+margin: 0;
+}
+
+h3{
+color: #666;
+
+}
+
+h1 a{
+color: #777;
+text-decoration: none;
+}
+
+h1 img{
+display: block;
+margin-bottom: 25px;
+width: 250px;
+border: 0;
+
+}
+
+td.ratez, td.ratez_form{
+display: none;
+}
+
+ul{
+padding: 0 0 0 15px;
+}
+
+#nav, div.title h1, .tagline,
+.search,.jqmClose,
+.ad_search_down,
+.titles_trigger,
+#user_account{
+display: none;
+}
+
+
+#bill_titles{
+font-size: 11px;
+background: #fefefe;
+padding: 15px;
+}
+
+
+#bill_titles h3{
+margin: 0 0 5px;
+}
+
+
+
+#bill_titles ul{
+margin: 0;
+padding: 0 0 0 0px;
+}
+
+
+#bill_titles ul li{
+margin: 0;
+padding: 5px 0 0px 0px;
+list-style: none;
+}
+
+#bill_titles ul li em{
+font-weight: bold;
+}
+
+
+
+.title{
+border-bottom: 1px solid #fff;
+padding: 15px;
+font-size: 12px;
+font-weight: bold;
+}
+
+
+.title p{
+margin: 0;padding: 0;
+}
+
+
+#tabs{
+background: #ddd;
+}
+
+
+
+#tabs ul{
+margin: 0;
+padding: 0;
+border-top: 1px solid #999;
+}
+
+
+#tabs ul li{
+list-style: none;
+}
+
+
+#tabs ul li a{
+border-bottom: 1px solid #999;
+display: block;
+font-size: 12px;
+font-weight: bold;
+text-decoration: none;
+color: #333;
+padding: 10px 15px;
+}
+
+
+
+
+
+

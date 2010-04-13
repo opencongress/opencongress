@@ -13,6 +13,14 @@
   		<% end %>
 	  <% end %>
 
+
+<% if @bill.text_comments_count > 0 %>
+
+<a href="#">View most Commented Paragrarhs</a>
+
+<% end %>
+
+
 		<script type="text/javascript">
 		$j().ready(function() {
 			$j('#learn').jqm({trigger:'a.learn_trigger'});

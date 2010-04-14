@@ -36,7 +36,7 @@ color: #aaa;
 }
 
 
-.healthcare_status{
+.panel_status{
 padding: 12px 10px 10px 15px;
 margin: 15px 0;
 background: #eee;
@@ -123,7 +123,7 @@ margin-bottom: 30px;
 }
 
 
-.preview_healthcare_panel_title {
+.preview_panel_title {
     display: block;
 background: #fefefe;
 padding: 10px;
@@ -141,7 +141,7 @@ float: right;
 }
 
 
-#preview_healthcare_panel {
+#preview_panel {
     display: block;
     float: left;
 border: 1px solid #eee;
@@ -158,19 +158,19 @@ display: none;
 }
 
 
-#preview_healthcare_panel iframe {
+#preview_panel iframe {
 margin: 10px auto;
 width: 320px;
 }
 
-#preview_healthcare_code {
+#preview_code {
     display: block;
     float: right;
     width: 470px;
 margin: 15px 30px 0 0;
 }
 
-#preview_healthcare_code textarea{
+#preview_code textarea{
     width: 480px;
 }
 

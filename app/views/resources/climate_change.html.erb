@@ -13,7 +13,7 @@
   <dl class="tool_form panel_status">
    <dt><label for="path_select">Select a Size:</label></dt>
    <dd>
-     <%= select("panel", "path_select", [['Large', 'climate_change_panel'], ["Small", 'climate_change_panel_sm']], {}, { :onChange => "setHealthCarePath(document.getElementById('panel_path_select').value);" } ) %>
+     <%= select("panel", "path_select", [['Large', 'climate_change_panel'], ["Small", 'climate_change_panel_sm']], {}, { :onChange => "setPanelPath(document.getElementById('panel_path_select').value, 'climate_change');" } ) %>
    </dd>
 
   <%= hidden_field 'panel', 'state_abbrev', { :value => "" } %>
@@ -57,7 +57,7 @@
   
   <div id="preview_panel">
   <h2 id="preview_title">Climate Change Widget Preview</h2>
-    <iframe id="healthcare_panel" name="oc_healthcare_frame" width="350" scrolling="no" frameborder="0" style="border: 0px solid #999;" allowtransparency="true" hspace="0" vspace="0" marginheight="0" marginwidth="0"></iframe>
+    <iframe id="climate_change_panel" name="oc_climate_change_frame" width="350" scrolling="no" frameborder="0" style="border: 0px solid #999;" allowtransparency="true" hspace="0" vspace="0" marginheight="0" marginwidth="0"></iframe>
   </div>
 
 
@@ -65,6 +65,6 @@
   </div>
 
   <!-- The following image forces the fields to update on the initial load of the page -->
-  <%= image_tag 'blank.gif', :class => 'noborder', :width => '0', :height => '0', :onLoad => 'updateHealthCareFields();' %>
+  <%= image_tag 'blank.gif', :class => 'noborder', :width => '0', :height => '0', :onLoad => 'updatePanelFields(\'climate_change\');' %>
   <br />
 </div>

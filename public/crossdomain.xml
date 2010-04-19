@@ -1,0 +1,8 @@
+<cross-domain-policy> 
+<allow-access-from domain="maplight.org"/> 
+<allow-access-from domain="*.maplight.org"/> 
+<allow-access-from domain="takepart.com"/> 
+<allow-access-from domain="*.takepart.com"/> 
+<allow-access-from domain="us.t-sign.com"/> 
+<allow-access-from domain="*.us.t-sign.com"/> 
+</cross-domain-policy>

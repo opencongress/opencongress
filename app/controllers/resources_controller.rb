@@ -236,6 +236,91 @@ class ResourcesController < ApplicationController
     item = klass.find_by_id(id)
     render :partial => 'shared/email_friend_form', :locals => { :item => item }, :layout => false
   end
+  
+  def email_friend_send
+    @success = false
+    if !simple_captcha_valid?
+      @content = "The code you entered does not match the code in the image.  Please try again."
+      render :layout => false
+      return
+    end
+    object_type = params[:email][:object_type]
+    id = params[:email][:object_id]
+    
+    klass = Object.const_get object_type
+    item = klass.find_by_id(id)
+    
+    friend_email = FriendEmail.new
+    friend_email.emailable = item
+    friend_email.ip_address = request.remote_ip
+    friend_email.save
+    
+    if object_type == 'Bill'
+      subject = "OpenCongress: #{item.title_full_common}"
+      url = "#{BASE_URL}bill/#{item.ident}/show"
+      item_desc = "bill"
+    elsif object_type == 'Person'
+      subject = "OpenCongress: #{item.name}"
+      url = "#{BASE_URL}person/show/#{item.to_param}"
+      item_desc = "Member of Congress"
+    elsif object_type == 'Subject'
+      subject = "OpenCongress: #{item.term}"
+      url = "#{BASE_URL}issue/show/#{item.to_param}"
+      item_desc = "issue"
+    elsif object_type == 'UpcomingBill'
+      subject = "OpenCongress: #{item.title}"
+      url = "#{BASE_URL}bill/upcoming/#{item.id}"
+      item_desc = "bill"
+    elsif object_type == 'Article'
+      subject = "OpenCongress: #{item.title}"
+      url = "#{BASE_URL}articles/view/#{item.to_param}"
+    end
+
+    dest_emails = params[:email][:dest_emails]
+    dest_emails = dest_emails.split("\n")
+
+    if params[:email]["cc_me"] == "1"
+      dest_emails << params[:email][:email]
+    end
+    
+    begin
+      Emailer::deliver_friend(dest_emails, params[:email][:email], subject, url, item_desc, params[:email][:message])
+      @content = "Your email has been delivered."
+      @success = true
+    rescue Exception => e
+      @content = "There was an unknown error sending your email. Please try again later."
+    end
+      
+    render :layout => false
+  end
+  
+  def email_feedback_form
+    @subject = params[:subject]
+    render :layout => false
+  end    
+  
+  def email_feedback
+  #  debugger
+    if !simple_captcha_valid?
+      @content = "Captcha Failed.  Try again"
+      render :layout => false
+      return
+    end
+    
+    cc = []
+    if params[:feedback]["cc_me"] == "1"
+      cc << params[:feedback][:email]
+    end
+    
+    begin
+      Emailer::deliver_feedback(cc, params[:feedback][:email], params[:feedback][:subject], params[:feedback][:message])
+      @content = "Your feedback has been delivered."
+    rescue Exception => e
+      @content = "There was an unknown error sending your feedback. Please try again later."
+    end
+    render :layout => false
+  end
+
 
   def healthcare_panel
     @house_bill_ident = "111-h3962"
@@ -281,88 +366,7 @@ class ResourcesController < ApplicationController
   def financial_reform_panel_sm
     financial_reform_panel
   end
- 
-  
-  def email_friend_send
-    @success = false
-    if !simple_captcha_valid?
-      @content = "The code you entered does not match the code in the image.  Please try again."
-      render :layout => false
-      return
-    end
-    object_type = params[:email][:object_type]
-    id = params[:email][:object_id]
-    
-    klass = Object.const_get object_type
-    item = klass.find_by_id(id)
-    
-    friend_email = FriendEmail.new
-    friend_email.emailable = item
-    friend_email.ip_address = request.remote_ip
-    friend_email.save
-    
-    if object_type == 'Bill'
-      subject = "OpenCongress: #{item.title_full_common}"
-      url = "#{BASE_URL}bill/#{item.ident}/show"
-      item_desc = "bill"
-    elsif object_type == 'Person'
-      subject = "OpenCongress: #{item.name}"
-      url = "#{BASE_URL}person/show/#{item.to_param}"
-      item_desc = "Member of Congress"
-    elsif object_type == 'Subject'
-      subject = "OpenCongress: #{item.term}"
-      url = "#{BASE_URL}issue/show/#{item.to_param}"
-      item_desc = "issue"
-    elsif object_type == 'UpcomingBill'
-      subject = "OpenCongress: #{item.title}"
-      url = "#{BASE_URL}bill/upcoming/#{item.id}"
-      item_desc = "bill"
-    end
-    
-    dest_emails = params[:email][:dest_emails]
-    dest_emails = dest_emails.split("\n")
 
-    if params[:email]["cc_me"] == "1"
-      dest_emails << params[:email][:email]
-    end
-    
-    begin
-      Emailer::deliver_friend(dest_emails, params[:email][:email], subject, url, item_desc, params[:email][:message])
-      @content = "Your email has been delivered."
-      @success = true
-    rescue Exception => e
-      @content = "There was an unknown error sending your email. Please try again later."
-    end
-      
-    render :layout => false
-  end
-  
-  def email_feedback_form
-    @subject = params[:subject]
-    render :layout => false
-  end    
-  
-  def email_feedback
-  #  debugger
-    if !simple_captcha_valid?
-      @content = "Captcha Failed.  Try again"
-      render :layout => false
-      return
-    end
-    
-    cc = []
-    if params[:feedback]["cc_me"] == "1"
-      cc << params[:feedback][:email]
-    end
-    
-    begin
-      Emailer::deliver_feedback(cc, params[:feedback][:email], params[:feedback][:subject], params[:feedback][:message])
-      @content = "Your feedback has been delivered."
-    rescue Exception => e
-      @content = "There was an unknown error sending your feedback. Please try again later."
-    end
-    render :layout => false
-  end
 
   def district_from_address
     @district = ZipcodeDistrict.from_address(params[:address])

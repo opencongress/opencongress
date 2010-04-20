@@ -16,8 +16,7 @@
 
 <% if @bill.text_comments_count > 0 %>
 
-<a href="#">View most Commented Paragrarhs</a>
-
+<%= link_to "View Most Commented Paragraphs", :action => 'text', :anchor => 'most_commented' %>
 <% end %>
 
 

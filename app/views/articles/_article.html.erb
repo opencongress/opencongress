@@ -25,57 +25,60 @@
     <h2>Share This Article</h2>	
     
     
-    
-
-		<ul class="share">
-
-
-
-<li class="email_friend"><a target="_blank" href="http://www.reddit.com/submit?url=<%=u article_url(article) %>&title=<%=u article.title %>">Email a Friend</a></li>	
-<li class="facebook"><a target="_blank" href="http://www.facebook.com/sharer.php?u=<%=u article_url(article) %>&t=<%=u article.title %>">Facebook</a></li>	
-<li class="twitter"><a href="http://twitter.com/home?status=Currently reading <%=u article_url(article) %>" title="Click to share this post on Twitter">Share on Twitter</a></li>
-<li class="reddit"><a target="_blank" href="http://www.reddit.com/submit?url=<%=u article_url(article) %>&title=<%=u article.title %>">Reddit</a></li>	
-<li class="digg"><a href="http://digg.com/submit?phase=2&url=<%=u article_url(article) %>">Digg this</a> </li>	
-
-<li class="buzz"><a target="_blank" href="http://www.google.com/reader/link?url=<%=u article_url(article) %>&title=<%=u article.title %>&srcURL=http://www.opencongress.org&srcTitle=OpenCongress">Buzz it!</a></li>	
-<li class="linkedin"><a target="_blank" href="http://www.reddit.com/submit?url=<%=u article_url(article) %>&title=<%=u article.title %>">Reddit</a></li>	
-
-<li class="delicious"><a href="http://del.icio.us/post?v=2&url=<%=u article_url(article) %>&title=<%=u article.title %>" title="Post to del.icio.us">Post page to del.icio.us</a> </li>	
-
-<li class="stumble"><script src="http://www.stumbleupon.com/hostedbadge.php?s=4"></script></li>	
-<li class="netvibes"><a target="_blank" href="http://www.netvibes.com/share?title=<%=u article.title %>&url=<%=u article_url(article) %>&autoclose=1">Net Vibes</a></li>	
-<li class="bebo"><script>function bebo_click() {u=location.href;t=document.title;window.open('http://www.bebo.com/c/share?Url='+encodeURIComponent(u)+'&Title='+encodeURIComponent(t)+'&MID=8974376238&TUUID=fc7850b8-964c-47bd-8a91-db1d2a5cad3c','sharer','toolbar=0,status=0,width=626,height=436');return false;}</script><a href="http://www.bebo.com/share.php?Url=<url>" onclick="return bebo_click()" target="_blank">Share on Bebo</a></li>	
-
-
-<li class="yah_buzz"><script type="text/javascript">
-    yahooBuzzArticleHeadline = "Yahoo! Buzz is now open!";
-    yahooBuzzArticleSummary = "Welcome new publishers.";
-    yahooBuzzArticleCategory = "business";
-    yahooBuzzArticleType = "text";
-    yahooBuzzArticleId = window.location.href;
+    <script type='text/javascript'>
+$j().ready(function() {
+	$j('#e_friend').jqm({ajax:'@href', trigger:'a.e_trigger'});
+});
 </script>
 
-<script type="text/javascript"
-    src="http://d.yimg.com/ds/badge2.js"
-    badgetype="logo">
-</script></li>	
-
-
-<li class="mixx"><a href="http://www.mixx.com/" onclick="window.location='http://www.mixx.com/submit?page_url='+window.location; return false;">Mixx</a></li>	
-
-<li class="fark"><a target="_blank" href="http://www.fark.com/cgi/farkit.pl?u=<%=u article_url(article) %>&h=<%=u article.title %>">Fark</a></li>	
-
+		<ul class="share">
+					
+					<li class="email_friend"><a href="<%= url_for :controller => 'resources', :action => 'email_friend_form', :object_class => article.class, :object_id => article.id %>" class="e_trigger">Share via Email</a></li>
+					<li class="facebook"><a target="_blank" href="http://www.facebook.com/sharer.php?u=<%=u article_url(article) %>&t=<%=u article.title %>">Facebook</a></li>	
+					<li class="twitter"><a href="http://twitter.com/home?status=Currently reading <%=u article_url(article) %>" title="Click to share this post on Twitter">Share on Twitter</a></li>
+					<li class="reddit"><a target="_blank" href="http://www.reddit.com/submit?url=<%=u article_url(article) %>&title=<%=u article.title %>">Reddit</a></li>	
+					<li class="digg"><a href="http://digg.com/submit?phase=2&url=<%=u article_url(article) %>">Digg this</a> </li>	
+					
+					<li class="buzz"><a target="_blank" href="http://www.google.com/reader/link?url=<%=u article_url(article) %>&title=<%=u article.title %>&srcURL=http://www.opencongress.org&srcTitle=OpenCongress">Buzz it!</a></li>	
+					<li class="linkedin"><a target="_blank" href="http://www.reddit.com/submit?url=<%=u article_url(article) %>&title=<%=u article.title %>">Reddit</a></li>	
+					
+					<li class="delicious"><a href="http://del.icio.us/post?v=2&url=<%=u article_url(article) %>&title=<%=u article.title %>" title="Post to del.icio.us">Post page to del.icio.us</a> </li>	
+					
+					<li class="stumble"><script src="http://www.stumbleupon.com/hostedbadge.php?s=4"></script></li>	
+					<li class="netvibes"><a target="_blank" href="http://www.netvibes.com/share?title=<%=u article.title %>&url=<%=u article_url(article) %>&autoclose=1">Net Vibes</a></li>	
+					<li class="bebo"><script>function bebo_click() {u=location.href;t=document.title;window.open('http://www.bebo.com/c/share?Url='+encodeURIComponent(u)+'&Title='+encodeURIComponent(t)+'&MID=8974376238&TUUID=fc7850b8-964c-47bd-8a91-db1d2a5cad3c','sharer','toolbar=0,status=0,width=626,height=436');return false;}</script><a href="http://www.bebo.com/share.php?Url=<url>" onclick="return bebo_click()" target="_blank">Share on Bebo</a></li>	
+					
+					
+					<li class="yah_buzz"><script type="text/javascript">
+					    yahooBuzzArticleHeadline = "Yahoo! Buzz is now open!";
+					    yahooBuzzArticleSummary = "Welcome new publishers.";
+					    yahooBuzzArticleCategory = "business";
+					    yahooBuzzArticleType = "text";
+					    yahooBuzzArticleId = window.location.href;
+					</script>
+					
+					<script type="text/javascript"
+					    src="http://d.yimg.com/ds/badge2.js"
+					    badgetype="logo">
+					</script></li>	
+					
+					
+					<li class="mixx"><a href="http://www.mixx.com/" onclick="window.location='http://www.mixx.com/submit?page_url='+window.location; return false;">Mixx</a></li>	
+					
+					<li class="fark"><a target="_blank" href="http://www.fark.com/cgi/farkit.pl?u=<%=u article_url(article) %>&h=<%=u article.title %>">Fark</a></li>	
+					
 		</ul>
 
 
 
-  
 
   
-  <div class="clearfix">&nbsp;</div>
   
   </div>
 
+  <div id="e_friend" class="jqmWindow">
+
+</div>
 
     
   <% if article.tags.size > 0 %>

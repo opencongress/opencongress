@@ -8,3 +8,71 @@ th {
   border: 1px solid #000;
   background: #ccc;
 }
+
+
+#heading{
+ height: 45px;
+ }
+ 
+.user{
+font-size: 11px;
+min-height: 50px;
+padding: 10px;
+
+}
+
+
+.enabledtrue{
+background: #ebfbdf;
+margin-bottom: 10px;
+
+border: 1px solid #fff;
+}
+
+
+.enabledtrue:hover{
+border: 1px solid #333;
+}
+
+
+.user h3{
+margin: 0;
+}
+
+.user h3 strong{
+margin: 0;
+min-width: 150px;
+float: left;
+}
+
+.user h3 span{
+display: block;
+font-size: 11px;
+font-weight: normal;
+}
+
+.user h3 div{
+color: #666;
+font-size: 11px;
+display: inline;
+padding-left: 10px;
+font-weight: normal;
+}
+
+
+.activated{
+float: right;
+font-size: 11px;
+text-align: right;
+}
+
+
+.activated strong{
+display: block;
+}
+
+
+.activated .user_buttons{
+text-align: right;
+font-weight: bold;
+}

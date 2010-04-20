@@ -573,7 +573,9 @@ padding: 0 !important;
   font-size: 12px;
 color: #999;
 line-height: 1em;
+height: 3em;
   background-color: #f8f8f8;
+position: relative;
 border: 1px solid #eee;
 -moz-border-radius: 4px
 }
@@ -602,3 +604,59 @@ margin-top: 2px !important;
 background: url(/images/more.png) 0 6px no-repeat !important;
 }
 
+.left_email{
+float: left;
+width: 250px;
+}
+
+
+.left_email label{
+display: block;
+margin-bottom: 10px;
+}
+
+
+
+.left_email input{
+display: block;
+margin-bottom: 10px;
+padding: 3px;
+width: 242px;
+}
+
+
+.right_email{
+float: right;
+width: 300px;
+}
+
+
+.right_email label{
+display: block;
+margin-bottom: 10px;
+}
+
+.right_email input{
+float: right;
+}
+
+
+.right_email div input{
+float: none;
+}
+
+.right_email #simple_captcha{
+display: block;
+margin: 10px 0;
+padding: 5px;
+height: 43px;
+}
+
+.right_email #catcha{
+float: right !important;
+}
+
+div.simple_captcha_image {
+margin-right: 15px !important;
+float: left !important;
+}

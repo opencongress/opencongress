@@ -6,6 +6,9 @@
 #
 set :stages, %w(staging production)
 set :default_stage, "production"
+set :user, "cappy"
+set :runner, "cappy"
+
 require 'capistrano/ext/multistage'
 
 #
@@ -19,10 +22,9 @@ default_run_options[:pty] = true
 set :repository,  "git://github.com/opencongress/opencongress.git"
 set :branch, "master"
 set :scm, :git
-set :git_shallow_clone, 1
+set :deploy_via, :remote_cache
 
 default_run_options[:pty] = true
-set :use_sudo, true
 
 namespace :deploy do
   desc "Link the images"
@@ -41,7 +43,7 @@ namespace :deploy do
     run "ln -s #{deploy_to}/#{shared_dir}/files/screencast.mp4 #{current_release}/public/screencast.mp4"
     run "ln -s #{deploy_to}/#{shared_dir}/files/synch_s3_asset_host.yml #{current_release}/config/"
     run "ln -s #{deploy_to}/#{shared_dir}/files/facebook.yml #{current_release}/config/"
-    sudo "chown -R mongrel:admins #{current_release}"
+#    sudo "chown -R mongrel:admins #{current_release}"
   end
 
   desc "Compile CSS & JS for public/assets/ (see assets.yml)"

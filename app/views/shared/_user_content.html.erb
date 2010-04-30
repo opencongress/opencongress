@@ -13,6 +13,14 @@
   		<% end %>
 	  <% end %>
 
+
+<% if @bill.text_comments_count > 0 %>
+
+<p class="most_button"><%= link_to "View Most Commented Paragraphs", :action => 'text', :anchor => 'most_commented' %>
+</p>
+<% end %>
+
+
 		<script type="text/javascript">
 		$j().ready(function() {
 			$j('#learn').jqm({trigger:'a.learn_trigger'});
@@ -34,12 +42,12 @@
 				<p id="vote_message_<%= @bill.id %>" style="display:none;border:2px solid #48A100;padding:3px;"></p>
 			</div>
 		</div>  
-<!--
-		<div id="learn" class="jqmWindow scrolling">
-			<h3>Learn More About this Bill</h3>
-			<div class="ie"><a href="#" class="jqmClose">Close</a></div>
-		</div>
--->
+			<!--
+					<div id="learn" class="jqmWindow scrolling">
+						<h3>Learn More About this Bill</h3>
+						<div class="ie"><a href="#" class="jqmClose">Close</a></div>
+					</div>
+			-->
 		<div class="uc-box-bottom">
 			<div class="uc-box">
 				<%= user_bill_result(@bill) %>

@@ -61,6 +61,26 @@ color: #e5f2ff;
 padding: 40px;
 }
 
+.most_button{
+postion: absolute;
+margin: -25px 0 30px;
+border-left: 1px solid #c9daea;
+}
+
+
+.most_button a{
+display: block;
+font-size: 11px;
+width: 232px;
+padding: 6px 0 7px 30px;
+background: url(/images/large_buttons.png) -2px -1143px no-repeat !important;
+text-decoration: none;
+}
+
+.most_button a:hover{
+background: url(/images/large_buttons.png) -2px -1177px no-repeat !important;
+}
+
 
 
 .main {

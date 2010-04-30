@@ -1,0 +1,51 @@
+<%= javascript_include_tag 'widgets/panel_generator' %>
+<div id="heading">
+  <h2><%= @page_title = 'Make a Financial Reform Widget' %></h2>  <p>This widget keeps you up-to-date with the major financial reform bills in Congress.</p>
+
+</div>
+<div class="padding">
+
+  <div id="customize_container">
+  		  <h2 class="preview_panel_title">Customize</h2>
+
+  <dl class="tool_form panel_status">
+   <dt><label for="path_select">Select a Size:</label></dt>
+   <dd>
+     <%= select("panel", "path_select", [['Large', 'financial_reform_panel'], ["Small", 'financial_reform_panel_sm']], {}, { :onChange => "setPanelPath(document.getElementById('panel_path_select').value, 'financial_reform');" } ) %>
+   </dd>
+
+  <%= hidden_field 'panel', 'path', { :value =>  "financial_reform_panel" } %>
+  <%= hidden_field 'panel', 'hostname', { :value => home_url } %>
+
+  </dl>
+
+  <h2 class="preview_panel_title clear">Embed</h2>
+
+  <div id="preview_panel_code">
+  Copy and paste this code into your webpage:<br>
+  <%= text_area 'panel', 'code', "cols" => 68, "rows" => 20 %>
+  </div>
+
+      <%= toggler("more_widgets", "<span>More Widgets</span>", "<span>Hide Extra Widgets</span>", "more_down", "more_up") %>
+   	<ul id="more_widgets" style="display: none">
+   		<li><a href="healthcare" class="healthcare">Healthcare Reform Widget</a></li>
+         <li><a href="financial_reform" class="financial">Financial Reform Widget</a></li>
+   		<li><a href="climate_change" class="climate">Climate Change Widget</a></li>				
+   	</ul>
+  </div>
+  
+  <div id="preview_container">
+  
+  <div id="preview_panel">
+  <h2 id="preview_title">Financial Reform Widget Preview</h2>
+    <iframe id="financial_reform_panel" name="oc_financial_reform_frame" width="350" scrolling="no" frameborder="0" style="border: 0px solid #999;" allowtransparency="true" hspace="0" vspace="0" marginheight="0" marginwidth="0"></iframe>
+  </div>
+
+
+
+  </div>
+
+  <!-- The following image forces the fields to update on the initial load of the page -->
+  <%= image_tag 'blank.gif', :class => 'noborder', :width => '0', :height => '0', :onLoad => 'updatePanelFields(\'financial_reform\');' %>
+  <br />
+</div>

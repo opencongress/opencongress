@@ -21,6 +21,11 @@ function setHealthCarePath(path) {
   updateHealthCareFields();
 }
 
+function setPanelPath(path, panelType) {
+  document.getElementById('panel_path').value = path;
+  updateFields(null, panelType);
+}
+
 function setIssueBillsIssueId(issueId) {
   document.getElementById('panel_issue_id').value = issueId;
   updateIssueBillsFields(); 
@@ -36,6 +41,10 @@ function updateBillStatusFields(changedField) {
 
 function updateHealthCareFields(changedField) {  
   updateFields(changedField, "healthcare");
+}
+
+function updatePanelFields(panelType) {
+  updateFields(null, panelType);
 }
 
 function updateIssueBillsFields(changedField) {  
@@ -126,6 +135,11 @@ function updateFields(changedField, panelType, generatorRefresh) {
                      document.getElementById('panel_state_abbrev').value : ''    ;
      var path = document.getElementById('panel_path') ?
                     document.getElementById('panel_path').value : 'healthcare_panel';
+    frameHeight = 630;
+  }
+  else if (panelType == 'climate_change' || panelType == 'financial_reform') {
+     var path = document.getElementById('panel_path') ?
+                    document.getElementById('panel_path').value : panelType + '_panel';
     frameHeight = 630;
   }
   else if (panelType == 'bill_status')
@@ -247,6 +261,11 @@ function updateFields(changedField, panelType, generatorRefresh) {
     userCode += "oc_path = \"#PATH\";\n";
     scriptName = "#HOSTNAMEjavascripts/widgets/healthcare.js";
   }
+  else if (panelType == 'climate_change' || panelType == 'financial_reform')
+  {
+    userCode += "oc_path = \"#PATH\";\n";
+    scriptName = "#HOSTNAMEjavascripts/widgets/" + panelType + ".js";
+  }
   else
   {
     userCode += "oc_num_items = \"#NUM_ITEMS\";\n" +
@@ -271,7 +290,7 @@ function updateFields(changedField, panelType, generatorRefresh) {
   } else if (panelType == 'issue_bills') {
     userCode = userCode.replace(/#ITEMTYPE/, item_type);
     userCode = userCode.replace(/#ISSUE_ID/, issue_id); 
-  } else if (panelType == 'healthcare') {
+  } else if (panelType == 'healthcare' || panelType == 'climate_change' || panelType == 'financial_reform') {
       userCode = userCode.replace(/#STATE_ABBREV/, state_abbrev);   
       userCode = userCode.replace(/#PATH/, path);
   } else if (panelType == 'watching') {

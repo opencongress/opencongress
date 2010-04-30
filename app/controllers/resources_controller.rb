@@ -236,41 +236,6 @@ class ResourcesController < ApplicationController
     item = klass.find_by_id(id)
     render :partial => 'shared/email_friend_form', :locals => { :item => item }, :layout => false
   end
-
-  def healthcare_panel
-    @house_bill_ident = "111-h3962"
-    @senate_bill_ident = "111-h3590"
-
-    if params[:state] && @state_name = State.for_abbrev(params[:state])
-      # Count number of users in this state tracking this bill
-      query = "my_state:(\"#{params[:state]}\")"
-      @house_user_count = User.count_by_solr(query, :facets => {:browse => ["public_tracking:true", "my_bills_tracked:#{@house_bill_ident}"]})
-      @senate_user_count = User.count_by_solr(query, :facets => {:browse => ["public_tracking:true", "my_bills_tracked:#{@senate_bill_ident}"]})
-    else
-      @house_bill = Bill.find_by_ident(@house_bill_ident)
-      @senate_bill = Bill.find_by_ident(@senate_bill_ident)
-
-      @house_user_count = @house_bill.blank? ? 0 : @house_bill.tracking_suggestions[0]
-      @senate_user_count = @senate_bill.blank? ? 0 : @senate_bill.tracking_suggestions[0]
-    end
-
-    @page_title = "Healthcare Widget"
-
-    render :layout => false
-  end
-  
-  def healthcare_panel_sm
-    healthcare_panel
-  end
-  
-  def climate_change_panel
-    @page_title = "Climate Change Widget"
-    render :layout => false
-  end
-
-  def climate_change_panel_sm
-    climate_change_panel
-  end
   
   def email_friend_send
     @success = false
@@ -306,8 +271,11 @@ class ResourcesController < ApplicationController
       subject = "OpenCongress: #{item.title}"
       url = "#{BASE_URL}bill/upcoming/#{item.id}"
       item_desc = "bill"
+    elsif object_type == 'Article'
+      subject = "OpenCongress: #{item.title}"
+      url = "#{BASE_URL}articles/view/#{item.to_param}"
     end
-    
+
     dest_emails = params[:email][:dest_emails]
     dest_emails = dest_emails.split("\n")
 
@@ -352,6 +320,53 @@ class ResourcesController < ApplicationController
     end
     render :layout => false
   end
+
+
+  def healthcare_panel
+    @house_bill_ident = "111-h3962"
+    @senate_bill_ident = "111-h3590"
+
+    if params[:state] && @state_name = State.for_abbrev(params[:state])
+      # Count number of users in this state tracking this bill
+      query = "my_state:(\"#{params[:state]}\")"
+      @house_user_count = User.count_by_solr(query, :facets => {:browse => ["public_tracking:true", "my_bills_tracked:#{@house_bill_ident}"]})
+      @senate_user_count = User.count_by_solr(query, :facets => {:browse => ["public_tracking:true", "my_bills_tracked:#{@senate_bill_ident}"]})
+    else
+      @house_bill = Bill.find_by_ident(@house_bill_ident)
+      @senate_bill = Bill.find_by_ident(@senate_bill_ident)
+
+      @house_user_count = @house_bill.blank? ? 0 : @house_bill.tracking_suggestions[0]
+      @senate_user_count = @senate_bill.blank? ? 0 : @senate_bill.tracking_suggestions[0]
+    end
+
+    @page_title = "Healthcare Widget"
+
+    render :layout => false
+  end
+  
+  def healthcare_panel_sm
+    healthcare_panel
+  end
+  
+  def climate_change_panel
+    @page_title = "Climate Change Widget"
+    render :layout => false
+  end
+
+  def climate_change_panel_sm
+    climate_change_panel
+  end
+ 
+ 
+  def financial_reform_panel
+    @page_title = "Financial Reform Widget"
+    render :layout => false
+  end
+
+  def financial_reform_panel_sm
+    financial_reform_panel
+  end
+
 
   def district_from_address
     @district = ZipcodeDistrict.from_address(params[:address])

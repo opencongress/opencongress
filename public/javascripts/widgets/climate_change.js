@@ -1,12 +1,9 @@
 var fHeight = 0;
-if (oc_path == "healthcare_panel") {
-    fHeight = 538;
+if (oc_path == "climate_change_panel") {
+    fHeight = 390;
     fWidth = 320;
-    if (typeof oc_state != "undefined") {
-        fHeight += 42;
-    }
-} else if (oc_path == "healthcare_panel_sm") {
-    fHeight = 373;
+} else if (oc_path == "climate_change_panel_sm") {
+    fHeight = 309;
     fWidth = 161;
 }
 if (window.navigator.userAgent.indexOf("MSIE")) {

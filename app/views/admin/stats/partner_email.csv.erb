@@ -1,0 +1,5 @@
+# OpenCongress Partner Email Signup Data
+Name,Email,Registration Date
+<% @users.each do |u| -%>
+<%= u.full_name %>,<%= u.email %>,<%= u.created_at %>
+<% end -%>

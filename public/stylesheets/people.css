@@ -112,6 +112,13 @@ background: url(/images/small_compare.png) right top no-repeat;
 .compare_select span{
 padding-right: 15px;
 }
+
+
+.show .compare_select{
+margin-top: -50px;
+}
+
+
 .votes_with em, .votes_least em{
 font-size: 11px;
 color: #999;
@@ -488,8 +495,8 @@ padding: 10px 0 4px;
   float:left;
   clear:left;
   padding-left:25px;
-  background: url(/images/sprites.png) -279px -93px no-repeat;
-   _background: url(/images/sprites.gif) -279px -93px no-repeat;
+  background: url(/images/sprites.png) -308px -93px no-repeat;
+   _background: url(/images/sprites.gif) -308px -93px no-repeat;
 margin-bottom: 6px;
 }                        
 #voting-similarities {

@@ -64,7 +64,7 @@ margin-right: 3px !important;
 background: url(/images/volume.png) 0 0 no-repeat !important;
    _background: url(/images/volume.gif) 0 0 no-repeat !important;
 height: 19px;
-margin-left: 18px !important;
+margin-left: 7px !important;
 }
 
 
@@ -113,7 +113,53 @@ margin-left: 5px;
 
 
 .vol_container.ui-corner-all.vol_container_top{
-margin-left: 25px;
+margin: -11px 0 0px 10px !important;
+border: 1px solid #000;
+border-bottom: 0 !important;
+-moz-border-radius: 3px;
+-moz-border-radius-bottomleft: 0;
+-moz-border-radius-bottomright: 0;
+background: #eee !important;
+width: 28px;
+padding-top: 5px;
+padding-bottom: 5px;
+}
+
+
+
+.vol_container.ui-corner-all.vol_container_top .ui-slider-handle{
+
+margin-left: 0px !important;
+margin-bottom: -9px !important;
+}
+
+.vol_container.ui-corner-all.vol_container_top .volume_bar{
+width: 10px !important;
+border: 1px solid #ccc;
+-moz-border-radius: 5px;
+
+}
+
+.vol_container.ui-corner-all.vol_container_top .volume_bar .ui-slider-range{
+-moz-border-radius: 4px;
+margin-bottom: -1px;
+background: #ddd;
+}
+
+
+.play_head .ui-slider-range{
+background: #aaa;
+-moz-border-radius: 4px;
+border: 0 !important;
+
+}
+
+
+.play_head .ui-slider-range.mv_buffer{
+background: #5d8bc6;
+-moz-border-radius: 4px;
+border: 0 !important;
+
 }
 
 
@@ -121,10 +167,12 @@ margin-left: 25px;
     background: 0 !important;
 height: 20px;
 border: 0 !important;
+
 }
 
 .ui-state-default.ui-corner-all.ui-icon_link.lButton .ui-icon-play{
     background: url(/images/small_play.png) 6px 1px no-repeat !important;
+
    _background: url(/images/small_play.gif) 6px 1px no-repeat !important;
 height: 20px;
 
@@ -504,7 +552,7 @@ margin-top: 1px !important;
 	background: #CCC !important;
 }
 
-.large_play_button {
+.ui-state-default.play-btn-large {
 	background: url(/images/play.png) center 0px no-repeat !important;
    _background: url(/images/play.gif) center 0px no-repeat !important;
     display:block !important;
@@ -536,7 +584,7 @@ background: 0 !important;
 
 
 
-.large_play_button:hover {
+.ui-state-default.play-btn-large:hover {
 background: url(/images/play.png) center -96px no-repeat !important;
    _background: url(/images/play.gif) center -96px no-repeat !important;
 
@@ -1013,6 +1061,7 @@ float: left !important;
 
 #bill.videos #content-main .videos{
 padding: 35px;
+background: #fff;
 }
 
 .video1,

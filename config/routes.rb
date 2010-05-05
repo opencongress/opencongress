@@ -105,6 +105,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.admin 'admin', :controller => 'admin/index'
   map.connect 'admin/stats/bills.:format', :controller => 'admin/stats', :action => 'bills'
+  map.connect 'admin/stats/partner_email.:format', :controller => 'admin/stats', :action => 'partner_email'
 
   map.with_options :controller => 'battle_royale' do |br|
     br.battle_royale 'battle_royale.:format',  :action => 'index'

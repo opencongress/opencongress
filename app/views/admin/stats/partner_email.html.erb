@@ -1,0 +1,23 @@
+<div class="padding" style="clear: both;">
+  <h2>Partner Email Signups</h2>
+  <p style="margin: 10px 0;"><a href="/admin/stats/partner_email.csv">All Data in CSV Format</a> (Right Click and "Save File..." Will take a minute to load.)</p>
+
+  <%= will_paginate @users %>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Email Address</th>
+      <th>Registration Date</th>
+    </tr>
+
+    <% @users.each do |u| %>
+      <tr>
+        <td><%= u.full_name %></td>
+        <td><%= u.email %></td>
+        <td><%= u.created_at %></td>
+      </tr>
+    <% end %>
+    
+  </table>
+  <%= will_paginate @users %>
+</div>

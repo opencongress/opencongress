@@ -1,4 +1,3 @@
-<% esc_sub_url = CGI.escape(subscribe_url) %>
 <li class="subscribe">
   <h4 class="subscribe_title"><%= message %></h4>
   <ul>  
@@ -7,23 +6,23 @@
     </li>
 
     <li class="yahoo">
-      <a href="http://add.my.yahoo.com/rss?url=<%= esc_sub_url %>">Yahoo</a>
+      <a href="http://add.my.yahoo.com/rss?url=<%=u subscribe_url %>">Yahoo</a>
     </li>
 
     <li class="google">
-      <a href="http://fusion.google.com/add?feedurl=<%= esc_sub_url %>">Google</a>
+      <a href="http://fusion.google.com/add?feedurl=<%=u subscribe_url %>">Google</a>
     </li>  
 
     <li class="bloglines">
-      <a href="http://www.bloglines.com/sub/<%= subscribe_url %>">Bloglines</a>
+      <a href="http://www.bloglines.com/sub/<%=u subscribe_url %>">Bloglines</a>
     </li>
 
     <li class="newsgator">
-      <a href="http://www.newsgator.com/ngs/subscriber/subext.aspx?url=<%= esc_sub_url %>">Newsgator</a>
+      <a href="http://www.newsgator.com/ngs/subscriber/subext.aspx?url=<%=u subscribe_url %>">Newsgator</a>
     </li>
 
     <li class="netvibes">
-      <a href="http://www.netvibes.com/subscribe.php?url=<%= esc_sub_url %>">Netvibes</a>
+      <a href="http://www.netvibes.com/subscribe.php?url=<%=u subscribe_url %>">Netvibes</a>
     </li>
   </ul>
 </li>

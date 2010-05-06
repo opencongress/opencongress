@@ -119,17 +119,18 @@ class AccountController < ApplicationController
       @senators, @reps = Person.find_current_congresspeople_by_zipcode(@user.zipcode, @user.zip_four)
       @user.representative_id = @reps.first.id if (@reps && @reps.length == 1)
     end  
-    @user.save!
 
-    # check for an invitation
-    if session[:invite]
-      Friend.create_confirmed_friendship(@user, session[:invite].inviter)
-      session[:invite] = nil
+    if @user.save
+      # check for an invitation
+      if session[:invite]
+        Friend.create_confirmed_friendship(@user, session[:invite].inviter)
+        session[:invite] = nil
+      end
+
+      redirect_to(:controller => 'account', :action => 'confirm', :login => @user.login)
+    else
+      render :action => 'signup'
     end
-
-    redirect_to(:controller => 'account', :action => 'confirm', :login => @user.login)
-  rescue ActiveRecord::RecordInvalid
-    render :action => 'signup'
   end
 
   def confirm
@@ -230,6 +231,7 @@ class AccountController < ApplicationController
     end
     redirect_back_or_default(user_profile_path(:login => current_user.login))
   end
+
   def mailing_list
    if params[:user][:mailing] && params[:user][:mailing] == "1"
      current_user.mailing = true
@@ -237,7 +239,7 @@ class AccountController < ApplicationController
    else
      current_user.mailing = false
      flash[:notice] = "Un-Subscribed from the Mailing List"
-   end 
+   end
    current_user.save!
    redirect_back_or_default(user_profile_path(:login => current_user.login))
   end

@@ -1,0 +1,41 @@
+<div title="Account signup" id="signupform" class="form">
+
+   <%= error_messages_for :user %>
+  
+		<label for="user_login">Choose a Username:</label>
+  		<%= f.text_field :login, :size => 30 %>
+  		<p class="small" style="padding: 0 0 10px 142px !important; margin: 0 !important;">(no spaces or special characters)</p>
+  		
+  		<label for="user_password">Choose a Password:</label>
+		<%= f.password_field :password, :size => 30 %>
+		
+		<label for="user_password_confirmation">Confirm Password</label>
+  		<%= f.password_field :password_confirmation, :size => 30 %>
+ 		
+		<label for="user_email">Email</label>
+  		<%= f.text_field :email, :size => 30 %>
+		
+  		<label>Zip Code</label>
+  		<%= f.text_field :zipcode, :size => 5 %>
+  		
+  		<p class="zip_tell">(required, to find your Members of Congress)</p>
+  		
+  		<div class="clear margintop floatleft behave">	<br/>
+			<%= f.check_box :mailing, :style => "margin-top:-6px;", :class => "tick" %>
+			<label class="send" for="user_mailling">Send me major updates about OpenCongress <em>(optional, about one email per month)</em></label>
+		</div>
+
+  		<div class="clear margintop floatleft behave">	<br/>
+			<%= f.check_box :partner_mailing, :class => "tick" %>
+			<label class="send" for="user_mailling">Join the Participatory Politics Foundation and Sunlight Foundation email lists<em>(optional, hear about our new projects)</em></label>
+		</div>
+
+ 	<div class="clear margintop floatleft behave"><%= f.check_box :accept_tos, :class => "tick" %>
+ 		<label class="toss" for "user_accept_tos" %>I agree to the <a href="/about/terms_of_service">Terms of Service</a> and <a href="/about/privacy_policy">Privacy Policy.</a></label>
+	</div>
+
+	<input type="image" value="Register" class="floatright margintop behave clear" src="/images/register.png" />
+
+	<div class="clear"><em>We will not share your email address with anyone for any reason.</em></div>
+
+</div>

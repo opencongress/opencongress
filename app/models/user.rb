@@ -15,15 +15,15 @@ class User < ActiveRecord::Base
 
   attr_accessor :password
 
-  validates_presence_of     :login, :email, :if => :not_openid?
+  validates_presence_of     :login, :email, :unless => :openid?
   validates_acceptance_of :accept_tos, :on => :create
   validates_presence_of     :password,                   :if => :password_required?
   validates_presence_of     :password_confirmation,      :if => :password_required?
   validates_length_of       :password, :within => 4..40, :if => :password_required?
   validates_confirmation_of :password,                   :if => :password_required?
-  validates_length_of       :login,    :within => 3..40, :if => :not_openid?
+  validates_length_of       :login,    :within => 3..40, :unless => :openid?
   validates_length_of       :zip_four, :within => 0..4, :allow_nil => true, :allow_blank => true
-  validates_length_of       :email,    :within => 3..100, :if => :not_openid?
+  validates_length_of       :email,    :within => 3..100, :unless => :openid?
   #validates_email_veracity_of :email
   validates_email_format_of :email, :message => "address invalid"
   validates_numericality_of :zipcode, :only_integer => true, :allow_nil => true, :message => "is not a valid 5 digit zipcode"
@@ -32,6 +32,15 @@ class User < ActiveRecord::Base
   validates_length_of :zip_four, :is => 4, :allow_nil => true, :message => "is not a valid 4 digit zipcode extension"
   validates_format_of :login, :with => /^\w+$/, :message => "can only contain letters and numbers (no spaces)."
   validates_uniqueness_of   :login, :email, :identity_url, :case_sensitive => false, :allow_nil => true
+
+  HUMANIZED_ATTRIBUTES = {
+    :email => "E-mail address",
+    :accept_tos => "Terms of service",
+    :zip_four => "ZIP code +4 extension",
+    :zipcode => "ZIP code",
+    :login => "Username",
+    :partner_mailing => "Partner mailing preference"
+  }
 
   before_create :make_activation_code
   after_create :make_feed_key
@@ -139,6 +148,9 @@ class User < ActiveRecord::Base
   has_many :notebook_items, :through => :political_notebook
   
 #  has_many :bill_comments
+  def self.human_attribute_name(attr)
+    HUMANIZED_ATTRIBUTES[attr.to_sym] || super
+  end
 
   def placeholder
     "placeholder"
@@ -781,11 +793,11 @@ class User < ActiveRecord::Base
    end
 
    def password_required?
-     not_openid? && ( crypted_password.blank? || !password.blank? )
+     !openid? && ( crypted_password.blank? || !password.blank? )
    end
 
-   def not_openid?
-    identity_url.blank?
+   def openid?
+    !identity_url.blank?
    end
    
    private

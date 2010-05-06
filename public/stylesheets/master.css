@@ -3942,7 +3942,7 @@ color: #999;
 
 }
 
-#signupform .clear #user_accept_tos, #user_mailing{
+#signupform .tick {
 float: left;
 margin: 8px 0 8px 0px !important;
 }

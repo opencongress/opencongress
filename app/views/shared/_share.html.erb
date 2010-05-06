@@ -1,4 +1,3 @@
-<% esc_url = CGI.escape(url) %>
 <script type='text/javascript'>
 $j().ready(function() {
 	$j('#email_friend').jqm({ajax:'@href', trigger:'a.email_trigger'});
@@ -9,13 +8,13 @@ $j().ready(function() {
 <ul class="share_icons">
 	
 	<li class="reddit">
-		<a href="http://reddit.com/submit?url=<%= esc_url %>&title=<%= title %>">Reddit</a>
+		<a href="http://reddit.com/submit?url=<%=u url %>&title=<%= title %>">Reddit</a>
 	</li>
 	<li class="digg">
-		<a href="http://digg.com/submit?phase=2&amp;url=<%= esc_url %>&title=<%= title %>">Digg</a>
+		<a href="http://digg.com/submit?phase=2&amp;url=<%=u url %>&title=<%= title %>">Digg</a>
 	</li>  
 	<li class="stumble">
-		<a href="http://www.stumbleupon.com/submit?url=<%= esc_url %>&title=<%= title %>">Stumbleupon</a>
+		<a href="http://www.stumbleupon.com/submit?url=<%=u url %>&title=<%= title %>">Stumbleupon</a>
 	</li>  
 	<li class="facebook">
 		<a href="http://www.facebook.com/share.php?u=<%= url %>&title=<%= title %>">Facebook</a>
@@ -38,15 +37,15 @@ $j().ready(function() {
 <div class="ie"><a href="#" class="jqmClose">Close</a></div>
  <ul class="more_share">
 	<li>
-		<a href="http://del.icio.us/post?url=<%= esc_url %>&amp;title=<%= title %>">
+		<a href="http://del.icio.us/post?url=<%=u url %>&amp;title=<%= title %>">
 			<img src="/images/share_icons/share-delicious.gif" alt="del.icio.us" /><span>Del.icio.us</span></a>
 	</li>
 	<li>
-		<a href="http://www.newsvine.com/_wine/save?popoff=0&amp;u=<%= esc_url %>&amp;h=<%= title %>"> 
+		<a href="http://www.newsvine.com/_wine/save?popoff=0&amp;u=<%=u url %>&amp;h=<%= title %>"> 
 			<img src="/images/share_icons/share-newsvine.gif" alt="Newsvine" /><span>Newsvine</span></a>
 	</li>
 	<li>
-		<a href="http://co.mments.com/track?url=<%= esc_url %>">
+		<a href="http://co.mments.com/track?url=<%=u url %>">
 			<img src="/images/share_icons/share-comments.gif" alt="co.mments" /><span>Co.mments</span></a>
 	</li>
 	</ul>

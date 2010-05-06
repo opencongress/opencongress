@@ -53,7 +53,6 @@ class Wiki < ActiveRecord::Base
       #puts a[0].old_text
       
       return doc.to_s
-    end
     rescue
       return nil
     end

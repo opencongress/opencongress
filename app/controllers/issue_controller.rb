@@ -4,7 +4,7 @@ class IssueController < ApplicationController
   skip_before_filter :store_location, :except => [:index, :alphabetical, :by_most_viewed, :by_bill_count, :top_twenty_bills, :show, :top_viewed_bills]
 
   def index
-      redirect_to :action => 'alphabetical', :id => 'A'
+    redirect_to :action => 'alphabetical', :id => 'A'
   end
 
   def alphabetical

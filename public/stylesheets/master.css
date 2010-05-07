@@ -3607,33 +3607,41 @@ _background: url('/images/cap.gif') 0px 0px no-repeat;
 
 }
 
+.mini_people_list, .mini_bills_list, .mini_issues_list, .mini_reps_list, .mini_sens_list{
+padding-top: 5px;
+}
+
+
 .mini_people_list li, .mini_bills_list li, .mini_issues_list li, .mini_reps_list li, .mini_sens_list li{
 padding-left: 20px;
+border-bottom: 1px solid #eee;
+position: relative;
+padding-top: 5px;
 }
 
 .mini_bills_list li{
-background: url('/images/tiny_bill.png') 0px 2px no-repeat;
-_background: url('/images/tiny_bill.gif') 0px 2px no-repeat;
+background: url('/images/tiny_bill.png') 0px 7px no-repeat;
+_background: url('/images/tiny_bill.gif') 0px 7px no-repeat;
 }
 
 .mini_reps_list li{
-background: url('/images/tiny_rep.png') 0px 2px no-repeat;
-_background: url('/images/tiny_rep.gif') 0px 2px no-repeat;
+background: url('/images/tiny_rep.png') 0px 7px no-repeat;
+_background: url('/images/tiny_rep.gif') 0px 7px no-repeat;
 }
 
 .mini_sens_list li{
-background: url('/images/tiny_sen.png') 0px 2px no-repeat;
-_background: url('/images/tiny_sen.gif') 0px 2px no-repeat;
+background: url('/images/tiny_sen.png') 0px 7px no-repeat;
+_background: url('/images/tiny_sen.gif') 0px 7px no-repeat;
 }
 
 .mini_issues_list li{
-background: url('/images/tiny_issue.png') 0px 2px no-repeat;
-_background: url('/images/tiny_issue.gif') 0px 2px no-repeat;
+background: url('/images/tiny_issue.png') 0px 7px no-repeat;
+_background: url('/images/tiny_issue.gif') 0px 7px no-repeat;
 }
 
 .mini_people_list li{
-background: url('/images/befriended.png') 0px 4px no-repeat;
-_background: url('/images/befriended.gif') 0px 4px no-repeat;
+background: url('/images/befriended.png') 0px 8px no-repeat;
+_background: url('/images/befriended.gif') 0px 8px no-repeat;
 }
 
 

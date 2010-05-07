@@ -78,10 +78,10 @@ end
   end
   
   def RollCall.latest_votes_for_unique_bills(num = 3)
-    RollCall.find_by_sql("SELECT * FROM roll_calls WHERE date IN 
-                          (SELECT max(date) AS roll_date FROM roll_calls
+    RollCall.find_by_sql("SELECT * FROM roll_calls WHERE id IN 
+                          (SELECT max(id) AS roll_id FROM roll_calls
                            WHERE bill_id IS NOT NULL
-                           GROUP BY bill_id ORDER BY roll_date DESC LIMIT #{num})
+                           GROUP BY bill_id ORDER BY roll_id DESC LIMIT #{num})
                           AND bill_id IS NOT NULL
                           ORDER BY date DESC;" )
   end

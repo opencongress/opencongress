@@ -111,7 +111,7 @@ background:  url('/images/bill_small_list.png') 0 bottom repeat-x;
 }
 
 .medium_bill_list li.bill a{
-background: url('/images/small_bill.png') 15px 15px no-repeat;
+background: #e7f9ff url('/images/small_bill.png') 15px 15px no-repeat;
 }
 
 

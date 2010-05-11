@@ -6,7 +6,7 @@ else
   puts "Running from #{$0}"
 end
 
-file = "#{CRP_DATA_PATH}/CRP_Categories.txt"
+file = "#{OPENSECRETS_DATA_PATH}/CRP_Categories.txt"
 IO.foreach(file) do |line|
   line.chomp!
   

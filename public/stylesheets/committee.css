@@ -15,14 +15,12 @@ clear: both;
 }
 
 #committee.show .inner{
-background: url(/images/sen-sort.png) left 317px repeat-x;
-   _background: url(/images/sen-sort.gif) left 317px repeat-x;
 float: left;
 width: 1002px;
 }
 
 #committee.index .inner{
-background: url(/images/sen-sort.png) left 325px repeat-x;
+background: url(/images/sen-sort.png) left 205px repeat-x;
    _background: url(/images/sen-sort.gif) left 325px repeat-x;
 float: left;
 width: 1002px;
@@ -36,6 +34,7 @@ border-bottom: 1px solid #ddd !important;
 background: url('/images/carousel_dark_bg.png') left bottom repeat-x;
    _background: url('/images/carousel_dark_bg.gif') left bottom repeat-x;
 /*min-height: 240px;*/
+height: 120px;
 }
 .inner .jcarousel-skin-bravo {
   height:130px;

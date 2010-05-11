@@ -1654,6 +1654,18 @@ padding: 3px 0;
 display: block;
 }
 
+
+#bill_list span.title{
+font-size: 13px;
+}
+
+
+#bill_list span{
+font-size: 11px;
+padding-right: 5px;
+}
+
+
 #bill.show .related_issues_list .views_count {
 float: right;
 }
@@ -1704,27 +1716,35 @@ font-weight: bold;
 .tracking_info a i {
   color:#5F5F5F;
 }
+
+
+
+
 .tracking_count {
-  float:right;
+top: 5px;
+line-height: 11px;
+position: absolute;
+right: 0;
 }
+
+
 .tracking_count a {
-  float:left;
-  color:#fff;       
-  padding-right:5px;
-  line-height:16px;
-  background:url("/images/bill/tracking_count.png") no-repeat right 0;
+padding:3px 3px 2px;
+color:#697c90;       
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+line-height: 11px;
+background: #f3f7fc;
+border: 1px solid #e8ecf1;
+font-size: 10px;
+text-decoration: none;
+float: left;
 }
 .tracking_count a:hover {
-  background:url("/images/bill/tracking_count.png") no-repeat right -16px;
+background: #fff;
 }
 .tracking_count span {
-  padding:1px 0 1px 5px;
-  background:url("/images/bill/tracking_count.png") no-repeat 0 0;  
-  text-decoration: underline;
-}
-.tracking_count a:hover span {
-  background:url("/images/bill/tracking_count.png") no-repeat 0 -16px;  
-  color:#222;
+
 }
 
 .carousel_title {

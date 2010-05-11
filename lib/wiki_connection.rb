@@ -73,7 +73,6 @@ class Wiki < ActiveRecord::Base
         
         html = html.gsub(/<a\s(.|\n)*?>/, '')
         html = html.gsub(/<\/a>/, '')
-        
       end
     rescue
       return nil

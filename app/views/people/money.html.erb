@@ -3,7 +3,7 @@
   <p>This is a list of the top 10 industries giving campaign contributions to <%= @person.popular_name %> in <%= CURRENT_OPENSECRETS_CYCLE %>, the most recent year for which we have campaign contribution data.</p>
   
   <table class="simple-table">
-    <tr><th>Interest Group</th><th>Individual</th><th>PAC</th><th>Total</th></tr>
+    <tr><th>Industry</th><th>Individual</th><th>PAC</th><th>Total</th></tr>
     <% @person.top_industries.each do |ig| %>
       <tr style="border-bottom: 1px dotted #000">
         <td width=400><%= ig.name %></td>

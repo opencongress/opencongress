@@ -58,6 +58,6 @@ people.each_with_index do |p, i|
       f.save
     end
   rescue
-    puts "Error getting fundraisers for #{@person.name}"
+    puts "Error getting fundraisers for #{p.name}"
   end
 end

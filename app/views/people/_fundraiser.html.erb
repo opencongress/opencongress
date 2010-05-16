@@ -1,6 +1,8 @@
 <div class="fundraiser">
   <strong>When:</strong> <%= fundraiser.start_time.strftime("%B %d, %Y") %><br />
-  <strong>What:</strong> <a href="http://politicalpartytime.org/party/<%= fundraiser.sunlight_id %>/"><%= fundraiser.entertainment_type %></a><br />
+  <% unless fundraiser.entertainment_type.blank? %>
+    <strong>What:</strong> <a href="http://politicalpartytime.org/party/<%= fundraiser.sunlight_id %>/"><%= fundraiser.entertainment_type %></a><br />
+  <% end %>
   <strong>Where:</strong> <%= fundraiser.venue %><br />
   <strong>Beneficiaries:</strong> <%= fundraiser.beneficiaries %><br />
   <% unless fundraiser.contributions_info.blank? %>

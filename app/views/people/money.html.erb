@@ -29,9 +29,15 @@
     <% end %>
   </table>
 
+  <h2 style="margin-top: 20px;">Fundraisers</h2>
+  <p>Following are the latest three fundraisers for <%= @person.popular_name %>.  See all fundraisers <%= link_to "here", :controller => 'people', :action => 'fundraisers', :id => @person %>.</p>
+  
+  <% @person.fundraisers.find(:all, :limit => 3).each do |f| %>
+    <%= render :partial => 'fundraiser', :object => f %>
+  <% end %>
+
   <div class="partner_logo">
   <%= link_to image_tag('partners/opensecrets.png'), "http://opensecrets.org" %>
   <p>Campaign contribution data provided by <%= link_to "OpenSecrets.org", "http://OpenSecrets.org" %>, the nonpartisan guide to money in politics. See more detailed info about <%= @person.popular_name %> <a href="http://www.opensecrets.org/politicians/summary.php?cycle=<%= CURRENT_OPENSECRETS_CYCLE %>&cid=<%= @person.osid %>">here</a>.</p>
   </div>
-  
 </div>

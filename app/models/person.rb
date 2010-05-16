@@ -55,6 +55,8 @@ class Person < ActiveRecord::Base
   
   has_one :wiki_link, :as => "wikiable"
 
+  has_many :fundraisers, :order => 'fundraisers.start_time DESC'
+  
   before_update :set_party
   
   set_primary_key :id #From Benjamin: Why would we need this?
@@ -1387,7 +1389,7 @@ class Person < ActiveRecord::Base
       INNER JOIN crp_interest_groups ON crp_industries.id=crp_interest_groups.crp_industry_id
       INNER JOIN crp_contrib_individual_to_candidate ON crp_interest_groups.osid=crp_contrib_individual_to_candidate.crp_interest_group_osid
       WHERE crp_contrib_individual_to_candidate.cycle=? AND crp_contrib_individual_to_candidate.recipient_osid=? AND
-            crp_contrib_individual_to_candidate.contrib_type IN ('11', '15 ', '15J', '22Y')
+            crp_contrib_individual_to_candidate.contrib_type IN ('10', '11', '15 ', '15', '15E', '15J', '22Y')
       GROUP BY crp_industries.id)
         top_ind_is ON crp_industries.id=top_ind_is.id
     LEFT JOIN

@@ -1,0 +1,7 @@
+<div class="padding">
+  <h2>Fundraisers for <%= @person.popular_name %></h2>
+
+  <% @fundraisers.each do |f| %>
+    <%= render :partial => 'fundraiser', :object => f %>
+  <% end %>
+</div>

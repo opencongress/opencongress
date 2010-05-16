@@ -274,6 +274,12 @@ class PeopleController < ApplicationController
    @igs = @person.top_interest_groups(25) 
  end
  
+ def fundraisers
+   @person = Person.find(params[:id])
+   @page_title = "Fundraisers for #{@person.name}"
+   @fundraisers = @person.fundraisers
+ end
+ 
  def wiki
 
     @include_wiki_styles = true

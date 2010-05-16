@@ -1111,3 +1111,9 @@ margin-top: 10px;
 .bio_summary {
   width: 560px;
 }
+
+.fundraiser {
+  width: 600px;
+  padding: 10px 0;
+  border-bottom: 1px dotted #000;
+}

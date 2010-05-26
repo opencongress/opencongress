@@ -73,7 +73,8 @@ host: localhost<br/>
 Now you can start the solr server and run the database migrations
 	
 	cd ..;rake solr:start
-	rake db:migrate
+	rake db:structure:load
+	rake db:seed
 
 ### D. Data
    

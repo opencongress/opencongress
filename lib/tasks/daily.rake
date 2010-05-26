@@ -340,6 +340,15 @@ namespace :update do
       throw e
     end
   end
+  
+  task :partytime_fundraisers => :environment do
+    begin
+      load 'bin/crp/partytime_fundraisers.rb'
+    rescue Exception => e
+      #Emailer.deliver_rake_error(e, "Error compiling voting similarities!")
+      throw e
+    end
+  end
 
   task :all => [:rsync, :photos, :people, :bills, :amendments, :roll_calls, :committee_reports, :committee_schedule, :open_secrets, :person_voting_similarities, :sponsored_bill_stats, :expire_cached_bill_fragments, :expire_cached_person_fragments]
   task :parse_all => [ :people, :bills, :amendments, :roll_calls, :committee_reports, :committee_schedule, :open_secrets]

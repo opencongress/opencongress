@@ -55,6 +55,8 @@ class Person < ActiveRecord::Base
   
   has_one :wiki_link, :as => "wikiable"
 
+  has_many :fundraisers, :order => 'fundraisers.start_time DESC'
+  
   before_update :set_party
   
   set_primary_key :id #From Benjamin: Why would we need this?
@@ -1360,13 +1362,48 @@ class Person < ActiveRecord::Base
     average_approval_from_state(self.state)    
   end
 
-  def top_interest_groups(num = 10)
-    CrpInterestGroup.find_by_sql(["SELECT * FROM crp_interest_groups INNER JOIN 
-    (SELECT crp_interest_group_osid, SUM(crp_contrib_individual_to_candidate.amount) as contrib_total 
-    FROM crp_contrib_individual_to_candidate
-    WHERE cycle='2008' AND recipient_osid='#{osid}' GROUP BY crp_interest_group_osid)
-     top_igs ON crp_interest_groups.osid=top_igs.crp_interest_group_osid
-     ORDER BY top_igs.contrib_total DESC LIMIT ?", num])
+  def top_interest_groups(num = 10, cycle = CURRENT_OPENSECRETS_CYCLE)
+    igs = CrpInterestGroup.find_by_sql(["SELECT crp_interest_groups.*, top_ind_igs.ind_contrib_total, top_pac_igs.pac_contrib_total, (top_ind_igs.ind_contrib_total + top_pac_igs.pac_contrib_total) AS contrib_total FROM crp_interest_groups
+    LEFT JOIN
+      (SELECT crp_interest_group_osid, SUM(crp_contrib_individual_to_candidate.amount)::integer as ind_contrib_total 
+      FROM crp_contrib_individual_to_candidate
+      WHERE cycle=? AND recipient_osid=? AND crp_contrib_individual_to_candidate.contrib_type IN ('11', '15 ', '15J', '22Y')
+      GROUP BY crp_interest_group_osid)
+        top_ind_igs ON crp_interest_groups.osid=top_ind_igs.crp_interest_group_osid
+    LEFT JOIN
+      (SELECT crp_interest_group_osid, SUM(crp_contrib_pac_to_candidate.amount)::integer as pac_contrib_total 
+      FROM crp_contrib_pac_to_candidate
+      WHERE cycle=? AND recipient_osid=?
+      GROUP BY crp_interest_group_osid)
+        top_pac_igs ON crp_interest_groups.osid=top_pac_igs.crp_interest_group_osid
+    ORDER BY contrib_total DESC", cycle, osid, cycle, osid])
+        
+    igs.each{ |g| g.contrib_total = g.ind_contrib_total.to_i + g.pac_contrib_total.to_i }.sort {|a,b| b.contrib_total <=> a.contrib_total }[0..10]
+  end
+  
+  def top_industries(num = 10, cycle = CURRENT_OPENSECRETS_CYCLE)
+    is = CrpIndustry.find_by_sql(["SELECT crp_industries.*, top_ind_is.ind_contrib_total, top_pac_is.pac_contrib_total, (top_ind_is.ind_contrib_total + top_pac_is.pac_contrib_total) AS contrib_total FROM crp_industries
+    LEFT JOIN
+      (SELECT crp_industries.id, SUM(crp_contrib_individual_to_candidate.amount) as ind_contrib_total 
+      FROM crp_industries
+      INNER JOIN crp_interest_groups ON crp_industries.id=crp_interest_groups.crp_industry_id
+      INNER JOIN crp_contrib_individual_to_candidate ON crp_interest_groups.osid=crp_contrib_individual_to_candidate.crp_interest_group_osid
+      WHERE crp_contrib_individual_to_candidate.cycle=? AND crp_contrib_individual_to_candidate.recipient_osid=? AND
+            crp_contrib_individual_to_candidate.contrib_type IN ('10', '11', '15 ', '15', '15E', '15J', '22Y')
+      GROUP BY crp_industries.id)
+        top_ind_is ON crp_industries.id=top_ind_is.id
+    LEFT JOIN
+      (SELECT crp_industries.id, SUM(crp_contrib_pac_to_candidate.amount) as pac_contrib_total 
+      FROM crp_industries
+      INNER JOIN crp_interest_groups ON crp_industries.id=crp_interest_groups.crp_industry_id
+      INNER JOIN crp_contrib_pac_to_candidate ON crp_interest_groups.osid=crp_contrib_pac_to_candidate.crp_interest_group_osid
+      WHERE crp_contrib_pac_to_candidate.cycle=? AND crp_contrib_pac_to_candidate.recipient_osid=?
+      GROUP BY crp_industries.id)
+        top_pac_is ON crp_industries.id=top_pac_is.id
+    ORDER BY contrib_total DESC", cycle, osid, cycle, osid])
+        
+    is.each{ |g| g.contrib_total = g.ind_contrib_total.to_i + g.pac_contrib_total.to_i }.sort {|a,b| b.contrib_total <=> a.contrib_total }[0..10]
+
   end
   
   def comments_from_state_count(state)

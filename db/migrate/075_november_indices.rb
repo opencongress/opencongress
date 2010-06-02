@@ -1,7 +1,7 @@
 class NovemberIndices < ActiveRecord::Migration
   def self.up
     #done manually
-    #remove_index :commentaries, :date
+    remove_index :commentaries, :date
 
     add_index :commentaries, [:date, :commentary_type]
     

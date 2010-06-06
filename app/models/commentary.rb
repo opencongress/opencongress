@@ -64,6 +64,15 @@ require 'htmlentities'
     end
   end
   
+  def make_bad
+    bc = BadCommentary.new(:url => self.url, :commentariable_id => self.commentariable_id, :commentariable_type => self.commentariable_type, :date => self.date)
+    bc.save
+    
+    self.commentariable.decrement!(self.is_news ? :news_article_count : :blog_article_count)
+    
+    self.destroy
+  end
+  
   def self.full_text_search(q, options = {})
     is_news = options[:commentary_type] == 'news' ? 't' : 'f'
     

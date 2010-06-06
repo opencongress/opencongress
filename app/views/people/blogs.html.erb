@@ -2,8 +2,7 @@
 <%= render :partial => 'nbtabs' %>
 <%= render :partial => 'shared/sort_commentary', 
                                 :locals => { :object_type => 'people', :object_id => @person.id } %>
-                                
-<!--<p><a href="/people/show/<%= @person.id %>" class="arrow-left"><b>Back to <%= @person.popular_name %>'s Profile</b></a></p>-->
+
 <% cache("#{@person.fragment_cache_key}_blog_#{@sort}_page_#{@page}") do %>
   <!-- cached: <%= "#{@person.fragment_cache_key}_blog_#{@sort}_page_#{@page}" %> // <%= Time.now %> -->
   <p><%= will_paginate @blogs, :params => { :sort => @sort }  %></p>

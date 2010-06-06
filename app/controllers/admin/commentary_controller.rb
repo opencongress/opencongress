@@ -133,7 +133,7 @@ class Admin::CommentaryController < Admin::IndexController
         c.destroy
         c.commentariable.decrement!(c.is_news ? :news_article_count : :blog_article_count)
         object = c.commentariable unless object
-        logger.info "%%%%%%%%%%%%%%%%%%% #{c_id}"
+        #logger.info "%%%%%%%%%%%%%%%%%%% #{c_id}"
       end
     end
 
@@ -162,4 +162,15 @@ class Admin::CommentaryController < Admin::IndexController
     end
 
   end
+  
+  def person_cleanup
+    @person = Person.find_by_id(params[:person_id])
+
+    deleted = @person.cleanup_commentaries
+    
+    flash[:notice] = "Commentaries cleaned up. #{deleted} articles deleted."
+      
+    redirect_to :controller => '/people', :action => 'show', :id => @person
+  end
+  
 end

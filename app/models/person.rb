@@ -1497,4 +1497,18 @@ class Person < ActiveRecord::Base
     self.title
   end
 
+  def cleanup_commentaries
+    deleted = 0
+    commentaries = blogs + news
+    
+    commentaries.each_with_index do |c, i|
+      #puts "Check commentary (#{i+1}/#{commentaries.size}): #{c.title} for #{self.name}"
+      unless (c.title =~ /#{self.state}/ || c.excerpt =~ /#{self.state}/ ||
+              c.title =~ /#{State.for_abbrev(self.state)}/i || c.excerpt =~ /#{State.for_abbrev(self.state)}/i)
+        c.make_bad
+        deleted += 1
+      end
+    end
+    deleted
+  end
 end

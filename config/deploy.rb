@@ -31,6 +31,7 @@ namespace :deploy do
   task :link_images do
     run "cp #{deploy_to}/#{shared_dir}/database.yml #{current_release}/config/database.yml"
     run "cp #{deploy_to}/#{shared_dir}/api_keys.yml #{current_release}/config/api_keys.yml"
+    run "cp #{deploy_to}/#{shared_dir}/newrelic.yml #{current_release}/config/newrelic.yml"
     run "cp #{deploy_to}/#{shared_dir}/facebooker.yml #{current_release}/config/facebooker.yml"
     run "ln -s #{deploy_to}/#{shared_dir}/states #{current_release}/public/images/states"
     run "ln -s #{deploy_to}/#{shared_dir}/user_images #{current_release}/public/images/users"

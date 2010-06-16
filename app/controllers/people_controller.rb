@@ -272,7 +272,7 @@ class PeopleController < ApplicationController
  
  def money
    @igs = @person.top_interest_groups(25)
-   @fundraisers = @person.fundraisers.find(:all, :limit => 3) 
+   @fundraisers = @person.fundraisers.find(:all) 
  end
  
  def fundraisers

@@ -73,7 +73,7 @@ Rails::Initializer.run do |config|
 
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
-  config.active_record.observers = :user_observer, :friend_observer
+  config.active_record.observers = :user_observer, :friend_observer, :mailing_list_observer
 
   # Disable delivery errors if you bad email addresses should just be ignored
   # config.action_mailer.raise_delivery_errors = false

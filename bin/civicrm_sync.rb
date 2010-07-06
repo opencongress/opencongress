@@ -47,7 +47,7 @@ end
 
 def get(query)
   # TODO: Use SSL for this.
-  Rails.logger.debug "Opening " + 'http://crm.ppolitics.org/sites/all/modules/civicrm/extern/rest.php?q=civicrm' + query + AUTH_PART
+  puts "Opening " + 'http://crm.ppolitics.org/sites/all/modules/civicrm/extern/rest.php?q=civicrm' + query + AUTH_PART
   doc = Hpricot(open('http://crm.ppolitics.org/sites/all/modules/civicrm/extern/rest.php?q=civicrm' + query + AUTH_PART))
 
   if !(doc/"is_error").empty? && (doc/"is_error").first.inner_html == "1"
@@ -74,13 +74,11 @@ end
 UserAudit.all(:conditions => ["created_at > ?", last_sync_at]).each do |a|
   doc = get("/contact/search&email=#{es(a.email_was? ? a[:email_was] : a.email)}")
 
-  contact_id = first_inner(doc, "contact_id")
-
   case a.action
   when 'subscribe', 'unsubscribe':
     # If someone is found:
     if contact_id = first_inner(doc, "contact_id")
-      Rails.logger.debug "Updating opt out for contact id ##{contact_id} (#{a.email})"
+      puts "Updating opt out for contact id ##{contact_id} (#{a.email})"
       doc = add_contact :contact_id => contact_id, :is_opt_out => (a.action == "subscribe" ? 0 : 1)
     else
       # Create a new contact
@@ -89,17 +87,17 @@ UserAudit.all(:conditions => ["created_at > ?", last_sync_at]).each do |a|
       if new_id = first_inner(c, "contact_id")
         add_to_group new_id
       else
-        Rails.logger.error "Error: No contact ID for new contact"
+        puts "Error: No contact ID for new contact"
       end
     end
   when 'update':
     # If contact found:
     if contact_id = first_inner(doc, "contact_id")
-      Rails.logger.debug "Updating CiviCRM contact ##{contact_id}"
+      puts "Updating CiviCRM contact ##{contact_id}"
       add_contact :contact_id => contact_id, :first_name => a.full_name, :email => a.email
     else
       # Create a new contact
-      Rails.logger.debug "Creating a new contact"
+      puts "Creating a new contact"
       c = add_contact :first_name => a.full_name, :email => a.email
       if new_id = first_inner(c, "contact_id")
         add_to_group new_id

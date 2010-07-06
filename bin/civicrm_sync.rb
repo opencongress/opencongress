@@ -37,7 +37,7 @@ if File.exists?(LAST_SYNC_FN)
 end
 
 def es(str)
-  str ? CGI.escape(str) : ''
+  str && str.instance_of?(String) ? CGI.escape(str) : str
 end
 
 def first_inner(doc, elem)

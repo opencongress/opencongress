@@ -67,7 +67,7 @@ def add_contact(ops = {})
   ops[:contact_type] = "Individual"
   ops.each { |l, r| uri = uri + "&#{l}=#{es(r)}"}
 
-  return get("/contact/add" + ops)
+  return get("/contact/add" + uri)
 end
 
 # The main loop.

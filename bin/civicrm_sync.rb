@@ -71,7 +71,7 @@ def add_contact(ops = {})
 end
 
 # The main loop.
-UserAudit.all(:conditions => ["created_at > ?", last_sync_at]).each do |a|
+UserAudit.all(:conditions => ["created_at >= ?", last_sync_at], :order => "created_at").each do |a|
   doc = get("/contact/search&email=#{es(a.email_was? ? a[:email_was] : a.email)}")
 
   case a.action

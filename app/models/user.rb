@@ -724,16 +724,6 @@ class User < ActiveRecord::Base
      @forgotten_password
    end
 
-   # bulk update the cache
-   def self.update_cached_districts_and_states
-     User.find(:all).each do |u|
-       u.update_attribute(:state_cache, u.my_state)
-       u.update_attribute(:district_cache, u.my_district)
-     end
-     User.solr_commit
-     User.solr_optimize
-   end
-   
    def comment_warn(comment, admin)
      self.user_warnings.create({:warning_message => "Comment Warning for Comment #{comment.id}", :warned_by => admin.id})
      if Rails.env.production?
@@ -802,8 +792,10 @@ class User < ActiveRecord::Base
    
    private
    def cache_district_and_state
-     self.district_cache = self.my_district
-     self.state_cache = self.my_state
+     if self.zipcode_changed? || self.zip_four_changed?
+       self.district_cache = self.my_district
+       self.state_cache = self.my_state
+     end
    end
 
 end

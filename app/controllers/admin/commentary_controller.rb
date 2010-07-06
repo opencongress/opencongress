@@ -169,7 +169,7 @@ class Admin::CommentaryController < Admin::IndexController
     deleted = @person.cleanup_commentaries
     
     flash[:notice] = "Commentaries cleaned up. #{deleted} articles deleted."
-      
+
     redirect_to :controller => '/people', :action => 'show', :id => @person
   end
   

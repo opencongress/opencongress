@@ -112,7 +112,7 @@ UserAudit.all(:conditions => ["created_at >= ?", last_sync_at], :order => "creat
         "email[1][location_type_id]" => 1,
         "address[1][location_type_id]" => 1,
         "address[1][postal_code]" => a.zipcode,
-        :custom_1 => a.district,
+        :custom_1 => a.district
       )
     else
       # Create a new contact
@@ -123,7 +123,7 @@ UserAudit.all(:conditions => ["created_at >= ?", last_sync_at], :order => "creat
         "email[1][location_type_id]" => 1,
         "address[1][location_type_id]" => 1,
         "address[1][postal_code]" => a.zipcode,
-        :custom_1 => a.district,
+        :custom_1 => a.district
       )
       if new_id = first_inner(c, "contact_id")
         add_to_group new_id

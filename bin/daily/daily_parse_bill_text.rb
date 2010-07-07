@@ -266,6 +266,6 @@ begin
     parse_from_file(bill, ENV['BILL_TEXT_VERSION'], ENV['PARSE_ONLY'])
   end
 rescue
-  puts "ERROR OUTSIDE OF MAIN LOOP! The error: #{$!}"
+  puts "ERROR! Couldn't parse bill text.  Skipping. The error: #{$!}"
 end
 

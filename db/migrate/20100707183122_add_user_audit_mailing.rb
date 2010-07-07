@@ -1,7 +1,7 @@
 class AddUserAuditMailing < ActiveRecord::Migration
   def self.up
     add_column :user_audits, :mailing, :boolean, :default => false, :null => false
-    execute "update user_audits a set mailing = (select mailing from users where id = a.user_id)"
+    # execute "update user_audits a set mailing = (select mailing from users where id = a.user_id)"
     remove_column :user_audits, :action
   end
 

@@ -65,61 +65,38 @@ end
 UserAudit.all(:conditions => ["processed = false"], :order => "created_at").each do |a|
   doc = get("/contact/search&email=#{es(a.email_was? ? a[:email_was] : a.email)}")
 
-  case a.action
-  when 'subscribe', 'unsubscribe':
-    # If someone is found:
-    if contact_id = first_inner(doc, "contact_id")
-      puts "Updating opt out for contact id ##{contact_id} (#{a.email})"
-      doc = add_contact(
-        :contact_id => contact_id,
-        :is_opt_out => (a.action == "subscribe" ? 0 : 1)
-      )
+  # If someone is found:
+  if contact_id = first_inner(doc, "contact_id")
+    puts "- Updating contact id ##{contact_id} (#{a.email})"
+    add_contact(
+      :contact_id => contact_id,
+      :first_name => a.full_name,
+      "email[1][email]" => a.email,
+      "email[1][location_type_id]" => 1,
+      "address[1][location_type_id]" => 1,
+      "address[1][postal_code]" => a.zipcode,
+      :custom_1 => a.district,
+      :is_opt_out => (a.mailing : 1 : 0)
+    )
+  elsif a.mailing
+    # If we're adding this person to the mailing list,
+    # create a new contact
+    puts "- Creating a new contact for #{a.full_name}"
+    c = add_contact(
+      :first_name => a.full_name,
+      "email[1][email]" => a.email,
+      "email[1][location_type_id]" => 1,
+      "address[1][location_type_id]" => 1,
+      "address[1][postal_code]" => a.zipcode,
+      :custom_1 => a.district
+    )
+    if new_id = first_inner(c, "contact_id")
+      add_to_group new_id
     else
-      # Create a new contact
-      puts "Going to create a new contact for #{a.full_name}"
-      c = add_contact(
-        :first_name => a.full_name,
-        "email[1][email]" => a.email,
-        "email[1][location_type_id]" => 1,
-        "address[1][location_type_id]" => 1,
-        "address[1][postal_code]" => a.zipcode,
-        :custom_1 => a.district,
-        :is_opt_out => (a.action == "subscribe" ? 0 : 1)
-      )
-      if new_id = first_inner(c, "contact_id")
-        add_to_group new_id
-      else
-        puts "Error: No contact ID for new contact"
-      end
+      puts "Error: No contact ID for new contact"
     end
-  when 'update':
-    # If contact found:
-    if contact_id = first_inner(doc, "contact_id")
-      puts "Updating CiviCRM contact ##{contact_id}"
-      add_contact(
-        :contact_id => contact_id,
-        :first_name => a.full_name,
-        "email[1][email]" => a.email,
-        "email[1][location_type_id]" => 1,
-        "address[1][location_type_id]" => 1,
-        "address[1][postal_code]" => a.zipcode,
-        :custom_1 => a.district
-      )
-    else
-      # Create a new contact
-      puts "Creating a new contact"
-      c = add_contact(
-        :first_name => a.full_name,
-        "email[1][email]" => a.email,
-        "email[1][location_type_id]" => 1,
-        "address[1][location_type_id]" => 1,
-        "address[1][postal_code]" => a.zipcode,
-        :custom_1 => a.district
-      )
-      if new_id = first_inner(c, "contact_id")
-        add_to_group new_id
-      end
-    end
+  else
+    puts "- Not adding civicrm user for #{a.email}: opt-out."
   end
 
   a.processed = true

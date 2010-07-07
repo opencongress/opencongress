@@ -52,7 +52,7 @@ def tree_walk(element, version, in_inline = false, in_removed = false)
 
       e.name = in_inline ? 'span' : 'div'
     when 'p'
-      e.name = 'span' if in_inline
+      #e.name = 'span' if in_inline
     when 'ul'
       e.name = 'span' if in_inline
     when 'h2','h3','h4'
@@ -266,6 +266,6 @@ begin
     parse_from_file(bill, ENV['BILL_TEXT_VERSION'], ENV['PARSE_ONLY'])
   end
 rescue
-  puts "ERROR OUTSIDE OF MAIN LOOP! The error: #{$!}"
+  puts "ERROR! Couldn't parse bill text.  Skipping. The error: #{$!}"
 end
 

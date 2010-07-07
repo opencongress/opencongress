@@ -76,7 +76,7 @@ UserAudit.all(:conditions => ["processed = false"], :order => "created_at").each
       "address[1][location_type_id]" => 1,
       "address[1][postal_code]" => a.zipcode,
       :custom_1 => a.district,
-      :is_opt_out => (a.mailing : 1 : 0)
+      :is_opt_out => (a.mailing ? 1 : 0)
     )
   elsif a.mailing
     # If we're adding this person to the mailing list,

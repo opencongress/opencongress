@@ -23,18 +23,10 @@ require 'iconv'
 require 'fileutils'
 require 'cgi'
 
-LAST_SYNC_FN = "/data/opencongress/civicrm-opencongress-last-sync-date.txt"
-#LAST_SYNC_FN = "civicrm-opencongress-last-sync-date.txt"
 AUTH_PART = "&key=#{API_KEYS['civicrm_system_key']}&api_key=#{API_KEYS['civicrm_user_key']}"
 
 # The group_id of OpenCongress in CiviCRM
 OC_CIVICRM_GROUP_ID = "4"
-
-# When did we last sync? Check in.
-last_sync_at = Time.at(0)
-if File.exists?(LAST_SYNC_FN)
-  last_sync_at = File.mtime(LAST_SYNC_FN)
-end
 
 def es(str)
   str && str.instance_of?(String) ? CGI.escape(str) : str
@@ -43,7 +35,6 @@ end
 def first_inner(doc, elem)
   (doc/elem).first && (doc/elem).first.inner_html
 end
-
 
 def get(query)
   # TODO: Use SSL for this.
@@ -71,7 +62,7 @@ def add_contact(ops = {})
 end
 
 # The main loop.
-UserAudit.all(:conditions => ["created_at >= ?", last_sync_at], :order => "created_at").each do |a|
+UserAudit.all(:conditions => ["processed = false"], :order => "created_at").each do |a|
   doc = get("/contact/search&email=#{es(a.email_was? ? a[:email_was] : a.email)}")
 
   case a.action
@@ -131,7 +122,6 @@ UserAudit.all(:conditions => ["created_at >= ?", last_sync_at], :order => "creat
     end
   end
 
+  a.processed = true
+  a.save
 end
-
-# We're done! Update the last sync date.
-FileUtils.touch(LAST_SYNC_FN)

@@ -19,7 +19,7 @@ class MailingListObserver < ActiveRecord::Observer
       if user.mailing_changed? || user.zipcode_changed? || user.email_changed? || user.activated_at_changed? || user.full_name_changed? || user.district_cache_changed?
         UserAudit.create(
           :user_id => user.id,
-          :action => user.mailing_changed? ? (user.mailing ? "subscribe" : "unsubscribe") : "update",
+          :mailing => user.mailing,
           :email => user.email,
           :email_was => user.email_changed? ? user.email_was : nil,
           :zipcode => user.zipcode,
@@ -35,7 +35,7 @@ class MailingListObserver < ActiveRecord::Observer
     if user.activated_at && user.enabled && user.mailing
       UserAudit.create(
         :user_id => user.id,
-        :action => "unsubscribe",
+        :mailing => false,
         :email => user.email
       )
     end

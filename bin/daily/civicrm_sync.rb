@@ -11,7 +11,7 @@
 # If a query returns duplicate results, we'll update only the first contact found.
 
 if __FILE__ == $0
-  require File.dirname(__FILE__) + '/../config/environment'
+  require File.dirname(__FILE__) + '/../../config/environment'
 end
 
 require 'uri'
@@ -76,6 +76,7 @@ UserAudit.all(:conditions => ["processed = false"], :order => "created_at").each
       "address[1][location_type_id]" => 1,
       "address[1][postal_code]" => a.zipcode,
       :custom_1 => a.district,
+      :external_identifier => a.user_id,
       :is_opt_out => (a.mailing ? 1 : 0)
     )
   elsif a.mailing
@@ -88,6 +89,7 @@ UserAudit.all(:conditions => ["processed = false"], :order => "created_at").each
       "email[1][location_type_id]" => 1,
       "address[1][location_type_id]" => 1,
       "address[1][postal_code]" => a.zipcode,
+      :external_identifier => a.user_id,
       :custom_1 => a.district
     )
     if new_id = first_inner(c, "contact_id")

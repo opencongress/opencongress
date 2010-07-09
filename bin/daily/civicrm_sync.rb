@@ -38,7 +38,7 @@ end
 
 def get(query)
   # TODO: Use SSL for this.
-  puts "Opening " + 'http://crm.ppolitics.org/sites/all/modules/civicrm/extern/rest.php?q=civicrm' + query + AUTH_PART
+  # puts "Opening " + query + AUTH_PART
   doc = Hpricot(open('http://crm.ppolitics.org/sites/all/modules/civicrm/extern/rest.php?q=civicrm' + query + AUTH_PART))
 
   if !(doc/"is_error").empty? && (doc/"is_error").first.inner_html == "1"

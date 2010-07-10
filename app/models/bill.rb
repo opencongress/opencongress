@@ -1011,11 +1011,11 @@ class Bill < ActiveRecord::Base
   end
   
   def originating_chamber_vote
-    actions.select { |a| (a.action_type == 'vote' and a.vote_type == 'vote') }.first
+    actions.select { |a| (a.action_type == 'vote' and a.vote_type == 'vote') }.last
   end
   
   def other_chamber_vote
-    actions.select { |a| (a.action_type == 'vote' and a.vote_type == 'vote2') }.first
+    actions.select { |a| (a.action_type == 'vote' and a.vote_type == 'vote2') }.last
   end
   
   def presented_to_president_action

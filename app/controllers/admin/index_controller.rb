@@ -7,8 +7,41 @@ class Admin::IndexController < ApplicationController
   end
   
   def session_list
-    @session = CongressSession.new
-    @sessions = CongressSession.find(:all, :conditions => ["date >= ?", 1.day.ago], :limit => 10)
+    
+    unless params[:houseDates].blank?
+      dates = params[:houseDates].split(/,/)
+
+      CongressSession.update_all("is_in_session='f'", "date >= '#{1.day.ago}' AND chamber = 'house'")
+      dates.each do |d|
+        date = Date.parse(d)
+        session = CongressSession.find(:first, :conditions => ["chamber='house' AND date = ?", date])
+        if session
+          session.is_in_session = true
+          session.save
+        else
+          CongressSession.create(:chamber => 'house', :date => date, :is_in_session => true)
+        end
+      end      
+    end
+    
+    unless params[:senateDates].blank?
+      dates = params[:senateDates].split(/,/)
+
+      CongressSession.update_all("is_in_session='f'", "date >= '#{1.day.ago}' AND chamber = 'senate'")
+      dates.each do |d|
+        date = Date.parse(d)
+        session = CongressSession.find(:first, :conditions => ["chamber='senate' AND date = ?", date])
+        if session
+          session.is_in_session = true
+          session.save
+        else
+          CongressSession.create(:chamber => 'senate', :date => date, :is_in_session => true)
+        end
+      end      
+    end
+
+    @house_sessions = CongressSession.find(:all, :conditions => ["date >= ? AND chamber='house' AND is_in_session='t'", 1.day.ago])
+    @senate_sessions = CongressSession.find(:all, :conditions => ["date >= ? AND chamber='senate' AND is_in_session='t'", 1.day.ago])
   end
   
   def session_toggle

@@ -204,17 +204,14 @@
       		<h3>Get Updates with Our E-mail List</h3>
       		<p>Stay updated about major site developments: new data, new features, and new ways of interacting with Congress. We will only send you important e-mails and we won't share your email address with anyone.</p>
 
-      		<form name="subscribeform" action="http://list.opencongress.org/?p=subscribe" method="post" onsubmit="return duplicateSubscribeEmail();">
-      			<p>
-      				<input type="text" name="email" size="20" class="email" />
-      				<input type="hidden" name="emailconfirm" value="" />
-      				<button type="submit" name="subscribe" class="med_button"><span>Subscribe</span></button>
-      				<input type="hidden" name="htmlemail" value="1" />
-      				<input type="hidden" name="list[6]" value="signup" />
-      				<input type="hidden" name="listname[6]" value="Open Congress" />
-      			</p>
-      		</form>
-		
+            <form action="http://crm.ppolitics.org/civicrm/mailing/subscribe" name="subscribeform" method="post">
+               <p><input name="email" type="text" size="20" id="email" />
+               <input name="mark_x_4" type="hidden" value="1" />
+               <input type="hidden" name="destination" value="http://www.opencongress.org/resources/subscribe_thanks" />
+               <input name="_qf_Subscribe_next" value="Subscribe" type="submit" />
+               </p>
+            </form>
+            
       		<br />
 
       		<h3>Contact Us</h3>

@@ -268,23 +268,19 @@ class BattleRoyaleController < ApplicationController
     objects = @results.collect{|p| p.id}
     object_type = @results.first.class.to_s
     if object_type == "Person"
-      
        @blog_count = {}
        Commentary.count(:id, :conditions => ["is_news = ? AND commentariable_type = 'Person' AND commentariable_id in (?) AND created_at > ?", false, objects, @range.seconds.ago], :group => "commentariable_id").each {|x| @blog_count[x[0]] = x[1]}
 #       logger.info @blog_count.to_yaml
        @news_count = {}
        Commentary.count(:id, :conditions => ["is_news = ? AND commentariable_type = 'Person' AND commentariable_id in (?) AND created_at > ?", true, objects, @range.seconds.ago], :group => "commentariable_id").each {|x| @news_count[x[0]] = x[1]}
 #       logger.info @news_count.to_yaml
-
    elsif object_type == "Bill"
-
        @blog_count = {}
        Commentary.count(:id, :conditions => ["is_news = ? AND commentariable_type = 'Bill' AND commentariable_id in (?) AND created_at > ?", false, objects, @range.seconds.ago], :group => "commentariable_id").each {|x| @blog_count[x[0]] = x[1]}
        logger.info @blog_count.to_yaml
        @news_count = {}
        Commentary.count(:id, :conditions => ["is_news = ? AND commentariable_type = 'Bill' AND commentariable_id in (?) AND created_at > ?", true, objects, @range.seconds.ago], :group => "commentariable_id").each {|x| @news_count[x[0]] = x[1]}
        logger.info @news_count.to_yaml
-
    else   
       @blog_count = {}
       @news_count = {}

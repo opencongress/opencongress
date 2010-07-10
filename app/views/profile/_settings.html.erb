@@ -22,6 +22,13 @@
 	<%= f.check_box :mailing, :onClick => "this.form.submit();" %>
 	<% end %>
 </p>
+
+<p><label>Join the PPF and Sunlight Foundation email lists?</label>   
+	<% form_for :user, nil, :url => {:controller => 'account', :action => 'partner_mailing_list', :id => current_user.id}, :html => {:style => "display:inline;"} do |f| %>
+	<%= f.check_box :partner_mailing, :onClick => "this.form.submit();" %>
+	<% end %>
+</p>
+
 <p><%= toggler('change_pass', 'Change Password', 'Close', 'arrow-blue settings') %></p>
 <div id="change_pass" style="display:none;">
 	<% form_for :user, nil, :url => {:controller => 'account', :action => 'change_pw', :id => current_user.id} do |f| %>

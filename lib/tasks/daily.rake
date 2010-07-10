@@ -13,6 +13,10 @@ namespace :update do
       throw e
     end
   end
+  
+  task :mailing_list => :environment do
+    load 'bin/daily/civicrm_sync.rb'
+  end
 
   task :photos => :environment do
     begin

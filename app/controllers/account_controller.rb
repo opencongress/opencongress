@@ -244,6 +244,19 @@ class AccountController < ApplicationController
    redirect_back_or_default(user_profile_path(:login => current_user.login))
   end
 
+  def partner_mailing_list
+   if params[:user][:partner_mailing] && params[:user][:partner_mailing] == "1"
+     current_user.partner_mailing = true
+     flash[:notice] = "Subscribed to the Mailing List"
+   else
+     current_user.partner_mailing = false
+     flash[:notice] = "Un-Subscribed from the Mailing List"
+   end
+   current_user.save!
+   redirect_back_or_default(user_profile_path(:login => current_user.login))
+  end
+
+
   def why
   end
 

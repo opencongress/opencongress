@@ -199,6 +199,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect 'tools/:action/:id', :controller => 'resources'
   map.tools 'tools', :controller => 'resources'
+  map.donate 'donate', :controller => 'about', :action => 'donate'
 
   # Temporary home for api URLS
   map.api 'api', :controller => 'api', :action => 'index'

@@ -850,4 +850,8 @@ EOT
   def has_originating_chamber_roll_call?(bill)
     bill and bill.originating_chamber_vote and bill.originating_chamber_vote.roll_call
   end
+
+  def has_other_chamber_roll_call?(bill)
+    bill and bill.other_chamber_vote and bill.other_chamber_vote.roll_call
+  end
 end

@@ -1,23 +1,46 @@
+<style type="text/css">
+@import "http://keith-wood.name/css/jquery.datepick.css";
+
+td,th {
+  padding: 0;
+}
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://keith-wood.name/js/jquery.datepick.js"></script>
+<script type="text/javascript">
+$(function() {
+//      $.datepick.setDefaults({useThemeRoller: true});
+  $('#houseDatepicker').datepick({multiSelect: 999, monthsToShow: [3, 1],
+       monthsToStep: 3, prevText: '<< Previous months', nextText: 'Next months >>', minDate: new Date()});
+  $('#senateDatepicker').datepick({multiSelect: 999, monthsToShow: [3, 1],
+      monthsToStep: 3, prevText: '<< Previous months', nextText: 'Next months >>', minDate: new Date()});
+
+  $('#houseDatepicker').datepick('setDate', ["<%= @house_sessions.collect{ |s| s.date.strftime('%m/%d/%Y') }.join('","') %>"]); 
+  $('#senateDatepicker').datepick('setDate', ["<%= @senate_sessions.collect{ |s| s.date.strftime('%m/%d/%Y') }.join('","') %>"]); 
+});
+
+function setInputs() {
+   $("#houseDateInput").val($('#houseDatepicker').datepick('getDate'));
+   $("#senateDateInput").val($('#senateDatepicker').datepick('getDate'));
+};
+
+</script>
 <div class="padding">
-  <h2>House and Senate Sessions</h2>
-  
-  <table>
-    <tr><th>Date</th><th>Chamber</th><th>In Session?</th><th>Action</th></tr>
-    <% @sessions.each do |s| %>
-      <tr>
-        <td><%= s.date.strftime("%B %d, %Y") %></td>
-        <td><%= s.chamber %></td>
-        <td><%= s.is_in_session? ? "Yes" : "No" %></td>
-        <td><%= link_to s.is_in_session? ? "NOT in session" : "IS in session", :action => 'session_toggle', :id => s %></td>
-      </tr>
-    <% end %>
-  </table>
-  <br/>
-  <h2>Add a session</h2>
-  <% form_for @session, :url => { :action => 'session_new' } do |f| %>
-    Date: <%= f.date_select :date %>
-    Chamber: <%= f.select :chamber, [['House', 'house'], ['Senate','senate']] %>
-    <%= f.submit "Add" %>
-  <% end %>
+<h1>Session Dates for Congress</h1>
+<div style="float: left; margin-right: 20px">
+  <h2>House dates</h2>
+  <div id="houseDatepicker"></div>
 </div>
+<div style="float: left;">
+  <h2>Senate dates</h2>
+  <div id="senateDatepicker"></div>
+</div>
+<form method=post>
+   <input type="hidden" name="houseDates" id="houseDateInput">
+   <input type="hidden" name="senateDates" id="senateDateInput">
+   <input type="submit" id="inlineDateSubmit" onClick="setInputs();">
+   <a href="#" onClick='alert("dates: " + $("#houseDatepicker").datepick("getDate")); return false'>Check</a>
+</form>
+</div>
+
       

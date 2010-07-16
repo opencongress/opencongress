@@ -637,7 +637,7 @@ class PeopleController < ApplicationController
       
       @tabs = [
         ["Overview",{:action => 'show', :id => @person}],
-        ["Bio","#{@wiki_url}"],
+        ["Wiki Bio","#{@wiki_url}"],
         ["Bills",{:action => 'bills', :id => @person}],
         ["Votes",{:action => 'voting_history', :id => @person}],
         ["Money Trail",{:action => 'money', :id => @person}],

@@ -29,13 +29,13 @@ end
 
 Given /^a newly created user is logged in as "(.*)"$/ do |login|
   visit "/register"
-  fill_in("Login", :with => login)
-  fill_in("Password", :with => 'generic')
+  fill_in("Choose a Username:", :with => login)
+  fill_in("Choose a Password:", :with => 'generic')
   fill_in("user[password_confirmation]", :with => 'generic')
   fill_in("user[email]", :with => "dshettler-#{login}@gmail.com")
   fill_in("user[zipcode]", :with => "01585")
   check("user[accept_tos]")
-  click_button("Signup")
+  click_button("Register")
   response.body.should =~ /Thank you for Signing Up/m
   user = User.find_by_login(login)
   code = user.activation_code

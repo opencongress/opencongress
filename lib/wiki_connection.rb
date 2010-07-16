@@ -34,16 +34,20 @@ class Wiki < ActiveRecord::Base
   end
   
   def self.wiki_link_for_bill(session, typenum)    
-    link = find_by_sql(["SELECT smw_title AS wiki_title FROM smw_ids AS sids
-                          INNER JOIN
-                            (SELECT s_id FROM smw_rels2 INNER JOIN smw_ids AS p ON p_id=p.smw_id INNER JOIN smw_ids AS o ON o_id=o.smw_id 
-                             WHERE p.smw_title='Congressnumber' AND o.smw_title=?)
-                            AS num_q ON num_q.s_id=sids.smw_id
-                          INNER JOIN
-                            (SELECT s_id FROM smw_rels2 INNER JOIN smw_ids AS p ON p_id=p.smw_id INNER JOIN smw_ids AS o ON o_id=o.smw_id 
-                             WHERE p.smw_title='Billnumber' AND o.smw_title=?)
-                            AS bill_q ON bill_q.s_id=sids.smw_id", session, typenum])
-    link.empty? ? nil : link.first.wiki_title
+    begin
+      link = find_by_sql(["SELECT smw_title AS wiki_title FROM smw_ids AS sids
+                            INNER JOIN
+                              (SELECT s_id FROM smw_rels2 INNER JOIN smw_ids AS p ON p_id=p.smw_id INNER JOIN smw_ids AS o ON o_id=o.smw_id 
+                               WHERE p.smw_title='Congressnumber' AND o.smw_title=?)
+                              AS num_q ON num_q.s_id=sids.smw_id
+                            INNER JOIN
+                              (SELECT s_id FROM smw_rels2 INNER JOIN smw_ids AS p ON p_id=p.smw_id INNER JOIN smw_ids AS o ON o_id=o.smw_id 
+                               WHERE p.smw_title='Billnumber' AND o.smw_title=?)
+                              AS bill_q ON bill_q.s_id=sids.smw_id", session, typenum])
+      link.empty? ? nil : link.first.wiki_title
+    rescue
+      return nil
+    end
   end
   
   def self.biography_text_for(member_name)

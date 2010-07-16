@@ -9,6 +9,12 @@ development:
 staging:
   url: http://localhost:8982/solr
 
+test:
+  url: http://localhost:8982/solr
+    
+cucumber:
+  url: http://localhost:8982/solr
+    
 production:
   url: http://10.13.219.6:8983/oc-solr-prod
 

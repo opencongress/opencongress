@@ -28,8 +28,8 @@ class AboutController < ApplicationController
     @readme = BlueCloth.new(Rails.root.join("README.markdown").read).to_html
   end
   
-  def developer_job
-    @page_title = "OpenCongress is looking for a Rails developer!"
+  def donate 
+    @page_title = "Help Keep OpenCongress Up And Running"
   end
 
   def beta_feedback

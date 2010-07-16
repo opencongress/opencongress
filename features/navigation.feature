@@ -12,4 +12,4 @@ All navigation should function properly
     Then I should see "All Legislation in Congress"
     
     When I go to the advanced search page
-    Then the "search-field-advanced" field should contain ""
+    Then the "Search" field should contain ""

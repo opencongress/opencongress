@@ -12,7 +12,11 @@
    	<form action="/search/result" id="search-form-advanced">
      	<p>
         <input name="q" id="search-field-advanced" type="text" value="" class="floatleft" />
-        <a href="#" class="med_button" onclick="$('search-form-advanced').submit(); return false;"><span>Search</span></a>
+        <label for="search-field-advanced">
+          <a href="#" class="med_button" onclick="$('search-form-advanced').submit(); return false;">
+            <span>Search</span>
+          </a>
+        </label>
      	</p>
   <% end %>
  	

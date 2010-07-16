@@ -28,6 +28,8 @@ module NavigationHelpers
       '/people/senators'
     when /the representatives page/
       '/people/representatives'
+    when /the advanced search page/
+      '/search' 
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

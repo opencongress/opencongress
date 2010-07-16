@@ -29,7 +29,7 @@ class AboutController < ApplicationController
   end
   
   def donate 
-    @page_title = "Help Keep OpenCongress Up And Running"
+    render :layout => 'donate'
   end
 
   def beta_feedback

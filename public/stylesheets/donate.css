@@ -1,0 +1,187 @@
+
+body{
+margin: 0;
+padding: 0;
+font-family: Arial, Helvetica, sans-serif;
+background: url(/images/donate/bg.gif);
+}
+
+a{
+outline: none;
+}
+
+
+.wrapper{
+margin: 0 auto;
+padding: 50px 70px 40px;
+width: 782px;
+background: url(/images/donate/top.png) center top no-repeat;
+position: relative;
+}
+
+.logo{
+padding: 0;
+background: url(/images/donate/logo.gif) no-repeat;
+padding-top: 60px;
+width: 240px;
+height: 0;
+overflow: hidden;
+margin: 0px auto 60px;
+}
+
+h1{
+margin: 0 0 0px;
+padding: 20px 0;
+color: #365c93;
+text-align: center;
+font-size: 28px;
+font-weight: normal;
+}
+
+
+
+h1 strong{
+font-weight: bold;
+
+}
+
+.content{
+position: absolute;
+width: 782px;
+left: 69px;
+top: 340px;
+padding: 0px 0px 11px;
+background: url(/images/donate/bottom.png) bottom left no-repeat;
+}
+
+.content_inner{
+background: url(/images/donate/content_bg.png) ;
+float: left;
+width: 782px;
+}
+
+
+
+.left{
+float: left;
+width: 380px;
+padding: 20px 40px;
+border-right: 1px solid #fff;
+line-height: 1.7em;
+font-size: 14px;
+color: #555;
+}
+
+.right{
+float: right;
+width: 320px;
+}
+
+.right h2{
+font-size: 18px;
+margin: 50px 0 0 40px;
+color: #365c93;
+}
+
+.right ul {
+margin: 10px 0 0 23px;
+}
+
+.right ul li{
+color: #365c93;
+font-size: 18px;
+list-style-image:url(/images/donate/blue_star.gif); 
+line-height: 2em;
+}
+
+
+.banner{
+position: absolute;
+left: 69px;
+height: 83px;
+width: 782px;
+background: url(/images/donate/banner_bg.gif) repeat-x;
+top: 257px;
+}
+
+
+.banner .left_cap{
+position: absolute;
+left: -28px;
+height: 83px;
+width: 28px;
+background: url(/images/donate/banner_caps.gif) repeat-x;
+}
+
+
+.banner .right_cap{
+position: absolute;
+right: -28px;
+height: 83px;
+width: 28px;
+background: url(/images/donate/banner_caps.gif) top right repeat-x;
+}
+
+
+.banner p{
+float: left;
+color: #fff;
+font-size: 18px;
+margin: 34px 38px;
+text-shadow: #a11513 0px -1px 0px;
+
+}
+
+
+
+.donate_now{
+float: right;
+padding-top: 49px;
+width: 227px;
+height: 0;
+overflow: hidden;
+margin: 19px 45px 0 0;
+background: url(/images/donate/donate.png) repeat-x;
+}
+
+
+.left .donate_now{
+float: left;
+
+}
+
+.donate_now:hover{
+background: url(/images/donate/donate.png) 0 -50px repeat-x;
+}
+
+.donate_now:active{
+background: url(/images/donate/donate.png) 0 -100px repeat-x;
+}
+
+.venn{
+height: 387px;
+width: 257px;
+margin-left: 33px;
+background: url(/images/donate/venn.gif);
+margin-top: 30px;
+}
+
+
+.ppf{
+width: 367px;
+height: 367px;
+margin: 1150px auto 50px;
+clear: both;
+background: url(/images/donate/ppf.png);
+}
+
+.classy{
+font-weight: bold;
+font-size: 19px;
+color: #365c93;
+}
+
+
+.classy span{
+color: #993739;
+}

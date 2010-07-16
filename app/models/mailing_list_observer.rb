@@ -36,6 +36,7 @@ class MailingListObserver < ActiveRecord::Observer
       UserAudit.create(
         :user_id => user.id,
         :action => "unsubscribe",
+
         :email => user.email
       )
     end

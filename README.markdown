@@ -12,7 +12,7 @@
 
 Start by installing all the packages required by OpenCongress.
 
-so for Ubuntu:
+For Ubuntu:
 
 	sudo apt-get install postgresql postgresql-client postgresql-contrib libpq-dev ruby1.8 ruby1.8-dev rubygems libopenssl-ruby imagemagick libmagick9-dev gcj-4.4-jre
 

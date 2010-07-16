@@ -13,4 +13,3 @@ All navigation should function properly
     
     When I go to the advanced search page
     Then the "search-field-advanced" field should contain ""
-    

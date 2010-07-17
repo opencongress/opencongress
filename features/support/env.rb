@@ -56,8 +56,13 @@ if defined?(ActiveRecord::Base)
 end
 
 
+Fixtures.create_fixtures("features/fixtures", "actions")
+Fixtures.create_fixtures("features/fixtures", "articles")
 Fixtures.create_fixtures("features/fixtures", "bills")
 Fixtures.create_fixtures("features/fixtures", "people")
-Fixtures.create_fixtures("features/fixtures", "actions")
+Fixtures.create_fixtures("features/fixtures", "taggings")
+Fixtures.create_fixtures("features/fixtures", "tags")
+Fixtures.create_fixtures("features/fixtures", "bills")
 Fixtures.create_fixtures("features/fixtures", "user_roles")
+Fixtures.create_fixtures("features/fixtures", "users")
 

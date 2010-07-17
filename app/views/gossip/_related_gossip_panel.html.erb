@@ -57,12 +57,14 @@
       <%= render :partial => 'articles/archives' %>
        
        
-       <h3>Blogroll</h3>            
-          <ul class="blogroll">
-            <%= @blogroll.article %>
-          </ul>
-        
-     <br />
+      <% if @blogroll %>
+        <h3>Blogroll</h3>            
+        <ul class="blogroll">
+          <%= @blogroll.article %>
+        </ul>
+      <% end %>
+      
+      <br />
 			<h3>See our Twitter List</h3> 
 			<a href="http://twitter.com/#/list/OpenCongress/congress-watchers">Congress Watchers</a>
       

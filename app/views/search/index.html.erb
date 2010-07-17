@@ -1,26 +1,9 @@
 <div id="heading">
-    <h2>Advanced Search</h2>
-   <p>For suggestions on how to optimize your search, please visit the <a href="/search/tips">Search Tips</a> page.</p>
+  <h2>Advanced Search</h2>
+  <p>For suggestions on how to optimize your search, please visit the <a href="/search/tips">Search Tips</a> page.</p>
 </div>
 
 
 <div class="clearfix padding">
-  <%= render :partial => 'big_search_form' %>
-
-<!--
-  <div class="col2">
-    <h3 class="search">Find Your Representatives</h3>
-    <form action="#" id="form-search-advanced2" method="get">
-      <p><label for="rep_find_zipcode">Enter a ZIP code: <strong>*</strong></label>
-      <input name="rep_find_zipcode" id="rep_find_zipcode" type="text" size="30" value="" class="txt" /><br />
-      <strong>*</strong> <em class="small">will give you senators</em></p>
-      <p><label for="rep_find_address">Enter an address: <strong>*</strong></label>
-      <input name="rep_find_address" id="rep_find_address" type="text" size="30" value="" class="txt" /><br />
-      <strong>*</strong> <em class="small">will give you senators and representatives</em></p>
-      <p><input type="image" name="btn_Search" src="images/b-search-white.gif" alt="Send" class="btn" /></p>
-    </form>
-  </div>
--->
+  <%= render :partial => 'big_search_form', :locals => { :show_form => true } %>
 </div>
-
-<!-- // clearfix -->

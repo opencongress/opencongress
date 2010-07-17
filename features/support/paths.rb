@@ -28,6 +28,10 @@ module NavigationHelpers
       '/people/senators'
     when /the representatives page/
       '/people/representatives'
+    when /the advanced search page/
+      '/search' 
+    when /the page for blog articles tagged with "([^"]*)"/
+      "/blog/#{CGI.escape($1)}"
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

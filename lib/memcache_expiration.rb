@@ -13,13 +13,13 @@ class MemcacheExpiration
   def show_stats
     connect unless connection_active?
     
-    return @connection.stats
+    return @connection.stats rescue nil
   end
 
   def show_one_frag(fragment)
     connect unless connection_active?
 
-    return @connection.get("views/#{fragment}", true)
+    return @connection.get("views/#{fragment}", true) rescue nil
   end
 
   def expire_frag(fragment)
@@ -53,20 +53,21 @@ class MemcacheExpiration
   end
 
   def connect
-    hostport = '10.13.219.6:11211' unless RAILS_ENV=="test"
-    hostport = 'localhost:11211' if RAILS_ENV=="test"
-    errorcount = 0
+    if RAILS_ENV=='production'
+      hostport = '10.13.219.6:11211' 
+      errorcount = 0
     
-    while errorcount < 5
-      begin
-        @connection = MemCache.new(hostport, :namespace => @namespace)
-        return if connection_active?
-      rescue
-        puts "Error connecting to memcache server.  Trying again..."
-        errorcount += 1
+      while errorcount < 5
+        begin
+          @connection = MemCache.new(hostport, :namespace => @namespace)
+          return if connection_active?
+        rescue
+          puts "Error connecting to memcache server.  Trying again..."
+          errorcount += 1
+        end
       end
-    end
     
-    raise "Could not connect to memcache server!!"
+      raise "Could not connect to memcache server!!"
+    end
   end
 end

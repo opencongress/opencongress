@@ -1,0 +1,19 @@
+--- 
+taggings_001: 
+  tagger_id: 
+  created_at: 2010-01-19 13:59:43.013291
+  tag_id: "3358"
+  id: "6698"
+  context: tags
+  taggable_id: "1466"
+  taggable_type: Article
+  tagger_type: 
+taggings_002: 
+  tagger_id: 
+  created_at: 2010-04-06 12:09:06.429627
+  tag_id: "3177"
+  id: "8925"
+  context: tags
+  taggable_id: "1791"
+  taggable_type: Article
+  tagger_type: 

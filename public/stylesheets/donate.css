@@ -61,7 +61,6 @@ width: 782px;
 }
 
 
-
 .left{
 float: left;
 width: 380px;
@@ -185,3 +184,274 @@ color: #365c93;
 .classy span{
 color: #993739;
 }
+
+
+blockquote{
+font-size: 14px;
+line-height: 1.5em;
+text-align: center;
+margin: 0;
+padding: 0 10px;
+width: 260px;
+}
+
+.att{
+font-size: 14px;
+font-weight: bold;
+display: block;
+text-align: center;
+margin-top: 20px;
+}
+
+/*------------------------------------------------------------------------
+--------------------------------------------------------------------------v
+--------------------------------------------------------------------------
+
+~ Scrollable
+
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+------------------------------------------------------------------------*/
+
+.scrollable img {
+	margin:30px;	
+}
+
+.scrollable img.hover {
+	background-color:#123;	
+}
+
+
+
+.user img{
+margin: 15px 15px 0;
+float: left;
+overflow: hidden;
+display: block;
+}
+
+
+
+.user blockquote{
+padding-top: 13px;
+font-size: 12px;
+}
+
+
+
+  
+/*
+	root element for the scrollable.
+	when scrolling occurs this element stays still.
+*/
+.scrollable {
+
+	/* required settings */
+	position:relative;
+	overflow:hidden;
+	width: 280px;
+	height:280px !important;
+margin-left: 20px;
+	/* custom decorations */
+	border-bottom:1px solid #fff;
+	background:url(/img/global/gradient/h300.png) repeat-x;
+}
+
+/*
+	root element for scrollable items. Must be absolutely positioned
+	and it should have a extremely large width to accomodate scrollable items.
+	it's enough that you set the width and height for the root element and
+	not for this element.
+*/
+.scrollable .items {
+	/* this cannot be too large */
+	width:20000em;
+	position:absolute;
+	clear:both;
+}
+
+.items div {
+	float:left;
+	width:280px !important;
+}
+
+/* single scrollable item */
+.scrollable img {
+
+}
+
+/* active item */
+.scrollable .active {
+	border:2px solid #000;
+	position:relative;
+	cursor:default;
+}
+
+
+
+
+
+.scrollable a{
+text-decoration: none;
+color: #333;
+display: block;
+height: 240px;
+-moz-border-radius: 6px;
+-webkit-border-radius: 6px;
+border-radius: 10px;
+text-align: center;
+margin: 20px 0
+}
+
+
+.scrollable a:hover{
+background: #fff;
+}
+
+
+
+.scrollable a img{
+border: 0;
+}
+
+
+
+.scrollable .pc a img{
+display: block;
+margin: 100px 80px;
+float: left;
+}
+
+
+
+
+.scrollable .meta a img{
+display: block;
+margin: 100px 70px;
+float: left;
+}
+
+
+
+
+
+
+
+
+/* this makes it possible to add next button beside scrollable */
+.scrollable {
+	float:left;	
+}
+
+/* prev, next, prevPage and nextPage buttons */
+a.browse {
+	background: #fae8e8;
+	display:block;
+	width:20px;
+	height:20px;
+	float:left;
+	margin: 0px 0px 0px !important;
+	cursor:pointer;
+	font-size:1px;
+padding: 0 !important;
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+border-radius: 10px;
+border: 0;
+}
+
+/* right */
+a.right 	{float: right; background: #fae8e8 url(/images/donate/arrows.gif) -24px 6px no-repeat;
+ margin-right: 0px;}
+a.right:hover 	{ background-position:-30px -30px; }
+a.right:active 	{ background-position:-60px -30px; } 
+
+
+/* left */
+a.left		{ background: #fae8e8 url(/images/donate/arrows.gif) 6px 6px no-repeat;} 
+a.left:hover  	{ background-position:-30px 0; }
+a.left:active  	{ background-position:-60px 0; }
+
+/* up and down */
+a.up, a.down		{ 
+	background:url(../img/scrollable/arrow/vert_large.png) no-repeat; 
+	float: none;
+	margin: 10px 50px;
+}
+
+/* up */
+a.up:hover  		{ background-position:-30px 0; }
+a.up:active  		{ background-position:-60px 0; }
+
+/* down */
+a.down 				{ background-position: 0 -30px; }
+a.down:hover  		{ background-position:-30px -30px; }
+a.down:active  	{ background-position:-60px -30px; } 
+
+
+/* disabled navigational button */
+a.disabled {
+	visibility:hidden !important;		
+} 	
+
+
+
+
+
+
+
+
+
+
+
+/* position and dimensions of the navigator */
+.navi {
+	width:200px;
+padding-top: 5px;
+margin-left: 40px;
+}
+
+
+/* items inside navigator */
+.navi a {
+	width:5px !important;
+	height:5px !important;
+	float:left;
+	margin:3px;
+	background: #fae8e8 !important;
+	display:block;
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+border-radius: 10px;
+	font-size:1px;
+}
+
+/* mouseover state */
+.navi a:hover {
+	background-position:0 -8px;      
+}
+
+/* active state (current page state) */
+.navi a.active {
+	background-position:0 -16px;     
+}
+
+
+.nov{
+	background: #d84343;
+	display:block;
+-moz-border-radius: 20px;
+-webkit-border-radius: 20px;
+border-radius: 20px;
+margin: 35px 35px 15px;
+padding: 5px;
+height: 20px;
+}
+
+.new a img{
+margin-top: 50px;
+margin-left: 18px;
+}
+
+
+

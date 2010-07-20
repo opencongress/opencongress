@@ -5,9 +5,9 @@
   
   <h1>Help Keep OpenCongress <strong>Up and Running</strong></h1>
   
-  <div class="banner"><p>Make a charitable donation</p><a class="donate_now" href="#">Donate Now</a><span class="left_cap"></span><span class="right_cap"></span></div>
+  <div class="banner"><p>Make a charitable donation</p><a class="donate_now" rel="#donate" href="#">Donate Now</a><span class="left_cap"></span><span class="right_cap"></span></div>
   
-  <div class="content">
+  <div id="content">
   <div class="content_inner">
     <div class="left">
   <p class="classy">If you believe in transparent government, <span>we need your donation now.</span></p>
@@ -15,6 +15,9 @@
 	  <p><strong>Now, for the first time ever, we're asking for your donation to keep OpenCongress up and running.</strong><br />We're the Participatory Politics Foundation, a small 501(c)3 non-profit organization working every day to provide this popular public resource. We're web-based, independent, and active in the open-source community.</p>
 	<p>As OpenCongress has grown, we've held it together with grants from our terrific founding supporter, the Sunlight Foundation, and a handful of micro-donations... but we've reached the limit of what we can do with our current resources. So today, in our first-ever OpenCongress fundraiser, we need your help:</p> 
       <a class="donate_now" href="#">Donate Now</a><br /><br /><br />
+
+    
+
 
 	<p>Want to show even more support? Become an OC Booster. It's our new group of supporters who give one dollar per day to boost our daily work on OpenCongress and our larger mission of open government for everyone.</p>
 
@@ -182,6 +185,13 @@ $(document).ready(function() {
 $("#chained").scrollable({circular: true, mousewheel: true}).navigator().autoscroll({
 	interval: 3000		
 });
+
+$("a[rel]").overlay({
+	effect: 'drop',
+	mask: '#789'
+});
+
+
 });
 </script>
 
@@ -204,6 +214,193 @@ $("#chained").scrollable({circular: true, mousewheel: true}).navigator().autoscr
 </div>
 
 <div class="ppf"></div>
+
+
+
+<div class="simple_overlay" id="donate">
+<form action="http://crm.ppolitics.org/civicrm/contribute/transact" method="post" name="Main" id="Main" enctype="multipart/form-data" >
+
+  <h2>Thank for your donation</h2>
+<p>Enter your email and donation then continue to the next secure page</p>
+
+  <div><input name="qfKey" type="hidden" value="809e327d3299174d27c5f91de66ee17e" />
+<input name="_qf_default" type="hidden" value="Main:upload" />
+<input name="MAX_FILE_SIZE" type="hidden" value="2097152" />
+</div>
+
+
+<script type="text/javascript">
+<!--
+// Putting these functions directly in template so they are available for standalone forms
+
+function useAmountOther() {
+    for( i=0; i < document.Main.elements.length; i++ ) {
+        element = document.Main.elements[i];
+        if ( element.type == 'radio' && element.name == 'amount' ) {
+            if (element.value == 'amount_other_radio' ) {
+                element.checked = true;
+            } else {
+                element.checked = false;
+            }
+        }
+    }
+}
+
+function clearAmountOther() {
+  if (document.Main.amount_other == null) return; // other_amt field not present; do nothing
+  document.Main.amount_other.value = "";
+}
+
+//-->
+</script>
+
+
+
+<div class="form-item">
+
+    
+		    <div class="section amount-section">
+			<div class="label"><label>  Contribution Amount
+   <span class="marker" title="This field is required.">*</span>
+</label></div>
+
+<div class="content">
+
+<input onclick="clearAmountOther();" value="313" type="radio" id="CIVICRM_QFID_313__20_00" name="amount" checked="checked" />
+<label for="CIVICRM_QFID_313__20_00">$ 20.00 </label><br /><input onclick="clearAmountOther();" value="314" type="radio" id="CIVICRM_QFID_314__50_00" name="amount" />
+<label for="CIVICRM_QFID_314__50_00">$ 50.00 </label><br /><input onclick="clearAmountOther();" value="315" type="radio" id="CIVICRM_QFID_315__100_0" name="amount" />
+<label for="CIVICRM_QFID_315__100_0">$ 100.00 </label><br /><input onclick="clearAmountOther();" value="316" type="radio" id="CIVICRM_QFID_316__200_0" name="amount" />
+<label for="CIVICRM_QFID_316__200_0">$ 200.00 </label><br />
+
+<input value="amount_other_radio" type="radio" id="CIVICRM_QFID_amount_other_radio_Other_A" name="amount" class="amount_radio" />
+<div class="amount"><span>$</span> <input size="10" maxlength="10" onfocus="useAmountOther();" name="amount_other" type="text" id="amount_other" class="form-text money" /></div>
+</div>
+
+			<div class="clear"></div> 
+	 
+
+	 
+	    </div>
+	 
+	 
+		    	    <div class="section email-5-section">
+	    	<div class="label"><label for="email-5">  Email Address
+   <span class="marker" title="This field is required.">*</span>
+
+</label></div>
+	    	<div class="content">
+	    		<input size="30" maxlength="60" name="email-5" type="text" id="email-5" class="form-text big required" />
+	    	</div>
+	    	<div class="clear"></div> 
+	    </div>
+	
+	
+    <div class="crm-group custom_pre_profile-group">
+    	  
+
+
+  <script type="text/javascript">
+   
+cj(document).ready(function(){ 
+	cj('#selector tr:even').addClass('odd-row ');
+	cj('#selector tr:odd ').addClass('even-row');
+});
+ 
+  </script>
+ 	
+  </div>
+
+     
+
+<div class="crm-group custom_post_profile-group">
+  
+      <div class="label">
+      <label for="custom_3">Note</label>
+      
+
+    <textarea rows="4" cols="60" name="custom_3" id="custom_3" class="form-textarea"></textarea>
+  
+  <div class="clear"></div>
+</div>
+
+<div class="messages help">
+
+<p><strong>The information you provide will NOT be shared with any third party organisations.</strong>
+
+Thank you for getting involved in our campaign!</p></div>
+
+ 
+  
+
+
+  <script type="text/javascript">
+   
+cj(document).ready(function(){ 
+	cj('#selector tr:even').addClass('odd-row ');
+	cj('#selector tr:odd ').addClass('even-row');
+});
+ 
+  </script>
+	</div>
+    <div id="crm-submit-buttons"><button class="form-submit default" name="_qf_Main_upload" value="Continue &gt;&gt;" type="submit"><span>Continue</span></button></div>
+
+  </div>
+
+
+</form>
+</div>
+
+
+
+
+
+
+
+<script>
+
+// create custom animation algorithm for jQuery called "drop" 
+$.easing.drop = function (x, t, b, c, d) {
+	return -c * (Math.sqrt(1 - (t/=d)*t) - 1) + b;
+};
+
+
+// loading animation
+$.tools.overlay.addEffect("drop", function(css, done) { 
+   
+   // use Overlay API to gain access to crucial elements
+   var conf = this.getConf(),
+       overlay = this.getOverlay();           
+   
+   // determine initial position for the overlay
+   if (conf.fixed)  {
+      css.position = 'fixed';
+   } else {
+      css.top += $(window).scrollTop();
+      css.left += $(window).scrollLeft();
+      css.position = 'absolute';
+   } 
+   
+   // position the overlay and show it
+   overlay.css(css).show();
+   
+   // begin animating with our custom easing
+   overlay.animate({ top: '+=55',  opacity: 1,  width: '+=20'}, 700, 'drop', done);
+   
+   /* closing animation */
+   }, function(done) {
+      this.getOverlay().animate({top:'-=55', opacity:0, width:'-=20'}, 300, 'drop', function() {
+         $(this).hide();
+         done.call();      
+      });
+   }
+);
+
+$("img[rel]").overlay({
+	effect: 'drop',
+	mask: '#789'
+});
+</script>
+
 
 
 

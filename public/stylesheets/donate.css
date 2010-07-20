@@ -45,7 +45,7 @@ font-weight: bold;
 
 }
 
-.content{
+#content{
 position: absolute;
 width: 782px;
 left: 69px;
@@ -360,17 +360,19 @@ border-radius: 10px;
 border: 0;
 }
 
+a.browse:hover {
+	background-color: #fff;
+}
+
 /* right */
 a.right 	{float: right; background: #fae8e8 url(/images/donate/arrows.gif) -24px 6px no-repeat;
  margin-right: 0px;}
-a.right:hover 	{ background-position:-30px -30px; }
-a.right:active 	{ background-position:-60px -30px; } 
+
 
 
 /* left */
 a.left		{ background: #fae8e8 url(/images/donate/arrows.gif) 6px 6px no-repeat;} 
-a.left:hover  	{ background-position:-30px 0; }
-a.left:active  	{ background-position:-60px 0; }
+
 
 /* up and down */
 a.up, a.down		{ 
@@ -453,5 +455,201 @@ margin-top: 50px;
 margin-left: 18px;
 }
 
+/* the overlayed element */
+.simple_overlay {
+	
+	/* must be initially hidden */
+	display:none;
+	-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+	/* place overlay on top of other elements */
+	z-index:10000;
+
+	/* styling */
+	background-color:#fff;
+  margin-left: -20px;
+	width:600px;	
+	height:360px;
+	
+	/* CSS3 styling for latest browsers */
+	-moz-box-shadow:0 0 90px 5px #000;
+	-webkit-box-shadow: 0 0 90px #000;	
+}
+
+/* close button positioned on upper right corner */
+.simple_overlay .close {
+	background: url(/images/donate/close.png) no-repeat;
+	position:absolute;
+	right:-15px;
+	top:-15px;
+	cursor:pointer;
+	height:27px;
+
+	width:27px;
+}
+
+.simple_overlay form{
+padding: 30px;
+font-size: 13px;
+}
+
+.simple_overlay h2{
+margin: 0 !important;
+font-size: 16px;
+}
+
+.simple_overlay p{
+margin: 3px 0 20px;
+font-size: 11px;
+}
+
+
+
+.simple_overlay label{
+font-size: 13px;
+font-weight: bold;
+margin-bottom: 7px;
+display: block;
+}
+
+
+.simple_overlay form .form-text{
+font-size: 12px;
+font-weight: bold;
+margin-bottom: 7px;
+display: block;
+border: 1px solid #666;
+padding: 7px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+}
+
+.simple_overlay form textarea{
+width: 340px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+border: 1px solid #666;
+}
+
+
+
+
+.amount-section{
+float: left;
+margin-right: 60px;
+font-size: 13px !important;
+font-weight: bold;
+}
+
+
+.amount-section .form-text{
+float: left;
+margin-right: 20px;
+width: 70px;
+font-family: Arial, Helvetica, sans-serif;
+clear: none;
+}
+
+
+
+.amount-section input{
+float: left;
+clear: both;
+margin: 10px 10px 0 0;
+padding: 4px !important;
+font-size: 13px !important;
+}
+
+
+.amount-section label{
+float: left;
+margin: 7px 10px 5px 0;
+padding-top: 1px;
+}
+
+
+.amount{
+float: left;
+}
+
+.amount_radio{
+margin-top: 8px;
+}
+
+
+
+.amount input{
+float: right !important;
+}
+
+
+
+.amount span{
+float: left !important;
+padding-top: 5px;
+padding-right: 4px;
+}
+
+
+.form-text.big.required{
+margin-bottom: 20px;
+}
+
+
+
+
+div.messages{
+font-size: 11px;
+padding-top: 30px;
+width: 400px;
+float: left;
+
+}
+button::-moz-focus-inner { border: 0; }
+
+
+div.messages p strong{
+margin-bottom: 5px;
+display: block;
+}
+
+
+
+.form-submit{
+float: right;
+margin-top: 25px;
+background: 0;
+border: 0;
+outline: 0 !important;
+-moz-outline: 0 !important;
+cursor: pointer;
+}
+
+.form-submit span{
+height: 0;
+display: block;
+overflow: hidden;
+padding-top: 40px;
+width: 126px;
+background: url(/images/donate/continue.png) no-repeat;
+}
+
+.form-submit:hover span{
+background: url(/images/donate/continue.png) 0 -43px no-repeat;
+}
+
+
+.form-submit:active span{
+background: url(/images/donate/continue.png) 0 -86px no-repeat;
+}
+
+
+.amount-section .label label{
+padding: 0 !important;
+margin: 0 0 5px;
+}
 
 

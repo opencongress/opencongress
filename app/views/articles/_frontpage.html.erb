@@ -13,7 +13,7 @@
 <% if most_recent = articles.delete_at(0) %>
   <h3 class="line2">
     <strong class="gossip"><%= link_to most_recent.title, article_url(most_recent) %></strong>
-    <span class="by">by <%= most_recent.user.full_name %>
+    <% if most_recent.user %><span class="by">by <%= most_recent.user.full_name %><% end %>
     <em class="date"><%= most_recent.formatted_date %></em></span>
   </h3>
 

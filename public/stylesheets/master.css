@@ -396,13 +396,19 @@ right: 0;
 }
 
 
-
-
 #search .floatleft{
 margin-right: 30px;
 width: 293px;
 }
 
+#search-field-advanced {
+background: url('/images/forms.png') 0px -124px no-repeat;
+_background: url('/images/forms.gif') 0px -124px no-repeat;
+padding: 7px 10px 7px 7px;
+border: none;
+margin: 20px 5px 12px 0;
+float: left;
+}
 
 #sessions,
 #search_in {
@@ -3898,7 +3904,7 @@ clear: both;
 
 }
 
-#user_login, #user_password, #user_password_confirmation, #user_email{
+#user_login, #user_password, #user_password_confirmation, #user_email {
 background: url('/images/forms.png') 0px -124px no-repeat;
 _background: url('/images/forms.gif') 0px -124px no-repeat;
 padding: 7px 10px 7px 7px;
@@ -3912,7 +3918,7 @@ margin-bottom: 12px;
 margin: 0;
 }
 
-#user_zipcode{
+#user_zipcode {
 background: url('/images/forms.png') 0px 0px no-repeat;
 _background: url('/images/forms.gif') 0px 0px no-repeat;
 padding: 7px;

@@ -56,9 +56,10 @@ Given /^an active user is logged in as "(.*)"$/ do |login|
     :password => 'generic',
     :password_confirmation => 'generic',
     :email => "dshettler-#{login}@gmail.com",
+    :zipcode => '90039',
     :enabled => true,
     :is_banned => false,
-    :accept_tos => true,
+    :accepted_tos => true,
     :accept_terms => true
   )
 

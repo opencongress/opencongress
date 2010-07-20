@@ -1,4 +1,5 @@
 <div id="money_trail">
+  <h2>Campaign Contributions</h2>
   
   <p>This is a list of the top 10 industries giving campaign contributions to <%= @person.popular_name %> in <%= CURRENT_OPENSECRETS_CYCLE %>, the most recent year for which we have campaign contribution data.</p>
   
@@ -29,19 +30,22 @@
     <% end %>
   </table>
   
-  <div class="partner_logo">
-  <%= link_to image_tag('partners/opensecrets.png'), "http://opensecrets.org" %>
-  <p>Campaign contribution data provided by <%= link_to "OpenSecrets.org", "http://OpenSecrets.org" %>, the nonpartisan guide to money in politics. See more detailed info about <%= @person.popular_name %> <a href="http://www.opensecrets.org/politicians/summary.php?cycle=<%= CURRENT_OPENSECRETS_CYCLE %>&cid=<%= @person.osid %>">here</a>.</p>
-  </div>
 
   <% unless @fundraisers.empty? %>
-    <h2 style="margin-top: 20px;">Fundraisers</h2>
+    <h2 style="margin-top: 30px;">Fundraisers</h2>
     <p>Below are the three latest fundraising events for <%= @person.popular_name %>.</p>
   
     <% @fundraisers[0..2].each do |f| %>
       <%= render :partial => 'fundraiser', :object => f %>
     <% end %>
     
-    <p>Info provided by <a href="http://politicalpartytime.org" target="_new">Political Party Time</a>. See all events (<%= @fundraisers.size %>) <%= link_to ">>", :controller => 'people', :action => 'fundraisers', :id => @person %></p>
+    <div class="fundraiser_more_button"><p><%= link_to "<span>See all events (#{@fundraisers.size})</span>", { :controller => 'people', :action => 'fundraisers', :id => @person }, :class => 'med_button' %></p></div>
+    
+    <div class="partner_logo">
+    <%= link_to image_tag('partners/opensecrets.png'), "http://opensecrets.org" %>
+    <p>Campaign contribution data provided by <%= link_to "OpenSecrets.org", "http://OpenSecrets.org" %>, the nonpartisan guide to money in politics. See more detailed info about <%= @person.popular_name %> <a href="http://www.opensecrets.org/politicians/summary.php?cycle=<%= CURRENT_OPENSECRETS_CYCLE %>&cid=<%= @person.osid %>">here</a>.</p>
+    </div>
+    
+    <div class="fundraiser_footer"><p>Fundraiser data provided by <a href="http://politicalpartytime.org" target="_new">Political Party Time</a>.</p></div>
   <% end %>
 </div>

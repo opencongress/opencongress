@@ -24,7 +24,7 @@ class MailingListObserver < ActiveRecord::Observer
           :email_was => user.email_changed? ? user.email_was : nil,
           :zipcode => user.zipcode,
           :full_name => user.full_name,
-          :district => user.district_cache.first
+          :district => user.district_cache ? user.district_cache.first : nil
         )
       end
 

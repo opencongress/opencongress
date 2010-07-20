@@ -300,7 +300,7 @@ class AccountController < ApplicationController
   end
   
   def check_wiki
-    if logged_in?
+    if logged_in? and (RAILS_ENV == 'production')
       begin
         require 'net/http'
         require 'uri'

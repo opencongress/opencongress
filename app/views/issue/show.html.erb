@@ -4,7 +4,7 @@
 
 <div class="padding">
 
-<a href="/bill/hot" class="med_button floatright clearnone"><span>View Hot Bills By Issues Area</span></a>
+<!-- ><div style="width: 180px;" class="floatright"> -->
 <div class="floatright clearnone">
   <form id="timeframe_select" action="" method="get">
   <select name="filter" onchange="submit();">
@@ -12,7 +12,9 @@
   </select>
   </form>
 </div>
-<a href="/issues" class="med_button floatleft clearnone"><span>Back to All Issues</span></a>
+<a href="/issues" class="med_button floatleft clearnone pushright"><span>Back to All Issues</span></a>
+<a href="/bill/hot" class="med_button floatleft clearnone"><span>View Hot Bills By Issues Area</span></a>
+
 
 <div style="float:right;">
   <% if @br_link %>
@@ -36,27 +38,40 @@
   <%= will_paginate @bills %>
 <% else %>
   <div class="padding">
-  <p class="behave">No bills at this time. The Congressional Research Service -- the official
-  non-partisan think tank for Congress -- has not tagged any bills in the
-  current 111th session of Congress with this issue area.</p>
+  
+    <% if params[:filter] && params[:filter] == 'enacted' %>
+      <p class="behave">No bills at this time. The Congressional Research Service -- the official
+      non-partisan think tank for Congress -- has not tagged any bills in the
+      current 111th session of Congress with this issue area that have become law.</p>  
+      
+      <p class="behave">The CRS tags bills in Congress with varying numbers of issue areas --
+      sometimes just a couple, sometimes dozens. There are over 4,000 individual
+      issue areas maintained by CRS, some of which are closely related -- for
+      example, "environmental health", "environmental justice", "environmental
+      law enforcement", etc.</p>  
+    <% else %>
+      <p class="behave">No bills at this time. The Congressional Research Service -- the official
+      non-partisan think tank for Congress -- has not tagged any bills in the
+      current 111th session of Congress with this issue area.</p>
 
-  <p class="behave">The CRS tags bills in Congress with varying numbers of issue areas --
-  sometimes just a couple, sometimes dozens. There are over 4,000 individual
-  issue areas maintained by CRS, some of which are closely related -- for
-  example, "environmental health", "environmental justice", "environmental
-  law enforcement", etc.</p>
+      <p class="behave">The CRS tags bills in Congress with varying numbers of issue areas --
+      sometimes just a couple, sometimes dozens. There are over 4,000 individual
+      issue areas maintained by CRS, some of which are closely related -- for
+      example, "environmental health", "environmental justice", "environmental
+      law enforcement", etc.</p>
 
-  <p class="behave">The CRS might yet tag bills with this issue area in the current session of
-  Congress, but the likelihood of this for any given issue cannot be
-  reliably predicted from the available data. In the future, we seek to work
-  with Congress and other invested parties in order to open up the CRS
-  process and help make their work more accessible in accordance with the <a
-  href="http://www.opengovdata.org/">8 Principles of Open Government
-  Data</a>.</p>
-
-  <p class="behave">To stay up to date with this issue area, sign up for updates using the
-  tools to the right: subscribe to RSS feeds, email alerts, or track this
-  topic and others on your free "My OpenCongress" profile.</p>
+      <p class="behave">The CRS might yet tag bills with this issue area in the current session of
+      Congress, but the likelihood of this for any given issue cannot be
+      reliably predicted from the available data. In the future, we seek to work
+      with Congress and other invested parties in order to open up the CRS
+      process and help make their work more accessible in accordance with the <a
+      href="http://www.opengovdata.org/">8 Principles of Open Government
+      Data</a>.</p>
+    <% end %>
+    
+    <p class="behave">To stay up to date with this issue area, sign up for updates using the
+    tools to the right: subscribe to RSS feeds, email alerts, or track this
+    topic and others on your free "My OpenCongress" profile.</p>
   </div>
 <% end %>
 <br /><br />

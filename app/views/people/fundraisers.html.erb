@@ -11,6 +11,8 @@
   <% @fundraisers.each do |f| %>
     <%= render :partial => 'fundraiser', :object => f %>
   <% end %>
+  
+  <% if @fundraisers.total_pages > 1 %><div class="padding"><%= will_paginate @fundraisers %></div><% end %>
 
   <p class="fundraiser_footer">Info provided by the free <a href="http://politicalpartytime.org/data/all/" target="_new">Political Party Time API</a></p>
 </div>

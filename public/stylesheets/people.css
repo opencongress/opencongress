@@ -203,7 +203,7 @@ background: url(/images/hot.png) center 14px no-repeat;
 background: url(/images/cooling.png) bottom center no-repeat;
    _background: url(/images/cooling.gif) bottom center no-repeat;
 }
-.senators #heading{
+.senators #heading, .fundraisers #heading {
 border-bottom: 1px solid #f3e8d6;
 height: 45px;
  background: url('/images/brown_bg.png');
@@ -1069,6 +1069,11 @@ text-align: left;
 width: 600px;
 margin-top: 10px;
 }
+
+#money_trail td{
+padding: 3px 0;
+}
+
 .uc-box {
   width:152px;
 }
@@ -1096,6 +1101,8 @@ margin-top: 10px;
 
 .partner_logo {
    margin-top: 2em;
+   padding-top: 20px;
+   clear: both;
 }
 
 .partner_logo p {
@@ -1113,7 +1120,16 @@ margin-top: 10px;
 }
 
 .fundraiser {
-  width: 600px;
-  padding: 10px 0;
+  width: 640px;
+  padding: 15px 0;
   border-bottom: 1px dotted #000;
+}
+
+.fundraiser_more_button {
+  margin: 15px 0 15px 0;
+}
+
+.fundraiser_footer {
+  padding-top: 15px;
+  clear: both;
 }

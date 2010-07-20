@@ -33,7 +33,7 @@ class CommentsController < ApplicationController
           if parent
             render :partial => "shared/comment_form_recursive", :locals => {:parent_id => parent.id, :object => object }
           else
-            render :partial => "shared/comments3", :locals => {:object => object}
+            render :partial => 'shared/comment_form2', :locals => {:parent_id => 0, :object => object, :master_container => nil, :redirect => true } 
           end
           return
         else
@@ -51,7 +51,7 @@ class CommentsController < ApplicationController
           if parent
             render :partial => "shared/comment_form_recursive", :locals => {:parent_id => parent.id, :object => object } 
           else
-            render :partial => "shared/comments3", :locals => {:object => object}
+            render :partial => 'shared/comment_form2', :locals => {:parent_id => 0, :object => object, :master_container => nil, :redirect => true } 
           end
           return
         else

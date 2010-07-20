@@ -1,9 +1,16 @@
-<div class="padding">
+<div id="heading">
   <h2>Fundraisers for <%= @person.popular_name %></h2>
+</div>
 
+<div class="padding">
+
+  <p class="behave">This is a list of fundraising events involving this member of Congress -- typically the most-recent events, and occasionally an upcoming one.</p>
+
+  <p class="behave">Info provided by <a href="http://politicalpartytime.org/" target="_new">Political Party Time</a>, a project of the Sunlight Foundation, which posts invitations they receive from reputable anonymous sources. These documents are made available as a public service in the interest of creating more transparency about the relationships between lobbyists and lawmakers.</p>
+  
   <% @fundraisers.each do |f| %>
     <%= render :partial => 'fundraiser', :object => f %>
   <% end %>
-  
-  <p>Info provided by <a href="http://politicalpartytime.org" target="_new">Political Party Time</a>.</p>
+
+  <p class="fundraiser_footer">Info provided by the free <a href="http://politicalpartytime.org/data/all/" target="_new">Political Party Time API</a></p>
 </div>

@@ -11,6 +11,12 @@ class ArticlesController < ApplicationController
       return list
     end
 
+    def show
+      view
+      return if params[:goto_comment]
+      render :action => 'view'
+    end
+    
     def list
       if params[:tag] && @tag = CGI.unescape(params[:tag])
         @articles = Article.find_tagged_with(@tag).paginate(:page => params[:page], :per_page => 15)
@@ -42,7 +48,8 @@ class ArticlesController < ApplicationController
 
     def view
       render :file => "/u/apps/opencongress/current/public/404.html", :layout => false, :status => 404 and return unless params[:id]
-
+      comment_redirect(params[:goto_comment]) and return if params[:goto_comment]
+      
       @article = Article.find(params[:id], :include => :user)
 
       render :file => "/u/apps/opencongress/current/public/404.html", :layout => false, :status => 404 and return unless @article

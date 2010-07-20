@@ -77,7 +77,7 @@ class Comment < ActiveRecord::Base
     elsif self.commentable_type == "Subject"
       return {:controller => 'issue', :action => 'comments', :id => specific_object.to_param, :comment_page => self.page}
     elsif self.commentable_type == "Article"
-      return {:controller => 'articles', :action => 'view', :id => specific_object.to_param}
+      return {:controller => 'articles', :action => 'view', :id => specific_object.to_param, :goto_comment => self.id}
     elsif self.commentable_type == "Committee"
       return {:controller => 'committees', :action => 'show', :id => specific_object.to_param}      
     elsif self.commentable_type == "BillTextNode"

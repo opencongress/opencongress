@@ -136,9 +136,21 @@ background: url(/images/donate/banner_caps.gif) top right repeat-x;
 float: left;
 color: #fff;
 font-size: 18px;
-margin: 34px 38px;
+margin: 33px 38px !important;
 text-shadow: #a11513 0px -1px 0px;
+padding-left: 45px;
+background: url(/images/donate/heart.gif) 0 1px no-repeat;
+}
 
+
+.banner span.big_arrow{
+margin-top: 0px;
+padding-left: 80px;
+float: left;
+margin-left: 20px;
+margin-top: 26px;
+height: 30px;
+background: url(/images/donate/big_arrow.gif) 0 1px repeat;
 }
 
 
@@ -480,8 +492,8 @@ height: 20px;
 }
 
 .new a img{
-margin-top: 50px;
-margin-left: 18px;
+margin-top: 130px;
+margin-left: 14px;
 }
 
 /* the overlayed element */

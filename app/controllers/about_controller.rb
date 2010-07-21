@@ -32,6 +32,10 @@ class AboutController < ApplicationController
     render :layout => 'donate'
   end
 
+  def donate_thanks
+    render :layout => 'donate'
+  end
+
   def beta_feedback
     @page_title = "Feedback"
   end

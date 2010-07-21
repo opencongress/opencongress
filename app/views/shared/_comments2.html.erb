@@ -56,17 +56,24 @@
 		<% end %>
 		<div id="comments_master" style="float:none;clear:left;">
 
-		<%= render :partial => 'shared/comments3', :locals => {:object => object, :master_container => nil} %>
+		<%= render :partial => 'shared/comments3', :locals => {:object => object, :master_container => 'comments_master'} %>
 
 		</div>
 	</div>
 
 </div>
 <% unless logged_in? %>
-<script type="text/javascript">
-$j().ready(function() {
-	$j('#login_rate').jqm({ajax:'@href', trigger: 'a.rate_trigger'});
-});
-</script>
-<div id="login_rate" class="jqmWindow"></div>
+  <script type="text/javascript">
+  $j().ready(function() {
+  	$j('#login_rate').jqm({ajax:'@href', trigger: 'a.rate_trigger'});
+  });
+  </script>
+  <div id="login_rate" class="jqmWindow"></div>
+<% end %>
+
+<% if params[:comment_id] %>
+   <% javascript_tag :defer => 'defer' do -%>
+    new Effect.ScrollTo('com<%= params[:comment_id] %>');
+    new Effect.Highlight('com<%= params[:comment_id] %>', {duration: 8} );
+  <% end -%>
 <% end %>

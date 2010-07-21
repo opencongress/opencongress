@@ -20,6 +20,36 @@ div.col2 {
     float: left;
 }
 
+div.staff div{
+float: left; 
+width: 240px;
+height: 560px;
+padding-right: 105px;
+}
+
+
+div.staff div img{
+margin-bottom: 20px;
+}
+
+div.staff div h3{
+margin: 0px;
+
+
+}
+
+div.staff div h5{
+margin: 0px 0 20px;
+font-style: italic;
+font-weight: normal;
+}
+
+
+div.staff div.last{
+padding-right: 0px;
+}
+
+
 ul.pointy li:before {
     content: "\00BB \0020";
 }

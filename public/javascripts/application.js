@@ -404,7 +404,7 @@ BillText = {
     Element.hide('show_comments_link_' + nid);
     Element.show('close_comments_link_' + nid);
     
-    new Ajax.Updater('bill_text_comments_' + nid, "/comments/bill_text_comments?version=" + version + "&nid=" + nid);
+    new Ajax.Updater('bill_text_comments_' + nid, "/comments/bill_text_comments?version=" + version + "&nid=" + nid, { evalScripts: true});
     
     Element.addClassName('bill_text_section_' + nid, 'selected');
   },

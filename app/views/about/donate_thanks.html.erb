@@ -12,7 +12,6 @@
     <div class="left">
       <p class="classy">If you believe in transparent government, <span>we need your donation now.</span></p>
       <p>OpenCongress is a non-profit project leading the fight for open and accountable government. Over the past three years, we've grown to become the most-visited government transparency website in the United States.</p>
-
 	  <p><strong>Now, for the first time ever, we're asking for your donation to keep OpenCongress up and running.</strong><br />We're the Participatory Politics Foundation, a small non-profit organization working every day to bring you the real story behind what's happening in Congress. We provide OpenCongress as an independent public resource, 100% free and open-source.</p>
 	<p>As OpenCongress has grown, we've held it together with grants from our terrific founding supporter, the Sunlight Foundation, and a few micro-donations... but we've reached the limit of what we can do. So today, we need your help:</p> 
       <a class="donate_now" href="#">Donate Now</a><br /><br /><br />
@@ -33,6 +32,11 @@ tweetmeme_style = 'compact';
 </div>
   </div>
 
+
+
+
+
+    
     <div class="right">
       <div class="venn"></div>
 
@@ -230,22 +234,143 @@ $("a[rel]").overlay({
 
 <div class="ppf"></div>
 
+
+
 <div class="simple_overlay" id="donate">
-<a href="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php?oc_action=donate&amp;pp=paypal&amp;amount=20&amp;groups=PPF+News:Supporters&amp;receipt=42">$20</a>
-<a href="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php?oc_action=donate&amp;pp=paypal&amp;amount=50&amp;groups=PPF+News:Supporters&amp;receipt=42">$50</a>
-<a href="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php?oc_action=donate&amp;pp=paypal&amp;amount=20&amp;groups=PPF+News:Supporters&amp;receipt=42">$100</a>
-<a href="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php?oc_action=donate&amp;pp=paypal&amp;amount=20&amp;groups=PPF+News:Supporters&amp;receipt=42">$200</a>
+<form action="http://crm.ppolitics.org/civicrm/contribute/transact" method="post" name="Main" id="Main" enctype="multipart/form-data" >
 
-<form action="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php">
-   <input type="hidden" name="oc_action" value="donate">
-   <input type="hidden" name="pp" value="paypal">
-   <input type="hidden" name="groups" value="PPF News:Supporters">
-   <input type="hidden" name="receipt" value="42">
-   <label for="donate_amount">$</label><input type="text" name="amount" id="donate_amount">
-   <input type="submit" value="Donate">
-</form>
 
+
+  <div><input name="qfKey" type="hidden" value="809e327d3299174d27c5f91de66ee17e" />
+<input name="_qf_default" type="hidden" value="Main:upload" />
+<input name="MAX_FILE_SIZE" type="hidden" value="2097152" />
 </div>
+
+
+<script type="text/javascript">
+<!--
+// Putting these functions directly in template so they are available for standalone forms
+
+function useAmountOther() {
+    for( i=0; i < document.Main.elements.length; i++ ) {
+        element = document.Main.elements[i];
+        if ( element.type == 'radio' && element.name == 'amount' ) {
+            if (element.value == 'amount_other_radio' ) {
+                element.checked = true;
+            } else {
+                element.checked = false;
+            }
+        }
+    }
+}
+
+function clearAmountOther() {
+  if (document.Main.amount_other == null) return; // other_amt field not present; do nothing
+  document.Main.amount_other.value = "";
+}
+
+//-->
+</script>
+
+
+
+<div class="form-item">
+
+    
+		    <div class="section amount-section">
+			<div class="label"><label>  Contribution Amount
+   <span class="marker" title="This field is required.">*</span>
+</label></div>
+
+<div class="content">
+
+<input onclick="clearAmountOther();" value="313" type="radio" id="CIVICRM_QFID_313__20_00" name="amount" checked="checked" />
+<label for="CIVICRM_QFID_313__20_00">$ 20.00 </label><br /><input onclick="clearAmountOther();" value="314" type="radio" id="CIVICRM_QFID_314__50_00" name="amount" />
+<label for="CIVICRM_QFID_314__50_00">$ 50.00 </label><br /><input onclick="clearAmountOther();" value="315" type="radio" id="CIVICRM_QFID_315__100_0" name="amount" />
+<label for="CIVICRM_QFID_315__100_0">$ 100.00 </label><br /><input onclick="clearAmountOther();" value="316" type="radio" id="CIVICRM_QFID_316__200_0" name="amount" />
+<label for="CIVICRM_QFID_316__200_0">$ 200.00 </label><br />
+
+<input value="amount_other_radio" type="radio" id="CIVICRM_QFID_amount_other_radio_Other_A" name="amount" class="amount_radio" />
+<div class="amount"><span>$</span> <input size="10" maxlength="10" onfocus="useAmountOther();" name="amount_other" type="text" id="amount_other" class="form-text money" /></div>
+</div>
+
+			<div class="clear"></div> 
+	 
+
+	 
+	    </div>
+	 
+	 
+		    	    <div class="section email-5-section">
+	    	<div class="label"><label for="email-5">  Email Address
+   <span class="marker" title="This field is required.">*</span>
+
+</label></div>
+	    	<div class="content">
+	    		<input size="30" maxlength="60" name="email-5" type="text" id="email-5" class="form-text big required" />
+	    	</div>
+	    	<div class="clear"></div> 
+	    </div>
+	
+	
+    <div class="crm-group custom_pre_profile-group">
+    	  
+
+
+  <script type="text/javascript">
+   
+cj(document).ready(function(){ 
+	cj('#selector tr:even').addClass('odd-row ');
+	cj('#selector tr:odd ').addClass('even-row');
+});
+ 
+  </script>
+ 	
+  </div>
+
+     
+
+<div class="crm-group custom_post_profile-group">
+  
+      <div class="label">
+      <label for="custom_3">Send us a Note! (Optional, just for fun.)</label>
+      
+
+    <textarea rows="4" cols="60" name="custom_3" id="custom_3" class="form-textarea"></textarea>
+  
+  <div class="clear"></div>
+</div>
+
+<div class="messages help">
+
+<p><strong>The information you provide will not be shared with anyone else.</strong>
+
+
+ 
+  
+
+
+  <script type="text/javascript">
+   
+cj(document).ready(function(){ 
+	cj('#selector tr:even').addClass('odd-row ');
+	cj('#selector tr:odd ').addClass('even-row');
+});
+ 
+  </script>
+	</div>
+    <div id="crm-submit-buttons"><button class="form-submit default" name="_qf_Main_upload" value="Continue &gt;&gt;" type="submit"><span>Continue</span></button></div>
+
+  </div>
+
+
+</form>
+</div>
+
+
+
+
+
 
 
 <script>
@@ -300,3 +425,4 @@ $("img[rel]").overlay({
 </body>
 
 </html>
+

@@ -65,10 +65,8 @@ class ApplicationController < ActionController::Base
 
   def comment_redirect(comment_id)
     comment = Comment.find_by_id(comment_id)
-    # logger.info "COMMENT_ID:#{comment_id}"
-    # logger.info "PAGE: #{comment.page}"
     if comment.commentable_type == "Article"
-      redirect_to comment.commentable_link.merge(:comment_page => comment.page)
+      redirect_to comment.commentable_link.merge(:action => 'view', :comment_page => comment.page, :comment_id => comment_id)
     else
       redirect_to comment.commentable_link.merge(:action => 'comments', :comment_page => comment.page, :comment_id => comment_id)
     end

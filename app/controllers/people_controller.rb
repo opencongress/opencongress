@@ -278,7 +278,7 @@ class PeopleController < ApplicationController
  def fundraisers
    @person = Person.find(params[:id])
    @page_title = "Fundraisers for #{@person.name}"
-   @fundraisers = @person.fundraisers
+   @fundraisers = @person.fundraisers.paginate :page => params[:page]
  end
  
  def wiki

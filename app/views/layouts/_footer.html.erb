@@ -6,13 +6,14 @@
         		<div class="footlist first">
         			<b>OpenCongress</b>
         				<ul>
-          				<li><%= link_to 'Home', :controller => 'index' %></li>
           				<li><a href="/search">Search</a></li>
 			            <li><%= link_to 'About OpenCongress', { :controller => 'about' }, 
                                       { :title => "Find out more about who and what is Open Congress" } %></li>
                   <li><%= link_to 'Help FAQ', { :controller => 'about'}, 
                                       { :title => "" } %></li>
 									<li><%= link_to 'RSS Feeds', :controller => 'about', :action => 'rss' %></li>																			
+									<li><%= link_to 'Our Staff', :controller => 'about', :action => 'staff' %></li>																			
+
 									<li><a href="/contact/">Contact Us</a></li>
         				</ul>
         		</div>

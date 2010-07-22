@@ -230,7 +230,7 @@ EOT
 
   def maplight_link(bill = nil)
     if bill
-      '<div class="maplight"><a href="http://maplight.org">Campaign contribution data for bills provided by <img src="/images/maplight-trans.png" alt="Maplight.org" /></a></div>'
+      '<div class="maplight"><a href="http://maplight.org">Data on bill support and opposition provided by <img src="/images/maplight-trans.png" alt="Maplight.org" /></a></div>'
     else
       '<h3>For more info about the campaign contributions behind the bills in Congress, visit <a class="arrow" target="_blank" href="http://maplight.org"><img class="noborder maplight" src="/images/maplight-trans.png" alt="Maplight.org" /></a>.</h3>'
     end
@@ -848,10 +848,47 @@ EOT
   end
   
   def has_originating_chamber_roll_call?(bill)
-    bill and bill.originating_chamber_vote and bill.originating_chamber_vote.roll_call
+    if bill and bill.originating_chamber_vote
+      if bill.originating_chamber_vote.roll_call
+        return true
+      else
+        # sometimes the parser misses this
+        a = bill.originating_chamber_vote
+        rc = RollCall.find_by_ident("#{a.datetime.year}-#{a.where}#{a.roll_call_number}")
+        
+        if rc
+          a.roll_call = rc
+          a.save
+        
+          return true
+        end
+      end
+    end
+    return false
   end
 
   def has_other_chamber_roll_call?(bill)
-    bill and bill.other_chamber_vote and bill.other_chamber_vote.roll_call
+    
+    if bill and bill.other_chamber_vote
+      if bill.other_chamber_vote.roll_call
+        return true
+      else
+        # sometimes the parser misses this
+        a = bill.other_chamber_vote
+        rc = RollCall.find_by_ident("#{a.datetime.year}-#{a.where}#{a.roll_call_number}")
+        
+        if rc
+          a.roll_call = rc
+          a.save
+        
+          return true
+        end
+      end
+    end
+    return false
+  end
+  
+  def opensecrets_cycle_years
+    "#{CURRENT_OPENSECRETS_CYCLE.to_i - 1}-#{CURRENT_OPENSECRETS_CYCLE}"
   end
 end

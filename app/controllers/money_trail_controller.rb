@@ -39,6 +39,7 @@ class MoneyTrailController < ApplicationController
     
     if @bill
       @top_recipients = @group.top_recipients(@bill.chamber)
+      @top_recipients_other = @group.top_recipients(@bill.other_chamber)
     else
       @top_recipients = @group.top_recipients('senate')
       @top_recipients_other = @group.top_recipients('house')

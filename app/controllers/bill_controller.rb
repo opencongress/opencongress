@@ -352,7 +352,7 @@ class BillController < ApplicationController
       path = "#{OC_BILLTEXT_PATH}/#{@bill.session}/#{@bill.bill_type}#{@bill.number}#{@version.version}.gen.html-oc"
       
       @bill_text = File.open(path).read
-    rescue
+    rescue 
       @bill_text = "We're sorry but OpenCongress does not have the full bill text at this time.  Try at <a href='http://thomas.loc.gov/cgi-bin/query/z?c#{@bill.session}:#{@bill.typenumber}:'>THOMAS</a>."
     end
   end

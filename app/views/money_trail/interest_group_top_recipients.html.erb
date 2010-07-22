@@ -9,7 +9,9 @@
       <td><%= link_to_person(r) %></td>
       <td>$<%= number_with_delimiter(r.contrib_total) %></td>
       <% if has_originating_chamber_roll_call?(@bill) %>
-        <td><%= @bill.originating_chamber_vote.roll_call.vote_for_person(r) %></td>
+        <td>
+          <%= link_to @bill.originating_chamber_vote.roll_call.vote_for_person(r), @bill.originating_chamber_vote.roll_call.vote_url if has_originating_chamber_roll_call?(@bill) and @bill.originating_chamber_vote.roll_call.vote_for_person(r)%>
+        </td>
       <% end %>
     </tr>
   <% end %>
@@ -21,7 +23,9 @@
         <td><%= link_to_person(r) %></td>
         <td>$<%= number_with_delimiter(r.contrib_total) %></td>
         <% if has_originating_chamber_roll_call?(@bill) %>
-          <td><%= @bill.other_chamber_vote.roll_call.vote_for_person(r) %></td>
+          <td>
+            <%= link_to @bill.other_chamber_vote.roll_call.vote_for_person(r), @bill.other_chamber_vote.roll_call.vote_url if has_other_chamber_roll_call?(@bill) and @bill.other_chamber_vote.roll_call.vote_for_person(r)%>
+          </td>
         <% end %>
       </tr>
     <% end %>

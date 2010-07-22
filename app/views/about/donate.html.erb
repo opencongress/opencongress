@@ -1,11 +1,11 @@
 
 
-<div class="wrapper">
+<div class="wrapper" id="main">
   <div class="logo">OpenCongress</div>
   
   <h1>Help Keep OpenCongress <strong>Up and Running</strong></h1>
   
-  <div class="banner"><p>Make a charitable donation</p><span class="big_arrow"></span><a class="donate_now" rel="#donate" href="#">Donate Now</a><span class="left_cap"></span><span class="right_cap"></span></div>
+  <div class="banner"><p>Make a charitable donation</p><span class="big_arrow"></span><a class="donate_now" rel="#donate" href="#" id="donate_button">Donate Now</a><span class="left_cap"></span><span class="right_cap"></span></div>
   
   <div id="content">
   <div class="content_inner">
@@ -15,7 +15,7 @@
 
 	  <p><strong>Now, for the first time ever, we're asking for your donation to keep OpenCongress up and running.</strong><br />We're the Participatory Politics Foundation, a small non-profit organization working every day to bring you the real story behind what's happening in Congress. We provide OpenCongress as an independent public resource, 100% free and open-source.</p>
 	<p>As OpenCongress has grown, we've held it together with grants from our terrific founding supporter, the Sunlight Foundation, and a few micro-donations... but we've reached the limit of what we can do. So today, we need your help:</p> 
-      <a class="donate_now" href="#">Donate Now</a><br /><br /><br />
+      <a class="donate_now" href="#" rel="#donate">Donate Now</a><br /><br /><br />
 
 	<p class="larger">
 <strong>Larger donors and foundations:</strong> we have a good start and big plans. Are you in a position to contribute $1,000 or more to help us build some amazing new tools on OpenCongress? <a href="#">Get in touch!</a></p>
@@ -184,32 +184,6 @@ tweetmeme_style = 'compact';
 
 
 </div>
-
-
-<!-- javascript coding -->
-<script>
-// What is $(document).ready ? See: http://flowplayer.org/tools/documentation/basics.html#document_ready
-$(document).ready(function() {
-
-// heeeeeeeeeeere we go.
-$("#chained").scrollable({circular: true, mousewheel: true}).navigator().autoscroll({
-	interval: 10000		
-});
-
-$("a[rel]").overlay({
-	effect: 'drop',
-	mask: '#789'
-});
-
-
-});
-</script>
-
-
-    
-
-
-
      
     </div>
 <div class="principles">
@@ -232,11 +206,13 @@ $("a[rel]").overlay({
 
 <div class="simple_overlay" id="donate">
 
-<div class="select_ammount">
-<a href="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php?oc_action=donate&amp;pp=paypal&amp;amount=20&amp;groups=PPF+News:Supporters&amp;receipt=42">$20</a>
-<a href="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php?oc_action=donate&amp;pp=paypal&amp;amount=50&amp;groups=PPF+News:Supporters&amp;receipt=42">$50</a>
-<a href="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php?oc_action=donate&amp;pp=paypal&amp;amount=100&amp;groups=PPF+News:Supporters&amp;receipt=42">$100</a>
-<a href="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php?oc_action=donate&amp;pp=paypal&amp;amount=200&amp;groups=PPF+News:Supporters&amp;receipt=42">$200</a>
+<p class="error"><%= params[:error] if params[:error] %></p>
+
+<div class="select_amount">
+<a href="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php?oc_action=donate&amp;pp=paypal&amp;amount=20&amp;groups=PPF+News:Supporters&amp;receipt=42" class="wait">$20</a>
+<a href="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php?oc_action=donate&amp;pp=paypal&amp;amount=50&amp;groups=PPF+News:Supporters&amp;receipt=42" class="wait">$50</a>
+<a href="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php?oc_action=donate&amp;pp=paypal&amp;amount=100&amp;groups=PPF+News:Supporters&amp;receipt=42" class="wait">$100</a>
+<a href="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php?oc_action=donate&amp;pp=paypal&amp;amount=200&amp;groups=PPF+News:Supporters&amp;receipt=42" class="wait">$200</a>
 
 <form action="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php">
    <input type="hidden" name="oc_action" value="donate">
@@ -244,7 +220,7 @@ $("a[rel]").overlay({
    <input type="hidden" name="groups" value="PPF News:Supporters">
    <input type="hidden" name="receipt" value="42">
    <label for="donate_amount">$</label><input type="text" name="amount" id="donate_amount">
-   <input type="submit" value="Donate">
+   <input type="submit" value="Donate" class="wait">
 </form>
 
 </div>
@@ -255,11 +231,15 @@ $("a[rel]").overlay({
 
 <script>
 
+
 // create custom animation algorithm for jQuery called "drop" 
 $.easing.drop = function (x, t, b, c, d) {
 	return -c * (Math.sqrt(1 - (t/=d)*t) - 1) + b;
 };
 
+$('.wait').click(function() {
+   $("body").css("cursor", "progress");
+});
 
 // loading animation
 $.tools.overlay.addEffect("drop", function(css, done) { 
@@ -281,21 +261,46 @@ $.tools.overlay.addEffect("drop", function(css, done) {
    overlay.css(css).show();
    
    // begin animating with our custom easing
-   overlay.animate({ top: '+=55',  opacity: 1,  width: '+=20'}, 700, 'drop', done);
+   overlay.animate(
+      { top: '+=55',  opacity: 1 }, 200, 'drop', done);
    
    /* closing animation */
    }, function(done) {
-      this.getOverlay().animate({top:'-=55', opacity:0, width:'-=20'}, 300, 'drop', function() {
+      this.getOverlay().animate({opacity:0}, 100, 'drop', function() {
          $(this).hide();
          done.call();      
       });
    }
 );
 
+// What is $(document).ready ? See: http://flowplayer.org/tools/documentation/basics.html#document_ready
+$(document).ready(function() {
+
+// heeeeeeeeeeere we go.
+$("#chained").scrollable({circular: true, mousewheel: true}).navigator().autoscroll({
+	interval: 10000		
+});
+
+$("a[rel]").overlay({
+	effect: 'drop',
+	mask: '#789'
+});
+
+
 $("img[rel]").overlay({
 	effect: 'drop',
 	mask: '#789'
 });
+
+
+<% if params[:error] %>
+// Show the overlay.
+$('#donate_button').click();
+<% end %>
+
+
+});
+
 </script>
 
 

@@ -510,7 +510,7 @@ border-radius: 5px;
 	/* styling */
 	background-color:#fff;
   margin-left: -20px;
-	width:600px;	
+	width:620px;	
 	height:200px;
 	
 	/* CSS3 styling for latest browsers */
@@ -769,14 +769,17 @@ margin: 0 -35px 0 0;
 background: url(/images/donate/bit.gif) 0 0px no-repeat;
 }
 
-
-.select_ammount{
-
-padding: 0 40px;
-margin-top: 130px;
+p.error {
+  padding-top: 80px;
+  padding-left: 40px;
 }
 
-.select_ammount a{
+.select_amount{
+padding: 0 40px;
+margin-top: 20px;
+}
+
+.select_amount a{
 border: 1px solid #000;
 float: left;
 font-size: 13px;

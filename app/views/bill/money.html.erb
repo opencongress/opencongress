@@ -15,13 +15,25 @@
       <tr>
         <th>Name</th>
         <th>Amount Received</th>
-        <% if has_originating_chamber_roll_call?(@bill) %><th>Vote On Passage</th><% end %>
+        <th>Vote On Passage</th>
       </tr>
-      <% @bill.top_recipients_for_all_interest_groups('support').each do |r| %>
+      <% @bill.top_recipients_for_all_interest_groups('support', @bill.chamber).each_with_index do |r, i| %>
         <tr>
           <td><%= link_to_person(r) %></td>
           <td>$<%= number_with_delimiter(r.contrib_total) %></td>
-          <td><%= @bill.originating_chamber_vote.roll_call.vote_for_person(r) if has_originating_chamber_roll_call?(@bill) %></td>
+          <td>
+            <%= link_to @bill.originating_chamber_vote.roll_call.vote_for_person(r), @bill.originating_chamber_vote.roll_call.vote_url if has_originating_chamber_roll_call?(@bill) and @bill.originating_chamber_vote.roll_call.vote_for_person(r)%>
+          </td>
+        </tr>
+      <% end %>
+      <tr><td>&nbsp;</td></tr>
+      <% @bill.top_recipients_for_all_interest_groups('support', @bill.other_chamber).each_with_index do |r, i| %>
+        <tr>
+          <td><%= link_to_person(r) %></td>
+          <td>$<%= number_with_delimiter(r.contrib_total) %></td>
+          <td>
+            <%= link_to @bill.other_chamber_vote.roll_call.vote_for_person(r), @bill.other_chamber_vote.roll_call.vote_url if has_other_chamber_roll_call?(@bill) and @bill.other_chamber_vote.roll_call.vote_for_person(r)%>
+          </td>
         </tr>
       <% end %>
     </table>
@@ -51,14 +63,28 @@
       <tr>
         <th>Name</th>
         <th>Amount Received</th>
-        <% if has_originating_chamber_roll_call?(@bill) %><th>Vote On Passage</th><% end %>
+        <% if has_originating_chamber_roll_call?(@bill) %>
+          <th>Vote On Passage</th>
+        <% end %>
       </tr>
-      <% @bill.top_recipients_for_all_interest_groups('oppose').each do |r| %>
-      <tr>
-        <td><%= link_to_person(r) %></td>
-        <td>$<%= number_with_delimiter(r.contrib_total) %></td>
-        <td><%= @bill.originating_chamber_vote.roll_call.vote_for_person(r) if has_originating_chamber_roll_call?(@bill) %></td>
-      </tr>
+      <% @bill.top_recipients_for_all_interest_groups('oppose', @bill.chamber).each do |r| %>
+        <tr>
+          <td><%= link_to_person(r) %></td>
+          <td>$<%= number_with_delimiter(r.contrib_total) %></td>
+          <td>
+            <%= link_to @bill.originating_chamber_vote.roll_call.vote_for_person(r), @bill.originating_chamber_vote.roll_call.vote_url if has_originating_chamber_roll_call?(@bill) and @bill.originating_chamber_vote.roll_call.vote_for_person(r)%>
+          </td>
+        </tr>
+      <% end %>
+      <tr><td>&nbsp;</td></tr>
+      <% @bill.top_recipients_for_all_interest_groups('oppose', @bill.other_chamber).each do |r| %>
+        <tr>
+          <td><%= link_to_person(r) %></td>
+          <td>$<%= number_with_delimiter(r.contrib_total) %></td>
+          <td>
+            <%= link_to @bill.other_chamber_vote.roll_call.vote_for_person(r), @bill.other_chamber_vote.roll_call.vote_url if has_other_chamber_roll_call?(@bill) and @bill.other_chamber_vote.roll_call.vote_for_person(r)%>
+          </td>
+        </tr>
       <% end %>
     </table>
   <% end %>
@@ -73,4 +99,7 @@
   <% end %>
 </div>
 <%= maplight_link(bill=true) %>
+<div class="partner_logo clear">
+<p>Campaign contribution data provided by <%= link_to "OpenSecrets.org", "http://OpenSecrets.org" %>, the nonpartisan guide to money in politics. Contribution data is constantly being updated and this data may not be entirely up to date.</p>
+</div>
 </div>

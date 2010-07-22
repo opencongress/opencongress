@@ -2450,6 +2450,7 @@ _background:url("/images/sprites.gif") -131px -136px;
 
 .maplight{
   clear:both;
+  margin-bottom: 15px;
 }
 .maplight a{
   text-decoration:none;

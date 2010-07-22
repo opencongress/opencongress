@@ -1363,11 +1363,11 @@ class Person < ActiveRecord::Base
   end
 
   def top_interest_groups(num = 10, cycle = CURRENT_OPENSECRETS_CYCLE)
-    igs = CrpInterestGroup.find_by_sql(["SELECT crp_interest_groups.*, top_ind_igs.ind_contrib_total, top_pac_igs.pac_contrib_total, (top_ind_igs.ind_contrib_total + top_pac_igs.pac_contrib_total) AS contrib_total FROM crp_interest_groups
+    igs = CrpInterestGroup.find_by_sql(["SELECT crp_interest_groups.*, top_ind_igs.ind_contrib_total, top_pac_igs.pac_contrib_total, (COALESCE(top_ind_igs.ind_contrib_total, 0) + COALESCE(top_pac_igs.pac_contrib_total, 0)) AS contrib_total FROM crp_interest_groups
     LEFT JOIN
       (SELECT crp_interest_group_osid, SUM(crp_contrib_individual_to_candidate.amount)::integer as ind_contrib_total 
       FROM crp_contrib_individual_to_candidate
-      WHERE cycle=? AND recipient_osid=? AND crp_contrib_individual_to_candidate.contrib_type IN ('11', '15 ', '15J', '22Y')
+      WHERE cycle=? AND recipient_osid=? AND crp_contrib_individual_to_candidate.contrib_type IN ('10', '11', '15 ', '15', '15E', '15J', '22Y')
       GROUP BY crp_interest_group_osid)
         top_ind_igs ON crp_interest_groups.osid=top_ind_igs.crp_interest_group_osid
     LEFT JOIN
@@ -1376,13 +1376,12 @@ class Person < ActiveRecord::Base
       WHERE cycle=? AND recipient_osid=?
       GROUP BY crp_interest_group_osid)
         top_pac_igs ON crp_interest_groups.osid=top_pac_igs.crp_interest_group_osid
-    ORDER BY contrib_total DESC", cycle, osid, cycle, osid])
-        
-    igs.each{ |g| g.contrib_total = g.ind_contrib_total.to_i + g.pac_contrib_total.to_i }.sort {|a,b| b.contrib_total <=> a.contrib_total }[0..10]
+    ORDER BY contrib_total DESC
+    LIMIT ?", cycle, osid, cycle, osid, num])
   end
   
   def top_industries(num = 10, cycle = CURRENT_OPENSECRETS_CYCLE)
-    is = CrpIndustry.find_by_sql(["SELECT crp_industries.*, top_ind_is.ind_contrib_total, top_pac_is.pac_contrib_total, (top_ind_is.ind_contrib_total + top_pac_is.pac_contrib_total) AS contrib_total FROM crp_industries
+    CrpIndustry.find_by_sql(["SELECT crp_industries.*, top_ind_is.ind_contrib_total, top_pac_is.pac_contrib_total, (COALESCE(top_ind_is.ind_contrib_total, 0) + COALESCE(top_pac_is.pac_contrib_total, 0)) AS contrib_total FROM crp_industries
     LEFT JOIN
       (SELECT crp_industries.id, SUM(crp_contrib_individual_to_candidate.amount) as ind_contrib_total 
       FROM crp_industries
@@ -1400,10 +1399,8 @@ class Person < ActiveRecord::Base
       WHERE crp_contrib_pac_to_candidate.cycle=? AND crp_contrib_pac_to_candidate.recipient_osid=?
       GROUP BY crp_industries.id)
         top_pac_is ON crp_industries.id=top_pac_is.id
-    ORDER BY contrib_total DESC", cycle, osid, cycle, osid])
-        
-    is.each{ |g| g.contrib_total = g.ind_contrib_total.to_i + g.pac_contrib_total.to_i }.sort {|a,b| b.contrib_total <=> a.contrib_total }[0..10]
-
+    ORDER BY contrib_total DESC
+    LIMIT ?", cycle, osid, cycle, osid, num])
   end
   
   def comments_from_state_count(state)

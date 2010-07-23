@@ -1019,7 +1019,7 @@ class Bill < ActiveRecord::Base
   end
   
   def originating_chamber_vote
-    actions.select { |a| (a.action_type == 'vote' and a.vote_type == 'vote') }.last
+    actions.select { |a| (a.action_type == 'vote' and (a.vote_type == 'vote' || a.vote_type == 'pingpong')) }.last
   end
   
   def other_chamber_vote

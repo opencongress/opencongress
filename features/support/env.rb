@@ -57,6 +57,7 @@ end
 
 
 Fixtures.create_fixtures("features/fixtures", "actions")
+Fixtures.create_fixtures("features/fixtures", "amendments")
 Fixtures.create_fixtures("features/fixtures", "articles")
 Fixtures.create_fixtures("features/fixtures", "bills")
 Fixtures.create_fixtures("features/fixtures", "people")

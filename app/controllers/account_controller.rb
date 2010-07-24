@@ -184,16 +184,15 @@ class AccountController < ApplicationController
   end
 
   def forgot_password
-
     return unless request.post?
-    if @user = User.find_by_email(params[:user][:email])
+    if !params[:user][:email].blank? and (@user = User.find(:first, :conditions => ["UPPER(email) = ?", params[:user][:email].upcase]))
       @user.forgot_password
       @user.save!
-#      redirect_back_or_default(:controller => 'account', :action => 'index')
+      # redirect_back_or_default(:controller => 'account', :action => 'index')
       @page_title = "Forgot Password"
       render :action => 'pwmail'
     else
-      flash[:notice] = "Could not find a user with that email address"
+      flash.now[:notice] = "Could not find a user with that email address."
     end
   end
 

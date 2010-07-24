@@ -3,7 +3,16 @@ namespace :db do
   Defaults to development database. Set RAILS_ENV to override.'
 
   task :extract_fixtures => :environment do
-    sql = ENV['IDS'] ? "SELECT * FROM %s WHERE id IN (#{ENV['IDS']})" : "SELECT * FROM %s"
+    sql = 
+    
+    if ENV['IDS'] 
+      sql = "SELECT * FROM %s WHERE id IN (#{ENV['IDS']})"  
+    elsif ENV['WHERE']
+      sql = "SELECT * FROM %s WHERE #{ENV['WHERE']}"  
+    else
+      sql = "SELECT * FROM %s"
+    end
+    
     skip_tables = ["schema_info", "sessions"]
     ActiveRecord::Base.establish_connection
     tables = ENV['FIXTURES'] ? ENV['FIXTURES'].split(/,/) : ActiveRecord::Base.connection.tables - skip_tables

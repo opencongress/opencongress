@@ -414,7 +414,7 @@ float: left;
 
 .scrollable .meta a img{
 display: block;
-margin: 100px 44px;
+margin: 80px 44px 20px;
 float: left;
 }
 
@@ -822,8 +822,23 @@ left: 200px;
 }
 
 .digg img{
-margin-left: 0;
+margin: 25px 0 20px 0;
 }
+
+.digg blockquote{
+font-size: 11px;
+margin: 0;
+}
+
+
+
+.digg .att{
+font-size: 11px;
+margin: 0;
+}
+
+
+
 
 .bitly{
 width: 80px;
@@ -866,7 +881,9 @@ background: url(/images/donate/button_bg.gif) 0 0px repeat-x;
 
 
 
-
+.read img{
+width: 160px;
+}
 
 
 

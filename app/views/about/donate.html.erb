@@ -324,7 +324,7 @@ $("img[rel]").overlay({
 });
 
 
-<% if params[:error] %>
+<% if params[:error] && params[:choose_amount] %>
 // Show the overlay.
 $('#donate_button').click();
 <% end %>

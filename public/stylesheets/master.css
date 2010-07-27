@@ -1372,6 +1372,12 @@ _background: url('/images/show_sidebar.gif') no-repeat left top;
 #show_button:hover{
   background-position:left -83px;
 }
+
+
+
+
+
+
 /*///////////////////////////////////////////////////////
 
 ~ Content
@@ -1383,6 +1389,8 @@ _background: url('/images/show_sidebar.gif') no-repeat left top;
   border-right:#c2c2c2 solid 1px;
   clear: both;
     background: #fff url('/images/main_bg.jpg') right 0px no-repeat;
+
+position: relative;
 
 /*
 background: url('/images/grid_.png') center 0px no-repeat;
@@ -4181,6 +4189,88 @@ padding-top: 17px;
 margin: 0 !important;
 padding: 0 30px 5px 0 !important;
 }
+
+
+
+
+
+.banner{
+
+left: 69px;
+height: 83px;
+width: 1002px;
+background: url(/images/donate/banner_bg.gif) repeat-x;
+top: 257px;
+}
+
+
+.banner .left_cap{
+position: absolute;
+left: -28px;
+height: 83px;
+width: 28px;
+background: url(/images/donate/banner_caps.gif) repeat-x;
+}
+
+
+.banner .right_cap{
+position: absolute;
+right: -28px;
+height: 83px;
+width: 28px;
+background: url(/images/donate/banner_caps.gif) top right repeat-x;
+}
+
+
+.banner p{
+float: left;
+color: #fff;
+font-size: 18px;
+margin: 33px 38px 0 !important;
+text-shadow: #a11513 0px -1px 0px;
+padding-left: 45px;
+padding-top: 3px;
+background: url(/images/donate/heart.gif) 0 1px no-repeat;
+}
+
+.banner.thanks p{
+margin: 33px 38px 0 105px !important;
+}
+
+
+.banner span.big_arrow{
+margin-top: 0px;
+padding-left: 80px;
+float: left;
+margin-left: 20px;
+margin-top: 26px;
+height: 30px;
+background: url(/images/donate/big_arrow.gif) 0 1px repeat;
+}
+
+
+
+.donate_now{
+float: right;
+padding-top: 49px;
+width: 227px;
+height: 0;
+overflow: hidden;
+margin: 19px 10px 0 0;
+background: url(/images/donate/donate.png) repeat-x;
+}
+
+
+.donate_now:hover{
+background: url(/images/donate/donate.png) 0 -50px repeat-x;
+}
+
+.donate_now:active{
+background: url(/images/donate/donate.png) 0 -100px repeat-x;
+}
+
+
+
 
 
 

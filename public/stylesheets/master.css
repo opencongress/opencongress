@@ -59,6 +59,18 @@ h3{ font-size: 13px; }
 =========================================================
 ///////////////////////////////////////////////////////*/
 
+.marginright{
+margin-right: 20px;
+margin-bottom: 20px;
+}
+
+
+.marginleft{
+margin-left: 20px;
+margin-bottom: 20px;
+}
+
+
 
 .leftcolumn{
 width: 430px;

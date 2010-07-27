@@ -233,8 +233,7 @@ tweetmeme_style = 'compact';
 
 <div class="simple_overlay" id="donate">
 
-<div class="loading"></div>
-
+<div class="loading" id="loading" style="display:none;"></div>
 
 <p class="error"><%= params[:error] if params[:error] %></p>
 
@@ -270,6 +269,7 @@ $.easing.drop = function (x, t, b, c, d) {
 $('.wait').click(function() {
    $("body").css("cursor", "progress");
    $(this).css("cursor", "progress");
+   $("#loading").show();
 });
 
 // loading animation

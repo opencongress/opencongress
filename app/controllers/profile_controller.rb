@@ -370,14 +370,19 @@ class ProfileController < ApplicationController
 
   def edit_profile
     if logged_in?
-     @user = current_user
-     field = params[:field]
-     value = params[:value]  
+      @user = current_user
+      field = params[:field]
+      value = params[:value]  
 
-     case field
-     when "user_role", "user_role_id", "login"
-       render :text => "Nope"
-     else
+      if value == "[Click to Edit]"
+        render :text => "[Click to Edit]"
+        return
+      end
+
+      case field
+      when "user_role", "user_role_id", "login"
+        render :text => "Nope"
+      else
         @user[field] = value
         @user[field] = nil if ( field == "zipcode" && value == "" )
         @user[field] = nil if ( field == "zip_four" && value == "" ) 
@@ -386,12 +391,12 @@ class ProfileController < ApplicationController
           render :action => 'edit_profile', :layout => false
         else
           if field == "zip_four"
-             render :text => "Must be a 4 digit zip extension"
+            render :text => "Must be a 4 digit zip extension"
           else
             render :text => "Invalid input"
           end
         end
-     end
+      end
     end
   end
   

@@ -574,7 +574,7 @@ class PeopleController < ApplicationController
     end
     
     unless @senators and @reps
-      flash.now[:notice] = "Your search did not return and members of Congress."
+      flash.now[:notice] = "Your search did not return any members of Congress." unless params[:zip5].nil?
     end
   end
 

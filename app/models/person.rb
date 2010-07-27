@@ -720,40 +720,12 @@ class Person < ActiveRecord::Base
   end
 
   def Person.find_current_congresspeople_by_address_and_zipcode(address, zipcode)
-    # use watchdog
-    response = nil
-    begin
-      http = Net::HTTP.new('watchdog.net')
-      http.start do |http|
-        request = Net::HTTP::Get.new("/us/?address=#{URI.escape(address)}&zip=#{URI.escape(zipcode)}", {"User-Agent" => DEFAULT_USERAGENT})
-        response = http.request(request)
-      end
-    rescue Exception => e
-      logger.warn("Error looking up address on watchdog!: #{e}")
-      return nil
-    end
-    
-    return nil if response.nil?
-    
-    if response.kind_of?(Net::HTTPRedirection)
-      # if we're redirected, that's good
-      md = /(\w\w)-(\d\d)/.match(response['location'])
-      if md
-        state = md.captures[0].upcase
-        district = md.captures[1].to_i.to_s
-        rep = find(:first, 
-                   :conditions => ["state = ? AND district = ? AND title = ?", state, district.to_i.to_s, 'Rep.'])
-                    
-        sens = find_current_senators_by_state(state)
-        return [sens, [rep]]
-      else
-        return nil
-      end
+    yg = YahooGeocoder.new("#{address}, #{zipcode}")
+    unless yg.zip5.nil?
+      return self.find_current_congresspeople_by_zipcode(yg.zip5, yg.zip4)
     else
       return nil
-    end  
-    
-    return nil
+    end
   end
   
   def Person.find_current_representative_by_state_and_district(state, district)

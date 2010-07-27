@@ -57,12 +57,16 @@ end
 
 
 Fixtures.create_fixtures("features/fixtures", "actions")
+Fixtures.create_fixtures("features/fixtures", "amendments")
 Fixtures.create_fixtures("features/fixtures", "articles")
 Fixtures.create_fixtures("features/fixtures", "bills")
+Fixtures.create_fixtures("features/fixtures", "hot_bill_categories")
 Fixtures.create_fixtures("features/fixtures", "people")
+Fixtures.create_fixtures("features/fixtures", "roles")
 Fixtures.create_fixtures("features/fixtures", "taggings")
 Fixtures.create_fixtures("features/fixtures", "tags")
 Fixtures.create_fixtures("features/fixtures", "bills")
 Fixtures.create_fixtures("features/fixtures", "user_roles")
 Fixtures.create_fixtures("features/fixtures", "users")
+Fixtures.create_fixtures("features/fixtures", "zipcode_districts")
 

@@ -35,6 +35,10 @@ module NavigationHelpers
     when /a blog post titled "([^"]*)"/
       a = Article.find_by_title($1)
       "/articles/view/#{a.to_param}"
+    when /the zipcode lookup page/
+      "/people/zipcodelookup"
+    when /the forgot password page/
+      "/account/forgot_password"
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

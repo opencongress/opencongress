@@ -129,7 +129,6 @@ padding-left: 12px;
 table td.text {
 padding-right: 24px;
 }
-
 .question, .req {
 padding-left: 12px;
 }
@@ -142,7 +141,7 @@ padding: 0px
 .amendments {
 background: url(/images/amendment.png) 12px 11px no-repeat;
 _background: url(/images/amendment.gif) 12px 11px no-repeat;
-padding: 0px 20px 0 40px;
+padding: 0px 20px 0 12px;
 }
 
 table#amendments th span.nopad, table#actions th span.nopad, table#votes th span.nopad {

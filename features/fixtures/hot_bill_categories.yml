@@ -1,0 +1,49 @@
+--- 
+hot_bill_categories_010: 
+  name: Education
+  id: "11"
+hot_bill_categories_011: 
+  name: Civil Liberties
+  id: "1"
+hot_bill_categories_012: 
+  name: Taxes
+  id: "12"
+hot_bill_categories_001: 
+  name: Iraq
+  id: "2"
+hot_bill_categories_013: 
+  name: Criminal Justice
+  id: "13"
+hot_bill_categories_002: 
+  name: Housing/Mortgage Crisis
+  id: "3"
+hot_bill_categories_014: 
+  name: Technology
+  id: "14"
+hot_bill_categories_003: 
+  name: Energy/Environment
+  id: "4"
+hot_bill_categories_015: 
+  name: Media
+  id: "15"
+hot_bill_categories_004: 
+  name: Government/Transparency
+  id: "5"
+hot_bill_categories_016: 
+  name: Economy
+  id: "16"
+hot_bill_categories_005: 
+  name: Health
+  id: "6"
+hot_bill_categories_006: 
+  name: Guns
+  id: "7"
+hot_bill_categories_007: 
+  name: Intellectual Property
+  id: "8"
+hot_bill_categories_008: 
+  name: Immigration
+  id: "9"
+hot_bill_categories_009: 
+  name: Labor
+  id: "10"

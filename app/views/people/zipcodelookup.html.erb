@@ -1,32 +1,38 @@
-<div class="zip_search">
-<% if @display_zip %>
-<h3>New Search</h3>
-  <p>You can search again by entering your address and zipcode in the form below:</p>
-<% else %>
-  <p>To find your Senators and Representative, enter your five-digit zipcode in the first field below. If you happen to know your zipcode's four-digit extension, you can enter that in the second field below. If you don't, no problem, you can find it on the next page.</p>
-<% end %>
-
-<%= render :partial => 'people/zipcodelookup_form', :locals => { :show_zip4 => true } %>
+<div id="heading">
+  <h2><%= @page_title %></h2>
 </div>
 
-<% if @senators or @reps %>
-  <p>Search results for zipcode <b><%= @display_zip %></b>.</p>
-<% end %>
-
-<% if @senators%>
-	<div class="clearfix">
-  <h3 class="foo">Senators Representing Your State</h3>
-  <%= render :partial => 'people_list', :locals => { :people => @senators, :hide_help => true }%>
-	</div>
-<% end %>
-
-<% if @reps %>
-	<div class="clearfix">
-  <h3 class="foo">Representatives Representing Your Zipcode</h3>
-  <% if @reps.size > 1 %>
-    <p>We found multiple Representatives serving your zipcode. You can narrow your search by entering your street address into the form below.  Your street address will not be stored in our database.</p>
+<div class="padding-left">
+  <div class="zip_search <%= 'no_results' unless @senators or @reps %>">
+  <% if @display_zip %>
+  <h3>New Search</h3>
+    <p>You can search again by entering your address and zipcode in the form below:</p>
+  <% else %>
+    <p>To find your Senators and Representative, enter your five-digit zipcode in the first field below. If you happen to know your zipcode's four-digit extension, you can enter that in the second field below. If you don't, no problem, you can find it on the next page.</p>
   <% end %>
+
+  <%= render :partial => 'people/zipcodelookup_form', :locals => { :show_zip4 => true } %>
+  </div>
+
+  <% if @senators or @reps %>
+    <p class="margin-top">Search results for zipcode <b><%= @display_zip %></b>.</p>
+  <% end %>
+
+  <% if @senators%>
+  	<div class="clearfix">
+    <h3 class="foo">Senators Representing Your State</h3>
+    <%= render :partial => 'people_list', :locals => { :people => @senators, :hide_help => true }%>
+  	</div>
+  <% end %>
+
+  <% if @reps %>
+  	<div class="clearfix">
+    <h3 class="foo">Representatives Representing Your Zipcode</h3>
+    <% if @reps.size > 1 %>
+      <p>We found multiple Representatives serving your zipcode. You can narrow your search by entering your street address into the form below.  Your street address will not be stored in our database.</p>
+    <% end %>
   
-	<%= render :partial => 'people_list', :locals => { :people => @reps, :hide_help => true }%>
-	</div>
-<% end %>
+  	<%= render :partial => 'people_list', :locals => { :people => @reps, :hide_help => true }%>
+  	</div>
+  <% end %>
+</div>

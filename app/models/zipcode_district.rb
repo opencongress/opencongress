@@ -16,7 +16,7 @@ class ZipcodeDistrict < ActiveRecord::Base
     if y
       zip4 = y.zip4
       zip5 = y.zip5
-      unless zip4.blank? || zip5.blank?
+      unless zip5.blank?
         return ZipcodeDistrict.zip_lookup(zip5, zip4)
       else
         return nil

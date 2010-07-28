@@ -941,13 +941,6 @@ CREATE AGGREGATE rewrite(pg_catalog.tsquery[]) (
 
 
 --
--- Name: tsquery_ops; Type: OPERATOR FAMILY; Schema: public; Owner: -
---
-
-CREATE OPERATOR FAMILY tsquery_ops USING btree;
-
-
---
 -- Name: tsquery_ops; Type: OPERATOR CLASS; Schema: public; Owner: -
 --
 
@@ -959,13 +952,6 @@ CREATE OPERATOR CLASS tsquery_ops
     OPERATOR 4 >=(pg_catalog.tsquery,pg_catalog.tsquery) ,
     OPERATOR 5 >(pg_catalog.tsquery,pg_catalog.tsquery) ,
     FUNCTION 1 tsquery_cmp(pg_catalog.tsquery,pg_catalog.tsquery);
-
-
---
--- Name: tsvector_ops; Type: OPERATOR FAMILY; Schema: public; Owner: -
---
-
-CREATE OPERATOR FAMILY tsvector_ops USING btree;
 
 
 --
@@ -2143,7 +2129,8 @@ CREATE TABLE crp_contrib_pac_to_candidate (
     contrib_date date NOT NULL,
     crp_interest_group_osid character varying(255),
     contrib_type character varying(255),
-    direct_or_indirect character varying(255) NOT NULL
+    direct_or_indirect character varying(255) NOT NULL,
+    fec_cand_id character varying(255)
 );
 
 
@@ -2571,6 +2558,64 @@ CREATE SEQUENCE friends_id_seq
 --
 
 ALTER SEQUENCE friends_id_seq OWNED BY friends.id;
+
+
+--
+-- Name: fundraisers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE fundraisers (
+    id integer NOT NULL,
+    sunlight_id integer,
+    person_id integer,
+    host character varying(255),
+    beneficiaries character varying(255),
+    start_time timestamp without time zone,
+    end_time timestamp without time zone,
+    venue character varying(255),
+    entertainment_type character varying(255),
+    venue_address1 character varying(255),
+    venue_address2 character varying(255),
+    venue_city character varying(255),
+    venue_state character varying(255),
+    venue_zipcode character varying(255),
+    venue_website character varying(255),
+    contributions_info character varying(255),
+    latlong character varying(255),
+    rsvp_info character varying(255),
+    distribution_payer character varying(255),
+    make_checks_payable_to character varying(255),
+    checks_payable_address character varying(255),
+    committee_id character varying(255)
+);
+
+
+--
+-- Name: fundraisers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE fundraisers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+--
+-- Name: fundraisers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE fundraisers_id_seq OWNED BY fundraisers.id;
+
+
+--
+-- Name: geometry_columns; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE geometry_columns (
+    id integer NOT NULL
+);
 
 
 --
@@ -3794,6 +3839,44 @@ ALTER SEQUENCE upcoming_bills_id_seq OWNED BY upcoming_bills.id;
 
 
 --
+-- Name: user_audits; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE user_audits (
+    id integer NOT NULL,
+    user_id integer,
+    email character varying(255),
+    email_was character varying(255),
+    full_name character varying(255),
+    district character varying(255),
+    zipcode character varying(255),
+    state character varying(255),
+    created_at timestamp without time zone,
+    processed boolean DEFAULT false NOT NULL,
+    mailing boolean DEFAULT false NOT NULL
+);
+
+
+--
+-- Name: user_audits_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE user_audits_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_audits_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE user_audits_id_seq OWNED BY user_audits.id;
+
+
+--
 -- Name: user_ip_addresses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -3980,7 +4063,8 @@ CREATE TABLE users (
     is_banned boolean DEFAULT false,
     accepted_tos boolean DEFAULT false,
     accepted_tos_at timestamp without time zone,
-    partner_mailing boolean DEFAULT false
+    partner_mailing boolean DEFAULT false,
+    sso_key character varying(255)
 );
 
 
@@ -4001,62 +4085,6 @@ CREATE SEQUENCE users_id_seq
 --
 
 ALTER SEQUENCE users_id_seq OWNED BY users.id;
-
-
---
--- Name: v_bill_votes_by_bill_and_day; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW v_bill_votes_by_bill_and_day AS
-    SELECT bill_votes.bill_id, date_trunc('day'::text, bill_votes.created_at) AS day, count(bill_votes.support) AS vote_count, sum(bill_votes.support) AS aye_count, (count(bill_votes.support) - sum(bill_votes.support)) AS nay_count FROM bill_votes GROUP BY bill_votes.bill_id, date_trunc('day'::text, bill_votes.created_at);
-
-
---
--- Name: v_bill_votes_by_day; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW v_bill_votes_by_day AS
-    SELECT bill_votes.bill_id, date_trunc('day'::text, bill_votes.created_at) AS day, count(bill_votes.support) AS vote_count, sum(bill_votes.support) AS aye_count, (count(bill_votes.support) - sum(bill_votes.support)) AS nay_count FROM bill_votes GROUP BY bill_votes.bill_id, date_trunc('day'::text, bill_votes.created_at);
-
-
---
--- Name: v_bill_votes_summary; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW v_bill_votes_summary AS
-    SELECT bill_votes.bill_id, count(bill_votes.support) AS votes, sum(bill_votes.support) AS ayes, (count(bill_votes.support) - sum(bill_votes.support)) AS nays FROM bill_votes GROUP BY bill_votes.bill_id ORDER BY count(bill_votes.support) DESC;
-
-
---
--- Name: v_bookmarks_by_bill_and_day; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW v_bookmarks_by_bill_and_day AS
-    SELECT b.bookmarkable_id AS bill_id, date_trunc('day'::text, b.created_at) AS day, count(b.bookmarkable_id) AS bookmark_count FROM bookmarks b WHERE ((b.bookmarkable_type)::text = 'Bill'::text) GROUP BY b.bookmarkable_id, date_trunc('day'::text, b.created_at);
-
-
---
--- Name: v_bookmarks_by_day; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW v_bookmarks_by_day AS
-    SELECT b.bookmarkable_id AS bill_id, count(b.bookmarkable_id) AS bookmark_count, date_trunc('day'::text, b.created_at) AS day FROM bookmarks b WHERE ((b.bookmarkable_type)::text = 'Bill'::text) GROUP BY b.bookmarkable_id, date_trunc('day'::text, b.created_at);
-
-
---
--- Name: v_comments_by_bill_and_day; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW v_comments_by_bill_and_day AS
-    SELECT c.commentable_id AS bill_id, date_trunc('day'::text, c.created_at) AS day, count(c.id) AS comment_count FROM comments c WHERE ((c.commentable_type)::text = 'Bill'::text) GROUP BY c.commentable_id, date_trunc('day'::text, c.created_at);
-
-
---
--- Name: v_comments_by_day; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW v_comments_by_day AS
-    SELECT c.commentable_id AS bill_id, count(c.id) AS comment_count, date_trunc('day'::text, c.created_at) AS day FROM comments c WHERE ((c.commentable_type)::text = 'Bill'::text) GROUP BY c.commentable_id, date_trunc('day'::text, c.created_at);
 
 
 --
@@ -4563,6 +4591,13 @@ ALTER TABLE friends ALTER COLUMN id SET DEFAULT nextval('friends_id_seq'::regcla
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE fundraisers ALTER COLUMN id SET DEFAULT nextval('fundraisers_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE gossip ALTER COLUMN id SET DEFAULT nextval('gossip_id_seq'::regclass);
 
 
@@ -4774,6 +4809,13 @@ ALTER TABLE twitter_configs ALTER COLUMN id SET DEFAULT nextval('twitter_configs
 --
 
 ALTER TABLE upcoming_bills ALTER COLUMN id SET DEFAULT nextval('upcoming_bills_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE user_audits ALTER COLUMN id SET DEFAULT nextval('user_audits_id_seq'::regclass);
 
 
 --
@@ -5183,6 +5225,22 @@ ALTER TABLE ONLY friends
 
 
 --
+-- Name: fundraisers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY fundraisers
+    ADD CONSTRAINT fundraisers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: geometry_columns_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY geometry_columns
+    ADD CONSTRAINT geometry_columns_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: gossip_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -5463,6 +5521,14 @@ ALTER TABLE ONLY upcoming_bills
 
 
 --
+-- Name: user_audits_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY user_audits
+    ADD CONSTRAINT user_audits_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: user_ip_addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -5712,10 +5778,10 @@ CREATE INDEX friend_emails_ip_address_index ON friend_emails USING btree (ip_add
 
 
 --
--- Name: index_bad_commentaries_on_commentariable_id_and_commentariable_; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_bad_commentaries_on_cid_and_ctype; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_bad_commentaries_on_commentariable_id_and_commentariable_ ON bad_commentaries USING btree (commentariable_id, commentariable_type);
+CREATE INDEX index_bad_commentaries_on_cid_and_ctype ON bad_commentaries USING btree (commentariable_id, commentariable_type);
 
 
 --
@@ -5919,6 +5985,13 @@ CREATE INDEX index_crp_interest_groups_on_osid ON crp_interest_groups USING btre
 --
 
 CREATE UNIQUE INDEX index_facebook_templates_on_template_name ON facebook_templates USING btree (template_name);
+
+
+--
+-- Name: index_fundraisers_on_person_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_fundraisers_on_person_id ON fundraisers USING btree (person_id);
 
 
 --
@@ -6614,4 +6687,16 @@ INSERT INTO schema_migrations (version) VALUES ('20100225005011');
 
 INSERT INTO schema_migrations (version) VALUES ('20100228211106');
 
+INSERT INTO schema_migrations (version) VALUES ('20100227110831');
+
 INSERT INTO schema_migrations (version) VALUES ('20100401235324');
+
+INSERT INTO schema_migrations (version) VALUES ('20100515215737');
+
+INSERT INTO schema_migrations (version) VALUES ('20100630211146');
+
+INSERT INTO schema_migrations (version) VALUES ('20100707180635');
+
+INSERT INTO schema_migrations (version) VALUES ('20100707183122');
+
+INSERT INTO schema_migrations (version) VALUES ('20100710230738');

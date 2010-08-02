@@ -61,12 +61,18 @@ class Parser
         log.puts "#{entry_num}\t#{name}\t#{reportname}\t#{dbname}\t#{filename}"
         log.flush
         unless File.exists? filename
-          report = Hpricot(open(report_url))
-          contents = (report/'div[@id="content"]')
-          File.open(filename, "w+") do |f|
-            f.puts "<html>"
-            f.puts contents.first.to_html
-            f.puts "</html>"
+          begin
+            report = Hpricot(open(report_url))
+            contents = (report/'div[@id="content"]')
+            unless contents.first.nil?
+              File.open(filename, "w+") do |f|
+                f.puts "<html>"
+                f.puts contents.first.to_html
+                f.puts "</html>"
+              end
+            end
+          rescue
+            puts "Bad HTML for report: #{report_url}. Skipping..."  
           end
         end #unless
       end #reports.each

@@ -1,0 +1,31 @@
+<%# unless cookies[:saw_appeal] %>
+   <% cookies[:saw_appeal] = 1 %>
+   <style type="text/css">
+      div#donate_track {
+         width: 700px;
+         height: 400px;
+      }
+      
+      div#donate {
+         width: 650px;
+         height: 350px;
+      }
+      
+      div#donate .loading{
+         background: #fff url(/images/donate/loading.gif) center no-repeat;
+         position: absolute;
+         height: 200px;
+         width: 600px;
+         top: 10px;
+         left: 10px;
+      }
+
+   </style>
+   <script type="text/javascript">
+	$j().ready(function() {
+		$j('#donate_track').jqm({ajax:'<%= donate_modal_url %>'});
+		$j('#donate_track').jqmShow();
+	});
+	</script>
+	<div id="donate_track" class="jqmWindow"></div>
+<%# end %>

@@ -47,6 +47,10 @@ class IndexController < ApplicationController
 
   end
   
+  def donate_modal
+    render :layout => false
+  end
+  
   def notfound
     render :partial => "index/notfound_page", :layout => 'application', :status => "404"
   end

@@ -9,19 +9,20 @@
     position: fixed;
     top: 10%;
     left: 50%;
+z-index: 99999999 !important;
     margin-left: -385px;
     /*width: 600px;*/
     width:auto;
     background-color: #fefefe;
     color: #333;
-    border-top: 1px solid #ddd;
-    border-right: 1px solid #aaa;
-    border-bottom: 1px solid #aaa;
-    border-left: 1px solid #c9c9c9;
+    border: 1px solid #a0a0a0;
     padding: 30px;
-    overflow:auto;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
     max-height:80%;
-} 
+ -moz-box-shadow: 0px 5px 165px #777;
+-webkit-box-shadow: 10px 5px 5px black;
+        box-shadow: 10px 5px 5px black;} 
 .jqmWindow.closer {
   margin-left:0px;
 }
@@ -31,35 +32,35 @@
   width:700px;
 }
 
+
+.simple_overlay .close {
+	background: url(/images/donate/close.png) no-repeat;
+	position:absolute;
+	right:-15px;
+	top:-15px;
+	cursor:pointer;
+	height:27px;
+	width:27px;
+}
+
+
 .jqmClose{
-display: block;
-width: 23px;
-height: 0;
-background: url('/images/sprites.png') -61px -156px no-repeat ;
-   _background: url('/images/sprites.gif') -61px -156px no-repeat ;
-padding-top: 21px;
-overflow: hidden;
-position: absolute;
-top: 10px;
-right: 10px;
-z-index: 56789;
+	background: url(/images/donate/close.png) no-repeat;
+	position:absolute;
+	right:-15px;
+	top:-15px;
+	cursor:pointer;
+	height:27px;
+	width:27px;
 }
 
-.jqmClose:hover{
-background-position: -84px -156px;
-
-}
-
-.jqmClose:active{
-background-position: -107px -156px;
-
-}
 
 
 
 
 .jqmOverlay { 
 background: #fff url('/images/overlay.png');
+z-index: 9999999 !important;
    _background: #fff url('/images/overlay.gif');
 }
 

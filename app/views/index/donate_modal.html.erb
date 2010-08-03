@@ -1,5 +1,5 @@
-<div id="donate" class="simple_overlay" style="position: fixed; z-index: 10000; top: 133.7px; left: 323.5px; display: block; opacity: 1;">
-   <a class="close"></a>
+<div id="donate" class="simple_overlay">
+   <a class="jqmClose"></a>
 
    <div style="display: none;" id="loading" class="loading"></div>
    <script>
@@ -21,7 +21,7 @@
       <p>Congress is broken. OpenCongress fixes it.</p>
       <p>There's too much money in politics, and not enough transparency in government. OpenCongress is a non-profit project leading the fight to open up the U.S. Congress. We're free, open-source, and independent. But today, we need your help to stay alive and watchdog Congress:</p>
    <% end %>   
-
+<br />
    <p class="error"></p>
 
    <div class="select_amount">
@@ -40,15 +40,14 @@
       </form>
 
    </div>
-   
+   <div class="not_now">
    <p>Not right now, but I'll sign up for the OpenCongress email list.</p>
    <form action="http://crm.ppolitics.org/civicrm/mailing/subscribe" name="subscribeform" method="post">
-      <p><input name="email" type="text" size="20" id="email" />
+      <input name="email" type="text" size="20" id="email" />
       <input name="mark_x_4" type="hidden" value="1" />
       <input type="hidden" name="destination" value="http://www.opencongress.org/resources/subscribe_thanks" />
       <input name="_qf_Subscribe_next" value="Subscribe" type="submit" />
-      </p>
    </form>
-   
-   <p><a class="closeDialog" href="#" onclick="$j('#donate_track').jqmHide();">Continue to OpenCongress</a></p>
+   </div>
+   <a class="closeDialog" href="#" onclick="$j('#donate_track').jqmHide();">Continue to OpenCongress</a>
 </div>

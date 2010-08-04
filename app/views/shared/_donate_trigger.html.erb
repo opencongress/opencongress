@@ -1,4 +1,4 @@
-<% unless cookies[:saw_appeal] %>
+<% if cookies[:saw_appeal].blank? %>
    <% cookies[:saw_appeal] = 1 %>
    <style type="text/css">
       div#donate_track {

@@ -1,0 +1,53 @@
+<div id="donate" class="simple_overlay">
+   <a class="jqmClose"></a>
+
+   <div style="display: none;" id="loading" class="loading"></div>
+   <script>
+
+   $j('.wait').click(function() {
+      $j("body").css("cursor", "progress");
+      $j(this).css("cursor", "progress");
+      $j("#loading").show();
+   });
+
+   </script>
+
+  <div class="logo">OpenCongress</div>
+
+   <% if rand(2) == 0 %>
+      <p>OpenCongress is fortunate to have a great funding partner, but, the fact is, we need more resources to win this fight and open up government.</p>
+      <p>Your donations help us stay up and running and, more importantly, send a powerful message to larger donors that the OpenCongress community is passionate about watchdogging Congress and making their voices heard. Please make a tax-deductible donation to our non-profit work now:</p>
+   <% else %>
+      <p>Congress is broken. OpenCongress fixes it.</p>
+      <p>There's too much money in politics, and not enough transparency in government. OpenCongress is a non-profit project leading the fight to open up the U.S. Congress. We're free, open-source, and independent. But today, we need your help to stay alive and watchdog Congress:</p>
+   <% end %>   
+<br />
+   <p class="error"></p>
+
+   <div class="select_amount">
+      <a class="wait" href="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php?oc_action=donate&amp;pp=paypal&amp;amount=20&amp;groups=PPF+News:Supporters&amp;receipt=42">$20</a>
+      <a class="wait" href="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php?oc_action=donate&amp;pp=paypal&amp;amount=50&amp;groups=PPF+News:Supporters&amp;receipt=42">$50</a>
+      <a class="wait" href="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php?oc_action=donate&amp;pp=paypal&amp;amount=100&amp;groups=PPF+News:Supporters&amp;receipt=42">$100</a>
+      <a class="wait" href="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php?oc_action=donate&amp;pp=paypal&amp;amount=200&amp;groups=PPF+News:Supporters&amp;receipt=42">$200</a>
+
+      <form action="https://crm.ppolitics.org/sites/all/modules/civicrm/bin/OneClick.php">
+         <input type="hidden" value="donate" name="oc_action">
+         <input type="hidden" value="paypal" name="pp">
+         <input type="hidden" value="PPF News:Supporters" name="groups">
+         <input type="hidden" value="42" name="receipt">
+         <label for="donate_amount">$</label><input type="text" id="donate_amount" name="amount">
+         <input type="submit" class="wait" value="Donate">
+      </form>
+
+   </div>
+   <div class="not_now">
+   <p>Not right now, but I'll sign up for the OpenCongress email list.</p>
+   <form action="http://crm.ppolitics.org/civicrm/mailing/subscribe" name="subscribeform" method="post">
+      <input name="email" type="text" size="20" id="email" />
+      <input name="mark_x_4" type="hidden" value="1" />
+      <input type="hidden" name="destination" value="http://www.opencongress.org/resources/subscribe_thanks" />
+      <input name="_qf_Subscribe_next" value="Subscribe" type="submit" />
+   </form>
+   </div>
+   <a class="closeDialog" href="#" onclick="$j('#donate_track').jqmHide();">Continue to OpenCongress</a>
+</div>

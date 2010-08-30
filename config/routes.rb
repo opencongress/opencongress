@@ -29,6 +29,7 @@ ActionController::Routing::Routes.draw do |map|
   # -- just remember to delete public/index.html.
   # map.connect '', :controller => 'welcome'
   map.connect '', :controller => 'index'
+  map.donate_modal '/donate/modal', :controller => 'index', :action => 'donate_modal'
   map.home '', :controller => 'index', :action => 'index'
 
   # Allow downloading Web Service WSDL as a file with an extension

@@ -21,6 +21,7 @@ javascripts:
     frontpage:
         - public/javascripts/m.js
         - public/javascripts/jquery-1.3.2.min.js
+        - public/javascripts/jqmodal.js
         - public/javascripts/jquery.jcarousel.js
         - public/javascripts/frontpage.js
     distmap:
@@ -39,6 +40,7 @@ stylesheets:
         - public/stylesheets/typo.css
         - public/stylesheets/master.css
         - public/stylesheets/home.css
+        - public/stylesheets/jqModal.css
         - public/stylesheets/jquery.jcarousel.css
     districts:
         - public/stylesheets/states.css

@@ -32,7 +32,7 @@ Then grab the gems you need:
 <pre>
 
 <code>
-sudo gem install rails bluecloth hpricot htree jammit json pg RedCloth ruby-openid simple-rss rmagick htmlentities oauth</code>
+sudo gem install rails bluecloth mediacloth hpricot htree jammit json pg RedCloth ruby-openid simple-rss rmagick htmlentities oauth</code>
 </pre>
 
 __Note for OS X:__ *You may need to specify additional compile options for the pg gem. Make sure pg_config is in PATH and run* `sudo env ARCHFLAGS="-arch x86_64" gem install pg`

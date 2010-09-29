@@ -9,8 +9,8 @@ end
 require 'json'
 require 'open-uri'
 
-people = Person.all_sitting
-#people = Person.find(:all, :conditions => "osid='N00009668'")
+#people = Person.all_sitting
+people = Person.find(:all, :conditions => "osid='N00008092'")
 
 people.each_with_index do |p, i|
   puts "Checking fundraisers for #{p.name} (#{i+1}/#{people.size})"
@@ -24,7 +24,7 @@ people.each_with_index do |p, i|
     
       f = Fundraiser.find_or_create_by_sunlight_id(e['pk'])
       f.person = p
-      f.host = e['fields']['host']
+      f.host = e['fields']['hosts'].join(", ")
       f.beneficiaries = e['fields']['beneficiaries'].join(", ")
     
       begin

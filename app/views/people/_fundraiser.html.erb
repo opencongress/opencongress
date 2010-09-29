@@ -4,6 +4,9 @@
     <strong>What:</strong> <a href="http://politicalpartytime.org/party/<%= fundraiser.sunlight_id %>/"><%= fundraiser.entertainment_type %></a><br />
   <% end %>
   <strong>Where:</strong> <%= fundraiser.venue %><br />
+  <% unless fundraiser.host.blank? %>
+    <strong>Host(s):</strong> <%= fundraiser.host %><br />
+  <% end %>
   <strong>Beneficiaries:</strong> <%= fundraiser.beneficiaries %><br />
   <% unless fundraiser.contributions_info.blank? %>
     <strong>Contributions:</strong> <%= fundraiser.contributions_info %><br />

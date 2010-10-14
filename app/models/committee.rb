@@ -1,4 +1,4 @@
-class Committee < ActiveRecord::Base
+class Committee < ViewableObject
   validates_uniqueness_of :subcommittee_name, :scope => :name
 
   has_many :committee_people
@@ -16,7 +16,6 @@ class Committee < ActiveRecord::Base
   has_one :committee_stats
 
   has_many :comments, :as => :commentable
-  has_many :page_views, :as => :viewable
 
   has_many :bookmarks, :as => :bookmarkable
   
@@ -86,17 +85,6 @@ class Committee < ActiveRecord::Base
   def atom_id_as_entry
     # dates for committees are weird, so let use the beginning of each congress session
     "tag:opencongress.org,#{CONGRESS_START_DATES[DEFAULT_CONGRESS]}:/committee/#{id}"
-  end
-  
-  def views(seconds = 0)
-    # if the view_count is part of this instance's @attributes use that; otherwise, count
-    return @attributes['view_count'] if @attributes['view_count']
-    
-    if seconds <= 0
-      page_views.count
-    else
-      page_views.count(:conditions => ["created_at > ?", seconds.ago])
-    end
   end
 
   def Committee.random(limit)

@@ -1,4 +1,4 @@
-class Subject < ActiveRecord::Base  
+class Subject < ViewableObject  
   validates_uniqueness_of :term
   #validates_associated :bills
 
@@ -8,7 +8,6 @@ class Subject < ActiveRecord::Base
   has_many :recently_introduced_bills, :class_name => "Bill", :through => :bill_subjects, :source => "bill", :order => "bills.introduced DESC", :limit => 20
 
   has_many :comments, :as => :commentable
-  has_many :page_views, :as => :viewable
 
   has_one :issue_stats
   
@@ -197,17 +196,6 @@ class Subject < ActiveRecord::Base
 
   def Subject.find_by_first_letter(letter)
     Subject.find(:all, :conditions => ["upper(term) LIKE ?", "#{letter}%"], :order => "term asc")
-  end
-
-  def views(seconds = 0)
-    # if the view_count is part of this instance's @attributes use that; otherwise, count
-    return @attributes['view_count'] if @attributes['view_count']
-    
-    if seconds <= 0
-      page_views.count
-    else
-      page_views.count(:conditions => ["created_at > ?", seconds.ago])
-    end
   end
 
   def Subject.by_bill_count

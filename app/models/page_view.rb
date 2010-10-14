@@ -14,26 +14,22 @@ class PageView < ActiveRecord::Base
                                           most_viewed.view_count AS view_count 
                                    FROM #{associated_class.table_name} 
                                    INNER JOIN
-                                   (SELECT page_views.viewable_id,
-                                           count(page_views.viewable_id) AS view_count
-                                    FROM page_views 
-                                    WHERE page_views.created_at > ? AND
-                                          page_views.viewable_type = ?
-                                    GROUP BY page_views.viewable_id
+                                   (SELECT object_aggregates.aggregatable_id,
+                                           sum(object_aggregates.page_views_count) AS view_count
+                                    FROM object_aggregates 
+                                    WHERE object_aggregates.date >= ? AND
+                                          object_aggregates.aggregatable_type = ?
+                                    GROUP BY object_aggregates.aggregatable_id
                                     ORDER BY view_count DESC) most_viewed
-                                   ON #{associated_class.table_name}.id=most_viewed.viewable_id
+                                   ON #{associated_class.table_name}.id=most_viewed.aggregatable_id
                                    #{where_clause}
                                    ORDER BY view_count DESC LIMIT ?", 
                                   seconds.ago, viewable_type, limit])
   end
   
   def self.create_by_hour(viewable, request)
-    view = viewable.page_views.find(:first, :conditions => ["ip_address = ? AND created_at > ?", request.remote_ip, 1.hour.ago])
-    
-    unless view
-      viewable.page_views.create(:ip_address => request.remote_ip, 
-                         :referrer => ((/www\.opencongress\.org/.match(request.referer)) ? '' : request.referer))
-    end
+    viewable.page_views.create(:ip_address => request.remote_ip, 
+                       :referrer => ((/www\.opencongress\.org/.match(request.referer)) ? '' : request.referer))
   end
 end
 

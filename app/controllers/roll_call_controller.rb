@@ -282,7 +282,11 @@ class RollCallController < ApplicationController
     @roll_call = RollCall.find_by_id(params[:id]) || RollCall.find_by_ident("#{params[:year]}-#{params[:chamber]}#{params[:number]}")
     
     if @roll_call
-      PageView.create_by_hour(@roll_call, request)
+      key = "page_view_ip:RollCall:#{@roll_call.id}:#{request.remote_ip}"
+      unless read_fragment(key)
+        PageView.create_by_hour(@roll_call, request)
+        write_fragment(key, "c", :expires_in => 1.hour)
+      end
     end
   end
 

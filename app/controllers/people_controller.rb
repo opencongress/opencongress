@@ -688,4 +688,17 @@ class PeopleController < ApplicationController
       PageView.create_by_hour(@person, request)
     end
   end
+  
+  def page_view
+    @person = Person.find(params[:id])
+    
+    if @person
+      key = "page_view_ip:Person:#{@person.id}:#{request.remote_ip}"
+      unless read_fragment(key)
+        PageView.create_by_hour(@person, request)
+        write_fragment(key, "c", :expires_in => 1.hour)
+      end
+    end
+  end
+  
 end

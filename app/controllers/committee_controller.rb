@@ -1,5 +1,6 @@
 class CommitteeController < ApplicationController
-
+  before_filter :page_view
+  
   def index
     all = Committee.find(:all, :conditions => ['active = ?', true]).sort_by { |c| [(c.name || ""), (c.subcommittee_name || "") ] }
     @committees = all.group_by {|c| c.name || ""}
@@ -16,8 +17,6 @@ class CommitteeController < ApplicationController
   end
 
   def show
-    @committee = Committee.find(params[:id], :include => :reports)
-
     if @committee.has_wiki_link? # && !Rails.env.production?
       @wiki_tab = true
       @wiki_url = @committee.wiki_url
@@ -41,7 +40,6 @@ class CommitteeController < ApplicationController
     
 		@top_comments = @committee.comments.find(:all,:include => [:user], :order => "comments.plus_score_count - comments.minus_score_count DESC", :limit => 2)
     
-    PageView.create_by_hour(@committee, request)
     @atom = {'link' => url_for(:only_path => false, :controller => 'committee', :id => @committee, :action => 'atom'), 'title' => "#{@committee.name} - Major Bill Actions"}
   end
 
@@ -107,5 +105,19 @@ class CommitteeController < ApplicationController
   def nodata
     @page_title = "Committee Data Forthcoming"
     
+  end
+  
+  private
+  
+  def page_view
+    @committee = Committee.find(params[:id], :include => :reports)
+    
+    if @committee
+      key = "page_view_ip:Committee:#{@committee.id}:#{request.remote_ip}"
+      unless read_fragment(key)
+        PageView.create_by_hour(@committee, request)
+        write_fragment(key, "c", :expires_in => 1.hour)
+      end
+    end
   end
 end

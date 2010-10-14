@@ -1,4 +1,4 @@
-class Person < ActiveRecord::Base  
+class Person < ViewableObject  
 #  acts_as_solr :fields => [:party, {:with_party_percentage => :float}, {:abstains_percentage => :float}, {:against_party_percentage => :float}], 
 #               :facets => [:party]
 
@@ -44,7 +44,6 @@ class Person < ActiveRecord::Base
   has_many :featured_people, :order => 'created_at DESC'
 
   has_many :comments, :as => :commentable
-  has_many :page_views, :as => :viewable
   has_many :bookmarks, :as => :bookmarkable
 
   has_many :videos, :order => "videos.video_date DESC, videos.id"
@@ -1132,18 +1131,6 @@ class Person < ActiveRecord::Base
     end
     
     (people.sort { |p1, p2| p2.stats.entered_top_viewed <=> p1.stats.entered_top_viewed })
-  end
-  
-  def views(seconds = 0)
-    # if the view_count is part of this instance's @attributes use that because it came from
-    # the query and will make sense in the context of the page; otherwise, count
-    return @attributes['view_count'] if @attributes['view_count']
-    
-    if seconds <= 0
-      page_views_count
-    else
-      page_views.count(:conditions => ["created_at > ?", seconds.ago])
-    end
   end
   
   def representative_for_congress?(congress = DEFAULT_CONGRESS )

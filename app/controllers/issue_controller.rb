@@ -1,6 +1,6 @@
-
 class IssueController < ApplicationController
   before_filter :issue_profile_shared, :only => [:show, :comments]
+  before_filter :page_view, :only => :show
   skip_before_filter :store_location, :except => [:index, :alphabetical, :by_most_viewed, :by_bill_count, :top_twenty_bills, :show, :top_viewed_bills]
 
   def index
@@ -102,7 +102,6 @@ class IssueController < ApplicationController
     unless @subject
        render :partial => "index/notfound_page", :layout => 'application', :status => "404" and return 
     end
-    PageView.create_by_hour(@subject, request)
 
     comment_redirect(params[:goto_comment]) and return if params[:goto_comment]
 
@@ -175,5 +174,15 @@ class IssueController < ApplicationController
       flash[:error] = "Invalid bill URL."
       redirect_to :action => 'index'
     end    
+  end
+  
+  def page_view
+    if @subject
+      key = "page_view_ip:Subject:#{@subject.id}:#{request.remote_ip}"
+      unless read_fragment(key)
+        PageView.create_by_hour(@subject, request)
+        write_fragment(key, "c", :expires_in => 1.hour)
+      end
+    end
   end
 end

@@ -181,6 +181,7 @@ class IssueController < ApplicationController
       key = "page_view_ip:Subject:#{@subject.id}:#{request.remote_ip}"
       unless read_fragment(key)
         @subject.increment!(:page_views_count)
+        @subject.page_view
         write_fragment(key, "c", :expires_in => 1.hour)
       end
     end

@@ -241,7 +241,7 @@ class Person < ViewableObject
     		             GROUP BY roll_call_votes.person_id) party_votes_republican
     			     ON party_votes_republican.person_id = people.id
            LEFT OUTER JOIN (SELECT object_aggregates.aggregatable_id,
-                                          sum(object_aggregates.aggregatable_id) AS view_count
+                                          sum(object_aggregates.page_views_count) AS view_count
                                    FROM object_aggregates 
                                    WHERE object_aggregates.date >= current_timestamp - interval '#{def_count_days} days' AND
                                          object_aggregates.aggregatable_type = 'Person'

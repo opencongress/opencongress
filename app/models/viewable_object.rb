@@ -1,9 +1,12 @@
 class ViewableObject < ActiveRecord::Base
-  has_many :page_views, :as => :viewable
   has_many :object_aggregates, :as => :aggregatable
   
   def self.abstract_class?
     true
+  end
+  
+  def page_view
+    self.object_aggregates.find_or_create_by_date(Date.today).increment!(:page_views_count)
   end
   
   def views(seconds = 0)

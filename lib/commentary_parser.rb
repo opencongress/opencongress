@@ -406,7 +406,7 @@ module CommentaryParser
 
 
   def CommentaryParser.most_viewed_and_recent_activity_bills
-    most_viewed_bills = PageView.popular('Bill')
+    most_viewed_bills = ObjectAggregate.popular('Bill')
     recent_activity = Bill.find(:all, 
                                 :conditions => ["bills.id IN (SELECT bill_id FROM actions 
                                                         WHERE actions.datetime > ? 

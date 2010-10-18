@@ -69,7 +69,7 @@ class BillController < ApplicationController
     @title_desc = SiteText.find_title_desc('bill_all')
     @sort = 'all'
     # @custom_sidebar = Sidebar.find_by_page_and_enabled('bill_all', true)
-    #@related_bills = PageView.popular('Bill', DEFAULT_COUNT_TIME, 5) unless @custom_sidebar
+    #@related_bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME, 5) unless @custom_sidebar
     respond_to do |format|
       format.html {}
       format.js { render :action => 'update'}
@@ -80,7 +80,7 @@ class BillController < ApplicationController
     @days = days_from_params(params[:days])
     
     unless read_fragment("bill_meta_popular_#{@days}")
-      @bills = PageView.popular('Bill', @days, 100)
+      @bills = ObjectAggregate.popular('Bill', @days, 100)
     end
     
     @atom = {'link' => url_for(:only_path => false, :controller => 'bill/atom/most', :action => 'viewed'), 'title' => "Top 20 Most Viewed Bills"}
@@ -675,7 +675,9 @@ private
     if @bill = Bill.find_by_session_and_bill_type_and_number(session, bill_type, number, { :include => :actions })
       key = "page_view_ip:Bill:#{@bill.id}:#{request.remote_ip}"
       unless read_fragment(key)
-        PageView.create_by_hour(@bill, request)
+        @bill.increment!(:page_views_count)
+        @bill.page_view
+        @bill.log_referrer(request.referer)
         write_fragment(key, "c", :expires_in => 1.hour)
       end
     end

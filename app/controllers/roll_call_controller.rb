@@ -195,7 +195,7 @@ class RollCallController < ApplicationController
                              :conditions => ['date > ?', CONGRESS_START_DATES[DEFAULT_CONGRESS]]).paginate :page => @page
 
     end
-    @carousel = [PageView.popular('RollCall', DEFAULT_COUNT_TIME).slice(0..9)] 
+    @carousel = [ObjectAggregate.popular('RollCall', DEFAULT_COUNT_TIME).slice(0..9)] 
     @page_title = 'All Roll Calls'
     @title_desc = SiteText.find_title_desc('roll_call_all')
   
@@ -284,7 +284,7 @@ class RollCallController < ApplicationController
     if @roll_call
       key = "page_view_ip:RollCall:#{@roll_call.id}:#{request.remote_ip}"
       unless read_fragment(key)
-        PageView.create_by_hour(@roll_call, request)
+        @roll_call.page_view
         write_fragment(key, "c", :expires_in => 1.hour)
       end
     end

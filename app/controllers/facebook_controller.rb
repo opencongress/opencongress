@@ -40,7 +40,7 @@ class FacebookController < ApplicationController
   end
   
   def mostviewedbills
-    @bills = PageView.popular('Bill', DEFAULT_COUNT_TIME, 25)
+    @bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME, 25)
     @bill_count = 25
     
     respond_to do |format|

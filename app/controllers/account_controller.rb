@@ -179,7 +179,7 @@ class AccountController < ApplicationController
   def welcome
     @user = current_user
     @show_tracked_list = true
-    @most_viewed_bills = PageView.popular('Bill', DEFAULT_COUNT_TIME, 5)
+    @most_viewed_bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME, 5)
     @senators, @reps = Person.find_current_congresspeople_by_zipcode(@user.zipcode, @user.zip_four) if ( logged_in? && @user == current_user && !(@user.zipcode.nil? || @user.zipcode.empty?))
   end
 

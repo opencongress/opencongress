@@ -240,14 +240,14 @@ class Person < ViewableObject
     	                     AND bills.session = #{congress}
     		             GROUP BY roll_call_votes.person_id) party_votes_republican
     			     ON party_votes_republican.person_id = people.id
-           LEFT OUTER JOIN (SELECT page_views.viewable_id,
-                                          count(page_views.viewable_id) AS view_count
-                                   FROM page_views 
-                                   WHERE page_views.created_at > current_timestamp - interval '#{def_count_days} days' AND
-                                         page_views.viewable_type = 'Person'
-                                   GROUP BY page_views.viewable_id
+           LEFT OUTER JOIN (SELECT object_aggregates.aggregatable_id,
+                                          sum(object_aggregates.aggregatable_id) AS view_count
+                                   FROM object_aggregates 
+                                   WHERE object_aggregates.date >= current_timestamp - interval '#{def_count_days} days' AND
+                                         object_aggregates.aggregatable_type = 'Person'
+                                   GROUP BY object_aggregates.aggregatable_id
                                    ORDER BY view_count DESC) most_viewed
-                                  ON people.id=most_viewed.viewable_id
+                                  ON people.id=most_viewed.aggregatable_id
            LEFT OUTER JOIN (SELECT count(commentaries.id) as blog_count, commentaries.commentariable_id
                                    FROM commentaries 
                                    WHERE commentaries.date > current_timestamp - interval '#{def_count_days} days' AND
@@ -1109,11 +1109,11 @@ class Person < ViewableObject
   def Person.top20_viewed(person_type = nil)
     case person_type 
     when 'sen'
-      people = PageView.popular('Person', DEFAULT_COUNT_TIME, 540).select{|p| p.title == 'Rep.'}[0..20]
+      people = ObjectAggregate.popular('Person', DEFAULT_COUNT_TIME, 540).select{|p| p.title == 'Rep.'}[0..20]
     when 'rep'
-      people = PageView.popular('Person', DEFAULT_COUNT_TIME, 540).select{|p| p.title == 'Rep.'}[0..20]
+      people = ObjectAggregate.popular('Person', DEFAULT_COUNT_TIME, 540).select{|p| p.title == 'Rep.'}[0..20]
     else
-      people = PageView.popular('Person')
+      people = ObjectAggregate.popular('Person')
     end
     
     (people.select {|p| p.stats.entered_top_viewed.nil? }).each do |pv|

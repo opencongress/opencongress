@@ -8,7 +8,7 @@ class CommitteeController < ApplicationController
     @senate_committees = Committee.by_chamber('senate').sort_by { |c| [c.name, (c.subcommittee_name || "")] }.group_by(&:name)
 
     #@custom_sidebar = Sidebar.find_by_page_and_enabled('committee_index', true)
-    @carousel = PageView.popular('Committee', DEFAULT_COUNT_TIME).slice(0..7)
+    @carousel = ObjectAggregate.popular('Committee', DEFAULT_COUNT_TIME).slice(0..7)
     
     @page_title =  "Committees"
     @title_class = "sort"
@@ -56,7 +56,7 @@ class CommitteeController < ApplicationController
     @major = @committees.keys.sort
     
     @custom_sidebar = Sidebar.find_by_page_and_enabled('committee_by_chamber', true)
-    @related_committees = PageView.popular('Committee', DEFAULT_COUNT_TIME).slice(0..2) unless @custom_sidebar 
+    @related_committees = ObjectAggregate.popular('Committee', DEFAULT_COUNT_TIME).slice(0..2) unless @custom_sidebar 
     
     @title_class = "sort"
     @title_desc = SiteText.find_title_desc('committee_index')
@@ -68,7 +68,7 @@ class CommitteeController < ApplicationController
 
     @days = days_from_params(params[:days])
 
-    @committees = PageView.popular('Committee', @days)
+    @committees = ObjectAggregate.popular('Committee', @days)
     
     @custom_sidebar = Sidebar.find_by_page_and_enabled('committee_by_chamber', true)
     
@@ -115,7 +115,8 @@ class CommitteeController < ApplicationController
     if @committee
       key = "page_view_ip:Committee:#{@committee.id}:#{request.remote_ip}"
       unless read_fragment(key)
-        PageView.create_by_hour(@committee, request)
+        @committee.increment!(:page_views_count)
+        @committee.page_view
         write_fragment(key, "c", :expires_in => 1.hour)
       end
     end

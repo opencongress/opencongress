@@ -11,7 +11,7 @@ class IssueController < ApplicationController
     @sort = :alphabetical
     
     @custom_sidebar = Sidebar.find_by_page_and_enabled('issue_alphabetical', true)
-    @carousel = [PageView.popular('Subject', DEFAULT_COUNT_TIME).slice(0..9)]
+    @carousel = [ObjectAggregate.popular('Subject', DEFAULT_COUNT_TIME).slice(0..9)]
     
     letter = params[:id]
     if letter.nil?
@@ -44,7 +44,7 @@ class IssueController < ApplicationController
     @custom_sidebar = Sidebar.find_by_page_and_enabled('issue_by_most_viewed', true)
 
     @order = :most_viewed
-    @subjects = PageView.popular('Subject', @days).paginate
+    @subjects = ObjectAggregate.popular('Subject', @days).paginate
 
     @atom = {'link' => url_for(:only_path => false, :controller => 'issue', :action => 'atom_top20'), 'title' => "Top 20 Most Viewed Issues"}
     
@@ -59,7 +59,7 @@ class IssueController < ApplicationController
     @sort = :by_bill_count
 
     #@custom_sidebar = Sidebar.find_by_page_and_enabled('issue_by_bill_count', true)
-    @carousel = [PageView.popular('Subject', DEFAULT_COUNT_TIME).slice(0..9)] 
+    @carousel = [ObjectAggregate.popular('Subject', DEFAULT_COUNT_TIME).slice(0..9)] 
 
     @order = :bill_count
     @subjects = Subject.find(:all, :order => 'bill_count desc, term asc').paginate
@@ -180,7 +180,7 @@ class IssueController < ApplicationController
     if @subject
       key = "page_view_ip:Subject:#{@subject.id}:#{request.remote_ip}"
       unless read_fragment(key)
-        PageView.create_by_hour(@subject, request)
+        @subject.increment!(:page_views_count)
         write_fragment(key, "c", :expires_in => 1.hour)
       end
     end

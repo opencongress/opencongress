@@ -207,7 +207,7 @@ class Subject < ViewableObject
   end
   
   def Subject.top20_viewed
-    issues = PageView.popular('Subject')
+    issues = ObjectAggregate.popular('Subject')
       
     (issues.select {|b| b.stats.entered_top_viewed.nil? }).each do |bv|
       bv.stats.entered_top_viewed = Time.now
@@ -320,12 +320,12 @@ class Subject < ViewableObject
                               most_viewed.view_count AS view_count 
                        FROM bills
                        INNER JOIN
-                       (SELECT page_views.viewable_id, 
-                               count(page_views.viewable_id) AS view_count
-                        FROM page_views 
-                        WHERE page_views.created_at > ? AND
-                              page_views.viewable_type = 'Bill'
-                        GROUP BY page_views.viewable_id
+                       (SELECT object_aggregates.aggregatable_id, 
+                               count(object_aggregates.aggregatable_id) AS view_count
+                        FROM object_aggregates 
+                        WHERE object_aggregates.date >= ? AND
+                              object_aggregates.aggregatable_type = 'Bill'
+                        GROUP BY object_aggregates.aggregatable_id
                         ORDER BY view_count DESC) most_viewed
                        ON bills.id=most_viewed.viewable_id
                        INNER JOIN bill_subjects ON bill_subjects.bill_id=bills.id

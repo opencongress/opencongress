@@ -242,7 +242,7 @@ class Committee < ViewableObject
   end
   
   def Committee.top20_viewed
-    comms = PageView.popular('Committee')
+    comms = ObjectAggregate.popular('Committee')
       
     (comms.select {|b| b.stats.entered_top_viewed.nil? }).each do |bv|
       bv.stats.entered_top_viewed = Time.now

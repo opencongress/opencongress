@@ -18,8 +18,8 @@ class Bill < ViewableObject
   has_many :amendments, :order => 'offered_datetime', :include => :roll_calls
   has_many :roll_calls, :order => 'date DESC'
   has_many :comments, :as => :commentable
-  has_many :page_views, :as => :viewable
   has_many :object_aggregates, :as => :aggregatable
+  has_many :bill_referrers
   has_many :bill_votes
   has_one  :last_action, :class_name => "Action", :order => "actions.date DESC"
   has_many :most_recent_actions, :class_name => "Action", :order => "actions.date DESC", :limit => 5
@@ -696,7 +696,7 @@ class Bill < ViewableObject
     end
   
     def top20_viewed
-      bills = PageView.popular('Bill')
+      bills = ObjectAggregate.popular('Bill')
       
       (bills.select {|b| b.stats.entered_top_viewed.nil? }).each do |bv|
         bv.stats.entered_top_viewed = Time.now
@@ -707,7 +707,7 @@ class Bill < ViewableObject
     end
 
     def top5_viewed
-      bills = PageView.popular('Bill', DEFAULT_COUNT_TIME, 5)
+      bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME, 5)
       
       (bills.select {|b| b.stats.entered_top_viewed.nil? }).each do |bv|
         bv.stats.entered_top_viewed = Time.now
@@ -733,6 +733,12 @@ class Bill < ViewableObject
       Bill.find_by_sql ["SELECT * FROM (SELECT random(), bills.* FROM bills ORDER BY 1) as bs LIMIT ?;", limit]
     end
   end # class << self
+  
+  def log_referrer(referrer)
+    unless (/www\.opencongress\.org/.match(request.referer) || /www\.google\.com/.match(request.referer))
+      self.bill_referrers.find_or_create_by_url(referrer)
+    end
+  end
   
   def unique_referrers(since = 2.days)
     ref_views = PageView.find(:all, 

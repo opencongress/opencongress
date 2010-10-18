@@ -321,7 +321,7 @@ class Subject < ViewableObject
                        FROM bills
                        INNER JOIN
                        (SELECT object_aggregates.aggregatable_id, 
-                               count(object_aggregates.aggregatable_id) AS view_count
+                               sum(object_aggregates.aggregatable_id) AS view_count
                         FROM object_aggregates 
                         WHERE object_aggregates.date >= ? AND
                               object_aggregates.aggregatable_type = 'Bill'

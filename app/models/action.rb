@@ -1,4 +1,6 @@
 class Action < ActiveRecord::Base
+  include Comparable
+  
   # has_one :roll # votes?
   has_many :refers
   
@@ -101,11 +103,11 @@ class Action < ActiveRecord::Base
   end
 
   def formatted_date
-    Time.at(date).utc.strftime("%b %d, %Y")
+    Time.at(date).strftime("%b %d, %Y")
   end
 
   def formatted_date_short
-    Time.at(date).utc.strftime("%b ") + Time.at(date).utc.day.ordinalize    
+    Time.at(date).strftime("%b ") + Time.at(date).day.ordinalize    
   end
 
   def date_std
@@ -153,6 +155,28 @@ class Action < ActiveRecord::Base
 
   def vetoed_to_s
     "Vetoed on #{self.date_std}. #{self.text}."
+  end
+  
+  def <=>(another_action)
+    if self.action_type == 'enacted'
+      -1
+    elsif self.action_type == 'vote' and self.vote_type == 'override'
+      -1
+    elsif self.action_type == 'signed'
+      -1
+    elsif self.action_type == 'vetoed'
+      -1
+    elsif self.action_type == 'topresident'
+      -1
+    else
+      if (Date.parse(date_std) > Date.parse(another_action.date_std))
+        -1
+      elsif (Date.parse(date_std) < Date.parse(another_action.date_std))
+        1
+      else
+        another_action.id <=> id
+      end
+    end
   end
   
 end

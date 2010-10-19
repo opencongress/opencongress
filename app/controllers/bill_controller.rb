@@ -390,7 +390,7 @@ class BillController < ApplicationController
   end
 
   def actions
-    @actions = @bill.actions.paginate(:all, :page => @page, :per_page => 10, :order => ["date DESC"])
+    @actions = @bill.actions.paginate(:all, :page => @page, :per_page => 10, :order => ["datetime::date DESC, id DESC"])
   end 
   
   def votes

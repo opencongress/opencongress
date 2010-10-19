@@ -375,12 +375,12 @@ module CommentaryParser
 
   def CommentaryParser.find_referring_posts_for_bill?(bill)
     # returns true unless we have all the referrings posts already
-    bill.unique_referrers.each do |r|
+    bill.bill_referrers.each do |r|
       #puts "#{r}"
-      if /google\.com/.match(r)
+      if /google\.com/.match(r.url)
         #puts "From google, skipping."
       else
-        unless Commentary.find(:first, :conditions => ["url=?", r])
+        unless Commentary.find(:first, :conditions => ["url=?", r.url])
           #puts "Didn't find, will search"
           return true
         end
@@ -440,13 +440,8 @@ module CommentaryParser
     Person.expire_meta_commentary_fragments
   end
   
-  def CommentaryParser.recent_referrers
-    referred_bills = Bill.find_by_sql(["SELECT bills.* FROM bills WHERE id IN 
-                               (SELECT page_views.viewable_id FROM page_views
-                                WHERE page_views.viewable_type = 'Bill' AND
-                                      page_views.referrer IS NOT NULL AND
-                                      page_views.created_at > ?
-                                GROUP BY page_views.viewable_id)", 2.days.ago])
+  def CommentaryParser.recent_referrers                                
+    referred_bills = BillReferrer.find(:all).collect{ |br| br.bill }.uniq
                                 
                   
     i = 0
@@ -464,6 +459,9 @@ module CommentaryParser
     end
     
     Bill.expire_meta_commentary_fragments
+    
+    # delete referrers older than two days
+    BillReferrer.find(:all, :conditions => ["created_at > ?", 2.days.ago]).each{ |br| br.destroy }
   end
 end
 

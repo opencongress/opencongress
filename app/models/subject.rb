@@ -327,7 +327,7 @@ class Subject < ViewableObject
                               object_aggregates.aggregatable_type = 'Bill'
                         GROUP BY object_aggregates.aggregatable_id
                         ORDER BY view_count DESC) most_viewed
-                       ON bills.id=most_viewed.viewable_id
+                       ON bills.id=most_viewed.aggregatable_id
                        INNER JOIN bill_subjects ON bill_subjects.bill_id=bills.id
                        WHERE bills.session=? AND bill_subjects.subject_id=?
                        ORDER BY view_count DESC

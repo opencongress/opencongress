@@ -41,7 +41,7 @@ class ObjectAggregates < ActiveRecord::Migration
                   ELSIF (TG_TABLE_NAME = ''bill_votes'') THEN
                       object_type := ''Bill'';
                       object_id := NEW.bill_id;
-                      IF (NEW.support = 1) THEN
+                      IF (NEW.support = 0) THEN
                         column_name := ''votes_support'';
                       ELSE 
                         column_name := ''votes_oppose'';

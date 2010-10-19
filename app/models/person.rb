@@ -1,4 +1,4 @@
-class Person < ActiveRecord::Base  
+class Person < ViewableObject  
 #  acts_as_solr :fields => [:party, {:with_party_percentage => :float}, {:abstains_percentage => :float}, {:against_party_percentage => :float}], 
 #               :facets => [:party]
 
@@ -44,7 +44,6 @@ class Person < ActiveRecord::Base
   has_many :featured_people, :order => 'created_at DESC'
 
   has_many :comments, :as => :commentable
-  has_many :page_views, :as => :viewable
   has_many :bookmarks, :as => :bookmarkable
 
   has_many :videos, :order => "videos.video_date DESC, videos.id"
@@ -241,14 +240,14 @@ class Person < ActiveRecord::Base
     	                     AND bills.session = #{congress}
     		             GROUP BY roll_call_votes.person_id) party_votes_republican
     			     ON party_votes_republican.person_id = people.id
-           LEFT OUTER JOIN (SELECT page_views.viewable_id,
-                                          count(page_views.viewable_id) AS view_count
-                                   FROM page_views 
-                                   WHERE page_views.created_at > current_timestamp - interval '#{def_count_days} days' AND
-                                         page_views.viewable_type = 'Person'
-                                   GROUP BY page_views.viewable_id
+           LEFT OUTER JOIN (SELECT object_aggregates.aggregatable_id,
+                                          sum(object_aggregates.page_views_count) AS view_count
+                                   FROM object_aggregates 
+                                   WHERE object_aggregates.date >= current_timestamp - interval '#{def_count_days} days' AND
+                                         object_aggregates.aggregatable_type = 'Person'
+                                   GROUP BY object_aggregates.aggregatable_id
                                    ORDER BY view_count DESC) most_viewed
-                                  ON people.id=most_viewed.viewable_id
+                                  ON people.id=most_viewed.aggregatable_id
            LEFT OUTER JOIN (SELECT count(commentaries.id) as blog_count, commentaries.commentariable_id
                                    FROM commentaries 
                                    WHERE commentaries.date > current_timestamp - interval '#{def_count_days} days' AND
@@ -1110,11 +1109,11 @@ class Person < ActiveRecord::Base
   def Person.top20_viewed(person_type = nil)
     case person_type 
     when 'sen'
-      people = PageView.popular('Person', DEFAULT_COUNT_TIME, 540).select{|p| p.title == 'Rep.'}[0..20]
+      people = ObjectAggregate.popular('Person', DEFAULT_COUNT_TIME, 540).select{|p| p.title == 'Rep.'}[0..20]
     when 'rep'
-      people = PageView.popular('Person', DEFAULT_COUNT_TIME, 540).select{|p| p.title == 'Rep.'}[0..20]
+      people = ObjectAggregate.popular('Person', DEFAULT_COUNT_TIME, 540).select{|p| p.title == 'Rep.'}[0..20]
     else
-      people = PageView.popular('Person')
+      people = ObjectAggregate.popular('Person')
     end
     
     (people.select {|p| p.stats.entered_top_viewed.nil? }).each do |pv|
@@ -1132,18 +1131,6 @@ class Person < ActiveRecord::Base
     end
     
     (people.sort { |p1, p2| p2.stats.entered_top_viewed <=> p1.stats.entered_top_viewed })
-  end
-  
-  def views(seconds = 0)
-    # if the view_count is part of this instance's @attributes use that because it came from
-    # the query and will make sense in the context of the page; otherwise, count
-    return @attributes['view_count'] if @attributes['view_count']
-    
-    if seconds <= 0
-      page_views_count
-    else
-      page_views.count(:conditions => ["created_at > ?", seconds.ago])
-    end
   end
   
   def representative_for_congress?(congress = DEFAULT_CONGRESS )

@@ -1,6 +1,6 @@
-class PageView < ActiveRecord::Base
-  belongs_to :viewable, :polymorphic => true, :counter_cache => true
-
+class ObjectAggregate < ActiveRecord::Base
+  belongs_to :aggregatable, :polymorphic => true
+  
   def self.popular(viewable_type, seconds = DEFAULT_COUNT_TIME, limit = 20, congress = DEFAULT_CONGRESS, frontpage_hot = false)
     associated_class = Object.const_get(viewable_type)
 
@@ -26,10 +26,4 @@ class PageView < ActiveRecord::Base
                                    ORDER BY view_count DESC LIMIT ?", 
                                   seconds.ago, viewable_type, limit])
   end
-  
-  def self.create_by_hour(viewable, request)
-    viewable.page_views.create(:ip_address => request.remote_ip, 
-                       :referrer => ((/www\.opencongress\.org/.match(request.referer)) ? '' : request.referer))
-  end
 end
-

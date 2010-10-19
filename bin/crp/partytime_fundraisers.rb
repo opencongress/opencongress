@@ -10,7 +10,6 @@ require 'json'
 require 'open-uri'
 
 people = Person.all_sitting
-#people = Person.find(:all, :conditions => "osid='N00008092'")
 
 people.each_with_index do |p, i|
   puts "Checking fundraisers for #{p.name} (#{i+1}/#{people.size})"

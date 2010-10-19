@@ -88,7 +88,7 @@ class ObjectAggregates < ActiveRecord::Migration
      execute "DROP VIEW list_representatives"
      execute "DROP VIEW list_senators"
 
-     #drop_table :page_views
+     drop_table :page_views
   end
 
   def self.down

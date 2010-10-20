@@ -195,14 +195,14 @@ class Person < ViewableObject
     Person.find_by_sql(["SELECT people.*, 
        COALESCE(person_approvals.person_approval_avg, 0) as person_approval_average,
        COALESCE(bills_sponsored.sponsored_bills_count, 0) as sponsored_bills_count,
-       COALESCE(total_rolls.tcalls, 0) as total_roll_call_votes,
-       CASE WHEN people.party = 'Democrat' THEN COALESCE(party_votes_democrat.pcount, 0)
-            WHEN people.party = 'Republican' THEN COALESCE(party_votes_republican.pcount, 0)
+       COALESCE(people.total_session_votes, 0) as total_roll_call_votes,
+       CASE WHEN people.party = 'Democrat' THEN COALESCE(people.votes_democratic_position, 0)
+            WHEN people.party = 'Republican' THEN COALESCE(people.votes_republican_position, 0)
             ELSE 0
        END as party_roll_call_votes,
-       COALESCE(most_viewed.view_count, 0) as view_count,
-       COALESCE(blogs.blog_count, 0) as blog_count,
-       COALESCE(news.news_count, 0) as news_count
+       COALESCE(aggregates.view_count, 0) as view_count,
+       COALESCE(aggregates.blog_count, 0) as blog_count,
+       COALESCE(aggregates.news_count, 0) as news_count
     FROM people
     LEFT OUTER JOIN roles on roles.person_id=people.id    
     LEFT OUTER JOIN (select person_approvals.person_id as person_approval_id, 
@@ -217,52 +217,16 @@ class Person < ViewableObject
                     WHERE bills.session = #{congress}
                     GROUP BY sponsor_id) bills_sponsored
       ON bills_sponsored.sponsor_id = people.id
-    LEFT OUTER JOIN (SELECT DISTINCT(roll_call_votes.person_id), count(DISTINCT roll_calls.id) AS tcalls 
-                    FROM roll_calls
-                    LEFT OUTER JOIN bills ON bills.id = roll_calls.bill_id 
-                    INNER JOIN roll_call_votes ON roll_calls.id = roll_call_votes.roll_call_id 
-                      WHERE roll_call_votes.vote != '0' AND bills.session = #{congress}
-                      GROUP BY roll_call_votes.person_id) total_rolls
-    		          ON total_rolls.person_id = people.id
-    LEFT OUTER JOIN (SELECT DISTINCT(roll_call_votes.person_id), count(DISTINCT roll_calls.id) AS pcount 
-                     FROM roll_calls 
-                     LEFT OUTER JOIN bills ON bills.id = roll_calls.bill_id 
-                     INNER JOIN roll_call_votes ON roll_calls.id = roll_call_votes.roll_call_id 
-                     WHERE ((roll_calls.democratic_position = true AND vote = '+') OR (roll_calls.democratic_position = false AND vote = '-')) 
-                     AND bills.session = #{congress}
-                 GROUP BY roll_call_votes.person_id) party_votes_democrat
-    	     ON party_votes_democrat.person_id = people.id
-    	    LEFT OUTER JOIN (SELECT DISTINCT(roll_call_votes.person_id), count(DISTINCT roll_calls.id) AS pcount 
-    	                     FROM roll_calls 
-    	                     LEFT OUTER JOIN bills ON bills.id = roll_calls.bill_id 
-    	                     INNER JOIN roll_call_votes ON roll_calls.id = roll_call_votes.roll_call_id 
-    	                     WHERE ((roll_calls.republican_position = true AND vote = '+') OR (roll_calls.republican_position = false AND vote = '-')) 
-    	                     AND bills.session = #{congress}
-    		             GROUP BY roll_call_votes.person_id) party_votes_republican
-    			     ON party_votes_republican.person_id = people.id
-           LEFT OUTER JOIN (SELECT object_aggregates.aggregatable_id,
-                                          sum(object_aggregates.page_views_count) AS view_count
-                                   FROM object_aggregates 
-                                   WHERE object_aggregates.date >= current_timestamp - interval '#{def_count_days} days' AND
-                                         object_aggregates.aggregatable_type = 'Person'
-                                   GROUP BY object_aggregates.aggregatable_id
-                                   ORDER BY view_count DESC) most_viewed
-                                  ON people.id=most_viewed.aggregatable_id
-           LEFT OUTER JOIN (SELECT count(commentaries.id) as blog_count, commentaries.commentariable_id
-                                   FROM commentaries 
-                                   WHERE commentaries.date > current_timestamp - interval '#{def_count_days} days' AND
-                                         commentaries.is_news = 'f' AND 
-                                         commentaries.commentariable_type = 'Person'
-                                   GROUP BY commentaries.commentariable_id
-                                   ORDER BY blog_count DESC) blogs
-                                  ON people.id=blogs.commentariable_id      
-           LEFT OUTER JOIN (SELECT count(commentaries.id) as news_count, commentaries.commentariable_id
-                                   FROM commentaries 
-                                   WHERE commentaries.date > current_timestamp - interval '#{def_count_days} days' AND
-                                         commentaries.commentariable_type = 'Person' AND commentaries.is_news = 't'
-                                   GROUP BY commentaries.commentariable_id
-                                   ORDER BY news_count DESC) news
-                                  ON people.id=news.commentariable_id                                                                  			       
+     LEFT OUTER JOIN (SELECT object_aggregates.aggregatable_id,
+                                    sum(object_aggregates.page_views_count) as view_count, 
+                                    sum(object_aggregates.blog_articles_count) as blog_count,
+                                    sum(object_aggregates.news_articles_count) as news_count
+                             FROM object_aggregates 
+                             WHERE object_aggregates.date >= current_timestamp - interval '#{def_count_days} days' AND
+                                   object_aggregates.aggregatable_type = 'Person'
+                             GROUP BY object_aggregates.aggregatable_id
+                             ORDER BY view_count DESC) aggregates
+                            ON people.id=aggregates.aggregatable_id                                                               			       
     WHERE roles.role_type = ? AND roles.startdate <= ? AND roles.enddate >= ? ORDER BY #{order} #{lim};", chamber, Date.today, Date.today])
   end
 
@@ -649,6 +613,49 @@ class Person < ViewableObject
     end
   end
 
+  def Person.calculate_and_save_party_votes
+    update_query = ["UPDATE people 
+                     SET total_session_votes=votes_agg.total_votes, 
+                         votes_democratic_position=votes_agg.votes_democratic_position,
+                         votes_republican_position=votes_agg.votes_republican_position
+                     FROM 
+                  (SELECT people.id as person_id, 
+                           total_votes.total_votes AS total_votes, 
+                           dem_position.votes_democratic_position as votes_democratic_position,
+                           rep_position.votes_republican_position as votes_republican_position 
+    FROM people
+    LEFT OUTER JOIN roles on roles.person_id=people.id    
+    LEFT OUTER JOIN
+      (SELECT DISTINCT(roll_call_votes.person_id) as p_id, count(DISTINCT roll_calls.id) AS total_votes 
+      FROM roll_calls
+      LEFT OUTER JOIN bills ON bills.id = roll_calls.bill_id 
+      INNER JOIN roll_call_votes ON roll_calls.id = roll_call_votes.roll_call_id 
+      WHERE roll_call_votes.vote != '0' AND bills.session = ?
+      GROUP BY roll_call_votes.person_id) total_votes ON total_votes.p_id=people.id
+    LEFT OUTER JOIN 
+      (SELECT DISTINCT(roll_call_votes.person_id) as p_id, count(DISTINCT roll_calls.id) AS votes_democratic_position 
+      FROM roll_calls 
+      LEFT OUTER JOIN bills ON bills.id = roll_calls.bill_id 
+      INNER JOIN roll_call_votes ON roll_calls.id = roll_call_votes.roll_call_id 
+      WHERE ((roll_calls.democratic_position = true AND vote = '+') OR (roll_calls.democratic_position = false AND vote = '-')) 
+      AND bills.session = ?
+      GROUP BY roll_call_votes.person_id) dem_position ON dem_position.p_id=people.id
+    LEFT OUTER JOIN
+      (SELECT DISTINCT(roll_call_votes.person_id) as p_id, count(DISTINCT roll_calls.id) AS votes_republican_position 
+      FROM roll_calls 
+      LEFT OUTER JOIN bills ON bills.id = roll_calls.bill_id 
+      INNER JOIN roll_call_votes ON roll_calls.id = roll_call_votes.roll_call_id 
+      WHERE ((roll_calls.republican_position = true AND vote = '+') OR (roll_calls.republican_position = false AND vote = '-')) 
+      AND bills.session = ?
+      GROUP BY roll_call_votes.person_id) rep_position ON rep_position.p_id=people.id
+    WHERE roles.startdate <= ? AND roles.enddate >= ?) votes_agg
+    WHERE people.id=votes_agg.person_id", DEFAULT_CONGRESS, DEFAULT_CONGRESS, DEFAULT_CONGRESS, Date.today, Date.today]
+    
+  
+    ActiveRecord::Base.connection.execute(sanitize_sql_array(update_query))
+  end
+  
+  
   def last_x_bills(limit = 2)
      self.bills.find(:all, :limit => limit)
      #[]

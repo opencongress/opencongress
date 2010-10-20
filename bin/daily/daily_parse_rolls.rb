@@ -118,3 +118,5 @@ roll_files.each do |f|
     end
   }
 end
+
+Person.calculate_and_save_party_votes

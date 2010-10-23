@@ -264,7 +264,7 @@ class ApiController < ApplicationController
   end
   
   def most_viewed_bills_this_week
-    bills = PageView.popular('Bill', DEFAULT_COUNT_TIME + 30.days, 10) || Bill.find(:first)
+    bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME + 30.days, 10) || Bill.find(:first)
     do_render(bills, {:except => [:rolls, :hot_bill_category_id]})
   end
   

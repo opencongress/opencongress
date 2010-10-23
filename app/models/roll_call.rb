@@ -1,8 +1,7 @@
-class RollCall < ActiveRecord::Base
+class RollCall < ViewableObject
   belongs_to :bill
   belongs_to :amendment
   has_one :action
-  has_many :page_views, :as => :viewable
   has_many :roll_call_votes, :include => :person, :order => 'people.lastname'
   
   named_scope :for_ident, lambda { |ident| {:conditions => ["date_part('year', roll_calls.date) = ? AND roll_calls.where = case ? when 'h' then 'house' else 'senate' end AND roll_calls.number = ?", *Bill.ident(ident)]} }
@@ -25,17 +24,8 @@ class RollCall < ActiveRecord::Base
     rc.has_many :republican_abstain_votes, :conditions => "people.party='Republican' AND roll_call_votes.vote='0'"
   end
 
-#  before_save :set_party_lines
-  def views(seconds = 0)
-  # if the view_count is part of this instance's @attributes use that; otherwise, count
-  return @attributes['view_count'] if @attributes['view_count']
-  
-  if seconds <= 0
-    page_views.count
-  else
-    page_views.count(:conditions => ["created_at > ?", seconds.ago])
-  end
-end
+  #  before_save :set_party_lines
+
 
   def set_party_lines
     if self.republican_nay_votes.count >= self.republican_aye_votes.count

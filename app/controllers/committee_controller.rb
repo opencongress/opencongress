@@ -1,5 +1,6 @@
 class CommitteeController < ApplicationController
-
+  before_filter :page_view
+  
   def index
     all = Committee.find(:all, :conditions => ['active = ?', true]).sort_by { |c| [(c.name || ""), (c.subcommittee_name || "") ] }
     @committees = all.group_by {|c| c.name || ""}
@@ -7,7 +8,7 @@ class CommitteeController < ApplicationController
     @senate_committees = Committee.by_chamber('senate').sort_by { |c| [c.name, (c.subcommittee_name || "")] }.group_by(&:name)
 
     #@custom_sidebar = Sidebar.find_by_page_and_enabled('committee_index', true)
-    @carousel = PageView.popular('Committee', DEFAULT_COUNT_TIME).slice(0..7)
+    @carousel = ObjectAggregate.popular('Committee', DEFAULT_COUNT_TIME).slice(0..7)
     
     @page_title =  "Committees"
     @title_class = "sort"
@@ -16,8 +17,6 @@ class CommitteeController < ApplicationController
   end
 
   def show
-    @committee = Committee.find(params[:id], :include => :reports)
-
     if @committee.has_wiki_link? # && !Rails.env.production?
       @wiki_tab = true
       @wiki_url = @committee.wiki_url
@@ -41,7 +40,6 @@ class CommitteeController < ApplicationController
     
 		@top_comments = @committee.comments.find(:all,:include => [:user], :order => "comments.plus_score_count - comments.minus_score_count DESC", :limit => 2)
     
-    PageView.create_by_hour(@committee, request)
     @atom = {'link' => url_for(:only_path => false, :controller => 'committee', :id => @committee, :action => 'atom'), 'title' => "#{@committee.name} - Major Bill Actions"}
   end
 
@@ -58,7 +56,7 @@ class CommitteeController < ApplicationController
     @major = @committees.keys.sort
     
     @custom_sidebar = Sidebar.find_by_page_and_enabled('committee_by_chamber', true)
-    @related_committees = PageView.popular('Committee', DEFAULT_COUNT_TIME).slice(0..2) unless @custom_sidebar 
+    @related_committees = ObjectAggregate.popular('Committee', DEFAULT_COUNT_TIME).slice(0..2) unless @custom_sidebar 
     
     @title_class = "sort"
     @title_desc = SiteText.find_title_desc('committee_index')
@@ -70,7 +68,7 @@ class CommitteeController < ApplicationController
 
     @days = days_from_params(params[:days])
 
-    @committees = PageView.popular('Committee', @days)
+    @committees = ObjectAggregate.popular('Committee', @days)
     
     @custom_sidebar = Sidebar.find_by_page_and_enabled('committee_by_chamber', true)
     
@@ -107,5 +105,20 @@ class CommitteeController < ApplicationController
   def nodata
     @page_title = "Committee Data Forthcoming"
     
+  end
+  
+  private
+  
+  def page_view
+    @committee = Committee.find(params[:id], :include => :reports)
+    
+    if @committee
+      key = "page_view_ip:Committee:#{@committee.id}:#{request.remote_ip}"
+      unless read_fragment(key)
+        @committee.increment!(:page_views_count)
+        @committee.page_view
+        write_fragment(key, "c", :expires_in => 1.hour)
+      end
+    end
   end
 end

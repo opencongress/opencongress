@@ -1,4 +1,4 @@
-class Bill < ActiveRecord::Base  
+class Bill < ViewableObject
 
 #  acts_as_solr :fields => [{:billtext_txt => :text},:bill_type,:session,{:title_short=>{:boost=>3}}, {:introduced => :integer}],
 #               :facets => [:bill_type, :session], :auto_commit => false
@@ -18,7 +18,8 @@ class Bill < ActiveRecord::Base
   has_many :amendments, :order => 'offered_datetime', :include => :roll_calls
   has_many :roll_calls, :order => 'date DESC'
   has_many :comments, :as => :commentable
-  has_many :page_views, :as => :viewable
+  has_many :object_aggregates, :as => :aggregatable
+  has_many :bill_referrers
   has_many :bill_votes
   has_one  :last_action, :class_name => "Action", :order => "actions.date DESC"
   has_many :most_recent_actions, :class_name => "Action", :order => "actions.date DESC", :limit => 5
@@ -695,7 +696,7 @@ class Bill < ActiveRecord::Base
     end
   
     def top20_viewed
-      bills = PageView.popular('Bill')
+      bills = ObjectAggregate.popular('Bill')
       
       (bills.select {|b| b.stats.entered_top_viewed.nil? }).each do |bv|
         bv.stats.entered_top_viewed = Time.now
@@ -706,7 +707,7 @@ class Bill < ActiveRecord::Base
     end
 
     def top5_viewed
-      bills = PageView.popular('Bill', DEFAULT_COUNT_TIME, 5)
+      bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME, 5)
       
       (bills.select {|b| b.stats.entered_top_viewed.nil? }).each do |bv|
         bv.stats.entered_top_viewed = Time.now
@@ -732,16 +733,10 @@ class Bill < ActiveRecord::Base
       Bill.find_by_sql ["SELECT * FROM (SELECT random(), bills.* FROM bills ORDER BY 1) as bs LIMIT ?;", limit]
     end
   end # class << self
-
-  def views(seconds = 0)
-    # if the view_count is part of this instance's @attributes use that because it came from
-    # the query and will make sense in the context of the page; otherwise, count
-    return @attributes['view_count'] if @attributes['view_count']
-    
-    if seconds <= 0
-      page_views_count
-    else
-      page_views.count(:conditions => ["created_at > ?", seconds.ago])
+  
+  def log_referrer(referrer)
+    unless (referrer.blank? || /opencongress\.org/.match(referrer) || /google\.com/.match(referrer))
+      self.bill_referrers.find_or_create_by_url(referrer)
     end
   end
   
@@ -1019,7 +1014,7 @@ class Bill < ActiveRecord::Base
   end
   
   def originating_chamber_vote
-    actions.select { |a| (a.action_type == 'vote' and (a.vote_type == 'vote' || a.vote_type == 'pingpong')) }.last
+    actions.select { |a| (a.action_type == 'vote' and a.vote_type == 'vote') }.last
   end
   
   def other_chamber_vote

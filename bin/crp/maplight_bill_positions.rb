@@ -51,7 +51,7 @@ begin
       end
       
       # scrape interest groups just to make sure
-      h = Hpricot(open(bill_e.elements["url"].text))
+      h = Hpricot(open("#{bill_e.elements["url"].text}/total-contributions.table"))
       
       h.search("div.whom-supported tr > td:first-of-type").each do |g| 
         

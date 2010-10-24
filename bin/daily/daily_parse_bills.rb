@@ -26,17 +26,11 @@ committees = {}
 related_bills = {}
 subjects = {}
 
-# prepare a has for later saving of subjects
-subjects = Subject.find(:all).inject({}) do |hash, subject|
-  hash[subject.term] ||= subject
-  hash
-end
-subject_count = 0
-
 force_parse = ENV['FORCE_ALL'] == 'true' ? true : false
 
 # get the list of bill files we're going to parse
-bill_files = Dir.new(PATH).entries.select { |f| f.match(/(.*).xml/) }
+#bill_files = Dir.new(PATH).entries.select { |f| f.match(/(.*).xml/) }
+bill_files = Dir.new(PATH).entries.select { |f| f.match(/h4851.xml/) }
 i = 0
 bill_files.each do |f|
   Bill.transaction { 
@@ -215,17 +209,9 @@ bill_files.each do |f|
 
       es.each("bill/subjects/term") do |e|
         term = e.attributes["name"]
-        if subjects[term]
-          subject = subjects[term]
-        else
-          subject = Subject.find_or_create_by_term(term)
-        
-          subjects[term] = subject
-        end
+        subject = Subject.find_or_create_by_term(term)
       
         bs = BillSubject.find_or_create_by_bill_id_and_subject_id(bill.id, subject.id)
-        subject_count += 1
-        puts "subject relationships saved: #{subject_count}" if subject_count % 100 == 0
       end
 
       es.each("bill/amendments/amendment") do |e|
@@ -255,14 +241,11 @@ bill_files.each do |f|
 end
 
 # save all of the subjects to force their bill counts to be accurate
-puts "Saving subjects"
-count = 0
-subjects.values.each do |s|
-  count += 1
-  puts "count: #{count}" if count % 100 == 0
+subjects = Subject.find(:all)
+subjects.each_with_index do |s, i|  
+  puts "Saving subjects: #{i+1}/#{subjects.size}" if i % 100 == 0
   s.save 
 end
-puts "total subject count: #{count}"
 
 
 # save any related bills that were not recognized during the parse

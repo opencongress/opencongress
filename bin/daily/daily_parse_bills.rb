@@ -29,8 +29,7 @@ subjects = {}
 force_parse = ENV['FORCE_ALL'] == 'true' ? true : false
 
 # get the list of bill files we're going to parse
-#bill_files = Dir.new(PATH).entries.select { |f| f.match(/(.*).xml/) }
-bill_files = Dir.new(PATH).entries.select { |f| f.match(/h4851.xml/) }
+bill_files = Dir.new(PATH).entries.select { |f| f.match(/(.*).xml/) }
 i = 0
 bill_files.each do |f|
   Bill.transaction { 

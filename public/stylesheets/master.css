@@ -4613,7 +4613,10 @@ display: block;
 text-align: center;
 }
 
-
+table.simple-table th, table.simple-table td {
+	padding-right:15px;
+	text-align: left;
+}
 
 
 

@@ -489,6 +489,16 @@ class PeopleController < ApplicationController
     end
   end
   
+  def votes_with_party
+    @chamber = params[:chamber] == 'house' ? 'house' : 'senate'
+    @party = params[:party] == 'democrat' ? 'Democrat' : 'Republican'
+    @party_adj = @party == 'Democrat' ? 'Democratic' : 'Republican'
+    @people_names = @chamber == 'house' ? 'Representatives' : 'Senators'
+    
+    
+    @people = Person.list_by_votes_with_party_ranking(@chamber, @party)
+  end
+  
   def bills
     @page = params[:page]
     @page = "1" unless @page

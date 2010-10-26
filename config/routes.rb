@@ -92,6 +92,7 @@ ActionController::Routing::Routes.draw do |map|
     p.blogs_person 'people/blogs/:id', :action => 'blogs'
     p.connect 'people/news/:id/:page', :action => 'news'
     p.connect 'people/blogs/:id/:page', :action => 'blogs'
+    p.connect 'people/votes_with_party/:chamber/:party', :action => 'votes_with_party'
 
     p.connect 'people/voting_history/:id/:page', :action => 'voting_history'
     p.connect 'person/compare.:format', :action => 'compare'

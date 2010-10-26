@@ -497,6 +497,8 @@ class PeopleController < ApplicationController
     
     
     @people = Person.list_by_votes_with_party_ranking(@chamber, @party)
+    
+    @median = @people[(@people.size/2)]
   end
   
   def bills

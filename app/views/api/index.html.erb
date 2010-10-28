@@ -165,6 +165,12 @@
     Returns bills that OpenCongress editors feel are "hot".<br/>
     <%= link_to "#{BASE_URL}api/hot_bills?key=#{@api_key}", "/api/hot_bills?key=#{@api_key}" %>
   </dd>
+  
+  <dt>Stalled Bills</dt>
+  <dd>
+    Returns bills that have passed one chamber but have not received a vote on passage in the other (or a conference vote).<br/>
+    <%= link_to "#{BASE_URL}api/stalled_bills?session=#{DEFAULT_CONGRESS}&passing_chamber=s&key=#{@api_key}", "/api/stalled_bills?session=#{DEFAULT_CONGRESS}&passing_chamber=s&key=#{@api_key}" %>
+  </dd>
 
   <dt>Most Blogged Bills this Week</dt>
   <dd>

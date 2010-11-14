@@ -103,9 +103,20 @@ class CommentsController < ApplicationController
   end
   def rate
     comment = Comment.find_by_id(params[:id])
+    
+    # first check the ip to see if someone is bombing a comment
+    ip_score = CommentScore.find_by_comment_id_and_ip_address(comment.id, request.remote_ip)
+    if ip_score
+      render :update do |page|
+        page.replace_html "comm_score_" + comment.id.to_s, "<span id='comm_score_#{comment.id.to_s}' style='color:red'>X</span>"      
+    	  page.visual_effect :pulsate, "comm_score_" + comment.id.to_s
+      end
+      return
+    end
+    
     score = current_user.comment_scores.find_by_comment_id(comment.id)
       unless score
-        score = current_user.comment_scores.create(:user_id => current_user.id, :comment_id => comment.id, :score => params[:value])
+        score = current_user.comment_scores.create(:user_id => current_user.id, :comment_id => comment.id, :score => params[:value], :ip_address => request.remote_ip)
         if score.score > 5
           comment.plus_score_count = comment.plus_score_count.to_i + 1
           id = "plus"

@@ -686,7 +686,7 @@ a.small_button{
 	}
 #plus.small_button {
   color:#418d21;
-  margin-left:0px;
+  /* margin-left:0px; */
 }        
 #minus.small_button {
   color:#8e0400;
@@ -701,13 +701,13 @@ a.small_button{
   font-weight:bold;
   font-size:13px;
 }                       
-#plus.small_button span {
+/*#plus.small_button span {
   background-position:-4px top;
   padding:2px 4px 2px 10px;
 }
 #plus.small_button:hover span, #plus.small_button.active span {
   background-position:-4px -23px;
-}
+}*/
 
 #minus.small_button span {
   padding:1px 9px 3px 12px;

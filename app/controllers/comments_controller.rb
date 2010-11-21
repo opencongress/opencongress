@@ -102,6 +102,10 @@ class CommentsController < ApplicationController
     render :partial => "shared/comment_form_recursive", :locals => {:parent_id => params[:parent_id], :object => object } 
   end
   def rate
+    # as of Nov 21, 2010 we are only allowing positive comment ratings (value = 10)
+    # due to rampant comment bombing
+    return if (params[:value].nil? || params[:value].to_i < 10)
+      
     comment = Comment.find_by_id(params[:id])
     
     # first check the ip to see if someone is bombing a comment

@@ -4632,6 +4632,15 @@ table.simple-table th, table.simple-table td {
 	text-align: left;
 }
 
+.facebook_like {
+  border:none; 
+  overflow:hidden; 
+  width:197px; 
+  height:80px; 
+  clear: both; 
+  padding: 14px 30px; 
+  margin-top: 20px;
+}
 
 
 

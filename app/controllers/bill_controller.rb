@@ -113,9 +113,16 @@ class BillController < ApplicationController
     @title_desc = SiteText.find_title_desc('bill_hot')
     @types = 'all'
     @hot_bill_categories = HotBillCategory.find(:all, :order => :name)
+    @atom = {'link' => "/bill/hot.rss", 'title' => "Hot Bills"}
+    
     respond_to do |format|
       format.html {}
       format.js { render :action => 'update'}
+      format.rss {
+        @hot_bills = Bill.find(:all, :conditions => ["session = ? AND hot_bill_category_id IS NOT NULL", DEFAULT_CONGRESS], 
+                           :order => 'introduced DESC')
+        render :action => 'hot.rxml'
+      }
     end
   end
 

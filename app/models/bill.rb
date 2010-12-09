@@ -841,6 +841,18 @@ class Bill < ViewableObject
                          WHERE bills.session=? AND vote_action.vote_date - intro_action.intro_date < ? #{resolution_condition}
                          ORDER BY vote_date DESC", congress, rushed_time])
     end
+    
+    def find_stalled_in_second_chamber(original_chamber = 's', session = DEFAULT_CONGRESS, num = :all)
+      Bill.find_by_sql(["SELECT bills.* FROM bills 
+                          INNER JOIN actions a_v ON (bills.id=a_v.bill_id AND a_v.vote_type='vote' AND a_v.result='pass') 
+                        WHERE bills.bill_type=? AND bills.session=?
+                        EXCEPT 
+                          (SELECT bills.* FROM bills 
+                            INNER JOIN actions a_v ON (bills.id=a_v.bill_id AND a_v.vote_type='vote' AND a_v.result='pass') 
+                            INNER JOIN actions a_v2 ON (bills.id=a_v2.bill_id AND (a_v2.vote_type='vote2' OR a_v2.vote_type='conference')) 
+                            WHERE bills.bill_type=? AND bills.session=?);", original_chamber, session, original_chamber, session])
+    end
+    
 
     def find_gpo_consideration_rushed_bills(congress = DEFAULT_CONGRESS, rushed_time = 259200, show_resolutions = false)
       # rushed time not working correctly for some reason (adapter is changing...)

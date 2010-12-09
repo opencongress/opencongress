@@ -177,8 +177,8 @@
 					<%= render :partial => 'shared/share', 
 					:locals => { :message => "Share This #{object.display_object_name}", 
 					:url => url_for(:only_path => false, 
-					:controller => params[:controller], :action => 'show', 
-					:id => object.kind_of?(Bill) ? object.ident : object),
+					  :controller => params[:controller], :action => 'show', 
+					  :id => object.kind_of?(Bill) ? object.ident : object),
 					:title => "Check out #{object.title_for_share} on OpenCongress",
 					:item => object
 					} %>
@@ -186,6 +186,8 @@
 
 			</div>
 		</ul>
+
+
 
 
 
@@ -230,6 +232,9 @@
 	<% end %>
 	</ul>             
 <% end %>
+
+<iframe src="http://www.facebook.com/plugins/like.php?href=<%= url_for(:only_path => false, :controller => params[:controller], :action => 'show', :id => object.kind_of?(Bill) ? object.ident : object) %>&amp;layout=standard&amp;show_faces=true&amp;width=197&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" allowTransparency="true" class="facebook_like"></iframe>
+
 	<!--
 	  <div id="small_comment">
 	    <%# render :partial => 'shared/comment_form2', :locals => {:object => object, :master_container => 'small_comment', :redirect => false } %>

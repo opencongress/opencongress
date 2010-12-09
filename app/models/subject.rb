@@ -1,7 +1,4 @@
 class Subject < ViewableObject  
-  validates_uniqueness_of :term
-  #validates_associated :bills
-
   has_many :bill_subjects
   has_many :bills, :through => :bill_subjects, :order => "bills.introduced DESC"
 

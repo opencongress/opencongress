@@ -655,6 +655,40 @@ class Person < ViewableObject
     ActiveRecord::Base.connection.execute(sanitize_sql_array(update_query))
   end
   
+  def Person.list_by_votes_with_party_ranking(chamber = 'house', party = 'Democrat')
+    role_type = (chamber == 'house') ? 'Rep.' : 'Sen.'
+    
+    # find_by_sql(["SELECT people.*, 
+    #                       CASE WHEN people.party = 'Democrat' THEN (people.votes_democratic_position::real/people.total_session_votes::real)::real
+    #                            WHEN people.party = 'Republican' THEN (people.votes_republican_position::real/people.total_session_votes::real)::real
+    #                            ELSE 0
+    #                       END as votes_with_party_percentage::real  FROM people
+    #                    LEFT OUTER JOIN roles on roles.person_id=people.id
+    #                    WHERE people.party = ? AND roles.startdate <= ? AND roles.enddate >= ?
+    #                      AND people.title = ?
+    #                   ORDER BY votes_with_party_percentage DESC", party, Date.today, Date.today, role_type])
+
+    peeps = find_by_sql(["SELECT people.*, 0.0 as votes_with_party_percentage FROM people
+                       LEFT OUTER JOIN roles on roles.person_id=people.id
+                       WHERE people.party = ? AND roles.startdate <= ? AND roles.enddate >= ?
+                         AND people.title = ?
+                      ORDER BY votes_with_party_percentage DESC", party, Date.today, Date.today, role_type])
+
+    if party == 'Democrat'
+      peeps.collect! {|p| 
+        p.votes_with_party_percentage = (p.votes_democratic_position.to_f/p.total_session_votes.to_f) * 100
+        p
+      }
+    else
+      peeps.collect! {|p| 
+        p.votes_with_party_percentage = (p.votes_republican_position.to_f/p.total_session_votes.to_f) * 100
+        p
+      }
+    end
+    
+    peeps.sort {|a,b| b.votes_with_party_percentage <=> a.votes_with_party_percentage}
+  end
+    
   
   def last_x_bills(limit = 2)
      self.bills.find(:all, :limit => limit)
@@ -1266,6 +1300,11 @@ class Person < ViewableObject
   
   def is_sitting?
     title.blank? ? false : true
+  end
+  
+  def chamber
+    return 'house' if title == 'Rep.'
+    return 'senate' if title == 'Sen.'
   end
   
   def votes(num = -1)

@@ -1,5 +1,5 @@
 class CommitteeController < ApplicationController
-  before_filter :page_view
+  before_filter :page_view, :only => :show
   
   def index
     all = Committee.find(:all, :conditions => ['active = ?', true]).sort_by { |c| [(c.name || ""), (c.subcommittee_name || "") ] }

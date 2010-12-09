@@ -203,7 +203,7 @@ background: url(/images/hot.png) center 14px no-repeat;
 background: url(/images/cooling.png) bottom center no-repeat;
    _background: url(/images/cooling.gif) bottom center no-repeat;
 }
-.senators #heading, .fundraisers #heading, .zipcodelookup #heading {
+.senators #heading, .fundraisers #heading, .zipcodelookup #heading, .votes_with_party #heading {
 border-bottom: 1px solid #f3e8d6;
 height: 45px;
  background: url('/images/brown_bg.png');

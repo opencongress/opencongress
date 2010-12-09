@@ -2,7 +2,7 @@ xml.instruct!
 
 xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
 
-  xml.title   "Open Congress : Blog 7b4ca3d5e9a64bed938ee1a5a4538a8b"
+  xml.title   "Open Congress : Blog"
   xml.link    "rel" => "self", "href" => url_for(:only_path => false, :controller => 'articles', :action => 'atom')
   xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'blog')
   xml.updated @articles.first.created_at.strftime("%Y-%m-%dT%H:%M:%SZ") if @articles.any?

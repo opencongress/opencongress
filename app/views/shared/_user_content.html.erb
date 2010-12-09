@@ -26,7 +26,24 @@
 			$j('#learn').jqm({trigger:'a.learn_trigger'});
 		});
 		</script>
+  	<% unless @bill.sidebar_box.nil? %>	
+  	  <div class="sidebar_editorial">
+  	    <% unless @bill.sidebar_box.image_url.blank? %>
+  	      <div class="sidebar_editorial_image">
+  	        <img src='<%= @bill.sidebar_box.image_url %>' />
+  	      </div>
+  	    <% end %>
+  	    
+  	    <% unless @bill.sidebar_box.box_html.blank? %>
+  	      <div class="sidebar_editorial_content">
+  	        <%= @bill.sidebar_box.box_html %>
+  	      </div>
+  	    <% end %>
+  	  </div>
+  	<% end %>
   		
+  		
+
 		<%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
 		
 		<div id="vote">

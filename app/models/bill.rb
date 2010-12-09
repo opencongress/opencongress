@@ -36,6 +36,8 @@ class Bill < ViewableObject
   has_many :bookmarks, :as => :bookmarkable
   has_many :notebook_links, :as => :notebookable
 
+  has_one :sidebar_box, :as => :sidebarable
+
   has_many :committee_meetings_bills
   has_many :committee_meetings, :through => :committee_meetings_bills
 

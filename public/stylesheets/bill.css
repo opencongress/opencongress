@@ -1869,6 +1869,16 @@ padding-right: 10px;
 div.news_blogs .col1 #news_list, div.news_blogs .col2 #blogs_list {
 padding: 0;
 }
+
+#bill_video{
+clear: both;
+padding: 35px;
+}
+
+.money_trail_summary_more {
+  padding: 0 35px;
+  margin-top: 5px;
+}
   
 /*///////////////////////////////////////////
 

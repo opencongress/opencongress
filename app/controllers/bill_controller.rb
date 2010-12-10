@@ -101,6 +101,7 @@ class BillController < ApplicationController
     @page_title = 'Pending Bills in Congress'
     @sort = 'pending'
     @title_desc = SiteText.find_title_desc('bill_pending')
+    @exclude_introduced = (params[:exclude_introduced] == 'true') ? true : false
     respond_to do |format|
       format.html {}
       format.js { render :action => 'update'}
@@ -309,6 +310,9 @@ class BillController < ApplicationController
         @tracking_suggestions = @bill.tracking_suggestions
         @supporting_suggestions = @bill.support_suggestions
         @opposing_suggestions = @bill.oppose_suggestions
+        
+        # create roll call variable to include chart JS
+        @roll_call = @bill.roll_calls.empty? ? nil : @bill.roll_calls.first
      }
       format.xml {
         render :xml => @bill.to_xml(:exclude => [:fti_titles], :include => [:bill_titles,:last_action,:sponsor,:co_sponsors,:actions,:roll_calls])

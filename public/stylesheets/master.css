@@ -686,7 +686,7 @@ a.small_button{
 	}
 #plus.small_button {
   color:#418d21;
-  margin-left:0px;
+  /* margin-left:0px; */
 }        
 #minus.small_button {
   color:#8e0400;
@@ -701,13 +701,13 @@ a.small_button{
   font-weight:bold;
   font-size:13px;
 }                       
-#plus.small_button span {
+/*#plus.small_button span {
   background-position:-4px top;
   padding:2px 4px 2px 10px;
 }
 #plus.small_button:hover span, #plus.small_button.active span {
   background-position:-4px -23px;
-}
+}*/
 
 #minus.small_button span {
   padding:1px 9px 3px 12px;
@@ -1196,7 +1196,7 @@ a.small_button.small_arrow:hover span{
 	text-transform: uppercase;
 	
 	float: left;
-	width: 61px;
+	width: 51px;
 	padding-left: 10px;
 	}
 
@@ -1264,7 +1264,7 @@ a.small_button.small_arrow:hover span{
 #sort li{
 	display: inline;
 	float: left;
-	margin-right: 8px;
+	margin-right: 7px;
 	}
 
 #sort li a{
@@ -1285,6 +1285,20 @@ a.small_button.small_arrow:hover span{
 	font-weight: bold;
 	line-height: 10px;
 	}
+	
+#sort li a.rss{
+	background: none;
+	padding: 0;
+}
+
+#sort li a.rss img {
+  padding-top: 5px; 
+  margin-left: 5px;
+}
+
+#sort li a.rss:hover {
+  background: none;
+}
 
 #sort li a:hover{
 	background: url('/images/small_button_cap.png') right -279px no-repeat;
@@ -4618,6 +4632,16 @@ table.simple-table th, table.simple-table td {
 	text-align: left;
 }
 
+
+.facebook_like {
+  border:none; 
+  overflow:hidden; 
+  width:197px; 
+  height:80px; 
+  clear: both; 
+  padding: 14px 30px; 
+  margin-top: 20px;
+}
 
 
 

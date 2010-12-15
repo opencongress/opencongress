@@ -1,0 +1,13 @@
+<div style="margin: 20px;">
+  <% form_for @sidebar_box, :url => { :action => 'update', :id => @sidebar_box } do |f| %>
+    <%= f.error_messages %>
+
+    <%= f.label :box_html, 'HTML' %>:<br />
+    <%= f.text_field :box_html %><br />
+    <%= f.label :image_url, 'Image URL' %>:<br />
+    <%= f.text_field :image_url %><br />
+    <p>
+      <%= f.submit 'Update' %>
+    </p>
+  <% end %>
+</div>

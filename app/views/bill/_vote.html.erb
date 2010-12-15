@@ -1,0 +1,42 @@
+<tr class="<%= cycle('a','b') %>">
+<td class="roll">
+  <table cellpadding="0" cellspacing="0">
+<tr>
+      <td class="action" colspan="3"><span class="date roll"><%= vote.date.strftime("%B %d, %Y") %></span><%= link_to "Roll call number <b>#{vote.number}</b>", :controller => 'roll_call', :action => 'show', :id => vote.id %> <% if vote.amendment %>(Amendment number <b><%= vote.amendment.display_number %></b>) <% end %> in the <b><%= vote.chamber %></b></td>
+    </tr>
+    <tr>
+      <td class="question" colspan="3"><em>Question:</em> <%= vote.question %></td>
+    </tr>
+    <% if vote.amendment %>
+    <tr>
+      <td><em>Amendment purpose:</em> <%= vote.amendment.purpose %></td>
+    </tr>  
+    <% end %>
+     <tr>
+        <td class="req"><em>Required percentage of 'Aye' votes:</em> <%= vote.required %> <%= numeric_percentage(vote) %></td>
+        <% if vote.total_votes > 0 %>
+        <td><em>Percentage of 'aye' votes:</em> <%= "%2d" % ((vote.ayes.to_f / vote.total_votes.to_f) * 100) %>%</td>  
+      <% end %>
+        <td><em>Result:</em> <%= vote.result %></td>    
+      </tr>  
+			<tr>
+				<td class="pies" colspan="3">
+					<%= roll_call_sublists_by_vote_type('+', vote) %>
+				  <div class="pie-chart" id='roll_call_Aye_chart_<%= vote.id %>'>
+						<%= ofc2(210,120, "roll_call/partyvote_piechart_data/#{vote.id}?breakdown_type=#{CGI.escape("+")}&disclaimer_off=true&radius=40") %>
+					</div>
+
+				  <% roll_call_sublists_by_vote_type('-', vote) %>
+				  <div class="pie-chart" id='roll_call_Nay_chart_<%= vote.id %>'>
+						<%= ofc2(210,120, "roll_call/partyvote_piechart_data/#{vote.id}?breakdown_type=-&disclaimer_off=true&radius=40") %>
+					</div>
+
+				  <%= roll_call_sublists_by_vote_type('0', vote) %>
+				  <div class="pie-chart" id='roll_call_Abstain_chart_<%= vote.id %>'>
+						<%= ofc2(210,120, "roll_call/partyvote_piechart_data/#{vote.id}?breakdown_type=0&disclaimer_off=true&radius=40") %>
+					</div>
+				</td>
+			</tr>
+  </table>
+  </td>
+</tr>

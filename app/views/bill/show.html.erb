@@ -71,6 +71,15 @@
 	</div>
 	
 	
+	<% unless @roll_call.nil? %>
+	  <table id="votes" cellpadding="0" cellspacing="0">
+      <thead><tr class="header"><th><span>Latest Vote</span></th></tr></thead>
+      <tfoot><tr><td colspan="4">&nbsp;</td></tr></tfoot>
+      <tbody>
+	      <%= render :partial => 'vote', :object => @bill.roll_calls.first %>
+	    </tbody>
+	  </table>
+	<% end %>
 	
 	
 	
@@ -106,7 +115,45 @@
 	</div>
 	<% end %>
 
-		<div class="clearfix"></div>       
+		<div class="clearfix"></div>
+		
+		<% unless @bill.bill_position_organizations.empty? %>
+  		<div id="money_trail_summary">
+        <div class="col1">
+          <% unless @bill.bill_position_organizations.select{|g| g.disposition == 'support'}.empty? %>
+            <h3>Specific Organizations Supporting <%= @bill.typenumber %></h3>
+            <ul>
+            <% supporting_orgs = @bill.bill_position_organizations.select{|g| g.disposition == 'support'} %>
+            <% supporting_orgs[0..5].each { |org| %><li><%= org.name %></li><% } %>
+            <% if supporting_orgs.size > 5 %>
+              <li>...and <strong><%= supporting_orgs.size - 5 %></strong> more.  
+              <%= link_to "See all.", :controller => 'bill', :action => 'money', :id => @bill.ident %>
+            <% end %>
+            </ul>
+          <% end %>
+        </div>
+      
+        <div class="col2">
+          <% unless @bill.bill_position_organizations.select{|g| g.disposition == 'oppose'}.empty? %>
+            <h3>Specific Organizations Opposing <%= @bill.typenumber %></h3>
+            <ul>
+              <% opposing_orgs = @bill.bill_position_organizations.select{|g| g.disposition == 'oppose'} %>
+              <% opposing_orgs[0..5].each { |org| %><li><%= org.name %></li><% } %>
+              <% if opposing_orgs.size > 5 %>
+                <li>...and <strong><%= opposing_orgs.size - 5 %></strong> more.  
+                <%= link_to "See all.", :controller => 'bill', :action => 'money', :id => @bill.ident %>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+      
+        <div class='money_trail_summary_more'>
+          See the <a href="<%= url_for :controller => 'bill', :action => 'money', :id => @bill.ident %>">money trail</a> behind this bill for more info on how campaign contributions may be influencing senators'/representatives' votes.</p>
+        </div>
+      </div>
+    <% end %>
+      
+      
 		<br />                      
 
 
@@ -205,4 +252,14 @@
   		</div>
 		<% end  %>			
 	<% end %>
+	
+	
+	<% unless @bill.videos.empty? %>  
+    <div id="bill_video" class="cols-box clearfix">
+      <h3 class="darkline clear">Videos of <%= @bill.typenumber %></h3>
+      <%= render :partial => 'shared/videos', :object => @bill.videos.find(:all, :limit => 2), 
+                 :locals => { :more_url => (@bill.videos.size > 2) ? link_to("See more videos (#{@bill.videos.size} total)", { :controller => 'bill', :action => 'videos', :id => @bill.ident }, :class => "arrow") : nil } %>
+    </div>
+  <% end %>
+  
 </div>

@@ -687,6 +687,16 @@ width: 8px;
 background: url('/images/bill/bs-close.png') no-repeat left top;
 _background: url('/images/bill/bs-close.gif') no-repeat left top;
 }
+
+
+#bill-status-dates td.close {
+width: 8px;
+background: url('/images/bill/bs-date-close.png') no-repeat left top;
+_background: url('/images/bill/bs-date-close.gif') no-repeat left top;
+}
+
+
+
 td.divide.pending {
 background: url('/images/bill/bs-pending_div.png') no-repeat left top;
 _background: url('/images/bill/bs-pending_div.gif') no-repeat left top;
@@ -710,9 +720,9 @@ _padding: 5px 0;
 width: 9px;
 }
 td.divide.failed {
-background: url('/images/bill/bs-fail_div.png') no-repeat left top;
-_background: url('/images/bill/bs-fail_div.gif') no-repeat left top;
-width: 28px;
+background: url('/images/bill/bs-fail_div.png') no-repeat left 3px;
+_background: url('/images/bill/bs-fail_div.gif') no-repeat left 3px;
+width: 30px;
 }
 
 td.divide.current {

@@ -1873,6 +1873,11 @@ color: #585858;
 font-weight: normal;
 }
 
+.tiny_list li{
+padding-left: 25px !important;
+}
+
+
 /*///////////////////////////////////////////////////////
 
 ~ Heplful Javascript Popups

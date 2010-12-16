@@ -1,11 +1,14 @@
-<div style="margin: 20px;">
+<div class="padding">
   <% form_for @sidebar_box, :url => { :action => 'update', :id => @sidebar_box } do |f| %>
     <%= f.error_messages %>
 
-    <%= f.label :box_html, 'HTML' %>:<br />
-    <%= f.text_field :box_html %><br />
+
     <%= f.label :image_url, 'Image URL' %>:<br />
-    <%= f.text_field :image_url %><br />
+    <%= f.text_field :image_url %><br /><br />
+
+    <%= f.label :box_html, 'HTML' %>:<br />
+    <%= f.text_area :box_html %><br />
+
     <p>
       <%= f.submit 'Update' %>
     </p>

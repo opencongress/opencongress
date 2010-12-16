@@ -121,6 +121,8 @@ border-bottom: 1px solid #aaa;
 
 .padding{ padding: 35px;}
 
+.small_padding{ padding: 15px;}
+
 .behave{ margin-bottom: 10px;}
 
 .bold{font-weight: bold;}
@@ -4647,6 +4649,128 @@ table.simple-table th, table.simple-table td {
   padding: 14px 30px; 
   margin-top: 20px;
 }
+
+
+
+.header{
+clear: both;
+
+border: none;
+padding: 8px 15px;
+margin: 0px;
+
+-moz-border-radius-topleft: 4px;
+-moz-border-radius-topright: 4px;
+-webkit-border-radius-top-left: 4px;
+-webkit-border-radius-top-right: 4px;
+border-radius: 4px;
+
+-moz-box-shadow: 0px 1px 1px #666;
+-webkit-box-shadow:  0px 1px 1px #666;
+box-shadow:  0px 1px 1px #666;
+
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#efefef');
+background:-webkit-gradient(linear,left top,left bottom,from(#ffffff),to(#efefef));
+background:-moz-linear-gradient(top, #ffffff, #efefef);
+
+}
+
+
+
+
+.votes{
+float: left;
+width: 100%;
+
+-moz-box-shadow: 0px 1px 1px #666;
+-webkit-box-shadow:  0px 1px 1px #666;
+box-shadow:  0px 1px 1px #666;
+
+-moz-border-radius-bottomleft: 4px;
+-moz-border-radius-bottomright: 4px;
+-webkit-border-radius-bottom-left: 4px;
+-webkit-border-radius-bottom-right: 4px;
+
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#efefef');
+background:-webkit-gradient(linear,left top,left bottom,from(#ffffff),to(#efefef));
+background:-moz-linear-gradient(top, #ffffff, #efefef);
+
+border-top: 1px solid #ddd;
+
+}
+
+
+
+
+#sidebar_recent_articles h4{
+padding: 0 30px;
+}
+
+
+
+#sidebar_recent_articles ul li a{
+text-decoration: none;
+padding: 10px 30px;
+line-height: 1.2em;
+display: block;
+}
+
+
+#sidebar_recent_articles ul li a span.title{
+
+}
+
+
+
+#sidebar_recent_articles ul li a span.date{
+font-style: italic;
+color: #666;
+display: block;
+font-size: 11px;
+}
+
+
+#sidebar_recent_articles ul li:hover{
+
+-moz-box-shadow: 0px 1px 1px #666;
+-webkit-box-shadow:  0px 1px 1px #666;
+box-shadow:  0px 1px 1px #666;
+
+
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#efefef');
+background:-webkit-gradient(linear,left top,left bottom,from(#ffffff),to(#efefef));
+background:-moz-linear-gradient(top, #ffffff, #efefef);
+}
+
+
+
+.sidebar_editorial{
+margin: 0 30px;
+width: 197px;
+
+}
+
+
+
+.sidebar_editorial h2{
+padding: 0 0 10px !important;
+margin: 0px;
+}
+
+
+.sidebar_editorial p{
+margin: 0px 0 10px;
+}
+
+
+
+
+.sidebar_editorial_image img{
+max-width: 197px;
+padding-bottom: 20px;
+}
+
+
 
 
 

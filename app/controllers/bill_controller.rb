@@ -68,7 +68,6 @@ class BillController < ApplicationController
     @page_title = "#{@types.capitalize} Bills: #{congress}th Congress"
     @title_desc = SiteText.find_title_desc('bill_all')
     @sort = 'all'
-    # @custom_sidebar = Sidebar.find_by_page_and_enabled('bill_all', true)
     #@related_bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME, 5) unless @custom_sidebar
     respond_to do |format|
       format.html {}

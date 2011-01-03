@@ -17,9 +17,7 @@ class MoneyTrailController < ApplicationController
     @page_title = "Most Viewed Industry Sectors"
     @title_class = 'sort'
     @title_desc = SiteText.find_title_desc('industry_index')
-    
-    @custom_sidebar = Sidebar.find_by_page_and_enabled('industry_index', true)   
-    
+        
     render :action => 'index'
   end
   

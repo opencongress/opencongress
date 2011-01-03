@@ -7,7 +7,6 @@ class CommitteeController < ApplicationController
     @house_committees = Committee.by_chamber('house').sort_by { |c| [c.name, (c.subcommittee_name || "")] }.group_by(&:name)
     @senate_committees = Committee.by_chamber('senate').sort_by { |c| [c.name, (c.subcommittee_name || "")] }.group_by(&:name)
 
-    #@custom_sidebar = Sidebar.find_by_page_and_enabled('committee_index', true)
     @carousel = ObjectAggregate.popular('Committee', DEFAULT_COUNT_TIME).slice(0..7)
     
     @page_title =  "Committees"
@@ -55,7 +54,6 @@ class CommitteeController < ApplicationController
     @committees = Committee.by_chamber(@chamber).sort_by { |c| [c.name, (c.subcommittee_name || "")] }.group_by(&:name)
     @major = @committees.keys.sort
     
-    @custom_sidebar = Sidebar.find_by_page_and_enabled('committee_by_chamber', true)
     @related_committees = ObjectAggregate.popular('Committee', DEFAULT_COUNT_TIME).slice(0..2) unless @custom_sidebar 
     
     @title_class = "sort"
@@ -69,9 +67,7 @@ class CommitteeController < ApplicationController
     @days = days_from_params(params[:days])
 
     @committees = ObjectAggregate.popular('Committee', @days)
-    
-    @custom_sidebar = Sidebar.find_by_page_and_enabled('committee_by_chamber', true)
-    
+        
     @atom = {'link' => url_for(:only_path => false, :controller => 'committee', :action => 'atom_top20'), 'title' => "Top 20 Most Viewed Committees"}
     
     @page_title = "Most Viewed Committees"

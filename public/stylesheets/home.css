@@ -52,6 +52,11 @@ padding-right: 20px;
 background: url('/images/new_social.png') right -23px no-repeat;
 }
 
+a.full_article{
+background: none !important;
+padding: 0;
+}
+
 .add_facebook{
 padding-top: 50px;
 overflow: hidden;
@@ -958,6 +963,25 @@ padding-right: 3px;
 color: #d05829;
 padding-right: 3px;
 font-weight: bold;
+}
+
+ul.latest_votes li a span.votes{
+background: 0 !important;
+-moz-box-shadow: none !important;;
+-webkit-box-shadow: none !important;;
+box-shadow: none !important;;
+border: 0 !important;
+}
+
+ul.latest_votes li a span.type{
+clear: none;
+width: 270px;
+overflow: hidden;
+height: 1.6em;
+}
+
+div.featured_members{
+height: 376px;
 }
 
 

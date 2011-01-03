@@ -1899,10 +1899,18 @@ clear: both;
 padding: 35px;
 }
 
+.lowpadding {
+  padding-bottom: 5px !important;
+  margin-bottom: 20px;
+} 
+
+
 .money_trail_summary_more {
   padding: 0 35px;
   margin-top: 5px;
+  clear: left;
 }
+
   
 /*///////////////////////////////////////////
 

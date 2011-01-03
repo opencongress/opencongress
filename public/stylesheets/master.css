@@ -4701,14 +4701,16 @@ border-top: 1px solid #ddd;
 
 
 
-
-#sidebar_recent_articles h4{
+.sidebar_recent_articles {
+  margin-bottom: 20px;
+}
+.sidebar_recent_articles h4{
 padding: 0 30px;
 }
 
 
 
-#sidebar_recent_articles ul li a{
+.sidebar_recent_articles ul li a{
 text-decoration: none;
 padding: 10px 30px;
 line-height: 1.2em;
@@ -4716,13 +4718,13 @@ display: block;
 }
 
 
-#sidebar_recent_articles ul li a span.title{
+.sidebar_recent_articles ul li a span.title{
 
 }
 
 
 
-#sidebar_recent_articles ul li a span.date{
+.sidebar_recent_articles ul li a span.date{
 font-style: italic;
 color: #666;
 display: block;
@@ -4730,7 +4732,7 @@ font-size: 11px;
 }
 
 
-#sidebar_recent_articles ul li:hover{
+.sidebar_recent_articles ul li:hover{
 
 -moz-box-shadow: 0px 1px 1px #666;
 -webkit-box-shadow:  0px 1px 1px #666;

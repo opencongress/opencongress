@@ -1,16 +1,15 @@
 <% articles = Article.find_tagged_with("#{@bill.subjects.collect{|s| s.term}.join(',')}", { :order => 'created_at DESC', :limit => 5 })%>
 
 <% unless articles.empty? %>
-  <div id="sidebar_related_articles">
-    <h4>Related OC Blog Articles</h4>
+  <div class="sidebar_recent_articles">
+    <h4>OC Blog Articles Related To This Bill</h4>
     <ul>
       <% articles.each do |article| %>
         <li>
           <a href="<%= url_for :controller => 'articles', :action => 'view', :id => article %>">
-            <span class='title'><%= truncate(article.title, :length => 40) %></span>
+            <span class='title'><%= article.title %></span>
+            <span class='date'><%= article.created_at.strftime("%b %d, %Y") %></span>
           </a>
-          <br /> 
-          <span class='date'><%= article.created_at.strftime("%b %d, %Y") %></span>
         </li>
       <% end %>
     </ul>

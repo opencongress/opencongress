@@ -103,7 +103,7 @@
 		  <div id="wiki_summary" <%= @bill.wiki_summary.blank? ? "style='display:none;'" : "" %>>
 		    <% if @bill.wiki_summary %>
 			    <p><%= @bill.wiki_summary  %></p>
-			    <p id="contribute">This summary providedby people like you <a href="<%= @wiki_url %>">Contribute to it</a></p>
+			    <p id="contribute">This summary provided by people like you <a href="<%= @wiki_url %>">Contribute to it</a></p>
 			  <% else %>
 			    <p id="contribute">This bill currently has no wiki summary. <a href="<%= @wiki_url ? @wiki_url : @wiki_create_url %>" class="<%= "wiki_link" unless logged_in? %>">Create Summary</a></p>
 			  <% end %> 
@@ -119,9 +119,9 @@
 		
 		<% unless @bill.bill_position_organizations.empty? %>
   		<div id="money_trail_summary">
-        <div class="col1">
+        <div class="col1 lowpadding">
           <% unless @bill.bill_position_organizations.select{|g| g.disposition == 'support'}.empty? %>
-            <h3>Specific Organizations Supporting <%= @bill.typenumber %></h3>
+            <h3>Organizations Supporting <%= @bill.typenumber %></h3>
             <ul>
             <% supporting_orgs = @bill.bill_position_organizations.select{|g| g.disposition == 'support'} %>
             <% supporting_orgs[0..5].each { |org| %><li><%= org.name %></li><% } %>
@@ -133,9 +133,9 @@
           <% end %>
         </div>
       
-        <div class="col2">
+        <div class="col2 lowpadding">
           <% unless @bill.bill_position_organizations.select{|g| g.disposition == 'oppose'}.empty? %>
-            <h3>Specific Organizations Opposing <%= @bill.typenumber %></h3>
+            <h3>Organizations Opposing <%= @bill.typenumber %></h3>
             <ul>
               <% opposing_orgs = @bill.bill_position_organizations.select{|g| g.disposition == 'oppose'} %>
               <% opposing_orgs[0..5].each { |org| %><li><%= org.name %></li><% } %>
@@ -146,10 +146,10 @@
             </ul>
           <% end %>
         </div>
+      </div>
       
-        <div class='money_trail_summary_more'>
-          See the <a href="<%= url_for :controller => 'bill', :action => 'money', :id => @bill.ident %>">money trail</a> behind this bill for more info on how campaign contributions may be influencing senators'/representatives' votes.</p>
-        </div>
+      <div class='money_trail_summary_more'>
+        See the <a href="<%= url_for :controller => 'bill', :action => 'money', :id => @bill.ident %>">money trail</a> behind this bill for more info on how campaign contributions may be influencing senators'/representatives' votes.</p>
       </div>
     <% end %>
       

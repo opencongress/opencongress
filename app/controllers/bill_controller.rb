@@ -52,8 +52,9 @@ class BillController < ApplicationController
   end
   
   def all
-    expires_in 20.minutes, :public => true
-    congress = params[:congress] ? params[:congress] : DEFAULT_CONGRESS
+    # disabled caching for 
+    #expires_in 20.minutes, :public => true
+    @congress = params[:congress] ? params[:congress] : DEFAULT_CONGRESS
     
     # the following is temporary until a better way is figured out!
     unless read_fragment("bill_#{@types}_index")
@@ -61,7 +62,7 @@ class BillController < ApplicationController
       @bill_counts = {}
       @types_from_params.each do |bill_type|
         @bills[bill_type] = Bill.find_all_by_bill_type_and_session(bill_type, congress, :order => 'lastaction DESC', :limit => 5)
-        @bill_counts[bill_type] = Bill.count(:conditions => ['bill_type = ? AND session = ?', bill_type, congress])
+        @bill_counts[bill_type] = Bill.count(:conditions => ['bill_type = ? AND session = ?', bill_type, @congress])
       end
     end
     
@@ -77,9 +78,15 @@ class BillController < ApplicationController
 
   def popular
     @days = days_from_params(params[:days])
-    
-    unless read_fragment("bill_meta_popular_#{@days}")
-      @bills = ObjectAggregate.popular('Bill', @days, 100)
+    @congress = params[:congress].blank? ? DEFAULT_CONGRESS : params[:congress]
+    if @congress != DEFAULT_CONGRESS
+      @bills = Bill.find(:all, :select => "bills.*, bills.page_views_count AS view_count", 
+                         :conditions => ["session = ?", params[:congress]], 
+                         :order => 'page_views_count DESC', :limit => 100)
+    else
+      unless read_fragment("bill_meta_popular_#{@days}")
+        @bills = ObjectAggregate.popular('Bill', @days, 100)
+      end
     end
     
     @atom = {'link' => url_for(:only_path => false, :controller => 'bill/atom/most', :action => 'viewed'), 'title' => "Top 20 Most Viewed Bills"}
@@ -114,12 +121,13 @@ class BillController < ApplicationController
     @types = 'all'
     @hot_bill_categories = HotBillCategory.find(:all, :order => :name)
     @atom = {'link' => "/bill/hot.rss", 'title' => "Hot Bills"}
+    @congress = params[:congress].blank? ? DEFAULT_CONGRESS : params[:congress]
     
     respond_to do |format|
       format.html {}
       format.js { render :action => 'update'}
       format.rss {
-        @hot_bills = Bill.find(:all, :conditions => ["session = ? AND hot_bill_category_id IS NOT NULL", DEFAULT_CONGRESS], 
+        @hot_bills = Bill.find(:all, :conditions => ["session = ? AND hot_bill_category_id IS NOT NULL", @congress], 
                            :order => 'introduced DESC')
         render :action => 'hot.rxml'
       }
@@ -146,19 +154,27 @@ class BillController < ApplicationController
 
   def most_commentary
     @days = days_from_params(params[:days])
+    @congress = params[:congress].blank? ? DEFAULT_CONGRESS : params[:congress]
     
     if params[:type] == 'news'
       @sort = @commentary_type = 'news'
-      @page_title = 'Bills Most Written About In The News'
+      @page_title = "Bills Most Written About In The News : #{@congress.to_i.ordinalize} Congress"
       @atom = {'link' => "/bill/atom/most/news", 'title' => @page_title}      
     else
       @sort = @commentary_type = 'blog'
-      @page_title = 'Bills Most Written About On Blogs'
+      @page_title = "Bills Most Written About On Blogs : #{@congress.to_i.ordinalize} Congress"
       @atom = {'link' => "/bill/atom/most/blog", 'title' => @page_title}
     end
     
-    unless read_fragment("bill_meta_most_#{@commentary_type}_#{@days}")
-      @bills = Bill.find_by_most_commentary(@commentary_type, 20, @days, DEFAULT_CONGRESS, @types_from_params)
+    if @congress != DEFAULT_CONGRESS
+      order = (@sort == 'news') ? 'news_article_count' : 'blog_article_count'
+      @bills = Bill.find(:all, :select => "bills.*, bills.#{order} AS article_count", 
+                         :conditions => ["session = ? AND #{order} IS NOT NULL", params[:congress]], 
+                         :order => "#{order} DESC", :limit => 100)
+    else
+      unless read_fragment("bill_meta_most_#{@commentary_type}_#{@days}")
+        @bills = Bill.find_by_most_commentary(@commentary_type, 20, @days, DEFAULT_CONGRESS, @types_from_params)
+      end
     end
     respond_to do |format|
       format.html {}

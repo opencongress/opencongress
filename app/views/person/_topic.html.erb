@@ -23,6 +23,8 @@
     <% end %>
   </div>  
 
+  <%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
+
   <% unless @person.person_stats.nil? %>
     <ul id="sponsor_stats" class="clearfix">
       <%= sponsored_bill_stats %>

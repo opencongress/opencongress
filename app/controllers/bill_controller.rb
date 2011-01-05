@@ -57,16 +57,16 @@ class BillController < ApplicationController
     @congress = params[:congress] ? params[:congress] : DEFAULT_CONGRESS
     
     # the following is temporary until a better way is figured out!
-    unless read_fragment("bill_#{@types}_index")
+    unless read_fragment("bill_#{@types}_index_#{@congress}")
       @bills = {}
       @bill_counts = {}
       @types_from_params.each do |bill_type|
-        @bills[bill_type] = Bill.find_all_by_bill_type_and_session(bill_type, congress, :order => 'lastaction DESC', :limit => 5)
+        @bills[bill_type] = Bill.find_all_by_bill_type_and_session(bill_type, @congress, :order => 'lastaction DESC', :limit => 5)
         @bill_counts[bill_type] = Bill.count(:conditions => ['bill_type = ? AND session = ?', bill_type, @congress])
       end
     end
     
-    @page_title = "#{@types.capitalize} Bills: #{congress}th Congress"
+    @page_title = "#{@types.capitalize} Bills: #{@congress}th Congress"
     @title_desc = SiteText.find_title_desc('bill_all')
     @sort = 'all'
     #@related_bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME, 5) unless @custom_sidebar

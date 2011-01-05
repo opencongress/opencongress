@@ -1570,10 +1570,8 @@ font-size: 11px;
 display: block;
 line-height: 3em;
 font-size: 11px;
-background: url('/images/large_buttons.png') right -540px no-repeat;
-_background: url('/images/large_buttons.gif') right -540px no-repeat;
 text-decoration: none;
-margin: 20px 0 0 0;
+margin: 0px 0 0 0;
 float: left;
 padding: 0 22px 0 0;
 width: 190px;
@@ -1584,10 +1582,8 @@ min-width: 155px;
 }
 
 .stats_button span, .users_button span {
-padding: 10px 0px 6px 19px;
+padding: 0px 0px 0px 5px;
 display: block;
-background: url('/images/large_buttons.png') 0 -540px no-repeat;
-_background: url('/images/large_buttons.gif') 0 -540px no-repeat;
 }
 
 .stats_button {
@@ -1613,12 +1609,10 @@ width: 240px;
 .action_button {
 display: block;
 clear: both;
-padding: 0px 0 0px 19px;
+padding: 0px 0 0px 5px;
 font-size: 11px;
-background: url('/images/large_buttons.png') 0 -916px no-repeat;
-_background: url('/images/large_buttons.gif') 0 -916px no-repeat;
 text-decoration: none;
-margin: 20px 0 0 0;
+margin: 0px 0 0 0;
 overflow: hidden;
 float: left;
 width: 405px;

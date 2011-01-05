@@ -3582,59 +3582,43 @@ line-height: 1em;
 }
 
 .small_box{
-width: 199px;
-margin: 0 0px 0 30px;
-padding: 0px 0 5px;
-background: url('/images/stats_bottom.png') left bottom no-repeat ;
-_background: url('/images/stats_bottom.gif') left bottom no-repeat ;
-}
-
-
-#stats ul{
-  padding: 0 15px 6px 15px;
-  width: 170px;
-}
-#stats ul li{
-  font-size: 11px;
-  color: #647180;
-  padding: 0;
-  margin: 0;
-  width: 170px;
-  clear: both;
-}
-
-#stats span.time{
-  float: left;
-}
-#stats span.count{
-  float: right;
-  color:#647180;
-}
-
-
-#stats h3{
+padding: 15px 45px 10px;
 font-size: 11px;
-padding: 11px 15px 0;
-margin: 0 0 0px 0;
-color: #647180;
-text-align: left;
+border-bottom: 1px solid #eee; 
+float: left;
+width: 100%;
+line-height: 1em;
 }
 
-#stats p{
+.small_box *{
+padding: 0 10px 0 0;
+}
+
+
+
+.small_box h3{
+float: left;
 font-size: 11px;
-padding: 11px 15px 0;
-margin: 0 0 0px 0;
-color: #647180;
+margin: 0;
+line-height: 1em;
 }
 
-#stats p.bottom{
-padding: 0px 15px 6px;
+
+.small_box ul{
+float: left;
+margin: 0;
+padding: 1px;
 }
 
-.small_box_top{
-background: url('/images/stats_top.png') left 0 no-repeat;
-_background: url('/images/stats_top.gif') left 0 no-repeat;
+.small_box ul li{
+float: left;
+line-height: 1em;
 }
+
+
+
+
+
 
 .br_link a{
 font-size: 11px;

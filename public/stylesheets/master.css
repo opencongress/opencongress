@@ -3612,8 +3612,8 @@ padding: 0 10px 0 0;
 }
 
 .small_box h3{
-
-font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif !important;
+font-size: 12px !important;
 margin: 0 0 4px;
 line-height: 1em;
 }
@@ -3633,6 +3633,17 @@ color: #333;
 
 
 
+#issue #stats{
+width: 680px;
+padding: 0;
+margin-bottom: 20px;
+}
+
+#people #stats{
+width: 680px;
+padding: 0;
+margin-bottom: 20px;
+}
 
 
 

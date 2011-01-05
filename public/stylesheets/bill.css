@@ -1417,6 +1417,8 @@ clear: both;
 
 #wiki_summary {
 padding: 45px 29px 0px 0px;
+background: url('/images/wiki_bg.png') 20px 0 no-repeat;
+min-height: 100px;
 }
 
 .official_summary h4 {

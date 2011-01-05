@@ -3047,26 +3047,34 @@ _background: url('/images/send_email.gif') left 7px no-repeat;
 }
 
 .feedback{
-padding: 3px 0 3px 29px;
+padding: 3px 0 5px 29px;
 background: url('/images/feedback.png') left 2px no-repeat;
 _background: url('/images/feedback.gif') left 2px no-repeat;
-margin: 0 0 5px 49px;
-
+margin: 0 0 50px 49px;
+font-weight: bold;
+text-decoration: none;
+float: left;
 }
 
 .bill_widget{
-padding: 3px 0 3px 30px;
-margin: 0 0 5px 49px;
+padding: 3px 0 5px 30px;
+margin: 0 0 10px 49px;
 background: url('/images/bill_widget.png') left 1px no-repeat;
 _background: url('/images/bill_widget.gif') left 1px no-repeat;
 font-weight: bold;
 text-decoration: none;
+float: left;
+color: #333;
 }
 
 .mypn{
 display: block;
-padding: 3px 0 3px 29px;
-margin: 0 0 5px 49px;
+padding: 3px 0 5px 29px;
+margin: 20px 0 10px 49px;
+color: #333 !important;
+font-weight: bold;
+float: left;
+text-decoration: none;
 background: url('/images/notebook.png') 1px 4px no-repeat;
 _background: url('/images/notebook.gif') 1px 4px no-repeat;
 }
@@ -3106,9 +3114,20 @@ _background:url('/images/uc-box-bottom.gif') 11px bottom no-repeat;
 
 ul.share_buttons, ul#share_subscribe{
 clear: both;
-margin-top: 20px;
+margin: 25px 0 0 30px;
 font-weight: bold;
 color: #666;
+width: 198px;
+float: left;
+padding: 0 0 10px !important;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius:3px;
+-moz-box-shadow: inset 0 1px 2px #526476;
+-webkit-box-shadow: inset 0 1px 2px #526476;
+box-shadow: inset 0 1px 2px #526476;
+
+
 }
 
 ul.share_buttons a, ul#share_subscribe a{
@@ -3163,9 +3182,7 @@ height: 26px !important;
 float: left;
 }
 
-li a:hover{
-background-position: 1px -21px;
-}
+
 
 .newsgator a{
 background-position: -52px -21px;
@@ -3581,25 +3598,23 @@ font-size: 14px;
 line-height: 1em;
 }
 
-.small_box{
-padding: 15px 45px 10px;
+#stats.small_box{
+padding: 15px 0px 10px 5px;
 font-size: 11px;
-border-bottom: 1px solid #eee; 
 float: left;
-width: 100%;
+width: 370px;
 line-height: 1em;
 }
 
-.small_box *{
+
+#stats.small_box *{
 padding: 0 10px 0 0;
 }
 
-
-
 .small_box h3{
-float: left;
-font-size: 11px;
-margin: 0;
+
+font-size: 12px;
+margin: 0 0 4px;
 line-height: 1em;
 }
 
@@ -3613,6 +3628,7 @@ padding: 1px;
 .small_box ul li{
 float: left;
 line-height: 1em;
+color: #333;
 }
 
 
@@ -4187,9 +4203,8 @@ span.over{
   color:#a61c1c;
 }
 .count{
-  color:#AAAAAA;
+  color:#333;
   font-size:11px;
-  float:right;
 }
 
 

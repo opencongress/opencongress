@@ -538,28 +538,45 @@ padding: 0 10px 0 1px;
 }
 
 #bill-text {
-padding: 23px 0 0 0px
-float: left;
+padding: 0px
+
 margin: 20px 0;
+
 }
 
 #bill-text a {
-background: url('/images/large_buttons.png') left -410px no-repeat ;
-_background: url('/images/large_buttons.gif') left -410px no-repeat ;
 display: block;
-padding: 15px 0 0 30px;
-width: 234px;
-height: 49px;
+padding: 10px 30px;
 font-weight: bold;
 text-decoration: none;
 color: #43617d;
+margin: 0 50px 0 50px;
+float: left;
+width: 140px;
+
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius:3px;
+
+border: 1px solid #a7c3c9;
+border-top: 1px solid #c6d9de;
+border-bottom: 1px solid #4e7179;
+
+
+-moz-box-shadow: 0 1px 0px #a7c3c9, inset 0 1px 0px #fff;
+-webkit-box-shadow: 0 1px 0px #a7c3c9, inset 0 1px 0px #fff;
+box-shadow: 0 1px 0px #a7c3c9, inset 0 1px 0px #fff;
+
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ecf9fc', endColorstr='#d6e8eb'); /* for IE */
+background: -webkit-gradient(linear, left top, left bottom, from(#ecf9fc), to(#d6e8eb)); /* for webkit browsers */
+background: -moz-linear-gradient(top,  #ecf9fc,  #d6e8eb); /* for firefox 3.6+ */
 }
 
+
 #bill-text a:hover {
-background: url('/images/large_buttons.png') left -475px no-repeat ;
-_background: url('/images/large_buttons.gif') left -475px no-repeat ;
 color: #43617d;
 }
+
 
 #bill-text a span {
 display: block;
@@ -567,10 +584,12 @@ font-size: 11px;
 font-weight: normal;
 }
 
+
 #bill-text a.overview_button {
 background: url('/images/large_buttons.png') left -1009px no-repeat ;
 _background: url('/images/large_buttons.gif') left -1009px no-repeat ;
 }
+
 
 #bill-text a.overview_button:hover {
 background: url('/images/large_buttons.png') left -1074px no-repeat ;
@@ -919,6 +938,7 @@ border-top: 1px solid #efefef;
 clear: both;
 margin: 0 50px;
 padding: 10px 0 0 0px;
+display: none;
 }
 
 .cp a {
@@ -1619,9 +1639,7 @@ width: 405px;
 }
 
 .action_button:hover {
-background: url('/images/large_buttons.png') 0 -962px no-repeat;
-_background: url('/images/large_buttons.gif') 0 -962px no-repeat;
-text-decoration: none;
+
 }
 
 .action_button span {
@@ -1631,11 +1649,6 @@ padding-top: 1px !important;
 line-height: 4.1em;
 }
 
-.action_button:hover {
-background: url('/images/large_buttons.png') 0 -962px no-repeat;
-_background: url('/images/large_buttons.gif') 0 -962px no-repeat;
-text-decoration: none;
-}
 
 .action_button .dater {
 font-weight: bold;

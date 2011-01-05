@@ -184,17 +184,10 @@
 		</ul>
 
 
-
-
-
-		<ul class="share_buttons">
 			<%= render :partial => 'notebook_items/add_to_mypn', :object => object %>
-		</ul>
 		
 		<% if @bill %>
-			<ul>
-				<li><a href="/resources/bill_status?bill_id=<%= @bill.ident %>" class="bill_widget">Make A Bill Widget</a></li>
-			</ul>
+			<a href="/resources/bill_status?bill_id=<%= @bill.ident %>" class="bill_widget">Make A Bill Widget</a>
 		<% end %>
 		
 
@@ -204,11 +197,9 @@
 		});
 	</script>
   
-	<ul id="fdbck" class="share_buttons">
-		<li>
+
 			<a href="/resources/email_feedback_form?subject=<%= request.url %>" class="feedback">Send us Feedback</a>
-		</li>
-	</ul>
+
 
 	<div id="email_feedback" class="jqmWindow">
 		<%# render :partial => 'shared/email_feedback_form' %>

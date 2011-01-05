@@ -1,31 +1,14 @@
 <div id="tertiary-content">
 
 	<% if object.class.to_s == "Bill" %>
-		<% if @bill_text %>
-		  <div id="bill-text" class="un">
-		    <%= link_to "View Bill Overview <span>Official info, comments, more</span>", {:action => 'show'}, :class => 'overview_button' %>
-		  </div>
-		<% else %>
-		  <% unless @bill.current_bill_text_version.nil? %>
-  		  <div id="bill-text" class="un">
-  		    <%= link_to "Official Bill Text <span>Comment on about #{number_with_delimiter(@bill.current_bill_text_version.pages)} Pages</span>", :action => 'text' %>
-  		  </div>
-  		<% end %>
-	  <% end %>
-
-
-<% if @bill.text_comments_count > 0 %>
-
-<p class="most_button"><%= link_to "View Most Commented Paragraphs", :action => 'text', :anchor => 'most_commented' %>
-</p>
-<% end %>
-
-
 		<script type="text/javascript">
 		$j().ready(function() {
 			$j('#learn').jqm({trigger:'a.learn_trigger'});
 		});
 		</script>
+		
+		
+		
   	<% unless @bill.sidebar_box.nil? %>	
   	  <div class="sidebar_editorial">
   	    <% unless @bill.sidebar_box.image_url.blank? %>
@@ -41,11 +24,7 @@
   	    <% end %>
   	  </div>
   	<% end %>
-  		
-  		
-
-		<%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
-		
+  				
 		<div id="vote">
 			<script type="text/javascript">
 			$j().ready(function() {

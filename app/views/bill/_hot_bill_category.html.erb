@@ -2,7 +2,7 @@
 	<a name="<%= hot_bill_category.name %>"></a>
 	<h3><%= hot_bill_category.name %></h3>
 	<ul class="bills_list">  
-		<% hot_bill_category.bills.each do |b| %>
+		<% hot_bill_category.bills.find(:all, :conditions => ["session=?", @congress]).each do |b| %>
 		<li class="<%= bill_category(b) %>">
 			<span><%= render :partial => "shared/track_link", :locals => {:object => b} %></span>
 			<a class="icon_link" href="<%= bill_path(b) %>">

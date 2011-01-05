@@ -67,64 +67,14 @@
 </table>
 <% end %>
 
-<% unless @bill.roll_calls.empty? %>
-<table id="votes" cellpadding="0" cellspacing="0">
+
+
+
+	<% unless @roll_call.nil? %>
 	
-	<thead>
-	<tr class="header">
-		<th colspan="3"><span>Latest Vote</span>
-		<% if @bill.roll_calls.size > 1 %>
-		<%= link_to "View All Votes [#{@bill.roll_calls.size}]", {:action => 'votes'}, :class => 'toggle' %>
-		<% end %>
-		</th>
-	</tr>
-	</thead>
-	<tfoot>
-
-		<tr>                                
-			<td colspan="3">&nbsp;&nbsp;</td>
-		</tr>
-
-		</tfoot>
-	<tbody>
-	<tr>
-		<td colspan="3" class="action"><span class="date roll"><%= @roll_call.date.strftime("%B %d, %Y") %></span><%= link_to "Roll call number <b>#{@roll_call.number}</b>", :controller => 'roll_call', :action => 'show', :id => @roll_call.id %> <% if @roll_call.amendment %>(Amendment number <b><%= @roll_call.amendment.display_number %></b>) <% end %> in the <b><%= @roll_call.chamber %></b></td>
-	</tr>
-	<tr>
-		<td class="question" colspan="3"><em>Question:</em> <%= @roll_call.question %></td>
-	</tr>
-	<% if @roll_call.amendment %>
-	<tr>
-		<td class="amend" colspan="3"><em>Amendment purpose:</em> <%= @roll_call.amendment.purpose %></td>
-	</tr>  
+    <h3 class="header">Latest Vote</h3>
+    <div class="votes">
+    <%= render :partial => 'vote', :object => @bill.roll_calls.first %>
+    </div>
 	<% end %>
-	<tr>
-		<td class="req"><em>Required percentage of 'Aye' votes:</em> <%= @roll_call.required %> <%= numeric_percentage(@roll_call) %></td>
-		<% if @roll_call.total_votes > 0 %>
-		<td><em>Percentage of 'aye' votes:</em> <%= "%2d" % ((@roll_call.ayes.to_f / @roll_call.total_votes.to_f) * 100) %>%</td>  
-		<% end %>
-		<td class="result"><em>Result:</em> <%= @roll_call.result %></td>    
-	</tr>  
-	<tr>
-		<td class="votes" colspan="3">
-			<%= roll_call_sublists_by_vote_type('+', @roll_call) %>
-			<div class="pie-chart" id='roll_call_Aye_chart'>
-				<%= @aye_chart %>
-			</div>
-
-			<%= roll_call_sublists_by_vote_type('-', @roll_call) %>
-			<div class="pie-chart" id='roll_call_Nay_chart'>
-				<%= @nay_chart %>
-			</div>
-
-			<%= roll_call_sublists_by_vote_type('0', @roll_call) %>
-			<div class="pie-chart" id='roll_call_Abstain_chart'>
-				<%= @abstain_chart %>
-			</div>
-		</td>
-		</tr>
-	
-	</tbody>
-	</table>
-	<% end %>
-</div>
+	</div>

@@ -10,7 +10,6 @@ class IssueController < ApplicationController
   def alphabetical
     @sort = :alphabetical
     
-    @custom_sidebar = Sidebar.find_by_page_and_enabled('issue_alphabetical', true)
     @carousel = [ObjectAggregate.popular('Subject', DEFAULT_COUNT_TIME).slice(0..9)]
     
     letter = params[:id]
@@ -41,8 +40,6 @@ class IssueController < ApplicationController
 
     @days = days_from_params(params[:days])
 
-    @custom_sidebar = Sidebar.find_by_page_and_enabled('issue_by_most_viewed', true)
-
     @order = :most_viewed
     @subjects = ObjectAggregate.popular('Subject', @days).paginate
 
@@ -58,7 +55,6 @@ class IssueController < ApplicationController
   def by_bill_count
     @sort = :by_bill_count
 
-    #@custom_sidebar = Sidebar.find_by_page_and_enabled('issue_by_bill_count', true)
     @carousel = [ObjectAggregate.popular('Subject', DEFAULT_COUNT_TIME).slice(0..9)] 
 
     @order = :bill_count

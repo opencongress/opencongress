@@ -28,6 +28,8 @@
 	</div>
 	
 	<div class="bill_topic_text_stats">
+	  <%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
+	  
   	<% if @bill_text %>
   	  <div id="bill-text" class="un">
   	    <%= link_to "View Bill Overview <span>Official info, comments, more</span>", {:action => 'show'}, :class => 'overview_button' %>
@@ -45,7 +47,6 @@
       </p>
     <% end %>
 
-	  <%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
   </div>
     
 	<!-- <div class="box-wrap">

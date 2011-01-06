@@ -8,7 +8,7 @@
       <% else %>
         <% unless @bill.current_bill_text_version.nil? %>
           <div id="bill-text" class="un">
-            <%= link_to "Official Bill Text <span>Comment on about #{number_with_delimiter(@bill.current_bill_text_version.pages)} Pages</span>", :action => 'text'
+            <%= link_to "Official Bill Text <span>Comment on about #{number_with_delimiter(@bill.current_bill_text_version.pages)} Pages</span>", :action => 'text' %>
           </div>
         <% end %>
     <% end %>
@@ -154,8 +154,6 @@
 <% elsif object.class.to_s == "Subject" %>
   <%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
   <br />
-<% end %>
-  
 <% end %>
 
 <% if logged_in? %>

@@ -58,6 +58,9 @@ h3{ font-size: 13px; }
 =========================================================
 ///////////////////////////////////////////////////////*/
 
+
+
+
 .marginright{
 margin-right: 20px;
 margin-bottom: 20px;
@@ -3117,7 +3120,17 @@ _background:url('/images/uc-box.gif') no-repeat left top;
 _background:url('/images/uc-box-bottom.gif') 11px bottom no-repeat;
 }           
 
-ul.share_buttons, ul#share_subscribe{
+
+
+
+
+.small_box{
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius:3px;
+-moz-box-shadow: inset 0 1px 2px #666;
+-webkit-box-shadow: inset 0 1px 2px #666;
+box-shadow: inset 0 1px 2px #666;
 clear: both;
 margin: 25px 0 0 30px;
 font-weight: bold;
@@ -3125,12 +3138,65 @@ color: #666;
 width: 198px;
 float: left;
 padding: 0 0 10px !important;
--moz-border-radius: 3px;
--webkit-border-radius: 3px;
-border-radius:3px;
--moz-box-shadow: inset 0 1px 2px #526476;
--webkit-box-shadow: inset 0 1px 2px #526476;
-box-shadow: inset 0 1px 2px #526476;
+}
+
+
+
+
+.small_box h3{
+font-family: Arial, Helvetica, sans-serif !important;
+font-size: 12px !important;
+margin: 0 0 4px;
+text-align: left !important;
+line-height: 1em;
+}
+
+
+
+
+.small_box ul{
+float: left;
+margin: 0;
+padding: 1px;
+}
+
+
+
+.small_box ul li{
+float: left;
+line-height: 1em;
+}
+
+
+#stats{
+padding-bottom: 0 !important;
+}
+
+
+#stats li{
+float: none;
+font-size: 11px;
+padding: 6px 0 5px 10px;
+display: block !important;
+font-weight: normal;
+width: 186px;
+}
+
+
+#stats li .time{
+float: left;
+width: 100px;
+}
+
+
+#stats h3{
+padding: 10px 0 3px 10px;
+}
+
+
+
+
+ul.share_buttons, ul#share_subscribe{
 
 
 }
@@ -3603,52 +3669,13 @@ font-size: 14px;
 line-height: 1em;
 }
 
-#stats.small_box{
-padding: 15px 0px 10px 5px;
-font-size: 11px;
-float: left;
-width: 370px;
-line-height: 1em;
-}
-
-
-#stats.small_box *{
-padding: 0 10px 0 0;
-}
-
-.small_box h3{
-	font-family: Arial, Helvetica, sans-serif !important;
-font-size: 12px !important;
-margin: 0 0 4px;
-line-height: 1em;
-}
-
-
-.small_box ul{
-float: left;
-margin: 0;
-padding: 1px;
-}
-
-.small_box ul li{
-float: left;
-line-height: 1em;
-color: #333;
-}
 
 
 
-#issue #stats{
-width: 680px;
-padding: 0;
-margin-bottom: 20px;
-}
 
-#people #stats{
-width: 680px;
-padding: 0;
-margin-bottom: 20px;
-}
+
+
+
 
 
 
@@ -4811,5 +4838,11 @@ list-style: none;
 
 
 }
+
+
+
+
+
+
 
 

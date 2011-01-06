@@ -23,7 +23,6 @@ body{
 h3{ font-size: 13px; }
 
 
-
 /*///////////////////////////////////////////////////////
 =========================================================
 
@@ -93,6 +92,12 @@ background: url('/images/carousel_dark_bg.png') top left repeat-x;
 border-bottom: 1px solid #aaa;
 }
 
+.image{ 
+padding: 4px; 
+border: 1px solid #ddd; 
+background: #fff;
+
+}
 
 /* clearfix */
 
@@ -1560,7 +1565,7 @@ width: 30px;
   color:#666;
   font-weight:bold;
     padding: 2px 14px 0 5px;
-  font-family:Helvetica, sans-serif;
+  font-family:Arial, sans-serif;
 }
 
 .mypnz_img{
@@ -4783,6 +4788,28 @@ padding-bottom: 20px;
 }
 
 
+.press{
+padding: 0 0 0 0px;
+margin: 0;
+}
 
+
+.press li{
+margin-bottom: 15px;
+-moz-box-shadow:inset 0px 1px 1px #ddd;
+-webkit-box-shadow:inset 0px 1px 1px #ddd;
+box-shadow: inset 0px 1px 1px #ddd;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+padding: 12px 15px;
+list-style: none;
+}
+
+
+.press li:hover{
+
+
+}
 
 

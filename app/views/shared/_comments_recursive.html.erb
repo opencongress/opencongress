@@ -80,7 +80,6 @@
 
 				<% if logged_in? %>
 	  				<% comment_score = myscores.select{ |s| s.comment_id == comment.id }.first %>
-	  					<%= link_to_remote "<span>&minus;</span>", :url => {:controller => 'comments', :action => :rate, :id => comment.id, :value => 1}, :html => {:id => 'minus', :class => "small_button#{comment_score.score > 5 ? ' active' : '' unless comment_score.nil?}"} %>
 	  					<%= link_to_remote "<span>+</span>", :url => {:controller => 'comments', :action => :rate, :id => comment.id, :value => 10}, :html => {:id => 'plus', :class => "small_button#{comment_score.score < 5 ? ' active' : '' unless comment_score.nil?}"} %>
 
 	<!--
@@ -88,7 +87,6 @@
 							<a href="#" class="plus <%= comment_score.score > 5 ? " rated" : "" unless comment_score.nil? %>" onclick="new Ajax.Updater('rate_comment_<%= comment.id.to_s%>','/comments/rate/<%= comment.id %>?value=10', {asynchronous:true, evalScripts:true}); return false;">+</a>
 -->
 			<% else %>
-					<%= link_to("<span>&minus;</span>", login_url(:modal => true), :id => 'minus', :class => 'small_button rate_trigger' ) %>
 					<%= link_to("<span>+</span>", login_url(:modal => true), :id => 'plus', :class => 'small_button rate_trigger' ) %>
 	  		<% end %>
 

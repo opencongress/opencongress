@@ -253,6 +253,14 @@ class ApiController < ApplicationController
     do_render(bills, {:except => [:rolls, :hot_bill_category_id]})
   end
   
+  def stalled_bills
+    original_chamber = (params[:passing_chamber] == 's') ? 's' : 'h'
+    session = (AVAILABLE_CONGRESSES.include?(params[:session])) ? params[:session] : DEFAULT_CONGRESS
+    
+    bills = Bill.find_stalled_in_second_chamber(original_chamber, session)
+    do_render(bills, {:except => [:rolls, :hot_bill_category_id]})
+  end
+  
   def most_blogged_bills_this_week
     bills = Bill.find_by_most_commentary('blog', 10, DEFAULT_COUNT_TIME)
     do_render(bills, {:except => [:rolls, :hot_bill_category_id]})
@@ -264,7 +272,7 @@ class ApiController < ApplicationController
   end
   
   def most_viewed_bills_this_week
-    bills = PageView.popular('Bill', DEFAULT_COUNT_TIME + 30.days, 10) || Bill.find(:first)
+    bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME + 30.days, 10) || Bill.find(:first)
     do_render(bills, {:except => [:rolls, :hot_bill_category_id]})
   end
   

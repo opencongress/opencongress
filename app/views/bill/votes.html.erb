@@ -1,67 +1,18 @@
-<div class="main">
+
+
+  <div class="padding">
 <%= render :partial => 'aavtabs' %>
-<%= will_paginate @roll_calls %>
 
-<table id="votes" cellpadding="0" cellspacing="0">
-<thead>
-<tr class="header"><th><span>All Votes</span></th></tr>
-</thead>
-<tfoot>
-
-<tr>                                
-	<td colspan="4">&nbsp;</td>
-</tr>
-
-</tfoot>
-<tbody>
-
-<% @roll_calls.each do |roll| %>
-<tr class="<%= cycle('a','b') %>">
-<td class="roll">
-  <table cellpadding="0" cellspacing="0">
-<tr>
-      <td class="action" colspan="3"><span class="date roll"><%= roll.date.strftime("%B %d, %Y") %></span><%= link_to "Roll call number <b>#{roll.number}</b>", :controller => 'roll_call', :action => 'show', :id => roll.id %> <% if roll.amendment %>(Amendment number <b><%= roll.amendment.display_number %></b>) <% end %> in the <b><%= roll.chamber %></b></td>
-    </tr>
-    <tr>
-      <td class="question" colspan="3"><em>Question:</em> <%= roll.question %></td>
-    </tr>
-    <% if roll.amendment %>
-    <tr>
-      <td><em>Amendment purpose:</em> <%= roll.amendment.purpose %></td>
-    </tr>  
-    <% end %>
-     <tr>
-        <td class="req"><em>Required percentage of 'Aye' votes:</em> <%= roll.required %> <%= numeric_percentage(roll) %></td>
-        <% if roll.total_votes > 0 %>
-        <td><em>Percentage of 'aye' votes:</em> <%= "%2d" % ((roll.ayes.to_f / roll.total_votes.to_f) * 100) %>%</td>  
-      <% end %>
-        <td><em>Result:</em> <%= roll.result %></td>    
-      </tr>  
-			<tr>
-				<td class="pies" colspan="3">
-					<%= roll_call_sublists_by_vote_type('+', roll) %>
-				  <div class="pie-chart" id='roll_call_Aye_chart_<%= roll.id %>'>
-						<%= ofc2(210,120, "roll_call/partyvote_piechart_data/#{roll.id}?breakdown_type=#{CGI.escape("+")}&disclaimer_off=true&radius=40") %>
-					</div>
-
-				  <% roll_call_sublists_by_vote_type('-', roll) %>
-				  <div class="pie-chart" id='roll_call_Nay_chart_<%= roll.id %>'>
-						<%= ofc2(210,120, "roll_call/partyvote_piechart_data/#{roll.id}?breakdown_type=-&disclaimer_off=true&radius=40") %>
-					</div>
-
-				  <%= roll_call_sublists_by_vote_type('0', roll) %>
-				  <div class="pie-chart" id='roll_call_Abstain_chart_<%= roll.id %>'>
-						<%= ofc2(210,120, "roll_call/partyvote_piechart_data/#{roll.id}?breakdown_type=0&disclaimer_off=true&radius=40") %>
-					</div>
-				</td>
-			</tr>
-  </table>
-  </td>
-</tr>
-<% end %>
-
-</tbody>
-</table>
+<div class="clear"><br /></div>
 
 <%= will_paginate @roll_calls %>
-</div>
+
+    <h3 class="header">All Votes</h3>
+    <div class="votes">
+
+<%= render :partial => 'vote', :collection => @roll_calls %>
+
+    </div>
+  </div>
+
+<%= will_paginate @roll_calls %>

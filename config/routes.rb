@@ -29,7 +29,6 @@ ActionController::Routing::Routes.draw do |map|
   # -- just remember to delete public/index.html.
   # map.connect '', :controller => 'welcome'
   map.connect '', :controller => 'index'
-  map.donate_modal '/donate/modal', :controller => 'index', :action => 'donate_modal'
   map.home '', :controller => 'index', :action => 'index'
 
   # Allow downloading Web Service WSDL as a file with an extension
@@ -48,6 +47,7 @@ ActionController::Routing::Routes.draw do |map|
     b.connect 'bill/pending', :action => 'pending'
     b.connect 'bill/popular', :action => 'popular'
     b.connect 'bill/hot', :action => 'hot'
+    b.connect 'bill/hot.rss', :action => 'hot', :format => 'rss'
     b.connect 'bill/readthebill', :action => 'readthebill'
     b.connect 'bill/readthebill.:format', :action => 'readthebill'
     b.connect 'bill/compare', :action => 'compare'
@@ -93,6 +93,7 @@ ActionController::Routing::Routes.draw do |map|
     p.blogs_person 'people/blogs/:id', :action => 'blogs'
     p.connect 'people/news/:id/:page', :action => 'news'
     p.connect 'people/blogs/:id/:page', :action => 'blogs'
+    p.connect 'people/votes_with_party/:chamber/:party', :action => 'votes_with_party'
 
     p.connect 'people/voting_history/:id/:page', :action => 'voting_history'
     p.connect 'person/compare.:format', :action => 'compare'

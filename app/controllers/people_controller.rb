@@ -489,6 +489,19 @@ class PeopleController < ApplicationController
     end
   end
   
+  def votes_with_party
+    @chamber = params[:chamber] == 'house' ? 'house' : 'senate'
+    @party = params[:party] == 'democrat' ? 'Democrat' : 'Republican'
+    @party_adj = @party == 'Democrat' ? 'Democratic' : 'Republican'
+    @people_names = @chamber == 'house' ? 'Representatives' : 'Senators'
+    
+    
+    @people = Person.list_by_votes_with_party_ranking(@chamber, @party)
+
+    @median = @people[(@people.size/2)]
+
+  end
+  
   def bills
     @page = params[:page]
     @page = "1" unless @page
@@ -685,7 +698,13 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:id])
     
     if @person
-      PageView.create_by_hour(@person, request)
+      key = "page_view_ip:Person:#{@person.id}:#{request.remote_ip}"
+      unless read_fragment(key)
+        @person.increment!(:page_views_count)
+        @person.page_view
+        write_fragment(key, "c", :expires_in => 1.hour)
+      end
     end
   end
+  
 end

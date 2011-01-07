@@ -94,7 +94,7 @@
 	  <img src="http://chart.apis.google.com/chart?cht=v&amp;chs=180x90&amp;chco=ff9900,6FC6B0&amp;chd=t:<%= @person2.unabstained_roll_calls.count %>,<%= @person1.unabstained_roll_calls.count %>,0,<%= (@vote_together[0].to_f /
 	@vote_together[1].to_f * 100).round %>&amp;chdl=<%= @person2.lastname%>|<%= @person1.lastname %>" style="float:right;margin:3px;border:3px solid #FFFFFF;"/>
       <p>
-		<%= link_to @person1.full_name, :controller => 'people', :action => 'show', :id => @person1.ident %> and <%= link_to @person2.full_name, :controller => 'people', :action => 'show', :id => @person2.ident %> have voted together <%= @vote_together[0] %> times on roll call votes since January, 2007 in votes where neither abstained, representing a voting similarity of <%= (@vote_together[0].to_f / @vote_together[1].to_f * 100).round %>%.
+		<%= link_to @person1.full_name, :controller => 'people', :action => 'show', :id => @person1.ident %> and <%= link_to @person2.full_name, :controller => 'people', :action => 'show', :id => @person2.ident %> have voted together <%= @vote_together[0] %> times on roll call votes since January, 2007 in votes where neither abstained, representing a voting similarity of <%= (@vote_together[0].to_f / @vote_together[1].to_f * 100).round %>%.  The list below highlights how their voting records compare on passage of bills and editorially-selected "hot" votes on amendments.
 	  </p>
   </div>  
 

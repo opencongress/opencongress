@@ -77,7 +77,6 @@ class ApplicationController < ActionController::Base
 
   def has_accepted_tos?
     if logged_in?
-      logger.info "USER APP TOS: #{current_user.accepted_tos}"
       unless current_user.accepted_tos == true
         redirect_to :controller => 'account', :action => 'accept_tos'
       end

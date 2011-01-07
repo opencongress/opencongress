@@ -51,34 +51,47 @@ begin
       end
       
       # scrape interest groups just to make sure
-      h = Hpricot(open(bill_e.elements["url"].text))
-      divs = h/"div.organizations"
-
-      divs.search("#for a.interest").each do |g| 
-        ig = CrpInterestGroup.find_by_name(CGI.unescapeHTML(g.inner_html))
-        if ig and not bigs.include?(ig)
-          puts "SUPPORTS: #{ig.name}"
-          big = BillInterestGroup.find_or_initialize_by_bill_id_and_crp_interest_group_id(bill.id, ig.id)
-          big.disposition = 'support'
-          big.save
+      h = Hpricot(open("#{bill_e.elements["url"].text}/total-contributions.table"))
+      
+      h.search("div.whom-supported tr > td:first-of-type").each do |g| 
+        
+        if g.search("a.active").first
+          g = g.search("a.active").first
+        end
+        
+        unless g.inner_html.blank?
+          ig = CrpInterestGroup.find_by_name(CGI.unescapeHTML(g.inner_html))
+          if ig and not bigs.include?(ig)
+            puts "SUPPORTS: #{ig.name}"
+            big = BillInterestGroup.find_or_initialize_by_bill_id_and_crp_interest_group_id(bill.id, ig.id)
+            big.disposition = 'support'
+            big.save
           
-          bigs << big
-        else
-          puts "UNKNOWN SUPPORT: #{g.inner_html}"
+            bigs << big
+          else
+            puts "UNKNOWN SUPPORT: #{g.inner_html}"
+          end
         end
       end
 
-      divs.search("#against a.interest").each do |g| 
-        ig = CrpInterestGroup.find_by_name(CGI.unescapeHTML(g.inner_html))
-        if ig and not bigs.include?(ig)
-          puts "OPPOSES: #{ig.name}"
-          big = BillInterestGroup.find_or_initialize_by_bill_id_and_crp_interest_group_id(bill.id, ig.id)
-          big.disposition = 'oppose'
-          big.save
+      h.search("div.whom-opposed tr > td:first-of-type").each do |g| 
+        if g.search("a.active").first
+          g = g.search("a.active").first
+        end
+
+        unless g.inner_html.blank?
+        
+          ig = CrpInterestGroup.find_by_name(CGI.unescapeHTML(g.inner_html))
+          if ig and not bigs.include?(ig)
+            puts "OPPOSES: #{ig.name}"
+            big = BillInterestGroup.find_or_initialize_by_bill_id_and_crp_interest_group_id(bill.id, ig.id)
+            big.disposition = 'oppose'
+            big.save
           
-          bigs << big
-        else
-          puts "UNKNOWN OPPOSE: #{g.inner_html}"
+            bigs << big
+          else
+            puts "UNKNOWN OPPOSE: #{g.inner_html}"
+          end
         end
       end
 

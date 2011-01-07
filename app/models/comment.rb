@@ -116,7 +116,7 @@ class Comment < ActiveRecord::Base
       if page_result = Comment.find_by_sql(["select comment_page(id, commentable_id, commentable_type, ?) as page_number from comments where id = ?", Comment.per_page, self.id])[0]
         return page_result.page_number
       else
-        return 0
+        return 1
       end
   end
 

@@ -49,45 +49,41 @@ margin-bottom: 20px;
 font-size: 15px;
 font-weight: bold;
 padding-right: 20px;
-background: url('/images/arrows.png') right -44px no-repeat;
+background: url('/images/new_social.png') right -23px no-repeat;
+}
+
+a.full_article{
+background: none !important;
+padding: 0;
 }
 
 .add_facebook{
-padding-top: 20px;
+padding-top: 50px;
 overflow: hidden;
 float: right;
-width: 136px;
+width: 89px;
 height: 0;
-background: url('/images/fbt.png') left -23px no-repeat;
-margin: 13px 0 0 0;
+background: url('/images/new_social.png') left 0px no-repeat;
+margin: 1px 0 0 0;
 }
 
 .add_facebook:hover{
-padding-top: 20px;
-overflow: hidden;
-float: right;
-height: 0;
-background: url('/images/fbt.png') left top no-repeat;
+background: url('/images/new_social.png') left 0px no-repeat;
 }
 
 
 .tweet_us{
-padding-top: 20px;
+padding-top: 50px;
 overflow: hidden;
-width: 103px;
+width: 83px;
 float: right;
 height: 0;
-margin: 13px 0 0 0;
-background: url('/images/fbt.png') right -23px no-repeat;
-
+margin: 1px 0 0 0;
+background: url('/images/new_social.png') right 0px no-repeat;
 }
 
 .tweet_us:hover{
-padding-top: 20px;
-overflow: hidden;
-float: right;
-height: 0;
-background: url('/images/fbt.png') right top no-repeat;
+background: url('/images/new_social.png') right 0px no-repeat;
 }
 
 
@@ -969,6 +965,25 @@ padding-right: 3px;
 font-weight: bold;
 }
 
+ul.latest_votes li a span.votes{
+background: 0 !important;
+-moz-box-shadow: none !important;;
+-webkit-box-shadow: none !important;;
+box-shadow: none !important;;
+border: 0 !important;
+}
+
+ul.latest_votes li a span.type{
+clear: none;
+width: 270px;
+overflow: hidden;
+height: 1.6em;
+}
+
+div.featured_members{
+height: 376px;
+}
+
 
 .box03 div{
 
@@ -1210,3 +1225,15 @@ p.topline .med_button span{
 padding-top: 8px;
 padding-bottom: 6px;
 }
+
+
+.og{
+background: url(/images/og-banner.jpg) 0 0 no-repeat;
+display: block;
+padding-top: 353px;
+overflow: hidden;
+height: 0;
+border-bottom: 1px solid #ccc;
+}
+
+

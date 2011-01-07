@@ -3,7 +3,7 @@ class IndexController < ApplicationController
   
   def index
     unless read_fragment("frontpage_rightside")
-      @popular_bills = PageView.popular('Bill', DEFAULT_COUNT_TIME, 6, DEFAULT_CONGRESS, true)
+      @popular_bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME, 6, DEFAULT_CONGRESS, true)
       
       @index_tabs = [
               {:title => 'Newest Bills',
@@ -13,7 +13,7 @@ class IndexController < ApplicationController
               :link => '/bill/most/viewed'},
               {:title => 'Most-Viewed Bills',
               :partial => 'bill',
-              :collection => PageView.popular('Bill', DEFAULT_COUNT_TIME, 3),
+              :collection => ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME, 3),
               :id => "bv",
               :link => '/bill/most/viewed',
               :style => 'display: none;'},
@@ -31,7 +31,7 @@ class IndexController < ApplicationController
               :id => 'pr'},
               {:title => 'Most-Viewed Issues',
               :partial => 'issue',
-              :collection => PageView.popular('Subject', DEFAULT_COUNT_TIME, 3),
+              :collection => ObjectAggregate.popular('Subject', DEFAULT_COUNT_TIME, 3),
               :style => 'display: none;',
               :id => 'pis',
               :link => '/issues'}]
@@ -45,10 +45,6 @@ class IndexController < ApplicationController
 
     @sessions = CongressSession.sessions
 
-  end
-  
-  def donate_modal
-    render :layout => false
   end
   
   def notfound

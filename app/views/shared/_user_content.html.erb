@@ -117,27 +117,29 @@
 	
 <% elsif object.class.to_s == "Person" %>
   <div class="rep_info">
-  <% unless object.website.blank? %>
-    Official website: <a href="<%= object.website %>" target="_new"><%= object.website %></a><br />
-  <% end %>
+    <% unless object.website.blank? %>
+      Official website: <a href="<%= object.website %>" target="_new"><%= object.website %></a><br />
+    <% end %>
 
-  <% unless object.congress_office.blank? %>
+    <% unless object.congress_office.blank? %>
   
-  	<div class="address">
-  		<strong>Address:</strong><br />
-  		<%= object.congress_office %><br />
-    	Washington, DC <%= object.senator? ? "20510" : "20515"%><br />
-  	</div>
-  <% end %>
+    	<div class="address">
+    		<strong>Address:</strong><br />
+    		<%= object.congress_office %><br />
+      	Washington, DC <%= object.senator? ? "20510" : "20515"%><br />
+    	</div>
+    <% end %>
 
-  <% unless object.phone.blank? and object.fax.blank? %>
-  	<div class="phone">
-    	<%= "<strong>Phone:</strong> #{object.phone}" unless object.phone.blank? %><br />
-    	<%= "<strong>Fax:</strong> #{object.fax}" unless object.fax.blank? %>
-    </div>
-    <br />
-  <% end %>
-
+    <% unless object.phone.blank? and object.fax.blank? %>
+    	<div class="phone">
+      	<%= "<strong>Phone:</strong> #{object.phone}" unless object.phone.blank? %><br />
+      	<%= "<strong>Fax:</strong> #{object.fax}" unless object.fax.blank? %>
+      </div>
+      <br />
+    <% end %>
+    <a href="<%= object.opengovernment_url %>" class='med_button' target='_new'>
+      <span>OpenGovernment Profile</span>
+    </a>
   </div>
  	
  	<%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>

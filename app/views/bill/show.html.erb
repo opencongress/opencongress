@@ -120,8 +120,8 @@
 		<% unless @bill.bill_position_organizations.empty? %>
   		<div id="money_trail_summary">
         <div class="col1 lowpadding">
+          <h3>Organizations Supporting <%= @bill.typenumber %></h3>
           <% unless @bill.bill_position_organizations.select{|g| g.disposition == 'support'}.empty? %>
-            <h3>Organizations Supporting <%= @bill.typenumber %></h3>
             <ul>
             <% supporting_orgs = @bill.bill_position_organizations.select{|g| g.disposition == 'support'} %>
             <% supporting_orgs[0..5].each { |org| %><li><%= org.name %></li><% } %>
@@ -130,12 +130,14 @@
               <%= link_to "See all.", :controller => 'bill', :action => 'money', :id => @bill.ident %>
             <% end %>
             </ul>
+          <% else %>
+            <ul><li>None via MapLight at this time.</li></ul>
           <% end %>
         </div>
       
         <div class="col2 lowpadding">
+          <h3>Organizations Opposing <%= @bill.typenumber %></h3>
           <% unless @bill.bill_position_organizations.select{|g| g.disposition == 'oppose'}.empty? %>
-            <h3>Organizations Opposing <%= @bill.typenumber %></h3>
             <ul>
               <% opposing_orgs = @bill.bill_position_organizations.select{|g| g.disposition == 'oppose'} %>
               <% opposing_orgs[0..5].each { |org| %><li><%= org.name %></li><% } %>
@@ -144,6 +146,8 @@
                 <%= link_to "See all.", :controller => 'bill', :action => 'money', :id => @bill.ident %>
               <% end %>
             </ul>
+          <% else %>
+            <ul><li>None via MapLight at this time.</li></ul>
           <% end %>
         </div>
       </div>

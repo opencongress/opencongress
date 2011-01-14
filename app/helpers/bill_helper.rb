@@ -94,6 +94,8 @@ module BillHelper
   end
 
   def bill_summary_with_more
+    return "" if @bill.summary.blank?
+    
     summary_no_html = @bill.summary.gsub(/<\/?[^>]*>/, "")
     summary_no_html.gsub!(/"/, "\\\"")
     summary_no_html.gsub!(/'/, "&apos;")

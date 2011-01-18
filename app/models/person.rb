@@ -369,9 +369,7 @@ class Person < ViewableObject
   end
   
   def opengovernment_url
-    # just link to main page for now
-    #"http://opengovernment.org/people/govtrack/#{self.id}"
-    "http://opengovernment.org"
+    "http://opengovernment.org/people/govtrack/#{self.id}"
   end
   
   def has_wiki_link?

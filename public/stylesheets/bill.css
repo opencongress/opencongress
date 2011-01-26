@@ -65,7 +65,6 @@ padding: 40px;
 .most_button{
 clear: left;
 float: left;
-margin-left: 50px;
 
 }
 
@@ -73,7 +72,7 @@ margin-left: 50px;
 .most_button a{
 display: block;
 font-size: 11px;
-width: 200px;
+width: 207px;
 padding: 6px 0 7px 20px;
 
 -moz-border-radius-bottomleft: 3px;
@@ -103,22 +102,6 @@ text-decoration: none;
 }
 
 
-#stats{
-float: right !important;
--moz-box-shadow: inset 0 1px 2px #666 !important;
--webkit-box-shadow: inset 0 1px 2px #666 !important;
-box-shadow: inset 0 1px 2px #666 !important;
-margin: 0 50px 0 0 !important;
--moz-border-radius: 3px !important;
--webkit-border-radius: 3px !important;
-border-radius:3px !important;
-padding: 10px !important;
-width: inherit !important;
-}
-
-#stats h3{
-margin-bottom: 10px !important;
-}
 
 .main {
 background: #fff;
@@ -585,12 +568,15 @@ padding: 10px 30px 10px 20px;
 font-weight: bold;
 text-decoration: none;
 color: #43617d;
-margin: 0 35px 0 50px;
+margin: 20px 35px 0 -1px;
 float: left;
-width: 170px;
+width: 178px;
 
--moz-border-radius: 3px;
--webkit-border-radius: 3px;
+-moz-border-radius-topright: 3px;
+-moz-border-radius-bottomright: 3px;
+
+-webkit-border-radius-bottom-right: 3px;
+-webkit-border-radius-bottom-left: 3px;
 border-radius:3px;
 
 border: 1px solid #a7c3c9;
@@ -604,17 +590,28 @@ box-shadow: 0 1px 0px #a7c3c9, inset 0 1px 0px #fff;
 
 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ecf9fc', endColorstr='#d6e8eb'); /* for IE */
 background: -webkit-gradient(linear, left top, left bottom, from(#ecf9fc), to(#d6e8eb)); /* for webkit browsers */
-background: -moz-linear-gradient(top,  #ecf9fc,  #d6e8eb); /* for firefox 3.6+ */
+background: -moz-linear-gradient(top,  #e0ebf7,  #dce9f6); /* for firefox 3.6+ */
 }
 
+
+
+#bill-text a:hover {
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ecf9fc', endColorstr='#d6e8eb'); /* for IE */
+background: -webkit-gradient(linear, left top, left bottom, from(#ecf9fc), to(#d6e8eb)); /* for webkit browsers */
+background: -moz-linear-gradient(top,  #eaf2fb,  #e3eef9); /* for firefox 3.6+ */
+}
+
+
+#bill-text a:active {
+border: 0;
+-moz-box-shadow:inset -1px 1px 3px #333,  0 0px 3px #fff;
+-webkit-box-shadow: 0 1px 0px #a7c3c9, inset 0 1px 0px #fff;
+box-shadow: 0 1px 0px #a7c3c9, inset 0 1px 0px #fff;
+background: #cfddeb;
+margin-bottom: 2px;
+}
 #bill-text.un a {
--moz-border-radius: 3px;
--moz-border-radius-bottomright: 0px;
--moz-border-radius-bottomleft: 0px;
--webkit-border-radius: 3px;
--webkit-border-bottom-right: 0px;
--webkit-border-bottom-left: 0px;
-border-radius:3px;
+
 }
 
 #bill-text a:hover {
@@ -978,11 +975,9 @@ padding: 0 10px;
 }
 
 .cp {
-border-top: 1px solid #efefef;
 clear: both;
 margin: 0 50px;
 padding: 10px 0 0 0px;
-display: none;
 }
 
 .cp a {
@@ -1417,6 +1412,8 @@ clear: both;
 
 #wiki_summary {
 padding: 45px 29px 0px 0px;
+background: url('/images/wiki_bg.png') 20px 0 no-repeat;
+min-height: 100px;
 }
 
 .official_summary h4 {

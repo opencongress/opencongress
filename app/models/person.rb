@@ -368,6 +368,10 @@ class Person < ViewableObject
     (!self.contact_webform.blank? && (self.contact_webform =~ /^http:\/\//)) ? true : false
   end
   
+  def opengovernment_url
+    "http://opengovernment.org/people/govtrack/#{self.id}"
+  end
+  
   def has_wiki_link?
     if self.wiki_url.blank?
       return false

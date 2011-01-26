@@ -4841,6 +4841,25 @@ list-style: none;
 
 
 
+.small-ppf{
+float: left;
+width: 100px;
+height: 0;
+overflow: hidden;
+padding-top: 80px;
+background: url('/images/ppf-small.png') 0px 0px no-repeat;
+}
+
+
+
+.small-sunlight{
+float: left;
+width: 500px;
+height: 0;
+overflow: hidden;
+padding-top: 80px;
+background: url('/images/sunlight-small.png') 0px 4px no-repeat;
+}
 
 
 

@@ -57,6 +57,7 @@ module IndexHelper
 			"Nomination Confirmed" => "passed_big.png",
 			"Passed" => "passed_big.png",
 			"Resolution Agreed to" => "passed_big.png",
+			"Resolution Rejected" => "Failed_big.gif",
 			"Veto Overridden" => "passed_big.png"
 			}
 		if rcall.has_key?(result)

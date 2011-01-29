@@ -157,6 +157,12 @@ people.each_with_index do |p, i|
       raise e
     end
   end
+  
+  # sleep when we're halfway through so we don't upset the YouTube gods
+  if i == (people.size/2).to_i
+    puts "Going to sleep for 15 minutes...."
+    sleep (60*15)
+  end
 end
 
 # now check for bills (metavid only, for now)

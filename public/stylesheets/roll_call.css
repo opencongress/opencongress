@@ -118,6 +118,16 @@ padding-right: 3px;
 font-weight: bold;
 }
 
+.rolls_list .pvs_category{
+color: #6e6083;
+padding: 0 0 0 20px;
+margin-top: 2px;
+font-weight: normal;
+display:block;
+height: 20px;
+background:url(/images/star.gif) no-repeat 0 -32px
+}
+
 #timeframe_select.popular {
   margin-left:240px;
 }                        

@@ -51,7 +51,8 @@
 			<h4>Sort By</h4>
 			<li id="newest" class="<%= sort == 'newest' ? 'active' : '' %>"><%= link_to "<span>Newest</span>", :sort => 'newest' %></li> 
 			<li id="oldest" class="<%= sort == 'oldest' ? 'active' : '' %>"><%= link_to "<span>Oldest</span>", :sort => 'oldest' %></li> 
-			<li id="hotbills" class="<%= sort == 'hotbils' ? 'active' : '' %>"><%= link_to "<span>Hot Bills</span>", :sort => 'hotbills' %></li> 
+			<li id="hotbills" class="<%= sort == 'hotbills' ? 'active' : '' %>"><%= link_to "<span>Hot Bills</span>", :sort => 'hotbills' %></li> 
+			<li id="keyvotes" class="<%= sort == 'keyvotes' ? 'active' : '' %>"><%= link_to "<span>Key Votes</span>", :sort => 'keyvotes' %></li> 
 		</ul>
 		<%= will_paginate @rolls %>
 	</div>

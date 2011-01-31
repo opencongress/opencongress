@@ -4840,6 +4840,13 @@ list-style: none;
 }
 
 
+.grey_info_box {
+  width:880px;
+  background:#F9F9F9;
+  border:1px solid #EEEEEE;
+  padding:17px 20px 20px 20px;
+}
+
 
 
 

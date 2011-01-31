@@ -1,38 +1,41 @@
-<div class="hot_category">
-	<a name="<%= hot_bill_category.name %>"></a>
-	<h3><%= hot_bill_category.name %></h3>
-	<ul class="bills_list">  
-		<% hot_bill_category.bills.find(:all, :conditions => ["session=?", @congress]).each do |b| %>
-		<li class="<%= bill_category(b) %>">
-			<span><%= render :partial => "shared/track_link", :locals => {:object => b} %></span>
-			<a class="icon_link" href="<%= bill_path(b) %>">
+<% bills = hot_bill_category.hot_bills.find(:all, :conditions => ["session=?", @congress]) %>
+<% if bills.size > 0 %>
+  <div class="hot_category">
+  	<a name="<%= hot_bill_category.name %>"></a>
+  	<h3><%= hot_bill_category.name %></h3>
+  	<ul class="bills_list">  
+  		<% bills.each do |b| %>
+  		<li class="<%= bill_category(b) %>">
+  			<span><%= render :partial => "shared/track_link", :locals => {:object => b} %></span>
+  			<a class="icon_link" href="<%= bill_path(b) %>">
 
-			<div class="title">
-				<% unless b.title_popular_only.blank? %>
-				<span class="a"><%= "#{b.typenumber} - #{truncate(b.title_popular_only, :length => 103)}" %></span>
-				<% else %>
-				<span class="a"><%= b.typenumber %></span>
-				<% end %>
+  			<div class="title">
+  				<% unless b.title_popular_only.blank? %>
+  				<span class="a"><%= "#{b.typenumber} - #{truncate(b.title_popular_only, :length => 103)}" %></span>
+  				<% else %>
+  				<span class="a"><%= b.typenumber %></span>
+  				<% end %>
 
-				<% if b.plain_language_summary %>
-				<%= b.plain_language_summary.gsub(/<\/?[^>]*>/, "") %>
-				<% else %>
+  				<% if b.plain_language_summary %>
+  				<%= b.plain_language_summary.gsub(/<\/?[^>]*>/, "") %>
+  				<% else %>
 
-				<% unless b.title_official.blank? %>
-				<p><%= truncate(b.title_official, :length => 145) %></p>
-				<% end %>
-				<% end %>
-			</div>
+  				<% unless b.title_official.blank? %>
+  				<p><%= truncate(b.title_official, :length => 145) %></p>
+  				<% end %>
+  				<% end %>
+  			</div>
 
-			<span class="status">
-				<span><%= temp_url_strip(b.status) %></span>
-				<span class="date"><%= b.last_action.formatted_date if b.last_action %></span>
-				<% unless b.session == DEFAULT_CONGRESS %>
-				<span>(<%= b.session.ordinalize %> congress)</span>
-				<% end %>
-			</span>
-			</a> 
-		</li>
-		<% end %>
-	</ul>
-</div>
+  			<span class="status">
+  				<span><%= temp_url_strip(b.status) %></span>
+  				<span class="date"><%= b.last_action.formatted_date if b.last_action %></span>
+  				<% unless b.session == DEFAULT_CONGRESS %>
+  				<span>(<%= b.session.ordinalize %> congress)</span>
+  				<% end %>
+  			</span>
+  			</a> 
+  		</li>
+  		<% end %>
+  	</ul>
+  </div>
+<% end %>

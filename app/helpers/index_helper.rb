@@ -63,7 +63,7 @@ module IndexHelper
 		if rcall.has_key?(result)
 			image_tag rcall.fetch(result), :alt => result, :title => result 
 		else
-			'<span class="result">#{result}</span>'
+			"<span class='result'>#{result}</span>"
 		end
 	end
 

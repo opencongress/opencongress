@@ -270,6 +270,18 @@ namespace :update do
     end
   end
   
+  task :project_vote_smart => :environment do
+    begin
+      load 'bin/daily/project_vote_smart.rb'
+    rescue Exception => e
+      if (['production', 'staging'].include?(Rails.env))
+        Emailer.deliver_rake_error(e, "Error parsing PVS data!")
+      else
+        puts "Error parsing PVS data!"
+      end
+      throw e
+    end
+  end
 
   task :gossip => :environment do
     begin

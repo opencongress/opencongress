@@ -180,18 +180,21 @@ class RollCallController < ApplicationController
     
     if params[:sort] == 'hotbills'
       @sort = 'hotbills'
-      @rolls = RollCall.find(:all, :include => :bill, :order => 'roll_calls.date DESC',
+      @rolls = RollCall.find(:all, :include => [:bill, :amendment], :order => 'roll_calls.date DESC',
                              :conditions => ['roll_calls.date > ? AND bills.hot_bill_category_id IS NOT NULL', 
                                             CONGRESS_START_DATES[DEFAULT_CONGRESS]]).paginate :page => @page
-
+    
+    elsif params[:sort] == 'keyvotes'
+      @sort = 'keyvotes'
+      @rolls = RollCall.find_pvs_key_votes.paginate :page => @page
     elsif params[:sort] == 'oldest'
       @sort = 'oldest'
-      @rolls = RollCall.find(:all, :order => 'date ASC', 
+      @rolls = RollCall.find(:all, :include => [:bill, :amendment], :order => 'date ASC', 
                              :conditions => ['date > ?', CONGRESS_START_DATES[DEFAULT_CONGRESS]]).paginate :page => @page
 
     else
       @sort = 'newest'
-      @rolls = RollCall.find(:all, :order => 'date DESC', 
+      @rolls = RollCall.find(:all, :include => [:bill, :amendment], :order => 'date DESC', 
                              :conditions => ['date > ?', CONGRESS_START_DATES[DEFAULT_CONGRESS]]).paginate :page => @page
 
     end

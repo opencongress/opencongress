@@ -50,7 +50,8 @@ class Bill < ViewableObject
         :as => :emailable,
         :order => 'created_at'
   
-  belongs_to :hot_bill_category
+  belongs_to :hot_bill_category, :class_name => "PvsCategory", :foreign_key => :hot_bill_category_id
+  belongs_to :key_vote_category, :class_name => "PvsCategory", :foreign_key => :key_vote_category_id
   
   has_many :bill_interest_groups,
         :include => :crp_interest_group,

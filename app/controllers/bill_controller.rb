@@ -119,7 +119,7 @@ class BillController < ApplicationController
     @sort = 'hot'
     @title_desc = SiteText.find_title_desc('bill_hot')
     @types = 'all'
-    @hot_bill_categories = HotBillCategory.find(:all, :order => :name)
+    @hot_bill_categories = PvsCategory.find(:all, :order => :name)
     @atom = {'link' => "/bill/hot.rss", 'title' => "Hot Bills"}
     @congress = params[:congress].blank? ? DEFAULT_CONGRESS : params[:congress]
     

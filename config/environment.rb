@@ -47,6 +47,8 @@ require File.join(File.dirname(__FILE__), 'boot')
 Rails::Initializer.run do |config|
   config.gem "json"
   config.gem "jammit"
+  config.gem "govkit"
+  config.gem "haml"
 
   config.action_controller.session = { :session_key => "_myapp_session", :secret => API_KEYS['app_key'] }
 

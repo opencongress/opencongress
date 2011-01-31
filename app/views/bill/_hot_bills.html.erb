@@ -1,12 +1,7 @@
-<div style="float:right;width:600px;background:#F9F9F9;
-border:1px solid #EEEEEE;padding:17px 20px 20px 20px;">
+<div class='grey_info_box'>
 This page of "Hot Bills" lists 46 issue areas, created and maintained by the non-profit, non-partisan <a href="http://votesmart.org/issue_rating.php">Project Vote Smart</a>. Bills in Congress are then assigned to issue areas by OpenCongress site editors (<a href="http://www.opencongress.org/about/staff">about our staff</a>). Bills may be assigned to more than one issue area, where applicable. Of the bills included here, many are actively moving through the legislative process towards becoming law. Some have already been voted on by Congress, and some are not moving in Congress, but have gained a lot of interest from the public and the media. Generally, then, these are the bills that people focus on when considering Congress' recent actions on these issues.
 </div>
-<ul class="stars-inline clearfix">
-	<% @hot_bill_categories.each do |c| %>
-    <li><a href="#<%= c.name %>"><%= c.name %></a></li>
-  <% end %>
-</ul>
+
 <div class="hot_bill_collection">
-<%= render :partial => 'hot_bill_category', :collection => @hot_bill_categories %>
+  <%= render :partial => 'hot_bill_category', :collection => @hot_bill_categories %>
 </div>

@@ -20,7 +20,7 @@
 		<p><label for="description">Description</label><%= f.text_area :description,:rows => 4 %></p>
 		<p><label for="tags">Tags</label><%= f.text_field :tag_list %></p>
 		<% if @object.kind_of? Bill %>
-		  <p><label for="category">Issue Area</label> <%= f.select :hot_bill_category_id, HotBillCategory.find(:all, :order => 'name ASC').collect {|c| [ c.name, c.id ] }, { :selected => @object.hot_bill_category_id, :include_blank => true } %></p>
+		  <p><label for="category">Issue Area</label> <%= f.select :hot_bill_category_id, PvsCategory.find(:all, :order => 'name ASC').collect {|c| [ c.name, c.id ] }, { :selected => @object.hot_bill_category_id, :include_blank => true } %></p>
 		<% end %>
 		<input type="submit" value="Add" />
 	<div>

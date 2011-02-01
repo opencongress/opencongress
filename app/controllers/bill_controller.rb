@@ -119,7 +119,7 @@ class BillController < ApplicationController
     @sort = 'hot'
     @title_desc = SiteText.find_title_desc('bill_hot')
     @types = 'all'
-    @hot_bill_categories = HotBillCategory.find(:all, :order => :name)
+    @hot_bill_categories = PvsCategory.find(:all, :order => :name)
     @atom = {'link' => "/bill/hot.rss", 'title' => "Hot Bills"}
     @congress = params[:congress].blank? ? DEFAULT_CONGRESS : params[:congress]
     
@@ -140,11 +140,7 @@ class BillController < ApplicationController
     @page = "1" unless @page
     @bill_type = params[:bill_type]
 
-    unless read_fragment(:controller => 'bill', :action => 'type', :bill_type => @bill_type, :page => @page)
-
-      @bills = Bill.paginate_all_by_bill_type_and_session(@bill_type, congress, :include => "bill_titles", :order => 'number', :page => @page)
-
-    end 
+    @bills = Bill.paginate_all_by_bill_type_and_session(@bill_type, congress, :include => "bill_titles", :order => 'number', :page => @page)
 
     respond_to do |format|
       format.html {}

@@ -10,7 +10,7 @@ class Admin::HotBillsController < Admin::IndexController
     if bill
       if params[:bill][:hot_bill_category_id] == 'new'
         unless params[:hot_bill_category][:name].blank?
-          c = HotBillCategory.find_or_create_by_name(params[:hot_bill_category][:name])
+          c = PvsCategory.find_or_create_by_name(params[:hot_bill_category][:name])
           
           bill.hot_bill_category = c
           

@@ -32,7 +32,7 @@ class FacebookController < ApplicationController
   end
   
   def hotbills
-    @hot_bill_categories = HotBillCategory.find(:all)
+    @hot_bill_categories = PvsCategory.find(:all)
 
     respond_to do |format|
       format.fbml { render :partial => 'hotbill_search_results', :layout => false }

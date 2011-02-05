@@ -43,7 +43,7 @@ namespace :deploy do
   	run "ln -s #{deploy_to}/#{shared_dir}/images #{current_release}/public/images/" 
     run "ln -s #{deploy_to}/#{shared_dir}/files/oc_whats.flv #{current_release}/public/oc_whats.flv"
     run "ln -s #{deploy_to}/#{shared_dir}/files/screencast.mp4 #{current_release}/public/screencast.mp4"
-    run "ln -s #{deploy_to}/#{shared_dir}/files/synch_s3_asset_host.yml #{current_release}/config/"
+#    run "ln -s #{deploy_to}/#{shared_dir}/files/synch_s3_asset_host.yml #{current_release}/config/"
     run "ln -s #{deploy_to}/#{shared_dir}/files/facebook.yml #{current_release}/config/"
 #    sudo "chown -R mongrel:admins #{current_release}"
   end
@@ -51,11 +51,6 @@ namespace :deploy do
   desc "Compile CSS & JS for public/assets/ (see assets.yml)"
   task :jammit do
     run "cd #{current_release}; /opt/rubye/bin/jammit"
-
-    # .gz filenames do not work in safari; we need to rename these files.
-    # .cssjz and .jsjz are special extensions recognized by the S3 syncher so it
-    # will do the right thing with respect to the Content-Type and Content-Encoding headers.
-    run "cd #{current_release}/public/assets; for f in *.css.gz; do mv $f `basename $f .css.gz`.cssgz; done; for f in *.js.gz; do mv $f `basename $f .js.gz`.jsgz; done"
   end
 
   desc "Restart Passenger"

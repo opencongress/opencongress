@@ -1,3 +1,8 @@
+s3_bucket: assets.opencongress.org
+s3_permission: public_read
+s3_access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
+s3_secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
+
 package_assets: on
 javascripts:
     defaults:

@@ -44,6 +44,18 @@ BASE_URL = 'http://www.opencongress.org/'
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
+# Monkeypatch to get redcloth working on RubyGems 1.5.0.
+if Gem::VERSION >= "1.3.6" 
+    module Rails
+        class GemDependency
+            def requirement
+                r = super
+                (r == Gem::Requirement.default) ? nil : r
+            end
+        end
+    end
+end
+
 Rails::Initializer.run do |config|
   config.gem "json"
   config.gem "jammit"

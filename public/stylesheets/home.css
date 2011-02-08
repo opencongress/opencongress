@@ -253,7 +253,7 @@ background-position: 0 -1px;
 line-height: 2.7em;
 border: 0;
 border-bottom: 1px solid #ccc;
-background: url(/images/blog_bg.png) left bottom no-repeat;
+background: url(/images/blog_bg.jpg) left bottom no-repeat;
 }
 
 .congress_status h2 span{
@@ -312,7 +312,7 @@ padding: 0px 0 8px 0px;
 
 .small_heading{
 font-size: 12px;
-background: url(/images/blog_bg.png) left bottom no-repeat;
+background: url(/images/blog_bg.jpg) left bottom no-repeat;
 clear: both;
 line-height: 2.5em;
 padding: 0 0 0 10px;
@@ -397,7 +397,7 @@ font-weight: normal;
 
 
 .top_area{
-background: url(/images/blog_bg.png) left bottom no-repeat;
+background: url(/images/blog_bg.jpg) left bottom no-repeat;
 border-bottom: 1px solid #ccc;
 }
 

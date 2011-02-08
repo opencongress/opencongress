@@ -691,7 +691,7 @@ class Bill < ViewableObject
       return nil
     end
   
-    def find_hot_bills(order = 'hot_bill_categories.name', options = {})
+    def find_hot_bills(order = 'pvs_categories.name', options = {})
       # not used right now.  more efficient to loop through categories
       # probably just need to add an index to hot_bill_category_id
       Bill.find(:all, :conditions => ["bills.session = ? AND bills.hot_bill_category_id IS NOT NULL", DEFAULT_CONGRESS], 

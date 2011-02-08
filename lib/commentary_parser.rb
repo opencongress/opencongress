@@ -439,8 +439,6 @@ module CommentaryParser
   
     bills = (most_viewed_bills | recent_activity) 
     
-    bills = Bill.find(:all, :conditions => ["bills.session=? and bills.bill_type=? and bills.number=?", 112, 'h', 2])
-    
     i = 0 
     bills.each do |b|
       i += 1

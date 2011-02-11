@@ -61,6 +61,7 @@ Rails::Initializer.run do |config|
   config.gem "jammit"
   config.gem "govkit"
   config.gem "haml"
+  config.gem "hoptoad_notifier"
 
   config.action_controller.session = { :session_key => "_myapp_session", :secret => API_KEYS['app_key'] }
 

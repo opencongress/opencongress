@@ -59,6 +59,7 @@ class ApplicationController < ActionController::Base
     when ::ActionController::RoutingError, ::ActionController::UnknownAction then
       render :partial => "index/notfound_page", :layout => 'application', :status => "404"
     else
+      notify_hoptoad(exception)
       render :partial => "index/error_page", :layout => 'application', :locals => { :exception => exception }, :status => "500"
     end
   end

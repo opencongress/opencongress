@@ -21,7 +21,7 @@
 			<br /><%= link_to "Delete Current Image", {:action => 'delete_images'} %>
 			<% end %>
 			<% else %>
-			<%= image_tag "/images/anonymous.gif", :alt => "No Picture" %>
+			<%= image_tag "anonymous.gif", :alt => "No Picture" %>
 			<% end %>
 			<% if @user == current_user %>
 			<br /><%= toggler('ul_pic', 'Upload New Picture', 'close') %>

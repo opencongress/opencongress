@@ -31,6 +31,7 @@ if defined?(PhusionPassenger)
     end
 end
 
+
 BASE_URL = 'http://dev.opencongress.org/'
 
 DATA_PATH = "/data"

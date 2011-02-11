@@ -1,7 +1,7 @@
 <ul>
 <% link = listitem %>
 <li class="notebook_link" id="notebook_item_<%= listitem.id %>">
-<img class="mypn-icon" src="/images/mypn-link.png" alt="link" title="Link" />
+<%= image_tag 'mypn-link.png', :title => 'Link', :class => 'mypn-icon' %>
 	<% if link.is_internal? %>
 		<%= link_to_internal link %>
 	<% else %>

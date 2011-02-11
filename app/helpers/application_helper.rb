@@ -212,11 +212,11 @@ EOT
   def contact_button(type = 'all')
     case type 
     when 'all'
-      "/images/btn-contact-all-sponsors.gif"
+      image_path "btn-contact-all-sponsors.gif"
     when 'senator'
-      "/images/btn-contact-senator.gif"
+      image_path "btn-contact-senator.gif"
     when 'representative'
-      "/images/btn-contact-representative.gif"
+      image_path "btn-contact-representative.gif"
     end
   end
   
@@ -724,7 +724,7 @@ EOT
     <td class="tc" />
     <td class="tr #{point}">}
     if point == ""
-    out +=  link_to_function(image_tag('/images/close.png', :alt => 'Close', :id => "Close", :mouseover => '/images/close_hover.png'), "Element.hide('#{div_name}')")
+    out +=  link_to_function(image_tag('close.png', :alt => 'Close', :id => "Close", :mouseover => '/images/close_hover.png'), "Element.hide('#{div_name}')")
     end
     out += '</td>
     </tr>
@@ -844,7 +844,7 @@ EOT
   end
 
   def bookmarking_image
-    "<link rel=\"image_src\" href=\"" + (@bookmarking_image.blank? ? "/images/fb-default.jpg" : @bookmarking_image) + "\" />"
+    "<link rel=\"image_src\" href=\"" + (@bookmarking_image.blank? ? image_path("fb-default.jpg") : @bookmarking_image) + "\" />"
   end
   
   def has_originating_chamber_roll_call?(bill)

@@ -1,6 +1,6 @@
 #mv_overlay {
-	background:transparent url(/images/transparent_bg.png) repeat scroll 0 0 !important;
-   _background:transparent url(/images/transparent_bg.gif) repeat scroll 0 0 !important;
+	background:transparent url(../images/transparent_bg.png) repeat scroll 0 0 !important;
+   _background:transparent url(../images/transparent_bg.gif) repeat scroll 0 0 !important;
 	cursor:wait !important;
 	height:100% !important;
 	left:0 !important;
@@ -45,24 +45,24 @@ border: 10px solid !important;
 
 .ui-icon.ui-icon-comment{
 width: 32px;
-background: url(/images/cc.png) 0 0 no-repeat !important;
-   _background: url(/images/cc.gif) 0 0 no-repeat !important;
+background: url(../images/cc.png) 0 0 no-repeat !important;
+   _background: url(../images/cc.gif) 0 0 no-repeat !important;
 height: 19px;
 margin-left: 15px !important;
 }
 
 .ui-icon.ui-icon-comment:hover{
 width: 32px;
-background: url(/images/cc.png) 0 -21px no-repeat !important;
-   _background: url(/images/cc.gif) 0 -21px no-repeat !important;
+background: url(../images/cc.png) 0 -21px no-repeat !important;
+   _background: url(../images/cc.gif) 0 -21px no-repeat !important;
 height: 19px;
 }
 
 .ui-icon.ui-icon-volume-on{
 width: 32px;
 margin-right: 3px !important;
-background: url(/images/volume.png) 0 0 no-repeat !important;
-   _background: url(/images/volume.gif) 0 0 no-repeat !important;
+background: url(../images/volume.png) 0 0 no-repeat !important;
+   _background: url(../images/volume.gif) 0 0 no-repeat !important;
 height: 19px;
 margin-left: 7px !important;
 }
@@ -171,22 +171,22 @@ border: 0 !important;
 }
 
 .ui-state-default.ui-corner-all.ui-icon_link.lButton .ui-icon-play{
-    background: url(/images/small_play.png) 6px 1px no-repeat !important;
+    background: url(../images/small_play.png) 6px 1px no-repeat !important;
 
-   _background: url(/images/small_play.gif) 6px 1px no-repeat !important;
+   _background: url(../images/small_play.gif) 6px 1px no-repeat !important;
 height: 20px;
 
 }
 .ui-state-default.ui-corner-all.ui-icon_link.lButton .ui-icon-play:hover{
-    background: url(/images/small_play.png) 6px -27px no-repeat !important;
-   _background: url(/images/small_play.gif) 6px -27px no-repeat !important;
+    background: url(../images/small_play.png) 6px -27px no-repeat !important;
+   _background: url(../images/small_play.gif) 6px -27px no-repeat !important;
 }
 
 
 .play_head.ui-slider{
 border: 1px solid #ccc;
-	background: url(/images/bar_bg.png) 0 -2px repeat-x !important;
-   _background: url(/images/bar_bg.gif) 0 -2px repeat-x !important;
+	background: url(../images/bar_bg.png) 0 -2px repeat-x !important;
+   _background: url(../images/bar_bg.gif) 0 -2px repeat-x !important;
 }
 
 .ui-slider-handle.ui-state-default{
@@ -194,15 +194,15 @@ width: 13px !important;
 padding: 0px 0 0 0 !important;
 margin: 3px 0 0 -1px !important;
 border: none !important;
-background: url(/images/slider.png) no-repeat !important;
-   _background: url(/images/slider.gif) no-repeat !important;
+background: url(../images/slider.png) no-repeat !important;
+   _background: url(../images/slider.gif) no-repeat !important;
 cursor: pointer !important;
 height: 13px !important;
 }
 
 .ui-slider-handle.ui-state-default:hover{
-background: url(/images/slider.png) 0 -16px no-repeat !important;
-   _background: url(/images/slider.gif) 0 -16px no-repeat !important;
+background: url(../images/slider.png) 0 -16px no-repeat !important;
+   _background: url(../images/slider.gif) 0 -16px no-repeat !important;
 }
 
 
@@ -314,7 +314,7 @@ div.floatleft, table.floatleft {
 }
 .videoPlayer .controls {
 	height: 29px !important;	
-	background: #fff url(/images/c_bg.gif) repeat-x !important;
+	background: #fff url(../images/c_bg.gif) repeat-x !important;
 	display:block !important;
 }
 .videoPlayer .controlInnerSmall {
@@ -323,10 +323,10 @@ div.floatleft, table.floatleft {
 	float: left !important;
 	display: inline !important;
 }
-.videoPlayer .controls span.border_left {background: url(/images/player_bottom_left.png) 0 0 no-repeat !important;
-   _background: url(/images/player_bottom_left.gif) 0 0 no-repeat !important; width: 4px !important; height: 29px !important; float: left !important; display: inline !important;}
-.videoPlayer .controls span.border_right {background: url(/images/player_bottom_right.png) 0 0 no-repeat !important;
-   _background: url(/images/player_bottom_right.gif) 0 0 no-repeat !important; width: 4px !important; height: 29px !important; float: right !important; display: inline !important;}
+.videoPlayer .controls span.border_left {background: url(../images/player_bottom_left.png) 0 0 no-repeat !important;
+   _background: url(../images/player_bottom_left.gif) 0 0 no-repeat !important; width: 4px !important; height: 29px !important; float: left !important; display: inline !important;}
+.videoPlayer .controls span.border_right {background: url(../images/player_bottom_right.png) 0 0 no-repeat !important;
+   _background: url(../images/player_bottom_right.gif) 0 0 no-repeat !important; width: 4px !important; height: 29px !important; float: right !important; display: inline !important;}
 
 .videoPlayer .pause_button {
 	width: 24px !important;
@@ -336,16 +336,16 @@ div.floatleft, table.floatleft {
 	float: left !important;
 border:none !important;
 	display: inline !important;
-    background: url(/images/pause.png) 9px 11px no-repeat !important;
-   _background: url(/images/pause.gif) 9px 11px no-repeat !important;
+    background: url(../images/pause.png) 9px 11px no-repeat !important;
+   _background: url(../images/pause.gif) 9px 11px no-repeat !important;
 }
 
 
 
 .videoPlayer .pause_button:hover {
 
-    background: url(/images/pause.png) 9px -10px no-repeat !important;
-   _background: url(/images/pause.gif) 9px -10px no-repeat !important;
+    background: url(../images/pause.png) 9px -10px no-repeat !important;
+   _background: url(../images/pause.gif) 9px -10px no-repeat !important;
 }
 
 .videoPlayer .play_button {
@@ -356,16 +356,16 @@ border:none !important;
 border:none !important;
 	float: left !important;
 	display: inline !important;
-    background: url(/images/small_play.png) 9px 9px no-repeat !important;
-   _background: url(/images/small_play.gif) 9px 9px no-repeat !important;
+    background: url(../images/small_play.png) 9px 9px no-repeat !important;
+   _background: url(../images/small_play.gif) 9px 9px no-repeat !important;
 }
 
 
 
 
 .videoPlayer .play_button:hover {
-    background: url(/images/small_play.png) 9px -19px no-repeat !important;
-   _background: url(/images/small_play.gif) 9px -19px no-repeat !important;
+    background: url(../images/small_play.png) 9px -19px no-repeat !important;
+   _background: url(../images/small_play.gif) 9px -19px no-repeat !important;
 }
 
 .controls a{
@@ -382,12 +382,12 @@ border:none !important;
 	
 }
 .volume_on {	
-	background: url(/images/player_volume_tag.png) 0 8px no-repeat !important;
-   _background: url(/images/player_volume_tag.gif) 0 8px no-repeat !important;
+	background: url(../images/player_volume_tag.png) 0 8px no-repeat !important;
+   _background: url(../images/player_volume_tag.gif) 0 8px no-repeat !important;
 }
 .volume_off{
-	background: url(/images/player_volume_tag_off.png) 0 8px no-repeat !important;
-   _background: url(/images/player_volume_tag_off.gif) 0 8px no-repeat !important;
+	background: url(../images/player_volume_tag_off.png) 0 8px no-repeat !important;
+   _background: url(../images/player_volume_tag_off.gif) 0 8px no-repeat !important;
 }
 
 .videoPlayer .volume_control {
@@ -396,12 +396,12 @@ border:none !important;
 	margin: 9px 4px 0 0 !important;
 	float: right !important;
 	display: inline !important;
-	background: url(/images/player_volume_seek.png) 0 0 no-repeat !important;
-   _background: url(/images/player_volume_seek.gif) 0 0 no-repeat !important;
+	background: url(../images/player_volume_seek.png) 0 0 no-repeat !important;
+   _background: url(../images/player_volume_seek.gif) 0 0 no-repeat !important;
 }
 .videoPlayer .volume_knob {
-	background: url(/images/player_slider.png) 0 0 no-repeat !important;
-   _background: url(/images/player_slider.gif) 0 0 no-repeat !important;
+	background: url(../images/player_slider.png) 0 0 no-repeat !important;
+   _background: url(../images/player_slider.gif) 0 0 no-repeat !important;
 	width: 14px !important;
 	height: 14px !important;
 	position: absolute !important;
@@ -411,8 +411,8 @@ border:none !important;
 }
 
 .videoPlayer .closed_captions {
-    background: url(/images/cc.png) 0 0 no-repeat !important;
-   _background: url(/images/cc.gif) 0 0 no-repeat !important;
+    background: url(../images/cc.png) 0 0 no-repeat !important;
+   _background: url(../images/cc.gif) 0 0 no-repeat !important;
 	height: 20px !important;
 	width: 31px !important;
 	cursor: pointer !important;
@@ -423,14 +423,14 @@ border:none !important;
 
 
 .videoPlayer .closed_captions:hover {
-    background: url(/images/cc.png) 0 -21px no-repeat !important;
-   _background: url(/images/cc.gif) 0 -21px no-repeat !important;
+    background: url(../images/cc.png) 0 -21px no-repeat !important;
+   _background: url(../images/cc.gif) 0 -21px no-repeat !important;
 }
 
 
 .videoPlayer .options {
-    background: url(/images/menu.png) 0 0 no-repeat !important;
-   _background: url(/images/menu.gif) 0 0 no-repeat !important;
+    background: url(../images/menu.png) 0 0 no-repeat !important;
+   _background: url(../images/menu.gif) 0 0 no-repeat !important;
 	height: 20px !important;
 	width: 27px !important;
 	cursor: pointer !important;
@@ -440,12 +440,12 @@ border:none !important;
 }
 
 .videoPlayer .options:hover {
-    background: url(/images/menu.png) 0 -21px no-repeat !important;
-   _background: url(/images/menu.gif) 0 -21px no-repeat !important;
+    background: url(../images/menu.png) 0 -21px no-repeat !important;
+   _background: url(../images/menu.gif) 0 -21px no-repeat !important;
 }
 .videoPlayer .fullscreen {
-	background: url(/images/player_button_fullscreen.png) 0 0 no-repeat !important;
-   _background: url(/images/player_button_fullscreen.gif) 0 0 no-repeat !important;
+	background: url(../images/player_button_fullscreen.png) 0 0 no-repeat !important;
+   _background: url(../images/player_button_fullscreen.gif) 0 0 no-repeat !important;
 	height: 20px !important;
 	width: 20px !important;
 	cursor: pointer !important;
@@ -482,8 +482,8 @@ width: 186px !important;
 	display: inline !important;
     width: 100% !important;
 	height: 14px !important;
-	background: url(/images/bar_bg.png) repeat-x !important;
-   _background: url(/images/bar_bg.gif) repeat-x !important;
+	background: url(../images/bar_bg.png) repeat-x !important;
+   _background: url(../images/bar_bg.gif) repeat-x !important;
 	margin: 9px 0px 0 -10px !important;
 	position:relative !important;
 
@@ -494,8 +494,8 @@ width: 186px !important;
 	position: relative !important;
 	z-index: 4 !important;
 margin-left: -3px !important;
-	background: url(/images/bar_left.png) -3px 0 no-repeat !important;
-   _background: url(/images/bar_left.gif) -3px 0 no-repeat !important;
+	background: url(../images/bar_left.png) -3px 0 no-repeat !important;
+   _background: url(../images/bar_left.gif) -3px 0 no-repeat !important;
 }
 .videoPlayer .seeker .seeker_bar_close {
 	width: 15px !important;
@@ -505,8 +505,8 @@ margin-left: -3px !important;
 	float: right !important;
 	display: inline !important;
 	margin: -13px -4px 0 0 !important;
-	background: url(/images/bar_right.png) 0 0 no-repeat !important;
-   _background: url(/images/bar_right.gif) 0 0 no-repeat !important;
+	background: url(../images/bar_right.png) 0 0 no-repeat !important;
+   _background: url(../images/bar_right.gif) 0 0 no-repeat !important;
 }
 .videoPlayer .seeker .mv_progress{
 	width: 0% !important;
@@ -518,7 +518,7 @@ margin-top: 1px !important;
 }
 .videoPlayer .seeker .mv_playback {
 	z-index: 3 !important;
-	background: url(/images/played.gif) repeat-x !important;
+	background: url(../images/played.gif) repeat-x !important;
 }
 .videoPlayer .seeker .mv_buffer {
 	z-index: 2 !important;
@@ -529,8 +529,8 @@ margin-top: 1px !important;
 	background: #558 !important;
 }
 .videoPlayer .seeker .seeker_slider {
-	background: url(/images/slider.png) no-repeat !important;
-   _background: url(/images/slider.gif) no-repeat !important;
+	background: url(../images/slider.png) no-repeat !important;
+   _background: url(../images/slider.gif) no-repeat !important;
 	width: 14px !important;
 	height: 14px !important;
 	position: relative !important;
@@ -541,8 +541,8 @@ margin-top: 1px !important;
 }
 
 .videoPlayer .seeker .seeker_slider:hover {
-	background: url(/images/slider.png) 0 -16px no-repeat !important;
-   _background: url(/images/slider.gif) 0 -16px no-repeat !important;
+	background: url(../images/slider.png) 0 -16px no-repeat !important;
+   _background: url(../images/slider.gif) 0 -16px no-repeat !important;
 
 }
 
@@ -553,8 +553,8 @@ margin-top: 1px !important;
 }
 
 .ui-state-default.play-btn-large {
-	background: url(/images/play.png) center 0px no-repeat !important;
-   _background: url(/images/play.gif) center 0px no-repeat !important;
+	background: url(../images/play.png) center 0px no-repeat !important;
+   _background: url(../images/play.gif) center 0px no-repeat !important;
     display:block !important;
 	width: 130px !important;
 	height: 0px !important;
@@ -585,8 +585,8 @@ background: 0 !important;
 
 
 .ui-state-default.play-btn-large:hover {
-background: url(/images/play.png) center -96px no-repeat !important;
-   _background: url(/images/play.gif) center -96px no-repeat !important;
+background: url(../images/play.png) center -96px no-repeat !important;
+   _background: url(../images/play.gif) center -96px no-repeat !important;
 
 }
 
@@ -605,8 +605,8 @@ background: url(/images/play.png) center -96px no-repeat !important;
 	height: 32px !important;
 	position: relative !important;
 	z-index: 3 !important;
-	background: url(/images/player_options_top.png) 0 0 no-repeat !important;
-   _background: url(/images/player_options_top.gif) 0 0 no-repeat !important;
+	background: url(../images/player_options_top.png) 0 0 no-repeat !important;
+   _background: url(../images/player_options_top.gif) 0 0 no-repeat !important;
 }
 .videoOptionsBox {
 	width: 170px !important;
@@ -615,16 +615,16 @@ background: url(/images/play.png) center -96px no-repeat !important;
 	overflow: hidden !important;
 	color:#6C6C6C !important;
 	z-index: 3 !important;
-	background: url(/images/player_options_bg.png) 0 0 repeat-y !important;
-   _background: url(/images/player_options_bg.gif) 0 0 repeat-y !important;
+	background: url(../images/player_options_bg.png) 0 0 repeat-y !important;
+   _background: url(../images/player_options_bg.gif) 0 0 repeat-y !important;
 }
 .videoOptionsBot {
 	width: 183px !important;
 	height: 18px !important;
 	position: relative !important;
 	z-index: 3 !important;
-	background: url(/images/player_options_bottom.png) 0 0 no-repeat !important;
-   _background: url(/images/player_options_bottom.gif) 0 0 no-repeat !important;
+	background: url(../images/player_options_bottom.png) 0 0 no-repeat !important;
+   _background: url(../images/player_options_bottom.gif) 0 0 no-repeat !important;
 }
 
 .videoOptionsBox div.block {
@@ -651,8 +651,8 @@ background: url(/images/play.png) center -96px no-repeat !important;
 	border-bottom: 1px solid #dadada !important;
 }
 .videoOptionsBox div.block p.short_match a span {display: block !important; padding: 5px 20px !important;}
-.videoOptionsBox div.block p.short_match a:hover {background: #0b68c9 url(/images/selector.png) 0 0 repeat-x !important;
-   _background: #0b68c9 url(/images/selector.gif) 0 0 repeat-x !important; color: white !important;}
+.videoOptionsBox div.block p.short_match a:hover {background: #0b68c9 url(../images/selector.png) 0 0 repeat-x !important;
+   _background: #0b68c9 url(../images/selector.gif) 0 0 repeat-x !important; color: white !important;}
 .videoOptionsBox div.block p.short_match a.last_match {border: 0 !important;}
 
 .videoOptionsBox div.block p.normal_match a {
@@ -663,8 +663,8 @@ background: url(/images/play.png) center -96px no-repeat !important;
 	border: 0 !important;
 }
 .videoOptionsBox div.block p.normal_match a span {display: block !important; padding: 3px 20px !important;}
-.videoOptionsBox div.block p.normal_match a:hover {background: #0b68c9 url(/images/selector.png) 0 0 repeat-x !important;
-   _background: #0b68c9 url(/images/selector.gif) 0 0 repeat-x !important; color: white !important;}
+.videoOptionsBox div.block p.normal_match a:hover {background: #0b68c9 url(../images/selector.png) 0 0 repeat-x !important;
+   _background: #0b68c9 url(../images/selector.gif) 0 0 repeat-x !important; color: white !important;}
 .videoOptionsBox div.block p.normal_match a.last_match {border: 0 !important;}
 
 .videoOptionsBox div.block p.bill_match {border-bottom: 1px solid #dadada !important;}
@@ -698,8 +698,8 @@ background: url(/images/play.png) center -96px no-repeat !important;
 	font-size: 11px !important;
 }
 .videoOptionsBox div.embed_code button.copy_to_clipboard {
-	background: #dddddd url(/images/button_to_clipboard.png) 0 0 repeat-x !important;
-   _background: #dddddd url(/images/button_to_clipboard.gif) 0 0 repeat-x !important;
+	background: #dddddd url(../images/button_to_clipboard.png) 0 0 repeat-x !important;
+   _background: #dddddd url(../images/button_to_clipboard.gif) 0 0 repeat-x !important;
 	border: 1px solid #a1badf !important;
 	text-align: center !important;
 	padding: 2px 4px !important;
@@ -709,8 +709,8 @@ background: url(/images/play.png) center -96px no-repeat !important;
 .videoComplete {
 /*	width: 100% !important;
 	height: 100% !important;*/
-	background: url(/images/transparent_bg.png) 0 0 repeat !important;
-   _background: url(/images/transparent_bg.gif) 0 0 repeat !important;
+	background: url(../images/transparent_bg.png) 0 0 repeat !important;
+   _background: url(../images/transparent_bg.gif) 0 0 repeat !important;
 	position: absolute !important;
     top:0px !important;
     left:0px !important;
@@ -743,8 +743,8 @@ background: url(/images/play.png) center -96px no-repeat !important;
 
 .videoComplete .videoOptionsComplete a.email {
 	font-size:16px !important;
-	background: url(/images/ico_mail.png) right 0px no-repeat !important;
-   _background: url(/images/ico_mail.gif) right 0px no-repeat !important; 
+	background: url(../images/ico_mail.png) right 0px no-repeat !important;
+   _background: url(../images/ico_mail.gif) right 0px no-repeat !important; 
 	padding: 0 50px 0 0 !important;
 }
 
@@ -759,8 +759,8 @@ background: url(/images/play.png) center -96px no-repeat !important;
 	font-size: 11px !important;
 }
 .videoComplete div.embed_code button.copy_to_clipboard {
-	background: #dddddd url(/images/button_to_clipboard.png) 0 0 repeat-x !important;
-   _background: #dddddd url(/images/button_to_clipboard.gif) 0 0 repeat-x !important;
+	background: #dddddd url(../images/button_to_clipboard.png) 0 0 repeat-x !important;
+   _background: #dddddd url(../images/button_to_clipboard.gif) 0 0 repeat-x !important;
 	border: 1px solid #3b4552 !important;
 	text-align: center !important;
 	padding: 2px 4px !important;
@@ -781,11 +781,11 @@ background: url(/images/play.png) center -96px no-repeat !important;
 .ui-resizable .ui-resizable-handle { display: block }
 .ui-resizable-e { z-index:5 !important; position:absolute !important; cursor: e-resize !important;
 	width: 15px !important;height:19px !important; top: 0px !important; bottom: 0px !important; right: 0px !important;
-	background: transparent url(/images/slider_handle_red.gif) no-repeat scroll 0% 0% !important;
+	background: transparent url(../images/slider_handle_red.gif) no-repeat scroll 0% 0% !important;
 }
 .ui-resizable-w { z-index:5 !important; position:absolute !important; cursor: w-resize !important;
 	width: 15px !important;height:19px !important; top: 0px !important; bottom: 0px !important; left: 0px !important;
-	background: transparent url(/images/slider_handle_green.gif) no-repeat scroll 0% 0% !important;
+	background: transparent url(../images/slider_handle_green.gif) no-repeat scroll 0% 0% !important;
 }
 .ui-dragSpan {filter: alpha(opacity=70) !important; -moz-opacity: .7 !important; background-color:#AAF !important; position:absolute !important; left: 10px !important; right:10px !important;height:19px !important;  }
 

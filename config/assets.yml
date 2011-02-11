@@ -42,6 +42,7 @@ stylesheets:
         - public/stylesheets/home.css
         - public/stylesheets/jqModal.css
         - public/stylesheets/jquery.jcarousel.css
+        - public/stylesheets/search.css
     districts:
         - public/stylesheets/states.css
         - public/stylesheets/districts.css

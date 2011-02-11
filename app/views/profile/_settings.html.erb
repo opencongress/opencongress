@@ -1,8 +1,8 @@
 <p><label>RSS feed for all tracked items</label> 
-	<%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => 'user_feeds', :login => current_user.login, :action => 'tracked_items', :key => current_user.feed_key %>
+	<%= link_to image_tag('feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => 'user_feeds', :login => current_user.login, :action => 'tracked_items', :key => current_user.feed_key %>
 </p>
 <p><label>RSS feed of my actions</label> 
-<%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => 'user_feeds', :login => current_user.login, :action => 'actions', :key => current_user.feed_key %>
+<%= link_to image_tag('feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => 'user_feeds', :login => current_user.login, :action => 'actions', :key => current_user.feed_key %>
 </p>
 <p><label>Default Comments Rating Filter</label>
 	<a name="comm_fil"></a>

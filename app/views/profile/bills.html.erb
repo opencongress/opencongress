@@ -4,7 +4,7 @@
 	
 <div id="linkcontent" style="clear:both;padding-top:10px;width:100%;">
 <% unless @bookmarks.empty? %>
-	<h3>Bills I'm Tracking <%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => 'user_feeds', :login => @user.login, :action => 'bills', :key => logged_in? ? current_user.feed_key : nil %></h3>
+	<h3>Bills I'm Tracking <%= link_to image_tag('feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => 'user_feeds', :login => @user.login, :action => 'bills', :key => logged_in? ? current_user.feed_key : nil %></h3>
 	    <table class="simple-table2" cellspacing="0">
 	      <tr>
 	        <th scope="col">Bill</th>
@@ -18,9 +18,9 @@
 	<% @bookmarks.each do |b| %>
 	<% bill = b.bookmarkable %>
 	<tr><td><%= link_to bill.typenumber, bill_path(bill) %> <%= bill.title_common %> <span class='date'>(<%= bill.session.ordinalize %> congress)</span><br/>
-	    News: <%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}),
+	    News: <%= link_to image_tag('feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}),
 	              :controller => 'bill', :action => 'atom_news', :id => bill.ident %>
-	    Blogs: <%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}),
+	    Blogs: <%= link_to image_tag('feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}),
 	              :controller => 'bill', :action => 'atom_blogs', :id => bill.ident %>	    
 	    </td>
 	            <td><%= temp_url_strip(bill.status) %></td>

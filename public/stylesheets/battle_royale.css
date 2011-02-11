@@ -48,13 +48,13 @@ height: 80px;
 width: 924px;
 margin: 30px auto 0;
 background: url('/images/find_rep.png') no-repeat;
-_background: url(/images/find_rep.gif) no-repeat;
+_background: url(../images/find_rep.gif) no-repeat;
 }
 
 
 #objects form#search span input {
-background: url(/images/forms.png) left -124px no-repeat;
-_background: url(/images/forms.gif) left -124px no-repeat;
+background: url(../images/forms.png) left -124px no-repeat;
+_background: url(../images/forms.gif) left -124px no-repeat;
 border: none;
 padding: 7px;
 width: 218px;
@@ -91,7 +91,7 @@ border-right: 1px solid #eee;
 
 #battle_royale #content tr {
 border-bottom: 1px solid #ddd;
-background: #fcfcfc url(/images/sen-sort.png) 0 -55px repeat-x;
+background: #fcfcfc url(../images/sen-sort.png) 0 -55px repeat-x;
 }
 
 

@@ -29,7 +29,7 @@ href="http://participatorypolitics.org/tools_watching.html">sample</a>).
   <dt><label for="post_info_url">Enter the number of the bill:</label></dt> 
   <dd><%= text_field 'bill_status', 'bill_number', { :size => '6', :maxlength => '6', :value => "" } %>
     <%= submit_tag "Search >>" %>
-    <img alt="Indicator" class="noborder" height="5" id="search_spinner" src="/images/indicator.gif" style="display: none; vertical-align: middle" width="21" />
+    <%= image_tag 'indicator.gif', :style => 'display: none; vertical-align: middle', :class => 'noborder', :height => 5, :id => 'search_spinner', :width => 21 %>
     <div class="form_note">(ie, for "H.R.6", enter "6")</div>
     <div id="watching_search_results">
     </div>
@@ -65,5 +65,5 @@ Copy and paste this code into your webpage:<br>
 </div>
 
 <!-- The following image forces the fields to update on the initial load of the page -->
-<img src="/images/blank.gif" class="noborder" width="0" height="0" onLoad="updateWatchingFields();">
+<%= image_tag "blank.gif", :class=>"noborder", :width=>"0", :height=>"0", :onLoad=>"updateWatchingFields();" %>
 </div>

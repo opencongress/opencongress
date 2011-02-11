@@ -25,3 +25,15 @@ OPENSECRETS_DATA_PATH = "#{DATA_PATH}/opensecrets/"
 OC_BILLTEXT_PATH = "#{DATA_PATH}/opencongress/bills.text"
 GOVTRACK_BILLTEXT_DIFF_PATH = "#{DATA_PATH}/govtrack/bills.text.cmp"
 
+
+### CLOUDFRONT TEST
+# Use the git revision of this release
+RELEASE_NUMBER = %x{cat REVISION | cut -c -7}.rstrip
+
+
+# Enable serving of images, stylesheets, and javascripts from CloudFront
+config.action_controller.asset_host = Proc.new {
+   |source, request| "#{request.ssl? ? 'https' : 'http'}://d1f0ywl7f2vxwh.cloudfront.net/r-#{RELEASE_NUMBER}"
+}
+
+#### END CLOUDFRONT TEST

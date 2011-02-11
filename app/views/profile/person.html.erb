@@ -4,7 +4,7 @@
 		
 <div id="linkcontent" style="clear:both;padding-top:10px;width:100%;">
 <% unless @bookmarks.nil? || @bookmarks.empty? %>
-<h3><%= @ptype %> I'm Tracking <%= link_to image_tag('/images/feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => 'user_feeds', :login => @user.login, :action =>  params[:person_type], :key => logged_in? ? current_user.feed_key : nil %></h3>
+<h3><%= @ptype %> I'm Tracking <%= link_to image_tag('feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => 'user_feeds', :login => @user.login, :action =>  params[:person_type], :key => logged_in? ? current_user.feed_key : nil %></h3>
 <br />
 <ul>
 	<% @bookmarks.each do |b| %>

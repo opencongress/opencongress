@@ -1,5 +1,6 @@
 <ul>
-<li class="notebook_note" id="notebook_item_<%= listitem.id %>"><img class="mypn-icon" src="/images/mypn-note.png" alt="Note" title="Note" />
+<li class="notebook_note" id="notebook_item_<%= listitem.id %>">
+  <%= image_tag 'mypn-note.png', :alt => 'Note', :title => 'Note', :class => 'mypn-icon' %>
 	<% unless listitem.description.blank? %>
 		<%= RedCloth.new(h listitem.description).to_html %>
 	<% end %>

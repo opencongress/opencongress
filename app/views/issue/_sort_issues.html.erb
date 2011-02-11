@@ -31,7 +31,7 @@
 			<h3>Search for Issues:</h3>
 			<% form_remote_tag(:url => { :action => 'quick_search' }, :update => 'issue_list') do %>
 				<%= text_field_tag 'q' %>
-				<input type="image" src="/images/show_me.png" value="submit" /> 
+				<input type="image" src="<%= image_path 'show_me.png' %>" value="submit" /> 
 				<% end %>
 			</div>
 

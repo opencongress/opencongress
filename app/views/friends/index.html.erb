@@ -121,7 +121,7 @@
 <h3 class="inline"><%= user_name("My", "'s") %> Friends</h3>
 
 <% if @user == current_user %>
-	<span style="margin:2px 5px 0 20px;float:left;"><%= image_tag("/images/private.png", :alt => "private", :title => "Private") %></span>
+	<span style="margin:2px 5px 0 20px;float:left;"><%= image_tag("private.png", :alt => "private", :title => "Private") %></span>
 		<% form_for :privacy_option, @user.privacy_option, :url => {:controller => "/profile", :action => 'update_privacy' } do |f| %>
 		  <%= f.select PrivacyOption.column_names[11].to_sym, [["Public",2],["Friends", 1], ["Private",0]], {}, {:onchange => "this.form.submit();"} %>
 		<% end %>
@@ -143,7 +143,7 @@
 							<% if friend.friend.main_picture %>
 							<td><%= image_tag "#{BASE_URL}images/users/" + friend.friend.login + "_m.jpg", :alt => friend.friend.login %></td>
 							<% else %>
-							<td><%= image_tag "/images/anonymous.gif", :alt => "No Picture" %></td>
+							<td><%= image_tag "anonymous.gif", :alt => "No Picture" %></td>
 							<% end %>
 							<td style="padding-left:15px;">
 								<table>

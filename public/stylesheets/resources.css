@@ -160,7 +160,7 @@ margin-top: 20px;
     display: block;
     float: left;
 border: 1px solid #eee;
-background: #fff url(/images/widgets/guides.gif) center bottom no-repeat;
+background: #fff url(../images/widgets/guides.gif) center bottom no-repeat;
 padding: 20px;
 margin-bottom: 30px;
 -moz-border-radius: 10px;  
@@ -207,7 +207,7 @@ float: left;
 }
 
 .more_down span{
-background: #fefefe url(/images/arrows.png) right -19px no-repeat;
+background: #fefefe url(../images/arrows.png) right -19px no-repeat;
 padding-right: 20px;display: block;
 }
 
@@ -235,7 +235,7 @@ float: left;
 }
 
 .more_up span{
-background: #fefefe url(/images/arrows.png) right 6px no-repeat;
+background: #fefefe url(../images/arrows.png) right 6px no-repeat;
 padding-right: 20px;display: block;
 }
 
@@ -265,17 +265,17 @@ margin-right: 28px;
 
 
 #more_widgets a.climate{
-background: url(/images/widgets/widgets.png) 0 0 no-repeat;
+background: url(../images/widgets/widgets.png) 0 0 no-repeat;
 margin-right: 0px;
 }
 
 
 #more_widgets a.healthcare{
-background: url(/images/widgets/widgets.png) -165px 0 no-repeat;
+background: url(../images/widgets/widgets.png) -165px 0 no-repeat;
 }
 
 #more_widgets a.financial{
-background: url(/images/widgets/widgets.png) -330px 0 no-repeat;
+background: url(../images/widgets/widgets.png) -330px 0 no-repeat;
 }
 
 

@@ -35,12 +35,6 @@
 			<tr>      
 				<td>Overall Rating: <%=h number_with_precision(comment.average_rating,1) %>&nbsp;&ensp;|&ensp;</td>
 				<% if logged_in? %>
-				<!-- <td>
-					<span >
-						<img src="/images/question.gif" onmouseover="Element.show('useful<%=comment.id.to_s%>');" onmouseout="Element.hide('useful<%=comment.id.to_s%>');" style="cursor:pointer;border:0;vertical-align:bottom;margin-right:3px;" />
-					</span>
-				</td> -->
-
 				<td>
 					<div class="rate_comm" id="rate_comment_<%= comment.id.to_s%>">
 					<% if (comment_score = myscores.select{ |s| s.comment_id == comment.id }.first).nil? %>Was this comment useful?  

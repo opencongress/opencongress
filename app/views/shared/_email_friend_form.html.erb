@@ -95,8 +95,7 @@ function verifyEmailForm()
     
     <%= show_simple_captcha(:image_style => 'all_black', :distortion => 'high') %>
     <%= submit_tag "Send >>" %> 
-     
-      <img alt="Indicator" class="noborder" id="emailindicator" src="/images/spinner.gif" style="display: none; vertical-align: middle; height: 20px;" />
+     <%= image_tag "spinner.gif", :alt=>"Indicator", :class=>"noborder", :id=>"emailindicator", :style=>"display: none; vertical-align: middle; height: 20px;" />
 
  </div>
   <% end %>

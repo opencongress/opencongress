@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
   validates_presence_of     :password,                   :if => :password_required?
   validates_presence_of     :password_confirmation,      :if => :password_required?
   validates_length_of       :password, :within => 4..40, :if => :password_required?
-  validates_confirmation_of :password,                   :if => :password_required?
+  validates_confirmation_of :passwordx,                   :if => :password_required?
   validates_length_of       :login,    :within => 3..40, :unless => :openid?
   validates_length_of       :zip_four, :within => 0..4, :allow_nil => true, :allow_blank => true
   validates_length_of       :email,    :within => 3..100, :unless => :openid?
@@ -593,7 +593,7 @@ class User < ActiveRecord::Base
   # permissions method
   def can_view(option,viewer)
     res = false
-    if viewer.nil?
+    if viewer.nil? or (viewer == :false)
       logger.info "tis nil"
       if self.privacy_option[option] == 2
         logger.info "tis allowed"

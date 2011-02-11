@@ -163,17 +163,16 @@ class AccountController < ApplicationController
   end
   
   def activate
-   @user = User.find_by_activation_code(params[:id])
-   if @user and @user.activate
-     self.current_user = @user
-     redirect_to welcome_url
-     return
-  else
-     flash[:notice] = "We didn't find that confirmation code; maybe you've already activated your account?"
-     redirect_to signup_url
-     return
-   end
-
+    @user = User.find_by_activation_code(params[:id])
+    if @user and @user.activate
+      self.current_user = @user
+      redirect_to welcome_url
+      return
+    else
+      flash[:notice] = "We didn't find that confirmation code; maybe you've already activated your account?"
+      redirect_to signup_url
+      return
+    end
   end
 
   def welcome

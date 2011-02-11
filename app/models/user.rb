@@ -13,14 +13,14 @@ class User < ActiveRecord::Base
                            :my_approved_reps, :my_approved_sens, :my_disapproved_reps, 
                            :my_disapproved_sens, :my_state_f, :my_district_f], :auto_commit => false
 
-  attr_accessor :password
+  attr_accessor :password_confirmation
 
   validates_presence_of     :login, :email, :unless => :openid?
   validates_acceptance_of :accept_tos, :on => :create
   validates_presence_of     :password,                   :if => :password_required?
   validates_presence_of     :password_confirmation,      :if => :password_required?
   validates_length_of       :password, :within => 4..40, :if => :password_required?
-  validates_confirmation_of :passwordx,                   :if => :password_required?
+  validates_confirmation_of :password,                   :if => :password_required?
   validates_length_of       :login,    :within => 3..40, :unless => :openid?
   validates_length_of       :zip_four, :within => 0..4, :allow_nil => true, :allow_blank => true
   validates_length_of       :email,    :within => 3..100, :unless => :openid?

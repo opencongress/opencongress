@@ -13,17 +13,15 @@ config.gem "newrelic_rpm"
 # Full error reports are disabled and caching is turned on
 config.action_controller.consider_all_requests_local = false
 
-# Enable serving of images, stylesheets, and javascripts from CloudFront
-config.action_controller.asset_host = Proc.new {
-   |source, request| "#{request.ssl? ? 'https' : 'http'}://d1f0ywl7f2vxwh.cloudfront.net"
-}
 
 # Use the git revision of this release
 RELEASE_NUMBER = %x{cat REVISION | cut -c -7}.rstrip
 
-config.action_controller.asset_path = proc { |asset_path|
-   "/r-#{RELEASE_NUMBER}#{asset_path}"
+# Enable serving of images, stylesheets, and javascripts from CloudFront
+config.action_controller.asset_host = Proc.new {
+   |source, request| "#{request.ssl? ? 'https' : 'http'}://d1f0ywl7f2vxwh.cloudfront.net/r-#{RELEASE_NUMBER}"
 }
+
 
 #
 # Caching

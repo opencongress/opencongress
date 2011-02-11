@@ -64,7 +64,7 @@ function verifyEmailForm()
     <dt>&nbsp;</dt><dd><%= check_box('feedback', 'cc_me' ) %> Send me a copy</dd>
     <dt>&nbsp;</dt><dd><%= show_simple_captcha(:image_style => 'all_black', :distortion => 'high') %>
     <dt>&nbsp;</dt><dd><%= submit_tag "Send >>" %> 
-      <img alt="Indicator" class="noborder" id="feedbackindicator" src="/images/spinner.gif" style="display: none; vertical-align: middle; height: 20px;" />
+      <%= image_tag 'spinner.gif', :alt => "Indicator", :class => "noborder" :id => "feedbackindicator" :style => "display: none; vertical-align: middle; height: 20px;" %>
     </dd>
     </dl>
   <% end %>

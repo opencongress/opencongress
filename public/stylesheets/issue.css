@@ -1,8 +1,8 @@
 @import url('people.css');
 
 #issue_list{
-background: url(/images/zip_arrow.png) 0 -74px no-repeat;
-   _background: url(/images/zip_arrow.gif) 0 -74px no-repeat;
+background: url(../images/zip_arrow.png) 0 -74px no-repeat;
+   _background: url(../images/zip_arrow.gif) 0 -74px no-repeat;
 height: 550px;
 float: right;
 width: 618px;
@@ -29,8 +29,8 @@ padding: 7px 33px;
 }
 
 .sidebar{
-background: url(/images/map_right.png) right 20px no-repeat;
-   _background: url(/images/map_right.gif) right 20px no-repeat;
+background: url(../images/map_right.png) right 20px no-repeat;
+   _background: url(../images/map_right.gif) right 20px no-repeat;
 }
 
 .bills_list{
@@ -46,8 +46,8 @@ background: #fdfdfd;
 #issue.show .inner{
 float: left;
 width: 1002px;
-background: url(/images/issue_bg.png) right 0px repeat-y;
-   _background: url(/images/issue_bg.gif) right 0px repeat-y;
+background: url(../images/issue_bg.png) right 0px repeat-y;
+   _background: url(../images/issue_bg.gif) right 0px repeat-y;
 }
 
 #issue.alphabetical .inner, #issue.by_most_viewed .inner, #issue.by_bill_count .inner {
@@ -68,8 +68,8 @@ float: right;
 
 
 .issue_widget_link{
-background: url(/images/map_buttons.png) 0 -103px no-repeat;
-   _background: url(/images/map_buttons.gif) 0 -103px no-repeat;
+background: url(../images/map_buttons.png) 0 -103px no-repeat;
+   _background: url(../images/map_buttons.gif) 0 -103px no-repeat;
 display: block;
 padding-top: 52px;
 overflow: hidden;
@@ -78,15 +78,15 @@ margin: 15px 20px 13px;
 }
 
 .issue_widget_link:hover{
-background: url(/images/map_buttons.png) 0 -155px no-repeat;
-   _background: url(/images/map_buttons.gif) 0 -155px no-repeat;
+background: url(../images/map_buttons.png) 0 -155px no-repeat;
+   _background: url(../images/map_buttons.gif) 0 -155px no-repeat;
 }
 
 #heading{
 height: 45px;
 border-bottom: 1px solid #cfebed;
-background: url(/images/issues_heading.png);
-   _background: url(/images/issues_heading.gif);
+background: url(../images/issues_heading.png);
+   _background: url(../images/issues_heading.gif);
 }
 
 #zipcode_lookup #q{
@@ -98,8 +98,8 @@ height: 21px;
 padding: 7px 0 0 0px;
 text-align: center;
 background: none;
-background: url(/images/forms.png) 0 0px no-repeat;
-   _background: url(/images/forms.gif) 0 0px no-repeat;
+background: url(../images/forms.png) 0 0px no-repeat;
+   _background: url(../images/forms.gif) 0 0px no-repeat;
 }
 
 #zip_sort{
@@ -112,11 +112,11 @@ width: 617px;
 float: left;
 
 /*
-background: url(/images/sorting_bg.png) no-repeat;
-   _background: url(/images/sorting_bg.gif) no-repeat;
+background: url(../images/sorting_bg.png) no-repeat;
+   _background: url(../images/sorting_bg.gif) no-repeat;
 */
-background: url(/images/zip_arrow.png) 0 11px no-repeat;
-   _background: url(/images/zip_arrow.gif) 0 11px no-repeat;
+background: url(../images/zip_arrow.png) 0 11px no-repeat;
+   _background: url(../images/zip_arrow.gif) 0 11px no-repeat;
 }
 
 a#widgets_trigger {

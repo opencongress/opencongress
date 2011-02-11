@@ -7,7 +7,7 @@
 	<style media="all" type="text/css">
 
 .climate_change_widget {
-   background: url(/images/widgets/climate_bg.png) left 0 no-repeat;
+   background: url(<%= image_path 'widgets/climate_bg.png' %>) left 0 no-repeat;
    width: 320px;
    font-family: Arial, Helvetica, sans-serif;
    padding: 0px;
@@ -43,7 +43,7 @@ color: #333;
    border-left: 1px solid #999;
    border-right: 1px solid #999;
    padding: 15px 15px 0;
-      background: #fff url(/images/widgets/climate_bg.png) -1px -70px no-repeat;
+      background: #fff url(<%= image_path 'widgets/climate_bg.png' %>) -1px -70px no-repeat;
 
 }
 
@@ -78,7 +78,7 @@ color: #333;
 
 .climate_change_widget .blog_coverage {
    display: block;
-   background: url(/images/widgets/button-320.png) no-repeat;
+   background: url(<%= image_path 'widgets/button-320.png' %>) no-repeat;
    height: 40px;
    padding-top: 20px;
 }
@@ -99,7 +99,7 @@ color: #333;
 .passed {
    color: #4a862a;
    padding-left: 23px;
-   background: url(http://a0.opencongress.org/images/widgets/widget_icons.png?1267060449) 7px -114px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 7px -114px no-repeat;
 }
 
 .introduced {
@@ -108,7 +108,7 @@ color: #333;
 }
 
 .full_text, .comments, .roll_call, .voting_record, .tracking {
-   background: url(http://a2.opencongress.org/images/widgets/widget_icons.png?1267060449) 0 14px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 14px no-repeat;
    padding-left: 18px;
    line-height: 1.8em;
    color: #555;
@@ -120,7 +120,7 @@ padding-top: 10px;
 }
 
 .pres_bill {
-   background: url(http://a3.opencongress.org/images/widgets/widget_icons.png?1267060449) 0 5px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 5px no-repeat;
 clear: both;
 margin-bottom: 0px;
 display: block;
@@ -161,13 +161,13 @@ line-height: 2em;
 
 .democrat {
    padding-left: 20px;
-   background: url(http://a2.opencongress.org/images/widgets/widget_icons.png?1267060449) 0 -139px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 -139px no-repeat;
 }
 
 
 .republican {
    padding-left: 20px;
-   background: url(http://a3.opencongress.org/images/widgets/widget_icons.png?1267060449) 0 -168px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 -168px no-repeat;
 }
 
 .status ul {

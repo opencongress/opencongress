@@ -6,7 +6,7 @@
 
 	<style media="all" type="text/css">
 .healthcare_widget {
-   background: url(/images/widgets/small_bg.png) no-repeat;
+   background: url(<%= image_path 'widgets/small_bg.png' %>) no-repeat;
    width: 160px;
    font-family: Arial, Helvetica, sans-serif;
    padding: 0px;
@@ -79,7 +79,7 @@ border-bottom: 1px solid #999;
 
 .healthcare_widget .blog_coverage {
    display: block;
-   background: url(/images/widgets/small_bottom.png) bottom no-repeat;
+   background: url(<%= image_path 'widgets/small_bottom.png' %>) bottom no-repeat;
 padding-bottom: 10px;
 
 }
@@ -102,7 +102,7 @@ margin: 0;
 .passed {
    color: #4a862a;
    padding-left: 16px;
-   background: url(/images/widgets/widget_icons.png?1262045908) 0px -114px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0px -114px no-repeat;
 }
 
 .introduced {
@@ -111,7 +111,7 @@ margin: 0;
 }
 
 .full_text, .comments, .roll_call, .voting_record, .tracking, .pres_bill {
-   background: url(/images/widgets/widget_icons.png?1262045908) 0 14px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 14px no-repeat;
    padding-left: 18px;
    line-height: 1.8em;
    color: #555;
@@ -155,13 +155,13 @@ padding-top: 10px;
 
 .democrat {
    padding-left: 20px;
-   background: url(/images/widgets/widget_icons.png?1262045908) 0 -139px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 -139px no-repeat;
 }
 
 
 .republican {
    padding-left: 20px;
-   background: url(/images/widgets/widget_icons.png?1262045908) 0 -168px no-repeat;
+   background: url(<%= image_path 'widgets/widget_icons.png' %>) 0 -168px no-repeat;
 }
 
 .status ul {

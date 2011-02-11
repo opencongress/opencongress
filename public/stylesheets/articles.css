@@ -44,7 +44,7 @@ clear: none !important;
 
 .sub_blog{
 font-size: 14px;
-background: url(/images/rss_icon.png) left center no-repeat;
+background: url(../images/rss_icon.png) left center no-repeat;
 padding-left: 23px;
 text-decoration: none;
 display: block;
@@ -359,8 +359,8 @@ clear: both;
 }
 
 .add_to_emails {
-background: url(/images/forms.png) left -124px no-repeat;
-_background: url(/images/forms.gif) left -124px no-repeat;
+background: url(../images/forms.png) left -124px no-repeat;
+_background: url(../images/forms.gif) left -124px no-repeat;
 border: none;
 padding: 7px;
 width: 218px;
@@ -402,8 +402,8 @@ font-weight: normal;
 h3.no_comments strong {
 font-weight: bold;
 padding: 0 10px 0 35px;
-background: url(/images/comments.png) left 2px no-repeat;
-_background: url(/images/comments.gif) left 2px no-repeat;
+background: url(../images/comments.png) left 2px no-repeat;
+_background: url(../images/comments.gif) left 2px no-repeat;
 }
 
 .blog-body h2 {
@@ -414,28 +414,28 @@ line-height: 1.4em;
 }
 
 .a {
-background: url(/images/1.png) center no-repeat;
-_background: url(/images/1.gif) center no-repeat;
+background: url(../images/1.png) center no-repeat;
+_background: url(../images/1.gif) center no-repeat;
 }
 
 .b {
-background: url(/images/2.png) center no-repeat;
-_background: url(/images/2.gif) center no-repeat;
+background: url(../images/2.png) center no-repeat;
+_background: url(../images/2.gif) center no-repeat;
 }
 
 .c {
-background: url(/images/3.png) center no-repeat;
-_background: url(/images/3.gif) center no-repeat;
+background: url(../images/3.png) center no-repeat;
+_background: url(../images/3.gif) center no-repeat;
 }
 
 .d {
-background: url(/images/4.png) center no-repeat;
-_background: url(/images/4.gif) center no-repeat;
+background: url(../images/4.png) center no-repeat;
+_background: url(../images/4.gif) center no-repeat;
 }
 
 .e {
-background: url(/images/5.png) center no-repeat;
-_background: url(/images/5.gif) center no-repeat;
+background: url(../images/5.png) center no-repeat;
+_background: url(../images/5.gif) center no-repeat;
 }
 
 #articles.edit .inner {
@@ -453,7 +453,7 @@ width: 681px;
 
 
 .recent_posts li a{
-background: url(/images/home_blog_icon.png) 0 6px no-repeat;
+background: url(../images/home_blog_icon.png) 0 6px no-repeat;
 padding: 5px 5px 5px 20px;
 display: block;
 text-decoration: none;
@@ -463,7 +463,7 @@ border-bottom: 1px solid #fff;
 
 
 .recent_posts li a:hover{
-background: #eee url(/images/home_blog_icon.png) 0 6px no-repeat;
+background: #eee url(../images/home_blog_icon.png) 0 6px no-repeat;
 padding: 5px 5px 5px 20px;
 display: block;
 text-decoration: none;
@@ -479,7 +479,7 @@ line-height: 1em;
 
 
 .tips li a{
-background: url(/images/note.png) 0 7px no-repeat;
+background: url(../images/note.png) 0 7px no-repeat;
 padding: 5px 5px 5px 20px;
 display: block;
 text-decoration: none;
@@ -488,7 +488,7 @@ color: #333;
 }
 
 .tips li a:hover{
-background: #eee url(/images/note.png) 0 7px no-repeat;
+background: #eee url(../images/note.png) 0 7px no-repeat;
 padding: 5px 5px 5px 20px;
 display: block;
 text-decoration: none;
@@ -514,7 +514,7 @@ margin-bottom: 10px;
 
 
 .archives li a{
-background: url(/images/archives.png) 0 4px no-repeat;
+background: url(../images/archives.png) 0 4px no-repeat;
 line-height: 2em;
 padding-left: 20px;
 display: block;
@@ -525,7 +525,7 @@ border-bottom: 1px solid #fff;
 
 
 .archives li a:hover{
-background: #eee url(/images/archives.png) 0 4px no-repeat;
+background: #eee url(../images/archives.png) 0 4px no-repeat;
 border-bottom: 1px solid #ddd;
 }
 
@@ -601,7 +601,7 @@ float: left !important;
 
 .share-link{
 margin-top: 2px !important;
-background: url(/images/more.png) 0 6px no-repeat !important;
+background: url(../images/more.png) 0 6px no-repeat !important;
 }
 
 .left_email{

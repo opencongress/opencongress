@@ -253,7 +253,7 @@ background-position: 0 -1px;
 line-height: 2.7em;
 border: 0;
 border-bottom: 1px solid #ccc;
-background: url(/images/blog_bg.jpg) left bottom no-repeat;
+background: url(../images/blog_bg.jpg) left bottom no-repeat;
 }
 
 .congress_status h2 span{
@@ -312,7 +312,7 @@ padding: 0px 0 8px 0px;
 
 .small_heading{
 font-size: 12px;
-background: url(/images/blog_bg.jpg) left bottom no-repeat;
+background: url(../images/blog_bg.jpg) left bottom no-repeat;
 clear: both;
 line-height: 2.5em;
 padding: 0 0 0 10px;
@@ -334,7 +334,7 @@ font-weight: bold;
 cursor: pointer;
 padding: 10px 10px 10px 0px;
 position: relative;
-background: url(/images/arrows.png) right -12px no-repeat;
+background: url(../images/arrows.png) right -12px no-repeat;
 }
 
 .small_heading span span{
@@ -397,14 +397,14 @@ font-weight: normal;
 
 
 .top_area{
-background: url(/images/blog_bg.jpg) left bottom no-repeat;
+background: url(../images/blog_bg.jpg) left bottom no-repeat;
 border-bottom: 1px solid #ccc;
 }
 
 
 .just_for_a_border{
 position: relative;
-background: url(/images/line.gif) 570px bottom repeat-y;
+background: url(../images/line.gif) 570px bottom repeat-y;
 }
 
 
@@ -686,8 +686,8 @@ float: left;
 margin: 0;
 width: 246px;
 font-weight: normal;
-background: url(/images/everyone.png) left top no-repeat;
-   _background: url(/images/everyone_home.gif) left top no-repeat;
+background: url(../images/everyone.png) left top no-repeat;
+   _background: url(../images/everyone_home.gif) left top no-repeat;
 }
 
 #heading div.myoc p{
@@ -732,8 +732,8 @@ padding: 35px;
 }
 
 .use_oc .email{
-background: url(/images/forms.png) 0px -124px no-repeat;
-   _background: url(/images/forms.gif) 0px -124px no-repeat;
+background: url(../images/forms.png) 0px -124px no-repeat;
+   _background: url(../images/forms.gif) 0px -124px no-repeat;
 border: none;
 padding: 7px 9px;
 width: 216px;
@@ -752,7 +752,7 @@ clear: both;}
 #find{
 clear: both;
 padding: 30px 0px 5px 27px;
-background: url(/images/track_them.jpg) 0px -2px no-repeat;
+background: url(../images/track_them.jpg) 0px -2px no-repeat;
 float: left;
 width: 975px;
 
@@ -765,12 +765,12 @@ padding: 17px 0px 0 70px;
 height: 50px;
 width: 424px;
 float: left;
-background: url(/images/find_bg.png) 0px 0px no-repeat;
+background: url(../images/find_bg.png) 0px 0px no-repeat;
 }
 
 .enter_zip{
-background: url(/images/forms.png) left -30px no-repeat;
-   _background: url(/images/forms.gif) left -30px no-repeat;
+background: url(../images/forms.png) left -30px no-repeat;
+   _background: url(../images/forms.gif) left -30px no-repeat;
 width: 123px !important;
 border: none;
 text-align: center;
@@ -825,8 +825,8 @@ padding-bottom: 0px;
 width: 100%;
 clear: both;
 min-height: 260px;
-background: url(/images/pitch_bg.png) left bottom repeat-x;
-   _background: url(/images/pitch_bg.gif) left bottom repeat-x;
+background: url(../images/pitch_bg.png) left bottom repeat-x;
+   _background: url(../images/pitch_bg.gif) left bottom repeat-x;
 border-bottom: 1px solid #abd1e2;
 border-top: 1px solid #ddedf5;
 }
@@ -842,7 +842,7 @@ width: 570px;
 }
 
 .featured_members h3.darkline{
-background: url(/images/small_heading.png) left bottom repeat-x;
+background: url(../images/small_heading.png) left bottom repeat-x;
 line-height: 2.4em;
 padding-left: 30px;
 }
@@ -877,7 +877,7 @@ border-left: 1px solid #ddd;
 
 
 .box01 h3{
-background: url(/images/small_heading.png) left bottom repeat-x;
+background: url(../images/small_heading.png) left bottom repeat-x;
 line-height: 2.4em;
 padding-left: 30px;
 margin: 0;
@@ -1137,8 +1137,8 @@ font-size: 11px;
 }
 
 .inner{
-background: url(/images/sen-sort.png) left 0 repeat-x !important;
-_background: url(/images/sen-sort.gif) left 0 repeat-x !important;
+background: url(../images/sen-sort.png) left 0 repeat-x !important;
+_background: url(../images/sen-sort.gif) left 0 repeat-x !important;
 .background:none !important;
 }
 
@@ -1185,7 +1185,7 @@ background: url('/images/number5.png') no-repeat 690px 58px;
 }
 
 .b-bill{
-background: url(/images/b-bill.png);
+background: url(../images/b-bill.png);
 width: 543px;
 padding-top: 55px;
 height: 0;
@@ -1196,7 +1196,7 @@ margin-bottom:12px;
 }
 
 .b-bill:hover{
-background: url(/images/b-bill.png) 0 -56px;
+background: url(../images/b-bill.png) 0 -56px;
 }
 
 
@@ -1228,7 +1228,7 @@ padding-bottom: 6px;
 
 
 .og{
-background: url(/images/og-banner.jpg) 0 0 no-repeat;
+background: url(../images/og-banner.jpg) 0 0 no-repeat;
 display: block;
 padding-top: 353px;
 overflow: hidden;

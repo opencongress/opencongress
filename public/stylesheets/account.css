@@ -186,23 +186,23 @@ text-decoration: none;
 
 
 .rating {
-background: url(/images/no-rating.png) 3px center no-repeat;
-_background: url(/images/no-rating.gif) 3px center no-repeat;
+background: url(../images/no-rating.png) 3px center no-repeat;
+_background: url(../images/no-rating.gif) 3px center no-repeat;
 }
 
 .no_rating {
-background: url(/images/no-rating.png) 3px center no-repeat;
-_background: url(/images/no-rating.gif) 3px center no-repeat;
+background: url(../images/no-rating.png) 3px center no-repeat;
+_background: url(../images/no-rating.gif) 3px center no-repeat;
 }
 
 .bill_count {
-background: url(/images/tiny_bill.png) left center no-repeat;
-_background: url(/images/tiny_bill.gif) left center no-repeat;
+background: url(../images/tiny_bill.png) left center no-repeat;
+_background: url(../images/tiny_bill.gif) left center no-repeat;
 }
 
 .cronie {
-background: url(/images/cronie.png) left center no-repeat;
-_background: url(/images/cronie.gif) left center no-repeat;
+background: url(../images/cronie.png) left center no-repeat;
+_background: url(../images/cronie.gif) left center no-repeat;
 }
 
 
@@ -217,8 +217,8 @@ margin-bottom: 15px;
 }
 
 .why_get ul {
-background: url(/images/register_images.png) left 5px no-repeat;
-_background: url(/images/register_images.gif) left 5px no-repeat;
+background: url(../images/register_images.png) left 5px no-repeat;
+_background: url(../images/register_images.gif) left 5px no-repeat;
 padding: 0;
 }
 

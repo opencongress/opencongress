@@ -2,8 +2,8 @@
 
 #heading {
 min-height: 45px;
-background: url(/images/committees_heading.png);
-   _background: url(/images/committees_heading.gif);
+background: url(../images/committees_heading.png);
+   _background: url(../images/committees_heading.gif);
 border-bottom: 1px solid #ddc7ee;
 }
 
@@ -11,8 +11,8 @@ border-bottom: 1px solid #ddc7ee;
 .show #heading, .by_number #heading {
 min-height: 45px;
 padding-bottom: 20px;
-background: url(/images/committees_heading.png);
-   _background: url(/images/committees_heading.gif);
+background: url(../images/committees_heading.png);
+   _background: url(../images/committees_heading.gif);
 border-bottom: 1px solid #ddc7ee;
 float: left;
 width: 945px;
@@ -33,8 +33,8 @@ height: 557px;
 float: right;
 margin: 0;
 paddding: 0;
-background: url(/images/zip_arrow.png) 0 -70px no-repeat;
-   _background: url(/images/zip_arrow.gif) 0 -70px no-repeat;
+background: url(../images/zip_arrow.png) 0 -70px no-repeat;
+   _background: url(../images/zip_arrow.gif) 0 -70px no-repeat;
 overflow: auto;
 }
 
@@ -56,8 +56,8 @@ font-size: 11px !important;
 
 #the_rolls{
 height: 600px;
-background: url(/images/sen-sort.png) left top repeat-x;
-   _background: url(/images/sen-sort.gif) left top repeat-x;
+background: url(../images/sen-sort.png) left top repeat-x;
+   _background: url(../images/sen-sort.gif) left top repeat-x;
 }
 
 
@@ -125,7 +125,7 @@ margin-top: 2px;
 font-weight: normal;
 display:block;
 height: 20px;
-background:url(/images/star.gif) no-repeat 0 -32px
+background:url(../images/star.gif) no-repeat 0 -32px
 }
 
 #timeframe_select.popular {
@@ -241,8 +241,8 @@ width: 383px;
 }
 
 .view_examples:hover span{
-background: url(/images/map_buttons.png) left -262px no-repeat;
-   _background: url(/images/map_buttons.gif) left -262px no-repeat;
+background: url(../images/map_buttons.png) left -262px no-repeat;
+   _background: url(../images/map_buttons.gif) left -262px no-repeat;
 }
 
 .view_examples span{
@@ -252,8 +252,8 @@ width: 340px;
 margin: 0px 0 0 22px;
 overflow: hidden;
 padding-top: 49px;
-background: url(/images/map_buttons.png) left -210px no-repeat;
-   _background: url(/images/map_buttons.gif) left -210px no-repeat;
+background: url(../images/map_buttons.png) left -210px no-repeat;
+   _background: url(../images/map_buttons.gif) left -210px no-repeat;
 }
 
 	
@@ -270,14 +270,14 @@ width: 586px;
 height: 22px;
 margin: 0 0 0 0px;
 padding-left: 30px;/*
-background: url(/images/zip_arrow.png) 0 -64px no-repeat;
-   _background: url(/images/zip_arrow.gif) 0 -64px no-repeat;
+background: url(../images/zip_arrow.png) 0 -64px no-repeat;
+   _background: url(../images/zip_arrow.gif) 0 -64px no-repeat;
 */
 }
 
 .inner{
-background: url(/images/sen-sort.png) left 83px repeat-x;
-   _background: url(/images/sen-sort.gif) left 83px repeat-x;
+background: url(../images/sen-sort.png) left 83px repeat-x;
+   _background: url(../images/sen-sort.gif) left 83px repeat-x;
 }
 
 #roll_call.show .inner, #roll_call.by_number .inner {
@@ -296,20 +296,20 @@ display: none;
 
 
 span.abs{
-  background: url(/images/sprites.png) 0 -242px no-repeat;
-   _background: url(/images/sprites.gif) 0 -242px no-repeat;
+  background: url(../images/sprites.png) 0 -242px no-repeat;
+   _background: url(../images/sprites.gif) 0 -242px no-repeat;
 padding-left: 20px !important;
 }
 
 
 span.nays{
-  background: url(/images/Failed_big.gif) 0 -3px no-repeat;
+  background: url(../images/Failed_big.gif) 0 -3px no-repeat;
 padding-left: 20px !important;
 }
 
 span.ayes{
-  background: url(/images/passed_big.png) 0 1px no-repeat;
-   _background: url(/images/passed_big.gif) 0 1px no-repeat;
+  background: url(../images/passed_big.png) 0 1px no-repeat;
+   _background: url(../images/passed_big.gif) 0 1px no-repeat;
 padding-left: 20px !important;
 }
 
@@ -318,8 +318,8 @@ padding-left: 20px !important;
 display: block;
 padding-top: 0 ;
 margin: 0;
-background: url(/images/map_right.png) right 20px no-repeat;
-   _background: url(/images/map_right.gif) right 20px no-repeat;
+background: url(../images/map_right.png) right 20px no-repeat;
+   _background: url(../images/map_right.gif) right 20px no-repeat;
 height: 90px;
 overflow: hidden;
 margin-bottom: 24px;
@@ -327,19 +327,19 @@ border-top: 0;
 }
 
 #head_button:hover span{
-background: url(/images/map_buttons.png) 0 -470px no-repeat;
-   _background: url(/images/map_buttons.gif) 0 -470px no-repeat;
+background: url(../images/map_buttons.png) 0 -470px no-repeat;
+   _background: url(../images/map_buttons.gif) 0 -470px no-repeat;
 }
 
 
 #head_button:hover {
-background: url(/images/map_right.png) right 20px no-repeat;
-   _background: url(/images/map_right.gif) right 20px no-repeat;
+background: url(../images/map_right.png) right 20px no-repeat;
+   _background: url(../images/map_right.gif) right 20px no-repeat;
 }
 
 #head_button span {
-background: url(/images/map_buttons.png) 0 -418px no-repeat;
-   _background: url(/images/map_buttons.gif) 0 -418px no-repeat;
+background: url(../images/map_buttons.png) 0 -418px no-repeat;
+   _background: url(../images/map_buttons.gif) 0 -418px no-repeat;
 padding-top: 50px !important;
 height: 0;
 overflow: hidden;

@@ -35,7 +35,7 @@
   	</div>
   	<div class="comm_action">
   		<% if logged_in? %>
-  		  <a href="<%= url_for :controller => 'comments', :action => 'flag', :id => comment.id %>" class="flag" id="flag_<%= comment.id.to_s %>"><%= image_tag('/images/flag.png', :alt => 'flag') %></a>
+  		  <a href="<%= url_for :controller => 'comments', :action => 'flag', :id => comment.id %>" class="flag" id="flag_<%= comment.id.to_s %>"><%= image_tag('flag.png', :alt => 'flag') %></a>
 				<script type="text/javascript">
 				$j().ready(function(){
 					$j("#flag_<%= comment.id.to_s %>").qtip({

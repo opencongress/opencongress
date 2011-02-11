@@ -41,7 +41,7 @@
 
   <div id="privacy">
   	<% form_for :privacy_option, @user.privacy_option,:url => update_privacy_political_notebook_path({:login =>@user.login}) do |f| %>
-  	<span class="notebookPrivacy"><%= image_tag("/images/private.png", :alt => "private",:id => 'Privacy') %></span><%= f.select PrivacyOption.column_names[PrivacyOption.column_names.index 'my_political_notebook'].to_sym, [["Public",2],["Friends", 1], ["Private",0]], {}, {:onchange => "this.form.submit();"} %>
+  	<span class="notebookPrivacy"><%= image_tag("private.png", :alt => "private",:id => 'Privacy') %></span><%= f.select PrivacyOption.column_names[PrivacyOption.column_names.index 'my_political_notebook'].to_sym, [["Public",2],["Friends", 1], ["Private",0]], {}, {:onchange => "this.form.submit();"} %>
   	<% end %>
     <script type="text/javascript">
 		$j().ready(function(){

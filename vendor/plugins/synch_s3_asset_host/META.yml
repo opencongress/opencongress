@@ -1,7 +1,0 @@
-author: Scott Patten
-summary: A Capistrano 2.0 extension that synchs your public directory to your asset hosts on Amazon S3
-homepage: http://spattendesign.com/projects/synching-your-amazon-s3-asset-host-using-capistrano
-plugin: svn://svn.spattendesign.com/svn/plugins/synch_s3_asset_host
-license: MIT
-rails_version: 1.1.2+
-capistrano_version: 2.0.0+

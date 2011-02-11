@@ -31,6 +31,21 @@ if defined?(PhusionPassenger)
     end
 end
 
+### CLOUDFRONT TEST
+# Enable serving of images, stylesheets, and javascripts from CloudFront
+config.action_controller.asset_host = Proc.new {
+   |source, request| "#{request.ssl? ? 'https' : 'http'}://d1f0ywl7f2vxwh.cloudfront.net"
+}
+
+# Use the git revision of this release
+RELEASE_NUMBER = %x{cat REVISION | cut -c -7}.rstrip
+
+config.action_controller.asset_path = proc { |asset_path|
+   "/r-#{RELEASE_NUMBER}#{asset_path}"
+}
+#### END CLOUDFRONT TEST
+
+
 BASE_URL = 'http://dev.opencongress.org/'
 
 DATA_PATH = "/data"

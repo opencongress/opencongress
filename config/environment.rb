@@ -113,7 +113,6 @@ require 'extensions.rb'
 require 'simple-rss'
 require 'acts_as_taggable'
 require 'active_record_fk_hack'
-require 'jammit_s3_md5_hack'
 require 'action_controller/integration'
 require 'wiki_connection'
 

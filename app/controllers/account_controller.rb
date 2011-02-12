@@ -349,96 +349,88 @@ class AccountController < ApplicationController
   end
 
   protected
-
-#  def open_id_authentication
-#    authenticate_with_open_id do |result, identity_url|
-#      if result.successful?
-#        self.current_user = User.find_or_create_by_identity_url(identity_url)
-#      end
-#    end
-#  end
-     def open_id_authentication(identity_url)
-        # Pass optional :required and :optional keys to specify what sreg fields you want.
-        # Be sure to yield registration, a third argument in the #authenticate_with_open_id block.
-        authenticate_with_open_id(identity_url, :required => [:nickname, :email]) do |status, identity_url, registration|
-          if status.successful?
-            if self.current_user = User.find_by_identity_url(identity_url)
-              # registration is a hash containing the valid sreg keys given above
-              # use this to map them to fields of your user model
-#              {'login=' => 'nickname', 'email=' => 'email', 'full_name=' => 'fullname'}.each do |attr, reg|
-#                current_user.send(attr, registration[reg]) unless registration[reg].blank?
-#              end
-              unless self.current_user.save
-                flash[:error] = "Error saving the fields from your OpenID profile: #{current_user.errors.full_messages.to_sentence}"
-              end
-            else
-             u = User.new()
-              {'login=' => 'nickname', 'email=' => 'email', 'full_name=' => 'fullname'}.each do |attr, reg|
-                u.send(attr, registration[reg]) unless registration[reg].blank?
-              end
-              if u.save && self.current_user = User.find_by_identity_url(identity_url)
-                logger.info "rock on"
-              else 
-                session[:idurl] = identity_url
-                redirect_to :action => 'new_openid' and return
-              end
+    def open_id_authentication(identity_url)
+      # Pass optional :required and :optional keys to specify what sreg fields you want.
+      # Be sure to yield registration, a third argument in the #authenticate_with_open_id block.
+      authenticate_with_open_id(identity_url, :required => [:nickname, :email]) do |status, identity_url, registration|
+        if status.successful?
+          if self.current_user = User.find_by_identity_url(identity_url)
+            # registration is a hash containing the valid sreg keys given above
+            # use this to map them to fields of your user model
+            #              {'login=' => 'nickname', 'email=' => 'email', 'full_name=' => 'fullname'}.each do |attr, reg|
+            #                current_user.send(attr, registration[reg]) unless registration[reg].blank?
+            #              end
+            unless self.current_user.save
+              flash[:error] = "Error saving the fields from your OpenID profile: #{current_user.errors.full_messages.to_sentence}"
+            end
+          else
+           u = User.new()
+            {'login=' => 'nickname', 'email=' => 'email', 'full_name=' => 'fullname'}.each do |attr, reg|
+              u.send(attr, registration[reg]) unless registration[reg].blank?
+            end
+            if u.save && self.current_user = User.find_by_identity_url(identity_url)
+              logger.info "rock on"
+            else 
+              session[:idurl] = identity_url
+              redirect_to :action => 'new_openid' and return
             end
           end
         end
-      end
-
-  private
-  def root_url
-    home_url
-  end
-  def process_login_actions
-    #debugger
-    if session[:action] && session[:action][:url]
-      case session[:action][:url]
-      when /\/bill\/([0-9]{3}-\w{2,})\//
-        ident = $1
-        if ident
-          bill = Bill.find_by_ident(ident)
-          if bill
-            if session[:login_action][:action_result].to_i == 0
-              b = BillVote.find_or_initialize_by_user_id_and_bill_id(current_user.id, bill.id)
-              b.support = 0
-              b.save
-            elsif session[:login_action][:action_result].to_i == 1
-              b = BillVote.find_or_initialize_by_user_id_and_bill_id(current_user.id, bill.id)
-              b.support = 1
-              b.save
-            end
-          end
-        end
-      end
-    if session[:login_action][:action_result]
-      if session[:login_action][:action_result] == 'track'
-      case session[:login_action][:url]
-      when /\/bill\/([0-9]{3}-\w{2,})\//
-        ident = $1
-        if ident
-          bill = Bill.find_by_ident(ident)
-          if bill
-            bookmark = Bookmark.new(:user_id => current_user.id)
-            bill.bookmarks << bookmark
-          end    
-        end
-      when /\/([^\/]+)\/[^\/]+\/(\d+)/
-        obj = $1
-        id = $2
-        if id && obj
-          object = Object.const_get(obj)
-          this_object = object.find_by_id(id)
-          if this_object
-            bookmark = Bookmark.new(:user_id => current_user.id)
-            this_object.bookmarks << bookmark
-          end
-        end
-      end
       end
     end
-  end
+
+  private
+    def root_url
+      home_url
+    end
+    def process_login_actions
+      #debugger
+      if session[:action] && session[:action][:url]
+        case session[:action][:url]
+        when /\/bill\/([0-9]{3}-\w{2,})\//
+          ident = $1
+          if ident
+            bill = Bill.find_by_ident(ident)
+            if bill
+              if session[:login_action][:action_result].to_i == 0
+                b = BillVote.find_or_initialize_by_user_id_and_bill_id(current_user.id, bill.id)
+                b.support = 0
+                b.save
+              elsif session[:login_action][:action_result].to_i == 1
+                b = BillVote.find_or_initialize_by_user_id_and_bill_id(current_user.id, bill.id)
+                b.support = 1
+                b.save
+              end
+            end
+          end
+        end
+      if session[:login_action][:action_result]
+        if session[:login_action][:action_result] == 'track'
+        case session[:login_action][:url]
+        when /\/bill\/([0-9]{3}-\w{2,})\//
+          ident = $1
+          if ident
+            bill = Bill.find_by_ident(ident)
+            if bill
+              bookmark = Bookmark.new(:user_id => current_user.id)
+              bill.bookmarks << bookmark
+            end    
+          end
+        when /\/([^\/]+)\/[^\/]+\/(\d+)/
+          obj = $1
+          id = $2
+          if id && obj
+            object = Object.const_get(obj)
+            this_object = object.find_by_id(id)
+            if this_object
+              bookmark = Bookmark.new(:user_id => current_user.id)
+              this_object.bookmarks << bookmark
+            end
+          end
+        end
+        end
+      end
+    end
   end
     
 end

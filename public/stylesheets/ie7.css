@@ -213,7 +213,7 @@ margin:0;
 .bills .search_form, .voting_history .search_form{
 width:auto;
 }
-#user_login, #user_password, #user_password_confirmation, #user_email {
+#user_login, #user_password, #user_password_confirmation, #user_email, #openid_url {
   width:232px;
 }
 #signupform {

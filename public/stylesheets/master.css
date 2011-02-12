@@ -3749,7 +3749,7 @@ margin-top: 25px;
 
 }
 
-#loginform label{
+#loginform label, #oid_loginform label{
 width: 85px;
 float: left;
 padding: 4px 0;
@@ -3991,7 +3991,7 @@ clear: both;
 
 }
 
-#user_login, #user_password, #user_password_confirmation, #user_email {
+#user_login, #user_password, #user_password_confirmation, #user_email, #openid_url {
 background: url('../images/forms.png') 0px -124px no-repeat;
 _background: url('../images/forms.gif') 0px -124px no-repeat;
 padding: 7px 10px 7px 7px;

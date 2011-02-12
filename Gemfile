@@ -6,17 +6,29 @@ gem 'rails'
 gem 'pg'
 gem 'mysql'
 
-gem 'rmagick'
-gem "govkit"
-gem "json"
-gem "jammit"
+# HAML support
 gem "haml"
+
+# RMagick
+gem 'rmagick'
+
+# GovKit
+gem "govkit"
+
+# jammit support
+gem "jammit"
+
+# notifier for production errors
 gem "hoptoad_notifier"
 
+# OpenID 
 gem 'ruby-openid'
+gem 'rack-openid'
+
+# markup tools and parsers
 gem 'simple-rss'
 gem 'mediacloth'
 gem 'hpricot'
 gem 'RedCloth'
-gem 'rack-openid'
 gem 'htmlentities'
+gem "json"

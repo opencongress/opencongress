@@ -14,6 +14,9 @@ class User < ActiveRecord::Base
                            :my_disapproved_sens, :my_state_f, :my_district_f], :auto_commit => false
 
   attr_accessor :password_confirmation
+  
+  # the following is so acts_as_autheticated doesn't bomb since we added devise compatibility
+  attr_accessor :remember_token_expires_at
 
   validates_presence_of     :login, :email, :unless => :openid?
   validates_acceptance_of :accept_tos, :on => :create

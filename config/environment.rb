@@ -4,10 +4,6 @@
 # you don't control web/app server and can't set it the proper way
 ENV['RAILS_ENV'] ||= 'development'
 
-# Specifies gem version of Rails to use when vendor/rails is not present
-
-RAILS_GEM_VERSION = '2.3.5'
-
 require 'yaml'
 require 'ostruct'
 #
@@ -57,13 +53,7 @@ if Gem::VERSION >= "1.3.6"
 end
 
 Rails::Initializer.run do |config|
-  config.gem "json"
-  config.gem "jammit"
-  config.gem "govkit"
-  config.gem "haml"
-  config.gem "hoptoad_notifier"
-
-  config.action_controller.session = { :session_key => "_myapp_session", :secret => API_KEYS['app_key'] }
+  config.action_controller.session = { :key => "_myapp_session", :secret => API_KEYS['app_key'] }
 
   # Settings in config/environments/* take precedence those specified here
 

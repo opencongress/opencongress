@@ -10,6 +10,7 @@ set :user, "cappy"
 set :runner, "cappy"
 
 require 'capistrano/ext/multistage'
+require 'bundler/capistrano'
 
 #
 # These may be overridden by deploy/staging.rb:
@@ -71,3 +72,11 @@ set :keep_releases, 4
 after "deploy:update", "deploy:cleanup"
 after "deploy:update_code", "deploy:link_images"
 after "deploy:update_code", "deploy:jammit"
+
+
+# HopToad install put this in.  Not sure we need it yet.
+# Dir[File.join(File.dirname(__FILE__), '..', 'vendor', 'gems', 'hoptoad_notifier-*')].each do |vendored_notifier|
+#   $: << File.join(vendored_notifier, 'lib')
+# end
+# 
+# require 'hoptoad_notifier/capistrano'

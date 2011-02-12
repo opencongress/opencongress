@@ -4,9 +4,6 @@
 # Code is not reloaded between requests
 config.cache_classes = true
 
-# New Relic RPM
-config.gem "newrelic_rpm"
-
 # Use a different logger for distributed setups
 # config.logger = SyslogLogger.new
 

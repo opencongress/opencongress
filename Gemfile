@@ -32,3 +32,10 @@ gem 'hpricot'
 gem 'RedCloth'
 gem 'htmlentities'
 gem "json"
+
+# Deployment
+gem 'capistrano'
+gem 'capistrano-ext'
+
+# new relic RPM
+gem 'newrelic_rpm'

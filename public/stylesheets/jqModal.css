@@ -53,7 +53,9 @@ z-index: 99999999 !important;
 	height:27px;
 	width:27px;
 }
-
+.jqmClose span {
+  display:none;
+}
 
 
 

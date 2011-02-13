@@ -62,7 +62,7 @@ function verifyEmailForm()
 <div id="emailfriend">
 	<div class="ie">
   <a href="#" class="jqmClose">
-      Close
+    <span>Close</span>
   </a>
   </div>  
 <% form_remote_tag(:url => { :controller => 'resources', :action => 'email_friend_send' }, 
@@ -73,29 +73,25 @@ function verifyEmailForm()
     <%= hidden_field 'email', 'object_id', "value" => item.id %>
   
   
-  
-  <div class="left_email">
-  
   <label>Your Email:</label></dt>
   <%= text_field 'email', 'email', 'value' => @email_from %>
   
+  <div class="clear" />
+  
   <label>Friends' Emails:<br />(one per line)<br /></label>
-      <%= text_area 'email', 'dest_emails', :cols => 30, :rows => 7 %>
-  
-  </div>
-  
-  <div class="right_email">
-  
-  <label>Personal Message: (optional)</label>
+  <%= text_area 'email', 'dest_emails', :cols => 30, :rows => 7 %>
 
-      <textarea rows="5" cols="30" id="email_message" name="email[message]">Hi, thought you might be interested in this info from OpenCongress, a public resource website about what's really happening in Congress.</textarea>
+  <div class="clear" />
+    
+  <label>Personal Message: (optional)</label><br />
+  <textarea rows="5" cols="30" id="email_message" name="email[message]">Hi, thought you might be interested in this info from OpenCongress, a public resource website about what's really happening in Congress.</textarea>
 
     
     <div><%= check_box('email', 'cc_me' ) %> Send me a copy</div>
     
     <%= show_simple_captcha(:image_style => 'all_black', :distortion => 'high') %>
     <%= submit_tag "Send >>" %> 
-     <%= image_tag "spinner.gif", :alt=>"Indicator", :class=>"noborder", :id=>"emailindicator", :style=>"display: none; vertical-align: middle; height: 20px;" />
+    <%= image_tag "spinner.gif", :alt=>"Indicator", :class=>"noborder", :id=>"emailindicator", :style=>"display: none; vertical-align: middle; height: 20px;" %>
 
  </div>
   <% end %>

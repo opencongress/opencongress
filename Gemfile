@@ -30,6 +30,7 @@ gem 'simple-rss'
 gem 'mediacloth'
 gem 'hpricot'
 gem 'RedCloth'
+gem 'bluecloth'
 gem 'htmlentities'
 gem "json"
 

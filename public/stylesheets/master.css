@@ -4862,6 +4862,16 @@ background: url('/images/sunlight-small.png') 0px 4px no-repeat;
 }
 
 
-
+.construct{
+position: absolute;
+top: 0;
+left: 500px;
+top: 90px;
+height: 0px;
+overflow: hidden;
+padding-top: 120px;
+width: 120px;
+background: url('/images/construct.png') 0px 4px no-repeat;
+}
 
 

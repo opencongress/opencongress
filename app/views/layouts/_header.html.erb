@@ -45,7 +45,10 @@
 				<input name="commit" type="image" src="<%= image_path 'login.png' %>" value="Login" />
 			</form>
 												
-			<a href="/login">or Login with your OpenID</a>
+			<div class="login_options">
+			  <a href="/login">or Login with your OpenID</a> - 
+			  <a href="/account/forgot_password">Forgot Password?</a>
+			</div>
 		</div>
 		
 		<form action="/search/result" id="form-search" method="get">

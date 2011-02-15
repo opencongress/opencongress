@@ -198,19 +198,27 @@ class AccountController < ApplicationController
   def reset_password
     redirect_to '/account/forgot_password' and return if params[:id].blank?
     @user = User.find_by_password_reset_code(params[:id])
-
-    raise if @user.nil?
-    return if @user unless request.post?
-      if (params[:user][:password] == params[:user][:password_confirmation])
-        self.current_user = @user #for the next two lines to work
-        current_user.password_confirmation = params[:user][:password_confirmation]
-        current_user.password = params[:user][:password]
-        @user.reset_password
-        flash[:notice] = current_user.save ? "Password reset" : "Password not reset"
-      else
-        flash[:notice] = "Password mismatch"
-      end
-      redirect_back_or_default(:controller => 'account', :action => 'index')
+    @page_title = "Reset Password"
+    
+    if @user.nil?
+      flash[:error] = "Password reset link not recognized.  Please try again."
+      redirect_to '/account/forgot_password'
+    else
+      return unless request.post?
+    
+      @user.password = ''
+    end
+    
+    if (params[:user][:password] == params[:user][:password_confirmation])
+      self.current_user = @user #for the next two lines to work
+      current_user.password_confirmation = params[:user][:password_confirmation]
+      current_user.password = params[:user][:password]
+      @user.reset_password
+      flash[:notice] = current_user.save ? "Password reset" : "Password not reset"
+    else
+      flash[:notice] = "Password mismatch"
+    end
+    redirect_back_or_default(:controller => 'account', :action => 'index')
   end
 
   def profile

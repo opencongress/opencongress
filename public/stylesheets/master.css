@@ -3967,11 +3967,13 @@ margin: 0 15px 0 0;
 float: left;
 }
 
-#login a{
-clear: both;
+#login .login_options {
+clear: left;
 display: block;
-font-size: 11px;
 padding: 8px 0 0;
+}
+#login .login_options a {
+font-size: 11px;
 }
 
 #signupform{

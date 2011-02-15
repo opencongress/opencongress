@@ -39,7 +39,9 @@
 <% blog_max.times do |i| %>
   <% b = blogs[i] %>
   
-  <%= render :partial => 'shared/commentary', :object => b, :locals => { :default_title => default_title, :short => short } %>
+  <% unless b.nil? %>
+    <%= render :partial => 'shared/commentary', :object => b, :locals => { :default_title => default_title, :short => short } %>
+  <% end %>
 <% end %>
 <% if admin_logged_in? %></form><% end %>
 

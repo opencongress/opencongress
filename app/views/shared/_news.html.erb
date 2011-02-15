@@ -41,7 +41,9 @@
 <% news_max.times do |i| %>
   <% n = news[i] %>
   
-  <%= render :partial => 'shared/commentary', :object => n, :locals => { :default_title => default_title, :short => short} %>
+  <% unless n.nil? %>
+    <%= render :partial => 'shared/commentary', :object => n, :locals => { :default_title => default_title, :short => short} %>
+  <% end %>
 <% end %>
 <% if admin_logged_in? %></form><% end %>
 

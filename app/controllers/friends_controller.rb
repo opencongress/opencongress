@@ -28,7 +28,7 @@ class FriendsController < ApplicationController
 		@bill = Bill.find_by_ident(params[:id])
 		@object = @bill
 		@users_solr = User.find_users_tracking_bill(@bill)
-    @users = User.find_for_tracking_table(current_user, @bill, @users_solr.docs)
+    @users = @users_solr.nil? ? [] : User.find_for_tracking_table(current_user, @bill, @users_solr.docs)
 		@page_title = "Users tracking #{@bill.typenumber}"
 
 		if params[:state]
@@ -51,7 +51,7 @@ class FriendsController < ApplicationController
     @person = Person.find(params[:id])
 		@object = @person
     @users_solr = User.find_users_tracking_person(@person)
-    @users = User.find_for_tracking_table(current_user, @person, @users_solr.docs)
+    @users = @users_solr.nil? ? [] : User.find_for_tracking_table(current_user, @person, @users_solr.docs)
  		@page_title = "Users tracking #{@person.short_name}"
 
 		if logged_in? && !current_user.zipcode.blank?
@@ -65,7 +65,7 @@ class FriendsController < ApplicationController
   def tracking_issue
     @issue = Subject.find(params[:id])
     @users_solr = User.find_users_tracking_issue(@issue)
-    @users = User.find_for_tracking_table(current_user, @issue, @users_solr.docs)
+    @users = @users_solr.nil? ? [] : User.find_for_tracking_table(current_user, @issue, @users_solr.docs)
  		@page_title = "Users tracking #{@issue.term}"
 
 		if logged_in? && !current_user.zipcode.blank?
@@ -80,7 +80,7 @@ class FriendsController < ApplicationController
   def tracking_committee
     @committee = Committee.find(params[:id])
     @users_solr = User.find_users_tracking_committee(@committee)
-    @users = User.find_for_tracking_table(current_user, @committee, @users_solr.docs)
+    @users = @users_solr.nil? ? [] : User.find_for_tracking_table(current_user, @committee, @users_solr.docs)
  		@page_title = "Users tracking the #{@committee.name} Committee"
 
 		if logged_in? && !current_user.zipcode.blank?
@@ -96,7 +96,7 @@ class FriendsController < ApplicationController
     @person = Person.find(params[:id])
 		@object = @person
     @users_solr = User.find_users_supporting_person(@person)
-    @users = User.find_for_tracking_table(current_user, @person, @users_solr.docs)
+    @users = @users_solr.nil? ? [] : User.find_for_tracking_table(current_user, @person, @users_solr.docs)
  		@page_title = "Users Supporting #{@person.short_name}"
 
 		if logged_in? && !current_user.zipcode.blank?
@@ -113,7 +113,7 @@ class FriendsController < ApplicationController
     @person = Person.find(params[:id])
 		@object = @person
     @users_solr = User.find_users_opposing_person(@person)
-    @users = User.find_for_tracking_table(current_user, @person, @users_solr.docs)
+    @users = @users_solr.nil? ? [] : User.find_for_tracking_table(current_user, @person, @users_solr.docs)
  		@page_title = "Users Opposing #{@person.short_name}"
 
 		if logged_in? && !current_user.zipcode.blank?
@@ -128,7 +128,7 @@ class FriendsController < ApplicationController
 		@bill = Bill.find_by_ident(params[:id])
 		@object = @bill
     @users_solr = User.find_users_supporting_bill(@bill)
-    @users = User.find_for_tracking_table(current_user, @bill, @users_solr.docs)
+    @users = @users_solr.nil? ? [] : User.find_for_tracking_table(current_user, @bill, @users_solr.docs)
  		@page_title = "Users Supporting #{@bill.typenumber}"
 
 		if logged_in? && !current_user.zipcode.blank?
@@ -143,7 +143,7 @@ class FriendsController < ApplicationController
 		@bill = Bill.find_by_ident(params[:id])
 		@object = @bill
     @users_solr = User.find_users_opposing_bill(@bill)
-    @users = User.find_for_tracking_table(current_user, @bill, @users_solr.docs)
+    @users = @users_solr.nil? ? [] : User.find_for_tracking_table(current_user, @bill, @users_solr.docs)
  		@page_title = "Users Opposing #{@bill.typenumber}"
 
 		if logged_in? && !current_user.zipcode.blank?

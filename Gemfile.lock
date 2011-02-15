@@ -1,0 +1,98 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    RedCloth (4.2.3)
+    actionmailer (2.3.11)
+      actionpack (= 2.3.11)
+    actionpack (2.3.11)
+      activesupport (= 2.3.11)
+      rack (~> 1.1.0)
+    activerecord (2.3.11)
+      activesupport (= 2.3.11)
+    activeresource (2.3.11)
+      activesupport (= 2.3.11)
+    activesupport (2.3.11)
+    builder (3.0.0)
+    capistrano (2.5.19)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.0.0)
+    capistrano-ext (1.2.1)
+      capistrano (>= 1.0.0)
+    closure-compiler (1.0.0)
+    crack (0.1.8)
+    fastercsv (1.5.4)
+    govkit (0.6.0)
+      fastercsv (>= 1.5.3)
+      httparty (>= 0.5.2)
+      json (>= 1.4.3)
+      nokogiri (>= 1.4.4)
+    haml (3.0.25)
+    highline (1.6.1)
+    hoptoad_notifier (2.4.5)
+      activesupport
+      builder
+    hpricot (0.8.2)
+    htmlentities (4.2.1)
+    httparty (0.7.3)
+      crack (= 0.1.8)
+    jammit (0.6.0)
+      closure-compiler (>= 0.1.0)
+      yui-compressor (>= 0.9.1)
+    json (1.5.1)
+    mediacloth (0.0.3)
+    mysql (2.8.1)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
+    net-sftp (2.0.5)
+      net-ssh (>= 2.0.9)
+    net-ssh (2.1.0)
+    net-ssh-gateway (1.0.1)
+      net-ssh (>= 1.99.1)
+    newrelic_rpm (2.13.4)
+    nokogiri (1.4.4)
+    oauth (0.4.4)
+    pg (0.9.0)
+    rack (1.1.0)
+    rack-openid (1.1.2)
+      rack (>= 0.4)
+      ruby-openid (>= 2.0.3)
+    rails (2.3.11)
+      actionmailer (= 2.3.11)
+      actionpack (= 2.3.11)
+      activerecord (= 2.3.11)
+      activeresource (= 2.3.11)
+      activesupport (= 2.3.11)
+      rake (>= 0.8.3)
+    rake (0.8.7)
+    rmagick (2.13.1)
+    ruby-openid (2.1.2)
+    simple-rss (1.2.3)
+    yui-compressor (0.9.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  RedCloth
+  capistrano
+  capistrano-ext
+  govkit
+  haml
+  hoptoad_notifier
+  hpricot
+  htmlentities
+  jammit
+  json
+  mediacloth
+  mysql
+  newrelic_rpm
+  oauth
+  pg
+  rack-openid
+  rails
+  rmagick
+  ruby-openid
+  simple-rss

@@ -145,12 +145,12 @@ margin: 0;
 
 .bill {
 padding-left: 20px;
-background:transparent url(/images/tiny_bill.png) no-repeat scroll 0 2px;
+background:transparent url(../images/tiny_bill.png) no-repeat scroll 0 2px;
 }
 
 .rep {
 padding-left: 20px;
-background:transparent url(/images/tiny_sen.png) no-repeat scroll 0 2px;
+background:transparent url(../images/tiny_sen.png) no-repeat scroll 0 2px;
 }
 
 

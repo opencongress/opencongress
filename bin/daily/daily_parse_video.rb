@@ -1,19 +1,21 @@
 #!/usr/bin/env ruby
 
-if __FILE__ == $0
-  require File.dirname(__FILE__) + '/../../config/environment'
-else
-  puts "Running from #{$0}"
-end
-
 require 'rubygems'
 require 'hpricot'
 require 'open-uri'
+require 'o_c_logger'
+
+if __FILE__ == $0
+  require File.dirname(__FILE__) + '/../../config/environment'
+else
+  OCLogger.log "Running from #{$0}"
+end
+
 
 
 def metavid_item_to_video(item, person = nil)
-  puts "Got a metavid video: #{item.text('title')}"
-  #puts "EMBED: #{item.elements['media:roe_embed'].attributes['url']}"
+  OCLogger.log "Got a metavid video: #{item.text('title')}"
+  #OCLogger.log "EMBED: #{item.elements['media:roe_embed'].attributes['url']}"
   
   embed = item.elements['media:roe_embed'].attributes['url']
   vid_url = item.text('link')
@@ -32,7 +34,7 @@ def metavid_item_to_video(item, person = nil)
     # calculate the length from the title
     md = /(\d+:\d+:\d+) to (\d+:\d+:\d+)/.match(v.title)    
     if md[1] and md[2]
-      #puts "LENGTH: #{(Time.parse(md[2]) - Time.parse(md[1])).to_i} seconds"
+      #OCLogger.log "LENGTH: #{(Time.parse(md[2]) - Time.parse(md[1])).to_i} seconds"
       v.length = (Time.parse(md[2]) - Time.parse(md[1])).to_i
     end
   
@@ -81,8 +83,8 @@ def metavid_item_to_video(item, person = nil)
 end
 
 def youtube_item_to_video(item, person = nil)
-  puts "Got a youtube video: #{item.text('title')}"
-  #puts "inspect: #{item}"
+  OCLogger.log "Got a youtube video: #{item.text('title')}"
+  #OCLogger.log "inspect: #{item}"
   vid_url = item.text('link')
   yt_id = nil
   
@@ -102,14 +104,14 @@ def youtube_item_to_video(item, person = nil)
     v.embed = %Q{<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/#{yt_id}&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/#{yt_id}&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>}
     v.video_date = Date.parse(item.text('pubDate'))
   
-    #puts "DESC: #{item.text('description')}"
+    #OCLogger.log "DESC: #{item.text('description')}"
     item_desc = Hpricot(item.text('description'))
     
     desc = item_desc.at("div[@style='font-size: 12px; margin: 3px 0px;'] span").inner_html  
     v.description = desc
     
     vid_time = item_desc.at("span[@style='color: #000000; font-size: 11px; font-weight: bold;']").inner_html
-    #puts "vid_time: #{vid_time}"
+    #OCLogger.log "vid_time: #{vid_time}"
     vid_length = (vid_time.length == 8) ? vid_time : "00:#{vid_time}"  
     vid_length = (Time.parse(vid_length) - Time.parse("00:00:00")).to_i
     v.length = vid_length
@@ -123,12 +125,13 @@ end
 people = Person.all_sitting
 
 people.each_with_index do |p, i|
-  puts "Checking videos for #{p.name} (#{i+1}/#{people.size})"
+  OCLogger.log "Checking videos for #{p.name} (#{i+1}/#{people.size})"
   
   # check metavid
   unless p.metavid_id.blank?  
     url  = "http://metavid.org/w/index.php?title=Special:MvExportSearch&order=recent&f%5B0%5D%5Ba%5D=and&f%5B0%5D%5Bt%5D=speech_by&f%5B0%5D%5Bv%5D=#{p.metavid_id.gsub(/_/, '+')}"
-
+    
+    OCLogger.log "Metavid URL: #{url}"
     begin
       doc = REXML::Document.new(open(url))
     
@@ -137,13 +140,15 @@ people.each_with_index do |p, i|
       end
       
     rescue Exception => e
-      puts "Error parsing metavid #{e}"
+      OCLogger.log "Error parsing metavid #{e}"
     end
   end
   
   # check youtube
   unless p.youtube_id.blank?  
     url  = "http://gdata.youtube.com/feeds/base/users/#{p.youtube_id}/uploads?alt=rss&v=2&client=ytapi-youtube-profile"
+
+    OCLogger.log "youtube URL: #{url}"
 
     begin
       doc = REXML::Document.new(open(url))
@@ -153,8 +158,7 @@ people.each_with_index do |p, i|
       end
       
     rescue Exception => e
-      puts "Error parsing youtube #{e}"
-      raise e
+      OCLogger.log "Error parsing youtube #{e}"
     end
   end
 end
@@ -162,7 +166,7 @@ end
 # now check for bills (metavid only, for now)
 url = "http://metavid.org/wiki/Special:MvExportAsk?q=[[Bill%3A%3A%3Cq%3E[[Category%3ABill]]%3C%2Fq%3E]]&po=&sc=0&eq=yes&limit=1000&offset=0"
 begin
-  puts "Checking metavid bills page..."
+  OCLogger.log "Checking metavid bills page..."
   doc = REXML::Document.new(open(url))
   
   doc.elements.each("rss/channel/item") do |item|
@@ -170,7 +174,7 @@ begin
   end
     
 rescue Exception => e
-  puts "Error parsing metavid #{e}"
+  OCLogger.log "Error parsing metavid #{e}"
   raise e
 end
 

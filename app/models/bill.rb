@@ -50,7 +50,8 @@ class Bill < ViewableObject
         :as => :emailable,
         :order => 'created_at'
   
-  belongs_to :hot_bill_category
+  belongs_to :hot_bill_category, :class_name => "PvsCategory", :foreign_key => :hot_bill_category_id
+  belongs_to :key_vote_category, :class_name => "PvsCategory", :foreign_key => :key_vote_category_id
   
   has_many :bill_interest_groups,
         :include => :crp_interest_group,
@@ -690,7 +691,7 @@ class Bill < ViewableObject
       return nil
     end
   
-    def find_hot_bills(order = 'hot_bill_categories.name', options = {})
+    def find_hot_bills(order = 'pvs_categories.name', options = {})
       # not used right now.  more efficient to loop through categories
       # probably just need to add an index to hot_bill_category_id
       Bill.find(:all, :conditions => ["bills.session = ? AND bills.hot_bill_category_id IS NOT NULL", DEFAULT_CONGRESS], 
@@ -738,7 +739,7 @@ class Bill < ViewableObject
   
   def log_referrer(referrer)
     unless (referrer.blank? || /opencongress\.org/.match(referrer) || /google\.com/.match(referrer))
-      self.bill_referrers.find_or_create_by_url(referrer)
+      self.bill_referrers.find_or_create_by_url(referrer[0..253])
     end
   end
   

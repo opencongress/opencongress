@@ -1,7 +1,7 @@
 <% file = listitem %>
 <ul>
   <li class="notebook_link" id="notebook_item_<%= listitem.id %>">
-    <img class="mypn-icon" src="/images/mypn-file.png" alt="File" title="File" />
+    <%= image_tag 'mypn-file.png', :alt => 'File', :title => 'File', :class => 'mypn-icon' %>
     <%= link_to file.title + (file.can_render_thumbnail? ? " <span class=\'download\'>(fullsize)</span>" : " <span class=\'download\'>(download)</span>"), political_notebook_notebook_file_path(:login =>file.political_notebook.user.login,:id => file.id), :target => 'blank' %>	<br />	
     <% if file.can_render_thumbnail? %>
       <% height = file.item_div("medium", file.id) %>

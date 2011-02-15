@@ -6,7 +6,7 @@
   <% if @sort == 'toprated' %>
     <p>There are currently not enough ranked blog articles. Please help by ranking some blog articles as "helpful".</p>
   <% else %>
-    <p>Hmmmm, no blog posts found for this bill at this time. This means that this this bill has not yet been mentioned on a publicly-searchable blog by either its official number (for example, "H.R. 3200") or title (for example, "America's Affordable Health Choices Act of 2009"). As soon as that changes, our daily automated search across the Web will catch it and include it here. If this bill is of interest to you, you can write a blog post referring to this bill by its official number or title, and once it's published online, a link back your blog post will appear here within about one day. Or, if you know of a blog post about this bill to display here, email us the web address of this page and the web address of your suggested blog post: <script type="text/javascript">m("writeus","opencongress","org","1");</script> Our editorial team will post relevant links as quickly as possible. Thanks for helping to build public knowledge about Congress.</p>
+    <p class="padding">Hmmmm, no blog posts found for this bill at this time. This means that this this bill has not yet been mentioned on a publicly-searchable blog by either its official number (for example, "H.R. 3200") or title (for example, "America's Affordable Health Choices Act of 2009"). As soon as that changes, our daily automated search across the Web will catch it and include it here. If this bill is of interest to you, you can write a blog post referring to this bill by its official number or title, and once it's published online, a link back your blog post will appear here within about one day. Or, if you know of a blog post about this bill to display here, email us the web address of this page and the web address of your suggested blog post: <script type="text/javascript">m("writeus","opencongress","org","1");</script> Our editorial team will post relevant links as quickly as possible. Thanks for helping to build public knowledge about Congress.</p>
   <% end %>
 <% else %>
   <p style="margin-bottom:25px;">
@@ -39,7 +39,9 @@
 <% blog_max.times do |i| %>
   <% b = blogs[i] %>
   
-  <%= render :partial => 'shared/commentary', :object => b, :locals => { :default_title => default_title, :short => short } %>
+  <% unless b.nil? %>
+    <%= render :partial => 'shared/commentary', :object => b, :locals => { :default_title => default_title, :short => short } %>
+  <% end %>
 <% end %>
 <% if admin_logged_in? %></form><% end %>
 

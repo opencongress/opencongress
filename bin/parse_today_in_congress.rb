@@ -49,29 +49,33 @@ end
 
 # check the govtrack data just to see if we've missed a date:
 
-File.open("#{GOVTRACK_DATA_PATH}/congress.nextsession.house", "r") do |f|
-  f.each_line do |line| 
-    date = Time.at(line.to_i)
+##
+## Jan 28, 2011 GovTrack no longer putting these files in data
+##
 
-    unless (CongressSession.find_by_date_and_chamber(date, 'house'))
-      CongressSession.create({ :date => date, :chamber => 'house', :is_in_session => true})
-      puts "Session for house:#{date} added to DB."
-    else
-      puts "Session for house:#{date} already in DB. Skipping."
-    end
-  end
-end
-
-File.open("#{GOVTRACK_DATA_PATH}/congress.nextsession.senate", "r") do |f|
-  f.each_line do |line| 
-    date = Time.at(line.to_i)
-
-    unless (CongressSession.find_by_date_and_chamber(date, 'senate'))
-      CongressSession.create({ :date => date, :chamber => 'senate', :is_in_session => true})
-      puts "Session for senate:#{date} added to DB."
-    else
-      puts "Session for senate:#{date} already in DB. Skipping."
-    end
-  end
-end
+# File.open("#{GOVTRACK_DATA_PATH}/congress.nextsession.house", "r") do |f|
+#   f.each_line do |line| 
+#     date = Time.at(line.to_i)
+# 
+#     unless (CongressSession.find_by_date_and_chamber(date, 'house'))
+#       CongressSession.create({ :date => date, :chamber => 'house', :is_in_session => true})
+#       puts "Session for house:#{date} added to DB."
+#     else
+#       puts "Session for house:#{date} already in DB. Skipping."
+#     end
+#   end
+# end
+# 
+# File.open("#{GOVTRACK_DATA_PATH}/congress.nextsession.senate", "r") do |f|
+#   f.each_line do |line| 
+#     date = Time.at(line.to_i)
+# 
+#     unless (CongressSession.find_by_date_and_chamber(date, 'senate'))
+#       CongressSession.create({ :date => date, :chamber => 'senate', :is_in_session => true})
+#       puts "Session for senate:#{date} added to DB."
+#     else
+#       puts "Session for senate:#{date} already in DB. Skipping."
+#     end
+#   end
+# end
 

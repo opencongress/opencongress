@@ -4,7 +4,7 @@ class BillController < ApplicationController
   helper :roll_call
 	before_filter :page_view, :only => [:show, :text]
   before_filter :get_params, :only => [:index, :all, :popular, :pending, :hot, :most_commentary, :readthebill]
-  before_filter :bill_profile_shared, :only => [:show, :comments, :money, :votes, :actions, :amendments, :text, :actions_votes, :news_blogs, :videos, :news, :blogs, :news_blogs]
+  before_filter :bill_profile_shared, :only => [:show, :comments, :money, :votes, :actions, :amendments, :text, :actions_votes, :news_blogs, :videos, :news, :blogs, :news_blogs, :topnews, :topblogs]
   before_filter :aavtabs, :only => [:actions, :amendments, :votes, :actions_votes]
   skip_before_filter :store_location, :only => [:bill_vote, :status_text, :user_stats_ajax, :atom, :atom_blogs, :atom_news, :atom_top20, :atom_top_commentary, :atom_topblogs, :atom_topnews]
 
@@ -119,7 +119,7 @@ class BillController < ApplicationController
     @sort = 'hot'
     @title_desc = SiteText.find_title_desc('bill_hot')
     @types = 'all'
-    @hot_bill_categories = HotBillCategory.find(:all, :order => :name)
+    @hot_bill_categories = PvsCategory.find(:all, :order => :name)
     @atom = {'link' => "/bill/hot.rss", 'title' => "Hot Bills"}
     @congress = params[:congress].blank? ? DEFAULT_CONGRESS : params[:congress]
     
@@ -140,11 +140,7 @@ class BillController < ApplicationController
     @page = "1" unless @page
     @bill_type = params[:bill_type]
 
-    unless read_fragment(:controller => 'bill', :action => 'type', :bill_type => @bill_type, :page => @page)
-
-      @bills = Bill.paginate_all_by_bill_type_and_session(@bill_type, congress, :include => "bill_titles", :order => 'number', :page => @page)
-
-    end 
+    @bills = Bill.paginate_all_by_bill_type_and_session(@bill_type, congress, :include => "bill_titles", :order => 'number', :page => @page)
 
     respond_to do |format|
       format.html {}
@@ -505,12 +501,7 @@ class BillController < ApplicationController
   end
 
   def topblogs
-    @blogs = @bill.blogs.find(:all, :conditions => "commentaries.average_rating > 5", :limit => 5).paginate :page => @page
-
-    @page_title = "Highest Rated Blog Articles For #{@bill.typenumber}"
-    
-    @atom = {'link' => url_for(:only_path => false, :controller => 'bill', :id => @bill.ident, :action => 'atom_topblogs'), 'title' => "#{@bill.typenumber} blog articles"}
-    render :action => 'blogs'
+    redirect_to :controller => 'bill', :action => 'blogs', :id => @bill.ident, :sort => 'toprated'
   end
 
   def money
@@ -555,10 +546,7 @@ class BillController < ApplicationController
   end
 
   def topnews
-    @news = @bill.news.find(:all, :conditions => "commentaries.average_rating > 5", :limit => 5).paginate :page => @page
-    @page_title = "Highest Rated Blog Articles For #{@bill.typenumber}"
-    @atom = {'link' => url_for(:controller => 'bill', :id => @bill.ident, :action => 'atom_topnews'), 'title' => "#{@bill.typenumber} blog articles"}
-    render :action => 'news'
+    redirect_to :controller => 'bill', :action => 'news', :id => @bill.ident, :sort => 'toprated'
   end
 
   def commentary_search

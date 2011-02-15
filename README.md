@@ -37,7 +37,7 @@ sudo gem install rails bluecloth mediacloth hpricot htree jammit json pg RedClot
 
 __Note for OS X:__ *You may need to specify additional compile options for the pg gem. Make sure pg_config is in PATH and run* `sudo env ARCHFLAGS="-arch x86_64" gem install pg`
 
-### B. DB setup
+### B. Database setup
 
 Switch to the postgres user and setup a db user following prompts for password and superuser.
 

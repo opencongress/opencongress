@@ -1,14 +1,9 @@
 set :branch, "production"
 
-role :web, "75.126.164.19", :asset_host_syncher => true
-role :web, "74.86.203.130"
-role :app, "75.126.164.19"
-role :app, "74.86.203.130"
-role :db,  "75.126.164.19", :primary => true
-role :db, "74.86.203.130"
-
-
-#
-# Sync with Amazon S3 asset hosts:
-#
-before "deploy:symlink", "s3_asset_host:synch_public"
+role :web, "app1.in.opencongress.org"
+role :web, "app2.in.opencongress.org"
+role :app, "app1.in.opencongress.org"
+role :app, "app2.in.opencongress.org"
+role :app, "worker.in.opencongress.org"
+role :db,  "app2.in.opencongress.org", :primary => true
+role :db, "app1.in.opencongress.org"

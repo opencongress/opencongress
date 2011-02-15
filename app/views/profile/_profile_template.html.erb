@@ -7,8 +7,8 @@ dsfsdddsf
 
   <% if @user == current_user %>
 		<h3 class="dark inline">Things I'm Tracking:</h3>
-		<%= toggler('things_im_tracking_whatsthis', image_tag('/images/question.png', :mouseover => '/images/question_hover.png', :alt => "What's This?", :title => "What's This?"), "(Close help)", show_link_class = "question", hide_link_class = "") %>
-		<div id="things_im_tracking_whatsthis" style="display: none;">Nearly every page on OpenCongress features a box to "Track This" item -- it's on pages for bills, Members of Congress, issue areas, and more. Simply click on the button to add that item to your "My OpenCongress" profile, and you'll have assembled a handy one-stop clearinghouse of everything you're following in Congress. You can get started by tracking your <a href="http://www.opencongress.org/people/senators">Senators</a>, your <a href="http://www.opencongress.org/people/representatives">Representative</a>, the <a href="http://www.opencongress.org/issue/by_most_viewed">issues</a> you care about, and any <a href="http://www.opencongress.org/gossip/hot">hot bills</a> that affect those issues.</div>
+		<%= toggler('things_im_tracking_whatsthis', image_tag('question.png', :mouseover => '/images/question_hover.png', :alt => "What's This?", :title => "What's This?"), "(Close help)", show_link_class = "question", hide_link_class = "") %>
+		<div id="things_im_tracking_whatsthis" style="display: none;">Nearly every page on OpenCongress features a box to "Track This" item -- it's on pages for bills, Members of Congress, issue areas, and more. Simply click on the button to add that item to your "My OpenCongress" profile, and you'll have assembled a handy one-stop clearinghouse of everything you're following in Congress. You can get started by tracking your <a href="/people/senators">Senators</a>, your <a href="/people/representatives">Representative</a>, the <a href="/issue/by_most_viewed">issues</a> you care about, and any <a href="/gossip/hot">hot bills</a> that affect those issues.</div>
 	<% else %>
 				<h3 class="darkline">Things <%= @user.login %> is Tracking:</h3>
 	<% end %>

@@ -971,7 +971,7 @@ class Person < ViewableObject
     primary = "my_approved_reps_facet" if self.title == "Rep."
     primary = "my_approved_sens_facet" if self.title == "Sen."
         
-    return [0,{}] if self.title.blank?
+    return [0,{}] if (self.title.blank? or primary.blank?)
     
     users = User.find_by_solr('placeholder:placeholder', :facets => {:fields => [:my_bills_supported, :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens, :my_bills_opposed], 
                                                       :browse => ["#{primary.gsub('_facet', '')}:#{self.id}"], 

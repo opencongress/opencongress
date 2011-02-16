@@ -1,5 +1,8 @@
-      <li class="issue">
-      <a href="<%= url_for :controller => 'issue', :action => 'show', :id => issue %>">
-        <span class="title"><%= issue.term %></span>
-      </a>
-      </li>
+<li class="issue">
+  <a href="<%= url_for :controller => 'issue', :action => 'show', :id => issue %>">
+    <% unless count_type == :none %>
+      <div class="mini_box"><%= homepage_object_count(issue, count_type) %></div>
+    <% end %>
+    <span class="title"><%= issue.term %></span>
+  </a>
+</li>

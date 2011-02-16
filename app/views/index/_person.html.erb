@@ -8,5 +8,8 @@
        <span><%= person.party %>, <%= State.for_abbrev(person.state)%></span> 
      </span>
 
+   	<% unless count_type == :none %>
+   	  <div class="mini_box"><%= homepage_object_count(person, count_type) %></div>
+     <% end %>
    </a>
  </li>

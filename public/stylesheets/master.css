@@ -3121,6 +3121,20 @@ _background:url('../images/uc-box-bottom.gif') 11px bottom no-repeat;
 }           
 
 
+.mini_box{
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius:3px;
+-moz-box-shadow: inset 0 1px 2px #666;
+-webkit-box-shadow: inset 0 1px 2px #666;
+box-shadow: inset 0 1px 2px #666;
+font-weight: bold;
+background: #F6F6F6;
+color: #000;
+float: right;
+padding: 2px 5px;
+margin: 3px 10px 10px 3px;
+}
 
 
 

@@ -12,6 +12,7 @@ GEM
     activeresource (2.3.11)
       activesupport (= 2.3.11)
     activesupport (2.3.11)
+    bluecloth (2.0.9)
     builder (3.0.0)
     capistrano (2.5.19)
       highline
@@ -77,6 +78,7 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth
+  bluecloth
   capistrano
   capistrano-ext
   govkit

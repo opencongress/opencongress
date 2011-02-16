@@ -28,6 +28,20 @@ module IndexHelper
       return date.strftime("%B %d, %Y")
     end
   end
+
+  def homepage_object_count(object, count_type)
+
+    case count_type
+    when 'views'
+      return "#{number_with_delimiter(object.views)} views"
+    when 'news_articles'
+      return "#{number_with_delimiter(object.commentary_count('news'))} articles"
+    when 'blog_articles'
+      return "#{number_with_delimiter(object.commentary_count('blog'))} articles"
+    end
+    
+    return "ugh"
+	end
 	
 	def get_result_image(result)
 		rcall = {

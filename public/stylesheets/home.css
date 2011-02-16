@@ -549,6 +549,11 @@ font-weight: bold;
 #pis li a span.title{
 padding-top: 9px;
 padding-left: 10px;
+width: 275px;
+}
+
+#pis li a .mini_box {
+  margin-top: 20px;
 }
 
 /*

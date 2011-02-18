@@ -95,6 +95,6 @@ DEPENDENCIES
   pg
   rack-openid
   rails
-  rmagick
+  rmagick (= 2.13.1)
   ruby-openid
   simple-rss

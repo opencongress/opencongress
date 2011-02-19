@@ -28,13 +28,14 @@ class Person < ViewableObject
   named_scope :rep, :joins => :roles, :select => "people.*", :conditions => ["roles.person_id = people.id AND roles.role_type='rep' AND roles.enddate > ?", Date.today]
 
 
-  has_many :news, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='t'"
+  has_many :news, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='t'"
+  has_many :blogs, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='f'"
+
   has_many :idsorted_news, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='t'"
   has_many :idsorted_blogs, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='f'"
 
-  has_many :recent_news, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='t'", :limit => 10
-  has_many :blogs, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='f'"
-  has_many :recent_blogs, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='f'", :limit => 10
+  has_many :recent_news, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='t'", :limit => 10
+  has_many :recent_blogs, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='f'", :limit => 10
 
   has_many :cycle_contributions, :class_name => 'PersonCycleContribution', :order => 'people_cycle_contributions.cycle DESC'
 

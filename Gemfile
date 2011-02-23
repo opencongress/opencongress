@@ -10,7 +10,7 @@ gem 'mysql'
 gem "haml"
 
 # RMagick
-gem 'rmagick'
+gem 'rmagick', '2.13.1'
 
 # GovKit
 gem "govkit"

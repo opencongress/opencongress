@@ -1,6 +1,7 @@
 class MemcacheExpiration
   require 'rubygems'
   require 'memcache'
+  require 'o_c_logger'
 
   @connection = nil
   @namespace = nil
@@ -25,13 +26,17 @@ class MemcacheExpiration
   def expire_frag(fragment)
     connect unless connection_active?
     
-    if fragment.class.to_s == "Array"
-      fragment.each do |f|
-        f = "views/#{f}"
-        @connection.delete(f)
+    begin
+      if fragment.class.to_s == "Array"
+        fragment.each do |f|
+          f = "views/#{f}"
+          @connection.delete(f)
+        end
+      else
+        @connection.delete("views/#{fragment}")
       end
-    else
-      @connection.delete("views/#{fragment}")
+    rescue Exception => e
+      OCLogger.log "WARNING: Error deleting cached fragment or array '#{fragment}': #{e}"
     end
   end
 
@@ -62,7 +67,7 @@ class MemcacheExpiration
           @connection = MemCache.new(hostport, :namespace => @namespace)
           return if connection_active?
         rescue
-          puts "Error connecting to memcache server.  Trying again..."
+          OCLogger.log "Error connecting to memcache server.  Trying again..."
           errorcount += 1
         end
       end

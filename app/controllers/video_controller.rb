@@ -6,7 +6,7 @@ class VideoController < ApplicationController
   end
   
   def all
-    @videos = Video.find(:all, :order => 'video_date DESC').paginate
+    @videos = Video.paginate(:all, :order => 'video_date DESC', :page => params[:page])
     @page_title = "All Videos"
     @atom = {'link' => url_for(:only_path => false, :controller => 'video', :action => 'rss'), 'title' => "All Videos RSS"}
     

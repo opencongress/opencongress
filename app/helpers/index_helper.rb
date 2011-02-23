@@ -40,7 +40,7 @@ module IndexHelper
       return "#{number_with_delimiter(object.commentary_count('blog'))} articles"
     end
     
-    return "ugh"
+    return ""
 	end
 	
 	def get_result_image(result)

@@ -26,7 +26,7 @@ class Bill < ViewableObject
   
   has_many :bill_text_versions
   
-  with_options :class_name => 'Commentary', :order => 'commentaries.date DESC' do |c|
+  with_options :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC' do |c|
     c.has_many :news, :as => :commentariable, :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='t'"
     c.has_many :blogs, :as => :commentariable, :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='f'"
   end
@@ -465,11 +465,11 @@ class Bill < ViewableObject
       order = options[:order] ||= "vote_count_1 desc"
       search = options[:search]
       if possible_orders.include?(order)
-
+    
         limit = options[:limit] ||= 20
         offset = options[:offset] ||= 0
         not_null_check = order.split(' ').first
-
+    
         query = "
             SELECT
               bills.*,
@@ -537,15 +537,15 @@ class Bill < ViewableObject
             ORDER BY #{order} 
             LIMIT #{limit} 
             OFFSET #{offset}"
-
+    
         query_params = [range.seconds.ago,range.seconds.ago, (range*2).seconds.ago, range.seconds.ago, range.seconds.ago]
-
+    
         if search
           # Plug the search parameters into the query parmaeters
           query_params.unshift(search)
           query_params.push(search)
         end
-
+    
         Bill.find_by_sql([query, *query_params])
       else 
         return []

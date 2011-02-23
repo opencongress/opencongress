@@ -62,7 +62,7 @@ font-size: 11px;
 color: #666;
 line-height: 1.4em;
 }
-#voting_history h3{
+#voting_history h2{
 padding: 0 0 0 35px;
 }
 #person_video{
@@ -953,7 +953,7 @@ display: none;
 }
 .user_stats_div {
 float: left;
-  width: 660px;
+  width: 670px;
   padding:35px;
 }
 .user_stats_div table{

@@ -1,5 +1,5 @@
-<li class="bill">
-  <a href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>">
+<li class="blue no_sides no_top">
+  <a class="bill" href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>">
   	<span class="title">
   	  <%= bill.typenumber %> - <span><%= truncate(bill.title_common, :length => 50) rescue nil %></span>
   	</span>
@@ -9,7 +9,7 @@
   	</span>
   	
   	<% unless count_type == :none %>
-  	  <div class="mini_box"><%= homepage_object_count(bill, count_type) %></div>
+  	  <span class="small_article"><%= homepage_object_count(bill, count_type) %></span>
     <% end %>
   </a>
 </li>   

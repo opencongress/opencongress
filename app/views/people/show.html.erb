@@ -1,6 +1,6 @@
 <% cache("#{@person.fragment_cache_key}_header") do %>
   <!-- <div class="issue_cloud">
-    <h3 class="dark">Issue Cloud</h3>
+    <h2 class="dark">Issue Cloud</h2>
     <%# tag_cloud @top_issues, %w(issue_cloud1 issue_cloud2 issue_cloud3 issue_cloud4 issue_cloud5 issue_cloud6 issue_cloud7 issue_cloud8 issue_cloud9 issue_cloud10) do |issue, css_class| %>
       <%# link_to issue.term, {:controller => 'issue', :action => :show, :id => issue}, :class => css_class %>
     <%# end %>
@@ -9,7 +9,7 @@
 <% if @person.committees.any? %>
     <% committees = @person.committees.sort_by { |c| [(c.name || ""), (c.subcommittee_name || "") ] }.group_by(&:name) %>
     <div class="committee_list">
-      <h3 class="dark">Committee Membership</h3>
+      <h2 class="dark">Committee Membership</h2>
       <ul class="list">
         <%= render(:partial =>'committee/committees_list', :locals => {:committees => committees }, :collection => committees.keys.sort) %>
       </ul>
@@ -19,7 +19,7 @@
 	<div id="bill_and_status_list">
 		<% sponsored_bills = @person.bills.find(:all, :limit => 3) %>
 		<% if sponsored_bills.any? %>
-			<h3 class="darkline">Most Recent Sponsored Bills</h3>
+			<h2>Most Recent Sponsored Bills</h2>
 			<%= render(:partial => 'bill/related_bills_list', :locals => { :related_bills_list => sponsored_bills })%>
 			<% if @person.bills.size > 3 %>
 				<a href="/people/bills/<%= @person.to_param %>#sponsored" class="med_button bold clearnone"><span>View All Sponsored Bills</span></a>
@@ -27,7 +27,7 @@
 		<% else %>
 			<% cosponsored_bills = @person.bills_cosponsored.find(:all, :limit => 3) %>
 			<% if cosponsored_bills.any? %>
-				<h3 class="darkline">Most Recent Co-Sponsored Bills</h3>
+				<h2>Most Recent Co-Sponsored Bills</h2>
 				<%= render(:partial => 'bill/related_bills_list', :locals => { :related_bills_list => cosponsored_bills })%>
  			<% end %>
 		<% end %>
@@ -40,10 +40,10 @@
 
   <% if @person.votes(3).any? %>
     <div id="voting_history">
-      <h3>Recent Voting History</h3>
+      <h2>Recent Voting History</h2>
       <%= site_text_explain('voting_history') %>
       <%= render(:partial => 'voting_history', :locals => { :votes => @person.votes(3) }) %>
-      <a href="/people/voting_history/<%= @person.to_param %>" class="med_button clearnone"><span>View Full Voting History</span></a>
+      <a href="/people/voting_history/<%= @person.to_param %>" class="silver medium button floatleft margin-top margin-left push-left push-top clearnone"><span>View Full Voting History</span></a>
 			</div>
   <% end %>
 <% if @person.votes? %>
@@ -65,7 +65,7 @@
       <% cache ("#{@person.fragment_cache_key}_news_preview") do %>
       <!-- cached: <%= "#{@person.fragment_cache_key}_news_preview" %> // <%= Time.now %> -->
       <a class="feed" href="<%= url_for :action => 'atom_news', :id => @person %>">FEED</a>
-      <h5 class="short">Recent News Coverage</h5>
+      <h2 class="short">Recent News Coverage</h5>
       <div id="news_list">
         <a name="news"></a>
 
@@ -85,7 +85,7 @@
         <% cache ("#{@person.fragment_cache_key}_blog_preview") do %>
         <!-- cached: <%= "#{@person.fragment_cache_key}_blog_preview" %> // <%= Time.now %> -->
         <a class="feed" href="<%= url_for :action => 'atom_blogs', :id => @person %>">FEED</a>
-        <h5 class="short">Recent Blog Coverage</h5>
+        <h2 class="short">Recent Blog Coverage</h5>
         <div id="blogs_list">
           <a name="blogs"></a>
 
@@ -137,14 +137,14 @@
 
 <% unless @person.videos.empty? %>  
   <div id="person_video" class="cols-box clearfix">
-    <h3 class="darkline clear">Videos of <%= @person.popular_name %></h3>
+    <h2 class="darkline clear">Videos of <%= @person.popular_name %></h2>
     <%= render :partial => 'shared/videos', :object => @person.videos.find(:all, :limit => 2), 
                :locals => { :more_url => (@person.videos.size > 2) ? link_to("See more videos (#{@person.videos.size} total)", { :controller => 'people', :action => 'videos', :id => @person }, :class => "arrow") : nil } %>
   </div>
 <% end %>
 <div class="padding">
 <% if @featured_person_text %>
-  <h3 class="darkline">Featured Members of Congress</h3>
+  <h2>Featured Members of Congress</h2>
   <div id="featured_person">
     <p class="bold behave">On <%= @featured_person_text.created_at.strftime("%B %d, %Y") %> <%= @person.popular_name %> was featured on the homepage of OpenCongress:</p>
     <blockquote>

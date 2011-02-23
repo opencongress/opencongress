@@ -1766,28 +1766,6 @@ margin-bottom: 0;
 margin-top: 10px !important;
 }
 
-.tracking_info, .user_also_wrap {
-border-bottom: 1px solid #eee;
-float: left;
-padding-bottom: 30px;
-margin-bottom: 0px;
-width: 675px;
-}
-
-.tracking_info h3, .user_also_wrap h3 {
-color: #666;
-font-weight: normal;
-}
-
-.tracking_info h3 span, .user_also_wrap h3 span {
-color: #555;
-font-weight: bold;
-}
-
-.tracking_info a i {
-  color:#5F5F5F;
-}
-
 
 
 

@@ -1,9 +1,9 @@
 <% cache("#{stance}_items_#{object.display_object_name}_#{object.id}", :expires_in => 24.hours) do %>
   <!-- cached: tracked_items_<%= "#{object.display_object_name}_#{object.id}" %> // <%= Time.now %> -->
  <div class="user_also_wrap"> 
-  <h3 class="clear">Users <b><%= stance %></b> <%= title %> 
+  <h2 class="clear">Users <b><%= stance %></b> <%= title %> 
      (<%= link_to tracking_suggestions[0], :controller => 'friends', :action => action, :id => (object.class.to_s == 'Subject' ? object.to_param : object.ident ) %>) <span>are also:</span>
-  </h3>
+  </h2>
   <table style="width:100%;">
     <tr>
       <% unless tracking_suggestions[1][:my_bills_supported_facet].blank? %><th style="width:380px;text-align:left;">Supporting Bill</th><% end %>
@@ -16,7 +16,7 @@
         <ul class="mini_bills_list">
         <% tracking_suggestions[1][:my_bills_supported_facet].each do |p| %>
           <li><%= link_to p[:object].typenumber, bill_path(p[:object]) %> <%= truncate_string(p[:object].title_short, 20) %>
-            <div class="tracking_count"><%= link_to "<span>#{p[:trackers]}</span>", :controller => 'friends', :action => 'supporting_bill', :id => p[:object].ident %></div></li>
+            <%= link_to "<span>#{p[:trackers]}</span>", :controller => 'friends', :action => 'supporting_bill', :id => p[:object].ident %></li>
         <% end %>
         </ul>
       </td>
@@ -26,7 +26,7 @@
         <ul class="mini_sens_list">
         <% tracking_suggestions[1][:my_approved_sens_facet].each do |p| %>
           <li><%= link_to "#{p[:object].short_name} <i>[#{p[:object].party_and_state}]</i>", person_url(p[:object].ident) %> 
-            <div class="tracking_count"><%= link_to "<span>#{p[:trackers]}</span>", :controller => 'friends', :action => 'supporting_person', :id => p[:object].ident %></div></li>
+            <%= link_to "<span>#{p[:trackers]}</span>", :controller => 'friends', :action => 'supporting_person', :id => p[:object].ident %></li>
         <% end %>
         </ul>
       </td>
@@ -36,7 +36,7 @@
         <ul class="mini_reps_list">
         <% tracking_suggestions[1][:my_approved_reps_facet].each do |p| %>
           <li><%= link_to "#{p[:object].short_name} <i>[#{p[:object].party_and_state}]</i>", person_url(p[:object].ident) %> 
-            <div class="tracking_count"><%= link_to "<span>#{p[:trackers]}</span>", :controller => 'friends', :action => 'supporting_person', :id => p[:object].ident %></div></li>
+            <%= link_to "<span>#{p[:trackers]}</span>", :controller => 'friends', :action => 'supporting_person', :id => p[:object].ident %></li>
         <% end %>
         </ul>
       </td>
@@ -44,6 +44,7 @@
      
     </tr>
 </table>
+<br /><br />
 <table style="width:100%;">
   <tr>
 		<% unless tracking_suggestions[1][:my_bills_opposed_facet].blank? %><th style="width:380px;text-align:left;">Opposing Bill</th><% end %>
@@ -57,7 +58,7 @@
 	        <ul class="mini_bills_list">
 	        <% tracking_suggestions[1][:my_bills_opposed_facet].each do |p| %>
 	          <li><%= link_to p[:object].typenumber, bill_path(p[:object]) %> <%= truncate_string(p[:object].title_short, 20) %>
-	            <div class="tracking_count"><%= link_to "<span>#{p[:trackers]}</span>", :controller => 'friends', :action => 'opposing_bill', :id => p[:object].ident %></div></li>
+	            <%= link_to "<span>#{p[:trackers]}</span>", :controller => 'friends', :action => 'opposing_bill', :id => p[:object].ident %></li>
 	        <% end %>
 	        </ul>
 	      </td>
@@ -68,7 +69,7 @@
         <ul class="mini_sens_list">
         <% tracking_suggestions[1][:my_disapproved_sens_facet].each do |p| %>
           <li><%= link_to "#{p[:object].short_name} <i>[#{p[:object].party_and_state}]</i>", person_url(p[:object].ident) %> 
-            <div class="tracking_count"><%= link_to "<span>#{p[:trackers]}</span>", :controller => 'friends', :action => 'opposing_person', :id => p[:object].ident %></div></li>
+            <%= link_to "<span>#{p[:trackers]}</span>", :controller => 'friends', :action => 'opposing_person', :id => p[:object].ident %></li>
         <% end %>
         </ul>
       </td>
@@ -79,7 +80,7 @@
         <ul class="mini_reps_list">
         <% tracking_suggestions[1][:my_disapproved_reps_facet].each do |p| %>
           <li><%= link_to "#{p[:object].short_name} <i>[#{p[:object].party_and_state}]</i>", person_url(p[:object].ident) %> 
-            <div class="tracking_count"><%= link_to "<span>#{p[:trackers]}</span>", :controller => 'friends', :action => 'opposing_person', :id => p[:object].ident %></div></li>
+            <%= link_to "<span>#{p[:trackers]}</span>", :controller => 'friends', :action => 'opposing_person', :id => p[:object].ident %></li>
         <% end %>
         </ul>
       </td>

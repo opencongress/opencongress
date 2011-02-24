@@ -361,7 +361,7 @@ td.label {
 }
 
 #qsearch_submit a.qsearch_button {
-  background: #6d84b4 url(/images/search_input_gloss.gif) top center repeat-x;
+  background: #6d84b4 url(../images/search_input_gloss.gif) top center repeat-x;
   border-bottom: 1px solid #506798;
   border-left: 1px solid #617aad;
   border-right: 1px solid #506798;
@@ -374,7 +374,7 @@ td.label {
   width: 19px;
 }
 #qsearch_submit a.qsearch_button span.qsearch_glass {
-  background: url(/images/search_glass.gif) 0% 70% no-repeat;
+  background: url(../images/search_glass.gif) 0% 70% no-repeat;
   display: block;
   margin: 0px;
   padding: 3px 0px;
@@ -384,7 +384,7 @@ td.label {
   border: 1px solid #3b5998;
 }
 #qsearch_submit a.qsearch_button:active span.qsearch_glass {
-  background: url(/images/search_glass.gif) 100% 70% no-repeat;
+  background: url(../images/search_glass.gif) 100% 70% no-repeat;
 }
 
 
@@ -455,19 +455,19 @@ td.label {
         padding: 0px; }
 
       #sidebar .app_list .photos_app_link {
-        background: url(/images/icons/photo.gif) 0px 2px no-repeat; }
+        background: url(../images/icons/photo.gif) 0px 2px no-repeat; }
       #sidebar .app_list .video_app_link {
-        background: url(/images/icons/video.gif) 0px 2px no-repeat; }
+        background: url(../images/icons/video.gif) 0px 2px no-repeat; }
       #sidebar .app_list .notes_app_link {
-        background: url(/images/icons/note.gif) 0px 2px no-repeat; }
+        background: url(../images/icons/note.gif) 0px 2px no-repeat; }
       #sidebar .app_list .groups_app_link {
-        background: url(/images/icons/group.gif) 0px 3px no-repeat; }
+        background: url(../images/icons/group.gif) 0px 3px no-repeat; }
       #sidebar .app_list .events_app_link {
-        background: url(/images/icons/event.gif) 0px 2px no-repeat; }
+        background: url(../images/icons/event.gif) 0px 2px no-repeat; }
       #sidebar .app_list .book_app_link {
-        background: url(/images/icons/bookreview.gif) 0px 2px no-repeat; }
+        background: url(../images/icons/bookreview.gif) 0px 2px no-repeat; }
       #sidebar .app_list .posted_app_link {
-        background: url(/images/icons/post.gif) 0px 2px no-repeat; }
+        background: url(../images/icons/post.gif) 0px 2px no-repeat; }
 
       #sidebar .app_list .icon {
         float: left;
@@ -517,11 +517,11 @@ td.label {
 }
 
 #sidebar .more_apps {
-  background: url(/images/down_arrow_grey_small.gif) no-repeat 10px 2px;
+  background: url(../images/down_arrow_grey_small.gif) no-repeat 10px 2px;
 }
 
 #sidebar .less_apps {
-  background: url(/images/up_arrow_grey_small.gif) no-repeat 10px 2px;
+  background: url(../images/up_arrow_grey_small.gif) no-repeat 10px 2px;
 }
 
 #sidebar .more_apps a, #sidebar .less_apps a, .more_section a {
@@ -542,12 +542,12 @@ td.label {
   #publicity h5.new {
     line-height: 17px;
     padding: 0px 0px 2px 36px;
-    background: url(/images/publicity_new.gif) no-repeat left center; }
+    background: url(../images/publicity_new.gif) no-repeat left center; }
 
   #publicity h5.tip {
     line-height: 17px;
     padding: 0px 0px 2px 29px;
-    background: url(/images/publicity_tip.gif) no-repeat left center; }
+    background: url(../images/publicity_tip.gif) no-repeat left center; }
 
   #publicity p {
     margin: 0px;
@@ -569,7 +569,7 @@ td.label {
   margin: 0px 1px 0px 0px;
   padding: 9px 0px 4px 0px;
   height: 2em;
-  background: url(/images/navigator_bg.gif) no-repeat left bottom;
+  background: url(../images/navigator_bg.gif) no-repeat left bottom;
   line-height: 2em; }
 
   #navigator a {
@@ -652,7 +652,7 @@ td.label {
 
 #book #content_shadow {
     margin: 2px 0px 0px 1px;
-    background: transparent url(/images/shadow_gray.gif) repeat-y top right;
+    background: transparent url(../images/shadow_gray.gif) repeat-y top right;
     padding: 0px;
     border-bottom: solid 1px #ddd; }
 
@@ -714,7 +714,7 @@ td.label {
 
   #pagefooter .copyright .brand {
     padding: 0px 0px 2px 22px;
-    background: url(/images/icons/hidden.gif) no-repeat; }
+    background: url(../images/icons/hidden.gif) no-repeat; }
 
 #subheader {
   border-left: solid 1px #b7b7b7;
@@ -735,12 +735,12 @@ td.label {
   width: 17px;
   margin: 0px 0px -10px -1px;
   padding: 3px 0px 3px;
-  background: transparent url(/images/global_menu_arrow.gif) no-repeat 0px center; }
+  background: transparent url(../images/global_menu_arrow.gif) no-repeat 0px center; }
 
   #navigator .main_set li a.global_menu_arrow_active,
   #navigator .main_set li a.global_menu_arrow:hover,
   #navigator .main_set li a.global_menu_arrow_active:hover {
-    background: #5c75aa url(/images/global_menu_arrow.gif) no-repeat 0px center; }
+    background: #5c75aa url(../images/global_menu_arrow.gif) no-repeat 0px center; }
 
 
 
@@ -813,7 +813,7 @@ td.label {
     margin: 0px;
     font-size: 14px;
     padding: 0px 0px 0px 24px;
-    background: url(/images/icons/hidden.gif) no-repeat 1px 1px; }
+    background: url(../images/icons/hidden.gif) no-repeat 1px 1px; }
 
   .title_header h2.no_icon {
      padding: 0px;
@@ -942,7 +942,7 @@ td.label {
     .dashboard_header .dh_links form {display: inline; overflow: hidden; width: 0px;}
 
     .dashboard_header .dh_links .dh_actions .back_to_link {
-      background: url(/images/arrow_micro_back.gif) no-repeat 0% 55%;
+      background: url(../images/arrow_micro_back.gif) no-repeat 0% 55%;
       padding-left: 10px; }
 
   .dashboard_header .dh_titlebar {
@@ -955,7 +955,7 @@ td.label {
       background-repeat: no-repeat;
       background-position: 1px 8px; }
     .dashboard_header .dh_titlebar .dh_subtitle {
-      background-image: url(/images/dashboard_subtitle_arrow.gif);
+      background-image: url(../images/dashboard_subtitle_arrow.gif);
       background-position: 0px 5px;
       background-repeat: no-repeat;
       color: #000;
@@ -979,7 +979,7 @@ td.label {
 
   .dashboard_header .dh_new_media_shell {
     float: right;
-    background: url(/images/new_media_button_active.gif) no-repeat bottom -30px;
+    background: url(../images/new_media_button_active.gif) no-repeat bottom -30px;
     margin: 7px 0px 0px 10px; }
 
   /*  NEW MEDIA BUTTON  */
@@ -988,13 +988,13 @@ td.label {
      float: left;
      color: #777;
      text-decoration: none;
-     background: url(/images/new_media_button.gif) no-repeat; }
+     background: url(../images/new_media_button.gif) no-repeat; }
 
-     .dh_new_media .tr { background: url(/images/new_media_button.gif) no-repeat top right; }
-     .dh_new_media .bl { background: url(/images/new_media_button.gif) no-repeat bottom left; }
-     .dh_new_media .br { background: url(/images/new_media_button.gif) no-repeat bottom right; }
+     .dh_new_media .tr { background: url(../images/new_media_button.gif) no-repeat top right; }
+     .dh_new_media .bl { background: url(../images/new_media_button.gif) no-repeat bottom left; }
+     .dh_new_media .br { background: url(../images/new_media_button.gif) no-repeat bottom right; }
      .dh_new_media span {
-       background: url(/images/new_media_button_plus.gif) no-repeat 9px center;
+       background: url(../images/new_media_button_plus.gif) no-repeat 9px center;
        color: #333;
        font-size: 11px;
        font-weight: bold;
@@ -1008,16 +1008,16 @@ td.label {
   .dh_new_media:active .tr,
   .dh_new_media:active .bl,
   .dh_new_media:active .br {
-    background-image: url(/images/new_media_button_active.gif); }
+    background-image: url(../images/new_media_button_active.gif); }
 
 
 /* Toolbar Buttons ===================== */
 
 .dh_toolbar_buttons {
-  background: url(/images/buttons/toolbar_button_hover.gif) no-repeat bottom left;
+  background: url(../images/buttons/toolbar_button_hover.gif) no-repeat bottom left;
 }
 .dh_toolbar_button {
-  background-image: url(/images/buttons/toolbar_button_active.gif);
+  background-image: url(../images/buttons/toolbar_button_active.gif);
   color: #777;
   display: block;
   float: left;
@@ -1029,73 +1029,73 @@ td.label {
 
 /*  LEFT BUTTON  */
 .dh_toolbar_button_left {
-  background: url(/images/buttons/toolbar_button.gif) no-repeat top left;
+  background: url(../images/buttons/toolbar_button.gif) no-repeat top left;
 }
 .dh_toolbar_button_left .bottom_left {
-  background: url(/images/buttons/toolbar_button.gif) no-repeat bottom left;
+  background: url(../images/buttons/toolbar_button.gif) no-repeat bottom left;
 }
 .dh_toolbar_button_left .bottom_right {
-  background: url(/images/buttons/toolbar_button_border.gif) no-repeat bottom right;
+  background: url(../images/buttons/toolbar_button_border.gif) no-repeat bottom right;
 }
 .dh_toolbar_button_left:hover,
 .dh_toolbar_button_left:hover .bottom_left {
-  background-image: url(/images/buttons/toolbar_button_hover.gif);
+  background-image: url(../images/buttons/toolbar_button_hover.gif);
 }
 .dh_toolbar_button_left:active,
 .dh_toolbar_button_left:active .bottom_left {
-  background-image: url(/images/buttons/toolbar_button_active.gif);
+  background-image: url(../images/buttons/toolbar_button_active.gif);
 }
 
 /*  CENTER BUTTON  */
 .dh_toolbar_button_center {
-  background: url(/images/buttons/toolbar_button.gif) no-repeat top center;
+  background: url(../images/buttons/toolbar_button.gif) no-repeat top center;
 }
 .dh_toolbar_button_center .bottom_left {
-  background: url(/images/buttons/toolbar_button.gif) no-repeat bottom center;
+  background: url(../images/buttons/toolbar_button.gif) no-repeat bottom center;
 }
 .dh_toolbar_button_center .bottom_right {
-  background: url(/images/buttons/toolbar_button_border.gif) no-repeat bottom right;
+  background: url(../images/buttons/toolbar_button_border.gif) no-repeat bottom right;
 }
 .dh_toolbar_button_center:hover,
 .dh_toolbar_button_center:hover .bottom_left {
-  background-image: url(/images/buttons/toolbar_button_hover.gif);
+  background-image: url(../images/buttons/toolbar_button_hover.gif);
 }
 .dh_toolbar_button_center:active,
 .dh_toolbar_button_center:active .bottom_left {
-  background-image: url(/images/buttons/toolbar_button_active.gif);
+  background-image: url(../images/buttons/toolbar_button_active.gif);
 }
 
 /*  RIGHT BUTTON  */
 .dh_toolbar_button_right {
-  background: url(/images/buttons/toolbar_button.gif) no-repeat top center;
+  background: url(../images/buttons/toolbar_button.gif) no-repeat top center;
 }
 .dh_toolbar_button_right .top_right {
-  background: url(/images/buttons/toolbar_button.gif) no-repeat top right;
+  background: url(../images/buttons/toolbar_button.gif) no-repeat top right;
 }
 .dh_toolbar_button_right .bottom_left {
-  background: url(/images/buttons/toolbar_button.gif) no-repeat bottom center;
+  background: url(../images/buttons/toolbar_button.gif) no-repeat bottom center;
 }
 .dh_toolbar_button_right .bottom_right {
-  background: url(/images/buttons/toolbar_button.gif) no-repeat bottom right;
+  background: url(../images/buttons/toolbar_button.gif) no-repeat bottom right;
 }
 .dh_toolbar_button_right:hover,
 .dh_toolbar_button_right:hover .top_right,
 .dh_toolbar_button_right:hover .bottom_left,
 .dh_toolbar_button_right:hover .bottom_right {
-  background-image: url(/images/buttons/toolbar_button_hover.gif);
+  background-image: url(../images/buttons/toolbar_button_hover.gif);
 }
 .dh_toolbar_button_right:active,
 .dh_toolbar_button_right:active .top_right,
 .dh_toolbar_button_right:active .bottom_left,
 .dh_toolbar_button_right:active .bottom_right {
-  background-image: url(/images/buttons/toolbar_button_active.gif);
+  background-image: url(../images/buttons/toolbar_button_active.gif);
 }
 
 
 /*  BUTTON ICON & LABEL  */
 .dh_toolbar_button span {
   background-color: transparent;
-  background-image: url(/images/buttons/toolbar_button_plus.gif);
+  background-image: url(../images/buttons/toolbar_button_plus.gif);
   background-position: 9px 48%;
   background-repeat: no-repeat;
   color: #333;
@@ -1120,15 +1120,15 @@ td.label {
 
 /*  DEFAULT PLUS BUTTON  */
 .dh_toolbar_button#toolbar_button_plus span {
-  background-image: url(/images/buttons/toolbar_button_plus.gif);
+  background-image: url(../images/buttons/toolbar_button_plus.gif);
 }
 /*  RECORD BUTTON  */
 .dh_toolbar_button#toolbar_button_record span {
-  background-image: url(/images/buttons/toolbar_button_record.gif);
+  background-image: url(../images/buttons/toolbar_button_record.gif);
 }
 /*  MESSAGE BUTTON  */
 .dh_toolbar_button#toolbar_button_message span {
-  background-image: url(/images/buttons/toolbar_button_message.gif);
+  background-image: url(../images/buttons/toolbar_button_message.gif);
 }
 .dh_toolbar_button_center#toolbar_button_message span,
 .dh_toolbar_button_right#toolbar_button_message  span {
@@ -1291,7 +1291,7 @@ textarea {
   border: 0px; }
 
 .inputsearch {
-  background: white url(/images/magglass.png) no-repeat 3px 4px;
+  background: white url(../images/magglass.png) no-repeat 3px 4px;
   padding-left: 17px; }
 
 .transparent_png_ie6 {
@@ -1414,7 +1414,7 @@ textarea {
 .toggle_tabs li {
   display:inline;
   padding: 2px 0px 3px;
-  background: #f1f1f1 url(/images/components/toggle_tab_gloss.gif) top left repeat-x;
+  background: #f1f1f1 url(../images/components/toggle_tab_gloss.gif) top left repeat-x;
 }
 
 .toggle_tabs li a {
@@ -1594,11 +1594,11 @@ textarea {
     padding: 0px 14px 1px 4px;
     display: block;
     float: left;
-    background: white url(/images/share_icon_small.gif) repeat-y right center;
+    background: white url(../images/share_icon_small.gif) repeat-y right center;
     border: solid 1px #7f93bc; }
 
     .s_and_h_big a {
-      background: white url(/images/share_icon.gif) repeat-y right center;
+      background: white url(../images/share_icon.gif) repeat-y right center;
       padding: 1px 18px 2px 4px;
       }
 
@@ -1614,23 +1614,23 @@ textarea {
     color: #fff;
     border-color: #3B5998;
     text-decoration: none;
-    background: #3B5998 url(/images/share_icon_small_hover.gif) repeat-y right center; }
+    background: #3B5998 url(../images/share_icon_small_hover.gif) repeat-y right center; }
 
     .s_and_h_big a:hover {
-      background: #3B5998 url(/images/share_icon_hover.gif) repeat-y right center; }
+      background: #3B5998 url(../images/share_icon_hover.gif) repeat-y right center; }
 
   .share_and_hide a.x_to_hide {
     border: none;
     width: 3px;
     padding: 1px 5px 2px;
     margin-left: 3px;
-    background: transparent url(/images/x_to_hide.gif) no-repeat center center; }
+    background: transparent url(../images/x_to_hide.gif) no-repeat center center; }
 
     .s_and_h_big a.x_to_hide {
       padding: 2px 5px 3px; }
 
   .share_and_hide a.x_to_hide:hover {
-    background: #3B5998 url(/images/x_to_hide_hover.gif) no-repeat center center; }
+    background: #3B5998 url(../images/x_to_hide_hover.gif) no-repeat center center; }
 
 
 .quail {
@@ -1730,7 +1730,7 @@ html #content .welcome_buttons a:hover {
   padding:0 0 0 14px;
   font-size:13px;
   color:#333;
-  background:transparent url(/images/sitetour/tour_arrow.gif) no-repeat 3px 2px;
+  background:transparent url(../images/sitetour/tour_arrow.gif) no-repeat 3px 2px;
   border: 0px; }
 
 .welcome_buttons a:hover h4 {
@@ -1762,14 +1762,14 @@ html #book .under_login_tour a:hover {
 .under_login_tour a h4 {
   font-size:11px;
   padding:0 0 0 9px;
-  background:transparent url(/images/sitetour/tour_arrow_micro.gif) no-repeat 2px 4px; }
+  background:transparent url(../images/sitetour/tour_arrow_micro.gif) no-repeat 2px 4px; }
 
 .under_login_tour a p {
   padding: 3px 0 0 9px; }
 
 .new_feature_tag {
   padding: 3px 0 0 6px; background:
-  url(/images/new_feature_tag.gif) no-repeat;
+  url(../images/new_feature_tag.gif) no-repeat;
   height: 14px;
   float: left;
   margin-right: 6px;
@@ -1834,7 +1834,7 @@ a.link_btn_style span.btn_text {
 
 /* preload */
 a.reg_btn_style {
-  background-image: url(/images/welcome/btn_register_signup_active_bg.gif);
+  background-image: url(../images/welcome/btn_register_signup_active_bg.gif);
 }
 
 a.reg_btn_style span.btn_text {
@@ -1844,12 +1844,12 @@ a.reg_btn_style span.btn_text {
 
 a.reg_btn_style div,
 a.reg_btn_style span {
-  background-image: url(/images/welcome/btn_register_signup_bg.gif);
+  background-image: url(../images/welcome/btn_register_signup_bg.gif);
 }
 
 a.reg_btn_style:active div,
 a.reg_btn_style:active span {
-  background-image: url(/images/welcome/btn_register_signup_active_bg.gif);
+  background-image: url(../images/welcome/btn_register_signup_active_bg.gif);
 }
 
 
@@ -1885,7 +1885,7 @@ a.reg_btn_style:active span {
 
     .app_switcher .app_switcher_unselected .app_switcher_button:hover {
       border: solid 1px #666;
-      background: #fff url(/images/app_switcher_hover_shadow.gif) repeat-x bottom left; }
+      background: #fff url(../images/app_switcher_hover_shadow.gif) repeat-x bottom left; }
 
     .app_switcher .app_switcher_selected .app_switcher_button {
       color: white;
@@ -1896,7 +1896,7 @@ a.reg_btn_style:active span {
     width: 13px;
     padding: 4px 0px 3px;
     margin-top: 1px;
-    background: transparent url(/images/app_switcher_down_arrow.gif) no-repeat -11px center; }
+    background: transparent url(../images/app_switcher_down_arrow.gif) no-repeat -11px center; }
 
     .app_switcher .app_switcher_selected .app_switcher_button .arrow {
       background-position: 2px center; }
@@ -1970,16 +1970,16 @@ a.reg_btn_style:active span {
     margin: 0px 3px; }
 
     .app_switcher_menu .selector_arrow {
-      background: url(/images/rightarrow.gif) no-repeat -7px center; }
+      background: url(../images/rightarrow.gif) no-repeat -7px center; }
 
     .app_switcher_menu a:hover .selector_arrow {
-      background: url(/images/rightarrow.gif) no-repeat 0px center; }
+      background: url(../images/rightarrow.gif) no-repeat 0px center; }
 
   .app_switcher_menu .app_icon {
     width: 16px;
     padding: 4px 0px;
     margin: 0px 0px 0px 2px;
-    background: url(/images/icons/hidden.gif) no-repeat -16px center; }
+    background: url(../images/icons/hidden.gif) no-repeat -16px center; }
 
     .app_switcher_menu a:hover .app_icon {
       background-position: 0px center; }
@@ -2167,13 +2167,13 @@ a.reg_btn_style:active span {
 /*  ---------------------------|  RSS  |---------------------------  */
 
 .syndication_feed a {
-    background: url(/images/icons/feed.gif) no-repeat 0px 0.3em;
+    background: url(../images/icons/feed.gif) no-repeat 0px 0.3em;
     display: block;
     padding: 3px 0px 4px 20px;
   }
 
 .syndication_right {
-    background: url(/images/icons/feed.gif) no-repeat center right;
+    background: url(../images/icons/feed.gif) no-repeat center right;
     padding-right: 20px;
 }
 
@@ -2230,7 +2230,7 @@ a.reg_btn_style:active span {
 /*  -------------------------| MISC FBML |------------------------------ */
 
 input.request_form_submit {
-  background: #3B5998 url(/images/icons/request_button_icon.gif) no-repeat 8px 6px;
+  background: #3B5998 url(../images/icons/request_button_icon.gif) no-repeat 8px 6px;
   padding: 3px 6px 3px 26px;
   overflow: visible; /* for ie: http://jehiah.cz/archive/button-width-in-ie */
 }
@@ -2249,7 +2249,7 @@ input.request_form_submit {
   padding: 5px 10px 5px 10px;
 }
 .flash_fallback_header {
-  background: transparent url(/images/icons/flashplayer.gif) no-repeat center left;
+  background: transparent url(../images/icons/flashplayer.gif) no-repeat center left;
   color: #282c30;
   font-size: 11px;
   font-weight: bold;
@@ -2376,7 +2376,7 @@ input.request_form_submit {
 }
 
 .below_social_ad .sponsored_question a {
-  background: transparent url(/images/question_mark_informational_off.gif) no-repeat scroll right bottom;
+  background: transparent url(../images/question_mark_informational_off.gif) no-repeat scroll right bottom;
   display: block;
   height: 12px;
   text-decoration:none;
@@ -2390,7 +2390,7 @@ input.request_form_submit {
 }
 
 .below_social_ad #ads_feedback .thumbs_up {
-  background: url(/images/icons/promote_t2_off.png) no-repeat scroll;
+  background: url(../images/icons/promote_t2_off.png) no-repeat scroll;
   display: block;
   float: left;
   height: 18px;
@@ -2400,11 +2400,11 @@ input.request_form_submit {
 }
 
 .below_social_ad #ads_feedback .thumbs_up:hover {
-  background: url(/images/icons/promote_t2_hover.png) no-repeat scroll;
+  background: url(../images/icons/promote_t2_hover.png) no-repeat scroll;
 }
 
 .below_social_ad #ads_feedback .ex {
-  background: url(/images/x_to_hide_gray.gif) no-repeat scroll;
+  background: url(../images/x_to_hide_gray.gif) no-repeat scroll;
   display: block;
   float: left;
   height: 18px;
@@ -2414,7 +2414,7 @@ input.request_form_submit {
 }
 
 .below_social_ad #ads_feedback .ex:hover {
-  background: url(/images/x_to_hide_hover.gif) no-repeat scroll;
+  background: url(../images/x_to_hide_hover.gif) no-repeat scroll;
 }
 
 .below_social_ad #ads_feedback .pipe {
@@ -2522,7 +2522,7 @@ input.request_form_submit {
   font-size: 1px;
   margin: 0px auto 0px;
   padding: 0px;
-  background: transparent url(/images/dark-pointer.gif) top center no-repeat;
+  background: transparent url(../images/dark-pointer.gif) top center no-repeat;
 }
 
 /**

@@ -50,8 +50,14 @@ class ArticlesController < ApplicationController
       render :file => "/u/apps/opencongress/current/public/404.html", :layout => false, :status => 404 and return unless params[:id]
       comment_redirect(params[:goto_comment]) and return if params[:goto_comment]
       
-      @article = Article.find(params[:id], :include => :user)
-
+      begin
+        @article = Article.find(params[:id], :include => :user)
+      rescue
+        flash[:error] = 'Blog article not found!'
+        redirect_to :controller => 'blog'
+        return
+      end
+      
       render :file => "/u/apps/opencongress/current/public/404.html", :layout => false, :status => 404 and return unless @article
 
       @meta_description = @article.excerpt.blank? ? @article.article : @article.excerpt

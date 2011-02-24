@@ -1,29 +1,49 @@
 source 'http://rubygems.org'
  
 gem 'rails', '3.0.0.rc2'
-gem "pg"
 
-gem "will_paginate"
+# database gems -- need both pg and mysql for app and wiki
+gem 'pg'
+gem 'mysql'
 
-gem "rmagick"
+# HAML support
+gem "haml"
 
+# RMagick
+gem 'rmagick', '2.13.1'
+
+# GovKit
+gem "govkit"
+
+# jammit support
+gem "jammit"
+
+# notifier for production errors
+gem "hoptoad_notifier"
+
+# OpenID 
+gem 'ruby-openid'
+gem 'rack-openid'
+
+# markup tools and parsers
+gem 'simple-rss'
+gem 'mediacloth'
+gem 'hpricot'
+gem 'RedCloth'
+gem 'bluecloth'
+gem 'htmlentities'
 gem "json"
-gem "jammit"  
-gem "govkit"  
-gem "ruby-openid", ">= 2.0.4"
 
-gem "simple-rss"
+# Deployment
+gem 'capistrano'
+gem 'capistrano-ext'
 
-gem "mediacloth"
-gem "RedCloth"
+# new relic RPM
+gem 'newrelic_rpm'
 
-group :development do
-  # bundler requires these gems in development
-  # gem "rails-footnotes"
-end
+# oauth
+gem 'oauth'
 
-group :test do
-  # bundler requires these gems while running tests
-  # gem "rspec"
-  # gem "faker"
-end
+gem 'will_paginate'
+
+

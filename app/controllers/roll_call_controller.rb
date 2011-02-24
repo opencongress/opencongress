@@ -180,22 +180,25 @@ class RollCallController < ApplicationController
     
     if params[:sort] == 'hotbills'
       @sort = 'hotbills'
-      @rolls = RollCall.find(:all, :include => :bill, :order => 'roll_calls.date DESC',
+      @rolls = RollCall.find(:all, :include => [:bill, :amendment], :order => 'roll_calls.date DESC',
                              :conditions => ['roll_calls.date > ? AND bills.hot_bill_category_id IS NOT NULL', 
                                             CONGRESS_START_DATES[DEFAULT_CONGRESS]]).paginate :page => @page
-
+    
+    elsif params[:sort] == 'keyvotes'
+      @sort = 'keyvotes'
+      @rolls = RollCall.find_pvs_key_votes.paginate :page => @page
     elsif params[:sort] == 'oldest'
       @sort = 'oldest'
-      @rolls = RollCall.find(:all, :order => 'date ASC', 
+      @rolls = RollCall.find(:all, :include => [:bill, :amendment], :order => 'date ASC', 
                              :conditions => ['date > ?', CONGRESS_START_DATES[DEFAULT_CONGRESS]]).paginate :page => @page
 
     else
       @sort = 'newest'
-      @rolls = RollCall.find(:all, :order => 'date DESC', 
+      @rolls = RollCall.find(:all, :include => [:bill, :amendment], :order => 'date DESC', 
                              :conditions => ['date > ?', CONGRESS_START_DATES[DEFAULT_CONGRESS]]).paginate :page => @page
 
     end
-    @carousel = [PageView.popular('RollCall', DEFAULT_COUNT_TIME).slice(0..9)] 
+    @carousel = [ObjectAggregate.popular('RollCall', DEFAULT_COUNT_TIME).slice(0..9)] 
     @page_title = 'All Roll Calls'
     @title_desc = SiteText.find_title_desc('roll_call_all')
   
@@ -282,7 +285,11 @@ class RollCallController < ApplicationController
     @roll_call = RollCall.find_by_id(params[:id]) || RollCall.find_by_ident("#{params[:year]}-#{params[:chamber]}#{params[:number]}")
     
     if @roll_call
-      PageView.create_by_hour(@roll_call, request)
+      key = "page_view_ip:RollCall:#{@roll_call.id}:#{request.remote_ip}"
+      unless read_fragment(key)
+        @roll_call.page_view
+        write_fragment(key, "c", :expires_in => 1.hour)
+      end
     end
   end
 

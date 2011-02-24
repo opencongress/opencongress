@@ -23,9 +23,11 @@
     </li>
     <li id="approval" class="<%= @sort == :approval ? "active" : "" %>">
       <a href="/people/<%= person_type %>?sort=approval"><span>Approval</span></a>		
-
     </li>
 
+		<% if @atom %>
+		  <li><a href="<%= @atom['link'] %>" class="rss"><%= image_tag 'rss.png' %></a></li>
+		<% end %>
   </ul>
 
   <ul id="jump" <%= "style='display:none;'" if @days %>>

@@ -13,13 +13,13 @@
         <% if u.small_picture %>
            <%= image_tag "/images/users/" + h(u.login) + "_s.jpg", :alt => "user photo" %>
          <% else %>
-           <%= image_tag "/images/anon-img-ex1.gif", :alt => "no photo" %> 
+           <%= image_tag "anon-img-ex1.gif", :alt => "no photo" %> 
          <% end %>
         </td>
         <td>
       <%= link_to u.login, user_profile_path(u.login) %></td>
-      <td style="padding-left:36px"><%= u.can_view(:my_location, current_user) ? u.location.blank? ? "-" : u.location : image_tag("/images/private.png", :alt => "private", :title => "Private") %></td>
-      <td><%= u.last_login ? time_ago_in_words(u.last_login,true) + " ago" : image_tag("/images/private.png", :alt => "private", :title => "Private") %></td>
+      <td style="padding-left:36px"><%= u.can_view(:my_location, current_user) ? u.location.blank? ? "-" : u.location : image_tag("private.png", :alt => "private", :title => "Private") %></td>
+      <td><%= u.last_login ? time_ago_in_words(u.last_login,true) + " ago" : image_tag("private.png", :alt => "private", :title => "Private") %></td>
       <td><%= u.solr_score %></td>
       <td>
           <div id="fdiv_<%= u.id %>">

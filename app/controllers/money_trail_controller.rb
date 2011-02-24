@@ -6,22 +6,18 @@ class MoneyTrailController < ApplicationController
 
     @page_title = @sector.name
     @title_class = 'sort'
-    @stats_object = @sector
-    
-    PageView.create_by_hour(@sector, request)
+    @stats_object = @sector    
   end
   
   def by_most_viewed
     @sort = :popular
     
-    @sectors = PageView.popular('Sector', DEFAULT_COUNT_TIME)
+    @sectors = ObjectAggregate.popular('Sector', DEFAULT_COUNT_TIME)
     
     @page_title = "Most Viewed Industry Sectors"
     @title_class = 'sort'
     @title_desc = SiteText.find_title_desc('industry_index')
-    
-    @custom_sidebar = Sidebar.find_by_page_and_enabled('industry_index', true)   
-    
+        
     render :action => 'index'
   end
   

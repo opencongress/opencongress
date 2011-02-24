@@ -1,40 +1,45 @@
-<% form_tag :action => 'update_pending' do -%>
+<div class="padding">
+  <% form_tag :action => 'update_pending' do -%>
 
-<b><%= @total_commentaries %></b> pending articles need to be processed.
-<table class="simple-table">
-  <th>Bill</th>
-  <th>Article</th>
-  <th>Action</th>
+    <p class='behave'><b><%= @total_commentaries %></b> pending articles need to be processed.</p>
+    <table class="simple-table">
+      <th>Bill or Person</th>
+      <th>Article</th>
+      <th>Action</th>
   
-  <% @commentaries.each do |c| %>
-    <tr>
-      <td>
-        <% if c.bill %>
-          <%= c.bill.title_full_common %>
-        <% elsif c.person %>
-          <%= c.person.name %>
-        <% end %>
-      </td>
-      <td>
-        <b><%= link_to c.title, c.url, :target => '_blank' %></b><br>
-        <%= c.excerpt %>
-        <% if c.status == 'PENDING' %>
-          <font color="red">MARKED QUESTIONABLE BY PARSER</font>
-        <% elsif c.status == 'FLAGGED' %>
-          <font color="red">FLAGGED BY USER</font>        
-        <% end %>
-      </td>
-      <td width="120">
-        <%= radio_button :commentary, c.id, "FALSE POSITIVE", { :checked => :checked } %>False positive<br />
-        <%= radio_button :commentary, c.id, "OK" %>OK<br />
-      </td>
-    </tr>
-  <% end %>
-</table>
+      <% @commentaries.each do |c| %>
+        <tr>
+          <td>
+            <%= c.commentariable.title_for_share %>
+          </td>
+          <td>
+            <b><%= link_to c.title, c.url, :target => '_blank' %></b> - <%= c.date.strftime("%B %d, %Y") %><br>
+            <%= c.excerpt %>
+            <% if c.status == 'PENDING' %>
+              <span style="color: red;">MARKED QUESTIONABLE BY PARSER</span>
+            <% elsif c.status == 'FLAGGED' %>
+              <span style="color: red;">FLAGGED BY USER</span>        
+            <% end %>
+          </td>
+          <td width="120">
+            <%= radio_button :commentary, c.id, "FALSE POSITIVE", { :checked => true } %>False positive<br />
+            <%= radio_button :commentary, c.id, "OK" %>OK<br />
+          </td>
+        </tr>
+      <% end %>
+    </table>
 
-<% if @total_commentaries > 10 %>
-  <%= submit_tag 'Continue >>' %>
-<% else %>
-  <%= submit_tag 'Finish!' %>
-<% end %>
-<% end %>        
+    <% if @commentariable %>
+      <%= hidden_field_tag :commentariable_type, @commentariable.class.to_s %>
+      <%= hidden_field_tag :commentariable_id, @commentariable.id %>
+    <% end %>
+    
+    <p class="behave"><% if @total_commentaries > 30 %></p>
+      <%= submit_tag 'Continue >>' %>
+    <% else %>
+      <%= submit_tag 'Finish!' %>
+    <% end %>
+    
+    <%= link_to "Go to #{@commentariable.title_for_share}", :controller => "/#{@commentariable.class.to_s.downcase}", :action => 'show', :id => @commentariable %>
+  <% end %>        
+</div>

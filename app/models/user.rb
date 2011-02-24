@@ -13,19 +13,22 @@ class User < ActiveRecord::Base
                            :my_approved_reps, :my_approved_sens, :my_disapproved_reps, 
                            :my_disapproved_sens, :my_state_f, :my_district_f], :auto_commit => false
 
-  attr_accessor :password
+  attr_accessor :password_confirmation
+  
+  # the following is so acts_as_autheticated doesn't bomb since we added devise compatibility
+  attr_accessor :remember_token_expires_at
 
   validates_presence_of     :login, :email, :unless => :openid?
   validates_acceptance_of :accept_tos, :on => :create
   validates_presence_of     :password,                   :if => :password_required?
-  validates_presence_of     :password_confirmation,      :if => :password_required?
+  #validates_presence_of     :password_confirmation,      :if => :password_required?
   validates_length_of       :password, :within => 4..40, :if => :password_required?
   validates_confirmation_of :password,                   :if => :password_required?
   validates_length_of       :login,    :within => 3..40, :unless => :openid?
   validates_length_of       :zip_four, :within => 0..4, :allow_nil => true, :allow_blank => true
   validates_length_of       :email,    :within => 3..100, :unless => :openid?
   #validates_email_veracity_of :email
-  validates_email_format_of :email, :message => "address invalid"
+  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :message => "address invalid"
   validates_numericality_of :zipcode, :only_integer => true, :allow_nil => true, :message => "is not a valid 5 digit zipcode"
   validates_numericality_of :zip_four, :only_integer => true, :allow_nil => true, :message => "is not a valid 4 digit zipcode extension"
   validates_length_of :zipcode, :is => 5, :allow_nil => true, :message => "is not a valid 5 digit zipcode"
@@ -593,7 +596,7 @@ class User < ActiveRecord::Base
   # permissions method
   def can_view(option,viewer)
     res = false
-    if viewer.nil?
+    if viewer.nil? or (viewer == :false)
       logger.info "tis nil"
       if self.privacy_option[option] == 2
         logger.info "tis allowed"
@@ -602,9 +605,9 @@ class User < ActiveRecord::Base
         logger.info "tis not allowed"
         res = false
       end
-    elsif viewer.id == self.id
+    elsif viewer[:id] == self[:id]
       res = true
-    elsif self.friends.find_by_friend_id(viewer.id) && self.privacy_option[option] >= 1
+    elsif self.friends.find_by_friend_id(viewer[:id]) && self.privacy_option[option] >= 1
       res = true
     elsif self.privacy_option[option] == 2
       res = true
@@ -659,7 +662,8 @@ class User < ActiveRecord::Base
     # Activates the user in the database.
     def activate
       @activated = true
-      update_attributes(:activated_at => Time.now.utc, :activation_code => nil)
+      update_attribute(:activated_at, Time.now)
+      update_attribute(:activation_code, nil)
     end
 
     # Returns true if the user has just been activated.

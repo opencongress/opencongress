@@ -32,7 +32,7 @@ class FacebookController < ApplicationController
   end
   
   def hotbills
-    @hot_bill_categories = HotBillCategory.find(:all)
+    @hot_bill_categories = PvsCategory.find(:all)
 
     respond_to do |format|
       format.fbml { render :partial => 'hotbill_search_results', :layout => false }
@@ -40,7 +40,7 @@ class FacebookController < ApplicationController
   end
   
   def mostviewedbills
-    @bills = PageView.popular('Bill', DEFAULT_COUNT_TIME, 25)
+    @bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME, 25)
     @bill_count = 25
     
     respond_to do |format|

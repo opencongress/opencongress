@@ -4,7 +4,7 @@ class BillController < ApplicationController
   helper :roll_call
 	before_filter :page_view, :only => [:show, :text]
   before_filter :get_params, :only => [:index, :all, :popular, :pending, :hot, :most_commentary, :readthebill]
-  before_filter :bill_profile_shared, :only => [:show, :comments, :money, :votes, :actions, :amendments, :text, :actions_votes, :news_blogs, :videos, :news, :blogs, :news_blogs]
+  before_filter :bill_profile_shared, :only => [:show, :comments, :money, :votes, :actions, :amendments, :text, :actions_votes, :news_blogs, :videos, :news, :blogs, :news_blogs, :topnews, :topblogs]
   before_filter :aavtabs, :only => [:actions, :amendments, :votes, :actions_votes]
   skip_before_filter :store_location, :only => [:bill_vote, :status_text, :user_stats_ajax, :atom, :atom_blogs, :atom_news, :atom_top20, :atom_top_commentary, :atom_topblogs, :atom_topnews]
 
@@ -52,24 +52,24 @@ class BillController < ApplicationController
   end
   
   def all
-    expires_in 20.minutes, :public => true
-    congress = params[:congress] ? params[:congress] : DEFAULT_CONGRESS
+    # disabled caching for 
+    #expires_in 20.minutes, :public => true
+    @congress = params[:congress] ? params[:congress] : DEFAULT_CONGRESS
     
     # the following is temporary until a better way is figured out!
-    unless read_fragment("bill_#{@types}_index")
+    unless read_fragment("bill_#{@types}_index_#{@congress}")
       @bills = {}
       @bill_counts = {}
       @types_from_params.each do |bill_type|
-        @bills[bill_type] = Bill.find_all_by_bill_type_and_session(bill_type, congress, :order => 'lastaction DESC', :limit => 5)
-        @bill_counts[bill_type] = Bill.count(:conditions => ['bill_type = ? AND session = ?', bill_type, congress])
+        @bills[bill_type] = Bill.find_all_by_bill_type_and_session(bill_type, @congress, :order => 'lastaction DESC', :limit => 5)
+        @bill_counts[bill_type] = Bill.count(:conditions => ['bill_type = ? AND session = ?', bill_type, @congress])
       end
     end
     
-    @page_title = "#{@types.capitalize} Bills: #{congress}th Congress"
+    @page_title = "#{@types.capitalize} Bills: #{@congress}th Congress"
     @title_desc = SiteText.find_title_desc('bill_all')
     @sort = 'all'
-    # @custom_sidebar = Sidebar.find_by_page_and_enabled('bill_all', true)
-    #@related_bills = PageView.popular('Bill', DEFAULT_COUNT_TIME, 5) unless @custom_sidebar
+    #@related_bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME, 5) unless @custom_sidebar
     respond_to do |format|
       format.html {}
       format.js { render :action => 'update'}
@@ -78,9 +78,15 @@ class BillController < ApplicationController
 
   def popular
     @days = days_from_params(params[:days])
-    
-    unless read_fragment("bill_meta_popular_#{@days}")
-      @bills = PageView.popular('Bill', @days, 100)
+    @congress = params[:congress].blank? ? DEFAULT_CONGRESS : params[:congress]
+    if @congress != DEFAULT_CONGRESS
+      @bills = Bill.find(:all, :select => "bills.*, bills.page_views_count AS view_count", 
+                         :conditions => ["session = ?", params[:congress]], 
+                         :order => 'page_views_count DESC', :limit => 100)
+    else
+      unless read_fragment("bill_meta_popular_#{@days}")
+        @bills = ObjectAggregate.popular('Bill', @days, 100)
+      end
     end
     
     @atom = {'link' => url_for(:only_path => false, :controller => 'bill/atom/most', :action => 'viewed'), 'title' => "Top 20 Most Viewed Bills"}
@@ -101,6 +107,7 @@ class BillController < ApplicationController
     @page_title = 'Pending Bills in Congress'
     @sort = 'pending'
     @title_desc = SiteText.find_title_desc('bill_pending')
+    @exclude_introduced = (params[:exclude_introduced] == 'true') ? true : false
     respond_to do |format|
       format.html {}
       format.js { render :action => 'update'}
@@ -112,10 +119,18 @@ class BillController < ApplicationController
     @sort = 'hot'
     @title_desc = SiteText.find_title_desc('bill_hot')
     @types = 'all'
-    @hot_bill_categories = HotBillCategory.find(:all, :order => :name)
+    @hot_bill_categories = PvsCategory.find(:all, :order => :name)
+    @atom = {'link' => "/bill/hot.rss", 'title' => "Hot Bills"}
+    @congress = params[:congress].blank? ? DEFAULT_CONGRESS : params[:congress]
+    
     respond_to do |format|
       format.html {}
       format.js { render :action => 'update'}
+      format.rss {
+        @hot_bills = Bill.find(:all, :conditions => ["session = ? AND hot_bill_category_id IS NOT NULL", @congress], 
+                           :order => 'introduced DESC')
+        render :action => 'hot.rxml'
+      }
     end
   end
 
@@ -125,11 +140,7 @@ class BillController < ApplicationController
     @page = "1" unless @page
     @bill_type = params[:bill_type]
 
-    unless read_fragment(:controller => 'bill', :action => 'type', :bill_type => @bill_type, :page => @page)
-
-      @bills = Bill.paginate_all_by_bill_type_and_session(@bill_type, congress, :include => "bill_titles", :order => 'number', :page => @page)
-
-    end 
+    @bills = Bill.paginate_all_by_bill_type_and_session(@bill_type, congress, :include => "bill_titles", :order => 'number', :page => @page)
 
     respond_to do |format|
       format.html {}
@@ -139,19 +150,27 @@ class BillController < ApplicationController
 
   def most_commentary
     @days = days_from_params(params[:days])
+    @congress = params[:congress].blank? ? DEFAULT_CONGRESS : params[:congress]
     
     if params[:type] == 'news'
       @sort = @commentary_type = 'news'
-      @page_title = 'Bills Most Written About In The News'
+      @page_title = "Bills Most Written About In The News : #{@congress.to_i.ordinalize} Congress"
       @atom = {'link' => "/bill/atom/most/news", 'title' => @page_title}      
     else
       @sort = @commentary_type = 'blog'
-      @page_title = 'Bills Most Written About On Blogs'
+      @page_title = "Bills Most Written About On Blogs : #{@congress.to_i.ordinalize} Congress"
       @atom = {'link' => "/bill/atom/most/blog", 'title' => @page_title}
     end
     
-    unless read_fragment("bill_meta_most_#{@commentary_type}_#{@days}")
-      @bills = Bill.find_by_most_commentary(@commentary_type, 20, @days, DEFAULT_CONGRESS, @types_from_params)
+    if @congress != DEFAULT_CONGRESS
+      order = (@sort == 'news') ? 'news_article_count' : 'blog_article_count'
+      @bills = Bill.find(:all, :select => "bills.*, bills.#{order} AS article_count", 
+                         :conditions => ["session = ? AND #{order} IS NOT NULL", params[:congress]], 
+                         :order => "#{order} DESC", :limit => 100)
+    else
+      unless read_fragment("bill_meta_most_#{@commentary_type}_#{@days}")
+        @bills = Bill.find_by_most_commentary(@commentary_type, 20, @days, DEFAULT_CONGRESS, @types_from_params)
+      end
     end
     respond_to do |format|
       format.html {}
@@ -302,6 +321,9 @@ class BillController < ApplicationController
         @tracking_suggestions = @bill.tracking_suggestions
         @supporting_suggestions = @bill.support_suggestions
         @opposing_suggestions = @bill.oppose_suggestions
+        
+        # create roll call variable to include chart JS
+        @roll_call = @bill.roll_calls.empty? ? nil : @bill.roll_calls.first
      }
       format.xml {
         render :xml => @bill.to_xml(:exclude => [:fti_titles], :include => [:bill_titles,:last_action,:sponsor,:co_sponsors,:actions,:roll_calls])
@@ -390,7 +412,7 @@ class BillController < ApplicationController
   end
 
   def actions
-    @actions = @bill.actions.paginate(:all, :page => @page, :per_page => 10, :order => ["date DESC"])
+    @actions = @bill.actions.paginate(:all, :page => @page, :per_page => 10, :order => ["datetime::date DESC, id DESC"])
   end 
   
   def votes
@@ -479,12 +501,7 @@ class BillController < ApplicationController
   end
 
   def topblogs
-    @blogs = @bill.blogs.find(:all, :conditions => "commentaries.average_rating > 5", :limit => 5).paginate :page => @page
-
-    @page_title = "Highest Rated Blog Articles For #{@bill.typenumber}"
-    
-    @atom = {'link' => url_for(:only_path => false, :controller => 'bill', :id => @bill.ident, :action => 'atom_topblogs'), 'title' => "#{@bill.typenumber} blog articles"}
-    render :action => 'blogs'
+    redirect_to :controller => 'bill', :action => 'blogs', :id => @bill.ident, :sort => 'toprated'
   end
 
   def money
@@ -529,10 +546,7 @@ class BillController < ApplicationController
   end
 
   def topnews
-    @news = @bill.news.find(:all, :conditions => "commentaries.average_rating > 5", :limit => 5).paginate :page => @page
-    @page_title = "Highest Rated Blog Articles For #{@bill.typenumber}"
-    @atom = {'link' => url_for(:controller => 'bill', :id => @bill.ident, :action => 'atom_topnews'), 'title' => "#{@bill.typenumber} blog articles"}
-    render :action => 'news'
+    redirect_to :controller => 'bill', :action => 'news', :id => @bill.ident, :sort => 'toprated'
   end
 
   def commentary_search
@@ -673,7 +687,13 @@ private
     session, bill_type, number = Bill.ident params[:id]
     
     if @bill = Bill.find_by_session_and_bill_type_and_number(session, bill_type, number, { :include => :actions })
-      PageView.create_by_hour(@bill, request)
+      key = "page_view_ip:Bill:#{@bill.id}:#{request.remote_ip}"
+      unless read_fragment(key)
+        @bill.increment!(:page_views_count)
+        @bill.page_view
+        @bill.log_referrer(request.referer)
+        write_fragment(key, "c", :expires_in => 1.hour)
+      end
     end
   end
 

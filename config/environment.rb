@@ -4,10 +4,6 @@
 # you don't control web/app server and can't set it the proper way
 ENV['RAILS_ENV'] ||= 'development'
 
-# Specifies gem version of Rails to use when vendor/rails is not present
-
-RAILS_GEM_VERSION = '2.3.5'
-
 require 'yaml'
 require 'ostruct'
 #
@@ -30,7 +26,7 @@ AVAILABLE_CONGRESSES = [111, 110, 109]
 CURRENT_OPENSECRETS_CYCLE = '2010'
 DEFAULT_USERAGENT = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.1) Gecko/20060111 Firefox/1.5.0.1'
 DEFAULT_SEARCH_PAGE_SIZE = 10
-DEFAULT_CONGRESS = 111
+DEFAULT_CONGRESS = 112
 ENV['FACEBOOKER_CALLBACK_PATH'] = '/facebook'
 TECHNORATI_API_KEY = API_KEYS['technorati_api_key']
 
@@ -44,11 +40,20 @@ BASE_URL = 'http://www.opencongress.org/'
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
-Rails::Initializer.run do |config|
-  config.gem "json"
-  config.gem "jammit"
+# Monkeypatch to get redcloth working on RubyGems 1.5.0.
+if Gem::VERSION >= "1.3.6" 
+    module Rails
+        class GemDependency
+            def requirement
+                r = super
+                (r == Gem::Requirement.default) ? nil : r
+            end
+        end
+    end
+end
 
-  config.action_controller.session = { :session_key => "_myapp_session", :secret => API_KEYS['app_key'] }
+Rails::Initializer.run do |config|
+  config.action_controller.session = { :key => "_myapp_session", :secret => API_KEYS['app_key'] }
 
   # Settings in config/environments/* take precedence those specified here
 

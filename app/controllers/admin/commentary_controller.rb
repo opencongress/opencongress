@@ -17,10 +17,21 @@ class Admin::CommentaryController < Admin::IndexController
   end
 
   def pending
-    @commentaries = Commentary.find_all_by_status('PENDING', :limit => 10)
-    @total_commentaries = Commentary.count_by_sql("SELECT count(*) FROM commentaries WHERE status='PENDING'")
-    
     @page_title = "Pending News and Blog Articles"
+
+    unless params[:commentary_type].blank? and params[:commentary_id].blank?
+      @commentaries = Commentary.find_all_by_status('PENDING', :limit => 30, :order => 'date DESC')
+      @total_commentaries = Commentary.count_by_sql("SELECT count(*) FROM commentaries WHERE status='PENDING'")
+    else
+      @commentaries = Commentary.find(:all, 
+                                      :conditions => ["status='PENDING' AND commentariable_type=? AND commentariable_id=?", params[:commentariable_type], params[:commentariable_id]],
+                                      :limit => 30, :order => 'date DESC')
+      @total_commentaries = Commentary.count_by_sql("SELECT count(*) FROM commentaries WHERE status='PENDING' AND commentariable_type='#{params[:commentariable_type]}' AND commentariable_id='#{params[:commentariable_id]}'")
+      klass = Object.const_get params[:commentariable_type]
+      @commentariable = klass.find_by_id(params[:commentariable_id])
+      
+      @page_title += " for #{@commentariable.title_for_share}"
+    end
   end
   
   def clear_cache
@@ -39,19 +50,24 @@ class Admin::CommentaryController < Admin::IndexController
         c = Commentary.find_by_id(k)
         
         if c
-          c.status = statuses[k]
-          c.is_ok = 'true' if statuses[k] == 'OK'
-          c.save
+          if statuses[k] == 'OK'
+            c.status = statuses[k]
+            c.is_ok = 'true' 
+            c.save
           
-          c.commentariable.increment!(c.is_news ? :news_article_count : :blog_article_count)
-          
+            c.commentariable.increment!(c.is_news ? :news_article_count : :blog_article_count)
+          else
+            BadCommentary.create(:commentariable_type => c.commentariable_type, :commentariable_id => c.commentariable_id, :url => c.url, :date => c.date)
+            
+            c.destroy
+          end
         end
       end
       
       flash[:notice] = "Commentaries have been updated"
     end
 
-    redirect_to :action => 'pending'
+    redirect_to :action => 'pending', :commentariable_type => params[:commentariable_type], :commentariable_id => params[:commentariable_id]
   end
   
   def add

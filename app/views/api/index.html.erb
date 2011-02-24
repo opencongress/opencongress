@@ -165,6 +165,12 @@
     Returns bills that OpenCongress editors feel are "hot".<br/>
     <%= link_to "#{BASE_URL}api/hot_bills?key=#{@api_key}", "/api/hot_bills?key=#{@api_key}" %>
   </dd>
+  
+  <dt>Stalled Bills</dt>
+  <dd>
+    Returns bills that have passed one chamber but have not received a vote on passage in the other (or a conference vote).<br/>
+    <%= link_to "#{BASE_URL}api/stalled_bills?session=#{DEFAULT_CONGRESS}&passing_chamber=s&key=#{@api_key}", "/api/stalled_bills?session=#{DEFAULT_CONGRESS}&passing_chamber=s&key=#{@api_key}" %>
+  </dd>
 
   <dt>Most Blogged Bills this Week</dt>
   <dd>
@@ -261,14 +267,14 @@
   <dt>OpenCongress Semantic MediaWiki API</dt>
   <dd>
     Here is the API for query strings on wiki data, as well as help with writing query language. We'll be doing more extensive documentation of how to use Semantic MediaWiki and the data available through this API soon. <br/>
- <a href="http://www.opencongress.org/wiki/Special:Ask">http://www.opencongress.org/wiki/Special:Ask</a>
+ <a href="/wiki/Special:Ask">http://www.opencongress.org/wiki/Special:Ask</a>
   </dd>
 
 
   <dt>Semantic MediaWiki Data </dt>
   <dd>
 Here is the page to retrieve all the data on the OpenCongress Wiki, including a simpler query string format. Further documentation of data offerings to come. <br/>
- <a href="http://www.opencongress.org/wiki/Special:GetData">http://www.opencongress.org/wiki/Special:GetData</a>
+ <a href="/wiki/Special:GetData">http://www.opencongress.org/wiki/Special:GetData</a>
   </dd>
 
       

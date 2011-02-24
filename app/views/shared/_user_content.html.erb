@@ -1,34 +1,51 @@
 <div id="tertiary-content">
 
 	<% if object.class.to_s == "Bill" %>
-		<% if @bill_text %>
-		  <div id="bill-text" class="un">
-		    <%= link_to "View Bill Overview <span>Official info, comments, more</span>", {:action => 'show'}, :class => 'overview_button' %>
-		  </div>
-		<% else %>
-		  <% unless @bill.current_bill_text_version.nil? %>
-  		  <div id="bill-text" class="un">
-  		    <%= link_to "Official Bill Text <span>Comment on about #{number_with_delimiter(@bill.current_bill_text_version.pages)} Pages</span>", :action => 'text' %>
-  		  </div>
-  		<% end %>
-	  <% end %>
+    <% if @bill_text %>
+      <div id="bill-text" class="un">
+        <%= link_to "View Bill Overview <span>Official info, comments, more</span>", {:action => 'show'}, :class => 'overview_button' %>
+      </div>
+      <% else %>
+        <% unless @bill.current_bill_text_version.nil? %>
+          <div id="bill-text" class="un">
+            <%= link_to "Official Bill Text <span>Comment on about #{number_with_delimiter(@bill.current_bill_text_version.pages)} Pages</span>", :action => 'text' %>
+          </div>
+        <% end %>
+    <% end %>
 
 
-<% if @bill.text_comments_count > 0 %>
-
-<p class="most_button"><%= link_to "View Most Commented Paragraphs", :action => 'text', :anchor => 'most_commented' %>
-</p>
-<% end %>
-
-
+    <% if @bill.text_comments_count > 0 %>
+      <p class="most_button">
+        <%= link_to "View Most Commented Paragraphs", :action => 'text', :anchor => 'most_commented' %>
+      </p>
+    <% end %>
+  
 		<script type="text/javascript">
 		$j().ready(function() {
 			$j('#learn').jqm({trigger:'a.learn_trigger'});
 		});
 		</script>
-  		
-		<%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
 		
+		
+		
+  	<% unless @bill.sidebar_box.nil? %>	
+  	  <div class="sidebar_editorial">
+  	    <% unless @bill.sidebar_box.image_url.blank? %>
+  	      <div class="sidebar_editorial_image">
+  	        <img src='<%= @bill.sidebar_box.image_url %>' />
+  	      </div>
+  	    <% end %>
+  	    
+  	    <% unless @bill.sidebar_box.box_html.blank? %>
+  	      <div class="sidebar_editorial_content">
+  	        <%= @bill.sidebar_box.box_html %>
+  	      </div>
+  	    <% end %>
+  	  </div>
+  	<% end %>
+  				
+  	<%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
+  	
 		<div id="vote">
 			<script type="text/javascript">
 			$j().ready(function() {
@@ -100,29 +117,32 @@
 	
 <% elsif object.class.to_s == "Person" %>
   <div class="rep_info">
-  <% unless object.website.blank? %>
-    Official website: <a href="<%= object.website %>" target="_new"><%= object.website %></a><br />
-  <% end %>
+    <% unless object.website.blank? %>
+      Official website: <a href="<%= object.website %>" target="_new"><%= object.website %></a><br />
+    <% end %>
 
-  <% unless object.congress_office.blank? %>
+    <% unless object.congress_office.blank? %>
   
-  	<div class="address">
-  		<strong>Address:</strong><br />
-  		<%= object.congress_office %><br />
-    	Washington, DC <%= object.senator? ? "20510" : "20515"%><br />
-  	</div>
-  <% end %>
+    	<div class="address">
+    		<strong>Address:</strong><br />
+    		<%= object.congress_office %><br />
+      	Washington, DC <%= object.senator? ? "20510" : "20515"%><br />
+    	</div>
+    <% end %>
 
-  <% unless object.phone.blank? and object.fax.blank? %>
-  	<div class="phone">
-    	<%= "<strong>Phone:</strong> #{object.phone}" unless object.phone.blank? %><br />
-    	<%= "<strong>Fax:</strong> #{object.fax}" unless object.fax.blank? %>
-    </div>
-    <br />
-  <% end %>
-
+    <% unless object.phone.blank? and object.fax.blank? %>
+    	<div class="phone">
+      	<%= "<strong>Phone:</strong> #{object.phone}" unless object.phone.blank? %><br />
+      	<%= "<strong>Fax:</strong> #{object.fax}" unless object.fax.blank? %>
+      </div>
+      <br />
+    <% end %>
+    <a href="<%= object.opengovernment_url %>" class='med_button' target='_new'>
+      <span>OpenGovernment Profile</span>
+    </a>
   </div>
-  <%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
+ 	
+ 	<%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
  	
 	<div class="uc-box-bottom">
 		<div class="uc-box">
@@ -133,10 +153,9 @@
   <% if object.has_contact_webform? %>
     <%= render :partial => 'shared/write_rep_external', :locals => { :people => [object] } %>
   <% end %>
-
 <% elsif object.class.to_s == "Subject" %>
-	<%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
-	<br />
+  <%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
+  <br />
 <% end %>
 
 <% if logged_in? %>
@@ -177,8 +196,8 @@
 					<%= render :partial => 'shared/share', 
 					:locals => { :message => "Share This #{object.display_object_name}", 
 					:url => url_for(:only_path => false, 
-					:controller => params[:controller], :action => 'show', 
-					:id => object.kind_of?(Bill) ? object.ident : object),
+					  :controller => params[:controller], :action => 'show', 
+					  :id => object.kind_of?(Bill) ? object.ident : object),
 					:title => "Check out #{object.title_for_share} on OpenCongress",
 					:item => object
 					} %>
@@ -188,15 +207,10 @@
 		</ul>
 
 
-
-		<ul class="share_buttons">
 			<%= render :partial => 'notebook_items/add_to_mypn', :object => object %>
-		</ul>
 		
 		<% if @bill %>
-			<ul>
-				<li><a href="/resources/bill_status?bill_id=<%= @bill.ident %>" class="bill_widget">Make A Bill Widget</a></li>
-			</ul>
+			<a href="/resources/bill_status?bill_id=<%= @bill.ident %>" class="bill_widget">Make A Bill Widget</a>
 		<% end %>
 		
 
@@ -206,11 +220,9 @@
 		});
 	</script>
   
-	<ul id="fdbck" class="share_buttons">
-		<li>
+
 			<a href="/resources/email_feedback_form?subject=<%= request.url %>" class="feedback">Send us Feedback</a>
-		</li>
-	</ul>
+
 
 	<div id="email_feedback" class="jqmWindow">
 		<%# render :partial => 'shared/email_feedback_form' %>
@@ -230,6 +242,13 @@
 	<% end %>
 	</ul>             
 <% end %>
+
+<iframe src="http://www.facebook.com/plugins/like.php?href=<%= url_for(:only_path => false, :controller => params[:controller], :action => 'show', :id => object.kind_of?(Bill) ? object.ident : object) %>&amp;layout=standard&amp;show_faces=true&amp;width=197&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" allowTransparency="true" class="facebook_like"></iframe>
+
+<%= render :partial => 'bill/related_oc_blog_articles' if object.class.to_s == "Bill" %>
+
+<%= render :partial => 'shared/recent_oc_blog_articles' %>
+
 	<!--
 	  <div id="small_comment">
 	    <%# render :partial => 'shared/comment_form2', :locals => {:object => object, :master_container => 'small_comment', :redirect => false } %>

@@ -7,7 +7,7 @@
   
     <p>There are currently not enough ranked news articles. Please help by ranking some news articles as "helpful".</p>
   <% else %>
-    <p>Hmmmm, no news coverage found for this bill at this time. This means that this this bill has not yet been mentioned on a publicly-searchable news website by either its official number (for example, "H.R. 3200") or title (for example, "America's Affordable Health Choices Act of 2009"). As soon as that changes, our daily automated search across the Web will catch it and include it here. If this bill is of interest to you, you can write a letter to the editor referring to this bill by name, and if your letter is published on the Web, a link back your letter will appear here within about one day. Or, if you know of a news article about this bill to display here, email us the web address of this page and the web address of your suggested news article: <script type="text/javascript">m("writeus","opencongress","org","1");</script> Our editorial team will post relevant links as quickly as possible. Thanks for helping to build public knowledge about Congress. 
+    <p class="padding">Hmmmm, no news coverage found for this bill at this time. This means that this this bill has not yet been mentioned on a publicly-searchable news website by either its official number (for example, "H.R. 3200") or title (for example, "America's Affordable Health Choices Act of 2009"). As soon as that changes, our daily automated search across the Web will catch it and include it here. If this bill is of interest to you, you can write a letter to the editor referring to this bill by name, and if your letter is published on the Web, a link back your letter will appear here within about one day. Or, if you know of a news article about this bill to display here, email us the web address of this page and the web address of your suggested news article: <script type="text/javascript">m("writeus","opencongress","org","1");</script> Our editorial team will post relevant links as quickly as possible. Thanks for helping to build public knowledge about Congress. 
     </p>
     <p>
   <% end %>
@@ -41,7 +41,9 @@
 <% news_max.times do |i| %>
   <% n = news[i] %>
   
-  <%= render :partial => 'shared/commentary', :object => n, :locals => { :default_title => default_title, :short => short} %>
+  <% unless n.nil? %>
+    <%= render :partial => 'shared/commentary', :object => n, :locals => { :default_title => default_title, :short => short} %>
+  <% end %>
 <% end %>
 <% if admin_logged_in? %></form><% end %>
 

@@ -1,8 +1,7 @@
-class RollCall < ActiveRecord::Base
+class RollCall < ViewableObject
   belongs_to :bill
   belongs_to :amendment
   has_one :action
-  has_many :page_views, :as => :viewable
   has_many :roll_call_votes, :include => :person, :order => 'people.lastname'
   
   named_scope :for_ident, lambda { |ident| {:conditions => ["date_part('year', roll_calls.date) = ? AND roll_calls.where = case ? when 'h' then 'house' else 'senate' end AND roll_calls.number = ?", *Bill.ident(ident)]} }
@@ -25,18 +24,15 @@ class RollCall < ActiveRecord::Base
     rc.has_many :republican_abstain_votes, :conditions => "people.party='Republican' AND roll_call_votes.vote='0'"
   end
 
-#  before_save :set_party_lines
-  def views(seconds = 0)
-  # if the view_count is part of this instance's @attributes use that; otherwise, count
-  return @attributes['view_count'] if @attributes['view_count']
+  @@BILL_PASSAGE_TYPES = [
+    'On Passage', 'On Agreeing to the Resolution'
+  ]
   
-  if seconds <= 0
-    page_views.count
-  else
-    page_views.count(:conditions => ["created_at > ?", seconds.ago])
-  end
-end
+  @@AMDT_PASSAGE_TYPES = [
+    'On Agreeing to the Amendment'
+  ]
 
+  #  before_save :set_party_lines
   def set_party_lines
     if self.republican_nay_votes.count >= self.republican_aye_votes.count
       self.republican_position = false
@@ -59,12 +55,20 @@ end
   def self.find_by_ident(ident_string)
     for_ident(ident_string).find(:first)
   end
-
+  
   def self.ident(param_id)
     md = /(\d+)-([sh]?)(\d+)$/.match(canonical_name(param_id))
     md ? md.captures : [nil, nil, nil]
   end
 
+  def self.find_pvs_key_votes(congress = DEFAULT_CONGRESS)
+    find(:all, :include => [:bill, :amendment], :order => 'roll_calls.date DESC',
+                           :conditions => ['roll_calls.date > ? AND 
+                                          ((roll_calls.roll_type IN (?) AND bills.key_vote_category_id IS NOT NULL) OR
+                                           (roll_calls.roll_type IN (?) AND amendments.key_vote_category_id IS NOT NULL))', 
+                  CONGRESS_START_DATES[DEFAULT_CONGRESS], @@BILL_PASSAGE_TYPES, @@AMDT_PASSAGE_TYPES])
+  end
+  
   def vote_for_person(person)
     RollCallVote.find(:first, :conditions => [ "person_id=? AND roll_call_id=?", person.id, self.id])
   end
@@ -75,6 +79,21 @@ end
     
   def total_votes
     (ayes + nays + abstains + presents)
+  end
+  
+  def key_vote?
+    return ((@@BILL_PASSAGE_TYPES.include?(roll_type) and bill and bill.key_vote_category) or
+           (@@AMDT_PASSAGE_TYPES.include?(roll_type) and amendment and amendment.key_vote_category))
+  end
+  
+  def key_vote_category_name
+    if self.amendment
+      self.amendement.key_vote_category.name
+    elsif self.bill
+      self.bill.key_vote_category.name
+    else
+      ""
+    end
   end
   
   def RollCall.latest_votes_for_unique_bills(num = 3)

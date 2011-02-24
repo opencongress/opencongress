@@ -1,6 +1,6 @@
-
 class IssueController < ApplicationController
   before_filter :issue_profile_shared, :only => [:show, :comments]
+  before_filter :page_view, :only => :show
   skip_before_filter :store_location, :except => [:index, :alphabetical, :by_most_viewed, :by_bill_count, :top_twenty_bills, :show, :top_viewed_bills]
 
   def index
@@ -10,8 +10,7 @@ class IssueController < ApplicationController
   def alphabetical
     @sort = :alphabetical
     
-    @custom_sidebar = Sidebar.find_by_page_and_enabled('issue_alphabetical', true)
-    @carousel = [PageView.popular('Subject', DEFAULT_COUNT_TIME).slice(0..9)]
+    @carousel = [ObjectAggregate.popular('Subject', DEFAULT_COUNT_TIME).slice(0..9)]
     
     letter = params[:id]
     if letter.nil?
@@ -41,10 +40,8 @@ class IssueController < ApplicationController
 
     @days = days_from_params(params[:days])
 
-    @custom_sidebar = Sidebar.find_by_page_and_enabled('issue_by_most_viewed', true)
-
     @order = :most_viewed
-    @subjects = PageView.popular('Subject', @days).paginate
+    @subjects = ObjectAggregate.popular('Subject', @days).paginate
 
     @atom = {'link' => url_for(:only_path => false, :controller => 'issue', :action => 'atom_top20'), 'title' => "Top 20 Most Viewed Issues"}
     
@@ -58,8 +55,7 @@ class IssueController < ApplicationController
   def by_bill_count
     @sort = :by_bill_count
 
-    #@custom_sidebar = Sidebar.find_by_page_and_enabled('issue_by_bill_count', true)
-    @carousel = [PageView.popular('Subject', DEFAULT_COUNT_TIME).slice(0..9)] 
+    @carousel = [ObjectAggregate.popular('Subject', DEFAULT_COUNT_TIME).slice(0..9)] 
 
     @order = :bill_count
     @subjects = Subject.find(:all, :order => 'bill_count desc, term asc').paginate
@@ -102,7 +98,6 @@ class IssueController < ApplicationController
     unless @subject
        render :partial => "index/notfound_page", :layout => 'application', :status => "404" and return 
     end
-    PageView.create_by_hour(@subject, request)
 
     comment_redirect(params[:goto_comment]) and return if params[:goto_comment]
 
@@ -175,5 +170,16 @@ class IssueController < ApplicationController
       flash[:error] = "Invalid bill URL."
       redirect_to :action => 'index'
     end    
+  end
+  
+  def page_view
+    if @subject
+      key = "page_view_ip:Subject:#{@subject.id}:#{request.remote_ip}"
+      unless read_fragment(key)
+        @subject.increment!(:page_views_count)
+        @subject.page_view
+        write_fragment(key, "c", :expires_in => 1.hour)
+      end
+    end
   end
 end

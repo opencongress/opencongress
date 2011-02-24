@@ -41,7 +41,7 @@
 
   <div id="privacy">
   	<% form_for :privacy_option, @user.privacy_option,:url => update_privacy_political_notebook_path({:login =>@user.login}) do |f| %>
-  	<span class="notebookPrivacy"><%= image_tag("/images/private.png", :alt => "private",:id => 'Privacy') %></span><%= f.select PrivacyOption.column_names[PrivacyOption.column_names.index 'my_political_notebook'].to_sym, [["Public",2],["Friends", 1], ["Private",0]], {}, {:onchange => "this.form.submit();"} %>
+  	<span class="notebookPrivacy"><%= image_tag("private.png", :alt => "private",:id => 'Privacy') %></span><%= f.select PrivacyOption.column_names[PrivacyOption.column_names.index 'my_political_notebook'].to_sym, [["Public",2],["Friends", 1], ["Private",0]], {}, {:onchange => "this.form.submit();"} %>
   	<% end %>
     <script type="text/javascript">
 		$j().ready(function(){
@@ -165,7 +165,7 @@
   <div class="hints">
   <% case @type
   when "NotebookLink" %>
-  <p>Here you can add links to any webpage from OpenCongress or around the web. For example, on an OpenCongress <a href="http://www.opencongress.org/bill/110-h1424/show">bill page</a>, click on the "+" next to the official bill number to add it here. Or, if you're reading a news article or blog post elsewhere on the web, use the bookmarklet to save it back here with your notes and remember it later. Don't forget the <a href="http://www.opencongress.org/blog">OpenCongress Blog</a> &mdash; for example, <a href="http://www.opencongress.org/articles/view/721-Obama-and-McCain-Legislative-Accomplishments">a post</a> comparing Sen. McCain and Sen. Obama's legislative accomplishments. Finally, you can bookmark any comment you value from users on OpenCongress &mdash; for example, <a href="http://www.opencongress.org/bill/110-h5749/show?goto_comment=20220">a call to action</a> on an Unemployment Bill. </p>
+  <p>Here you can add links to any webpage from OpenCongress or around the web. For example, on an OpenCongress <a href="/bill/110-h1424/show">bill page</a>, click on the "+" next to the official bill number to add it here. Or, if you're reading a news article or blog post elsewhere on the web, use the bookmarklet to save it back here with your notes and remember it later. Don't forget the <a href="/blog">OpenCongress Blog</a> &mdash; for example, <a href="/articles/view/721-Obama-and-McCain-Legislative-Accomplishments">a post</a> comparing Sen. McCain and Sen. Obama's legislative accomplishments. Finally, you can bookmark any comment you value from users on OpenCongress &mdash; for example, <a href="/bill/110-h5749/show?goto_comment=20220">a call to action</a> on an Unemployment Bill. </p>
   	<% when "NotebookVideo" %>
   <p>
   	Here you can embed any streaming video from around the web. For example, if you're watching <a href="http://www.youtube.com/watch?v=Mn5VathNJH4">a video</a> you want to save and share, copy-and-paste all the code to "Embed", and you'll be able to watch it here.
@@ -175,7 +175,7 @@
   	<% when "NotebookFile" %>                   
   	<p>Here you can upload files to save and share. For example, you might upload a <a href="http://2.bp.blogspot.com/_ov-pT1x-W8Y/SPZoiO-1fOI/AAAAAAAADAA/iBez5Ho3Svs/S1600-R/1013_super.png">polling graph</a>, or a <a href="http://www.publicknowledge.org/pdf/youtube-letter-20080514.pdf">.pdf</a> of a press release or a proposed bill. </p>
   	<% else %>
-  	<p>To see different types of content to add to "My Political Notebook", click on any of the tabs on the right-hand side of this page. To see an example of a fleshed-out notebook, visit the page of <a href="http://www.opencongress.org/users/donnyshaw/profile/political_notebook">Donny Shaw</a>, our blog and outreach director.</p>
+  	<p>To see different types of content to add to "My Political Notebook", click on any of the tabs on the right-hand side of this page. To see an example of a fleshed-out notebook, visit the page of <a href="/users/donnyshaw/profile/political_notebook">Donny Shaw</a>, our blog and outreach director.</p>
   	<% end %>
   </div>
   <% else %>

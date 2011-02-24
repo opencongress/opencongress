@@ -1,4 +1,4 @@
-class Bill < ActiveRecord::Base  
+class Bill < ViewableObject
 
 #  acts_as_solr :fields => [{:billtext_txt => :text},:bill_type,:session,{:title_short=>{:boost=>3}}, {:introduced => :integer}],
 #               :facets => [:bill_type, :session], :auto_commit => false
@@ -18,14 +18,15 @@ class Bill < ActiveRecord::Base
   has_many :amendments, :order => 'offered_datetime', :include => :roll_calls
   has_many :roll_calls, :order => 'date DESC'
   has_many :comments, :as => :commentable
-  has_many :page_views, :as => :viewable
+  has_many :object_aggregates, :as => :aggregatable
+  has_many :bill_referrers
   has_many :bill_votes
   has_one  :last_action, :class_name => "Action", :order => "actions.date DESC"
   has_many :most_recent_actions, :class_name => "Action", :order => "actions.date DESC", :limit => 5
   
   has_many :bill_text_versions
   
-  with_options :class_name => 'Commentary', :order => 'commentaries.date DESC' do |c|
+  with_options :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC' do |c|
     c.has_many :news, :as => :commentariable, :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='t'"
     c.has_many :blogs, :as => :commentariable, :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='f'"
   end
@@ -34,6 +35,8 @@ class Bill < ActiveRecord::Base
 
   has_many :bookmarks, :as => :bookmarkable
   has_many :notebook_links, :as => :notebookable
+
+  has_one :sidebar_box, :as => :sidebarable
 
   has_many :committee_meetings_bills
   has_many :committee_meetings, :through => :committee_meetings_bills
@@ -47,7 +50,8 @@ class Bill < ActiveRecord::Base
         :as => :emailable,
         :order => 'created_at'
   
-  belongs_to :hot_bill_category
+  belongs_to :hot_bill_category, :class_name => "PvsCategory", :foreign_key => :hot_bill_category_id
+  belongs_to :key_vote_category, :class_name => "PvsCategory", :foreign_key => :key_vote_category_id
   
   has_many :bill_interest_groups,
         :include => :crp_interest_group,
@@ -461,11 +465,11 @@ class Bill < ActiveRecord::Base
       order = options[:order] ||= "vote_count_1 desc"
       search = options[:search]
       if possible_orders.include?(order)
-
+    
         limit = options[:limit] ||= 20
         offset = options[:offset] ||= 0
         not_null_check = order.split(' ').first
-
+    
         query = "
             SELECT
               bills.*,
@@ -533,15 +537,15 @@ class Bill < ActiveRecord::Base
             ORDER BY #{order} 
             LIMIT #{limit} 
             OFFSET #{offset}"
-
+    
         query_params = [range.seconds.ago,range.seconds.ago, (range*2).seconds.ago, range.seconds.ago, range.seconds.ago]
-
+    
         if search
           # Plug the search parameters into the query parmaeters
           query_params.unshift(search)
           query_params.push(search)
         end
-
+    
         Bill.find_by_sql([query, *query_params])
       else 
         return []
@@ -687,15 +691,15 @@ class Bill < ActiveRecord::Base
       return nil
     end
   
-    def find_hot_bills(order = 'hot_bill_categories.name', options = {})
+    def find_hot_bills(order = 'pvs_categories.name', options = {})
       # not used right now.  more efficient to loop through categories
       # probably just need to add an index to hot_bill_category_id
-      Bill.find(:all, :conditions => "bills.hot_bill_category_id IS NOT NULL", :include => :hot_bill_category, 
-                :order => order, :limit => options[:limit])
+      Bill.find(:all, :conditions => ["bills.session = ? AND bills.hot_bill_category_id IS NOT NULL", DEFAULT_CONGRESS], 
+                :include => :hot_bill_category, :order => order, :limit => options[:limit])
     end
   
     def top20_viewed
-      bills = PageView.popular('Bill')
+      bills = ObjectAggregate.popular('Bill')
       
       (bills.select {|b| b.stats.entered_top_viewed.nil? }).each do |bv|
         bv.stats.entered_top_viewed = Time.now
@@ -706,7 +710,7 @@ class Bill < ActiveRecord::Base
     end
 
     def top5_viewed
-      bills = PageView.popular('Bill', DEFAULT_COUNT_TIME, 5)
+      bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME, 5)
       
       (bills.select {|b| b.stats.entered_top_viewed.nil? }).each do |bv|
         bv.stats.entered_top_viewed = Time.now
@@ -732,16 +736,10 @@ class Bill < ActiveRecord::Base
       Bill.find_by_sql ["SELECT * FROM (SELECT random(), bills.* FROM bills ORDER BY 1) as bs LIMIT ?;", limit]
     end
   end # class << self
-
-  def views(seconds = 0)
-    # if the view_count is part of this instance's @attributes use that because it came from
-    # the query and will make sense in the context of the page; otherwise, count
-    return @attributes['view_count'] if @attributes['view_count']
-    
-    if seconds <= 0
-      page_views_count
-    else
-      page_views.count(:conditions => ["created_at > ?", seconds.ago])
+  
+  def log_referrer(referrer)
+    unless (referrer.blank? || /opencongress\.org/.match(referrer) || /google\.com/.match(referrer))
+      self.bill_referrers.find_or_create_by_url(referrer[0..253])
     end
   end
   
@@ -846,6 +844,18 @@ class Bill < ActiveRecord::Base
                          WHERE bills.session=? AND vote_action.vote_date - intro_action.intro_date < ? #{resolution_condition}
                          ORDER BY vote_date DESC", congress, rushed_time])
     end
+    
+    def find_stalled_in_second_chamber(original_chamber = 's', session = DEFAULT_CONGRESS, num = :all)
+      Bill.find_by_sql(["SELECT bills.* FROM bills 
+                          INNER JOIN actions a_v ON (bills.id=a_v.bill_id AND a_v.vote_type='vote' AND a_v.result='pass') 
+                        WHERE bills.bill_type=? AND bills.session=?
+                        EXCEPT 
+                          (SELECT bills.* FROM bills 
+                            INNER JOIN actions a_v ON (bills.id=a_v.bill_id AND a_v.vote_type='vote' AND a_v.result='pass') 
+                            INNER JOIN actions a_v2 ON (bills.id=a_v2.bill_id AND (a_v2.vote_type='vote2' OR a_v2.vote_type='conference')) 
+                            WHERE bills.bill_type=? AND bills.session=?);", original_chamber, session, original_chamber, session])
+    end
+    
 
     def find_gpo_consideration_rushed_bills(congress = DEFAULT_CONGRESS, rushed_time = 259200, show_resolutions = false)
       # rushed time not working correctly for some reason (adapter is changing...)
@@ -1019,7 +1029,7 @@ class Bill < ActiveRecord::Base
   end
   
   def originating_chamber_vote
-    actions.select { |a| (a.action_type == 'vote' and (a.vote_type == 'vote' || a.vote_type == 'pingpong')) }.last
+    actions.select { |a| (a.action_type == 'vote' and a.vote_type == 'vote') }.last
   end
   
   def other_chamber_vote

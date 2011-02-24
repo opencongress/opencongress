@@ -26,7 +26,7 @@
       <dt><label for="post_info_url">Search for the issue:</label></dt> 
       <dd><%= text_field 'issue_bills', 'issue_text', { :size => '30', :maxlength => '255', :value => "" } %>
         <%= submit_tag "Search >>" %>
-        <img alt="Indicator" class="noborder" height="5" id="search_spinner" src="/images/indicator.gif" style="display: none; vertical-align: middle" width="21" />
+        <img alt="Indicator" class="noborder" height="5" id="search_spinner" src="<%= image_path 'indicator.gif' %>" style="display: none; vertical-align: middle" width="21" />
         <div class="form_note">(ie, "Immigration")</div>
         <div id="search_results">
         </div>
@@ -72,6 +72,6 @@
   </div>
 
   <!-- The following image forces the fields to update on the initial load of the page -->
-  <img src="/images/blank.gif" class="noborder" width="0" height="0" onLoad="updateIssueBillsFields();">
+  <%= image_tag "blank.gif", :class=>"noborder", :width=>"0", :height=>"0", :onLoad=>"updateIssueBillsFields();" %>
   <br />
 </div>

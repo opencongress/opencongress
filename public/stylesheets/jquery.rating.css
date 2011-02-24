@@ -2,10 +2,10 @@
 div.rating{cursor:pointer;margin:2em;clear:both;display:block}
 div.rating:after{content:'.';display:block;height:0;width:0;clear:both;visibility:hidden}
 div.cancel,div.star{float:left;width:15px;height:15px;text-indent:-999em;cursor:pointer;display:block;background:transparent;overflow:hidden}
-div.cancel,div.cancel a{background:url('/images/small_no-nos.png') no-repeat 0 -16px;
-   _background:url('/images/small_no-nos.gif') no-repeat 0 -16px;}
-div.star,div.star a{background:url('/images/small_stars.png') no-repeat 0 0px;
-   _background:url('/images/small_stars.gif') no-repeat 0 0px;}
+div.cancel,div.cancel a{background:url('../images/small_no-nos.png') no-repeat 0 -16px;
+   _background:url('../images/small_no-nos.gif') no-repeat 0 -16px;}
+div.star,div.star a{background:url('../images/small_stars.png') no-repeat 0 0px;
+   _background:url('../images/small_stars.gif') no-repeat 0 0px;}
 div.cancel a,div.star a{display:block;width:16px;height:100%;background-position:0 0px;border:0}
 div.star_on a{background-position:0 -32px!important}
 div.cancel.star_on a {

@@ -28,6 +28,20 @@ module IndexHelper
       return date.strftime("%B %d, %Y")
     end
   end
+
+  def homepage_object_count(object, count_type)
+
+    case count_type
+    when 'views'
+      return "#{number_with_delimiter(object.views)} views"
+    when 'news_articles'
+      return "#{number_with_delimiter(object.commentary_count('news'))} articles"
+    when 'blog_articles'
+      return "#{number_with_delimiter(object.commentary_count('blog'))} articles"
+    end
+    
+    return ""
+	end
 	
 	def get_result_image(result)
 		rcall = {
@@ -57,12 +71,13 @@ module IndexHelper
 			"Nomination Confirmed" => "passed_big.png",
 			"Passed" => "passed_big.png",
 			"Resolution Agreed to" => "passed_big.png",
+			"Resolution Rejected" => "Failed_big.gif",
 			"Veto Overridden" => "passed_big.png"
 			}
 		if rcall.has_key?(result)
 			image_tag rcall.fetch(result), :alt => result, :title => result 
 		else
-			'<span class="result">#{result}</span>'
+			"<span class='result'>#{result}</span>"
 		end
 	end
 

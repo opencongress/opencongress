@@ -25,8 +25,7 @@
   			<%= bill_titles_html %>
   		</ul>
 
-	</div>
-		
+	</div>    
 	<!-- <div class="box-wrap">
 
 		<span class="first"><strong><%= link_to "Latest Action", :action => 'actions_votes' %></strong> <%= @bill.actions[0].formatted_date_short %></span> - 
@@ -39,9 +38,12 @@
 <div class="cp">
 <% if can_blog? %>
   <%= link_to "Add/Edit Plain Language Summary", :controller => 'admin/bill_summaries', :action => 'edit', :id => @bill.ident %>  
+  <%= link_to "Add/Edit Sidebar Box/Image", :controller => 'admin/sidebar_boxes', :action => 'edit', :sidebarable_type => 'Bill', :sidebarable_id => @bill.id %> | 
   <%= link_to "Select Default Title",  :controller => 'admin/bill_summaries', :action => 'defaulttitle', :id => @bill.ident %>  
   <%= link_to "Add Related Bill (Different Session)",  :controller => 'admin/bill_summaries', :action => 'session_relations', :bill_id => @bill.ident %>
   <%= link_to "New news/blog article", :controller => 'admin/commentary', :action => 'new', :commentariable_type => 'Bill', :commentariable_id => @bill.id %>
+  <%= link_to "Check pending news/blog articles", :controller => 'admin/commentary', :action => 'pending', :commentariable_type => 'Bill', :commentariable_id => @bill.id %>
+  
   <%= link_to @bill.is_frontpage_hot? ? "Remove from frontpage" : "Add to frontpage",  :controller => 'admin/bill_summaries', :action => 'toggle_frontpage_hot', :bill_id => @bill.ident %>
   <br style="clear: both;"/>
   <a href="#" onclick="Element.show('addtitle_form'); return false;">Add a Title</a>   
@@ -62,7 +64,7 @@
   	<form action="/admin/hot_bills/addbill">
   		<b>Select category for this bill's "hot"-ness:</b><br />
   		<%= hidden_field "bill", "id" %>
-  		<% HotBillCategory.find(:all).each do |c| %>
+  		<% PvsCategory.find(:all, :order => 'name').each do |c| %>
   		  <%= radio_button "bill", "hot_bill_category_id", c.id %> <%= c.name %><br />
   		<% end %>
   		<%= radio_button "bill", "hot_bill_category_id", "" %> Remove (not "Hot")<br />

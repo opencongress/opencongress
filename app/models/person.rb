@@ -1,4 +1,4 @@
-class Person < ActiveRecord::Base  
+class Person < ViewableObject  
 #  acts_as_solr :fields => [:party, {:with_party_percentage => :float}, {:abstains_percentage => :float}, {:against_party_percentage => :float}], 
 #               :facets => [:party]
 
@@ -28,13 +28,14 @@ class Person < ActiveRecord::Base
   named_scope :rep, :joins => :roles, :select => "people.*", :conditions => ["roles.person_id = people.id AND roles.role_type='rep' AND roles.enddate > ?", Date.today]
 
 
-  has_many :news, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='t'"
+  has_many :news, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='t'"
+  has_many :blogs, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='f'"
+
   has_many :idsorted_news, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='t'"
   has_many :idsorted_blogs, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='f'"
 
-  has_many :recent_news, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='t'", :limit => 10
-  has_many :blogs, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='f'"
-  has_many :recent_blogs, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='f'", :limit => 10
+  has_many :recent_news, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='t'", :limit => 10
+  has_many :recent_blogs, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='f'", :limit => 10
 
   has_many :cycle_contributions, :class_name => 'PersonCycleContribution', :order => 'people_cycle_contributions.cycle DESC'
 
@@ -44,7 +45,6 @@ class Person < ActiveRecord::Base
   has_many :featured_people, :order => 'created_at DESC'
 
   has_many :comments, :as => :commentable
-  has_many :page_views, :as => :viewable
   has_many :bookmarks, :as => :bookmarkable
 
   has_many :videos, :order => "videos.video_date DESC, videos.id"
@@ -196,14 +196,14 @@ class Person < ActiveRecord::Base
     Person.find_by_sql(["SELECT people.*, 
        COALESCE(person_approvals.person_approval_avg, 0) as person_approval_average,
        COALESCE(bills_sponsored.sponsored_bills_count, 0) as sponsored_bills_count,
-       COALESCE(total_rolls.tcalls, 0) as total_roll_call_votes,
-       CASE WHEN people.party = 'Democrat' THEN COALESCE(party_votes_democrat.pcount, 0)
-            WHEN people.party = 'Republican' THEN COALESCE(party_votes_republican.pcount, 0)
+       COALESCE(people.total_session_votes, 0) as total_roll_call_votes,
+       CASE WHEN people.party = 'Democrat' THEN COALESCE(people.votes_democratic_position, 0)
+            WHEN people.party = 'Republican' THEN COALESCE(people.votes_republican_position, 0)
             ELSE 0
        END as party_roll_call_votes,
-       COALESCE(most_viewed.view_count, 0) as view_count,
-       COALESCE(blogs.blog_count, 0) as blog_count,
-       COALESCE(news.news_count, 0) as news_count
+       COALESCE(aggregates.view_count, 0) as view_count,
+       COALESCE(aggregates.blog_count, 0) as blog_count,
+       COALESCE(aggregates.news_count, 0) as news_count
     FROM people
     LEFT OUTER JOIN roles on roles.person_id=people.id    
     LEFT OUTER JOIN (select person_approvals.person_id as person_approval_id, 
@@ -218,53 +218,18 @@ class Person < ActiveRecord::Base
                     WHERE bills.session = #{congress}
                     GROUP BY sponsor_id) bills_sponsored
       ON bills_sponsored.sponsor_id = people.id
-    LEFT OUTER JOIN (SELECT DISTINCT(roll_call_votes.person_id), count(DISTINCT roll_calls.id) AS tcalls 
-                    FROM roll_calls
-                    LEFT OUTER JOIN bills ON bills.id = roll_calls.bill_id 
-                    INNER JOIN roll_call_votes ON roll_calls.id = roll_call_votes.roll_call_id 
-                      WHERE roll_call_votes.vote != '0' AND bills.session = #{congress}
-                      GROUP BY roll_call_votes.person_id) total_rolls
-    		          ON total_rolls.person_id = people.id
-    LEFT OUTER JOIN (SELECT DISTINCT(roll_call_votes.person_id), count(DISTINCT roll_calls.id) AS pcount 
-                     FROM roll_calls 
-                     LEFT OUTER JOIN bills ON bills.id = roll_calls.bill_id 
-                     INNER JOIN roll_call_votes ON roll_calls.id = roll_call_votes.roll_call_id 
-                     WHERE ((roll_calls.democratic_position = true AND vote = '+') OR (roll_calls.democratic_position = false AND vote = '-')) 
-                     AND bills.session = #{congress}
-                 GROUP BY roll_call_votes.person_id) party_votes_democrat
-    	     ON party_votes_democrat.person_id = people.id
-    	    LEFT OUTER JOIN (SELECT DISTINCT(roll_call_votes.person_id), count(DISTINCT roll_calls.id) AS pcount 
-    	                     FROM roll_calls 
-    	                     LEFT OUTER JOIN bills ON bills.id = roll_calls.bill_id 
-    	                     INNER JOIN roll_call_votes ON roll_calls.id = roll_call_votes.roll_call_id 
-    	                     WHERE ((roll_calls.republican_position = true AND vote = '+') OR (roll_calls.republican_position = false AND vote = '-')) 
-    	                     AND bills.session = #{congress}
-    		             GROUP BY roll_call_votes.person_id) party_votes_republican
-    			     ON party_votes_republican.person_id = people.id
-           LEFT OUTER JOIN (SELECT page_views.viewable_id,
-                                          count(page_views.viewable_id) AS view_count
-                                   FROM page_views 
-                                   WHERE page_views.created_at > current_timestamp - interval '#{def_count_days} days' AND
-                                         page_views.viewable_type = 'Person'
-                                   GROUP BY page_views.viewable_id
-                                   ORDER BY view_count DESC) most_viewed
-                                  ON people.id=most_viewed.viewable_id
-           LEFT OUTER JOIN (SELECT count(commentaries.id) as blog_count, commentaries.commentariable_id
-                                   FROM commentaries 
-                                   WHERE commentaries.date > current_timestamp - interval '#{def_count_days} days' AND
-                                         commentaries.is_news = 'f' AND 
-                                         commentaries.commentariable_type = 'Person'
-                                   GROUP BY commentaries.commentariable_id
-                                   ORDER BY blog_count DESC) blogs
-                                  ON people.id=blogs.commentariable_id      
-           LEFT OUTER JOIN (SELECT count(commentaries.id) as news_count, commentaries.commentariable_id
-                                   FROM commentaries 
-                                   WHERE commentaries.date > current_timestamp - interval '#{def_count_days} days' AND
-                                         commentaries.commentariable_type = 'Person' AND commentaries.is_news = 't'
-                                   GROUP BY commentaries.commentariable_id
-                                   ORDER BY news_count DESC) news
-                                  ON people.id=news.commentariable_id                                                                  			       
-    WHERE roles.role_type = ? AND roles.startdate <= ? AND roles.enddate >= ? ORDER BY #{order} #{lim};", chamber, Date.today, Date.today])
+     LEFT OUTER JOIN (SELECT object_aggregates.aggregatable_id,
+                                    sum(object_aggregates.page_views_count) as view_count, 
+                                    sum(object_aggregates.blog_articles_count) as blog_count,
+                                    sum(object_aggregates.news_articles_count) as news_count
+                             FROM object_aggregates 
+                             WHERE object_aggregates.date >= current_timestamp - interval '#{def_count_days} days' AND
+                                   object_aggregates.aggregatable_type = 'Person'
+                             GROUP BY object_aggregates.aggregatable_id
+                             ORDER BY view_count DESC) aggregates
+                            ON people.id=aggregates.aggregatable_id                                                               			       
+    WHERE roles.role_type = ? AND ((roles.startdate <= ? AND roles.enddate >= ?) OR roles.startdate = '2011-01-05') ORDER BY #{order} #{lim};", chamber, Date.today, Date.today])
+    #WHERE roles.role_type = ? AND roles.startdate <= ? AND roles.enddate >= ? ORDER BY #{order} #{lim};", chamber, Date.today, Date.today])
   end
 
   def Person.rep_random_news(limit = 1, since = DEFAULT_COUNT_TIME)
@@ -402,6 +367,10 @@ class Person < ActiveRecord::Base
 
   def has_contact_webform?
     (!self.contact_webform.blank? && (self.contact_webform =~ /^http:\/\//)) ? true : false
+  end
+  
+  def opengovernment_url
+    "http://opengovernment.org/people/govtrack/#{self.id}"
   end
   
   def has_wiki_link?
@@ -650,6 +619,83 @@ class Person < ActiveRecord::Base
     end
   end
 
+  def Person.calculate_and_save_party_votes
+    update_query = ["UPDATE people 
+                     SET total_session_votes=votes_agg.total_votes, 
+                         votes_democratic_position=votes_agg.votes_democratic_position,
+                         votes_republican_position=votes_agg.votes_republican_position
+                     FROM 
+                  (SELECT people.id as person_id, 
+                           total_votes.total_votes AS total_votes, 
+                           dem_position.votes_democratic_position as votes_democratic_position,
+                           rep_position.votes_republican_position as votes_republican_position 
+    FROM people
+    LEFT OUTER JOIN roles on roles.person_id=people.id    
+    LEFT OUTER JOIN
+      (SELECT DISTINCT(roll_call_votes.person_id) as p_id, count(DISTINCT roll_calls.id) AS total_votes 
+      FROM roll_calls
+      LEFT OUTER JOIN bills ON bills.id = roll_calls.bill_id 
+      INNER JOIN roll_call_votes ON roll_calls.id = roll_call_votes.roll_call_id 
+      WHERE roll_call_votes.vote != '0' AND bills.session = ?
+      GROUP BY roll_call_votes.person_id) total_votes ON total_votes.p_id=people.id
+    LEFT OUTER JOIN 
+      (SELECT DISTINCT(roll_call_votes.person_id) as p_id, count(DISTINCT roll_calls.id) AS votes_democratic_position 
+      FROM roll_calls 
+      LEFT OUTER JOIN bills ON bills.id = roll_calls.bill_id 
+      INNER JOIN roll_call_votes ON roll_calls.id = roll_call_votes.roll_call_id 
+      WHERE ((roll_calls.democratic_position = true AND vote = '+') OR (roll_calls.democratic_position = false AND vote = '-')) 
+      AND bills.session = ?
+      GROUP BY roll_call_votes.person_id) dem_position ON dem_position.p_id=people.id
+    LEFT OUTER JOIN
+      (SELECT DISTINCT(roll_call_votes.person_id) as p_id, count(DISTINCT roll_calls.id) AS votes_republican_position 
+      FROM roll_calls 
+      LEFT OUTER JOIN bills ON bills.id = roll_calls.bill_id 
+      INNER JOIN roll_call_votes ON roll_calls.id = roll_call_votes.roll_call_id 
+      WHERE ((roll_calls.republican_position = true AND vote = '+') OR (roll_calls.republican_position = false AND vote = '-')) 
+      AND bills.session = ?
+      GROUP BY roll_call_votes.person_id) rep_position ON rep_position.p_id=people.id
+    WHERE roles.startdate <= ? AND roles.enddate >= ?) votes_agg
+    WHERE people.id=votes_agg.person_id", DEFAULT_CONGRESS, DEFAULT_CONGRESS, DEFAULT_CONGRESS, Date.today, Date.today]
+    
+  
+    ActiveRecord::Base.connection.execute(sanitize_sql_array(update_query))
+  end
+  
+  def Person.list_by_votes_with_party_ranking(chamber = 'house', party = 'Democrat')
+    role_type = (chamber == 'house') ? 'Rep.' : 'Sen.'
+    
+    # find_by_sql(["SELECT people.*, 
+    #                       CASE WHEN people.party = 'Democrat' THEN (people.votes_democratic_position::real/people.total_session_votes::real)::real
+    #                            WHEN people.party = 'Republican' THEN (people.votes_republican_position::real/people.total_session_votes::real)::real
+    #                            ELSE 0
+    #                       END as votes_with_party_percentage::real  FROM people
+    #                    LEFT OUTER JOIN roles on roles.person_id=people.id
+    #                    WHERE people.party = ? AND roles.startdate <= ? AND roles.enddate >= ?
+    #                      AND people.title = ?
+    #                   ORDER BY votes_with_party_percentage DESC", party, Date.today, Date.today, role_type])
+
+    peeps = find_by_sql(["SELECT people.*, 0.0 as votes_with_party_percentage FROM people
+                       LEFT OUTER JOIN roles on roles.person_id=people.id
+                       WHERE people.party = ? AND roles.startdate <= ? AND roles.enddate >= ?
+                         AND people.title = ?
+                      ORDER BY votes_with_party_percentage DESC", party, Date.today, Date.today, role_type])
+
+    if party == 'Democrat'
+      peeps.collect! {|p| 
+        p.votes_with_party_percentage = (p.votes_democratic_position.to_f/p.total_session_votes.to_f) * 100
+        p
+      }
+    else
+      peeps.collect! {|p| 
+        p.votes_with_party_percentage = (p.votes_republican_position.to_f/p.total_session_votes.to_f) * 100
+        p
+      }
+    end
+    
+    peeps.sort {|a,b| b.votes_with_party_percentage <=> a.votes_with_party_percentage}
+  end
+    
+  
   def last_x_bills(limit = 2)
      self.bills.find(:all, :limit => limit)
      #[]
@@ -926,7 +972,7 @@ class Person < ActiveRecord::Base
     primary = "my_approved_reps_facet" if self.title == "Rep."
     primary = "my_approved_sens_facet" if self.title == "Sen."
         
-    return [0,{}] if self.title.blank?
+    return [0,{}] if (self.title.blank? or primary.blank?)
     
     users = User.find_by_solr('placeholder:placeholder', :facets => {:fields => [:my_bills_supported, :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens, :my_bills_opposed], 
                                                       :browse => ["#{primary.gsub('_facet', '')}:#{self.id}"], 
@@ -1110,11 +1156,11 @@ class Person < ActiveRecord::Base
   def Person.top20_viewed(person_type = nil)
     case person_type 
     when 'sen'
-      people = PageView.popular('Person', DEFAULT_COUNT_TIME, 540).select{|p| p.title == 'Rep.'}[0..20]
+      people = ObjectAggregate.popular('Person', DEFAULT_COUNT_TIME, 540).select{|p| p.title == 'Rep.'}[0..20]
     when 'rep'
-      people = PageView.popular('Person', DEFAULT_COUNT_TIME, 540).select{|p| p.title == 'Rep.'}[0..20]
+      people = ObjectAggregate.popular('Person', DEFAULT_COUNT_TIME, 540).select{|p| p.title == 'Rep.'}[0..20]
     else
-      people = PageView.popular('Person')
+      people = ObjectAggregate.popular('Person')
     end
     
     (people.select {|p| p.stats.entered_top_viewed.nil? }).each do |pv|
@@ -1132,18 +1178,6 @@ class Person < ActiveRecord::Base
     end
     
     (people.sort { |p1, p2| p2.stats.entered_top_viewed <=> p1.stats.entered_top_viewed })
-  end
-  
-  def views(seconds = 0)
-    # if the view_count is part of this instance's @attributes use that because it came from
-    # the query and will make sense in the context of the page; otherwise, count
-    return @attributes['view_count'] if @attributes['view_count']
-    
-    if seconds <= 0
-      page_views_count
-    else
-      page_views.count(:conditions => ["created_at > ?", seconds.ago])
-    end
   end
   
   def representative_for_congress?(congress = DEFAULT_CONGRESS )
@@ -1272,6 +1306,11 @@ class Person < ActiveRecord::Base
   
   def is_sitting?
     title.blank? ? false : true
+  end
+  
+  def chamber
+    return 'house' if title == 'Rep.'
+    return 'senate' if title == 'Sen.'
   end
   
   def votes(num = -1)

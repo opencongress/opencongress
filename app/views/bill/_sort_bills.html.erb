@@ -22,7 +22,7 @@
   <%= render :partial => 'carousel' unless @sort == 'hot' %>    
 
  <ul id="sort">
- <h4>Sort By</h4>
+   <h4>Sort By</h4>
 		<li id="all" class="<%= @sort == 'all' ? "active" : "" %>">
 			<%= link_to "<span>All Bills - By Date Introduced</span>", :action => 'all', :types => @types %>
 	 	</li>
@@ -44,6 +44,10 @@
 		<li id="gpo" class="<%= @sort == 'gpo' ? "active" : "" %>">
 			<%= link_to "<span>Rushed Bills</span>", :action => 'readthebill', :types => @types %>
 		</li>
+		
+		<% if @atom %>
+		  <li><a href="<%= @atom['link'] %>" class="rss"><%= image_tag 'rss.png' %></a></li>
+		<% end %>
 	</ul>
 
 	<div id="timeframe">

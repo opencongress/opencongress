@@ -3,7 +3,6 @@ class PeopleController < ApplicationController
   
   verify :method => :post, :only => [:most_viewed_text_update]
   before_filter :page_view, :only => :show
-  before_filter :open_secrets_ping, :only => :show
   before_filter :person_profile_shared, :only => [:show, :comments, :bills, :voting_history, :money, :news_blogs, :videos, :news, :blogs]
   skip_before_filter :store_location, :only => [:rate,:atom_top_commentary,:atom_news,:atom_blogs,:atom_topnews,:atom_topblogs,:atom_featured,:atom,:atom_top20]
 
@@ -489,6 +488,19 @@ class PeopleController < ApplicationController
     end
   end
   
+  def votes_with_party
+    @chamber = params[:chamber] == 'house' ? 'house' : 'senate'
+    @party = params[:party] == 'democrat' ? 'Democrat' : 'Republican'
+    @party_adj = @party == 'Democrat' ? 'Democratic' : 'Republican'
+    @people_names = @chamber == 'house' ? 'Representatives' : 'Senators'
+    
+    
+    @people = Person.list_by_votes_with_party_ranking(@chamber, @party)
+
+    @median = @people[(@people.size/2)]
+
+  end
+  
   def bills
     @page = params[:page]
     @page = "1" unless @page
@@ -616,6 +628,11 @@ class PeopleController < ApplicationController
   private
   
   def person_profile_shared
+    if params[:id].blank?
+      redirect_to :controller => 'people', :action => 'zipcodelookup'
+      return
+    end
+    
     if @person = Person.find(params[:id])
       @page_title_prefix = "U.S. Congress"
       @page_title = (@person.senator? ? 'Senator ' : 'Rep. ') + @person.popular_name + 
@@ -661,31 +678,20 @@ class PeopleController < ApplicationController
       redirect_to admin_url
     end
   end
-
-  
-  def open_secrets_ping
-    path = "/api/index.php?method=opencongress&cycle=#{CURRENT_OPENSECRETS_CYCLE}&cid=#{@person.osid}&apikey=573ba044995d1dad7746b593629a7246"
-    #path = "/api/opencongress/crp_opencongress.php?cycle=#{CURRENT_OPENSECRETS_CYCLE}&cid=#{@person.osid}"
-    
-    Thread.new {    
-      begin
-        http = Net::HTTP.new('www.opensecrets.org')
-        http.start do |http|
-          request = Net::HTTP::Get.new(path, {"User-Agent" => DEFAULT_USERAGENT})
-          http.read_timeout = 1
-          response = http.request(request)
-        end
-      rescue TimeoutError
-        # expected
-      end
-    }
-  end
   
   def page_view
-    @person = Person.find(params[:id])
+    unless params[:id].blank?
+      @person = Person.find(params[:id])
     
-    if @person
-      PageView.create_by_hour(@person, request)
+      if @person
+        key = "page_view_ip:Person:#{@person.id}:#{request.remote_ip}"
+        unless read_fragment(key)
+          @person.increment!(:page_views_count)
+          @person.page_view
+          write_fragment(key, "c", :expires_in => 1.hour)
+        end
+      end
     end
   end
+  
 end

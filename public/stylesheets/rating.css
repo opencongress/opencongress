@@ -39,25 +39,25 @@
     height: 13px;
 }
 .cancel,
-.cancel a {background: url(/images/no-star.gif) no-repeat 0 0px;}
+.cancel a {background: url(../images/no-star.gif) no-repeat 0 0px;}
 
 .small .cancel,
-.small .cancel a { background-image: url(/images/small-no-star.png);
-   _background-image: url(/images/small-no-star.gif);}
+.small .cancel a { background-image: url(../images/small-no-star.png);
+   _background-image: url(../images/small-no-star.gif);}
 
 .star.userrating,
-.star.userrating a {background: url(/images/user-star.gif) no-repeat 0 0px;}
+.star.userrating a {background: url(../images/user-star.gif) no-repeat 0 0px;}
 
 .small .star.userrating,
-.small .star.userrating a {background-image: url(/images/small-user-star.png);
-   _background-image: url(/images/small-user-star.gif);}
+.small .star.userrating a {background-image: url(../images/small-user-star.png);
+   _background-image: url(../images/small-user-star.gif);}
 
 .star.averagerating,
-.star.averagerating a {background: url(/images/avg-star.gif) no-repeat 0 0px;}
+.star.averagerating a {background: url(../images/avg-star.gif) no-repeat 0 0px;}
 
 .small .star.averagerating,
-.small .star.averagerating a {background-image: url(/images/small-avg-star.png);
-   _background-image: url(/images/small-avg-star.gif);}
+.small .star.averagerating a {background-image: url(../images/small-avg-star.png);
+   _background-image: url(../images/small-avg-star.gif);}
 
 .cancel a,
 .star a {

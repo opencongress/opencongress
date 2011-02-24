@@ -38,15 +38,15 @@ $j().ready(function() {
  <ul class="more_share">
 	<li>
 		<a href="http://del.icio.us/post?url=<%=u url %>&amp;title=<%= title %>">
-			<img src="/images/share_icons/share-delicious.gif" alt="del.icio.us" /><span>Del.icio.us</span></a>
+			<%= image_tag 'share_icons/share-delicious.gif', :alt=>"del.icio.us" %><span>Del.icio.us</span></a>
 	</li>
 	<li>
 		<a href="http://www.newsvine.com/_wine/save?popoff=0&amp;u=<%=u url %>&amp;h=<%= title %>"> 
-			<img src="/images/share_icons/share-newsvine.gif" alt="Newsvine" /><span>Newsvine</span></a>
+		  <%= image_tag 'share_icons/share-newsvine.gif', :alt=>"Newsvine" %><span>Newsvine</span></a>
 	</li>
 	<li>
 		<a href="http://co.mments.com/track?url=<%=u url %>">
-			<img src="/images/share_icons/share-comments.gif" alt="co.mments" /><span>Co.mments</span></a>
+			<%= image_tag 'share_icons/share-comments.gif', :alt=>"co.mments" %><span>Co.mments</span></a>
 	</li>
 	</ul>
 </div>
@@ -54,6 +54,8 @@ $j().ready(function() {
 
 	<a href="<%= url_for :controller => 'resources', :action => 'email_friend_form', 
 	                     :object_class => item.class, :object_id => item.id %>" class="email_trigger">Share via Email</a>
-
+	              
 <div id="email_friend" class="jqmWindow">
 </div>
+
+

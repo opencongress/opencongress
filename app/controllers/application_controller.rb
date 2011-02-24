@@ -59,6 +59,7 @@ class ApplicationController < ActionController::Base
     when ::ActionController::RoutingError, ::ActionController::UnknownAction then
       render :partial => "index/notfound_page", :layout => 'application', :status => "404"
     else
+      notify_hoptoad(exception)
       render :partial => "index/error_page", :layout => 'application', :locals => { :exception => exception }, :status => "500"
     end
   end
@@ -77,7 +78,6 @@ class ApplicationController < ActionController::Base
 
   def has_accepted_tos?
     if logged_in?
-      logger.info "USER APP TOS: #{current_user.accepted_tos}"
       unless current_user.accepted_tos == true
         redirect_to :controller => 'account', :action => 'accept_tos'
       end

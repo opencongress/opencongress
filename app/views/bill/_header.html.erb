@@ -14,7 +14,7 @@
 </div>  
 <div style="float:right;clear:right;">
 	   <% if @br_link %>
-		  <%= link_to image_tag('/images/battle_royale_button_d_bill.gif'), @br_link %>
+		  <%= link_to image_tag('battle_royale_button_d_bill.gif'), @br_link %>
 	<% end %>
 </div>
 
@@ -51,7 +51,7 @@
   	<form action="/admin/hot_bills/addbill">
   		<b>Select category for this bill's "hot"-ness:</b><br />
   		<%= hidden_field "bill", "id" %>
-  		<% HotBillCategory.find(:all).each do |c| %>
+  		<% PvsCategory.find(:all).each do |c| %>
   		  <%= radio_button "bill", "hot_bill_category_id", c.id %> <%= c.name %><br />
   		<% end %>
   		<%= radio_button "bill", "hot_bill_category_id", "" %> Remove (not "Hot")<br />

@@ -1,9 +1,15 @@
-        <li class="bill">
-        	<a href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>">
-          	<span class="title"><%= bill.typenumber %> - <span><%= truncate(bill.title_common, :length => 70) rescue nil %></span></span>
-          	<span class="date">
-            <span><%= temp_url_strip(bill.status) %></span> 
-            	<%= bill.last_action.formatted_date if bill.last_action %>
-         	</span>
-	      	</a>
-		</li>   
+<li class="bill">
+  <a href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>">
+  	<span class="title">
+  	  <%= bill.typenumber %> - <span><%= truncate(bill.title_common, :length => 50) rescue nil %></span>
+  	</span>
+  	<span class="date">
+      <span><%= temp_url_strip(bill.status) %></span> 
+    	<%= bill.last_action.formatted_date if bill.last_action %>
+  	</span>
+  	
+  	<% unless count_type == :none %>
+  	  <div class="mini_box"><%= homepage_object_count(bill, count_type) %></div>
+    <% end %>
+  </a>
+</li>   

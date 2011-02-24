@@ -12,7 +12,7 @@
   <% if comments.size > 0 %>
     <% #logger.info(object.comments.size) %>
     <% logged_in? ? myscores = current_user.comment_scores.find(:all) : myscores = Array.new %>
-         
+
     <% if comments.total_pages > 1 %>
       <p class="this_many">Displaying <%= comments.offset + 1 %>-<%= (comments.offset + comments.per_page > comments.total_entries ) ? comments.total_entries : comments.offset + comments.per_page %> of <b><%= comments.total_entries %></b> total comments.</p>
     <% end %>

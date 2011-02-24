@@ -1,14 +1,10 @@
-class Subject < ActiveRecord::Base  
-  validates_uniqueness_of :term
-  #validates_associated :bills
-
+class Subject < ViewableObject  
   has_many :bill_subjects
   has_many :bills, :through => :bill_subjects, :order => "bills.introduced DESC"
 
   has_many :recently_introduced_bills, :class_name => "Bill", :through => :bill_subjects, :source => "bill", :order => "bills.introduced DESC", :limit => 20
 
   has_many :comments, :as => :commentable
-  has_many :page_views, :as => :viewable
 
   has_one :issue_stats
   
@@ -199,17 +195,6 @@ class Subject < ActiveRecord::Base
     Subject.find(:all, :conditions => ["upper(term) LIKE ?", "#{letter}%"], :order => "term asc")
   end
 
-  def views(seconds = 0)
-    # if the view_count is part of this instance's @attributes use that; otherwise, count
-    return @attributes['view_count'] if @attributes['view_count']
-    
-    if seconds <= 0
-      page_views.count
-    else
-      page_views.count(:conditions => ["created_at > ?", seconds.ago])
-    end
-  end
-
   def Subject.by_bill_count
     Subject.find(:all, :order => "bill_count desc, term asc")
   end
@@ -219,7 +204,7 @@ class Subject < ActiveRecord::Base
   end
   
   def Subject.top20_viewed
-    issues = PageView.popular('Subject')
+    issues = ObjectAggregate.popular('Subject')
       
     (issues.select {|b| b.stats.entered_top_viewed.nil? }).each do |bv|
       bv.stats.entered_top_viewed = Time.now
@@ -332,14 +317,14 @@ class Subject < ActiveRecord::Base
                               most_viewed.view_count AS view_count 
                        FROM bills
                        INNER JOIN
-                       (SELECT page_views.viewable_id, 
-                               count(page_views.viewable_id) AS view_count
-                        FROM page_views 
-                        WHERE page_views.created_at > ? AND
-                              page_views.viewable_type = 'Bill'
-                        GROUP BY page_views.viewable_id
+                       (SELECT object_aggregates.aggregatable_id, 
+                               sum(object_aggregates.aggregatable_id) AS view_count
+                        FROM object_aggregates 
+                        WHERE object_aggregates.date >= ? AND
+                              object_aggregates.aggregatable_type = 'Bill'
+                        GROUP BY object_aggregates.aggregatable_id
                         ORDER BY view_count DESC) most_viewed
-                       ON bills.id=most_viewed.viewable_id
+                       ON bills.id=most_viewed.aggregatable_id
                        INNER JOIN bill_subjects ON bill_subjects.bill_id=bills.id
                        WHERE bills.session=? AND bill_subjects.subject_id=?
                        ORDER BY view_count DESC

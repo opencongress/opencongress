@@ -25,11 +25,11 @@
 
 <div class="right">
 
-    <div><span class="ayes"></span><em class="aye roll">Ayes: </em><span class="fontweightnormal"><%= @roll_call.ayes %> <%= aye_breakdown %></span>  </div>  
+    <div><span class="ayes"></span><em class="aye roll">Ayes: </em><span class="fontweightnormal"><%= @roll_call.ayes %> <%= aye_breakdown.html_safe %></span>  </div>  
 
-    <div><span class="nays"></span><em class="nay roll">Nays: </em><span class="fontweightnormal"><%= @roll_call.nays %> <%= nay_breakdown %></span> </div>   
+    <div><span class="nays"></span><em class="nay roll">Nays: </em><span class="fontweightnormal"><%= @roll_call.nays %> <%= nay_breakdown.html_safe %></span> </div>   
 
-    <div><span class="abs"></span><em class="abs roll">Abstained: </em><span class="fontweightnormal"><%= @roll_call.abstains %> <%= abstain_breakdown %></span></div>
+    <div><span class="abs"></span><em class="abs roll">Abstained: </em><span class="fontweightnormal"><%= @roll_call.abstains %> <%= abstain_breakdown.html_safe %></span></div>
 
 
     <% if @roll_call.presents > 0 %>

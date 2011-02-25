@@ -107,12 +107,12 @@
 </div><!-- col2 -->
 </div><!-- col12 -->
 <div class="col3">
-   <% unless logged_in? %><p class="callout"><a href="/register">Join now</a> and connect with <%= @state.user_count %> OpenCongress users in <%= @state.name %> (it's free)</p><% end %>
+   <% unless user_signed_in? %><p class="callout"><a href="/register">Join now</a> and connect with <%= @state.user_count %> OpenCongress users in <%= @state.name %> (it's free)</p><% end %>
 
 
 <br/>
 <h2 class="dark">Representatives</h2>
-<% if logged_in? && current_user.definitive_district_object && current_user.definitive_district_object.state == @state %>
+<% if user_signed_in? && current_user.definitive_district_object && current_user.definitive_district_object.state == @state %>
   <p><%= link_to "Browse all", representatives_path(:anchor => @state.abbreviation) %> or <%= link_to "see your representative (#{current_user.definitive_district_object.district_state_text})", state_district_path(@state,current_user.definitive_district_object) %></p>
 <% else %>
 

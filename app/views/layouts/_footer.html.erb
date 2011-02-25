@@ -46,7 +46,7 @@
       				<b>My OpenCongress</b>
       					<ul>
 
-									<% if logged_in? %>
+									<% if user_signed_in? %>
 									<li><%= link_to "Tracked Items", :controller => 'profile', :action => 'items_tracked', :login => current_user.login %></li>
 									<li><%= link_to "Actions", :controller => 'profile', :action => 'actions', :login => current_user.login %></li>
 									<li><%= link_to "Friends", friends_path(current_user.login)%></li>

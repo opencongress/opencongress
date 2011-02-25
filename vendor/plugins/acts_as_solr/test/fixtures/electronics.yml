@@ -5,6 +5,8 @@ ipod_video:
   features: iTunes, Podcasts, Audiobooks
   category: Electronics
   price: 599.00
+  created_at: <%= Date.today - 1.year %>
+  updated_at: <%= Date.today - 1.month %>
   
 dell_monitor:
   id: 2
@@ -13,6 +15,8 @@ dell_monitor:
   features: 30" TFT active matrix LCD, 2560 x 1600, .25mm dot pitch, 700:1 contrast
   category: Electronics
   price: 750.00
+  created_at: <%= Date.today - 1.year %>
+  updated_at: <%= Date.today - 1.month %>
   
 samsung_hd:
   id: 3
@@ -21,6 +25,8 @@ samsung_hd:
   features: 7200RPM, 8MB cache, IDE Ultra ATA-133
   category: Hard Drive
   price: 319.00
+  created_at: <%= Date.today - 2.years %>
+  updated_at: <%= Date.today - 2.months %>
   
 corsair_ram:
   id: 4
@@ -29,6 +35,8 @@ corsair_ram:
   features: CAS latency 2,	2-3-3-6 timing, 2.75v, unbuffered, heat-spreader
   category: Memory
   price: 155.00
+  created_at: <%= Date.today - 6.years %>
+  updated_at: <%= Date.today - 3.months %>
   
 a_data_ram:
   id: 5
@@ -37,3 +45,5 @@ a_data_ram:
   features: CAS latency 3, 2.7v
   category: Memory
   price: 65.79
+  created_at: <%= Date.today - 9.years %>
+  updated_at: <%= Date.today - 4.months %>

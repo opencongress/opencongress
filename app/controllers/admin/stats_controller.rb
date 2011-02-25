@@ -269,7 +269,7 @@ class Admin::StatsController < Admin::IndexController
   
   def bills
     @page_title = "Bill Stats"
-    @session = params[:session].blank? ? DEFAULT_CONGRESS : params[:session]
+    @session = params[:session].blank? ? Settings.default_congress : params[:session]
     if params[:format] == 'csv'
       @bills = Bill.find(:all, :conditions => ["session = ?", @session], 
                         :order => 'bills.page_views_count DESC')

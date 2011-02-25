@@ -6,15 +6,24 @@ module ActsAsSolr #:nodoc:
     def get_solr_field_type(field_type)
       if field_type.is_a?(Symbol)
         case field_type
-          when :float:          return "f"
-          when :integer:        return "i"
-          when :boolean:        return "b"
-          when :string:         return "s"
-          when :date:           return "d"
-          when :range_float:    return "rf"
-          when :range_integer:  return "ri"
-          when :facet:          return "facet"
-          when :text:           return "t"
+          when :float
+            return "f"
+          when :integer
+            return "i"
+          when :boolean
+            return "b"
+          when :string
+            return "s"
+          when :date
+            return "d"
+          when :range_float
+            return "rf"
+          when :range_integer
+            return "ri"
+          when :facet
+            return "facet"
+          when :text
+            return "t"
         else
           raise "Unknown field_type symbol: #{field_type}"
         end
@@ -28,10 +37,14 @@ module ActsAsSolr #:nodoc:
     # Sets a default value when value being set is nil.
     def set_value_if_nil(field_type)
       case field_type
-        when "b", :boolean:                        return "false"
-        when "s", "t", "d", :date, :string, :text: return ""
-        when "f", "rf", :float, :range_float:      return 0.00
-        when "i", "ri", :integer, :range_integer:  return 0
+        when "b", :boolean
+          return "false"
+        when "s", "t", "d", :date, :string, :text
+          return ""
+        when "f", "rf", :float, :range_float
+          return 0.00
+        when "i", "ri", :integer, :range_integer
+          return 0
       else
         return ""
       end

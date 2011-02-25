@@ -4,7 +4,7 @@
 </div>
 <% else %>
 <% def_fil = 5 %>
-<% def_fil = ( current_user.default_filter ? current_user.default_filter : 5 ) if logged_in? %>
+<% def_fil = ( current_user.default_filter ? current_user.default_filter : 5 ) if user_signed_in? %>
 <div id="comfl<%= comment.id.to_s %>" class="commentfl" style="clear:both;float:none;
 <% if (def_fil <= comment.average_rating) %>display:none;<%end%>">
 <p>Filtered Comment [<%= link_to_function "show", "new Effect.Appear('com#{comment.id.to_s}');Element.hide('comfl#{comment.id.to_s}');" %>]</p>
@@ -34,7 +34,7 @@
 		<table class="ctable2">
 			<tr>      
 				<td>Overall Rating: <%=h number_with_precision(comment.average_rating,1) %>&nbsp;&ensp;|&ensp;</td>
-				<% if logged_in? %>
+				<% if user_signed_in? %>
 				<td>
 					<div class="rate_comm" id="rate_comment_<%= comment.id.to_s%>">
 					<% if (comment_score = myscores.select{ |s| s.comment_id == comment.id }.first).nil? %>Was this comment useful?  
@@ -54,7 +54,7 @@
 			<td>&nbsp;|&nbsp;&nbsp;<%= comment_scores.select{ |s| s.score > 5 }.size %> of <%= comment_scores.size %> found useful.
 			</td>
 			<% end %>
-			<% if logged_in? %>
+			<% if user_signed_in? %>
 			<td class="flag" onmouseover="Element.show('flag_help_<%= comment.id.to_s %>');" onmouseout="Element.hide('flag_help_<%= comment.id.to_s %>');">
 			<%= link_to image_tag('/images/flag.png', :alt => 'flag'), :controller => 'comments', :action => 'flag', :id => comment.id %>
 			<%= dbox_start("flag_help_#{comment.id.to_s}", -190, 0, 175, "right")%>
@@ -77,7 +77,7 @@
 <div id="com_<%= comment.id.to_s %>" style="clear:both;display:none;"> </div>
 
 </div>
-<% if logged_in? && current_user.user_role.can_moderate_articles %>
+<% if user_signed_in? && current_user.user_role.can_moderate_articles %>
 <div style="clear:left;">       
 	<form class="button-to" action="/comments/censor/<%=h comment.id %>" method="post">
 	<%= submit_tag "Censor", :value => "Censor" %>

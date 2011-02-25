@@ -69,7 +69,7 @@ $j(document).ready(function() {
 		<span class="status">            
 			<span><%= temp_url_strip(b.status) %></span>
 			<span class="date"><%= b.last_action.formatted_date if b.last_action %></span>
-			<% unless b.session == DEFAULT_CONGRESS %>
+			<% unless b.session == Settings.default_congress %>
 			<span>(<%= b.session.ordinalize %> congress)</span>
 			<% end %>
 			<div class="sponsor">

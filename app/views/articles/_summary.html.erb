@@ -17,23 +17,23 @@
     <img class="blogpage-blog-image" src="<%= summary.frontpage_image_url %>">
   <% end %>
   
-  <p><%= summary.excerpt_for_blog_page %></p> 
+  <p><%= summary.excerpt_for_blog_page.html_safe %></p> 
     
     
-     <%= link_to '<span>Read Full Article</span>', article_url(summary), :class => 'full_article' %>
+     <%= link_to '<span>Read Full Article</span>'.html_safe, article_url(summary), :class => 'full_article' %>
     
     <% if summary.comments.count > 0 %>
-      <%= link_to  "<span>Comments (#{summary.comments.count.to_s})</span>", 
+      <%= link_to  "<span>Comments (#{summary.comments.count.to_s})</span>".html_safe, 
                                   article_url(summary, :anchor => 'comments'),
                                     :class => 'comments_link' %>
     <% else %>
-      <%= link_to '<span>Submit a Comment</span>', article_url(summary, :anchor => 'add'), :class => 'comments_link' %>
+      <%= link_to '<span>Submit a Comment</span>'.html_safe, article_url(summary, :anchor => 'add'), :class => 'comments_link' %>
     <% end %>
     
     <% if summary.tags.size > 0 %>
     <div class="article_tags">
   	  <% summary.tags.each do |tag| %>
-  		  <%= link_to "<span class='blog_tag'>#{tag.name}</span>", :action => 'list', :tag => CGI::escape(tag.name) %>
+  		  <%= link_to "<span class='blog_tag'>#{tag.name}</span>".html_safe, :action => 'list', :tag => CGI::escape(tag.name) %>
   	  <% end rescue nil %>
     </div>
   <% end %>

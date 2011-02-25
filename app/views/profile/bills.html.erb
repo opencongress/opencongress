@@ -4,7 +4,7 @@
 	
 <div id="linkcontent" style="clear:both;padding-top:10px;width:100%;">
 <% unless @bookmarks.empty? %>
-	<h3>Bills I'm Tracking <%= link_to image_tag('feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => 'user_feeds', :login => @user.login, :action => 'bills', :key => logged_in? ? current_user.feed_key : nil %></h3>
+	<h3>Bills I'm Tracking <%= link_to image_tag('feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => 'user_feeds', :login => @user.login, :action => 'bills', :key => user_signed_in? ? current_user.feed_key : nil %></h3>
 	    <table class="simple-table2" cellspacing="0">
 	      <tr>
 	        <th scope="col">Bill</th>

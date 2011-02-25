@@ -22,8 +22,8 @@
  	
     <div id="sessions">
       <p>Sessions:</p>
-      <% AVAILABLE_CONGRESSES.each do |c| %>
-        <%= check_box_tag "search_congress[#{c}]", "#{c}", c == DEFAULT_CONGRESS ? true : false %> <%= c.ordinalize %> Congress<br />
+      <% Settings.available_congresses.each do |c| %>
+        <%= check_box_tag "search_congress[#{c}]", "#{c}", c == Settings.default_congress ? true : false %> <%= c.ordinalize %> Congress<br />
       <% end %>
     </div>
 		

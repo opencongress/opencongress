@@ -1,5 +1,5 @@
 class AccountController < ApplicationController
-  before_filter :login_from_cookie, :except => [:reset_password]
+  #before_filter :login_from_cookie, :except => [:reset_password]
   before_filter :login_required, :only => [:welcome, :accept_tos]
   after_filter :check_wiki, :only => [:login, :activate]
 
@@ -11,7 +11,7 @@ class AccountController < ApplicationController
 #  observer :user_observer
 
   def index
-    unless logged_in?
+    unless user_signed_in?
       redirect_to(login_path)
     else
       redirect_to(user_profile_path(:login => current_user.login))
@@ -51,7 +51,7 @@ class AccountController < ApplicationController
     end
 
     if params[:wiki_return_page]
-      session[:return_to] = "#{WIKI_BASE_URL}/#{params[:wiki_return_page]}"
+      session[:return_to] = "#{Settings.wiki_base_url}/#{params[:wiki_return_page]}"
     end
 
     if using_open_id?
@@ -65,7 +65,7 @@ class AccountController < ApplicationController
       return unless request.post?
     end
 
-    if logged_in?
+    if user_signed_in?
       self.current_user.update_attribute(:previous_login_date, self.current_user.last_login ? self.current_user.last_login : Time.now)
       self.current_user.update_attribute(:last_login, Time.now)
       ip = self.current_user.user_ip_addresses.find_or_create_by_addr(UserIpAddress.int_form(request.remote_ip))
@@ -142,7 +142,7 @@ class AccountController < ApplicationController
       session[:return_to] = "http://www.opencongress.org/wiki/#{params[:wiki_return_page]}"
     end    
     redirect_loc = session[:return_to]
-    self.current_user.forget_me if logged_in?
+    self.current_user.forget_me if user_signed_in?
     cookies.delete :auth_token
     cookies.delete '_session_id'
     cookies.delete 'ocloggedin'
@@ -178,8 +178,9 @@ class AccountController < ApplicationController
   def welcome
     @user = current_user
     @show_tracked_list = true
-    @most_viewed_bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME, 5)
-    @senators, @reps = Person.find_current_congresspeople_by_zipcode(@user.zipcode, @user.zip_four) if ( logged_in? && @user == current_user && !(@user.zipcode.nil? || @user.zipcode.empty?))
+
+    @most_viewed_bills = ObjectAggregate.popular('Bill', Settings.default_count_time, 5)
+    @senators, @reps = Person.find_current_congresspeople_by_zipcode(@user.zipcode, @user.zip_four) if ( user_signed_in? && @user == current_user && !(@user.zipcode.nil? || @user.zipcode.empty?))
   end
 
   def forgot_password
@@ -306,7 +307,7 @@ class AccountController < ApplicationController
   end
   
   def check_wiki
-    if logged_in? and (RAILS_ENV == 'production')
+    if user_signed_in? and (Rails.env == 'production')
       begin
         require 'net/http'
         require 'uri'

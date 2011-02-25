@@ -27,18 +27,5 @@ if defined?(PhusionPassenger)
     end
 end
 
-BASE_URL = 'http://dev.opencongress.org/'
-
-DATA_PATH = "/data"
-GOVTRACK_DATA_PATH = "#{DATA_PATH}/govtrack/#{DEFAULT_CONGRESS}"
-GOVTRACK_BILLTEXT_PATH = "#{DATA_PATH}/govtrack/bills.text"
-COMMITTEE_REPORTS_PATH = "#{DATA_PATH}/committee_reports"
-OPENSECRETS_DATA_PATH = "#{DATA_PATH}/opensecrets/"
-OC_BILLTEXT_PATH = "#{DATA_PATH}/opencongress/bills.text"
-GOVTRACK_BILLTEXT_DIFF_PATH = "#{DATA_PATH}/govtrack/bills.text.cmp"
-
-# the following API key is for OpenCongress production use only!
-TECHNORATI_API_KEY = API_KEYS['technorati_api_key']
-
 MINI_MAILER_FROM = "alerts@dev.opencongress.org"
 

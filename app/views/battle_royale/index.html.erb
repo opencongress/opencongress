@@ -45,7 +45,7 @@
             <span><%= temp_url_strip(bill.status) %></span>
             
             <span class="date"><%= bill.last_action.formatted_date if bill.last_action %></span>
-						<% unless bill.session == DEFAULT_CONGRESS %>
+						<% unless bill.session == Settings.default_congress %>
               <span>(<%= bill.session.ordinalize %> congress)</span>
             <% end %>
 

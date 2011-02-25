@@ -1,5 +1,5 @@
 <div class="<%= cycle('video1','video2') %>">
-  <div class="video_embed"><%= video.embed %></div>
+  <div class="video_embed"><%= video.embed.html_safe %></div>
   <ul class="video_meta ui-corner-all">
     <li><h4><%= video.url.blank? ? video.title : link_to(video.title, video.url, { :target => '_new'}) %></h4></li>
     <% if video.person %>

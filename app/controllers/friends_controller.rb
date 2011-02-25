@@ -37,7 +37,7 @@ class FriendsController < ApplicationController
    		  @in_my_state_solr = User.find_users_in_states_tracking([params[:state]], @bill, 1000)
   		  @in_my_state = User.find_for_tracking_table(current_user, @bill, @in_my_state_solr.docs)
       end
-    elsif logged_in? && !current_user.zipcode.blank?
+    elsif user_signed_in? && !current_user.zipcode.blank?
 		  @state_abbrev = current_user.state_cache.first  
       @state_name = State.for_abbrev(@state_abbrev)
 		  @in_my_state_solr = User.find_users_in_states_tracking(current_user.state_cache, @bill, 1000)
@@ -54,7 +54,7 @@ class FriendsController < ApplicationController
     @users = @users_solr.nil? ? [] : User.find_for_tracking_table(current_user, @person, @users_solr.docs)
  		@page_title = "Users tracking #{@person.short_name}"
 
-		if logged_in? && !current_user.zipcode.blank?
+		if user_signed_in? && !current_user.zipcode.blank?
 		  @in_my_state_solr = User.find_users_in_states_tracking(current_user.state_cache, @person, 1000)
 		  @in_my_state = User.find_for_tracking_table(current_user, @person, @in_my_state_solr.docs)
 		  @in_my_district_solr = User.find_users_in_districts_tracking(current_user.district_cache, @person, 1000)
@@ -68,7 +68,7 @@ class FriendsController < ApplicationController
     @users = @users_solr.nil? ? [] : User.find_for_tracking_table(current_user, @issue, @users_solr.docs)
  		@page_title = "Users tracking #{@issue.term}"
 
-		if logged_in? && !current_user.zipcode.blank?
+		if user_signed_in? && !current_user.zipcode.blank?
 		  @in_my_state_solr = User.find_users_in_states_tracking(current_user.my_state, @issue, 1000)
 		  @in_my_state = User.find_for_tracking_table(current_user, @issue, @in_my_state_solr.docs)
 		  @in_my_district_solr = User.find_users_in_districts_tracking(current_user.my_district, @issue, 1000)
@@ -83,7 +83,7 @@ class FriendsController < ApplicationController
     @users = @users_solr.nil? ? [] : User.find_for_tracking_table(current_user, @committee, @users_solr.docs)
  		@page_title = "Users tracking the #{@committee.name} Committee"
 
-		if logged_in? && !current_user.zipcode.blank?
+		if user_signed_in? && !current_user.zipcode.blank?
 		  @in_my_state_solr = User.find_users_in_states_tracking(current_user.my_state, @committee, 1000)
 		  @in_my_state = User.find_for_tracking_table(current_user, @committee, @in_my_state_solr.docs)
 		  @in_my_district_solr = User.find_users_in_districts_tracking(current_user.my_district, @committee, 1000)
@@ -99,7 +99,7 @@ class FriendsController < ApplicationController
     @users = @users_solr.nil? ? [] : User.find_for_tracking_table(current_user, @person, @users_solr.docs)
  		@page_title = "Users Supporting #{@person.short_name}"
 
-		if logged_in? && !current_user.zipcode.blank?
+		if user_signed_in? && !current_user.zipcode.blank?
 		  @in_my_state_solr = User.find_users_in_states_supporting(current_user.state_cache, @person, 1000)
 		  @in_my_state = User.find_for_tracking_table(current_user, @person, @in_my_state_solr.docs)
 		  @in_my_district_solr = User.find_users_in_districts_supporting(current_user.district_cache, @person, 1000)
@@ -116,7 +116,7 @@ class FriendsController < ApplicationController
     @users = @users_solr.nil? ? [] : User.find_for_tracking_table(current_user, @person, @users_solr.docs)
  		@page_title = "Users Opposing #{@person.short_name}"
 
-		if logged_in? && !current_user.zipcode.blank?
+		if user_signed_in? && !current_user.zipcode.blank?
 		  @in_my_state_solr = User.find_users_in_states_opposing(current_user.state_cache, @person, 1000)
 		  @in_my_state = User.find_for_tracking_table(current_user, @person, @in_my_state_solr.docs)
 		  @in_my_district_solr = User.find_users_in_districts_opposing(current_user.district_cache, @person, 1000)
@@ -131,7 +131,7 @@ class FriendsController < ApplicationController
     @users = @users_solr.nil? ? [] : User.find_for_tracking_table(current_user, @bill, @users_solr.docs)
  		@page_title = "Users Supporting #{@bill.typenumber}"
 
-		if logged_in? && !current_user.zipcode.blank?
+		if user_signed_in? && !current_user.zipcode.blank?
 		  @in_my_state_solr = User.find_users_in_states_supporting(current_user.state_cache, @bill, 1000)
 		  @in_my_state = User.find_for_tracking_table(current_user, @bill, @in_my_state_solr.docs)
 		  @in_my_district_solr = User.find_users_in_districts_supporting(current_user.district_cache, @bill, 1000)
@@ -146,7 +146,7 @@ class FriendsController < ApplicationController
     @users = @users_solr.nil? ? [] : User.find_for_tracking_table(current_user, @bill, @users_solr.docs)
  		@page_title = "Users Opposing #{@bill.typenumber}"
 
-		if logged_in? && !current_user.zipcode.blank?
+		if user_signed_in? && !current_user.zipcode.blank?
 		  @in_my_state_solr = User.find_users_in_states_opposing(current_user.state_cache, @bill, 1000)
 		  @in_my_state = User.find_for_tracking_table(current_user, @bill, @in_my_state_solr.docs)
 		  @in_my_district_solr = User.find_users_in_districts_opposing(current_user.district_cache, @bill, 1000)

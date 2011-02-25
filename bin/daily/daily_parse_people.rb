@@ -126,7 +126,7 @@ class PeopleListener
         cp.role = as['role']
       end
       # temp for now until Josh changes data definition
-      cp.session = DEFAULT_CONGRESS
+      cp.session = Settings.default_congress
       cp.save
       
       @current_committees << cp
@@ -158,7 +158,7 @@ end
 puts "people parsed"
 
 Person.transaction {
-  source = File.open(GOVTRACK_DATA_PATH + "/../people.xml")
+  source = File.open(Settings.govtrack_data_path + "/#{Settings.default_congress}/../people.xml")
   
   listener = PeopleListener.new
   REXML::Document.parse_stream(source, listener)

@@ -1,20 +1,21 @@
 class Person < ViewableObject  
 #  acts_as_solr :fields => [:party, {:with_party_percentage => :float}, {:abstains_percentage => :float}, {:against_party_percentage => :float}], 
 #               :facets => [:party]
+  require 'yahoo_geocoder'
 
   has_many :committees, :through => :committee_people
-  has_many :committee_people, :conditions => [ "committees_people.session = ?", DEFAULT_CONGRESS ]
-  has_many :bills, :foreign_key => :sponsor_id, :conditions => [ "bills.session = ?", DEFAULT_CONGRESS ], :include => [ :bill_titles, :actions ], :order => 'bills.introduced DESC'
+  has_many :committee_people, :conditions => [ "committees_people.session = ?", Settings.default_congress ]
+  has_many :bills, :foreign_key => :sponsor_id, :conditions => [ "bills.session = ?", Settings.default_congress ], :include => [ :bill_titles, :actions ], :order => 'bills.introduced DESC'
   has_many :bill_cosponsors
-  has_many :bills_cosponsored, :class_name => 'Bill', :through => :bill_cosponsors, :source => :bill, :conditions => [ "bills.session = ?", DEFAULT_CONGRESS ], :order => 'bills.introduced DESC'
+  has_many :bills_cosponsored, :class_name => 'Bill', :through => :bill_cosponsors, :source => :bill, :conditions => [ "bills.session = ?", Settings.default_congress ], :order => 'bills.introduced DESC'
   has_many :roles, :order => 'roles.startdate DESC'
   has_many :roll_call_votes, :include => :roll_call, :order => 'roll_calls.date DESC'
 
   with_options :class_name => "RollCall", :through => :roll_call_votes,
                :source => :roll_call, :include => :bill do |rc|
-    rc.has_many :unabstained_roll_calls, :conditions => ["roll_call_votes.vote != '0' AND bills.session = ?", DEFAULT_CONGRESS]
-    rc.has_many :abstained_roll_calls, :conditions => ["vote = '0' AND bills.session = ?", DEFAULT_CONGRESS]
-    rc.has_many :party_votes, :conditions => '((roll_calls.#{party == "Democrat" ? "democratic_position" : "republican_position"} = \'t\' AND vote = \'+\') OR (roll_calls.#{party == "Democrat" ? "democratic_position" : "republican_position"} = \'f\' AND vote = \'-\')) AND bills.session = #{DEFAULT_CONGRESS}'
+    rc.has_many :unabstained_roll_calls, :conditions => ["roll_call_votes.vote != '0' AND bills.session = ?", Settings.default_congress]
+    rc.has_many :abstained_roll_calls, :conditions => ["vote = '0' AND bills.session = ?", Settings.default_congress]
+    rc.has_many :party_votes, :conditions => '((roll_calls.#{party == "Democrat" ? "democratic_position" : "republican_position"} = \'t\' AND vote = \'+\') OR (roll_calls.#{party == "Democrat" ? "democratic_position" : "republican_position"} = \'f\' AND vote = \'-\')) AND bills.session = #{Settings.default_congress}'
   end
 
   has_many :person_approvals
@@ -172,7 +173,7 @@ class Person < ViewableObject
     self.to_xml(default_options.merge(options))
   end
 
-  def Person.random_commentary(person_id, type, limit = 1, since = DEFAULT_COUNT_TIME)
+  def Person.random_commentary(person_id, type, limit = 1, since = Settings.default_count_time)
     p = Person.find_by_id(person_id)
     random_item = nil
     if p
@@ -190,7 +191,7 @@ class Person < ViewableObject
   end
 
   def self.list_chamber(chamber, congress, order, limit = nil)
-    def_count_days = DEFAULT_COUNT_TIME.to_i / 24 / 60 / 60
+    def_count_days = Settings.default_count_time.to_i / 24 / 60 / 60
     lim = limit.nil? ? "" : "LIMIT #{limit}"
 
     Person.find_by_sql(["SELECT people.*, 
@@ -232,7 +233,7 @@ class Person < ViewableObject
     #WHERE roles.role_type = ? AND roles.startdate <= ? AND roles.enddate >= ? ORDER BY #{order} #{lim};", chamber, Date.today, Date.today])
   end
 
-  def Person.rep_random_news(limit = 1, since = DEFAULT_COUNT_TIME)
+  def Person.rep_random_news(limit = 1, since = Settings.default_count_time)
     random_item = nil
     tries = 0
     until random_item != nil || tries == 3
@@ -247,7 +248,7 @@ class Person < ViewableObject
     end
   end
 
-  def Person.rep_random_blog(limit = 1, since = DEFAULT_COUNT_TIME)
+  def Person.rep_random_blog(limit = 1, since = Settings.default_count_time)
     random_item = nil
     tries = 0
     until random_item != nil || tries == 3
@@ -262,7 +263,7 @@ class Person < ViewableObject
     end
   end
 
-  def Person.sen_random_news(limit = 1, since = DEFAULT_COUNT_TIME)
+  def Person.sen_random_news(limit = 1, since = Settings.default_count_time)
     random_item = nil
     tries = 0
     until random_item != nil || tries == 3
@@ -277,7 +278,7 @@ class Person < ViewableObject
     end
   end
 
-  def Person.sen_random_blog(limit = 1, since = DEFAULT_COUNT_TIME)
+  def Person.sen_random_blog(limit = 1, since = Settings.default_count_time)
     random_item = nil
     tries = 0
     until random_item != nil || tries == 3
@@ -386,9 +387,9 @@ class Person < ViewableObject
     link = ""
     
     unless self.wiki_link
-      link = "#{WIKI_BASE_URL}/#{firstname}_#{lastname}"
+      link = "#{Settings.wiki_base_url}/#{firstname}_#{lastname}"
     else
-      link = "#{WIKI_BASE_URL}/#{self.wiki_link.name}"
+      link = "#{Settings.wiki_base_url}/#{self.wiki_link.name}"
     end
     
     return link
@@ -400,7 +401,7 @@ class Person < ViewableObject
     
     bio = Wiki.biography_text_for(article_name)
     unless bio.blank?
-      more_link = "<a class='wiki_bio_more' href='#{WIKI_BASE_URL}/#{article_name}\#Biography'>Read More...</a></p>"
+      more_link = "<a class='wiki_bio_more' href='#{Settings.wiki_base_url}/#{article_name}\#Biography'>Read More...</a></p>"
       
       # get first two sections
       first = bio.index(/<br\s\/><br\s\/>/)
@@ -655,7 +656,7 @@ class Person < ViewableObject
       AND bills.session = ?
       GROUP BY roll_call_votes.person_id) rep_position ON rep_position.p_id=people.id
     WHERE roles.startdate <= ? AND roles.enddate >= ?) votes_agg
-    WHERE people.id=votes_agg.person_id", DEFAULT_CONGRESS, DEFAULT_CONGRESS, DEFAULT_CONGRESS, Date.today, Date.today]
+    WHERE people.id=votes_agg.person_id", Settings.default_congress, Settings.default_congress, Settings.default_congress, Date.today, Date.today]
     
   
     ActiveRecord::Base.connection.execute(sanitize_sql_array(update_query))
@@ -733,7 +734,7 @@ class Person < ViewableObject
   end
   
   def Person.random(role, limit=3, congress=109)
-    Person.find_by_sql ["SELECT * FROM (SELECT random(), people.* FROM people LEFT OUTER JOIN roles on roles.person_id=people.id WHERE roles.role_type = ? AND roles.startdate <= ? AND roles.enddate >= ? ORDER BY 1) as peeps LIMIT ?;", role, CONGRESS_START_DATES[congress], CONGRESS_START_DATES[congress], limit]
+    Person.find_by_sql ["SELECT * FROM (SELECT random(), people.* FROM people LEFT OUTER JOIN roles on roles.person_id=people.id WHERE roles.role_type = ? AND roles.startdate <= ? AND roles.enddate >= ? ORDER BY 1) as peeps LIMIT ?;", role, Settings.congress_start_dates[congress], Settings.congress_start_dates[congress], limit]
   end
 
   def Person.find_all_by_last_name_ci_and_state(name, state)
@@ -1071,7 +1072,7 @@ class Person < ViewableObject
     end    
   end
   
-  def Person.find_by_most_commentary(type = 'news', person_type = 'rep', num = 5, since = DEFAULT_COUNT_TIME)
+  def Person.find_by_most_commentary(type = 'news', person_type = 'rep', num = 5, since = Settings.default_count_time)
     title = (person_type == 'rep') ? 'Rep.' : 'Sen.'
     is_news = (type == "news") ? true : false
     
@@ -1104,7 +1105,7 @@ class Person < ViewableObject
     (people.sort { |p1, p2| p2.stats.send(date_method) <=> p1.stats.send(date_method) })
   end
   
-  def commentary_count(type = 'news', since = DEFAULT_COUNT_TIME)
+  def commentary_count(type = 'news', since = Settings.default_count_time)
     return @attributes['article_count'] if @attributes['article_count']
     
     if type == 'news'
@@ -1114,7 +1115,7 @@ class Person < ViewableObject
     end
   end
   
-  def Person.representatives(congress = DEFAULT_CONGRESS, order_by = 'name')
+  def Person.representatives(congress = Settings.default_congress, order_by = 'name')
     Person.find_by_role_type('rep', congress, order_by)
   end
   
@@ -1126,7 +1127,7 @@ class Person < ViewableObject
                 :order => 'people.lastname')
   end
 
-  def Person.senators(congress = DEFAULT_CONGRESS, order_by = 'name')
+  def Person.senators(congress = Settings.default_congress, order_by = 'name')
     Person.find_by_role_type('sen', congress, order_by)
   end
 
@@ -1156,9 +1157,9 @@ class Person < ViewableObject
   def Person.top20_viewed(person_type = nil)
     case person_type 
     when 'sen'
-      people = ObjectAggregate.popular('Person', DEFAULT_COUNT_TIME, 540).select{|p| p.title == 'Rep.'}[0..20]
+      people = ObjectAggregate.popular('Person', Settings.default_count_time, 540).select{|p| p.title == 'Rep.'}[0..20]
     when 'rep'
-      people = ObjectAggregate.popular('Person', DEFAULT_COUNT_TIME, 540).select{|p| p.title == 'Rep.'}[0..20]
+      people = ObjectAggregate.popular('Person', Settings.default_count_time, 540).select{|p| p.title == 'Rep.'}[0..20]
     else
       people = ObjectAggregate.popular('Person')
     end
@@ -1180,9 +1181,9 @@ class Person < ViewableObject
     (people.sort { |p1, p2| p2.stats.entered_top_viewed <=> p1.stats.entered_top_viewed })
   end
   
-  def representative_for_congress?(congress = DEFAULT_CONGRESS )
+  def representative_for_congress?(congress = Settings.default_congress )
     #may be able to simplify this as >= 400000
-    not (roles.select { |r| r.role_type == 'rep' && r.startdate <= DateTime.parse(CONGRESS_START_DATES[congress]) && r.enddate >= DateTime.parse(CONGRESS_START_DATES[congress])  }.empty?)
+    not (roles.select { |r| r.role_type == 'rep' && r.startdate <= DateTime.parse(Settings.congress_start_dates[congress]) && r.enddate >= DateTime.parse(Settings.congress_start_dates[congress])  }.empty?)
   end
 
   def representative?
@@ -1193,17 +1194,17 @@ class Person < ViewableObject
     not @@NONVOTING_TERRITORIES.include?(state)
   end
 
-  def senator_for_congress? (congress = DEFAULT_CONGRESS)
+  def senator_for_congress? (congress = Settings.default_congress)
     #may be able to simplify this as < 400000
-    not (roles.select { |r| r.role_type == 'sen' && r.startdate <= DateTime.parse(CONGRESS_START_DATES[congress]) && r.enddate >= DateTime.parse(CONGRESS_START_DATES[congress])  }.empty?)
+    not (roles.select { |r| r.role_type == 'sen' && r.startdate <= DateTime.parse(Settings.congress_start_dates[congress]) && r.enddate >= DateTime.parse(Settings.congress_start_dates[congress])  }.empty?)
   end
   
   def senator?
     not (roles.select { |r| r.role_type == 'sen' && r.startdate <= Date.today && r.enddate >= Date.today  }.empty?)    
   end
 
-  def congress? (congress = DEFAULT_CONGRESS)
-    not (roles.select { |r| r.startdate <= DateTime.parse(CONGRESS_START_DATES[congress]) && r.enddate >= DateTime.parse(CONGRESS_START_DATES[congress])  }.empty?)
+  def congress? (congress = Settings.default_congress)
+    not (roles.select { |r| r.startdate <= DateTime.parse(Settings.congress_start_dates[congress]) && r.enddate >= DateTime.parse(Settings.congress_start_dates[congress])  }.empty?)
   end
 
   def belongs_to_major_party?
@@ -1294,14 +1295,14 @@ class Person < ViewableObject
     Person.find_by_sql(["SELECT * FROM oc_votes_together(?, ?) 
                          AS (v_id integer, v_count bigint) 
                          LEFT OUTER JOIN people ON v_id=people.id 
-                         ORDER BY v_count DESC", self.id, CONGRESS_START_DATES[DEFAULT_CONGRESS]])
+                         ORDER BY v_count DESC", self.id, Settings.congress_start_dates[Settings.default_congress]])
   end
   
   def votes_apart_list
     Person.find_by_sql(["SELECT * FROM oc_votes_apart(?, ?) 
                          AS (v_id integer, v_count bigint) 
                          LEFT OUTER JOIN people ON v_id=people.id 
-                         ORDER BY v_count DESC", self.id, CONGRESS_START_DATES[DEFAULT_CONGRESS]])
+                         ORDER BY v_count DESC", self.id, Settings.congress_start_dates[Settings.default_congress]])
   end
   
   def is_sitting?
@@ -1321,8 +1322,8 @@ class Person < ViewableObject
     end
   end
 
-  def roll_call_votes_for_congress(congress = DEFAULT_CONGRESS)
-    self.roll_call_votes.find(:all, :conditions => [ "roll_calls.date > ?", CONGRESS_START_DATES[DEFAULT_CONGRESS]],
+  def roll_call_votes_for_congress(congress = Settings.default_congress)
+    self.roll_call_votes.find(:all, :conditions => [ "roll_calls.date > ?", Settings.congress_start_dates[Settings.default_congress]],
                               :include => { :roll_call => { :roll_call_votes => :person }})
   end
   
@@ -1338,7 +1339,7 @@ class Person < ViewableObject
     self.person_stats
   end
   
-  def sectors_for_cycle(cycle = CURRENT_OPENSECRETS_CYCLE)
+  def sectors_for_cycle(cycle = Settings.current_opensecrets_cycle)
     sectors.select { |s| s.cycle == cycle }
   end
   
@@ -1351,7 +1352,7 @@ class Person < ViewableObject
   def self.full_text_search(q, options = {})
     current = options[:only_current] ? " AND (people.title='Rep.' OR people.title='Sen.')" : ""
     
-    people = Person.paginate_by_sql(["SELECT people.*, rank(fti_names, ?, 1) as tsearch_rank FROM people WHERE people.fti_names @@ to_tsquery('english', ?) #{current} ORDER BY people.lastname", q, q], :per_page => DEFAULT_SEARCH_PAGE_SIZE, :page => options[:page])
+    people = Person.paginate_by_sql(["SELECT people.*, rank(fti_names, ?, 1) as tsearch_rank FROM people WHERE people.fti_names @@ to_tsquery('english', ?) #{current} ORDER BY people.lastname", q, q], :per_page => Settings.default_search_page_size, :page => options[:page])
     people     
   end
 
@@ -1373,7 +1374,7 @@ class Person < ViewableObject
     average_approval_from_state(self.state)    
   end
 
-  def top_interest_groups(num = 10, cycle = CURRENT_OPENSECRETS_CYCLE)
+  def top_interest_groups(num = 10, cycle = Settings.current_opensecrets_cycle)
     igs = CrpInterestGroup.find_by_sql(["SELECT crp_interest_groups.*, top_ind_igs.ind_contrib_total, top_pac_igs.pac_contrib_total, (COALESCE(top_ind_igs.ind_contrib_total, 0) + COALESCE(top_pac_igs.pac_contrib_total, 0)) AS contrib_total FROM crp_interest_groups
     LEFT JOIN
       (SELECT crp_interest_group_osid, SUM(crp_contrib_individual_to_candidate.amount)::integer as ind_contrib_total 
@@ -1391,7 +1392,7 @@ class Person < ViewableObject
     LIMIT ?", cycle, osid, cycle, osid, num])
   end
   
-  def top_industries(num = 10, cycle = CURRENT_OPENSECRETS_CYCLE)
+  def top_industries(num = 10, cycle = Settings.current_opensecrets_cycle)
     CrpIndustry.find_by_sql(["SELECT crp_industries.*, top_ind_is.ind_contrib_total, top_pac_is.pac_contrib_total, (COALESCE(top_ind_is.ind_contrib_total, 0) + COALESCE(top_pac_is.pac_contrib_total, 0)) AS contrib_total FROM crp_industries
     LEFT JOIN
       (SELECT crp_industries.id, SUM(crp_contrib_individual_to_candidate.amount) as ind_contrib_total 
@@ -1422,11 +1423,11 @@ class Person < ViewableObject
 
   def actions_timeline
     rolls = roll_call_votes.find(:all, :include => [{:roll_call => :bill}], 
-                                       :conditions => ["bills.session = ?", DEFAULT_CONGRESS - 1]
+                                       :conditions => ["bills.session = ?", Settings.default_congress - 1]
                                 ).group_by{|a| a.roll_call.date.to_date}.reverse
     start_date = Time.parse("January 1st, #{RollCall.find(:first, :include => 
                                               [:bill], 
-                                              :conditions => ["bills.session = ?", DEFAULT_CONGRESS - 1], 
+                                              :conditions => ["bills.session = ?", Settings.default_congress - 1], 
                                               :order => ["roll_calls.date asc"]).date.year}")
     end_date = start_date + 2.years
     puts end_date.to_s

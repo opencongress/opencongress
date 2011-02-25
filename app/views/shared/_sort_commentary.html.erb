@@ -1,12 +1,12 @@
 <ul id="sort" class="sort_comments">
 <h4>Sort By</h4>
 		<li id="newest" class="<%= @sort == 'newest' ? "active" : "" %>">
-			<%= link_to "<span>Newest First</span>", :controller => object_type, :action => params[:action], :id => object_id, :sort => 'newest' %>
+			<%= link_to "<span>Newest First</span>".html_safe, :controller => object_type, :action => params[:action], :id => object_id, :sort => 'newest' %>
 	 	</li>
 		<li id="oldest" class="<%= @sort == 'oldest' ? "active" : "" %>">
-			<%= link_to "<span>Oldest First</span>", :controller => object_type, :action => params[:action], :id => object_id, :sort => 'oldest' %>
+			<%= link_to "<span>Oldest First</span>".html_safe, :controller => object_type, :action => params[:action], :id => object_id, :sort => 'oldest' %>
 		</li>
 		<li id="rating" class="<%= @sort == 'toprated' ? "active" : "" %>">
-			<%= link_to "<span>Highest Rated</span>", :controller => object_type, :action => params[:action], :id => object_id, :sort => 'toprated' %>
+			<%= link_to "<span>Highest Rated</span>".html_safe, :controller => object_type, :action => params[:action], :id => object_id, :sort => 'toprated' %>
 		</li>
 </ul>

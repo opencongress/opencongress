@@ -1,5 +1,3 @@
-# Methods added to this helper will be available to all templates in
-# the application.
 module ApplicationHelper
   def split_list(list, attribute, item_limit, action, controller = nil, show_views = false, trunc = false)
     item_limit = list.size if item_limit > list.size
@@ -20,7 +18,7 @@ module ApplicationHelper
     if item.kind_of? Bill
       link_text +=  "<span class=\"date\"><span>#{temp_url_strip(item.status)}</span>#{item.last_action.formatted_date if item.last_action}</span>"
     end
-    link_text += show_views ? "<span class=\"views_count\"><span>#{item.views(DEFAULT_COUNT_TIME) if show_views}</span> views</span>" : ""
+    link_text += show_views ? "<span class=\"views_count\"><span>#{item.views(Settings.default_count_time) if show_views}</span> views</span>" : ""
 
     if item.kind_of? Bill
       controller ? link_to(link_text, { :action => action, :controller => controller, :id => item.ident }) :
@@ -245,11 +243,11 @@ EOT
   end
   
   def technorati_button
-    '<a class="technorati" target="_blank" href="http://www.technorati.com">Information made available by <strong>Technorati</strong></a>'
+    '<a class="technorati" target="_blank" href="http://www.technorati.com">Information made available by <strong>Technorati</strong></a>'.html_safe
   end
 
   def daylife_button
-    '<a class="daily_life" target="_blank" href="http://www.daylife.com">Information made available by <strong>Daily Life</strong></a>'
+    '<a class="daily_life" target="_blank" href="http://www.daylife.com">Information made available by <strong>Daily Life</strong></a>'.html_safe
   end
 
   def short_date(date)
@@ -320,7 +318,7 @@ EOT
     st = SiteText.find_explain(tag)
     text = st ? st : ""
     
-    "<div class=\"explain_box\">#{text}</div>"
+    "<div class=\"explain_box\">#{text}</div>".html_safe
   end
   
   def site_text_plaintext(tag)
@@ -348,22 +346,22 @@ EOT
     end
   end
   
-  def admin_logged_in?
-    return (logged_in? && current_user.user_role.can_blog) ? true : false
+  def admin_user_signed_in?
+    return (user_signed_in? && current_user.user_role.can_blog) ? true : false
   end
   
   def can_blog?
-    return (logged_in? && current_user.user_role.can_blog) ? true : false
+    return (user_signed_in? && current_user.user_role.can_blog) ? true : false
   end
   
   def search_link(text)
     capitalized_words = []
     text.split.each { |w| capitalized_words << w.capitalize }
-    "<a href=\"/search/result?q=#{text}&amp;search_congress%5B#{DEFAULT_CONGRESS}%5D=#{DEFAULT_CONGRESS}&amp;search_bills=1&amp;search_people=1&amp;search_committees=1&amp;search_industries=1&amp;search_issues=1&amp;search_commentary=1\" target=\"_top\">#{truncate(capitalized_words.join(' '), length => 70)}</a>"
+    "<a href=\"/search/result?q=#{text}&amp;search_congress%5B#{Settings.default_congress}%5D=#{Settings.default_congress}&amp;search_bills=1&amp;search_people=1&amp;search_committees=1&amp;search_industries=1&amp;search_issues=1&amp;search_commentary=1\" target=\"_top\">#{truncate(capitalized_words.join(' '), length => 70)}</a>".html_safe
   end
 
   def search_url(text)
-    "/search/result?q=#{text}&amp;search_congress%5B#{DEFAULT_CONGRESS}%5D=#{DEFAULT_CONGRESS}&amp;search_bills=1&amp;search_people=1&amp;search_committees=1&amp;search_industries=1&amp;search_issues=1&amp;search_commentary=1"
+    "/search/result?q=#{text}&amp;search_congress%5B#{Settings.default_congress}%5D=#{Settings.default_congress}&amp;search_bills=1&amp;search_people=1&amp;search_committees=1&amp;search_industries=1&amp;search_issues=1&amp;search_commentary=1"
   end
   
   ### XML/ATOM helpers
@@ -438,7 +436,7 @@ EOT
     end
   end
   def add_friend_link_ajax(friend, update_div = "fdiv")
-     if logged_in? 
+     if user_signed_in? 
        friend_login = CGI::escapeHTML(friend.login)
        f = current_user.friends.find_by_friend_id(friend.id)
        if f.nil? && friend != current_user
@@ -472,6 +470,7 @@ EOT
       margin = 20
     end
     ret += "</ul>\n"
+    ret.html_safe
   end
   
 
@@ -483,6 +482,7 @@ EOT
       ret += "\t</li>"
     end
     ret += "</ul>\n"
+    ret.html_safe
   end
   
   def percent_to_color(result) #where result is whole number percentage,
@@ -525,7 +525,7 @@ EOT
 	def draw_inline_user_bill_vote(bill)
     bill_vote_images = String.new
     bill_vote_images = inline_determine_support(bill)
-    if logged_in?
+    if user_signed_in?
       bv = current_user.bill_votes.find_by_bill_id(bill.id)
       if bv
         if bv.support == 0
@@ -536,7 +536,7 @@ EOT
       end
     end
     bill_vote_images = bill_vote_images
-    return bill_vote_images
+    return bill_vote_images.html_safe
   end
   
 	def inline_determine_support(bill, support = 10)
@@ -554,7 +554,7 @@ EOT
 		end
 		logger.info params[:controller]
 		if request.path_parameters['controller'] == "battle_royale"
-			if logged_in?
+			if user_signed_in?
 			"" +
 			link_to_remote("Aye",
 			{ :url => {:controller => 'battle_royale', :action => 'br_bill_vote', :bill => bill.ident, :id => 0}},
@@ -575,15 +575,15 @@ EOT
   			""
        end
 		else
-		  if logged_in?
+		  if user_signed_in?
         "<div class='voting_buttons'>" +
-          link_to_remote(image_tag('yes.png') + "<span>I Support this Bill</span>",
+          link_to_remote(image_tag('yes.png') + "<span>I Support this Bill</span>".html_safe,
   			      {:url => {:controller => 'bill', :action => 'bill_vote', :bill => bill.ident, :id => 0}},
   			      :class => "yes #{yah}") +
         "
                                             
         " +
-          link_to_remote(image_tag('no.png') + "<span>I Oppose this Bill</span>",
+          link_to_remote(image_tag('no.png') + "<span>I Oppose this Bill</span>".html_safe,
   			      {:url => {:controller => 'bill', :action => 'bill_vote', :bill => bill.ident, :id => 1}},
   			      :class => "no #{nah}") +
         %Q{
@@ -593,12 +593,12 @@ EOT
         }
       else
         '<div class="voting_buttons">' +
-          link_to(image_tag('yes.png') + "<span>I Support this Bill</span>",
+          link_to(image_tag('yes.png') + "<span>I Support this Bill</span>".html_safe,
               login_url(:modal => true, :login_action => 0), :class => "vote_trigger yes") + 
         "
           
         " +
-          link_to(image_tag('no.png') + "<span>I Oppose this Bill</span>",
+          link_to(image_tag('no.png') + "<span>I Oppose this Bill</span>".html_safe,
               login_url(:modal => true, :login_action => 1), :class => "vote_trigger no") +
         "
         </div>
@@ -624,7 +624,7 @@ EOT
     <h3 class="clearfix" style="color:#{color};" id="support_#{bill.id.to_s}">#{result.nil? ? "-" : result}%</h3>
     <h4>Users Support Bill</h4>
     <font>#{bs} in favor / #{bo} opposed</font>
-    </div>}
+    </div>}.html_safe
   end
   
   def my_congresspeople_votes(bill)
@@ -697,7 +697,7 @@ EOT
         .jqmAddClose('##{text_name}_close');
     });
     </script>
-    <a href="#" id="#{text_name}_trigger" class="dbox_trigger">?</a>}
+    <a href="#" id="#{text_name}_trigger" class="dbox_trigger">?</a>}.html_safe
   end
   
   def dbox_content(text_name)
@@ -712,7 +712,7 @@ EOT
      <p>#{text}</p>
      </div>
      <img src="/images/resize.gif" id="#{text_name}_resize" alt="resize" class="dbox_resize" />
-     </div>}
+     </div>}.html_safe
   end
   
   def dbox_start(div_name, x_off, y_off, width, point = "")
@@ -731,7 +731,7 @@ EOT
     <tr>
     <td class="cl" />
     <td class="cc">'
-    return out
+    return out.html_safe
   end
 
   def dbox_end
@@ -745,15 +745,15 @@ EOT
     </tr>
     </table>
     </div>
-    </div>'
+    </div>'.html_safe
   end
   
   def make_tabs(tabs)
     make_tabs = tabs.inject([]) do |text, link|
       here = (link[1][:action] == controller.action_name) ? 'here' : ''
-      text << "<li id='#{link[1][:action]}' class='#{here}'>" + link_to("<span>#{link[0].to_s}</span>", link[1], :class => link[0].slice!(0..3)) + "</li>"
+      text << "<li id='#{link[1][:action]}' class='#{here}'>" + link_to("<span>#{link[0].to_s}</span>".html_safe, link[1], :class => link[0].slice!(0..3)) + "</li>"
      end
-     make_tabs.join("\n")
+     make_tabs.join("\n").html_safe
   end
 
   def tag_cloud(tags, classes)
@@ -826,7 +826,7 @@ EOT
 
   def info_box
     if @site_text_page && !@site_text_page.title_desc.blank?
-      return "<div class=\"extra_description\">#{@site_text_page.title_desc}</div>"
+      return "<div class=\"extra_description\">#{@site_text_page.title_desc}</div>".html_safe
     else
       return ""
     end
@@ -844,7 +844,7 @@ EOT
   end
 
   def bookmarking_image
-    "<link rel=\"image_src\" href=\"" + (@bookmarking_image.blank? ? image_path("fb-default.jpg") : @bookmarking_image) + "\" />"
+    "<link rel=\"image_src\" href=\"" + (@bookmarking_image.blank? ? image_path("fb-default.jpg") : @bookmarking_image) + "\" />".html_safe
   end
   
   def has_originating_chamber_roll_call?(bill)
@@ -889,6 +889,6 @@ EOT
   end
   
   def opensecrets_cycle_years
-    "#{CURRENT_OPENSECRETS_CYCLE.to_i - 1}-#{CURRENT_OPENSECRETS_CYCLE}"
+    "#{Settings.current_opensecrets_cycle.to_i - 1}-#{Settings.current_opensecrets_cycle}"
   end
 end

@@ -94,6 +94,6 @@ class BillsListener
   end
 end
 
-source = File.open(GOVTRACK_DATA_PATH + "/bills.index.xml")
+source = File.open(Settings.govtrack_data_path + "/#{Settings.default_congress}/bills.index.xml")
 listener = BillsListener.new
 REXML::Document.parse_stream(source, listener)

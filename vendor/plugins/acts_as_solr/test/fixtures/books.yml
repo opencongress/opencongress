@@ -3,9 +3,11 @@ splinter_cell:
   category_id: 1
   name: Splinter Cell
   author: Tom Clancy
+  published_on: <%= Date.today - 1.year %>
   
 ruby:
   id: 2
   category_id: 2
   name: Ruby for Dummies
   author: Peter McPeterson
+  published_on: <%= Date.today - 2.years %>

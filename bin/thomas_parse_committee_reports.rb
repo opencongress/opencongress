@@ -17,7 +17,7 @@ class Object
   end
 end
 
-base_path = COMMITTEE_REPORTS_PATH
+base_path = Settings.committee_reports_path
 
 dirs = ["house", "senate", "conference", "joint"]
 

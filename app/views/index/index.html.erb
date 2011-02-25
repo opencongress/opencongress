@@ -31,7 +31,7 @@
             <ul class="tabs" id="bill_tab_select">
               <% @index_tabs.each do |tab| %>
                 <li id="<%= tab[:id] %>link">
-                  <%= link_to_function("<span>#{tab[:title]}</span>", "switchBillTab('#{tab[:id]}', '#{tab[:title]}');") %>
+                  <%= link_to_function("<span>#{tab[:title]}</span>".html_safe, "switchBillTab('#{tab[:id]}', '#{tab[:title]}');") %>
                 </li>
               <% end %>
             </ul>
@@ -87,13 +87,13 @@
             <a class="img_a" href="<%= url_for :controller => 'people', :action => 'show', :id => @popular_sen_text.person %>">
               <img src="/images/photos/thumbs_73/<%= @popular_sen_text.person.id %>.png" alt="popular senator" />
             </a>					
-            <%= link_to "<span>View Profile</span>", 
+            <%= link_to "<span>View Profile</span>".html_safe, 
             { :controller => 'people', :action => 'show', :id => @popular_sen_text.person }, 
             :class => 'med_button med_arrow' %>					
-            <%= link_to '<span>All Senators</span>', { :controller => 'people', :action => 'senators', :sort => 'popular' }, 
+            <%= link_to '<span>All Senators</span>'.html_safe, { :controller => 'people', :action => 'senators', :sort => 'popular' }, 
             :class => 'med_button med_arrow' %>
           </p>
-          <p class="clearfix"><%= @popular_sen_text.text %></p>
+          <p class="clearfix"><%= @popular_sen_text.text.html_safe %></p>
 
         </div><!-- back -->
         <span class="cap"></span>
@@ -110,14 +110,14 @@
               <img src="/images/photos/thumbs_73/<%= @popular_rep_text.person.id %>.png" alt="popular representative" />
             </a>
 
-            <%= link_to "<span>View Profile</span>", 
+            <%= link_to "<span>View Profile</span>".html_safe, 
             { :controller => 'people', :action => 'show', :id => @popular_rep_text.person },
             :class => 'med_button med_arrow' %><br />
-            <%= link_to '<span>All Reps</span>', { :controller => 'people', :action => 'representatives', :sort => 'popular' },		     
+            <%= link_to '<span>All Reps</span>'.html_safe, { :controller => 'people', :action => 'representatives', :sort => 'popular' },		     
             :class => 'med_button med_arrow' %>
           </p>
 
-          <p class="clearfix"><%= @popular_rep_text.text %></p>
+          <p class="clearfix"><%= @popular_rep_text.text.html_safe %></p>
 
         </div><!-- back -->
         <span class="cap"></span>
@@ -146,7 +146,7 @@
         </li>
         <% end %>
       </ul>	
-      <%= link_to '<span>More Recent Votes</span>', { :controller => 'roll_call', :action => :all}, :class => 'more_' %>
+      <%= link_to '<span>More Recent Votes</span>'.html_safe, { :controller => 'roll_call', :action => :all}, :class => 'more_' %>
     </div><!-- second tier -->
 
     <div id="pitch">

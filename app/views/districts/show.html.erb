@@ -70,7 +70,7 @@
 </div><!-- col12 -->
 
 <div class="col3">
-   <% unless logged_in? %><p class="callout"><a href="/register">Join now</a> and connect with <%= @district.user_count %> OpenCongress users in this district (it's free)</p><% end %>
+   <% unless user_signed_in? %><p class="callout"><a href="/register">Join now</a> and connect with <%= @district.user_count %> OpenCongress users in this district (it's free)</p><% end %>
 </div>
 
 <div class="col12">

@@ -6,7 +6,7 @@ class MemcacheExpiration
   @connection = nil
   @namespace = nil
 
-  def initialize(namespace = "opencongress_#{RAILS_ENV}")
+  def initialize(namespace = "opencongress_#{Rails.env}")
     @namespace = namespace
     connect
   end
@@ -58,7 +58,7 @@ class MemcacheExpiration
   end
 
   def connect
-    if RAILS_ENV=='production'
+    if Rails.env == 'production'
       hostport = '10.13.219.6:11211' 
       errorcount = 0
     

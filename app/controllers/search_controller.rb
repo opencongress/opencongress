@@ -13,7 +13,7 @@ class SearchController < ApplicationController
     @query = params[:q]
     @page = (params[:page] || 1).to_i
     @found_items = 0    
-    @congresses = params[:search_congress] ? params[:search_congress].keys : ["#{DEFAULT_CONGRESS}"]
+    @congresses = params[:search_congress] ? params[:search_congress].keys : ["#{Settings.default_congress}"]
     
     unless @query
       flash.now[:notice] = "You didn't enter anything in the search field!"
@@ -119,8 +119,8 @@ class SearchController < ApplicationController
         end
         
         if (@found_items == 0)
-          if (@congresses == ["#{DEFAULT_CONGRESS}"])
-            flash.now[:notice] = "Sorry, your search returned no results in the current #{DEFAULT_CONGRESS}th Congress."
+          if (@congresses == ["#{Settings.default_congress}"])
+            flash.now[:notice] = "Sorry, your search returned no results in the current #{Settings.default_congress}th Congress."
           else
             flash.now[:notice] = "Sorry, your search returned no results."
           end

@@ -2,40 +2,40 @@ module BillHelper
 
   def bill_type_name(bill_type)
     case bill_type
-    when 'hr'  : '<div>Resolutions</div> <span>House of Representatives</span>'
-    when 'h' : '<div>Bills</div> <span>House of Representatives</span>'
-    when 'hj' : '<div>Joint Resolutions</div> <span>House of Representatives</span>'
-    when 'hc' : '<div>Concurrent Resolution</div> <span>House of Representatives</span>'
-    when 's'  : '<div>Bills</div> <span>Senate</span>'
-    when 'sr'  : '<div>Resolutions</div> <span>Senate</span>'
-    when 'sj'  : '<div>Joint Resolutions</div> <span>Senate</span>'
-    when 'sc'  : '<div>Concurrent Resolution</div> <span>Senate</span>'
+    when 'hr' then '<div>Resolutions</div> <span>House of Representatives</span>'
+    when 'h' then '<div>Bills</div> <span>House of Representatives</span>'
+    when 'hj' then '<div>Joint Resolutions</div> <span>House of Representatives</span>'
+    when 'hc' then '<div>Concurrent Resolution</div> <span>House of Representatives</span>'
+    when 's' then '<div>Bills</div> <span>Senate</span>'
+    when 'sr' then '<div>Resolutions</div> <span>Senate</span>'
+    when 'sj' then '<div>Joint Resolutions</div> <span>Senate</span>'
+    when 'sc' then '<div>Concurrent Resolution</div> <span>Senate</span>'
     end
   end
   
   def bill_type_page_title(bill_type)
     case bill_type
-    when 'hr'  : 'Resolutions: House of Representatives'
-    when 'h' : 'Bills: House of Representatives'
-    when 'hj' : 'Joint Resolutions: House of Representatives'
-    when 'hc' : 'Concurrent Resolution: House of Representatives'
-    when 's'  : 'Bills: Senate'
-    when 'sr'  : 'Resolutions: Senate'
-    when 'sj'  : 'Joint Resolutions: Senate'
-    when 'sc'  : 'Concurrent Resolution: Senate'
+    when 'hr' then 'Resolutions: House of Representatives'
+    when 'h' then 'Bills: House of Representatives'
+    when 'hj' then 'Joint Resolutions: House of Representatives'
+    when 'hc' then 'Concurrent Resolution: House of Representatives'
+    when 's' then 'Bills: Senate'
+    when 'sr' then 'Resolutions: Senate'
+    when 'sj' then 'Joint Resolutions: Senate'
+    when 'sc' then 'Concurrent Resolution: Senate'
     end
   end
 
   def bill_name(bill_type, number)
     case bill_type
-    when 'hr'  : 'H.Res.'
-    when 'h' : 'H.R.'
-    when 'hj' : 'H.J.Res.'
-    when 'hc' : 'H.Con.Res.'
-    when 's'  : 'S.'
-    when 'sr'  : 'S.Res.'
-    when 'sj'  : 'S.J.Res.'
-    when 'sc'  : 'S.Con.Res.'
+    when 'hr' then 'H.Res.'
+    when 'h' then 'H.R.'
+    when 'hj' then 'H.J.Res.'
+    when 'hc' then 'H.Con.Res.'
+    when 's' then 'S.'
+    when 'sr' then 'S.Res.'
+    when 'sj' then 'S.J.Res.'
+    when 'sc' then 'S.Con.Res.'
     end + number.to_s
   end
 

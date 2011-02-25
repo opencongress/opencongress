@@ -16,6 +16,7 @@ require 'solr/field'
 class Solr::Document
   include Enumerable
   attr_accessor :boost
+  attr_reader :fields
 
   # Create a new Solr::Document, optionally passing in a hash of 
   # key/value pairs for the fields
@@ -69,5 +70,9 @@ class Solr::Document
     e.attributes['boost'] = @boost.to_s if @boost
     @fields.each {|f| e.add_element(f.to_xml)}
     return e
+  end
+
+  def each(*args, &blk)
+    fields.each(&blk)
   end
 end

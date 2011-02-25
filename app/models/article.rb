@@ -1,5 +1,6 @@
-class Article < ActiveRecord::Base   
-  acts_as_taggable_on :tags
+class Article < ActiveRecord::Base
+  acts_as_taggable
+
   has_many :comments, :as => :commentable
   belongs_to :user
   default_scope :order => 'created_at DESC'
@@ -7,7 +8,7 @@ class Article < ActiveRecord::Base
   def self.per_page
     8
   end
-
+ 
   require 'RedCloth'
   
   def to_param
@@ -96,7 +97,7 @@ class Article < ActiveRecord::Base
     
       # Note: This takes (current_page, per_page, total_entries)
       # We need to do this so we can put LIMIT and OFFSET inside the subquery.
-      WillPaginate::Collection.create(options[:page], options[:per_page] || DEFAULT_SEARCH_PAGE_SIZE, @s_count) do |pager|
+      WillPaginate::Collection.create(options[:page], options[:per_page] || Settings.default_search_page_size, @s_count) do |pager|
         # perfom the find.
         # The subquery is here so we don't run ts_headline on all rows, which takes a long long time...
         # See http://www.postgresql.org/docs/8.4/static/textsearch-controls.html

@@ -2,19 +2,19 @@ class UserNotifier < ActionMailer::Base
   def signup_notification(user)
     setup_email(user)
     @subject    += 'Confirm Your OpenCongress Login'
-    @body[:url]  = "#{BASE_URL}account/activate/#{user.activation_code}"
+    @body[:url]  = "#{Settings.base_url}account/activate/#{user.activation_code}"
   end
 
   def activation(user)
     setup_email(user)
     @subject    += 'Your account has been activated!'
-    @body[:url]  = BASE_URL
+    @body[:url]  = Settings.base_url
   end
 
   def forgot_password(user)
     setup_email(user)
     @subject    += 'Request to change your password'
-    @body[:url]  = "#{BASE_URL}account/reset_password/#{user.password_reset_code}"
+    @body[:url]  = "#{Settings.base_url}account/reset_password/#{user.password_reset_code}"
   end
 
   def reset_password(user)

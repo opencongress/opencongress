@@ -6,7 +6,7 @@
       <div <% if related_industries.last == i %>class="last"<% end %>>
         <ul>
           <li>
-            <p><%= link_to_item i, :name, :show %> <em>(<%= i.views(DEFAULT_COUNT_TIME)%> views)</em></p>
+            <p><%= link_to_item i, :name, :show %> <em>(<%= i.views(Settings.default_count_time)%> views)</em></p>
           </li>
         </ul>
       </div>

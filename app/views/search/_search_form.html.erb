@@ -6,7 +6,7 @@
 				<div class="search">	
 					<span class="left"></span>
 					<input name="q" autocomplete="off" id="search-field" type="search" value="<%= @query ||= "Search" %>" onfocus="this.value = '';" onblur="if (this.value == ''){this.value = 'Search'};"/>
-					<input id="search_congress_<%= DEFAULT_CONGRESS %>" name="search_congress[<%= DEFAULT_CONGRESS %>]" type="hidden" value="<%= DEFAULT_CONGRESS %>" /> 
+					<input id="search_congress_<%= Settings.default_congress %>" name="search_congress[<%= Settings.default_congress %>]" type="hidden" value="<%= Settings.default_congress %>" /> 
 					<%= hidden_field_tag "search_bills", "1" %>
 					<%= hidden_field_tag "search_people", "1" %>
 					<%= hidden_field_tag "search_committees", "1" %>

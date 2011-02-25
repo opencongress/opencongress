@@ -25,7 +25,7 @@ class FacebookController < ApplicationController
     unless params[:facebook][:bill_search].blank?
       search_text = prepare_tsearch_query(params[:facebook][:bill_search])
       
-      @bills = Bill.full_text_search(search_text, { :page => 1, :congresses => ["#{DEFAULT_CONGRESS}"]})
+      @bills = Bill.full_text_search(search_text, { :page => 1, :congresses => ["#{Settings.default_congress}"]})
     end
     
     render :partial => 'bill_search_results', :layout => false
@@ -40,7 +40,8 @@ class FacebookController < ApplicationController
   end
   
   def mostviewedbills
-    @bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME, 25)
+    @bills = ObjectAggregate.popular('Bill', Settings.default_count_time, 25)
+
     @bill_count = 25
     
     respond_to do |format|

@@ -37,7 +37,7 @@ class PeopleController < ApplicationController
   def people_list
     expires_in 20.minutes, :public => true
 
-    congress = params[:congress] ? params[:congress].to_i : DEFAULT_CONGRESS
+    congress = params[:congress] ? params[:congress].to_i : Settings.default_congress
     person_type = (params[:person_type] == 'senators') ? 'sen' : 'rep'
     @person_type = (person_type == 'sen') ? :senators : :representatives
     @sort = (params[:sort] || :state).to_sym
@@ -69,11 +69,11 @@ class PeopleController < ApplicationController
 
     @show_tracked_list = true
     @title_desc = SiteText.find_title_desc(person_type == 'sen' ? 'people_senator_list' : 'people_representative_list')
-    with_random_news = @people.select{|p| p.news_count.to_i > 0}.rand
-    with_random_blogs = @people.select{|p| p.blog_count.to_i > 0}.rand
+    with_random_news = @people.select{|p| p.news_count.to_i > 0}.sample
+    with_random_blogs = @people.select{|p| p.blog_count.to_i > 0}.sample
     random_news, random_blogs = [[nil,nil],[nil,nil]]
-    random_news = Person.random_commentary(with_random_news.id, "news", 1, DEFAULT_COUNT_TIME) if with_random_news
-    random_blogs = Person.random_commentary(with_random_blogs.id, "blog", 1, DEFAULT_COUNT_TIME) if with_random_blogs
+    random_news = Person.random_commentary(with_random_news.id, "news", 1, Settings.default_count_time) if with_random_news
+    random_blogs = Person.random_commentary(with_random_blogs.id, "blog", 1, Settings.default_count_time) if with_random_blogs
 
     @carousel = [random_news, random_blogs, @people.sort{|a,b| b.view_count.to_i <=> a.view_count.to_i}[0..9]]
  		
@@ -170,7 +170,7 @@ class PeopleController < ApplicationController
 
     #check for fragment cache here!
     unless read_fragment("person_meta_#{@person_type}_#{@sort}_#{@days}")
-      @people = Person.list_chamber(person_type, DEFAULT_CONGRESS, "#{@commentary_type}_count DESC")
+      @people = Person.list_chamber(person_type, Settings.default_congress, "#{@commentary_type}_count DESC")
     end
     respond_to do |format| 
       format.html { render :action => 'list' }
@@ -216,7 +216,7 @@ class PeopleController < ApplicationController
 
   def comments
     @person = Person.find(params[:id], :include => :roles)
-    congress = params[:congress] ? params[:congress] : DEFAULT_CONGRESS
+    congress = params[:congress] ? params[:congress] : Settings.default_congress
     respond_to do |format|
       format.html {
     
@@ -231,7 +231,7 @@ class PeopleController < ApplicationController
   end
   
   def show
-    congress = params[:congress] ? params[:congress] : DEFAULT_CONGRESS
+    congress = params[:congress] ? params[:congress] : Settings.default_congress
     expires_in 20.minutes, :public => true
 
     respond_to do |format|
@@ -479,7 +479,7 @@ class PeopleController < ApplicationController
                                      bills.id = roll_calls.bill_id AND
                                      roll_calls.id = roll_call_votes.roll_call_id AND
                                      roll_call_votes.person_id = ?
-                               ORDER BY bills.hot_bill_category_id, bills.lastaction DESC", DEFAULT_CONGRESS, query_stripped, @person.id],
+                               ORDER BY bills.hot_bill_category_id, bills.lastaction DESC", Settings.default_congress, query_stripped, @person.id],
                                :per_page => 30, :page => @page)
       @page_title = "Voting History Search: #{@person.name}"                      
     else
@@ -516,7 +516,7 @@ class PeopleController < ApplicationController
                                       bill_fulltext.fti_names @@ to_tsquery('english', ?) AND
                                      bills.id = bill_fulltext.bill_id AND 
                                      bills.sponsor_id = ?
-                               ORDER BY bills.hot_bill_category_id, bills.lastaction DESC", DEFAULT_CONGRESS, query_stripped, @person.id],
+                               ORDER BY bills.hot_bill_category_id, bills.lastaction DESC", Settings.default_congress, query_stripped, @person.id],
                                :per_page => 30, :page => @page)
                                
        @cosponsored_bills = Bill.paginate_by_sql(
@@ -526,7 +526,7 @@ class PeopleController < ApplicationController
                                       bills.id = bill_fulltext.bill_id AND 
                                       bills.id = bills_cosponsors.bill_id AND
                                       bills_cosponsors.person_id=?
-                                ORDER BY bills.hot_bill_category_id, bills.lastaction DESC", DEFAULT_CONGRESS, query_stripped, @person.id],
+                                ORDER BY bills.hot_bill_category_id, bills.lastaction DESC", Settings.default_congress, query_stripped, @person.id],
                                 :per_page => 30, :page => @page)
       @page_title = "Sponsored Bills Search #{@person.name}"                      
     else
@@ -648,7 +648,7 @@ class PeopleController < ApplicationController
         #direct to create page for bill?  
       end
       
-      u_approval = current_user.person_approvals.find_by_person_id(@person.id) if logged_in?
+      u_approval = current_user.person_approvals.find_by_person_id(@person.id) if user_signed_in?
       @user_approval = u_approval.rating if u_approval
       @user_approval = 5 if @user_approval.nil?
       
@@ -674,7 +674,7 @@ class PeopleController < ApplicationController
                              
   
   def can_text
-    if !(logged_in? && current_user.user_role.can_manage_text)
+    if !(user_signed_in? && current_user.user_role.can_manage_text)
       redirect_to admin_url
     end
   end

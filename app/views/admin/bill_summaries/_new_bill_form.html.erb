@@ -2,7 +2,7 @@
 
 <!--[form:bill]-->
 <p><label for="bill_session">Session</label><br/>
-<%= select 'bill', 'session', AVAILABLE_CONGRESSES.collect{|c| [ c, c] }  %></p>
+<%= select 'bill', 'session', Settings.available_congresses.collect{|c| [ c, c] }  %></p>
 
 <% bill_types = Bill.all_types %>
 <p><label for="bill_bill_type">Bill type</label><br/>

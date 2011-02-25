@@ -9,8 +9,7 @@ class IssueController < ApplicationController
 
   def alphabetical
     @sort = :alphabetical
-    
-    @carousel = [ObjectAggregate.popular('Subject', DEFAULT_COUNT_TIME).slice(0..9)]
+    @carousel = [ObjectAggregate.popular('Subject', Settings.default_count_time).slice(0..9)]
     
     letter = params[:id]
     if letter.nil?
@@ -55,7 +54,7 @@ class IssueController < ApplicationController
   def by_bill_count
     @sort = :by_bill_count
 
-    @carousel = [ObjectAggregate.popular('Subject', DEFAULT_COUNT_TIME).slice(0..9)] 
+    @carousel = [ObjectAggregate.popular('Subject', Settings.default_count_time).slice(0..9)] 
 
     @order = :bill_count
     @subjects = Subject.find(:all, :order => 'bill_count desc, term asc').paginate
@@ -73,7 +72,7 @@ class IssueController < ApplicationController
     unless @subject
        render :partial => "index/notfound_page", :layout => 'application', :status => "404" and return 
     end
-    congress = params[:congress] ? params[:congress] : DEFAULT_CONGRESS
+    congress = params[:congress] ? params[:congress] : Settings.default_congress
       respond_to do |format|
         format.html {
     @sidebar_stats_object = @subject

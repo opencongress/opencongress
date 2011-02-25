@@ -51,7 +51,7 @@ people_types.each do |p_type|
   joined_people = Person.find(:all,
                         :include => [:roles, :person_stats],
                         :conditions => [ "roles.role_type=? AND roles.startdate <= ? AND roles.enddate >= ? ",
-                               p_type, CONGRESS_START_DATES[DEFAULT_CONGRESS], CONGRESS_START_DATES[DEFAULT_CONGRESS] ])
+                               p_type, Settings.congress_start_dates[Settings.default_congress], Settings.congress_start_dates[Settings.default_congress] ])
 
   puts joined_people.inspect
   

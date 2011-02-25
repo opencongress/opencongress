@@ -8,7 +8,7 @@ require 'hpricot'
 require 'open-uri'
 require 'fileutils'
 
-$base_path = COMMITTEE_REPORTS_PATH
+$base_path = Settings.committee_reports_path
 types = ["#{$base_path}/house","#{$base_path}/senate","#{$base_path}/conference","#{$base_path}/joint"]
 types.each do |t|
   unless FileTest.directory?(t)
@@ -25,7 +25,7 @@ class Parser
   attr_reader :gen, :congress, :printable_base, :rows_per_page
 
   def initialize
-    @congress = DEFAULT_CONGRESS
+    @congress = Settings.default_congress
     @printable_base = "http://thomas.loc.gov/cgi-bin/cpquery/T?&report=%s&dbname=%s&"
     @rows_per_page = 50
   end

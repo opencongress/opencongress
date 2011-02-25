@@ -54,7 +54,7 @@ class BillController < ApplicationController
   def all
     # disabled caching for 
     #expires_in 20.minutes, :public => true
-    @congress = params[:congress] ? params[:congress] : DEFAULT_CONGRESS
+    @congress = params[:congress] ? params[:congress] : Settings.default_congress
     
     # the following is temporary until a better way is figured out!
     unless read_fragment("bill_#{@types}_index_#{@congress}")
@@ -69,7 +69,7 @@ class BillController < ApplicationController
     @page_title = "#{@types.capitalize} Bills: #{@congress}th Congress"
     @title_desc = SiteText.find_title_desc('bill_all')
     @sort = 'all'
-    #@related_bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME, 5) unless @custom_sidebar
+
     respond_to do |format|
       format.html {}
       format.js { render :action => 'update'}
@@ -78,8 +78,8 @@ class BillController < ApplicationController
 
   def popular
     @days = days_from_params(params[:days])
-    @congress = params[:congress].blank? ? DEFAULT_CONGRESS : params[:congress]
-    if @congress != DEFAULT_CONGRESS
+    @congress = params[:congress].blank? ? Settings.default_congress : params[:congress]
+    if @congress != Settings.default_congress
       @bills = Bill.find(:all, :select => "bills.*, bills.page_views_count AS view_count", 
                          :conditions => ["session = ?", params[:congress]], 
                          :order => 'page_views_count DESC', :limit => 100)
@@ -101,7 +101,7 @@ class BillController < ApplicationController
 
   def pending
     @bills = Bill.find(:all, :include => [:bill_titles, :actions], 
-                        :conditions => ["actions.datetime > ? AND bills.session = ? AND bills.bill_type IN (?)", 3.months.ago, DEFAULT_CONGRESS, @types_from_params], 
+                        :conditions => ["actions.datetime > ? AND bills.session = ? AND bills.bill_type IN (?)", 3.months.ago, Settings.default_congress, @types_from_params], 
                         :order => "actions.date DESC", :limit => 30)
                         
     @page_title = 'Pending Bills in Congress'
@@ -121,7 +121,7 @@ class BillController < ApplicationController
     @types = 'all'
     @hot_bill_categories = PvsCategory.find(:all, :order => :name)
     @atom = {'link' => "/bill/hot.rss", 'title' => "Hot Bills"}
-    @congress = params[:congress].blank? ? DEFAULT_CONGRESS : params[:congress]
+    @congress = params[:congress].blank? ? Settings.default_congress : params[:congress]
     
     respond_to do |format|
       format.html {}
@@ -135,12 +135,12 @@ class BillController < ApplicationController
   end
 
   def list_bill_type
-    congress = params[:congress] ? params[:congress] : DEFAULT_CONGRESS
+    congress = params[:congress] ? params[:congress] : Settings.default_congress
     @page = params[:page]
     @page = "1" unless @page
     @bill_type = params[:bill_type]
 
-    @bills = Bill.paginate_all_by_bill_type_and_session(@bill_type, congress, :include => "bill_titles", :order => 'number', :page => @page)
+    @bills = Bill.where(["bills.bill_type=? AND bills.session=?", @bill_type, congress]).includes(:bill_titles).order('number').paginate(:page => @page)
 
     respond_to do |format|
       format.html {}
@@ -150,7 +150,7 @@ class BillController < ApplicationController
 
   def most_commentary
     @days = days_from_params(params[:days])
-    @congress = params[:congress].blank? ? DEFAULT_CONGRESS : params[:congress]
+    @congress = params[:congress].blank? ? Settings.default_congress : params[:congress]
     
     if params[:type] == 'news'
       @sort = @commentary_type = 'news'
@@ -162,14 +162,14 @@ class BillController < ApplicationController
       @atom = {'link' => "/bill/atom/most/blog", 'title' => @page_title}
     end
     
-    if @congress != DEFAULT_CONGRESS
+    if @congress != Setting.default_congress
       order = (@sort == 'news') ? 'news_article_count' : 'blog_article_count'
       @bills = Bill.find(:all, :select => "bills.*, bills.#{order} AS article_count", 
                          :conditions => ["session = ? AND #{order} IS NOT NULL", params[:congress]], 
                          :order => "#{order} DESC", :limit => 100)
     else
       unless read_fragment("bill_meta_most_#{@commentary_type}_#{@days}")
-        @bills = Bill.find_by_most_commentary(@commentary_type, 20, @days, DEFAULT_CONGRESS, @types_from_params)
+        @bills = Bill.find_by_most_commentary(@commentary_type, 20, @days, Settings.default_congress, @types_from_params)
       end
     end
     respond_to do |format|
@@ -196,19 +196,19 @@ class BillController < ApplicationController
     case params[:sort]
     when 'rushed'
       @page_title = "Read the Bill - Bills Rushed to Vote"
-      @bills = Bill.find_rushed_bills(DEFAULT_CONGRESS, 72.hours.to_i, @show_resolutions).paginate :page => params[:page]
+      @bills = Bill.find_rushed_bills(Settings.default_congress, 72.hours.to_i, @show_resolutions).paginate :page => params[:page]
       @atom = {'link' => "/bill/readthebill.rss?show_resolutions=#{@show_resolutions}", 'title' => @page_title}
       @title_desc = SiteText.find_title_desc('bills_rushed')
       @sort = 'rushed'
     when 'rtb_all'
       @page_title = "Read the Bill - All Bills With Vote on Passage"
-      @bills = Bill.find_rushed_bills(DEFAULT_CONGRESS, 2.years.to_i, @show_resolutions).paginate :page => params[:page]
+      @bills = Bill.find_rushed_bills(Settings.default_congress, 2.years.to_i, @show_resolutions).paginate :page => params[:page]
       @atom = {'link' => "/bill/readthebill.rss?sort=rtb_all&show_resolutions=#{@show_resolutions}", 'title' => @page_title} 
       @title_desc = SiteText.find_title_desc('bills_rushed_all')
       @sort = 'rtb_all'
     else
       @page_title = "Read the Bill - GPO Text Available to Consideration"
-      @bills = Bill.find_gpo_consideration_rushed_bills(DEFAULT_CONGRESS, 2.years.to_i, @show_resolutions).paginate :page => params[:page]
+      @bills = Bill.find_gpo_consideration_rushed_bills(Settings.default_congress, 2.years.to_i, @show_resolutions).paginate :page => params[:page]
       @atom = {'link' => "/bill/readthebill.rss?sort=gpo&show_resolutions=#{@show_resolutions}", 'title' => @page_title} 
       @title_desc = SiteText.find_title_desc('bills_rushed_gpo')
       @sort = 'gpo'      
@@ -371,7 +371,7 @@ class BillController < ApplicationController
 
     begin
       # open html from file
-      path = "#{OC_BILLTEXT_PATH}/#{@bill.session}/#{@bill.bill_type}#{@bill.number}#{@version.version}.gen.html-oc"
+      path = "#{Settings.oc_billtext_path}/#{@bill.session}/#{@bill.bill_type}#{@bill.number}#{@version.version}.gen.html-oc"
       
       @bill_text = File.open(path).read
     rescue 
@@ -384,7 +384,7 @@ class BillController < ApplicationController
     @bill_text = ""
     version = @bill.bill_text_versions.find(:first, :conditions => ["bill_text_versions.version=?", params[:version]])
     if version
-      path = "#{OC_BILLTEXT_PATH}/#{@bill.session}/#{@bill.bill_type}#{@bill.number}#{version.version}.gen.html-oc"
+      path = "#{Settings.oc_billtext_path}/#{@bill.session}/#{@bill.bill_type}#{@bill.number}#{version.version}.gen.html-oc"
       @bill_text = File.open(path).read
     end
     
@@ -576,7 +576,7 @@ class BillController < ApplicationController
 
   def bill_vote
     @bill = Bill.find_by_ident(params[:bill])
-    if logged_in?
+    if user_signed_in?
       @bv = current_user.bill_votes.find_by_bill_id(@bill.id)
       unless @bv
         @bv = current_user.bill_votes.create({:bill_id => @bill.id, :user_id  => current_user.id, :support => (params[:id] == "1" ? 1 : 0) }) unless @bv
@@ -652,8 +652,8 @@ private
 
       if @bill.has_wiki_link?
         @wiki_url = @bill.wiki_url
-      elsif logged_in?
-        @wiki_create_url = "#{WIKI_BASE_URL}/Special:AddData/Bill?Bill[common_title]=#{CGI::escape(@bill.title_common[0..70])}&Bill[bill_type]=#{@bill.bill_type}&Bill[type_name]=#{@bill.type_name}&Bill[bill_number]=#{@bill.number}&Bill[congress]=#{DEFAULT_CONGRESS}" #prolly should be rewritten as a post handled by a custom sfEditFormPreloadText call?
+      elsif user_signed_in?
+        @wiki_create_url = "#{Settings.wiki_base_url}/Special:AddData/Bill?Bill[common_title]=#{CGI::escape(@bill.title_common[0..70])}&Bill[bill_type]=#{@bill.bill_type}&Bill[type_name]=#{@bill.type_name}&Bill[bill_number]=#{@bill.number}&Bill[congress]=#{Settings.default_congress}" #prolly should be rewritten as a post handled by a custom sfEditFormPreloadText call?
       end
 
       @tabs = [
@@ -663,9 +663,9 @@ private
       @tabs << ["Money Trail",{:action => 'money', :id => @bill.ident}] unless @bill.bill_interest_groups.empty?
       @tabs.concat([
         ["Wiki","#{@wiki_url}"],
-        ["News <span>(#{number_with_delimiter(@bill.news_article_count)})</span> & Blogs <span>(#{number_with_delimiter(@bill.blog_article_count)})</span>",{:action => 'news_blogs', :id => @bill.ident}],
-        ["Videos <span>(#{number_with_delimiter(@bill.videos.size)})</span>",{:action => 'videos', :id => @bill.ident}],
-        ["Comments <span>(#{number_with_delimiter(@comments.comments.size)})</span>",{:action => 'comments', :id => @bill.ident}]
+        ["News <span>(#{number_with_delimiter(@bill.news_article_count)})</span> & Blogs <span>(#{number_with_delimiter(@bill.blog_article_count)})</span>".html_safe,{:action => 'news_blogs', :id => @bill.ident}],
+        ["Videos <span>(#{number_with_delimiter(@bill.videos.size)})</span>".html_safe,{:action => 'videos', :id => @bill.ident}],
+        ["Comments <span>(#{number_with_delimiter(@comments.comments.size)})</span>".html_safe,{:action => 'comments', :id => @bill.ident}]
       ])
       @top_comments = @bill.comments.find(:all,:include => [:user], :order => "comments.plus_score_count - comments.minus_score_count DESC", :limit => 2)
       @bookmarking_image = "/images/fb-bill.jpg"

@@ -19,7 +19,7 @@ class ArticlesController < ApplicationController
     
     def list
       if params[:tag] && @tag = CGI.unescape(params[:tag])
-        @articles = Article.find_tagged_with(@tag).paginate(:page => params[:page], :per_page => 15)
+        @articles = Article.tagged_with(@tag, :any => true).paginate(:page => params[:page], :per_page => 15)
         @page_title = "Blog - Articles Tagged '#{@tag}'"
       elsif @month = params[:month]
         month, year = @month.split(/-/)

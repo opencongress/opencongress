@@ -18,16 +18,13 @@ begin
   # If we can load rubygems and libxml-ruby...
   require 'rubygems'
   require 'xml/libxml'
-  
+  raise "acts_as_solr requires libxml-ruby 0.7 or greater" unless XML::Node.method_defined?(:attributes)
+
   # then make a few modifications to XML::Node so it can stand in for REXML::Element
   class XML::Node
     # element.add_element(another_element) should work
     alias_method :add_element, :<<
 
-    # element.attributes['blah'] should work
-    def attributes
-      self
-    end
 
     # element.text = "blah" should work
     def text=(x)
@@ -39,7 +36,7 @@ begin
   Solr::XML::Element = XML::Node
   
 rescue LoadError => e # If we can't load either rubygems or libxml-ruby
-  
+  puts "Requiring REXML"
   # Just use REXML.
   require 'rexml/document'
   Solr::XML::Element = REXML::Element

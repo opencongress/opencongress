@@ -3,7 +3,7 @@ namespace :update do
 
   task :rsync => :environment do
     begin
-      system "sh #{RAILS_ROOT}/bin/daily/govtrack-rsync.sh #{DATA_PATH}"
+      system "sh #{Rails.root}/bin/daily/govtrack-rsync.sh #{DATA_PATH}"
     rescue Exception => e
       if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error rsyncing govtrack data!")
@@ -20,9 +20,9 @@ namespace :update do
 
   task :photos => :environment do
     begin
-      system "sh #{RAILS_ROOT}/bin/daily/govtrack-photo-rsync.sh #{DATA_PATH}"
+      system "sh #{Rails.root}/bin/daily/govtrack-photo-rsync.sh #{DATA_PATH}"
       unless (['production', 'staging'].include?(Rails.env))
-        system "ln -s -i -F #{DATA_PATH}/govtrack/photos #{RAILS_ROOT}/public/images/photos"
+        system "ln -s -i -F #{DATA_PATH}/govtrack/photos #{Rails.root}/public/images/photos"
       end
     rescue Exception => e
       if (['production', 'staging'].include?(Rails.env))
@@ -318,7 +318,7 @@ namespace :update do
       Bill.expire_meta_govtrack_fragments
 
       # TO DO: only invalidate updated bills
-      bills = Bill.find(:all, :conditions => ["session = ?", DEFAULT_CONGRESS])
+      bills = Bill.find(:all, :conditions => ["session = ?", Settings.default_congress])
       bills.each do |b|
         b.send :expire_govtrack_fragments
       end

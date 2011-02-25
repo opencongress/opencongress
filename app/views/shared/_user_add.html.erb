@@ -3,7 +3,7 @@
 <ul>  
   <li id="trackli">
     <% if object.bookmarks.find_by_user_id(current_user.id) == nil %>
-    <% if logged_in? %>
+    <% if user_signed_in? %>
     <%= link_to_remote(image_tag('button-myoc.gif', :alt => "Add to My OpenCongress", :id => "b_myoc", :mouseover => image_path('button-myoc_omo.gif')), { :url => {:controller => 'profile', 
       :action => 'track', 
       :id => object.id, 
@@ -23,7 +23,7 @@
   <ul>  
     <li id="trackli">
       <% if object.bookmarks.find_by_user_id(current_user.id) == nil %>
-      <% if logged_in? %>
+      <% if user_signed_in? %>
       <%= link_to_remote(image_tag('button-myoc.gif', :alt => "Add to My OpenCongress", :id => "b_myoc", :mouseover => image_path('button-myoc_omo.gif')), { :url => {:controller => 'profile', 
         :action => 'track', 
         :id => object.id, 
@@ -43,7 +43,7 @@
     <ul>  
       <li id="trackli">
         <% if object.bookmarks.find_by_user_id(current_user.id) == nil %>
-        <% if logged_in? %>
+        <% if user_signed_in? %>
         <%= link_to_remote(image_tag('button-myoc.gif', :alt => "Add to My OpenCongress", :id => "b_myoc", :mouseover => image_path('button-myoc_omo.gif')), { :url => {:controller => 'profile', 
           :action => 'track', 
           :id => object.id, 
@@ -63,7 +63,7 @@
       <ul>
         <li id="trackli">
           <% if object.bookmarks.find_by_user_id(current_user.id) == nil %>
-            <% if logged_in? %>
+            <% if user_signed_in? %>
             <%= link_to_remote(image_tag('button-myoc.gif', :alt => "Add to My OpenCongress", :id => "b_myoc", :mouseover => image_path('button-myoc_omo.gif')), { :url => {:controller => 'profile',
               :action => 'track',
               :id => object.id,

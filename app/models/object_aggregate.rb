@@ -1,7 +1,7 @@
 class ObjectAggregate < ActiveRecord::Base
   belongs_to :aggregatable, :polymorphic => true
   
-  def self.popular(viewable_type, seconds = DEFAULT_COUNT_TIME, limit = 20, congress = DEFAULT_CONGRESS, frontpage_hot = false)
+  def self.popular(viewable_type, seconds = Settings.default_count_time, limit = 20, congress = Settings.default_congress, frontpage_hot = false)
     associated_class = Object.const_get(viewable_type)
 
     where_clause = ""

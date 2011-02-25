@@ -1,3 +1,3 @@
 HoptoadNotifier.configure do |config|
-  config.api_key = API_KEYS['hoptoad']
+  config.api_key = ApiKeys.project_vote_smart
 end

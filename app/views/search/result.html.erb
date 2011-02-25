@@ -15,7 +15,7 @@
   <strong class="blue">Didn't find what you're looking for?</strong><br /> Try searching <strong>all available sessions</strong> with an <a href="/search">Advanced Search</a>.
   </p>
   
-  <p style="width: 400px; padding: 15px 0; font-size: 13px; line-height: 1.8em;" class="floatleft"><b><%= number_with_delimiter(@found_items) %></b> items found<% if @congresses == ["#{DEFAULT_CONGRESS}"]%> <strong>in the 
+  <p style="width: 400px; padding: 15px 0; font-size: 13px; line-height: 1.8em;" class="floatleft"><b><%= number_with_delimiter(@found_items) %></b> items found<% if @congresses == ["#{Settings.default_congress}"]%> <strong>in the 
   current session of Congress</strong><% end %> for <strong style="color:#222;">"<%= @query %></strong>". 
   <br />
   <em>Search results are listed in order of relevance.</em></p>
@@ -42,7 +42,7 @@
   <% if @search_bills && @bills.size > 0 %>
     
     <div class="bill_search">
-    <h3 class="line2">Bills <em><%= total_and_pageview('bills', @bills.total_entries, @page) %></em></h3>
+    <h3 class="line2">Bills <em><%= total_and_pageview('bills', @bills.total_entries, @page).html_safe %></em></h3>
           
     <div class="pagination_links">
       <%= will_paginate(@bills, :params => { :q => @query, :search_bills => '1'}) %>

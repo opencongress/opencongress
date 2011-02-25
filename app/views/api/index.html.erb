@@ -1,7 +1,7 @@
 <div id="heading" class="clearfix">
 	<h2>OpenCongress API Documentation</h2>   
 	<div class="explain_box">
-<% unless logged_in? %>
+<% unless user_signed_in? %>
 	  <p>Welcome. This API provides programmers with structured access to all the data on OpenCongress, everything from official bill info to news and blog coverage to user-generated votes on bills and much more. As an open-source public resource on Congress, we encourage developers to share and remix any of this info on their own websites to keep their online communities up-to-date with their political interests.</p> 
   
 	  <p>Using the API requires an API KEY, which is automatically assigned to every free "My OpenCongress" account -- simply <a href="/register">join</a> or <a href="/login">login</a>, it takes less than a minute, and your key will appear here, along with sample links to call. The data below is just a start -- we will continually add more unique info &amp; useful enhancements in order to contribute public knowledge about Congress back to the data commons on the open Web. We're always interested in hearing requests or seeing use cases of how you're using this API -- see the Developer Resources at the bottom of this page.</p>
@@ -124,7 +124,7 @@
   <dt>Bills by session of congress</dt>
   <dd>
     Returns bills matching the given congress.<br/>
-    <%= link_to "#{BASE_URL}api/bills?congress=#{DEFAULT_CONGRESS}&key=#{@api_key}", "/api/bills?congress=#{DEFAULT_CONGRESS}&key=#{@api_key}" %>
+    <%= link_to "#{BASE_URL}api/bills?congress=#{Settings.default_congress}&key=#{@api_key}", "/api/bills?congress=#{Settings.default_congress}&key=#{@api_key}" %>
   </dd>
 
   <dt>Bills by type</dt>
@@ -132,13 +132,13 @@
     Returns bills matching the given type.  Type can be: h (house), 
     s (senate), hj (house joint resolution), sj (senate joint resolution), hc (house concurrent resolution)
     sc (senate concurrent resolution), hr (house resolution), sr (senate resolution) <br/>
-    <%= link_to "#{BASE_URL}api/bills?type=h&congress=#{DEFAULT_CONGRESS}&key=#{@api_key}", "/api/bills?type=h&congress=#{DEFAULT_CONGRESS}&key=#{@api_key}" %>
+    <%= link_to "#{BASE_URL}api/bills?type=h&congress=#{Settings.default_congress}&key=#{@api_key}", "/api/bills?type=h&congress=#{Settings.default_congress}&key=#{@api_key}" %>
   </dd>
 
   <dt>Bills by number</dt>
   <dd>
     Returns bills matching the given number.<br/>
-    <%= link_to "#{BASE_URL}api/bills?number=5749&type=h&congress=#{DEFAULT_CONGRESS}&key=#{@api_key}", "/api/bills?number=5749&type=h&congress=#{DEFAULT_CONGRESS}&key=#{@api_key}" %>
+    <%= link_to "#{BASE_URL}api/bills?number=5749&type=h&congress=#{Settings.default_congress}&key=#{@api_key}", "/api/bills?number=5749&type=h&congress=#{Settings.default_congress}&key=#{@api_key}" %>
   </dd>
   
   <dt>Bills by ident</dt>
@@ -169,7 +169,7 @@
   <dt>Stalled Bills</dt>
   <dd>
     Returns bills that have passed one chamber but have not received a vote on passage in the other (or a conference vote).<br/>
-    <%= link_to "#{BASE_URL}api/stalled_bills?session=#{DEFAULT_CONGRESS}&passing_chamber=s&key=#{@api_key}", "/api/stalled_bills?session=#{DEFAULT_CONGRESS}&passing_chamber=s&key=#{@api_key}" %>
+    <%= link_to "#{BASE_URL}api/stalled_bills?session=#{Settings.default_congress}&passing_chamber=s&key=#{@api_key}", "/api/stalled_bills?session=#{Settings.default_congress}&passing_chamber=s&key=#{@api_key}" %>
   </dd>
 
   <dt>Most Blogged Bills this Week</dt>

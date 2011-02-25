@@ -1,7 +1,24 @@
-== How to run unit tests for this plugin:
+acts_as_solr comes with a quick and fast unit test suite, and with a longer-running
+functional test suite, the latter testing the actual integration with Solr.
+
+The unit test suite is written using Shoulda, so make sure you have a recent version
+installed.
+
+Running `rake test` or just `rake` will run both test suites. Use `rake test:unit` to
+just run the unit test suite.
+ 
+== How to run functional tests for this plugin:
 To run the acts_as_solr's plugin tests run the following steps:
+
+- create a MySQL database called "actsassolr_test" (if you want to use MySQL)
+
+- create a new Rails project, if needed (the plugin can only be tested from within a Rails project); move/checkout acts_as_solr into its vendor/plugins/, as usual
+
+- copy vendor/plugins/acts_as_solr/config/solr.yml to config/ (the Rails config folder)
+
 - rake solr:start RAILS_ENV=test
-- rake (Accepts the following arguments: DB=sqlite|mysql and MYSQL_USER=user)
+
+- rake test:functional (Accepts the following arguments: DB=sqlite|mysql and MYSQL_USER=user)
 
 == Troubleshooting:
 If for some reason the tests don't run and you get MySQL errors, make sure you edit the MYSQL_USER entry under

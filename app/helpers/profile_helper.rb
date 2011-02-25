@@ -56,7 +56,7 @@ module ProfileHelper
 	
 	def user_bill_vote_string(bill)
 		out = "<td"
-		if logged_in?
+		if user_signed_in?
 			bv = current_user.bill_votes.find_by_bill_id(bill.id)
       if bv
         if bv.support == 0

@@ -1,13 +1,13 @@
-<% if logged_in? %>
+<% if user_signed_in? %>
   <ul class="user_nav">
     <h3>My OpenCongress</h3>
 
-    <li class="profile_link"><%= link_to "<span>My Profile</span>", user_profile_path(current_user.login) %></li> 
-		<li class="mypn_link"><%= link_to "<span>My Political Notebook</span>", political_notebook_path(current_user.login) %></li>
-		<li class="watchdog_link"><%= link_to "<span>Watchdog</span>", :controller => 'profile', :login => current_user.login, :action => 'watchdog' %></li>
-		<li class="friends_link"><%= link_to "<span>Friends</span>", friends_path(current_user.login) %></li>
-		<li class="actions_link"><%= link_to "<span>Actions</span>", :controller => 'profile', :action => 'actions', :login => current_user.login %></li>    
-		<li class="tracked_link"><%= link_to "<span>Tracked Items</span>", :controller => 'profile', :action => 'items_tracked', :login => current_user.login %></li>
+    <li class="profile_link"><%= raw(link_to "<span>My Profile</span>", user_profile_path(current_user.login)) %></li> 
+		<li class="mypn_link"><%= raw(link_to "<span>My Political Notebook</span>", political_notebook_path(current_user.login)) %></li>
+		<li class="watchdog_link"><%= raw(link_to "<span>Watchdog</span>", :controller => 'profile', :login => current_user.login, :action => 'watchdog') %></li>
+		<li class="friends_link"><%= raw(link_to "<span>Friends</span>", friends_path(current_user.login)) %></li>
+		<li class="actions_link"><%= raw(link_to "<span>Actions</span>", :controller => 'profile', :action => 'actions', :login => current_user.login) %></li>    
+		<li class="tracked_link"><%= raw(link_to "<span>Tracked Items</span>", :controller => 'profile', :action => 'items_tracked', :login => current_user.login) %></li>
 	</ul>
 <% end %>
 

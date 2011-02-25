@@ -6,7 +6,7 @@ class YahooGeocoder
   
   def initialize(this_address)
     @address = this_address
-    @key = API_KEYS['yahoo_apis']
+    @key = ApiKeys.yahoo_apis
     @zip5 = ''
     @zip4 = ''
     self.geocode

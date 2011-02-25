@@ -17,7 +17,7 @@
 
 <br style="clear: both;" />
 
-<%= "<p style='margin-top:18px;'>#{more_url}</p>" unless more_url.nil? %>
+<%= "<p style='margin-top:18px;'>#{more_url}</p>".html_safe unless more_url.nil? %>
 <% unless videos.empty? %>
   <div class="padding"><%= will_paginate videos if videos.kind_of? WillPaginate::Collection %></div>
 <% end %>

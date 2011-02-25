@@ -4,7 +4,12 @@
 # them in your Solr config file
 
 development:
-  url: http://localhost:8982/solr
+  url: http://127.0.0.1:8982/solr
   
 production:
-  url: http://localhost:8983/solr
+  url: http://127.0.0.1:8983/solr
+  jvm_options: -server -d64 -Xmx1024M -Xms64M
+
+test:
+  url: http://127.0.0.1:8981/solr
+

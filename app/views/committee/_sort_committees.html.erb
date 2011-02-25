@@ -11,8 +11,8 @@
 <div id="sort_nav">	
 	<ul id="sort">
 		<h4>Sort By</h4>
-		<li id="name" class="<%= sort == :all ? 'active' : '' %>"><%= link_to "<span>Name</span>", :action => 'index'  %></li> 
-		<li id="mostviewed" class="<%= sort == :popular ? 'active' : '' %>"><%= link_to "<span>Most Views</span>", :action => 'by_most_viewed'  %></li> 		
+		<li id="name" class="<%= sort == :all ? 'active' : '' %>"><%= link_to "<span>Name</span>".html_safe, :action => 'index'  %></li> 
+		<li id="mostviewed" class="<%= sort == :popular ? 'active' : '' %>"><%= link_to "<span>Most Views</span>".html_safe, :action => 'by_most_viewed'  %></li> 		
 	</ul>
 </div>
 <!-- // sortby-->

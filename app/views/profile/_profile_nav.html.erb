@@ -121,15 +121,15 @@
              <%= link_to @user.notebook_items.count, political_notebook_path(@user.login) %><br/>
 
           All users' Political Notebook items tagged with my district (<%= @user.my_district.first %>): 
-                <%= NotebookItem.find_tagged_with("#{@user.my_district.first}", :on => :tags).length %><br/>
+                <%= NotebookItem.tagged_with("#{@user.my_district.first}", :on => :tags).length %><br/>
 
         <h3 class="dark">About Me</h3>
          <ul>
           <li><%= link_to "My contact info", user_profile_path(@user.login) %></li>
           <li>My RSS feeds:
             <ul>
-              <li><%= link_to "Tracked Items", :controller=>"user_feeds", :action=>"tracked_items", :login => @user.login, :key => (logged_in? ? current_user.feed_key : nil) %></li>
-              <li><%= link_to "Actions", :controller=>"user_feeds", :action=>"actions", :login => @user.login, :key => (logged_in? ? current_user.feed_key : nil) %></li>
+              <li><%= link_to "Tracked Items", :controller=>"user_feeds", :action=>"tracked_items", :login => @user.login, :key => (user_signed_in? ? current_user.feed_key : nil) %></li>
+              <li><%= link_to "Actions", :controller=>"user_feeds", :action=>"actions", :login => @user.login, :key => (user_signed_in? ? current_user.feed_key : nil) %></li>
               <li><%= link_to "My Political Notebook", political_notebook_path(@user.login) + "/feed" %></li>
             </ul>
           </li>

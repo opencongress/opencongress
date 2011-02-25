@@ -1,6 +1,6 @@
 <% if @bill.related_bill_session %>
   <div class="bill_session_relation_box">
-    You are viewing a bill in a previous session of Congress. There is a bill in <%= @bill.related_bill_session.session == DEFAULT_CONGRESS ? "the current session" : "a more recent session" %> that may be more appropriate. View that bill: <%= link_to_bill @bill.related_bill_session %>
+    You are viewing a bill in a previous session of Congress. There is a bill in <%= @bill.related_bill_session.session == Settings.default_congress ? "the current session" : "a more recent session" %> that may be more appropriate. View that bill: <%= link_to_bill @bill.related_bill_session %>
   </div>
 <% end %>
 
@@ -22,7 +22,7 @@
 <% unless @bill.title_popular_only.blank? %>
   <h3 class="official-title"><%= em_official_title %></h3>
 <% end %> 
-<span class="date"><%= @bill.session == DEFAULT_CONGRESS ? 'current' : 'previous' %> <%= @bill.session.ordinalize %> session of congress</span>
+<span class="date"><%= @bill.session == Settings.default_congress ? 'current' : 'previous' %> <%= @bill.session.ordinalize %> session of congress</span>
 
 <% unless @bill.plain_language_summary.blank? %>
   <div class='explain_box bill'>

@@ -8,7 +8,7 @@ require  File.dirname(__FILE__) + '/../app/models/action'
 require 'rexml/document'
 require 'date'
 
-PATH = GOVTRACK_DATA_PATH + "/bills"
+PATH = Settings.govtrack_data_path + "/#{Settings.default_congress}/bills"
 
 #hash of people, indexed by id
 people = Person.find(:all).inject({}) { |h,p| h[p.id] = p; h }

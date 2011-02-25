@@ -6,7 +6,7 @@
       <div <% if related_issues.last == c %>class="last"<% end %>>
         <ul>
           <li>
-            <p><%= link_to_item c, :term, :show %> <em>(<%= c.views(DEFAULT_COUNT_TIME) %> views)</em></p>
+            <p><%= link_to_item c, :term, :show %> <em>(<%= c.views(Settings.default_count_time) %> views)</em></p>
           </li>
         </ul>
       </div>

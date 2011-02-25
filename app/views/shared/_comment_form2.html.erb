@@ -1,7 +1,7 @@
 <br />
 <!-- <h3 class="dark clear"><%= toggler("add", "Add A Comment", "", "arrow")%></h3> -->
 
-<% if logged_in? %>
+<% if user_signed_in? %>
 <div id="add" class="comment-add" style="clear:both;">
  <div class="count">characters remaining:&nbsp;&nbsp;<span id="counter"></span></div>
  <h3>Speak Your Mind</h3>
@@ -11,7 +11,7 @@
   <% remote_form_for :comment, :url => { :controller => 'comments', :action => 'add_comment', :id => object.id, :type => object.class.to_s }, :update => master_container.nil? ? nil : master_container do |f| %>
   <%= hidden_field_tag 'comment_page', "#{params[:comment_page]}" %>
 	<%= hidden_field_tag 'redirect', "#{redirect}" %>
-  <% unless logged_in? %>
+  <% unless user_signed_in? %>
 
 
 Please <%= link_to "Login", login_url %> or
@@ -42,7 +42,7 @@ Please <%= link_to "Login", login_url %> or
     <% end %>
     
 
-    <% unless logged_in? %>
+    <% unless user_signed_in? %>
     <div>
     <!--
     Spam check :

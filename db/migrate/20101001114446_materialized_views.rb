@@ -161,7 +161,7 @@ class MaterializedViews < ActiveRecord::Migration
     # execute "SELECT create_matview('sen_mostviewed_aggs_mv', 'sen_mostviewed_aggs_v');"
     
     
-    create_table :object_aggregates do |t|
+    create_table :object_aggregates, :id => false do |t|
       t.string :aggregatable_type
       t.integer :aggregatable_id
       t.date :date

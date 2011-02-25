@@ -8,7 +8,7 @@
       <% else %>
         <% unless @bill.current_bill_text_version.nil? %>
           <div id="bill-text" class="un">
-            <%= link_to "Official Bill Text <span>Comment on about #{number_with_delimiter(@bill.current_bill_text_version.pages)} Pages</span>", :action => 'text' %>
+            <%= link_to "Official Bill Text <span>Comment on about #{number_with_delimiter(@bill.current_bill_text_version.pages)} Pages</span>".html_safe, :action => 'text' %>
           </div>
         <% end %>
     <% end %>
@@ -68,7 +68,7 @@
 		<div class="uc-box-bottom">
 			<div class="uc-box">
 				<%= user_bill_result(@bill) %>
-				<% if logged_in? %>
+				<% if user_signed_in? %>
 				<%= my_congresspeople_votes(@bill) %>
 				<% end %>
 			</div>
@@ -87,7 +87,7 @@
 		
 		<% end %>
 		
-		<% if current_user != :false %>
+		<% if user_signed_in? %>
 		  <% if object.is_house_bill? %>
 		    <% if current_user.my_reps[0] and current_user.my_reps[0].has_contact_webform? %>
 		      <%= render :partial => 'shared/write_rep_external', :locals => { :people => [current_user.my_reps[0]] } %>
@@ -132,8 +132,8 @@
 
     <% unless object.phone.blank? and object.fax.blank? %>
     	<div class="phone">
-      	<%= "<strong>Phone:</strong> #{object.phone}" unless object.phone.blank? %><br />
-      	<%= "<strong>Fax:</strong> #{object.fax}" unless object.fax.blank? %>
+      	<%= "<strong>Phone:</strong> #{object.phone}".html_safe unless object.phone.blank? %><br />
+      	<%= "<strong>Fax:</strong> #{object.fax}".html_safe unless object.fax.blank? %>
       </div>
       <br />
     <% end %>
@@ -158,10 +158,10 @@
   <br />
 <% end %>
 
-<% if logged_in? %>
+<% if user_signed_in? %>
 	<% if object.bookmarks.find_by_user_id(current_user.id) == nil %>
 
-		<%= link_to_remote("<span id='b_myoc_txt'>Track With MyOC</span>", :url => {:controller => 'profile', 
+		<%= link_to_remote("<span id='b_myoc_txt'>Track With MyOC</span>".html_safe, :url => {:controller => 'profile', 
 			:action => 'track', 
 			:id => object.id, 
 			:type => object.class.to_s},
@@ -175,7 +175,7 @@
 				$j('#login_track').jqm({ajax:'@href', trigger: 'a.track_trigger'});
 			});
 			</script>
-			<%= link_to("<span id='b_myoc_txt'>Track with MyOC</span>", login_url(:modal => true, :login_action => 'track'), :class => 'large_track track_trigger', :id => "b_myoc" ) %>
+			<%= link_to("<span id='b_myoc_txt'>Track with MyOC</span>".html_safe, login_url(:modal => true, :login_action => 'track'), :class => 'large_track track_trigger', :id => "b_myoc" ) %>
 			<div id="login_track" class="jqmWindow"></div>
 	<% end %>
 
@@ -184,7 +184,7 @@
 	<ul class="share_buttons small_box">
 		<div class="small_box_top">
 			<%= render :partial => 'shared/subscribe', :locals => { :message => "Subscribe To This #{object.display_object_name}", :subscribe_url => @atom['link'], :object => @bill} %>
-			<li><%= render :partial => 'mailing_list_items/add_to_alerts', :object => object %></li>
+			<li><%= render :partial => 'mailing_list_items/add_to_alerts', :locals =>  { :object => object } %></li>
 		</div>
 		
 	</ul>

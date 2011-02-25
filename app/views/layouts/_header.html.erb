@@ -7,7 +7,7 @@
 		
 		<div id="user_account">
 		  
-			<% if logged_in? %>
+			<% if user_signed_in? %>
 
 				Welcome <b><%= link_to h(current_user.login), user_profile_url(current_user.login) %></b> |
 				
@@ -54,7 +54,7 @@
 		<form action="/search/result" id="form-search" method="get">
    	 	<div id="search">
 
-         <%= toggler("advanced", "Click to Show", "Click to Hide", "ad_search_down", "ad_search_up") %>
+         <%= toggler("advanced", "Click to Show", "Click to Hide", "ad_search_down", "ad_search_up").html_safe %>
 
    				<div class="search">
    					<label for="search-field">Search</label>
@@ -96,27 +96,27 @@
 	<div class="left">
 		<div class="right">
 			<ul>
-				<li id="bill_nav"><%= link_to '<span>Bills</span>', :controller => 'bill', :action => :all  %></li>
-				<li id="sens_nav"><%= link_to '<span>Senators</span>', :controller => 'people', :action => :senators  %></li>
-				<li id="reps_nav"><%= link_to '<span>Representatives</span>', :controller => 'people', :action => :representatives  %></li>
-				<li id="vote_nav"><%= link_to '<span>Votes</span>', :controller => 'roll_call' %></li>		
-				<li id="ishu_nav"><%= link_to '<span>Issues</span>', :controller => 'issue' %></li>
-				<li id="comm_nav"><%= link_to '<span>Committees</span>', :controller => 'committee' %></li>
-				<li id="muny_nav"><%= link_to '<span>The Money Trail</span>', :controller => 'money_trail' %></li>
-				<li id="wiki_nav" class="sub"><%= link_to '<span>Wiki</span>', WIKI_BASE_URL  %></li>		
-				<li id="blog_nav" class="sub"><%= link_to '<span>Blog</span>', blogs_url %></li>
+				<li id="bill_nav"><%= link_to '<span>Bills</span>'.html_safe, :controller => 'bill', :action => :all  %></li>
+				<li id="sens_nav"><%= link_to '<span>Senators</span>'.html_safe, :controller => 'people', :action => :senators  %></li>
+				<li id="reps_nav"><%= link_to '<span>Representatives</span>'.html_safe, :controller => 'people', :action => :representatives  %></li>
+				<li id="vote_nav"><%= link_to '<span>Votes</span>'.html_safe, :controller => 'roll_call' %></li>		
+				<li id="ishu_nav"><%= link_to '<span>Issues</span>'.html_safe, :controller => 'issue' %></li>
+				<li id="comm_nav"><%= link_to '<span>Committees</span>'.html_safe, :controller => 'committee' %></li>
+				<li id="muny_nav"><%= link_to '<span>The Money Trail</span>'.html_safe, :controller => 'money_trail' %></li>
+				<li id="wiki_nav" class="sub"><%= link_to '<span>Wiki</span>'.html_safe, Settings.wiki_base_url  %></li>		
+				<li id="blog_nav" class="sub"><%= link_to '<span>Blog</span>'.html_safe, blogs_url %></li>
 				<li id="tool_nav" class="sub">		
-				<%= link_to '<span>Resources ' + image_tag('tool_arrow-trans.png', :alt => '&gt;') + '</span>', tools_path %>
+				<%= link_to ('<span>Resources ' + image_tag('tool_arrow-trans.png', :alt => '&gt;') + '</span>').html_safe, tools_path %>
 				<ul class="sub">
-					<li id="compare_nav"><%= link_to '<span>Vote Comparison</span>', :controller => 'people', :action => 'compare' %></li> 
+					<li id="compare_nav"><%= link_to '<span>Vote Comparison</span>'.html_safe, :controller => 'people', :action => 'compare' %></li> 
 					<li id="widget_nav"><a href="/resources#widgets"><span>Site Widgets</span></a></li>
-					<li id="states_nav"><%= link_to '<span>States</span>', states_path %></li>
+					<li id="states_nav"><%= link_to '<span>States</span>'.html_safe, states_path %></li>
 					<li id="howitworks_nav"><a href="/about/howtouse"><span>How-to Use OpenCongress</span></a></li>
 					<li id="twitter_nav"><a href="http://twitter.com/opencongress"><span>Follow Our Twitter</span></a></li>
-					<li id="allresources_nav"><%= link_to '<span><strong>All Resources</strong></span>', tools_path(:anchor => 'all') %></li>
+					<li id="allresources_nav"><%= link_to '<span><strong>All Resources</strong></span>'.html_safe, tools_path(:anchor => 'all') %></li>
 				</ul>
 				</li>
-				<li id="battle_nav" class="sub"><%= link_to '<span>Battle Royale</span>', :controller => 'battle_royale' %></li> 
+				<li id="battle_nav" class="sub"><%= link_to '<span>Battle Royale</span>'.html_safe, :controller => 'battle_royale' %></li> 
 
 			</ul>
 		</div>

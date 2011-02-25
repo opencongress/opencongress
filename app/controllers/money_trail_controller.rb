@@ -12,8 +12,7 @@ class MoneyTrailController < ApplicationController
   def by_most_viewed
     @sort = :popular
     
-    @sectors = ObjectAggregate.popular('Sector', DEFAULT_COUNT_TIME)
-    
+    @sectors = ObjectAggregate.popular('Sector', Settings.default_count_time)
     @page_title = "Most Viewed Industry Sectors"
     @title_class = 'sort'
     @title_desc = SiteText.find_title_desc('industry_index')

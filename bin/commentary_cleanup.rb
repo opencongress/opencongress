@@ -15,7 +15,7 @@ require 'iconv'
 
 
 # Get all senate bills for the current congress.
-bills = Bill.find_all_by_session_and_bill_type(DEFAULT_CONGRESS, 's')
+bills = Bill.find_all_by_session_and_bill_type(Settings.default_congress, 's')
 i=0
 bills.each do |b|
   i += 1

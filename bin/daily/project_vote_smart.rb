@@ -27,7 +27,7 @@ def add_vote(votesmart_bill, category, year = Date.today.year)
       when 'PN'
         #I dunno
       else
-        oc_bill = Bill.find_by_ident("#{DEFAULT_CONGRESS}-#{bill_types[m[1]]}#{m[2]}")
+        oc_bill = Bill.find_by_ident("#{Settings.default_congress}-#{bill_types[m[1]]}#{m[2]}")
         if oc_bill
           oc_bill.key_vote_category = category
           oc_bill.save

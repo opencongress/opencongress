@@ -24,8 +24,8 @@
 				<% end %>
 			<% end %>
     <li id="p<%= person.id.to_s %>" class="person">
-      <%= "<span class='date'>#{(i + 1)}</span>" unless (@sort == :name or @sort == :state or controller.action_name = 'zipcodelookup') %>  
-			<%= link_to("<img src='/images/photos/thumbs_73/" + person.id.to_s + ".png'>", {:controller => 'people', :action => 'show', :id => person.to_param}) %>
+      <%= "<span class='date'>#{(i + 1)}</span>".html_safe unless (@sort == :name or @sort == :state or controller.action_name = 'zipcodelookup') %>  
+			<%= link_to(("<img src='/images/photos/thumbs_73/" + person.id.to_s + ".png'>").html_safe, {:controller => 'people', :action => 'show', :id => person.to_param}) %>
       
 			<div class="left details">
 				<a class="name" href="/people/show/<%= person.to_param %>"><%= person.name %> <span><%= person.party %></span></a>
@@ -43,7 +43,7 @@
 			-->
 		
 			<% if @sort == :popular %>
-        (<%= person.views(DEFAULT_COUNT_TIME) %> views)
+        (<%= person.views(Settings.default_count_time) %> views)
       <% end %>
       <% if @show_article_count %>
         (<%= person.commentary_count %> articles)

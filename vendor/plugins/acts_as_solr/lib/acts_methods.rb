@@ -39,6 +39,20 @@ module ActsAsSolr #:nodoc:
     # 
     #          Setting the field type preserves its original type when indexed
     # 
+    #          The field may also be passed with a hash value containing options
+    #
+    #          class Author < ActiveRecord::Base
+    #            acts_as_solr :fields => [{:full_name => {:type => :text, :as => :name}}]
+    #            def full_name
+    #              self.first_name + ' ' + self.last_name
+    #            end
+    #          end
+    #
+    #          The options accepted are:
+    #
+    #          :type:: Index the field using the specified type
+    #          :as:: Index the field using the specified field name
+    #
     # additional_fields:: This option takes fields to be include in the index
     #                     in addition to those derived from the database. You
     #                     can also use this option to include custom fields 
@@ -68,6 +82,33 @@ module ActsAsSolr #:nodoc:
     #              acts_as_solr :include => [:books]
     #            end
     # 
+    #           Each association may also be specified as a hash with an option hash as a value
+    #
+    #           class Book < ActiveRecord::Base
+    #             belongs_to :author
+    #             has_many :distribution_companies
+    #             has_many :copyright_dates
+    #             has_many :media_types
+    #             acts_as_solr(
+    #               :fields => [:name, :description],
+    #               :include => [
+    #                 {:author => {:using => :fullname, :as => :name}},
+    #                 {:media_types => {:using => lambda{|media| type_lookup(media.id)}}}
+    #                 {:distribution_companies => {:as => :distributor, :multivalued => true}},
+    #                 {:copyright_dates => {:as => :copyright, :type => :date}}
+    #               ]
+    #             ]
+    #
+    #           The options accepted are:
+    #
+    #           :type:: Index the associated objects using the specified type
+    #           :as:: Index the associated objects using the specified field name
+    #           :using:: Index the associated objects using the value returned by the specified method or proc.  If a method
+    #                    symbol is supplied, it will be sent to each object to look up the value to index; if a proc is
+    #                    supplied, it will be called once for each object with the object as the only argument
+    #           :multivalued:: Index the associated objects using one field for each object rather than joining them
+    #                          all into a single field
+    #
     # facets:: This option can be used to specify the fields you'd like to
     #          index as facet fields
     # 
@@ -75,12 +116,22 @@ module ActsAsSolr #:nodoc:
     #             acts_as_solr :facets => [:category, :manufacturer]  
     #           end
     # 
-    # boost:: You can pass a boost (float) value that will be used to boost the document and/or a field:
+    # boost:: You can pass a boost (float) value that will be used to boost the document and/or a field. To specify a more
+    #         boost for the document, you can either pass a block or a symbol. The block will be called with the record
+    #         as an argument, a symbol will result in the according method being called:
     # 
     #           class Electronic < ActiveRecord::Base
     #             acts_as_solr :fields => [{:price => {:boost => 5.0}}], :boost => 10.0
     #           end
     # 
+    #           class Electronic < ActiveRecord::Base
+    #             acts_as_solr :fields => [{:price => {:boost => 5.0}}], :boost => proc {|record| record.id + 120*37}
+    #           end
+    #
+    #           class Electronic < ActiveRecord::Base
+    #             acts_as_solr :fields => [{:price => {:boost => :price_rating}}], :boost => 10.0
+    #           end
+    #
     # if:: Only indexes the record if the condition evaluated is true. The argument has to be 
     #      either a symbol, string (to be eval'ed), proc/method, or class implementing a static 
     #      validation method. It behaves the same way as ActiveRecord's :if option.
@@ -89,6 +140,18 @@ module ActsAsSolr #:nodoc:
     #          acts_as_solr :if => proc{|record| record.is_active?}
     #        end
     # 
+    # offline:: Assumes that your using an outside mechanism to explicitly trigger indexing records, e.g. you only
+    #           want to update your index through some asynchronous mechanism. Will accept either a boolean or a block
+    #           that will be evaluated before actually contacting the index for saving or destroying a document. Defaults
+    #           to false. It doesn't refer to the mechanism of an offline index in general, but just to get a centralized point
+    #           where you can control indexing. Note: This is only enabled for saving records. acts_as_solr doesn't always like
+    #           it, if you have a different number of results coming from the database and the index. This might be rectified in
+    #           another patch to support lazy loading.
+    #
+    #             class Electronic < ActiveRecord::Base
+    #               acts_as_solr :offline => proc {|record| record.automatic_indexing_disabled?}
+    #             end
+    #
     # auto_commit:: The commit command will be sent to Solr only if its value is set to true:
     # 
     #                 class Author < ActiveRecord::Base
@@ -113,10 +176,11 @@ module ActsAsSolr #:nodoc:
         :include => nil,
         :facets => nil,
         :boost => nil,
-        :if => "true"
+        :if => "true",
+        :offline => false
       }  
       self.solr_configuration = {
-        :type_field => "type_t",
+        :type_field => "type_s",
         :primary_key_field => "pk_i",
         :default_boost => 1.0
       }
@@ -125,7 +189,8 @@ module ActsAsSolr #:nodoc:
       solr_configuration.update(solr_options) if solr_options.is_a?(Hash)
       Deprecation.validate_index(configuration)
       
-      configuration[:solr_fields] = []
+      configuration[:solr_fields] = {}
+      configuration[:solr_includes] = {}
       
       after_save    :solr_save
       after_destroy :solr_destroy
@@ -137,24 +202,40 @@ module ActsAsSolr #:nodoc:
         process_fields(configuration[:additional_fields])
       end
 
+      if configuration[:include].respond_to?(:each)
+        process_includes(configuration[:include])
+      end
+      
+      unless @already_solr_magic
+        alias_method_chain :method_missing, :solr_magic
+        @already_solr_magic = true
+      end
+    rescue ActiveRecord::StatementInvalid  
+      @acts_as_solr_needs_reload = true
+    end
+    
+    def acts_as_solr_needs_reload?
+      @acts_as_solr_needs_reload
     end
     
     private
     def get_field_value(field)
-      configuration[:solr_fields] << field
-      type  = field.is_a?(Hash) ? field.values[0] : nil
-      field = field.is_a?(Hash) ? field.keys[0] : field
-      define_method("#{field}_for_solr".to_sym) do
+      field_name, options = determine_field_name_and_options(field)
+      configuration[:solr_fields][field_name] = options
+      
+      define_method("#{field_name}_for_solr".to_sym) do
         begin
-          value = self[field] || self.instance_variable_get("@#{field.to_s}".to_sym) || self.send(field.to_sym)
-          case type 
+          value = self[field_name] || self.instance_variable_get("@#{field_name.to_s}".to_sym) || self.send(field_name.to_sym)
+          case options[:type] 
             # format dates properly; return nil for nil dates 
-            when :date: value ? value.utc.strftime("%Y-%m-%dT%H:%M:%SZ") : nil 
+            when :date
+              value ? (value.respond_to?(:utc) ? value.utc : value).strftime("%Y-%m-%dT%H:%M:%SZ") : nil 
             else value
           end
         rescue
+          puts $!
+          logger.debug "There was a problem getting the value for the field '#{field_name}': #{$!}"
           value = ''
-          logger.debug "There was a problem getting the value for the field '#{field}': #{$!}"
         end
       end
     end
@@ -168,5 +249,42 @@ module ActsAsSolr #:nodoc:
       end
     end
     
+    def process_includes(includes)
+      if includes.respond_to?(:each)
+        includes.each do |assoc|
+          field_name, options = determine_field_name_and_options(assoc)
+          configuration[:solr_includes][field_name] = options
+        end
+      end
+    end
+
+    def determine_field_name_and_options(field)
+      if field.is_a?(Hash)
+        name = field.keys.first
+        options = field.values.first
+        if options.is_a?(Hash)
+          [name, {:type => type_for_field(field)}.merge(options)]
+        else
+          [name, {:type => options}]
+        end
+      else
+        [field, {:type => type_for_field(field)}]
+      end
+    end
+    
+    def type_for_field(field)
+      if configuration[:facets] && configuration[:facets].include?(field)
+        :facet
+      elsif column = columns_hash[field.to_s]
+        case column.type
+        when :string then :text
+        when :datetime then :date
+        when :time then :date
+        else column.type
+        end
+      else
+        :text
+      end
+    end
   end
 end

@@ -20,7 +20,7 @@ Person.all_sitting.each do |p|
   if p.osid
     puts "Getting OpenSecrets data for #{p.name}"
     
-    path = "/api/index.php?method=opencongress&cycle=#{CURRENT_OPENSECRETS_CYCLE}&cid=#{p.osid}&apikey=#{API_KEYS['opensecrets_api_key']}"
+    path = "/api/index.php?method=opencongress&cycle=#{Settings.current_opensecrets_cycle}&cid=#{p.osid}&apikey=#{API_KEYS['opensecrets_api_key']}"
     
     success = false
     badcount = 0
@@ -54,7 +54,7 @@ Person.all_sitting.each do |p|
       
       s = Sector.find_or_create_by_name(sector)
       sectors[sector] ||= s
-      ps = PersonSector.find_or_initialize_by_person_id_and_sector_id_and_cycle(p.id, s.id, CURRENT_OPENSECRETS_CYCLE)
+      ps = PersonSector.find_or_initialize_by_person_id_and_sector_id_and_cycle(p.id, s.id, Settings.current_opensecrets_cycle)
       ps.total = total
       ps.save
     end
@@ -67,7 +67,7 @@ Person.all_sitting.each do |p|
       c = contribs[contributor] || Contributor.find_or_create_by_name(e.elements['contributor'].text)
       contribs[contributor] ||= c
       
-      pcc = PersonCycleContribution.find_or_initialize_by_person_id_and_cycle(p.id, CURRENT_OPENSECRETS_CYCLE)
+      pcc = PersonCycleContribution.find_or_initialize_by_person_id_and_cycle(p.id, Settings.current_opensecrets_cycle)
       pcc.top_contributor = c
       pcc.top_contributor_amount = amount
       pcc.save
@@ -77,7 +77,7 @@ Person.all_sitting.each do |p|
       #puts "Total: #{e.elements['total'].text}"
       
       total_raised = e.elements['total'].text
-      pcc = PersonCycleContribution.find_or_initialize_by_person_id_and_cycle(p.id, CURRENT_OPENSECRETS_CYCLE)
+      pcc = PersonCycleContribution.find_or_initialize_by_person_id_and_cycle(p.id, Settings.current_opensecrets_cycle)
       pcc.total_raised = total_raised
       pcc.save
     end

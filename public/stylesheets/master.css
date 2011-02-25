@@ -788,8 +788,8 @@ a.small_button.small_arrow:hover span{
 	}
 
 .pagination a,
-.pagination .prev_page,
-.pagination .current,
+.pagination .previous_page,
+.pagination em,
 .pagination .gap{
 	display: block;
 	float: left;
@@ -828,7 +828,7 @@ a.small_button.small_arrow:hover span{
 	_background: url('../images/small_button.gif') left -23px no-repeat;
 	}
 
-.pagination span.current, .pagination span.disabled{
+.pagination em, .pagination span.disabled{
 	color: #999;
 	padding: 0 6px 0 0;
 	text-decoration: none;
@@ -837,9 +837,10 @@ a.small_button.small_arrow:hover span{
 	_background: url('../images/small_button_cap.gif') right -23px no-repeat;
 	}
 
-.pagination span.current span, .pagination span.disabled span{ 
+.pagination em span, .pagination span.disabled span{ 
 	display: block;
 	font-size: 11px;
+	font-style: normal;
 	padding: 2px 2px 2px 8px;
 	background: url('../images/small_button.png') left -23px no-repeat;
 	_background: url('../images/small_button.gif') left -23px no-repeat;

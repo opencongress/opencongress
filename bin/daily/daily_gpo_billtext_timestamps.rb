@@ -20,7 +20,7 @@ begin
     text_version.gsub!(/[\(\)]/, "")
     
     GpoBilltextTimestamp.find_or_create_by_session_and_bill_type_and_number_and_version(
-          DEFAULT_CONGRESS, Bill.long_type_to_short(bill_long_type), number, text_version)
+          Settings.default_congress, Bill.long_type_to_short(bill_long_type), number, text_version)
   end
   
 rescue Exception => e

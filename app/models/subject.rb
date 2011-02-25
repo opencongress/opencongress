@@ -284,21 +284,21 @@ class Subject < ViewableObject
     SubjectRelation.all_related(self)
   end
 
-  def latest_bills(num, page = 1, congress = DEFAULT_CONGRESS)
+  def latest_bills(num, page = 1, congress = Settings.default_congress)
     bills.find(:all, :conditions => ['bills.session = ?', congress], 
                :order => 'bills.lastaction DESC').paginate(:per_page => num, :page => page)
   end
 
-  def passed_bills(num, page = 1, congress = DEFAULT_CONGRESS)
+  def passed_bills(num, page = 1, congress = Settings.default_congress)
     bills.find(:all, :include => :actions, :conditions => ["bills.session=? AND actions.action_type='enacted'", congress], 
                :order => 'actions.datetime DESC').paginate(:per_page => num, :page => page)
   end
 
-  def newest_bills(num, congress = DEFAULT_CONGRESS)
+  def newest_bills(num, congress = Settings.default_congress)
     bills.find(:all, :conditions => ['bills.session = ?', congress], :order => 'bills.introduced DESC', :limit => num);
   end
 
-  def new_bills_since(current_user, congress = DEFAULT_CONGRESS)
+  def new_bills_since(current_user, congress = Settings.default_congress)
     time_since = current_user.previous_login_date
     time_since = 200.days.ago if Rails.env.development?
     
@@ -312,7 +312,7 @@ class Subject < ViewableObject
     self.comments.count(:id, :conditions => ["created_at > ?", current_user.previous_login_date])
   end
   
-  def most_viewed_bills(num = 5, congress = DEFAULT_CONGRESS, seconds = DEFAULT_COUNT_TIME)
+  def most_viewed_bills(num = 5, congress = Settings.default_congress, seconds = Settings.default_count_time)
     Bill.find_by_sql(["SELECT bills.*, 
                               most_viewed.view_count AS view_count 
                        FROM bills
@@ -349,7 +349,7 @@ class Subject < ViewableObject
   end
   
   def before_save
-    self.bill_count = id ? BillSubject.count_by_sql("SELECT COUNT(*) FROM bill_subjects INNER JOIN bills ON bills.id=bill_subjects.bill_id WHERE bill_subjects.subject_id=#{id} AND bills.session=#{DEFAULT_CONGRESS}") : 0
+    self.bill_count = id ? BillSubject.count_by_sql("SELECT COUNT(*) FROM bill_subjects INNER JOIN bills ON bills.id=bill_subjects.bill_id WHERE bill_subjects.subject_id=#{id} AND bills.session=#{Settings.default_congress}") : 0
   end
 
   def summary
@@ -364,7 +364,7 @@ class Subject < ViewableObject
     subjects = Subject.paginate_by_sql(["SELECT subjects.*, rank(fti_names, ?, 1) as tsearch_rank FROM subjects 
                                  WHERE subjects.fti_names @@ to_tsquery('english', ?)
                                  ORDER BY tsearch_rank DESC, term ASC", q, q],
-                                :per_page => options[:per_page].nil? ? DEFAULT_SEARCH_PAGE_SIZE : options[:per_page], 
+                                :per_page => options[:per_page].nil? ? Settings.default_search_page_size : options[:per_page], 
                                 :page => options[:page])
     subjects  
   end

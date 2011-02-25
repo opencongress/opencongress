@@ -31,19 +31,19 @@
   
     <div class="col2">
       <h3 class="darkline">Vote Result</h3>
-      <%= roll_call_master_sublists(person_type) %>
-      <div id='roll_call_All_chart'><%= @master_chart %></div>
+      <%= roll_call_master_sublists(person_type).html_safe %>
+      <div id='roll_call_All_chart'><%= @master_chart.html_safe %></div>
 
       <h3 class="darkline">Votes by Party</h3>
       
-      <%= roll_call_sublists_by_vote_type('+', @roll_call) %>
-      <div id='roll_call_Aye_chart'><%= @aye_chart %></div>
+      <%= roll_call_sublists_by_vote_type('+', @roll_call).html_safe %>
+      <div id='roll_call_Aye_chart'><%= @aye_chart.html_safe %></div>
 
-      <%= roll_call_sublists_by_vote_type('-', @roll_call) %>
-      <div id='roll_call_Nay_chart'><%= @nay_chart %></div>
+      <%= roll_call_sublists_by_vote_type('-', @roll_call).html_safe %>
+      <div id='roll_call_Nay_chart'><%= @nay_chart.html_safe %></div>
 
-      <%= roll_call_sublists_by_vote_type('0', @roll_call) %>
-      <div id='roll_call_Abstain_chart'><%= @abstain_chart %></div>
+      <%= roll_call_sublists_by_vote_type('0', @roll_call).html_safe %>
+      <div id='roll_call_Abstain_chart'><%= @abstain_chart.html_safe %></div>
     </div>
   </div>
   <% end %>

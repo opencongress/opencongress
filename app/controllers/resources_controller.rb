@@ -61,31 +61,31 @@ class ResourcesController < ApplicationController
     else
       case object_type
       when 'sen'
-        @items = ObjectAggregate.popular('Person', DEFAULT_COUNT_TIME, 540).select{|p| p.title == 'Sen.'}.slice(0, num_items)
+        @items = ObjectAggregate.popular('Person', Settings.default_count_time, 540).select{|p| p.title == 'Sen.'}.slice(0, num_items)
         @title = "Most Viewed Senators on OpenCongress.org"
         @feed_link = "/people/atom_top20?type=sen"
         @more_link = "/people/senators?sort=popular"
         @more_text = "More Senators"
       when 'rep'
-        @items = ObjectAggregate.popular('Person', DEFAULT_COUNT_TIME, 540).select{|p| p.title == 'Rep.'}.slice(0, num_items)
+        @items = ObjectAggregate.popular('Person', Settings.default_count_time, 540).select{|p| p.title == 'Rep.'}.slice(0, num_items)
         @title = "Most Viewed Representatives on OpenCongress.org"
         @feed_link = "/people/atom_top20?type=rep"
         @more_link = "/people/representatives?sort=popular"
         @more_text = "More Representatives"
       when 'committee'
-        @items = ObjectAggregate.popular('Committee', DEFAULT_COUNT_TIME, num_items)
+        @items = ObjectAggregate.popular('Committee', Settings.default_count_time, num_items)
         @title = "Most Viewed Committees on OpenCongress.org"
         @feed_link = "/committee/atom_top20"
         @more_link = "/committee/most_viewed"
         @more_text = "More Commmittees"
       when 'issue'
-        @items = ObjectAggregate.popular('Subject', DEFAULT_COUNT_TIME, num_items)
+        @items = ObjectAggregate.popular('Subject', Settings.default_count_time, num_items)
         @title = "Most Viewed Issues on OpenCongress.org"
         @feed_link = "/issue/atom_top20"
         @more_link = "/issue/most_viewed"
         @more_text = "More Issues"  
       else
-        @items = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME, num_items)
+        @items = ObjectAggregate.popular('Bill', Settings.default_count_time, num_items)
         @title = "Most Viewed Bills on OpenCongress.org"
         @feed_link = "/bill/atom/most/viewed"
         @more_link = "/bill/most/viewed"
@@ -122,7 +122,7 @@ class ResourcesController < ApplicationController
       
       unless number.blank?
         @bills = Bill.find(:all, 
-                   :conditions => ["number = ? AND session = ?", number.to_i, DEFAULT_CONGRESS],
+                   :conditions => ["number = ? AND session = ?", number.to_i, Settings.default_congress],
                    :limit => 5,
                    :order => 'lastaction DESC')
       end
@@ -138,7 +138,8 @@ class ResourcesController < ApplicationController
     end
     
     @page_title = 'Bill Status Widget'
-    @most_viewed_bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME, 10) || Bill.find(:all, :limit => 10)
+
+    @most_viewed_bills = ObjectAggregate.popular('Bill', Settings.default_count_time, 10) || Bill.find(:all, :limit => 10)
   end
   
   def bill_status_panel
@@ -158,7 +159,7 @@ class ResourcesController < ApplicationController
     @item_type = params[:item_type] || 'new-bill'
         
     @page_title = 'Bills by Issue Area Widget'
-    @most_viewed_issues = ObjectAggregate.popular('Subject', DEFAULT_COUNT_TIME, 10) || Issue.find(:all, :limit => 10)
+    @most_viewed_issues = ObjectAggregate.popular('Subject', Settings.default_count_time, 10) || Issue.find(:all, :limit => 10)
   end
   
   def issue_bills_panel
@@ -387,7 +388,7 @@ class ResourcesController < ApplicationController
     unless @user.representative.nil?
       @representative = @user.representative
     else
-      if logged_in? && @user.zipcode
+      if user_signed_in? && @user.zipcode
         @sens, @reps = Person.find_current_congresspeople_by_zipcode(@user.zipcode, (@user.zip_four ? @user.zip_four : nil))
   	  
         if @reps.size == 1

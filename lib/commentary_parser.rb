@@ -274,7 +274,9 @@ module CommentaryParser
         #OCLogger.log d.inspect
         
         place += 1
-        t = d.at("a")
+        t = d.at("h2.title a")
+        
+        puts "GOT T: #{t.inspect}"
 
         os = OpenStruct.new
       
@@ -416,7 +418,7 @@ module CommentaryParser
   end
   
   def CommentaryParser.all_bills_for_current_session
-    bills = Bill.find(:all, :conditions => [ "session = ?", DEFAULT_CONGRESS ], :order => 'lastaction DESC')
+    bills = Bill.find(:all, :conditions => [ "session = ?", Settings.default_congress ], :order => 'lastaction DESC')
     i = 0 
     bills.each do |b|
       i += 1

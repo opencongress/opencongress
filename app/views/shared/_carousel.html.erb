@@ -84,7 +84,7 @@ $j(document).ready(function() {
 
 				<ul>
 					<% @carousel[2].each do |person| %>
-					<li><a href="#p<%= person.id.to_s %>" onclick="new Effect.Highlight('p<%= person.id.to_s %>', {duration: 1} );"><span class='name'><%= person.name %></span><span class='views'><%= person.views(DEFAULT_COUNT_TIME)  %> views</span></a></li>
+					<li><a href="#p<%= person.id.to_s %>" onclick="new Effect.Highlight('p<%= person.id.to_s %>', {duration: 1} );"><span class='name'><%= person.name %></span><span class='views'><%= person.views(Settings.default_count_time)  %> views</span></a></li>
 					<% end %>                  
 				</ul>
 			</div>
@@ -99,7 +99,7 @@ $j(document).ready(function() {
 		<div class="slide">
 			<ul>
 				<% @carousel[0].each do |issue| %>
-				<li><span class='name'><%= link_to_item issue, :term, :show %></span><span class='views'><%= issue.views(DEFAULT_COUNT_TIME) %> views</span></li>
+				<li><span class='name'><%= link_to_item issue, :term, :show %></span><span class='views'><%= issue.views(Settings.default_count_time) %> views</span></li>
 				<% end %>
 			</ul>
 		</div> 
@@ -113,7 +113,7 @@ $j(document).ready(function() {
 		<div class="slide">
 			<ul>
 				<% @carousel[0].each do |roll| %>
-				<li><span class='name'><%= link_to roll.question, :action => 'show', :id => roll.id %></span><span class='views'><%= roll.views(DEFAULT_COUNT_TIME) %> views</span></li>
+				<li><span class='name'><%= link_to roll.question, :action => 'show', :id => roll.id %></span><span class='views'><%= roll.views(Settings.default_count_time) %> views</span></li>
 				<% end %>
 			</ul>
 		</div> 

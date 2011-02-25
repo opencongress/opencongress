@@ -45,7 +45,7 @@
             
             <span class="date"><%= bill.last_action.formatted_date if bill.last_action %></span>
             
-						<% unless bill.session == DEFAULT_CONGRESS %>
+						<% unless bill.session == Settings.default_congress %>
               <span>(<%= bill.session.ordinalize %> congress)</span>
             <% end %>
 
@@ -53,14 +53,14 @@
 
 
 						<% if show_views %>
-            <span class='session'><%= number_with_delimiter(bill.views(DEFAULT_COUNT_TIME)) %> Views</span>
+            <span class='session'><%= number_with_delimiter(bill.views(Settings.default_count_time)) %> Views</span>
             <% end %>
             
                        
             
             <% if commentary_type %>
               <span class='session'>
-                <%= number_with_delimiter(bill.commentary_count(commentary_type, DEFAULT_COUNT_TIME)) %> Articles
+                <%= number_with_delimiter(bill.commentary_count(commentary_type, Settings.default_count_time)) %> Articles
               </span>
             <% end %>
 						</a>

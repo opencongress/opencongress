@@ -6,7 +6,7 @@ if defined? GovKit
 
     ##API key for Votesmart
     # http://votesmart.org/services_api.php
-    config.votesmart_apikey = API_KEYS['project_vote_smart']
+    config.votesmart_apikey = ApiKeys.project_vote_smart
 
     # API key for NIMSP. Request one here:
     # http://www.followthemoney.org/membership/settings.phtml

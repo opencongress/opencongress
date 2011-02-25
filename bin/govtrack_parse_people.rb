@@ -51,7 +51,7 @@ end
 
 # read in the file
 puts "reading file"
-peopleFile = File.open(GOVTRACK_DATA_PATH + "/repstats/people.xml", "r")
+peopleFile = File.open(Settings.govtrack_data_path + "/#{Settings.default_congress}/repstats/people.xml", "r")
 puts "to_rexml"
 xml = HTree(peopleFile).to_rexml
 

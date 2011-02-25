@@ -13,7 +13,7 @@ require 'yaml'
 
 include REXML
 
-PATH = GOVTRACK_DATA_PATH + "/bills"
+PATH = Settings.govtrack_data_path + "/#{Settings.default_congress}/bills"
 
 $node_order = 0
 
@@ -143,12 +143,12 @@ def get_text_word_count(bill_type, bill_number, text_version)
   # get the word count from the text file
   begin
     # try the version first
-    text_filename = "#{GOVTRACK_BILLTEXT_PATH}/#{DEFAULT_CONGRESS}/#{bill_type}/#{bill_type}#{bill_number}#{text_version}.txt"
+    text_filename = "#{Settings.govtrack_billtext_path}/#{Settings.default_congress}/#{bill_type}/#{bill_type}#{bill_number}#{text_version}.txt"
     text_file = File.open(text_filename)
   rescue
     begin
       # if that didn't work just use the symlink
-      text_filename = "#{GOVTRACK_BILLTEXT_PATH}/#{DEFAULT_CONGRESS}/#{bill_type}/#{bill_type}#{bill_number}.txt"
+      text_filename = "#{Settings.govtrack_billtext_path}/#{Settings.default_congress}/#{bill_type}/#{bill_type}#{bill_number}.txt"
       text_file = File.open(text_filename)
     rescue
       return 0
@@ -193,7 +193,7 @@ def parse_from_file(bill, text_version, filename)
     
     tree_walk(doc_root, version)
 
-    outfile = File.new("#{OC_BILLTEXT_PATH}/#{DEFAULT_CONGRESS}/#{bill.bill_type}#{bill.number}#{text_version}.gen.html-oc", "w+")
+    outfile = File.new("#{Settings.oc_billtext_path}/#{Settings.default_congress}/#{bill.bill_type}#{bill.number}#{text_version}.gen.html-oc", "w+")
     doc.write outfile
   else
     puts "Bill text not updated for #{filename}; skipping."
@@ -206,13 +206,13 @@ begin
     Bill.all_types_ordered.each do |bill_type|
       puts "Parsing bill text of type: #{bill_type}"
       
-      type_bills = Bill.find(:all, :conditions => ["bill_type = ? AND session = ?", bill_type, DEFAULT_CONGRESS])
+      type_bills = Bill.find(:all, :conditions => ["bill_type = ? AND session = ?", bill_type, Settings.default_congress])
       type_bills.each_with_index do |bill, i|
         begin
           puts "Parsing bill text: #{bill.typenumber} (#{i+1} of #{type_bills.size})"
     
           # first see if there are multiple versions of the bill
-          bill_version_files = Dir.new("#{GOVTRACK_BILLTEXT_DIFF_PATH}/#{DEFAULT_CONGRESS}/#{bill_type}").entries.select { |f| f.match(/#{bill_type}#{bill.number}_(.*)\.xml$/) }
+          bill_version_files = Dir.new("#{Settings.govtrack_billtext_diff_path}/#{Settings.default_congress}/#{bill_type}").entries.select { |f| f.match(/#{bill_type}#{bill.number}_(.*)\.xml$/) }
     
           if bill_version_files.size > 0
             puts "Multiple versions exist for #{bill_type}#{bill.number}."
@@ -229,7 +229,7 @@ begin
             previous_version = version_array[0][0]
             index = 1
             while index < version_array.size
-              version_file = "#{GOVTRACK_BILLTEXT_DIFF_PATH}/#{DEFAULT_CONGRESS}/#{bill_type}/#{bill_type}#{bill.number}_#{previous_version}-#{version}.xml"
+              version_file = "#{Settings.govtrack_billtext_diff_path}/#{Settings.default_congress}/#{bill_type}/#{bill_type}#{bill.number}_#{previous_version}-#{version}.xml"
         
               parse_from_file(bill, version, version_file)
         
@@ -238,21 +238,21 @@ begin
         
               index += 1
             end
-            version_file = "#{GOVTRACK_BILLTEXT_DIFF_PATH}/#{DEFAULT_CONGRESS}/#{bill_type}/#{bill_type}#{bill.number}_#{previous_version}-#{version}.xml"
+            version_file = "#{Settings.govtrack_billtext_diff_path}/#{Settings.default_congress}/#{bill_type}/#{bill_type}#{bill.number}_#{previous_version}-#{version}.xml"
             parse_from_file(bill, version, version_file)
       
             # also parse first version from the regular bill text path
-            version_file = "#{GOVTRACK_BILLTEXT_PATH}/#{DEFAULT_CONGRESS}/#{bill_type}/#{bill_type}#{bill.number}#{version_array.last[0]}.gen.html"
+            version_file = "#{Settings.govtrack_billtext_path}/#{Settings.default_congress}/#{bill_type}/#{bill_type}#{bill.number}#{version_array.last[0]}.gen.html"
           
             parse_from_file(bill, version_array.last[0], version_file)
           else
-            bill_files = Dir.new("#{GOVTRACK_BILLTEXT_PATH}/#{DEFAULT_CONGRESS}/#{bill_type}").entries.select { |f| f.match(/#{bill_type}#{bill.number}[a-z]+[0-9]?\.gen\.html$/) }
+            bill_files = Dir.new("#{Settings.govtrack_billtext_path}/#{Settings.default_congress}/#{bill_type}").entries.select { |f| f.match(/#{bill_type}#{bill.number}[a-z]+[0-9]?\.gen\.html$/) }
    
             bill_files.each do |f|
               md = /([hs][jcr]?)(\d+)(\w+)\.gen\.html$/.match(f)
               bill_type, bill_number, text_version = md.captures
      
-              parse_from_file(bill, text_version, "#{GOVTRACK_BILLTEXT_PATH}/#{DEFAULT_CONGRESS}/#{bill_type}/#{f}")
+              parse_from_file(bill, text_version, "#{Settings.govtrack_billtext_path}/#{Settings.default_congress}/#{bill_type}/#{f}")
             end
           end
         rescue

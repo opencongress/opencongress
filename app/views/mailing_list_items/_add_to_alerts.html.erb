@@ -1,5 +1,5 @@
 <% form_id = "form_emailalert_#{object.class}_#{object.id}" %>
-<% if logged_in? %>
+<% if user_signed_in? %>
 <li id="emailalert_<%= object.class %>_<%= object.id %>">
 	 
         <% if UserMailingList.find_or_create_from_user(current_user).already_contains?(object) %>

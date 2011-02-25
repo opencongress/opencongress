@@ -4,7 +4,7 @@
  <div <% if related_committees.last == c %>class="last"<% end %>>
    <ul>
      <li>
-       <p><%= link_to_item c, :proper_name, :show %> <em>(<%= c.views(DEFAULT_COUNT_TIME)%> views)</em></p>
+       <p><%= link_to_item c, :proper_name, :show %> <em>(<%= c.views(Settings.default_count_time)%> views)</em></p>
      <% unless c.chair.nil? -%>
       <p>Chair: <%= link_to_person c.chair %></p>
     <% end -%>

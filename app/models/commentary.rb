@@ -86,7 +86,7 @@ require 'htmlentities'
                                        commentaries.is_news = '#{is_news}' AND
                                        fti_names @@ to_tsquery('english', ?)                                       
                                  ORDER BY commentaries.date DESC", q, q],
-                          :per_page => DEFAULT_SEARCH_PAGE_SIZE, :page => options[:page], :total_entries => s_count)
+                          :per_page => Settings.default_search_page_size, :page => options[:page], :total_entries => s_count)
   end
   
   def article_valid?

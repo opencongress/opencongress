@@ -12,7 +12,7 @@
 <div class="back">
 <% if most_recent = articles.delete_at(0) %>
   <h3 class="line2">
-    <strong class="gossip"><%= link_to most_recent.title, article_url(most_recent) %></strong>
+    <strong class="gossip"><%= link_to most_recent.title.html_safe, article_url(most_recent) %></strong>
     <% if most_recent.user %><span class="by">by <%= most_recent.user.full_name %><% end %>
     <em class="date"><%= most_recent.formatted_date %></em></span>
   </h3>
@@ -21,15 +21,15 @@
       <img class="frontpage-blog-image" src="<%= most_recent.frontpage_image_url %>">
     <% end %>
 
-    <%= most_recent.excerpt %>
-<%= link_to('<span>Read Full Article</span>', article_url(most_recent), {:class => "full_article"}) %><% end %>
+    <%= most_recent.excerpt.html_safe %>
+    <%= link_to('<span>Read Full Article</span>'.html_safe, article_url(most_recent), {:class => "full_article"}) %><% end %>
 
 
 <h3 class="recent clear">More Recent Blog Posts</h3>
 <ul class="indent">
   <% articles.each_with_index do |g, i| -%>
     <li class="<%= (i.modulo(2) == 0) ? 'light' : 'dark' %>">
-      <%= link_to "<span class='blog_headline'>#{g.title}</span><span class='datedark'>#{short_date g.created_at}</span>", article_url(g) %>
+      <%= link_to "<span class='blog_headline'>#{g.title}</span><span class='datedark'>#{short_date g.created_at}</span>".html_safe, article_url(g) %>
    </li>
   <% end -%>
 </ul>

@@ -14,7 +14,7 @@
     <em><%= @person.is_sitting? ? "Current Term" : "Last Term" %></em>
     <strong><%= "#{@person.roles_sorted.first.startdate.year} - #{@person.roles_sorted.first.enddate.year}" %></strong>
     <%  if @person.roles_sorted.size > 1 %>
-    <%= toggler("rolehistory_list", "View All", "Hide")%>
+    <%= toggler("rolehistory_list", "View All", "Hide").html_safe %>
     <ul id="rolehistory_list" style="display:none;"> 
       <% @person.roles_sorted[1..@person.roles_sorted.size].each do |role| %>
       <li><strong><%= "#{role.startdate.year} - #{role.enddate.year}" %></strong></li>
@@ -39,7 +39,7 @@
   <% end %>
 </div>
 
-<% if admin_logged_in? %>
+<% if admin_user_signed_in? %>
   <div style="padding-left: 30px;">
     <%= link_to "New news/blog article", :controller => 'admin/commentary', :action => 'new', :commentariable_type => 'Person', :commentariable_id => @person.id %> | 
     <%= link_to "Cleanup news/blog articles (This may take several minutes)", :controller => 'admin/commentary', :action => 'person_cleanup', :person_id => @person.id %>  

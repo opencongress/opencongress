@@ -79,12 +79,12 @@ class Committee < ViewableObject
   end
   
   def atom_id_as_feed
-    "tag:opencongress.org,#{CONGRESS_START_DATES[DEFAULT_CONGRESS]}:/committee_feed/#{id}"
+    "tag:opencongress.org,#{Settings.congress_start_dates[Settings.default_congress]}:/committee_feed/#{id}"
   end
   
   def atom_id_as_entry
     # dates for committees are weird, so let use the beginning of each congress session
-    "tag:opencongress.org,#{CONGRESS_START_DATES[DEFAULT_CONGRESS]}:/committee/#{id}"
+    "tag:opencongress.org,#{Settings.congress_start_dates[Settings.default_congress]}:/committee/#{id}"
   end
 
   def Committee.random(limit)
@@ -113,15 +113,15 @@ class Committee < ViewableObject
   end
 
   def chair
-    Person.find :first, :select => "people.*", :include => :committee_people, :order => 'committees_people.id DESC', :conditions => ["(lower(committees_people.role) = 'chair' OR lower(committees_people.role) = 'chairman') AND committees_people.committee_id = ? AND committees_people.session = ?", id, DEFAULT_CONGRESS]
+    Person.find :first, :select => "people.*", :include => :committee_people, :order => 'committees_people.id DESC', :conditions => ["(lower(committees_people.role) = 'chair' OR lower(committees_people.role) = 'chairman') AND committees_people.committee_id = ? AND committees_people.session = ?", id, Settings.default_congress]
   end 
   
   def vice_chair
-    Person.find :first, :select => "people.*", :include => :committee_people, :order => 'committees_people.id DESC', :conditions => ["lower(committees_people.role) = 'vice chairman' AND committees_people.committee_id = ? AND committees_people.session = ?", id, DEFAULT_CONGRESS]
+    Person.find :first, :select => "people.*", :include => :committee_people, :order => 'committees_people.id DESC', :conditions => ["lower(committees_people.role) = 'vice chairman' AND committees_people.committee_id = ? AND committees_people.session = ?", id, Settings.default_congress]
   end
   
   def ranking_member
-    Person.find :first, :select => "people.*", :include => :committee_people, :order => 'committees_people.id DESC', :conditions => ["lower(committees_people.role) = 'ranking member' AND committees_people.committee_id = ? AND committees_people.session = ?", id, DEFAULT_CONGRESS]
+    Person.find :first, :select => "people.*", :include => :committee_people, :order => 'committees_people.id DESC', :conditions => ["lower(committees_people.role) = 'ranking member' AND committees_people.committee_id = ? AND committees_people.session = ?", id, Settings.default_congress]
   end
   
   def Committee.major_committees
@@ -158,7 +158,7 @@ class Committee < ViewableObject
   end
   
   def bills_sponsored(limit)
-    ids = Bill.find(:all, :select => "bills.id", :include => :bill_committees, :limit => limit, :order => "lastaction desc", :conditions => ["bills_committees.committee_id = ? AND session = ?", id, DEFAULT_CONGRESS]).map { |b| b.id } 
+    ids = Bill.find(:all, :select => "bills.id", :include => :bill_committees, :limit => limit, :order => "lastaction desc", :conditions => ["bills_committees.committee_id = ? AND session = ?", id, Settings.default_congress]).map { |b| b.id } 
     bills = (ids.size > 0) ? (Bill.find ids, :include => :bill_titles, :order => 'bills.lastaction DESC') : []
     bills = [bills] if bills.class == Bill
     bills
@@ -193,7 +193,7 @@ class Committee < ViewableObject
     unless self.wiki_link
       link = ""
     else
-      link = "#{WIKI_BASE_URL}/#{self.wiki_link.name}"
+      link = "#{Settings.wiki_base_url}/#{self.wiki_link.name}"
     end
     
     return link
@@ -265,7 +265,7 @@ class Committee < ViewableObject
                            WHERE fti_names @@ to_tsquery('english', ?) order by tsearch_rank DESC;", q, q])
   end
 
-  def new_bills_since(current_user, congress = DEFAULT_CONGRESS)
+  def new_bills_since(current_user, congress = Settings.default_congress)
     time_since = current_user.previous_login_date
     time_since = 200.days.ago if Rails.env.development?
 
@@ -279,7 +279,7 @@ class Committee < ViewableObject
     self.committee_reports.find(:all, :order => "reported_at DESC", :conditions => ["reported_at is not null"], :limit => limit)
   end
 
-  def new_reports_since(current_user, congress = DEFAULT_CONGRESS)
+  def new_reports_since(current_user, congress = Settings.default_congress)
     time_since = current_user.previous_login_date
     time_since = 200.days.ago if Rails.env.development?
 

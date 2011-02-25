@@ -1,0 +1,2 @@
+class Novel < Book
+end

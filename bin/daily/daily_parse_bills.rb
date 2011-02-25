@@ -17,7 +17,7 @@ require 'date'
 require 'yaml'
 
 
-PATH = GOVTRACK_DATA_PATH + "/bills"
+PATH = Settings.govtrack_data_path + "/#{Settings.default_congress}/bills"
 
 class NoUpdateException < StandardError
 end
@@ -189,7 +189,7 @@ bill_files.each do |f|
         reltype = as["type"]
         relnumber = as["number"].to_i
       
-        related_bill = Bill.find_by_bill_type_and_number_and_session(reltype, relnumber, DEFAULT_CONGRESS)
+        related_bill = Bill.find_by_bill_type_and_number_and_session(reltype, relnumber, Settings.default_congress)
 
         if related_bill.nil?
           # this bill has not been parsed yet; set the info in an array and add it after all the bills have been
@@ -253,7 +253,7 @@ count = 0
 related_bills.keys.each do |rb|
   bill = related_bills[rb]
   
-  related_bill = Bill.find_by_bill_type_and_number_and_session(rb[0], rb[1], DEFAULT_CONGRESS)
+  related_bill = Bill.find_by_bill_type_and_number_and_session(rb[0], rb[1], Settings.default_congress)
   if related_bill.nil?
     puts "Error! Unknown related bill: #{rb.inspect}"
   else

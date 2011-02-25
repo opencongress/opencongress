@@ -63,7 +63,7 @@
   			</ul>
   			<% end %>
   		<% end %>
-				<% if (person.roles.first.enddate < Date.today) && (logged_in? && current_user == @user) %>
+				<% if (person.roles.first.enddate < Date.today) && (user_signed_in? && current_user == @user) %>
 				<div style="padding-top:3px;padding-bottom:3px;">
 				  <em>(This person's Congressional term has ended. You may want to <%= link_to "Remove", :controller => 'profile', :action => 'remove_person_bookmark', :login => @user.login, :id => person.id %> this person from your tracked items)</em>
 				</div>

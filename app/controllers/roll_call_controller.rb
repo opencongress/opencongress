@@ -2,7 +2,7 @@ class RollCallController < ApplicationController
   helper :index
   skip_before_filter :store_location, :except => [:show, :all]
   before_filter :page_view, :only => [:show, :by_number]
-  before_filter :login_required, :only => [:make_hot]
+  before_filter :can_blog, :only => [:update_hot]
   before_filter :no_users, :only => [:can_blog]
   
   @@VOTE_TYPES = { "+" => "Aye", "-" => "Nay", "0" => "Abstain" }
@@ -129,22 +129,15 @@ class RollCallController < ApplicationController
     end
   end
   
-  def make_hot
+  def update_hot
     @roll_call = RollCall.find_by_id(params[:id])
-    @roll_call.is_hot = true
-    @roll_call.hot_date = Time.now
+    @roll_call.is_hot = params[:roll_call][:is_hot]
+    @roll_call.hot_date = Time.now if @roll_call.is_hot
     @roll_call.title = params[:roll_call][:title] if params[:roll_call][:title]
     @roll_call.save
     redirect_back_or_default("/roll_call/show/#{@roll_call.id}")
   end
-  
-  def make_not_hot
-    @roll_call = RollCall.find_by_id(params[:id])
-    @roll_call.is_hot = false
-    @roll_call.save
-    redirect_back_or_default("/roll_call/show/#{@roll_call.id}")
-  end
-  
+    
   def sublist
     @roll_call = RollCall.find(params[:id])
     
@@ -182,7 +175,7 @@ class RollCallController < ApplicationController
       @sort = 'hotbills'
       @rolls = RollCall.find(:all, :include => [:bill, :amendment], :order => 'roll_calls.date DESC',
                              :conditions => ['roll_calls.date > ? AND bills.hot_bill_category_id IS NOT NULL', 
-                                            CONGRESS_START_DATES[DEFAULT_CONGRESS]]).paginate :page => @page
+                                            Settings.congress_start_dates[Settings.default_congress]]).paginate :page => @page
     
     elsif params[:sort] == 'keyvotes'
       @sort = 'keyvotes'
@@ -190,15 +183,16 @@ class RollCallController < ApplicationController
     elsif params[:sort] == 'oldest'
       @sort = 'oldest'
       @rolls = RollCall.find(:all, :include => [:bill, :amendment], :order => 'date ASC', 
-                             :conditions => ['date > ?', CONGRESS_START_DATES[DEFAULT_CONGRESS]]).paginate :page => @page
+                             :conditions => ['date > ?', Settings.congress_start_dates[Settings.default_congress]]).paginate :page => @page
 
     else
       @sort = 'newest'
       @rolls = RollCall.find(:all, :include => [:bill, :amendment], :order => 'date DESC', 
-                             :conditions => ['date > ?', CONGRESS_START_DATES[DEFAULT_CONGRESS]]).paginate :page => @page
+                             :conditions => ['date > ?', Settings.congress_start_dates[Settings.default_congress]]).paginate :page => @page
 
     end
-    @carousel = [ObjectAggregate.popular('RollCall', DEFAULT_COUNT_TIME).slice(0..9)] 
+    @carousel = [ObjectAggregate.popular('RollCall', Settings.default_count_time).slice(0..9)] 
+
     @page_title = 'All Roll Calls'
     @title_desc = SiteText.find_title_desc('roll_call_all')
   
@@ -216,7 +210,7 @@ class RollCallController < ApplicationController
                                      bill_fulltext.fti_names @@ to_tsquery('english', ?) AND
                                      bills.id = bill_fulltext.bill_id AND 
                                      roll_calls.bill_id=bills.id
-                               ORDER BY bills.hot_bill_category_id, roll_calls.date DESC", DEFAULT_CONGRESS, query_stripped]
+                               ORDER BY bills.hot_bill_category_id, roll_calls.date DESC", Settings.default_congress, query_stripped]
                               )
                                
      render :partial => 'roll_calls_list', :locals => { :rolls => @rolls }, :layout => false
@@ -299,8 +293,9 @@ class RollCallController < ApplicationController
     @nay_chart = ofc2(400,220, "roll_call/partyvote_piechart_data/#{@roll_call.id}?breakdown_type=-")
     @abstain_chart = ofc2(400,220, "roll_call/partyvote_piechart_data/#{@roll_call.id}?breakdown_type=0")
 
-
-    @page_title = "#{@roll_call.chamber} Roll Call ##{@roll_call.number} Details"
+    @page_title = @roll_call.title.blank? ? "" : "#{@roll_call.title} - "
+    @page_title += "#{@roll_call.chamber} Roll Call ##{@roll_call.number} Details"
+    
     @title_desc = SiteText.find_title_desc('roll_call_show')
   end
 end

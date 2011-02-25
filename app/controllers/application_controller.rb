@@ -1,7 +1,7 @@
-# Filters added to this controller will be run for all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
 class ApplicationController < ActionController::Base
-  include AuthenticatedSystem
+  protect_from_forgery
+  
+  #include AuthenticatedSystem
   include SimpleCaptcha::ControllerHelpers
 
   before_filter :store_location, :except => ["rescue_action_in_public"]
@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   # this is only used for search results
   # CLEANUP TASK: combine this and the above pagintor
   def pages_for(size, options = {})
-    default_options = {:per_page => DEFAULT_SEARCH_PAGE_SIZE }
+    default_options = {:per_page => Settings.default_search_page_size }
     options = default_options.merge options
     pages = Paginator.new self, size, options[:per_page], (params[:page]||1)
     pages
@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
 
   def days_from_params(days)
     days = days.to_i if (days && !days.kind_of?(Integer))
-    return (days && ((days == 7) || (days == 14) || (days == 30) || (days == 365))) ? days.days : DEFAULT_COUNT_TIME
+    return (days && ((days == 7) || (days == 14) || (days == 30) || (days == 365))) ? days.days : Settings.default_count_time
   end
 
   def rescue_action_in_public(exception)
@@ -77,7 +77,8 @@ class ApplicationController < ActionController::Base
   private
 
   def has_accepted_tos?
-    if logged_in?
+    if user_signed_in?
+      logger.info "USER APP TOS: #{current_user.accepted_tos}"
       unless current_user.accepted_tos == true
         redirect_to :controller => 'account', :action => 'accept_tos'
       end
@@ -85,7 +86,7 @@ class ApplicationController < ActionController::Base
   end
 
   def is_banned?
-    if logged_in?
+    if user_signed_in?
       if current_user.is_banned == true
         redirect_to logout_url
       end
@@ -101,32 +102,32 @@ class ApplicationController < ActionController::Base
       end
   end
   def admin_login_required
-    if !(logged_in? && current_user.user_role.can_administer_users)
+    if !(user_signed_in? && current_user.user_role.can_administer_users)
       redirect_to :controller => 'admin', :action => 'index'
     end
   end
   def can_text
-    if !(logged_in? && current_user.user_role.can_manage_text)
+    if !(user_signed_in? && current_user.user_role.can_manage_text)
       redirect_to :controller => 'admin', :action => 'index'
     end
   end
   def can_moderate
-    if !(logged_in? && current_user.user_role.can_moderate_articles)
+    if !(user_signed_in? && current_user.user_role.can_moderate_articles)
       redirect_to :controller => 'admin', :action => 'index'
     end
   end
   def can_blog
-    unless (logged_in? && current_user.user_role.can_blog)
+    unless (user_signed_in? && current_user.user_role.can_blog)
       redirect_to :controller => 'admin', :action => 'index'
     end
   end
   def can_stats
-    unless (logged_in? && current_user.user_role.can_see_stats)
+    unless (user_signed_in? && current_user.user_role.can_see_stats)
       redirect_to :controller => 'admin', :action => 'index'
     end
   end
   def no_users
-    unless (logged_in? && current_user.user_role.name != "User")
+    unless (user_signed_in? && current_user.user_role.name != "User")
       flash[:notice] = "Permission Denied"
       redirect_to login_url
     end
@@ -156,6 +157,12 @@ class ApplicationController < ActionController::Base
     
     @site_text_page = SiteTextPage.find_by_page_params(page_params)
     @site_text_page = OpenStruct.new if @site_text_page.nil?
+  end
+  
+  def store_location
+    unless request.fullpath =~ /^\/stylesheets/ || request.fullpath =~ /^\/images/ || request.xhr?
+      session[:return_to] = request.fullpath
+    end
   end
 
   protected

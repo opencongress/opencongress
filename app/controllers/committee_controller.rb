@@ -7,7 +7,7 @@ class CommitteeController < ApplicationController
     @house_committees = Committee.by_chamber('house').sort_by { |c| [c.name, (c.subcommittee_name || "")] }.group_by(&:name)
     @senate_committees = Committee.by_chamber('senate').sort_by { |c| [c.name, (c.subcommittee_name || "")] }.group_by(&:name)
 
-    @carousel = ObjectAggregate.popular('Committee', DEFAULT_COUNT_TIME).slice(0..7)
+    @carousel = ObjectAggregate.popular('Committee', Settings.default_count_time).slice(0..7)
     
     @page_title =  "Committees"
     @title_class = "sort"
@@ -54,7 +54,7 @@ class CommitteeController < ApplicationController
     @committees = Committee.by_chamber(@chamber).sort_by { |c| [c.name, (c.subcommittee_name || "")] }.group_by(&:name)
     @major = @committees.keys.sort
     
-    @related_committees = ObjectAggregate.popular('Committee', DEFAULT_COUNT_TIME).slice(0..2) unless @custom_sidebar 
+    @related_committees = ObjectAggregate.popular('Committee', Settings.default_count_time).slice(0..2) unless @custom_sidebar 
     
     @title_class = "sort"
     @title_desc = SiteText.find_title_desc('committee_index')

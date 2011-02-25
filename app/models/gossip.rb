@@ -1,5 +1,6 @@
 class Gossip < ActiveRecord::Base
   validates_presence_of :email, :name, :tip
+  set_table_name 'gossip'
 
   def Gossip.latest(number = 10)
     Gossip.find :all, :limit => number, :order => "created_at desc", :conditions => 'approved = true'

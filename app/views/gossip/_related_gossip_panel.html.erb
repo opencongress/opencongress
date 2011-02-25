@@ -16,7 +16,7 @@
       <div class="clearfix margintop">
       
       
-      <h3><%= link_to '<span>Demand Question Time!</span>', '/resources/question_time', :class => 'med_button'  %></h3>
+      <h3><%= link_to '<span>Demand Question Time!</span>'.html_safe, '/resources/question_time', :class => 'med_button'  %></h3>
       
       <br />
       <br />      
@@ -49,7 +49,9 @@
          
          
          
-         <p><%= link_to '<span>Submit a tip</span>', { :controller => 'gossip', :action => 'submit' }, :class => 'med_button' %></p>
+        <p>
+          <%= link_to '<span>Submit a tip</span>'.html_safe, { :controller => 'gossip', :action => 'submit' }, :class => 'med_button' %>
+        </p>
          
          
          <br /><br /><br />
@@ -60,7 +62,7 @@
       <% if @blogroll %>
         <h3>Blogroll</h3>            
         <ul class="blogroll">
-          <%= @blogroll.article %>
+          <%= @blogroll.article.html_safe %>
         </ul>
       <% end %>
       

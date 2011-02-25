@@ -9,7 +9,7 @@ class ApiController < ApplicationController
   def index
     @page_title = "OC API Documentation"
     @api_key = ""
-    if logged_in?
+    if user_signed_in?
       @api_key = current_user.feed_key
     end
     
@@ -68,25 +68,25 @@ class ApiController < ApplicationController
 
           
   end
-#  Person.find_by_most_commentary(type = 'news', person_type = 'rep', num = 5, since = DEFAULT_COUNT_TIME)
+#  Person.find_by_most_commentary(type = 'news', person_type = 'rep', num = 5, since = Settings.default_count_time)
 
   def most_blogged_representatives_this_week
-    people = Person.find_by_most_commentary('blog', 'rep', @per_page, DEFAULT_COUNT_TIME)
+    people = Person.find_by_most_commentary('blog', 'rep', @per_page, Settings.default_count_time)
     do_render(people, {:methods => [:oc_user_comments, :oc_users_tracking], :include => [:recent_news, :recent_blogs]})
   end
 
   def most_blogged_senators_this_week
-    people = Person.find_by_most_commentary('blog', 'sen', @per_page, DEFAULT_COUNT_TIME)
+    people = Person.find_by_most_commentary('blog', 'sen', @per_page, Settings.default_count_time)
     do_render(people, {:methods => [:oc_user_comments, :oc_users_tracking], :include => [:recent_news, :recent_blogs]})
   end
 
   def representatives_most_in_the_news_this_week
-    people = Person.find_by_most_commentary('news', 'rep', @per_page, DEFAULT_COUNT_TIME)
+    people = Person.find_by_most_commentary('news', 'rep', @per_page, Settings.default_count_time)
     do_render(people, {:methods => [:oc_user_comments, :oc_users_tracking], :include => [:recent_news, :recent_blogs]})
   end
 
   def senators_most_in_the_news_this_week
-    people = Person.find_by_most_commentary('news', 'sen', @per_page, DEFAULT_COUNT_TIME)
+    people = Person.find_by_most_commentary('news', 'sen', @per_page, Settings.default_count_time)
     do_render(people, {:methods => [:oc_user_comments, :oc_users_tracking], :include => [:recent_news, :recent_blogs]})
   end
 
@@ -238,7 +238,7 @@ class ApiController < ApplicationController
   
   def bills_by_query
     query_stripped = prepare_tsearch_query(params[:q])
-    bills = Bill.full_text_search(query_stripped, {:congresses => [DEFAULT_CONGRESS,DEFAULT_CONGRESS - 1,DEFAULT_CONGRESS - 2,DEFAULT_CONGRESS - 3], :page => 1})
+    bills = Bill.full_text_search(query_stripped, {:congresses => [Settings.default_congress,Settings.default_congress - 1,Settings.default_congress - 2,Settings.default_congress - 3], :page => 1})
     do_render(bills, {:except => [:rolls, :hot_bill_category_id], 
                                 :methods => [:title_full_common, :status], 
                                 :include => {:co_sponsors => {:methods => [:oc_user_comments, :oc_users_tracking]}, 
@@ -255,24 +255,25 @@ class ApiController < ApplicationController
   
   def stalled_bills
     original_chamber = (params[:passing_chamber] == 's') ? 's' : 'h'
-    session = (AVAILABLE_CONGRESSES.include?(params[:session])) ? params[:session] : DEFAULT_CONGRESS
+    session = (AVAILABLE_CONGRESSES.include?(params[:session])) ? params[:session] : Settings.default_congress
     
     bills = Bill.find_stalled_in_second_chamber(original_chamber, session)
     do_render(bills, {:except => [:rolls, :hot_bill_category_id]})
   end
   
   def most_blogged_bills_this_week
-    bills = Bill.find_by_most_commentary('blog', 10, DEFAULT_COUNT_TIME)
+    bills = Bill.find_by_most_commentary('blog', 10, Settings.default_count_time)
     do_render(bills, {:except => [:rolls, :hot_bill_category_id]})
   end
   
   def bills_in_the_news_this_week
-    bills = Bill.find_by_most_commentary('news', 10, DEFAULT_COUNT_TIME)
+    bills = Bill.find_by_most_commentary('news', 10, Settings.default_count_time)
     do_render(bills, {:except => [:rolls, :hot_bill_category_id]})
   end
   
   def most_viewed_bills_this_week
-    bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME + 30.days, 10) || Bill.find(:first)
+    bills = ObjectAggregate.popular('Bill', Settings.default_count_time + 30.days, 10) || Bill.find(:first)
+
     do_render(bills, {:except => [:rolls, :hot_bill_category_id]})
   end
   

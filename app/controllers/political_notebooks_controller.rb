@@ -80,9 +80,9 @@ private
     @tag = params[:tag] ||= nil   
     @type = params[:type] ||= nil
     if @tag && @type
-      @items = @political_notebook.notebook_items.find_tagged_with(@tag, :conditions => ["type = ?", @type])
+      @items = @political_notebook.notebook_items.tagged_with(@tag, :conditions => ["type = ?", @type])
     elsif @tag
-      @items = @political_notebook.notebook_items.find_tagged_with @tag
+      @items = @political_notebook.notebook_items.tagged_with @tag
     elsif @type
       @items = @political_notebook.notebook_items.find(:all, :conditions => ["type = ?", @type])
     else
@@ -94,7 +94,7 @@ private
   end
   
   def is_users_notebook?
-    return false unless logged_in?
+    return false unless user_signed_in?
     return current_user == @political_notebook.user
   end
   

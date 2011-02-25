@@ -91,6 +91,7 @@ module IndexHelper
       out += "Not In Session"
     end
     out += "</div>"
+    out.html_safe
   end
   
   def recess_div(session)

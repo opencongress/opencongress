@@ -1,8 +1,8 @@
 module RollCallHelper
   def person_type
     case @roll_call.chamber
-      when 'House' : 'Representative'
-      when 'Senate' : 'Senator'
+      when 'House' then 'Representative'
+      when 'Senate' then 'Senator'
     end
   end
   
@@ -104,9 +104,9 @@ module RollCallHelper
   
   def numeric_percentage(roll_call)
     case roll_call.required
-      when '1/2' : "(50%)"
-      when '2/3' : "(66%)"
-      when '3/5' : "(60%)"
+      when '1/2' then "(50%)"
+      when '2/3' then "(66%)"
+      when '3/5' then "(60%)"
     end
   end
 end

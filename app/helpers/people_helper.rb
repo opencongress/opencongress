@@ -33,10 +33,10 @@ module PeopleHelper
     end 
       
     if person.roles_sorted.size == 1
-      "#{table_top}#{first_role_row}#{table_bottom}"
+      "#{table_top}#{first_role_row}#{table_bottom}".html_safe
     else  
       %Q{<span id="gossip_more">#{table_top}#{first_role_row}<tr><td colspan=5><a href="javascript:replace('gossip_extra', 'gossip_more')" class="arrow">See All #{person.roles_sorted.size} Terms</a></td></tr>#{table_bottom}</span>
-      <span id="gossip_extra" style="display: none">#{table_top}#{all_roles}<tr><td colspan="5"><a href="javascript:replace('gossip_more', 'gossip_extra')" class="arrow-hide">Hide Terms</a></td></tr>#{table_bottom}</span>}
+      <span id="gossip_extra" style="display: none">#{table_top}#{all_roles}<tr><td colspan="5"><a href="javascript:replace('gossip_more', 'gossip_extra')" class="arrow-hide">Hide Terms</a></td></tr>#{table_bottom}</span>}.html_safe
     end
   end
 	
@@ -106,7 +106,7 @@ module PeopleHelper
       output += "</ul>"
     end
     output += "</div>"
-    output
+    output.html_safe
     end
   end
 	
@@ -139,7 +139,7 @@ module PeopleHelper
       output += "<li>No Co-Sponsored Bills</li>"
     end
 
-    return output.blank? ? "Data unavailable at this time." : output
+    return output.blank? ? "Data unavailable at this time." : output.html_safe
 	end
 
 	
@@ -183,9 +183,9 @@ module PeopleHelper
       end
     end
     unless xml == true
-     '<td width="7%" align="center" class="call">' + link_to(vo.number, :controller => :roll_call, :action => :show, :id => vo.id) + %Q{</td>
+     ('<td width="7%" align="center" class="call">' + link_to(vo.number, :controller => :roll_call, :action => :show, :id => vo.id) + %Q{</td>
      <td class="#{clash} peeps peep1"><strong>#{@person1.lastname}</strong>&nbsp;<font class="#{vote1}">#{vote1}</td>
-     <td class="#{clash} peeps peep2"><strong>#{@person2.lastname}</strong>&nbsp;<font class="#{vote2}">#{vote2}</td>}
+     <td class="#{clash} peeps peep2"><strong>#{@person2.lastname}</strong>&nbsp;<font class="#{vote2}">#{vote2}</td>}).html_safe
     else
       xml_builder = Builder::XmlMarkup.new
       xml_builder.person1 { |xml|

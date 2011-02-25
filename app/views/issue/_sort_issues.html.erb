@@ -44,8 +44,8 @@
 			<div id="sort_nav">	
 				<ul id="sort">
 					<h4>Sort By</h4>
-					<li id="newest" class="<%= sort == :alphabetical ? 'active' : '' %>"><%= link_to "<span>Name</span>", :action => 'alphabetical'  %></li> 
-				  <li id="hotbills" class="<%= sort == :by_most_viewed ? 'active' : '' %>"><%= link_to "<span>Most Viewed</span>", :action => 'by_most_viewed' %></li> 	
-					<li id="oldest" class="<%= sort == :by_bill_count ? 'active' : '' %>"><%= link_to "<span>Most Bills</span>", :action => 'by_bill_count' %></li> 
+					<li id="newest" class="<%= sort == :alphabetical ? 'active' : '' %>"><%= link_to "<span>Name</span>".html_safe, :action => 'alphabetical'  %></li> 
+				  <li id="hotbills" class="<%= sort == :by_most_viewed ? 'active' : '' %>"><%= link_to "<span>Most Viewed</span>".html_safe, :action => 'by_most_viewed' %></li> 	
+					<li id="oldest" class="<%= sort == :by_bill_count ? 'active' : '' %>"><%= link_to "<span>Most Bills</span>".html_safe, :action => 'by_bill_count' %></li> 
 					
 				</ul>

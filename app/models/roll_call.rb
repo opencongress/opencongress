@@ -4,7 +4,7 @@ class RollCall < ViewableObject
   has_one :action
   has_many :roll_call_votes, :include => :person, :order => 'people.lastname'
   
-  named_scope :for_ident, lambda { |ident| {:conditions => ["date_part('year', roll_calls.date) = ? AND roll_calls.where = case ? when 'h' then 'house' else 'senate' end AND roll_calls.number = ?", *Bill.ident(ident)]} }
+  scope :for_ident, lambda { |ident| {:conditions => ["date_part('year', roll_calls.date) = ? AND roll_calls.where = case ? when 'h' then 'house' else 'senate' end AND roll_calls.number = ?", *Bill.ident(ident)]} }
 
   with_options :class_name => 'RollCallVote' do |rc|
     rc.has_many :aye_votes, :conditions => "roll_call_votes.vote='+'"
@@ -61,12 +61,12 @@ class RollCall < ViewableObject
     md ? md.captures : [nil, nil, nil]
   end
 
-  def self.find_pvs_key_votes(congress = DEFAULT_CONGRESS)
+  def self.find_pvs_key_votes(congress = Settings.default_congress)
     find(:all, :include => [:bill, :amendment], :order => 'roll_calls.date DESC',
                            :conditions => ['roll_calls.date > ? AND 
                                           ((roll_calls.roll_type IN (?) AND bills.key_vote_category_id IS NOT NULL) OR
                                            (roll_calls.roll_type IN (?) AND amendments.key_vote_category_id IS NOT NULL))', 
-                  CONGRESS_START_DATES[DEFAULT_CONGRESS], @@BILL_PASSAGE_TYPES, @@AMDT_PASSAGE_TYPES])
+                  CONGRESS_START_DATES[Settings.default_congress], @@BILL_PASSAGE_TYPES, @@AMDT_PASSAGE_TYPES])
   end
   
   def vote_for_person(person)
@@ -110,7 +110,7 @@ class RollCall < ViewableObject
     response = nil;
     http = Net::HTTP.new("www.govtrack.us")
     http.start do |http|
-      request = Net::HTTP::Get.new("/congress/votes.xpd", {"User-Agent" => DEFAULT_USERAGENT})
+      request = Net::HTTP::Get.new("/congress/votes.xpd", {"User-Agent" => Settings.scraper_useragent})
       response = http.request(request)
     end
     response.body

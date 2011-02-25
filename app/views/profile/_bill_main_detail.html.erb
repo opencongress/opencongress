@@ -23,7 +23,7 @@
 			<li><%= toggler_with_span_class("new_#{bill.ident}", "<span>New Comments (#{bill.commentss_count})</span>", '<span>Hide New Comments</span>', 'med_button', 'med_button on') %></li>
 		<% end %>
 	</ul>
-	<% if (bill.session == 110 || bill.session == 109) && (logged_in? && current_user == @user) %>
+	<% if (bill.session == 110 || bill.session == 109) && (user_signed_in? && current_user == @user) %>
 	<div>
 	  <em>(This bill is from a previous Congress, and is no longer being updated. You may want to <%= link_to "Remove It", :controller => 'profile', :action => 'remove_bill_bookmark', :login => @user.login, :id => bill.id %> from your tracked items)</em>
 	</div>

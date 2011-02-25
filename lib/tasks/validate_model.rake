@@ -5,7 +5,7 @@ namespace :db do
   desc "Run model validations on all model records in database"
   task :validate_model => :environment do
     puts "-- records - model --"
-    Dir.glob(RAILS_ROOT + '/app/models/**/*.rb').each { |file| require file }
+    Dir.glob(Rails.root + '/app/models/**/*.rb').each { |file| require file }
 
     Object.subclasses_of(ActiveRecord::Base).select { |c| c.name == ENV["CLASS"]}.each do |klass|
       total = klass.count

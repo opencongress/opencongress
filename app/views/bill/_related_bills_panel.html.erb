@@ -4,7 +4,7 @@
       <% related_bills.each do |rb| %>
       <div class="last">
             <%= link_to rb.title_full_common, bill_path(rb) %>
-            <em>(<%= rb.views(DEFAULT_COUNT_TIME) %> views)</em><br />
+            <em>(<%= rb.views(Settings.default_count_time) %> views)</em><br />
             <span class="date">Introduced on <%= Time.at(rb.introduced).strftime("%B %d, %Y") %> by the <%= rb.chamber.capitalize %></span><br />
             
          </div>

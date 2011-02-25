@@ -14,7 +14,7 @@ describe Article do
   it "should return articles for a given tag" do
     finreg1 = Article.find_by_title("Will the Agriculture Committee Hand Wall Street a Big Win on Derivatives?")
     
-    articles = Article.find_tagged_with("Financial Reform")
+    articles = Article.tagged_with("Financial Reform")
     
     articles.should include(finreg1)
   end
@@ -23,7 +23,7 @@ describe Article do
     finreg1 = Article.find_by_title("Will the Agriculture Committee Hand Wall Street a Big Win on Derivatives?")
     finreg2 = Article.find_by_title("House Dems take on Wall Street Bonuses")
     
-    articles = Article.find_tagged_with("Financial Reform")
+    articles = Article.tagged_with("Financial Reform")
     
     articles.should include(finreg1)
     articles.should include(finreg2)

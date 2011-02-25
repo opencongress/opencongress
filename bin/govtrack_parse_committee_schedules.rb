@@ -6,7 +6,7 @@ end
 
 require 'rexml/document'
 
-path = GOVTRACK_DATA_PATH + "/committeeschedule.xml"
+path = Settings.govtrack_data_path + "/#{Settings.default_congress}/committeeschedule.xml"
 
 class CommitteeScheduleListener
 

@@ -17,6 +17,8 @@ require 'net/http'
 class Solr::Connection
   attr_reader :url, :autocommit, :connection
 
+  ILLEGAL_XML_CHARS =  /\x00|\x01|\x02|\x03|\x04|\x05|\x06|\x07|\x08|\x0B|\x0C|\x0E|\x0F|\x10|\x11|\x12|\x13|\x14|\x15|\x16|\x17|\x18|\x19|\x1A|\x1B|\x1C|\x1D|\x1E|\x1F/ 
+
   # create a connection to a solr instance using the url for the solr
   # application context:
   #
@@ -28,7 +30,7 @@ class Solr::Connection
   #   conn = Solr::Connection.new('http://example.com:8080/solr', 
   #     :autocommit => :on)
 
-  def initialize(url, opts={})
+  def initialize(url="http://localhost:8983/solr", opts={})
     @url = URI.parse(url)
     unless @url.kind_of? URI::HTTP
       raise "invalid http url: #{url}"
@@ -78,12 +80,29 @@ class Solr::Connection
   #   conn.query('borges') do |hit|
   #     puts hit
   #   end
+  #
+  # options include:
+  # 
+  #   :sort, :default_field, :rows, :filter_queries, :debug_query,
+  #   :explain_other, :facets, :highlighting, :mlt,
+  #   :operator         => :or / :and
+  #   :start            => defaults to 0
+  #   :field_list       => array, defaults to ["*", "score"]
 
   def query(query, options={}, &action)
     # TODO: Shouldn't this return an exception if the Solr status is not ok?  (rather than true/false).
     create_and_send_query(Solr::Request::Standard, options.update(:query => query), &action)
   end
   
+  # performs a dismax search and returns a Solr::Response::Standard
+  #
+  #   response = conn.search('borges')
+  # 
+  # options are same as query, but also include:
+  # 
+  #   :tie_breaker, :query_fields, :minimum_match, :phrase_fields,
+  #   :phrase_slop, :boost_query, :boost_functions
+
   def search(query, options={}, &action)
     create_and_send_query(Solr::Request::Dismax, options.update(:query => query), &action)
   end
@@ -138,8 +157,15 @@ class Solr::Connection
   # send the http post request to solr; for convenience there are shortcuts
   # to some requests: add(), query(), commit(), delete() or send()
   def post(request)
+    if ENV["DEBUG"]
+      puts "POST #{@url.path + "/" + request.handler}"
+      puts "-- DATA -------------------"
+      puts request.to_s
+      puts "-- END DATA ---------------"
+    end
+    
     response = @connection.post(@url.path + "/" + request.handler,
-                                request.to_s,
+                                request.to_s.gsub(ILLEGAL_XML_CHARS, ''),
                                 { "Content-Type" => request.content_type })
   
     case response
@@ -160,3 +186,6 @@ private
   end
   
 end
+
+
+

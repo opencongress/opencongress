@@ -6,7 +6,7 @@ require "dbi"
 require 'rexml/document'
 require 'date'
 
-PATH = GOVTRACK_DATA_PATH + "/bills"
+PATH = Settings.govtrack_data_path + "/#{Settings.default_congress}/bills"
 
 bills = Bill.find_all
 

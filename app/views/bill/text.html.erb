@@ -27,7 +27,7 @@
 
 <div class="title">
 <!--
-<span class="date"><%= @bill.session == DEFAULT_CONGRESS ? 'current' : 'previous' %> <%= @bill.session.ordinalize %> session of congress</span>
+<span class="date"><%= @bill.session == Settings.default_congress ? 'current' : 'previous' %> <%= @bill.session.ordinalize %> session of congress</span>
 -->
 <h1><a href="/bill/<%= @bill.ident %>/show"><span><%= @bill.typenumber %></span></a> - <%= @bill.title_common %></h1>
 
@@ -133,7 +133,7 @@
   <%= @bill_text %>
 </div>
 
-<% unless logged_in? %>
+<% unless user_signed_in? %>
 <script type="text/javascript">
 $j().ready(function() {
 	$j('#login_rate').jqm({ajax:'@href', trigger: 'a.rate_trigger'});

@@ -5,7 +5,7 @@ class ApacheBan
   
   def self.create_by_ip(ipaddr)
     gots = false
-    file = File.open(BAN_FILE, 'r+')
+    file = File.open(Settings.ban_file, 'r+')
     file.each do |line|
       if line =~ /#{ipaddr}/
         gots = true
@@ -21,7 +21,7 @@ class ApacheBan
   end
 
   def self.delete_by_ip(ipaddr)
-    file = File.open(BAN_FILE)
+    file = File.open(Settings.ban_file)
     file_contents = file.read
     file.close
 
@@ -32,7 +32,7 @@ class ApacheBan
         new_contents << f
       end
     end
-    file = File.open(BAN_FILE, 'w')
+    file = File.open(Settings.ban_file, 'w')
     file.puts new_contents
     file.close
       

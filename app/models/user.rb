@@ -2,6 +2,8 @@ require 'digest/sha1'
 
 # this model expects a certain database layout and its based on the name/login pattern. 
 class User < ActiveRecord::Base
+  devise :database_authenticatable #, :recoverable, :rememberable, :trackable, :validatable , :confirmable 
+  
   acts_as_solr :fields => [:placeholder, {:definitive_district => :integer},:public_actions,:my_committees_tracked, :my_bills_supported, 
                            :my_people_tracked, :my_bills_opposed, :login, :username, :full_name, :email,
                            :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens,

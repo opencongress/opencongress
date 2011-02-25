@@ -19,7 +19,7 @@
     <li><a href="/articles/list?month=<%= m.month %>-<%= m.year %>"><%= m.display_month %></a></li>
   <% end %>
 </ul>
-<%= toggler("all_archives", "See All Archives", "Hide Archives", "arrow", "arrow-hide")%>
+<%= toggler("all_archives", "See All Archives", "Hide Archives", "arrow", "arrow-hide").html_safe %>
 <br /><br />
 <div id="all_archives" style="display:none;">
 <ul class="star">

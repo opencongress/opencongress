@@ -48,7 +48,7 @@ class ProfileController < ApplicationController
 		@title_class = "tab-nav"
     @profile_nav = @user
 
-  	if logged_in? && (current_user.id == @user.id) && @user.zipcode && @user.zip_four
+  	if user_signed_in? && (current_user.id == @user.id) && @user.zipcode && @user.zip_four
   	  zd = ZipcodeDistrict.zip_lookup(@user.zipcode, (@user.zip_four ? @user.zip_four : nil)).first
       unless zd.nil?
         @cd_text = zd.state.to_s + "-" + zd.district.to_s
@@ -93,15 +93,15 @@ class ProfileController < ApplicationController
   end
   
   def items_tracked
-    @atom = {'link' => url_for(:controller => 'user_feeds', :login => @user.login, :action => 'tracked_items', :key => logged_in? ? current_user.feed_key : nil)}
+    @atom = {'link' => url_for(:controller => 'user_feeds', :login => @user.login, :action => 'tracked_items', :key => user_signed_in? ? current_user.feed_key : nil)}
     @hide_atom = true
     @user = User.find_by_login(params[:login], :include => [:bookmarks]) # => [:bill, {:person => :roles}]}])
     @page_title = "#{@user.login}'s Profile"
     @profile_nav = @user
 		@title_class = "tab-nav"
 
-		@senators, @reps = Person.find_current_congresspeople_by_zipcode(@user.zipcode, @user.zip_four) if ( logged_in? && @user == current_user && !(@user.zipcode.nil? || @user.zipcode.empty?))
-    if logged_in? && current_user.id == @user.id
+		@senators, @reps = Person.find_current_congresspeople_by_zipcode(@user.zipcode, @user.zip_four) if ( user_signed_in? && @user == current_user && !(@user.zipcode.nil? || @user.zipcode.empty?))
+    if user_signed_in? && current_user.id == @user.id
       mailing_list = UserMailingList.find_or_create_by_user_id(@user.id)
       @show_email_alerts = true
     else
@@ -369,7 +369,7 @@ class ProfileController < ApplicationController
 
 
   def edit_profile
-    if logged_in?
+    if user_signed_in?
       @user = current_user
       field = params[:field]
       value = params[:value]  
@@ -401,7 +401,7 @@ class ProfileController < ApplicationController
   end
   
   def track
-    if logged_in?
+    if user_signed_in?
       object = Object.const_get(params[:type])
       @this_object = object.find_by_id(params[:id])
       if @this_object

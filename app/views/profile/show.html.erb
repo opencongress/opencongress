@@ -3,7 +3,7 @@
 </div>
 <%= render :partial => "profile_nav" %>
 <div class="profile_content">
-	<% if logged_in? && params[:login] == current_user.login %>
+	<% if user_signed_in? && params[:login] == current_user.login %>
 	<p><em>This page shows only the personal information that you have chosen to make
 		public. OpenCongress users are encouraged to share their preferred contact
 		info above: website or IM address (and coming soon, e-mail). This allows
@@ -137,7 +137,7 @@
 				</div>
 
 				<div class="settings">
-				<% if logged_in? && params[:login] == current_user.login %>
+				<% if user_signed_in? && params[:login] == current_user.login %>
 				<%= render :partial => "settings" %>
 				<% else %>
 				<% end %>

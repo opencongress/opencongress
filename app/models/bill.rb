@@ -1,7 +1,8 @@
 class Bill < ViewableObject
-
-#  acts_as_solr :fields => [{:billtext_txt => :text},:bill_type,:session,{:title_short=>{:boost=>3}}, {:introduced => :integer}],
-#               :facets => [:bill_type, :session], :auto_commit => false
+  require 'wiki_connection'
+  
+  acts_as_solr :fields => [{:billtext_txt => :text},:bill_type,:session,{:title_short=>{:boost=>3}}, {:introduced => :integer}],
+               :facets => [:bill_type, :session], :auto_commit => false
 
   belongs_to :sponsor, :class_name => "Person", :foreign_key => :sponsor_id
   has_many :bill_titles  
@@ -694,7 +695,7 @@ class Bill < ViewableObject
     def find_hot_bills(order = 'pvs_categories.name', options = {})
       # not used right now.  more efficient to loop through categories
       # probably just need to add an index to hot_bill_category_id
-      Bill.find(:all, :conditions => ["bills.session = ? AND bills.hot_bill_category_id IS NOT NULL", DEFAULT_CONGRESS], 
+      Bill.find(:all, :conditions => ["bills.session = ? AND bills.hot_bill_category_id IS NOT NULL", Settings.default_congress], 
                 :include => :hot_bill_category, :order => order, :limit => options[:limit])
     end
   
@@ -710,7 +711,7 @@ class Bill < ViewableObject
     end
 
     def top5_viewed
-      bills = ObjectAggregate.popular('Bill', DEFAULT_COUNT_TIME, 5)
+      bills = ObjectAggregate.popular('Bill', Settings.default_count_time, 5)
       
       (bills.select {|b| b.stats.entered_top_viewed.nil? }).each do |bv|
         bv.stats.entered_top_viewed = Time.now
@@ -767,7 +768,7 @@ class Bill < ViewableObject
     end
   end
 
-  def commentary_count(type = 'news', since = DEFAULT_COUNT_TIME)
+  def commentary_count(type = 'news', since = Settings.default_count_time)
     return @attributes['article_count'] if @attributes['article_count']
     
     if type == 'news'
@@ -788,8 +789,8 @@ class Bill < ViewableObject
     total_news = self.news.size
     total_blogs = self.blogs.size
     if (total_news + total_blogs) > 0
-      fresh_news = self.news.select { |n| n.date > DEFAULT_COUNT_TIME.ago }
-      fresh_blogs = self.blogs.select { |b| b.date > DEFAULT_COUNT_TIME.ago }
+      fresh_news = self.news.select { |n| n.date > Settings.default_count_time.ago }
+      fresh_blogs = self.blogs.select { |b| b.date > Settings.default_count_time.ago }
       return ((fresh_news.size.to_f + fresh_blogs.size.to_f) / (total_news.to_f + total_blogs.to_f))
     else
       return 0
@@ -804,14 +805,14 @@ class Bill < ViewableObject
 
   class << self
     def sponsor_count
-      Bill.count(:all, :conditions => ["session = ?", DEFAULT_CONGRESS], :group => "sponsor_id").sort {|a,b| b[1]<=>a[1]}
+      Bill.count(:all, :conditions => ["session = ?", Settings.default_congress], :group => "sponsor_id").sort {|a,b| b[1]<=>a[1]}
     end
 
     def cosponsor_count
-      Bill.count(:all, :include => [:bill_cosponsors], :conditions => ["bills.session = ?", DEFAULT_CONGRESS], :group => "bills_cosponsors.person_id").sort {|a,b| b[1]<=>a[1]}
+      Bill.count(:all, :include => [:bill_cosponsors], :conditions => ["bills.session = ?", Settings.default_congress], :group => "bills_cosponsors.person_id").sort {|a,b| b[1]<=>a[1]}
     end
   
-    def find_by_most_commentary(type = 'news', num = 5, since = DEFAULT_COUNT_TIME, congress = DEFAULT_CONGRESS, bill_types = ["h", "hc", "hj", "hr", "s", "sc", "sj", "sr"])
+    def find_by_most_commentary(type = 'news', num = 5, since = Settings.default_count_time, congress = Settings.default_congress, bill_types = ["h", "hc", "hj", "hr", "s", "sc", "sj", "sr"])
 
       is_news = (type == "news") ? true : false
     
@@ -831,7 +832,7 @@ class Bill < ViewableObject
                         since.ago, is_news, congress, bill_types, num])
     end
 
-    def find_rushed_bills(congress = DEFAULT_CONGRESS, rushed_time = 259200, show_resolutions = false)
+    def find_rushed_bills(congress = Settings.default_congress, rushed_time = 259200, show_resolutions = false)
       resolution_condition = show_resolutions ? "" : " AND (bills.bill_type = 'h' OR bills.bill_type = 's')"
     
       Bill.find_by_sql(["SELECT * FROM bills INNER JOIN 
@@ -845,7 +846,7 @@ class Bill < ViewableObject
                          ORDER BY vote_date DESC", congress, rushed_time])
     end
     
-    def find_stalled_in_second_chamber(original_chamber = 's', session = DEFAULT_CONGRESS, num = :all)
+    def find_stalled_in_second_chamber(original_chamber = 's', session = Settings.default_congress, num = :all)
       Bill.find_by_sql(["SELECT bills.* FROM bills 
                           INNER JOIN actions a_v ON (bills.id=a_v.bill_id AND a_v.vote_type='vote' AND a_v.result='pass') 
                         WHERE bills.bill_type=? AND bills.session=?
@@ -857,7 +858,7 @@ class Bill < ViewableObject
     end
     
 
-    def find_gpo_consideration_rushed_bills(congress = DEFAULT_CONGRESS, rushed_time = 259200, show_resolutions = false)
+    def find_gpo_consideration_rushed_bills(congress = Settings.default_congress, rushed_time = 259200, show_resolutions = false)
       # rushed time not working correctly for some reason (adapter is changing...)
  
       resolution_condition = show_resolutions ? "" : " AND (bills.bill_type = 'h' OR bills.bill_type = 's')"
@@ -1157,19 +1158,19 @@ class Bill < ViewableObject
   end
     
   def self.full_text_search(q, options = {})
-    congresses = options[:congresses] || DEFAULT_CONGRESS
+    congresses = options[:congresses] || Settings.default_congress
     
     s_count = Bill.count_by_sql(["SELECT COUNT(*) FROM bills, bill_fulltext
           WHERE bills.session IN (?) AND
             bill_fulltext.fti_names @@ to_tsquery('english', ?) AND
-            bills.id = bill_fulltext.bill_id", options[:congresses] || DEFAULT_CONGRESS, q])
+            bills.id = bill_fulltext.bill_id", options[:congresses] || Settings.default_congress, q])
 
     Bill.paginate_by_sql(["SELECT bills.*, rank(bill_fulltext.fti_names, ?, 1) as tsearch_rank FROM bills, bill_fulltext
                                WHERE bills.session IN (?) AND
                                      bill_fulltext.fti_names @@ to_tsquery('english', ?) AND
                                      bills.id = bill_fulltext.bill_id
                                ORDER BY hot_bill_category_id, lastaction DESC", q, options[:congresses], q],
-                :per_page => DEFAULT_SEARCH_PAGE_SIZE, :page => options[:page], :total_entries => s_count)
+                :per_page => Settings.default_search_page_size, :page => options[:page], :total_entries => s_count)
   end
 
   def billtext_txt
@@ -1190,7 +1191,7 @@ class Bill < ViewableObject
 
   def self.b_rb
     Bill.rebuild_solr_index(10) do |bill, options| 
-      bill.find(:all, options.merge({:conditions => ["session = ?", DEFAULT_CONGRESS]})) 
+      bill.find(:all, options.merge({:conditions => ["session = ?", Settings.default_congress]})) 
     end
   end
 

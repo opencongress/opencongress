@@ -27,7 +27,7 @@ class BattleRoyaleController < ApplicationController
     end
     page = params[:page] ||= 1
     
-#    @cache_key = "br-bill-#{page}-#{sort}-#{order}-#{logged_in? ? current_user.login : nil}-#{@range}-#{params[:q].blank? ? nil : Digest::SHA1.hexdigest(params[:q])}"
+#    @cache_key = "br-bill-#{page}-#{sort}-#{order}-#{user_signed_in? ? current_user.login : nil}-#{@range}-#{params[:q].blank? ? nil : Digest::SHA1.hexdigest(params[:q])}"
 #    unless read_fragment(@cache_key)
       unless params[:q].blank?
         @r_count = Bill.count_all_by_most_user_votes_for_range(@range, :search => prepare_tsearch_query(params[:q]), :order => sort + " " + order, :per_page => 20, :page => page)
@@ -77,7 +77,7 @@ class BattleRoyaleController < ApplicationController
     end
     
     page = params[:page] ||= 1
-#    @cache_key = "br-sens-#{page}-#{sort}-#{order}-#{logged_in? ? current_user.login : nil}-#{@range}-#{params[:q].blank? ? nil : Digest::SHA1.hexdigest(params[:q])}"
+#    @cache_key = "br-sens-#{page}-#{sort}-#{order}-#{user_signed_in? ? current_user.login : nil}-#{@range}-#{params[:q].blank? ? nil : Digest::SHA1.hexdigest(params[:q])}"
 #    unless read_fragment(@cache_key)    
       unless params[:q].blank?    
         @r_count = Person.count_all_by_most_tracked_for_range(@range, :search => prepare_tsearch_query(params[:q]), :order => sort + " " + order, :per_page => 20, :page => page)
@@ -126,7 +126,7 @@ class BattleRoyaleController < ApplicationController
         @p_subtitle << "Comments"
     end
     page = params[:page] ||= 1
-#    @cache_key = "br-reps-#{page}-#{sort}-#{order}-#{logged_in? ? current_user.login : nil}-#{@range}-#{params[:q].blank? ? nil : Digest::SHA1.hexdigest(params[:q])}"
+#    @cache_key = "br-reps-#{page}-#{sort}-#{order}-#{user_signed_in? ? current_user.login : nil}-#{@range}-#{params[:q].blank? ? nil : Digest::SHA1.hexdigest(params[:q])}"
 #    unless read_fragment(@cache_key)
       unless params[:q].blank?    
         @r_count = Person.count_all_by_most_tracked_for_range(@range, :search => prepare_tsearch_query(params[:q]), :order => sort + " " + order, :per_page => 20, :page => page, :person_type => "Rep.")
@@ -171,7 +171,7 @@ class BattleRoyaleController < ApplicationController
         @p_subtitle << "Comments"
     end
     page = params[:page] ||= 1
-#    @cache_key = "br-issues-#{page}-#{sort}-#{order}-#{logged_in? ? current_user.login : nil}-#{@range}-#{params[:q].blank? ? nil : Digest::SHA1.hexdigest(params[:q])}"
+#    @cache_key = "br-issues-#{page}-#{sort}-#{order}-#{user_signed_in? ? current_user.login : nil}-#{@range}-#{params[:q].blank? ? nil : Digest::SHA1.hexdigest(params[:q])}"
 #    unless read_fragment(@cache_key)
       unless params[:q].blank?   
         @r_count = Subject.count_all_by_most_tracked_for_range(@range, :search => prepare_tsearch_query(params[:q]), :order => sort + " " + order, :per_page => 20, :page => page)

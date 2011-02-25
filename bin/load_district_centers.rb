@@ -10,7 +10,7 @@ if __FILE__ == $0
 end
 
 # You probably don't have this file in this spot.
-FILE_NAME = File.join(DATA_PATH, "govtrack/110/geo/centers.json")
+FILE_NAME = File.join(Settings.govtrack_data_path, "110/geo/centers.json")
 
 puts "Updating district centerpoints..."
 i = IO.read(FILE_NAME)

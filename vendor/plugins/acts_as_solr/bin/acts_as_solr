@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+def die(s); STDERR.puts(s); exit(1); end
+if ARGV[0] != "install"
+  die "Usage: #{$0} install"
+end
+
+require "fileutils"
+include FileUtils::Verbose
+
+die("Where's the config folder?") unless File.directory?("config")
+cp File.dirname(__FILE__) + "/../config/solr.yml", "config"

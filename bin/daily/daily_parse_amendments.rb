@@ -10,9 +10,9 @@ require File.dirname(__FILE__) + '/../../app/models/action'
 require 'rexml/document'
 require 'date'
 
-PATH = GOVTRACK_DATA_PATH + "/bills.amdt"
+PATH = Settings.govtrack_data_path + "/#{Settings.default_congress}/bills.amdt"
 
-amendments = Amendment.find(:all, :include => :bill, :conditions => [ "bills.session = ?", DEFAULT_CONGRESS ])
+amendments = Amendment.find(:all, :include => :bill, :conditions => [ "bills.session = ?", Settings.default_congress ])
 count = 0
 a_num = 0
 amendments.each do |amdt|

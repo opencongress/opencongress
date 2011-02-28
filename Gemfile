@@ -38,8 +38,5 @@ gem "json"
 gem 'capistrano'
 gem 'capistrano-ext'
 
-# new relic RPM
-gem 'newrelic_rpm'
-
 # oauth
 gem 'oauth'

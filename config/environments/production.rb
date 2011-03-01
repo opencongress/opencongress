@@ -1,6 +1,7 @@
 OpenCongress::Application.configure do
   # Use a different cache store in production
-  # config.cache_store = :mem_cache_store
+  config.action_controller.perform_caching = true
+  config.cache_store = :mem_cache_store, '10.13.219.6:11211', { :namespace => 'opencongress_production' }
 
   # Disable Rails's static asset server
   # In production, Apache or nginx will already do this

@@ -180,13 +180,13 @@ class Bill < ViewableObject
       # check for the link in the wiki DB
       wiki_link = Wiki.wiki_link_for_bill(self.session, "#{self.bill_type.upcase}#{self.number}")
       unless wiki_link.blank?
-        WikiLink.create(:wikiable => self, :name => wiki_link, :oc_link => "#{BASE_URL}/bill/#{self.ident}/show")
-        link = "#{WIKI_BASE_URL}/#{wiki_link}"
+        WikiLink.create(:wikiable => self, :name => wiki_link, :oc_link => "#{Settings.base_url}/bill/#{self.ident}/show")
+        link = "#{WIKI_Settings.base_url}/#{wiki_link}"
       else
         link = ""
       end
     else
-      link = "#{WIKI_BASE_URL}/#{self.wiki_link.name}"
+      link = "#{WIKI_Settings.base_url}/#{self.wiki_link.name}"
     end
     
     return link

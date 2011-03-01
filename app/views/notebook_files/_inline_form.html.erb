@@ -1,5 +1,5 @@
 <% form_for :notebook_file, 
-				   :url => formatted_political_notebook_notebook_files_path(:login =>current_user.login, :format => 'js'),
+				   :url => political_notebook_notebook_files_path(:login =>current_user.login, :format => 'js'),
 				   :html => {:id => "add-file-form", :class => "notebook-form", :multipart => true, :target => 'upload_frame' } do |f| %>
 
 	<h3>Add a File</h3>

@@ -33,7 +33,7 @@
     Did you find this article useful? Your opinion counts - together, we're finding the very best news and blog coverage about Congress available on the web.
   </div>
 
-<% if admin_user_signed_in? %>
+<% if admin_logged_in? %>
   <p class="small">
     Scraped from: <%= commentary.scraped_from %> / Verification matched: <%= commentary.contains_term %>
   </p>

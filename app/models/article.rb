@@ -12,7 +12,7 @@ class Article < ActiveRecord::Base
   require 'RedCloth'
   
   def to_param
-    "#{id}-#{title.gsub(/[^a-z0-9]+/i, '-')}"
+    title.blank? ? "#{id}" : "#{id}-#{title.gsub(/[^a-z0-9]+/i, '-')}"
   end
   
   # hack - this is just used for linking in comment pagination
@@ -42,7 +42,7 @@ class Article < ActiveRecord::Base
   end
   
   def html_stripped
-    self.article.gsub(/<\/?[^>]*>/, "")
+    article.blank? ? "" : self.article.gsub(/<\/?[^>]*>/, "")
   end
   
   def excerpt_for_blog_page

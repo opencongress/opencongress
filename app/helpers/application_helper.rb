@@ -286,18 +286,21 @@ EOT
   end
   
   def toggler(div_name, show_link_text, hide_link_text, show_link_class = "", hide_link_class = "")
-    %Q{<span class="" id="show_#{div_name}">} + link_to_function(show_link_text, "Element.show('hide_#{div_name}');Element.hide('show_#{div_name}');new Effect.BlindDown('#{div_name}');", :class => show_link_class) + "</span>" + 
-    %Q{<span class="" id="hide_#{div_name}" style="display:none;">} + link_to_function(hide_link_text, "Element.show('show_#{div_name}');Element.hide('hide_#{div_name}');new Effect.BlindUp('#{div_name}');", :class => hide_link_class) + "</span>"
+    out = %Q{<span class="" id="show_#{div_name}">} + link_to_function(show_link_text, "Element.show('hide_#{div_name}');Element.hide('show_#{div_name}');new Effect.BlindDown('#{div_name}');", :class => show_link_class) + "</span>"
+    out += %Q{<span class="" id="hide_#{div_name}" style="display:none;">} + link_to_function(hide_link_text, "Element.show('show_#{div_name}');Element.hide('hide_#{div_name}');new Effect.BlindUp('#{div_name}');", :class => hide_link_class) + "</span>"
+
+    out.html_safe
   end
   
 	def toggler_with_span_class(div_name, show_link_text, hide_link_text, show_link_class = "", hide_link_class = "")
     %Q{<span class="#{show_link_class}" id="show_#{div_name}"><a href="javascript:toggle('#{div_name}')" class="#{show_link_class}">#{show_link_text}</a></span>
-    <span class="#{hide_link_class}" id="hide_#{div_name}" style="display: none;"><a href="javascript:toggle('#{div_name}')" class="#{hide_link_class}">#{hide_link_text}</a></span>}
+    <span class="#{hide_link_class}" id="hide_#{div_name}" style="display: none;"><a href="javascript:toggle('#{div_name}')" class="#{hide_link_class}">#{hide_link_text}</a></span>}.html_safe
   end
 
   def ajax_toggler(div_name, show_link_text, hide_link_text, field_two, show_link_class = "", hide_link_class = "")
-    "<span class=\"\" id=\"show_#{div_name}\">" + link_to_remote(show_link_text, {:update => div_name, :url => field_two, :complete => "Element.show('hide_#{div_name}');Element.hide('show_#{div_name}');new Effect.BlindDown('#{div_name}');"}, :class => show_link_class) + "</span>" + 
-    " <span class='' id='hide_#{div_name}' style=\"display:none;\">" + link_to_function(hide_link_text, "Element.show('show_#{div_name}');Element.hide('hide_#{div_name}');new Effect.BlindUp('#{div_name}');", :class => hide_link_class) + "</span>"
+    out = "<span class=\"\" id=\"show_#{div_name}\">" + link_to_remote(show_link_text, {:update => div_name, :url => field_two, :complete => "Element.show('hide_#{div_name}');Element.hide('show_#{div_name}');new Effect.BlindDown('#{div_name}');"}, :class => show_link_class) + "</span>" + 
+          " <span class='' id='hide_#{div_name}' style=\"display:none;\">" + link_to_function(hide_link_text, "Element.show('show_#{div_name}');Element.hide('hide_#{div_name}');new Effect.BlindUp('#{div_name}');", :class => hide_link_class) + "</span>"
+    out.html_safe
   end
 	
 	def im_here(ctl,act)
@@ -346,12 +349,12 @@ EOT
     end
   end
   
-  def admin_user_signed_in?
-    return (user_signed_in? && current_user.user_role.can_blog) ? true : false
+  def admin_logged_in?
+    return (logged_in? && current_user.user_role.can_blog) ? true : false
   end
   
   def can_blog?
-    return (user_signed_in? && current_user.user_role.can_blog) ? true : false
+    return (logged_in? && current_user.user_role.can_blog) ? true : false
   end
   
   def search_link(text)
@@ -436,7 +439,7 @@ EOT
     end
   end
   def add_friend_link_ajax(friend, update_div = "fdiv")
-     if user_signed_in? 
+     if logged_in? 
        friend_login = CGI::escapeHTML(friend.login)
        f = current_user.friends.find_by_friend_id(friend.id)
        if f.nil? && friend != current_user
@@ -525,7 +528,7 @@ EOT
 	def draw_inline_user_bill_vote(bill)
     bill_vote_images = String.new
     bill_vote_images = inline_determine_support(bill)
-    if user_signed_in?
+    if logged_in?
       bv = current_user.bill_votes.find_by_bill_id(bill.id)
       if bv
         if bv.support == 0
@@ -554,7 +557,7 @@ EOT
 		end
 		logger.info params[:controller]
 		if request.path_parameters['controller'] == "battle_royale"
-			if user_signed_in?
+			if logged_in?
 			"" +
 			link_to_remote("Aye",
 			{ :url => {:controller => 'battle_royale', :action => 'br_bill_vote', :bill => bill.ident, :id => 0}},
@@ -575,7 +578,7 @@ EOT
   			""
        end
 		else
-		  if user_signed_in?
+		  if logged_in?
         "<div class='voting_buttons'>" +
           link_to_remote(image_tag('yes.png') + "<span>I Support this Bill</span>".html_safe,
   			      {:url => {:controller => 'bill', :action => 'bill_vote', :bill => bill.ident, :id => 0}},

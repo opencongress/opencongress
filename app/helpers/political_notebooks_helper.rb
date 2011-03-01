@@ -22,7 +22,7 @@ module PoliticalNotebooksHelper
   end
       
   def image_for(file, size = '') 
-    image_tag("#{BASE_URL}#{file.public_filename(size)}")
+    image_tag("#{Settings.base_url}#{file.public_filename(size)}")
   end
   
   def div_height(y)

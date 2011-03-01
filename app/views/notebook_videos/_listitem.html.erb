@@ -9,7 +9,7 @@
     <% unless listitem.embed.blank? %>
     <div style="height:<%= div_height(listitem.height) %>px;">
 
-      <%= listitem.embed %><br />
+      <%= listitem.embed.html_safe %><br />
     </div>
     <% end %>
 

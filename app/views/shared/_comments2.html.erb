@@ -24,17 +24,17 @@
 		<div class="dboxed">
 		<%= dbox_content("about_ratings") %>
 		</div>
-    <%= hidden_field_tag "filterscore", ( user_signed_in? ? current_user.default_filter : 5 ) %>
+    <%= hidden_field_tag "filterscore", ( logged_in? ? current_user.default_filter : 5 ) %>
 		<div class="rate">
 			<div id="filtertrack">
-				<div id="filterhandle"><span id="sfilterscore"><%= user_signed_in? ? current_user.default_filter : 5 %></span></div>
+				<div id="filterhandle"><span id="sfilterscore"><%= logged_in? ? current_user.default_filter : 5 %></span></div>
 			</div>
 		</div>
 		<script type="text/javascript" language="javascript">
 		// <![CDATA[
 		new Control.Slider('filterhandle','filtertrack',{range:$R(0,10),
 			values:[0,1,2,3,4,5,6,7,8,9,10],
-			sliderValue:<%= user_signed_in? ? current_user.default_filter : 5 %>,
+			sliderValue:<%= logged_in? ? current_user.default_filter : 5 %>,
 			onSlide:function(v){$('sfilterscore').innerHTML=v},
 			onChange:function(v){$('filterscore').value=v;new Ajax.Request('/comments/filter_by_rating/<%= object.id %>', {asynchronous:true, evalScripts:true, parameters:'type=' + escape("<%= object.class.to_s %>") + '&value=' + escape(v) + '&comment_page=' + escape("<%= params[:comment_page] %>") + '&comment_sort=' + escape("<%= params[:comment_sort] %>")})}});
 			// ]]>
@@ -62,7 +62,7 @@
 	</div>
 
 </div>
-<% unless user_signed_in? %>
+<% unless logged_in? %>
   <script type="text/javascript">
   $j().ready(function() {
   	$j('#login_rate').jqm({ajax:'@href', trigger: 'a.rate_trigger'});

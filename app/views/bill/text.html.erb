@@ -133,7 +133,7 @@
   <%= @bill_text %>
 </div>
 
-<% unless user_signed_in? %>
+<% unless logged_in? %>
 <script type="text/javascript">
 $j().ready(function() {
 	$j('#login_rate').jqm({ajax:'@href', trigger: 'a.rate_trigger'});

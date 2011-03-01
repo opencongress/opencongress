@@ -258,23 +258,23 @@ class ResourcesController < ApplicationController
     
     if object_type == 'Bill'
       subject = "OpenCongress: #{item.title_full_common}"
-      url = "#{BASE_URL}bill/#{item.ident}/show"
+      url = "#{Settings.base_url}bill/#{item.ident}/show"
       item_desc = "bill"
     elsif object_type == 'Person'
       subject = "OpenCongress: #{item.name}"
-      url = "#{BASE_URL}person/show/#{item.to_param}"
+      url = "#{Settings.base_url}person/show/#{item.to_param}"
       item_desc = "Member of Congress"
     elsif object_type == 'Subject'
       subject = "OpenCongress: #{item.term}"
-      url = "#{BASE_URL}issue/show/#{item.to_param}"
+      url = "#{Settings.base_url}issue/show/#{item.to_param}"
       item_desc = "issue"
     elsif object_type == 'UpcomingBill'
       subject = "OpenCongress: #{item.title}"
-      url = "#{BASE_URL}bill/upcoming/#{item.id}"
+      url = "#{Settings.base_url}bill/upcoming/#{item.id}"
       item_desc = "bill"
     elsif object_type == 'Article'
       subject = "OpenCongress: #{item.title}"
-      url = "#{BASE_URL}articles/view/#{item.to_param}"
+      url = "#{Settings.base_url}articles/view/#{item.to_param}"
     end
 
     dest_emails = params[:email][:dest_emails]
@@ -373,7 +373,7 @@ class ResourcesController < ApplicationController
     @district = ZipcodeDistrict.from_address(params[:address])
     
     if @district && @district.length == 1
-      render :text => "<a href='#{BASE_URL}states/#{@district.first.state}/districts/#{@district.first.district}'>#{@district.first.state}-#{@district.first.district}</a> is your district."
+      render :text => "<a href='#{Settings.base_url}states/#{@district.first.state}/districts/#{@district.first.district}'>#{@district.first.state}-#{@district.first.district}</a> is your district."
     else
       render :text => "Your district could not be found."
     end
@@ -388,7 +388,7 @@ class ResourcesController < ApplicationController
     unless @user.representative.nil?
       @representative = @user.representative
     else
-      if user_signed_in? && @user.zipcode
+      if logged_in? && @user.zipcode
         @sens, @reps = Person.find_current_congresspeople_by_zipcode(@user.zipcode, (@user.zip_four ? @user.zip_four : nil))
   	  
         if @reps.size == 1

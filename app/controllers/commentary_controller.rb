@@ -2,7 +2,7 @@ class CommentaryController < ApplicationController
   skip_before_filter :store_location, :only => [:rate]
 
   def rate
-    unless user_signed_in? == false
+    unless logged_in? == false
       commentary = Commentary.find_by_id(params[:id])
       score = current_user.commentary_ratings.find_or_initialize_by_commentary_id(commentary.id)
       score.rating = params[:value]

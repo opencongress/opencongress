@@ -1,6 +1,6 @@
 <% object = add_to_mypn %>
 
-<% if user_signed_in? %>
+<% if logged_in? %>
 <li class="side-button" id="addmypn_<%= object.class %>_<%= object.id %>">
 	<% if PoliticalNotebook.find_or_create_from_user(current_user).already_contains? object %>
 		Added to MyPN

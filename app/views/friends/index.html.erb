@@ -141,7 +141,7 @@
 					<table  cellspacing="0">
 						<tr>
 							<% if friend.friend.main_picture %>
-							<td><%= image_tag "#{BASE_URL}images/users/" + friend.friend.login + "_m.jpg", :alt => friend.friend.login %></td>
+							<td><%= image_tag "#{Settings.base_url}images/users/" + friend.friend.login + "_m.jpg", :alt => friend.friend.login %></td>
 							<% else %>
 							<td><%= image_tag "anonymous.gif", :alt => "No Picture" %></td>
 							<% end %>

@@ -14,7 +14,7 @@
 			<h4>Avg. from State</h4>
 			<% end %>
 			<div class="my_rating">
-	<% if user_signed_in? %>
+	<% if logged_in? %>
 		<%= hidden_field_tag "scorep_" + person.id.to_s, 5 %>
 		<p>My Rating</p>
 		<div class="rate">

@@ -53,9 +53,7 @@ div.ie6_box {
   <div class="floatright paddingtopnone">
     <h3 class="make_one">Make me one, right now!</h3>
 
-        <% form_for :user, :url => {:action => 'signup'} do |f| %>
-         <%= render :partial => "signup_form", :locals => {:f => f} %>
-        <% end %>
+    <%= render :partial => "signup_form" %>
     <div style="clear:both;margin-bottom:1em;"></div>
 
   </div>

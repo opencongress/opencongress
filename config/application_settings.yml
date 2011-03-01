@@ -29,7 +29,7 @@ defaults: &defaults
   oc_billtext_path: /data/opencongress/bills.text
   committee_reports_path: /data/committee_reports
   
-  base_url: http://www.opencongress.org
+  base_url: http://www.opencongress.org/
   
   wiki_host: www.opencongress.org
   wiki_base_url: http://www.opencongress.org/wiki
@@ -45,7 +45,7 @@ development:
   oc_billtext_path: /Users/aross/pcf-work/oc_billtext
   committee_reports_path: /Users/aross/pcf-work/committee_reports
 
-  base_url: http://localhost:3003
+  base_url: http://localhost:3003/
   
 test:
   <<: *defaults

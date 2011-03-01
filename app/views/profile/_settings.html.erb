@@ -29,7 +29,7 @@
 	<% end %>
 </p>
 
-<p><%= toggler('change_pass', 'Change Password', 'Close', 'arrow-blue settings') %></p>
+<p><%= toggler('change_pass', 'Change Password', 'Close', 'arrow-blue settings').html_safe %></p>
 <div id="change_pass" style="display:none;">
 	<% form_for :user, nil, :url => {:controller => 'account', :action => 'change_pw', :id => current_user.id} do |f| %>
 	<p><label>New Password:</label>

@@ -35,7 +35,7 @@
   </div>
 <% end %>
 
-<% if admin_user_signed_in? %>
+<% if admin_logged_in? %>
   <form name="news_mass_delete_form" id="news_mass_delete_form" action="/admin/commentary/mass_delete">
 <% end %>
 <% news_max.times do |i| %>
@@ -45,7 +45,7 @@
     <%= render :partial => 'shared/commentary', :object => n, :locals => { :object => @bill.nil? ? @person : @bill, :default_title => default_title, :short => short} %>
   <% end %>
 <% end %>
-<% if admin_user_signed_in? %></form><% end %>
+<% if admin_logged_in? %></form><% end %>
 
 
 <div class="credit_buttons daylife">

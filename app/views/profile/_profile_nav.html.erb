@@ -2,12 +2,12 @@
 
 		<ul class="profile_nav" id="summaries_nav">
 		  <li class="" id="AboutMe">
-			    <%= link_to "<span>About Me</span>", user_profile_path(:login => @user.login),
+			    <%= link_to "<span>About Me</span>".html_safe, user_profile_path(:login => @user.login),
 				        :class => params[:action] == "profile" ? "arrow_button active" : "arrow_button" %></li>
 			
 			<% if @user.can_view(:my_tracked_items, current_user) %>
 			<li class="" style="" id="ItemsTracked">
-				<%= link_to "<span>Tracked Items</span>", 
+				<%= link_to "<span>Tracked Items</span>".html_safe, 
 				     {:controller => 'profile', 
 					  :action => 'items_tracked', 
 					  :login => @user.login}, 
@@ -18,7 +18,7 @@
 
 			<% if @user.can_view(:my_actions, current_user) %>
 			<li class="" id="Actions">
-			  <%= link_to "<span>Actions</span>", 
+			  <%= link_to "<span>Actions</span>".html_safe, 
 			          {:controller => 'profile', 
 				       :action => 'actions', 
 				       :login => @user.login}, 
@@ -27,20 +27,20 @@
 
 			<% if @user.can_view(:my_friends, current_user) %>
 			<li class="" id="Friends">
-			   <%= link_to "<span>Friends</span>", friends_path(@user.login), 
+			   <%= link_to "<span>Friends</span>".html_safe, friends_path(@user.login), 
 			          :class => params[:controller] == "friends" ? "arrow_button active" : "arrow_button" %></li>
 			<% end %>
       
 			<% if @user.can_view(:my_political_notebook, current_user) %>
 			<li class="" id="Notebook">
-				<%= link_to "<span>My Political Notebook</span>", political_notebook_path(@user.login), 
+				<%= link_to "<span>My Political Notebook</span>".html_safe, political_notebook_path(@user.login), 
 				        :class => controller.controller_name == 'political_notebooks' ? "arrow_button active" : "arrow_button" %>
 			 </li>
 			<% end %>
 			
 			<% if @user.can_view(:watchdog, current_user) %>
 			<li class="" id="Watchdog">
-				<%= link_to "<span>Watchdog</span>", user_watchdog_path(@user.login), :class => controller.action_name == "watchdog" ? "arrow_button active" : "arrow_button" %>
+				<%= link_to "<span>Watchdog</span>".html_safe, user_watchdog_path(@user.login), :class => controller.action_name == "watchdog" ? "arrow_button active" : "arrow_button" %>
 			</li>       
 			<% end %>
 		</ul>
@@ -128,8 +128,8 @@
           <li><%= link_to "My contact info", user_profile_path(@user.login) %></li>
           <li>My RSS feeds:
             <ul>
-              <li><%= link_to "Tracked Items", :controller=>"user_feeds", :action=>"tracked_items", :login => @user.login, :key => (user_signed_in? ? current_user.feed_key : nil) %></li>
-              <li><%= link_to "Actions", :controller=>"user_feeds", :action=>"actions", :login => @user.login, :key => (user_signed_in? ? current_user.feed_key : nil) %></li>
+              <li><%= link_to "Tracked Items", :controller=>"user_feeds", :action=>"tracked_items", :login => @user.login, :key => (logged_in? ? current_user.feed_key : nil) %></li>
+              <li><%= link_to "Actions", :controller=>"user_feeds", :action=>"actions", :login => @user.login, :key => (logged_in? ? current_user.feed_key : nil) %></li>
               <li><%= link_to "My Political Notebook", political_notebook_path(@user.login) + "/feed" %></li>
             </ul>
           </li>

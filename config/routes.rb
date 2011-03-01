@@ -1,6 +1,4 @@
 OpenCongress::Application.routes.draw do |map|
-  devise_for :users
-  
   map.resources :mailing_list_items
   map.resources :watch_dogs
 
@@ -15,6 +13,24 @@ OpenCongress::Application.routes.draw do |map|
     notebook.resources :notebook_notes
     notebook.resources :notebook_files    
   end
+
+  # resources :political_notebook, :path_prefix => '/users/:login/profile' do
+  #   collection do 
+  #     get :update_privacy
+  #   end
+  #   
+  #   resources :notebook_links do
+  #     collection do
+  #       get :faceform
+  #       get :update
+  #     end
+  #   end
+  #   
+  #   resources :notebook_videos
+  #   resources :notebook_notes
+  #   resources :notebook_files    
+  # end
+  # 
 
   #  map.connect 'users/:login/profile/political_notebook/:action', :controller => 'notebook_items'
   # The priority is based upon order of creation: first created -> highest priority.
@@ -37,7 +53,7 @@ OpenCongress::Application.routes.draw do |map|
   # instead of a file named 'wsdl'
   map.connect ':controller/service.wsdl', :action => 'wsdl'
 
-  map.simple_captcha '/simple_captcha/:action', :controller => 'simple_captcha'
+  map.simple_captcha '/simple_captcha/:id', :controller => 'simple_captcha', :action => 'show'
 
   # Handle bill routing. The action determines what information about the bill will 
   # be displayed.
@@ -168,6 +184,7 @@ OpenCongress::Application.routes.draw do |map|
     p.user_profile_actions 'users/:login/profile/actions', :action => 'actions'
     p.user_profile_items_tracked 'users/:login/profile/items_tracked', :action => 'items_tracked'
     p.user_watchdog 'users/:login/profile/watchdog', :action => 'watchdog'
+    p.connect 'users/:login/profile/edit_profile', :action => 'edit_profile'
     p.connect 'users/:login/profile/bills_supported', :action => 'bills_supported'
     p.connect 'users/:login/profile/tracked_rss', :action => 'tracked_rss'
     p.connect 'users/:login/profile/user_actions_rss', :action => 'user_actions_rss'
@@ -214,8 +231,7 @@ OpenCongress::Application.routes.draw do |map|
   map.connect 'presidents_health_care_proposal', :controller => 'index', :action => 'presidents_health_care_proposal'
   map.connect 'senate_health_care_bill', :controller => 'bill', :action => 'text', :id => '111-h3590', :version => 'ocas'
   map.connect 'house_reconciliation', :controller => 'index', :action => 'house_reconciliation'
-
-
+  
   # Install the default route as the lowest priority.
   map.connect ':controller/:action/:id'
   

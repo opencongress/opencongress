@@ -1,5 +1,5 @@
 <div class='add-comment comment_reply' id="comment_reply_<%= parent_id.to_s %>">
-<% if user_signed_in? %>
+<% if logged_in? %>
   <div style="color: red">
     <%= error_messages_for :comment, :header_message => "Please try again.", :message => "Your comment couldn't be saved because of the following errors:" %>
   </div>
@@ -7,13 +7,13 @@
 	<% remote_form_for :comment, {:url => { :controller => 'comments', :action => 'add_comment', :id => object.id, :type => object.class.to_s }, :update => "comment_reply_#{parent_id}", :complete => "new Effect.Highlight('comment_reply_#{parent_id.to_s}', {duration: 2});" } do |f| %>
         <%= f.hidden_field :parent_id, :value => parent_id %>
 
-<% unless user_signed_in? %>
+<% unless logged_in? %>
                
                Please <%= link_to "Login", login_url %> or 
                                  <%= link_to "Signup", signup_url %>, unless you wish to post anonymously
 <% end %>
 		<%= f.text_area :comment, :rows => 10 %>
-                 <% unless user_signed_in? %>
+                 <% unless logged_in? %>
 
 	
 	Spam check: <%= show_simple_captcha(:object=> "comment", :image_style => 'all_black', :distortion => 'high') %>

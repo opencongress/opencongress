@@ -14,7 +14,7 @@ module ProfileHelper
           :controller => 'profile',
           :action => 'edit_profile',
           :field => field,
-          :id => @user.id
+          :login => @user.login
          },
         :ajax => {
           :okText => "'SAVE'",
@@ -56,7 +56,7 @@ module ProfileHelper
 	
 	def user_bill_vote_string(bill)
 		out = "<td"
-		if user_signed_in?
+		if logged_in?
 			bv = current_user.bill_votes.find_by_bill_id(bill.id)
       if bv
         if bv.support == 0

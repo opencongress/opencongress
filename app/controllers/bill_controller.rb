@@ -576,7 +576,7 @@ class BillController < ApplicationController
 
   def bill_vote
     @bill = Bill.find_by_ident(params[:bill])
-    if user_signed_in?
+    if logged_in?
       @bv = current_user.bill_votes.find_by_bill_id(@bill.id)
       unless @bv
         @bv = current_user.bill_votes.create({:bill_id => @bill.id, :user_id  => current_user.id, :support => (params[:id] == "1" ? 1 : 0) }) unless @bv
@@ -652,7 +652,7 @@ private
 
       if @bill.has_wiki_link?
         @wiki_url = @bill.wiki_url
-      elsif user_signed_in?
+      elsif logged_in?
         @wiki_create_url = "#{Settings.wiki_base_url}/Special:AddData/Bill?Bill[common_title]=#{CGI::escape(@bill.title_common[0..70])}&Bill[bill_type]=#{@bill.bill_type}&Bill[type_name]=#{@bill.type_name}&Bill[bill_number]=#{@bill.number}&Bill[congress]=#{Settings.default_congress}" #prolly should be rewritten as a post handled by a custom sfEditFormPreloadText call?
       end
 

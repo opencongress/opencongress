@@ -648,7 +648,7 @@ class PeopleController < ApplicationController
         #direct to create page for bill?  
       end
       
-      u_approval = current_user.person_approvals.find_by_person_id(@person.id) if user_signed_in?
+      u_approval = current_user.person_approvals.find_by_person_id(@person.id) if logged_in?
       @user_approval = u_approval.rating if u_approval
       @user_approval = 5 if @user_approval.nil?
       
@@ -674,7 +674,7 @@ class PeopleController < ApplicationController
                              
   
   def can_text
-    if !(user_signed_in? && current_user.user_role.can_manage_text)
+    if !(logged_in? && current_user.user_role.can_manage_text)
       redirect_to admin_url
     end
   end

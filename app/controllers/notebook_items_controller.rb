@@ -3,7 +3,7 @@ class NotebookItemsController < ApplicationController
   #  include PoliticalNotebookSytem  
   helper :profile
   helper :political_notebooks
-  before_filter [:get_user, :get_notebook, :set_title, :set_profile_nav_location], :except => :remove_item
+  before_filter :notebook_env, :except => :remove_item
 
 
   def create
@@ -64,6 +64,13 @@ class NotebookItemsController < ApplicationController
   end
   
 protected
+  def notebook_env
+    get_user
+    get_notebook
+    set_title
+    set_profile_nav_location
+  end
+  
   def set_title
     @page_title = "#{@user.login}'s Profile"    
   end

@@ -28,7 +28,7 @@
       <% end %>
       <td style="padding-left:12px;">
           <div id="fdiv_<%= u.id %>">
-              <% if user_signed_in? %>
+              <% if logged_in? %>
                   <% if !u['is_friend'].nil? && u['is_friend_confirmed'] == 't' %>
                     <%= h(u.login) %> is my friend.
                   <% elsif !u['is_friend'].nil? %>

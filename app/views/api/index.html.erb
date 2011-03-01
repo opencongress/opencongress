@@ -1,7 +1,7 @@
 <div id="heading" class="clearfix">
 	<h2>OpenCongress API Documentation</h2>   
 	<div class="explain_box">
-<% unless user_signed_in? %>
+<% unless logged_in? %>
 	  <p>Welcome. This API provides programmers with structured access to all the data on OpenCongress, everything from official bill info to news and blog coverage to user-generated votes on bills and much more. As an open-source public resource on Congress, we encourage developers to share and remix any of this info on their own websites to keep their online communities up-to-date with their political interests.</p> 
   
 	  <p>Using the API requires an API KEY, which is automatically assigned to every free "My OpenCongress" account -- simply <a href="/register">join</a> or <a href="/login">login</a>, it takes less than a minute, and your key will appear here, along with sample links to call. The data below is just a start -- we will continually add more unique info &amp; useful enhancements in order to contribute public knowledge about Congress back to the data commons on the open Web. We're always interested in hearing requests or seeing use cases of how you're using this API -- see the Developer Resources at the bottom of this page.</p>
@@ -29,85 +29,85 @@
   <dt>First Name (first_name)</dt>
   <dd>
       Specify the first name of the person<br/>
-      <%= link_to "#{BASE_URL}api/people?first_name=John&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :first_name => "John" %>
+      <%= link_to "#{Settings.base_url}api/people?first_name=John&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :first_name => "John" %>
   </dd>
 <dt>Last Name (last_name)</dt>
 <dd>
     Specify the last name of the person<br/>
-    <%= link_to "#{BASE_URL}api/people?last_name=Kerry&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :last_name => "Kerry" %>
+    <%= link_to "#{Settings.base_url}api/people?last_name=Kerry&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :last_name => "Kerry" %>
 </dd>
   <dt>OpenCongress ID (person_id)</dt>
   <dd>
       Specify the id of the person<br/>
-      <%= link_to "#{BASE_URL}api/people?id=300056&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :person_id => "300056" %>
+      <%= link_to "#{Settings.base_url}api/people?id=300056&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :person_id => "300056" %>
   </dd>
 <dt>Gender (gender)</dt>
 <dd>
     Specify the gender of the person, either 'M' or 'F'<br/>
-    <%= link_to "#{BASE_URL}api/people?gender=M&last_name=Kennedy&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :gender => "M", :last_name => "Kennedy" %>
+    <%= link_to "#{Settings.base_url}api/people?gender=M&last_name=Kennedy&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :gender => "M", :last_name => "Kennedy" %>
 </dd>
 <dt>State (state)</dt>
 <dd>
     Specify the two letter state of the person<br/>
-    <%= link_to "#{BASE_URL}api/people?first_name=John&state=AZ&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :first_name => "John", :state => "AZ" %>
+    <%= link_to "#{Settings.base_url}api/people?first_name=John&state=AZ&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :first_name => "John", :state => "AZ" %>
 </dd>
 <dt>District (district)</dt>
 <dd>
     Specify the congressional district of the person<br/>
-    <%= link_to "#{BASE_URL}api/people?district=1&state=FL&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :district => "1", :state => "FL" %>
+    <%= link_to "#{Settings.base_url}api/people?district=1&state=FL&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :district => "1", :state => "FL" %>
 </dd>
 <dt>Party (party)</dt>
 <dd>
     Specify the political party of the person, either 'Republican', 'Democrat', or 'Independent'<br/>
-    <%= link_to "#{BASE_URL}api/people?party=Republican&state=FL&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :party => "Republican", :state => "FL" %>
+    <%= link_to "#{Settings.base_url}api/people?party=Republican&state=FL&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :party => "Republican", :state => "FL" %>
 </dd>
 <dt>User Approval Range (user_approval_from, user_approval_to)</dt>
 <dd>
     Specify an average OpenCongress user approval rating range (0.0 to 10.0)<br/>
-    <%= link_to "#{BASE_URL}api/people?user_approval_from=5.0&user_approval_to=10.0&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :user_approval_from => "5.0", :user_approval_to => "10.0" %>
+    <%= link_to "#{Settings.base_url}api/people?user_approval_from=5.0&user_approval_to=10.0&key=#{@api_key}", :controller => 'api', :key => @api_key, :action => 'people', :user_approval_from => "5.0", :user_approval_to => "10.0" %>
 </dd>
 
   <dt>Senators most in the news this week</dt>
   <dd>
-     <%= link_to "#{BASE_URL}api/senators_most_in_the_news_this_week?key=#{@api_key}", "/api/senators_most_in_the_news_this_week?key=#{@api_key}" %>
+     <%= link_to "#{Settings.base_url}api/senators_most_in_the_news_this_week?key=#{@api_key}", "/api/senators_most_in_the_news_this_week?key=#{@api_key}" %>
   </dd>
 
   <dt>Representatives most in the news this week</dt>
   <dd>
-     <%= link_to "#{BASE_URL}api/representatives_most_in_the_news_this_week?key=#{@api_key}", "/api/representatives_most_in_the_news_this_week?key=#{@api_key}" %>
+     <%= link_to "#{Settings.base_url}api/representatives_most_in_the_news_this_week?key=#{@api_key}", "/api/representatives_most_in_the_news_this_week?key=#{@api_key}" %>
   </dd>
 
   <dt>Most blogged Senators this week</dt>
   <dd>
-     <%= link_to "#{BASE_URL}api/most_blogged_senators_this_week?key=#{@api_key}", "/api/most_blogged_senators_this_week?key=#{@api_key}" %>
+     <%= link_to "#{Settings.base_url}api/most_blogged_senators_this_week?key=#{@api_key}", "/api/most_blogged_senators_this_week?key=#{@api_key}" %>
   </dd>
 
   <dt>Most blogged Representatives this week</dt>
   <dd>
-     <%= link_to "#{BASE_URL}api/most_blogged_representatives_this_week?key=#{@api_key}", "/api/most_blogged_representatives_this_week?key=#{@api_key}" %>
+     <%= link_to "#{Settings.base_url}api/most_blogged_representatives_this_week?key=#{@api_key}", "/api/most_blogged_representatives_this_week?key=#{@api_key}" %>
   </dd>
 
   <dt>Compare Two People</dt>
   <dd>Specify the ID's of two people to compare, and receive XML of their roll call vote comparisons.<br/>
-    <%= link_to "#{BASE_URL}person/compare.xml?person1=300001&person2=300013&key=#{@api_key}", "/person/compare.xml?person1=300001&person2=300013&key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}person/compare.xml?person1=300001&person2=300013&key=#{@api_key}", "/person/compare.xml?person1=300001&person2=300013&key=#{@api_key}" %>
   </dd>
 
   <dt>People Approved of by Open Congress Users are Also</dt>
   <dd>
      Returns bills, representatives, and senators supported and opposed by users's approving of a given person.<br/>
-    <%= link_to "#{BASE_URL}api/opencongress_users_supporting_person_are_also/300060?key=#{@api_key}", "/api/opencongress_users_supporting_person_are_also/300060?key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}api/opencongress_users_supporting_person_are_also/300060?key=#{@api_key}", "/api/opencongress_users_supporting_person_are_also/300060?key=#{@api_key}" %>
   </dd>
 
   <dt>People Disapproved of by Open Congress Users are Also</dt>
   <dd>
      Returns bills, representatives, and senators supported and opposed by users's disapproving of a given person.<br/>
-    <%= link_to "#{BASE_URL}api/opencongress_users_opposing_person_are_also/300060?key=#{@api_key}", "/api/opencongress_users_opposing_person_are_also/300060?key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}api/opencongress_users_opposing_person_are_also/300060?key=#{@api_key}", "/api/opencongress_users_opposing_person_are_also/300060?key=#{@api_key}" %>
   </dd>
 
   <dt>Open Congress Users tracking person are also tracking</dt>
   <dd>
      Returns bills, people, and issues commonly tracked by people tracking a given person.<br/>
-    <%= link_to "#{BASE_URL}api/opencongress_users_tracking_person_are_also_tracking/300060?key=#{@api_key}", "/api/opencongress_users_tracking_person_are_also_tracking/300060?key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}api/opencongress_users_tracking_person_are_also_tracking/300060?key=#{@api_key}", "/api/opencongress_users_tracking_person_are_also_tracking/300060?key=#{@api_key}" %>
   </dd>
 
 
@@ -124,7 +124,7 @@
   <dt>Bills by session of congress</dt>
   <dd>
     Returns bills matching the given congress.<br/>
-    <%= link_to "#{BASE_URL}api/bills?congress=#{Settings.default_congress}&key=#{@api_key}", "/api/bills?congress=#{Settings.default_congress}&key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}api/bills?congress=#{Settings.default_congress}&key=#{@api_key}", "/api/bills?congress=#{Settings.default_congress}&key=#{@api_key}" %>
   </dd>
 
   <dt>Bills by type</dt>
@@ -132,92 +132,92 @@
     Returns bills matching the given type.  Type can be: h (house), 
     s (senate), hj (house joint resolution), sj (senate joint resolution), hc (house concurrent resolution)
     sc (senate concurrent resolution), hr (house resolution), sr (senate resolution) <br/>
-    <%= link_to "#{BASE_URL}api/bills?type=h&congress=#{Settings.default_congress}&key=#{@api_key}", "/api/bills?type=h&congress=#{Settings.default_congress}&key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}api/bills?type=h&congress=#{Settings.default_congress}&key=#{@api_key}", "/api/bills?type=h&congress=#{Settings.default_congress}&key=#{@api_key}" %>
   </dd>
 
   <dt>Bills by number</dt>
   <dd>
     Returns bills matching the given number.<br/>
-    <%= link_to "#{BASE_URL}api/bills?number=5749&type=h&congress=#{Settings.default_congress}&key=#{@api_key}", "/api/bills?number=5749&type=h&congress=#{Settings.default_congress}&key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}api/bills?number=5749&type=h&congress=#{Settings.default_congress}&key=#{@api_key}", "/api/bills?number=5749&type=h&congress=#{Settings.default_congress}&key=#{@api_key}" %>
   </dd>
   
   <dt>Bills by ident</dt>
   <dd>
     Returns bills matching the given OpenCongress identification strings.<br/>
-    <%= link_to "#{BASE_URL}api/bills_by_ident?ident[]=110-s1178&ident[]=110-s239&key=#{@api_key}", "/api/bills_by_ident?ident[]=110-s1178&ident[]=110-s239&key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}api/bills_by_ident?ident[]=110-s1178&ident[]=110-s239&key=#{@api_key}", "/api/bills_by_ident?ident[]=110-s1178&ident[]=110-s239&key=#{@api_key}" %>
   </dd>
 
   <dt>Bills Introduced Since</dt>
   <dd>
     Returns bills that were introduced since the supplied date (30 at a time).<br/>
-    <%= link_to "#{BASE_URL}api/bills_introduced_since?date=Jan 30th, 2009&key=#{@api_key}", "/api/bills_introduced_since?date=Jan 30th, 2009&key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}api/bills_introduced_since?date=Jan 30th, 2009&key=#{@api_key}", "/api/bills_introduced_since?date=Jan 30th, 2009&key=#{@api_key}" %>
   </dd>
   
 
   <dt>Bills by Query</dt>
   <dd>
     Returns bills matching a text query.<br/>
-    <%= link_to "#{BASE_URL}api/bills_by_query?key=#{@api_key}&q=Global Poverty Act of 2007", "/api/bills_by_query?key=#{@api_key}&q=Global Poverty Act of 2007" %>
+    <%= link_to "#{Settings.base_url}api/bills_by_query?key=#{@api_key}&q=Global Poverty Act of 2007", "/api/bills_by_query?key=#{@api_key}&q=Global Poverty Act of 2007" %>
   </dd>
 
   <dt>Hot Bills</dt>
   <dd>
     Returns bills that OpenCongress editors feel are "hot".<br/>
-    <%= link_to "#{BASE_URL}api/hot_bills?key=#{@api_key}", "/api/hot_bills?key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}api/hot_bills?key=#{@api_key}", "/api/hot_bills?key=#{@api_key}" %>
   </dd>
   
   <dt>Stalled Bills</dt>
   <dd>
     Returns bills that have passed one chamber but have not received a vote on passage in the other (or a conference vote).<br/>
-    <%= link_to "#{BASE_URL}api/stalled_bills?session=#{Settings.default_congress}&passing_chamber=s&key=#{@api_key}", "/api/stalled_bills?session=#{Settings.default_congress}&passing_chamber=s&key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}api/stalled_bills?session=#{Settings.default_congress}&passing_chamber=s&key=#{@api_key}", "/api/stalled_bills?session=#{Settings.default_congress}&passing_chamber=s&key=#{@api_key}" %>
   </dd>
 
   <dt>Most Blogged Bills this Week</dt>
   <dd>
      Returns the most bills most blogged about this week.<br/>
-    <%= link_to "#{BASE_URL}api/most_blogged_bills_this_week?key=#{@api_key}", "/api/most_blogged_bills_this_week?key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}api/most_blogged_bills_this_week?key=#{@api_key}", "/api/most_blogged_bills_this_week?key=#{@api_key}" %>
   </dd>
 
   <dt>Bills Most in the News this Week</dt>
   <dd>
      Returns the most bills most reported on by news agencies this week.<br/>
-    <%= link_to "#{BASE_URL}api/bills_in_the_news_this_week?key=#{@api_key}", "/api/bills_in_the_news_this_week?key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}api/bills_in_the_news_this_week?key=#{@api_key}", "/api/bills_in_the_news_this_week?key=#{@api_key}" %>
   </dd>
   
   <dt>Most Tracked Bills this Week</dt>
   <dd>
      Returns the most bills most tracked by OpenCongress Users this week.<br/>
-    <%= link_to "#{BASE_URL}api/most_tracked_bills_this_week?key=#{@api_key}", "/api/most_tracked_bills_this_week?key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}api/most_tracked_bills_this_week?key=#{@api_key}", "/api/most_tracked_bills_this_week?key=#{@api_key}" %>
   </dd>
   
   <dt>Most Supported Bills this Week</dt>
   <dd>
      Returns the most bills most supported by OpenCongress Users this week.<br/>
-     <%= link_to "#{BASE_URL}api/most_supported_bills_this_week?key=#{@api_key}", "/api/most_supported_bills_this_week?key=#{@api_key}" %>
+     <%= link_to "#{Settings.base_url}api/most_supported_bills_this_week?key=#{@api_key}", "/api/most_supported_bills_this_week?key=#{@api_key}" %>
   </dd>
 
   <dt>Most Opposed Bills this Week</dt>
   <dd>
      Returns the most bills most opposed by OpenCongress Users this week.<br/>
-     <%= link_to "#{BASE_URL}api/most_opposed_bills_this_week?key=#{@api_key}", "/api/most_opposed_bills_this_week?key=#{@api_key}" %>
+     <%= link_to "#{Settings.base_url}api/most_opposed_bills_this_week?key=#{@api_key}", "/api/most_opposed_bills_this_week?key=#{@api_key}" %>
   </dd>
   
   <dt>Bills Supported by Open Congress Users are Also</dt>
   <dd>
      Returns bills, representatives, and senators supported and opposed by users's supporting a given bill.<br/>
-    <%= link_to "#{BASE_URL}api/opencongress_users_supporting_bill_are_also/111-s1?key=#{@api_key}", "/api/opencongress_users_supporting_bill_are_also/111-s1?key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}api/opencongress_users_supporting_bill_are_also/111-s1?key=#{@api_key}", "/api/opencongress_users_supporting_bill_are_also/111-s1?key=#{@api_key}" %>
   </dd>
 
   <dt>Bills Opposed by Open Congress Users are Also</dt>
   <dd>
      Returns bills, representatives, and senators supported and opposed by users's opposing a given bill.<br/>
-    <%= link_to "#{BASE_URL}api/opencongress_users_opposing_bill_are_also/111-s1?key=#{@api_key}", "/api/opencongress_users_opposing_bill_are_also/111-s1?key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}api/opencongress_users_opposing_bill_are_also/111-s1?key=#{@api_key}", "/api/opencongress_users_opposing_bill_are_also/111-s1?key=#{@api_key}" %>
   </dd>
 
   <dt>Open Congress Users tracking bill are also tracking</dt>
   <dd>
      Returns bills, people, and issues commonly tracked by people tracking a given bill.<br/>
-    <%= link_to "#{BASE_URL}api/opencongress_users_tracking_bill_are_also_tracking/111-s1?key=#{@api_key}", "/api/opencongress_users_tracking_bill_are_also_tracking/111-s1?key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}api/opencongress_users_tracking_bill_are_also_tracking/111-s1?key=#{@api_key}", "/api/opencongress_users_tracking_bill_are_also_tracking/111-s1?key=#{@api_key}" %>
   </dd>
   
 
@@ -234,7 +234,7 @@
   <dt>Roll Calls by Bills</dt>
   <dd>
     Returns the roll calls for a given list of bills.<br/>
-    <%= link_to "#{BASE_URL}api/bill_roll_calls?bill_id[]=51865&bill_id[]=51868&key=#{@api_key}", "/api/bill_roll_calls?bill_id[]=51865&bill_id[]=51868&key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}api/bill_roll_calls?bill_id[]=51865&bill_id[]=51868&key=#{@api_key}", "/api/bill_roll_calls?bill_id[]=51865&bill_id[]=51868&key=#{@api_key}" %>
   </dd>
       
 </dl>
@@ -249,7 +249,7 @@
   <dt>Issues by Keyword</dt>
   <dd>
     Specify a Keyword, and receive an array of issue areas that match the keyword.<br/>
-    <%= link_to "#{BASE_URL}api/issues_by_keyword?keyword=Privacy&key=#{@api_key}", "/api/issues_by_keyword?keyword=Privacy&key=#{@api_key}" %>
+    <%= link_to "#{Settings.base_url}api/issues_by_keyword?keyword=Privacy&key=#{@api_key}", "/api/issues_by_keyword?keyword=Privacy&key=#{@api_key}" %>
   </dd>
 
 
@@ -391,32 +391,32 @@ Here is the page to retrieve all the data on the OpenCongress Wiki, including a 
   <dt>Bills, 30 days, sorted by total comments descending</dt>
   <dd>
     Specify a Keyword, and receive an array of issue areas that match the keyword.<br/>
-    <%= link_to "#{BASE_URL}battle_royale.xml?key=#{@api_key}&order=desc&page=1&sort=total_comments&timeframe=30days", "/battle_royale.xml?key=#{@api_key}&order=desc&page=1&sort=total_comments&timeframe=30days" %>
+    <%= link_to "#{Settings.base_url}battle_royale.xml?key=#{@api_key}&order=desc&page=1&sort=total_comments&timeframe=30days", "/battle_royale.xml?key=#{@api_key}&order=desc&page=1&sort=total_comments&timeframe=30days" %>
   </dd>
 
 
   <dt>Bills, 30 days, sorted by total users tracking descending</dt>
   <dd>
     Specify a Keyword, and receive an array of issue areas that match the keyword.<br/>
-    <%= link_to "#{BASE_URL}battle_royale.xml?key=#{@api_key}&order=desc&page=1&sort=bookmark_count_1&timeframe=30days", "/battle_royale.xml?key=#{@api_key}&order=desc&page=1&sort=bookmark_count_1&timeframe=30days" %>
+    <%= link_to "#{Settings.base_url}battle_royale.xml?key=#{@api_key}&order=desc&page=1&sort=bookmark_count_1&timeframe=30days", "/battle_royale.xml?key=#{@api_key}&order=desc&page=1&sort=bookmark_count_1&timeframe=30days" %>
   </dd>
 
   <dt>Representatives, 5 days, sorted by total users tracking descending</dt>
   <dd>
     Specify a Keyword, and receive an array of issue areas that match the keyword.<br/>
-    <%= link_to "#{BASE_URL}battle_royale/representatives.xml?key=#{@api_key}&order=desc&page=1&sort=bookmark_count_1&timeframe=5days", "/battle_royale/representatives.xml?key=#{@api_key}&order=desc&page=1&sort=bookmark_count_1&timeframe=5days" %>
+    <%= link_to "#{Settings.base_url}battle_royale/representatives.xml?key=#{@api_key}&order=desc&page=1&sort=bookmark_count_1&timeframe=5days", "/battle_royale/representatives.xml?key=#{@api_key}&order=desc&page=1&sort=bookmark_count_1&timeframe=5days" %>
   </dd>
 
   <dt>Senators, 1 year, sorted by average approval rating descending</dt>
   <dd>
     Specify a Keyword, and receive an array of issue areas that match the keyword.<br/>
-    <%= link_to "#{BASE_URL}battle_royale/senators.xml?key=#{@api_key}&order=desc&page=1&sort=p_approval_avg&timeframe=1year", "/battle_royale/senators.xml?key=#{@api_key}&order=desc&page=1&sort=p_approval_avg&timeframe=1year" %>
+    <%= link_to "#{Settings.base_url}battle_royale/senators.xml?key=#{@api_key}&order=desc&page=1&sort=p_approval_avg&timeframe=1year", "/battle_royale/senators.xml?key=#{@api_key}&order=desc&page=1&sort=p_approval_avg&timeframe=1year" %>
   </dd>
 
   <dt>Issues, 30 days, sorted by total users tracking descending</dt>
   <dd>
     Specify a Keyword, and receive an array of issue areas that match the keyword.<br/>
-    <%= link_to "#{BASE_URL}battle_royale/issues.xml?key=#{@api_key}&order=desc&page=1&sort=bookmark_count_1&timeframe=30days", "/battle_royale/issues.xml?key=#{@api_key}&order=desc&page=1&sort=bookmark_count_1&timeframe=30days" %>
+    <%= link_to "#{Settings.base_url}battle_royale/issues.xml?key=#{@api_key}&order=desc&page=1&sort=bookmark_count_1&timeframe=30days", "/battle_royale/issues.xml?key=#{@api_key}&order=desc&page=1&sort=bookmark_count_1&timeframe=30days" %>
   </dd>
 
 </dl>

@@ -2,8 +2,6 @@ require 'digest/sha1'
 
 # this model expects a certain database layout and its based on the name/login pattern. 
 class User < ActiveRecord::Base
-  devise :database_authenticatable #, :recoverable, :rememberable, :trackable, :validatable , :confirmable 
-  
   acts_as_solr :fields => [:placeholder, {:definitive_district => :integer},:public_actions,:my_committees_tracked, :my_bills_supported, 
                            :my_people_tracked, :my_bills_opposed, :login, :username, :full_name, :email,
                            :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens,
@@ -37,7 +35,6 @@ class User < ActiveRecord::Base
   validates_length_of :zip_four, :is => 4, :allow_nil => true, :message => "is not a valid 4 digit zipcode extension"
   validates_format_of :login, :with => /^\w+$/, :message => "can only contain letters and numbers (no spaces)."
   validates_uniqueness_of   :login, :email, :identity_url, :case_sensitive => false, :allow_nil => true
-
   HUMANIZED_ATTRIBUTES = {
     :email => "E-mail address",
     :accept_tos => "Terms of service",
@@ -153,7 +150,7 @@ class User < ActiveRecord::Base
   has_many :notebook_items, :through => :political_notebook
   
 #  has_many :bill_comments
-  def self.human_attribute_name(attr)
+  def self.human_attribute_name(attr, options = {})
     HUMANIZED_ATTRIBUTES[attr.to_sym] || super
   end
 
@@ -689,6 +686,7 @@ class User < ActiveRecord::Base
   end
 
   def authenticated?(password)
+    puts "crypted: #{crypted_password} :: encrypt(password): #{encrypt(password)}"
     crypted_password == encrypt(password)
   end
 
@@ -775,6 +773,7 @@ class User < ActiveRecord::Base
       self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") if new_record?
       self.crypted_password = encrypt(password)
    end
+   
    def make_activation_code
       self.activation_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
       

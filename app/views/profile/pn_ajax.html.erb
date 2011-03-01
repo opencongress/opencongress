@@ -5,7 +5,7 @@
 			<%= image_tag 'mypn-small.png', :alt => "Add to My Political Notebook" %>
 		</td>
 		<td class="mypnz_txt">
-			<% if user_signed_in? %>
+			<% if logged_in? %>
 							<% if PoliticalNotebook.find_or_create_from_user(current_user).already_contains? @commentary %>
 								<span>Saved</span>
 							<% else %>
@@ -28,7 +28,7 @@
 	<td class="center"></td>
 	<td class="ratez">
 		<span id="comm_rate_<%= @commentary.id.to_s%>">
-		  <% if user_signed_in? %>
+		  <% if logged_in? %>
 			Rate
 			<% else %>
 		 <%= link_to("Rate", login_url) %>
@@ -50,7 +50,7 @@
 		</script>
 		<form id="rating_<%= @commentary.id.to_s %>">  
 			<% (1..10).each do |v| %>
-		<input class="rate_<%= @commentary.id.to_s %> {split:2}" type="radio" name="rate_<%= @commentary.id.to_s %>" value="<%= v %>" <%= "disabled='disabled'" unless user_signed_in? %><%= @commentary.score == v ? "checked='checked'" : "" %> />
+		<input class="rate_<%= @commentary.id.to_s %> {split:2}" type="radio" name="rate_<%= @commentary.id.to_s %>" value="<%= v %>" <%= "disabled='disabled'" unless logged_in? %><%= @commentary.score == v ? "checked='checked'" : "" %> />
 	  <% end %>
 			</form>           
 		 </td>

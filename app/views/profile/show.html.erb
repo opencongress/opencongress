@@ -3,7 +3,7 @@
 </div>
 <%= render :partial => "profile_nav" %>
 <div class="profile_content">
-	<% if user_signed_in? && params[:login] == current_user.login %>
+	<% if logged_in? && params[:login] == current_user.login %>
 	<p><em>This page shows only the personal information that you have chosen to make
 		public. OpenCongress users are encouraged to share their preferred contact
 		info above: website or IM address (and coming soon, e-mail). This allows
@@ -16,7 +16,7 @@
 		
 		<div id="picture_detail" style="padding-top:30px;padding-bottom:30px;">
 			<% if @user.main_picture %>
-			<%= image_tag "#{BASE_URL}/images/users/" + @user.login + "_m.jpg", :alt => @user.login %>
+			<%= image_tag "#{Settings.base_url}/images/users/" + @user.login + "_m.jpg", :alt => @user.login %>
 			<% if @user == current_user %>
 			<br /><%= link_to "Delete Current Image", {:action => 'delete_images'} %>
 			<% end %>
@@ -24,7 +24,7 @@
 			<%= image_tag "anonymous.gif", :alt => "No Picture" %>
 			<% end %>
 			<% if @user == current_user %>
-			<br /><%= toggler('ul_pic', 'Upload New Picture', 'close') %>
+			<br /><%= toggler('ul_pic', 'Upload New Picture', 'close').html_safe %>
 			<div id="ul_pic" style="display:none;">
 				<% form_for :user, :url => { :action => 'upload_pic' }, :html=>{:multipart=>true, :style=> "display:inline;"} do |form| %>
 				<%= file_field "picture", "tmp_file", :size=> 20 %>  
@@ -132,12 +132,12 @@
 					<% end %>
 					</div>
 
-				<p><%= toggler("phide","Change Privacy Settings", "Hide Privacy Settings", "privacy", "privacy") %></p>				
+				<p><%= toggler("phide","Change Privacy Settings", "Hide Privacy Settings", "privacy", "privacy").html_safe %></p>				
 				<% end %>
 				</div>
 
 				<div class="settings">
-				<% if user_signed_in? && params[:login] == current_user.login %>
+				<% if logged_in? && params[:login] == current_user.login %>
 				<%= render :partial => "settings" %>
 				<% else %>
 				<% end %>

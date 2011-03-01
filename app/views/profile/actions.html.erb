@@ -24,7 +24,7 @@
 		  <% if @my_comments.empty? %>
 		   <p style="clear:both;">No comments yet. You can add a comment on pages for any bill, Member of Congress, issues, and more. If you're looking to share your comments and votes with other people, they can easily track your actions on OpenCongress by subscribing to your personal RSS feed above.</p>
 		  <% end %>
-    	    <% user_signed_in? ? myscores = current_user.comment_scores.find(:all) : myscores = Array.new %>
+    	    <% logged_in? ? myscores = current_user.comment_scores.find(:all) : myscores = Array.new %>
 		
 		  <% @my_comments.each do |com| %>
            <%= render :partial => 'shared/comments_recursive', :locals => {:object => com.commentable_type, :comment => com, :myscores => myscores } %>

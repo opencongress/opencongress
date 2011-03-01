@@ -10,7 +10,7 @@
 
 <h3>I have an account:</h3>
 
-<% form_for :user do |f| %>
+<%= form_for :user do |f| %>
 
 <div title="Account login" id="loginform" class="floatleft form">
     
@@ -35,7 +35,7 @@
 <h3 style="text-align:left;">Login with OpenID</h3>
 <% end %>
 
-<% form_for :user do |f| %>
+<%= form_for :user do |f| %>
 
 <div title="Account login" id="oid_loginform" class="form">
 
@@ -59,11 +59,7 @@
 	<h3 class="make_one">Make me one, right now!</h3>
 
 	
-	<% form_for :user, :url => {:action => 'signup'} do |f| %>
-
-	<%= render :partial => "signup_form", :locals => {:f => f} %>
-
-	<% end %>
+	<%= render :partial => "signup_form" %>
 	<div style="clear:both;margin-bottom:1em;"></div>
 
 

@@ -3,3 +3,6 @@
 
 en:
   hello: "Hello world"
+  
+  simple_captcha:
+    label: "Enter the text from the image"

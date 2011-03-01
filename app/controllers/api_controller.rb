@@ -9,7 +9,7 @@ class ApiController < ApplicationController
   def index
     @page_title = "OC API Documentation"
     @api_key = ""
-    if user_signed_in?
+    if logged_in?
       @api_key = current_user.feed_key
     end
     

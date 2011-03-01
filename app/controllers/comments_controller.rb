@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
       @comment.commentable_id = object.id
       @comment.commentable_type = object.class.to_s
 
-      @comment.user_id = current_user.id if user_signed_in?
+      @comment.user_id = current_user.id if logged_in?
       @comment.ip_address = request.remote_ip
 
       parent = nil
@@ -27,7 +27,7 @@ class CommentsController < ApplicationController
         return
       end 
 
-      if user_signed_in? 
+      if logged_in? 
         unless @comment.save
           flash[:error] = "Failed to save."
           if parent

@@ -18,7 +18,7 @@
 </div>
 
 	<div id="bill_titles" class="jqmWindow scrolling">
-  		<div class="ie"><a href="#" class="jqmClose">Close</a></div>
+  		<div class="ie"><a href="#" class="jqmClose"><span>Close</span></a></div>
 		<h3>All Bill Titles</h3>
 		
 		<ul class="list">
@@ -85,7 +85,7 @@
 </div>
   
 	<% unless @wiki_url %>
-		<% if user_signed_in? %>
+		<% if logged_in? %>
 	<div id="create_wiki_message" class="jqmWindow">
 	 <p>This Bill currently has no wiki entry. <a href="<%= @wiki_create_url %>" class="small_button" style="float:right;margin-left:8px;margin-top:-4px;"><span>Create Wiki Page</span></a></p>
 	</div>

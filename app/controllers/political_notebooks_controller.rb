@@ -94,7 +94,7 @@ private
   end
   
   def is_users_notebook?
-    return false unless user_signed_in?
+    return false unless logged_in?
     return current_user == @political_notebook.user
   end
   

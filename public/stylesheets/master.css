@@ -4059,6 +4059,7 @@ margin: 8px 0 8px 0px !important;
 
 .toss{
 padding: 8px 0 0 0 !important; 
+width: 300px;
 }
 
 .send{
@@ -4885,7 +4886,16 @@ padding-top: 80px;
 background: url('../images/sunlight-small.png') 0px 4px no-repeat;
 }
 
-
-
+.errorExplanation {
+  color: red;
+  margin-bottom: 15px;
+}
+.errorExplanation p {
+  color: red;
+  font-size:1.5em;
+}
+.errorExplanation h2 {
+  font-size: 1.5em;
+}
 
 

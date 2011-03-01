@@ -52,7 +52,6 @@ gem 'will_paginate', '~> 3.0.pre2'
 gem "acts_as_solr"
 gem "validates_captcha"
 gem "okkez-open_id_authentication"
-gem "devise"
 
 gem "acts-as-taggable-on", :git => 'http://github.com/mbleigh/acts-as-taggable-on.git'
 
@@ -61,3 +60,17 @@ group :development do
   # gem "rails-footnotes"
 end
 
+
+# Testing
+group :test do
+  gem 'rspec', '1.3.1'
+  gem 'rspec-rails', '1.3.3'
+  gem 'cucumber', '0.8.5'
+  gem 'cucumber-rails'
+  gem 'webrat'
+  gem 'selenium-client'
+  gem 'sqlite3'
+  
+  gem 'capybara'
+  gem 'capybara-envjs'
+end

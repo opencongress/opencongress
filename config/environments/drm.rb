@@ -1,6 +1,6 @@
 # Settings specified here will take precedence over those in config/environment.rb
 
-BASE_URL = 'http://drm.dev.opencongress.org'
+Settings.base_url = 'http://drm.dev.opencongress.org'
 Settings.wiki_base_url = 'http://wiki-dev.opencongress.org/wiki'
 
 # In the development environment your application's code is reloaded on

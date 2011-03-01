@@ -22,8 +22,8 @@ class Comment < ActiveRecord::Base
   named_scope :uncensored, :conditions => ["censored != ?", true]
   
   apply_simple_captcha
-  validates_presence_of :comment, :message => "You must enter a comment."
-  validates_length_of :comment, :in => 1..1000, :too_short => "comment is not verbose enough, write more.", :too_long => "comment is too verbose, keep it under 1000 characters."
+  validates_presence_of :comment, :message => " : You must enter a comment."
+  validates_length_of :comment, :in => 1..1000, :too_short => " : Your comment is not verbose enough, write more.", :too_long => " : Your comment is too verbose, keep it under 1000 characters."
 
   acts_as_nested_set :scope => :root
 #  acts_as_tree

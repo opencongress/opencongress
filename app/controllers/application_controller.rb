@@ -1,7 +1,9 @@
+require 'authenticated_system'
+
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
-  #include AuthenticatedSystem
+  include AuthenticatedSystem
   include SimpleCaptcha::ControllerHelpers
 
   before_filter :store_location, :except => ["rescue_action_in_public"]
@@ -10,8 +12,6 @@ class ApplicationController < ActionController::Base
   before_filter :has_accepted_tos?
   before_filter :get_site_text_page
   before_filter :is_banned?
-
-  filter_parameter_logging :password
 
   def paginate_collection(collection, options = {})
     # from http://www.bigbold.com/snippets/posts/show/389
@@ -77,7 +77,7 @@ class ApplicationController < ActionController::Base
   private
 
   def has_accepted_tos?
-    if user_signed_in?
+    if logged_in?
       logger.info "USER APP TOS: #{current_user.accepted_tos}"
       unless current_user.accepted_tos == true
         redirect_to :controller => 'account', :action => 'accept_tos'
@@ -86,7 +86,7 @@ class ApplicationController < ActionController::Base
   end
 
   def is_banned?
-    if user_signed_in?
+    if logged_in?
       if current_user.is_banned == true
         redirect_to logout_url
       end
@@ -102,32 +102,32 @@ class ApplicationController < ActionController::Base
       end
   end
   def admin_login_required
-    if !(user_signed_in? && current_user.user_role.can_administer_users)
+    if !(logged_in? && current_user.user_role.can_administer_users)
       redirect_to :controller => 'admin', :action => 'index'
     end
   end
   def can_text
-    if !(user_signed_in? && current_user.user_role.can_manage_text)
+    if !(logged_in? && current_user.user_role.can_manage_text)
       redirect_to :controller => 'admin', :action => 'index'
     end
   end
   def can_moderate
-    if !(user_signed_in? && current_user.user_role.can_moderate_articles)
+    if !(logged_in? && current_user.user_role.can_moderate_articles)
       redirect_to :controller => 'admin', :action => 'index'
     end
   end
   def can_blog
-    unless (user_signed_in? && current_user.user_role.can_blog)
+    unless (logged_in? && current_user.user_role.can_blog)
       redirect_to :controller => 'admin', :action => 'index'
     end
   end
   def can_stats
-    unless (user_signed_in? && current_user.user_role.can_see_stats)
+    unless (logged_in? && current_user.user_role.can_see_stats)
       redirect_to :controller => 'admin', :action => 'index'
     end
   end
   def no_users
-    unless (user_signed_in? && current_user.user_role.name != "User")
+    unless (logged_in? && current_user.user_role.name != "User")
       flash[:notice] = "Permission Denied"
       redirect_to login_url
     end

@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/../config/environment'
 require 'net/http'
 require 'fileutils'
 
-BASE_URL = "www.senate.gov"
+Settings.base_url = "www.senate.gov"
 
 PAGES = {
 "senate aging (special)" => "/general/committee_membership/committee_memberships_SPAG.htm",
@@ -54,7 +54,7 @@ comms.each do |comm|
   end
   unless File.exist? outfile
     File.open(outfile, "w") do |f|
-      f.print Net::HTTP.get(BASE_URL, path)
+      f.print Net::HTTP.get(Settings.base_url, path)
     end
   end
 end

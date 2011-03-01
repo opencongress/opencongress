@@ -1,4 +1,4 @@
-<% unless user_signed_in? == false %>
+<% unless logged_in? == false %>
   <p><%= link_to "Back to My Political Notebook", political_notebook_path(current_user.login), { :class => 'arrow-left' } %></p>
 <% end %>
 
@@ -18,6 +18,6 @@
 
 <p>To get a sense of "My Political Notebook" in action, take a look at <a href="/users/donnyshaw/profile/political_notebook">Donny Shaw's page</a> and the mix of content he's saved there. Feel free to follow him as he posts new content by clicking on the orange RSS icon in his MyPN tab. By using an RSS reader such as Google Reader or My Yahoo, you'll get automatic updates every time he posts new content to his notebook (more info on <a href="/about/rss">how to use RSS</a>). Feel free to contact us with questions, suggestions, or feature requests: <script type="text/javascript">m("writeus","opencongress","org", "1")</script></p>
 
-<% unless user_signed_in? == false %>
+<% unless logged_in? == false %>
   <p><%= link_to "Back to My Political Notebook", political_notebook_path(current_user.login), { :class => 'arrow-left' } %></p>
 <% end %>

@@ -105,7 +105,7 @@
 			    <p><%= @bill.wiki_summary  %></p>
 			    <p id="contribute">This summary provided by people like you <a href="<%= @wiki_url %>">Contribute to it</a></p>
 			  <% else %>
-			    <p id="contribute">This bill currently has no wiki summary. <a href="<%= @wiki_url ? @wiki_url : @wiki_create_url %>" class="<%= "wiki_link" unless user_signed_in? %>">Create Summary</a></p>
+			    <p id="contribute">This bill currently has no wiki summary. <a href="<%= @wiki_url ? @wiki_url : @wiki_create_url %>" class="<%= "wiki_link" unless logged_in? %>">Create Summary</a></p>
 			  <% end %> 
 		  </div>
 

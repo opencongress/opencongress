@@ -1,7 +1,7 @@
 <% button = "track_small" unless button %>	
 <span id="trackli<%=h object.id %>">
-  <% if user_signed_in? == false or object.bookmarks.find_by_user_id(current_user.id) == nil %>
-    <% if user_signed_in? %>
+  <% if logged_in? == false or object.bookmarks.find_by_user_id(current_user.id) == nil %>
+    <% if logged_in? %>
       <%= link_to_remote "<span>Track #{object.obj_title ? object.obj_title : object.class.to_s}</span>".html_safe, :url => {:controller => 'profile', 
                   :action => 'track', 
                   :id => object.id,

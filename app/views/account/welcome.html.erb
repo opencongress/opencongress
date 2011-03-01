@@ -34,5 +34,5 @@
 <%= render :partial => "bill/related_bills_list", :locals => {:related_bills_list => @most_viewed_bills, :show_track_link => true} %>
 
 <br />
-<p style="margin-bottom:20px;" class="bigger"><%= link_to('<span>Visit My OpenCongress Profile</span>', user_profile_url(current_user.login), :class => 'med_button med_arrow') %></p>
+<p style="margin-bottom:20px;" class="bigger"><%= link_to('<span>Visit My OpenCongress Profile</span>'.html_safe, user_profile_url(current_user.login), :class => 'med_button med_arrow') %></p>
 </div>

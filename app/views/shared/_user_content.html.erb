@@ -68,7 +68,7 @@
 		<div class="uc-box-bottom">
 			<div class="uc-box">
 				<%= user_bill_result(@bill) %>
-				<% if user_signed_in? %>
+				<% if logged_in? %>
 				<%= my_congresspeople_votes(@bill) %>
 				<% end %>
 			</div>
@@ -87,7 +87,7 @@
 		
 		<% end %>
 		
-		<% if user_signed_in? %>
+		<% if logged_in? %>
 		  <% if object.is_house_bill? %>
 		    <% if current_user.my_reps[0] and current_user.my_reps[0].has_contact_webform? %>
 		      <%= render :partial => 'shared/write_rep_external', :locals => { :people => [current_user.my_reps[0]] } %>
@@ -158,7 +158,7 @@
   <br />
 <% end %>
 
-<% if user_signed_in? %>
+<% if logged_in? %>
 	<% if object.bookmarks.find_by_user_id(current_user.id) == nil %>
 
 		<%= link_to_remote("<span id='b_myoc_txt'>Track With MyOC</span>".html_safe, :url => {:controller => 'profile', 

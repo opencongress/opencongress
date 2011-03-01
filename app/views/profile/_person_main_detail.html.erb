@@ -8,7 +8,7 @@
 
     <li id="p<%= person.id.to_s %>" class="person">
 			<% unless buttons_only %> 
-			  <%= link_to("<img src='/images/photos/thumbs_73/" + person.id.to_s + ".png' />", 
+			  <%= link_to(("<img src='/images/photos/thumbs_73/" + person.id.to_s + ".png' />").html_safe, 
 			    {:controller => 'people', :action => 'show', :id => person.to_param}) %>
 			<% end %>
       
@@ -18,23 +18,23 @@
 
 			<ul class="left">
 				<li><% unless person.votes_count.nil? %>	
-					<%= ajax_toggler("new_votes_#{person.ident}", "<span>New Votes (#{person.votes_count})</span>", 
-					                    '<span>Hide New Votes</span>',
+					<%= ajax_toggler("new_votes_#{person.ident}", "<span>New Votes (#{person.votes_count})</span>".html_safe, 
+					                    '<span>Hide New Votes</span>'.html_safe,
 					                     {:action => 'tracked_votes', 
 						                  :id => person.id, 
 						                  :limit => person.votes_count}, 'med_button', 'med_button on') %>
 				<% end %>
 				<% unless person.newss_count.nil? %>
-					<%= ajax_toggler("news_updates_#{person.ident}", "<span>News Updates (#{person.newss_count})</span>",
-					                         '<span>Hide News Updates</span>',
+					<%= ajax_toggler("news_updates_#{person.ident}", "<span>News Updates (#{person.newss_count})</span>".html_safe,
+					                         '<span>Hide News Updates</span>'.html_safe,
 					                          {:action => 'tracked_commentary_news', 
 							                                       :id => person.id, 
 							                                       :object => "Person",
 							                                       :limit => person.newss_count}, 'med_button', 'med_button on') %>
 				<% end %>
 				<% unless person.blogss_count.nil? %>
-					<%= ajax_toggler("blog_updates_#{person.ident}", "<span>Blog Updates (#{person.blogss_count})</span>",
-					                        '<span>Hide Blog Updates</span>',
+					<%= ajax_toggler("blog_updates_#{person.ident}", "<span>Blog Updates (#{person.blogss_count})</span>".html_safe,
+					                        '<span>Hide Blog Updates</span>'.html_safe,
 					                          {:action => 'tracked_commentary_blogs', 
 							                                       :id => person.id, 
 							                                       :object => "Person",
@@ -42,7 +42,7 @@
 				<% end %>
 				<% unless person.commentss_count.nil? %>
 					<%= toggler_with_span_class("new_comments_#{person.ident}", 
-					             "<span>New Comments (#{person.commentss_count})</span>", '<span>Hide New Comments</span>', 'med_button', 'med_button on') %>
+					             "<span>New Comments (#{person.commentss_count})</span>".html_safe, '<span>Hide New Comments</span>'.html_safe, 'med_button', 'med_button on') %>
 				<% end %>
 				</li>
 			</ul>
@@ -63,7 +63,7 @@
   			</ul>
   			<% end %>
   		<% end %>
-				<% if (person.roles.first.enddate < Date.today) && (user_signed_in? && current_user == @user) %>
+				<% if (person.roles.first.enddate < Date.today) && (logged_in? && current_user == @user) %>
 				<div style="padding-top:3px;padding-bottom:3px;">
 				  <em>(This person's Congressional term has ended. You may want to <%= link_to "Remove", :controller => 'profile', :action => 'remove_person_bookmark', :login => @user.login, :id => person.id %> this person from your tracked items)</em>
 				</div>

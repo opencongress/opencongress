@@ -117,7 +117,7 @@ module BillHelper
         });
         </script>"
         
-        out += summary_no_html[0..290] + %Q{<span id="bill_summary_extra" class='jqmWindow scrolling'><div class="ie"><a href="#" class="jqmClose">Close</a></div><h3>Official Summary</h3>#{summary}<br /><br /></span>...<a href="#" class="summary_trigger more"><strong>Read the Rest</strong></a>}
+        out += summary_no_html[0..290] + %Q{<span id="bill_summary_extra" class='jqmWindow scrolling'><div class="ie"><a href="#" class="jqmClose"><span>Close</span></a></div><h3>Official Summary</h3>#{summary}<br /><br /></span>...<a href="#" class="summary_trigger more"><strong>Read the Rest</strong></a>}
       end
     end
   end

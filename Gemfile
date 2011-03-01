@@ -49,7 +49,7 @@ gem 'oauth'
 
 gem 'will_paginate', '~> 3.0.pre2'
 
-gem "acts_as_solr"
+#gem "acts_as_solr"
 gem "validates_captcha"
 gem "okkez-open_id_authentication"
 

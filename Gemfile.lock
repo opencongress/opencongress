@@ -41,7 +41,6 @@ GEM
       activemodel (= 3.0.4)
       activesupport (= 3.0.4)
     activesupport (3.0.4)
-    acts_as_solr (1.3.3)
     arel (2.0.9)
     bluecloth (2.0.11)
     builder (2.1.2)
@@ -195,7 +194,6 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   acts-as-taggable-on!
-  acts_as_solr
   bluecloth
   capistrano
   capistrano-ext

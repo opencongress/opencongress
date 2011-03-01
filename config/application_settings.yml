@@ -53,7 +53,7 @@ test:
 staging:
   <<: *defaults
   
-  base_url: http://dev.opencongress.org
+  base_url: http://dev.opencongress.org/
     
 production:
   <<: *defaults

@@ -660,7 +660,7 @@ EOT
         end 
       end   
       unless out.blank?
-        return "<h5>My Regional Officials</h5>" + out
+        return ("<h5>My Regional Officials</h5>" + out).html_safe
       end
     end             
   end

@@ -1003,29 +1003,11 @@ class Person < ViewableObject
     chamber_roles = self.roles.find_all_by_role_type(self.roles.first.role_type, :order => "enddate desc")
     number_terms = chamber_roles.length
 
-    total = 0
-    (0..number_terms - 1).each do |t|
-      if t != (number_terms - 1) && t != 0
-        if chamber_roles[t].startdate - 1.day == chamber_roles[t+1].enddate
-          total += ( chamber_roles[t-1].startdate.year - chamber_roles[t].startdate.year )
-        else
-          total += (chamber_roles[t-1].startdate.year - chamber_roles[t].startdate.year )
-          break
-        end
-      elsif t == 0 && t != (number_terms - 1)
-        if chamber_roles[t].startdate - 1.day == chamber_roles[t+1].enddate
-          total += ( Date.today.year - chamber_roles[t].startdate.year )
-        else
-          total += (Date.today.year - chamber_roles[t].startdate.year )
-          break
-        end
-      elsif t == 0 && t -= (number_terms - 1)
-        total += Date.today.year - (chamber_roles[0]).startdate.year
-      else       
-        total += (chamber_roles[t-1].startdate.year - chamber_roles[t].startdate.year )
-      end         
+    if chamber_roles.first.enddate > Date.today
+      return (Date.today.year - chamber_roles.last.startdate.year)
+    else
+      return (chamber_roles.first.enddate.year - chamber_roles.last.startdate.year)
     end
-    total
   end
 
   def parse_facets(facets, primary_facet, selected_facets)

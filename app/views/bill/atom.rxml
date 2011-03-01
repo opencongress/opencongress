@@ -17,8 +17,8 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
       xml.updated action.datetime.strftime("%Y-%m-%dT%H:%M:%SZ")
       xml.content "type" => "html" do
         @action = action
-        xml.text! render(:partial => "bill/action")
-        xml.text! render(:partial => "bill/rss_summary")
+        xml.text! render(:partial => "bill/action.html")
+        xml.text! render(:partial => "bill/rss_summary.html")
       end
     end
   end

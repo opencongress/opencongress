@@ -1,8 +1,0 @@
-- installer executable
-- Fix config errors
-VERSION 1.1.3
-- improve memory usage (via amuino)
-VERSION 1.1.1
-- highlighting support (needs doc)
-- invalid chars in XML bug fix
-- Raise a specific Exception class on connection error

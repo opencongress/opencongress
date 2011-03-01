@@ -6,7 +6,6 @@ class CreateElectronics < ActiveRecord::Migration
       t.column :features, :string
       t.column :category, :string
       t.column :price, :string
-      t.timestamps
     end
   end
 

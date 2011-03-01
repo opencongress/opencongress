@@ -4,7 +4,7 @@ class RollCallVote < ActiveRecord::Base
   
   after_create :recount_party_lines
 
-  named_scope :for_state, lambda { |abbrev| {:include => :person, :conditions => {:people => {:state => abbrev} } } }
+  scope :for_state, lambda { |abbrev| {:include => :person, :conditions => {:people => {:state => abbrev} } } }
   
   @@VOTE_FOR_SYMBOL = {
     "+" => "Aye",

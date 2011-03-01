@@ -54,9 +54,9 @@ class FacetedSearchTest < Test::Unit::TestCase
                                                                           "price:[500.00 TO *]"]}
     assert_equal 4, records.docs.size
     assert_equal({"facet_queries" => {"price_rf:[* TO 200.00]"=>2,
-                                      "price_rf:[200.00 TO 500.00]"=>1,
-                                      "price_rf:[500.00 TO *]"=>1}, 
-                  "facet_fields" => {}, "facet_dates" => {}}, records.facets)
+                                      "price_rf:[500.00 TO *]"=>1,
+                                      "price_rf:[200.00 TO 500.00]"=>1}, 
+                  "facet_fields" => {}}, records.facets)
   end
   
   # Faceted search specifying the query and fields
@@ -119,45 +119,4 @@ class FacetedSearchTest < Test::Unit::TestCase
     assert_equal({"category_facet"=>{"Memory"=>2}}, records.facets['facet_fields'])
   end
   
-  def test_faceted_search_with_dates
-    records = Electronic.find_by_solr "memory", :facets => {:dates => {:fields => [:created_at, :updated_at],
-      :start => (Date.today - 7.years).strftime("%Y-%m-%dT%H:%M:%SZ"), :end => Date.today.strftime("%Y-%m-%dT%H:%M:%SZ"), :gap => '+1YEAR', :other => :all}}
-
-    assert_equal 4, records.docs.size
-    
-    assert_equal 0, records.facets["facet_dates"]["created_at_d"]["after"]
-    assert_equal 1, records.facets["facet_dates"]["created_at_d"]["before"]
-    assert_equal 3, records.facets["facet_dates"]["created_at_d"]["between"]
-    
-    assert_equal 0, records.facets["facet_dates"]["updated_at_d"]["after"]
-    assert_equal 0, records.facets["facet_dates"]["updated_at_d"]["before"]
-    assert_equal 4, records.facets["facet_dates"]["updated_at_d"]["between"]
-  end
-  
-  def test_faceted_search_with_dates_filter
-    records = Electronic.find_by_solr "memory", :facets => {:dates => {:filter => ["updated_at:[#{(Date.today - 3.months).strftime("%Y-%m-%dT%H:%M:%SZ")} TO NOW-1MONTH/DAY]"]}}
-    
-    assert_equal 2, records.docs.size
-    
-    records.docs.each { |r|
-      assert r.updated_at >= (Date.today - 3.month)
-      assert r.updated_at <= (Date.today - 1.month)
-    }
-  end
-  
-  def test_faceted_search_with_dates_filter_and_facets
-    # this is a very contrived example but gives us data to validate
-    records = Electronic.find_by_solr "memory", :facets => {:dates => {:filter => ["updated_at:[#{(Date.today - 3.months).strftime("%Y-%m-%dT%H:%M:%SZ")} TO NOW-1MONTH/DAY]"],
-      :fields => [:created_at, :updated_at], :start => 'NOW-2MONTHS/DAY', :end => 'NOW-1MONTH/DAY', :gap => '+1MONTH', :other => :all}}
-    
-    assert_equal 2, records.docs.size
-    
-    assert_equal 0, records.facets["facet_dates"]["created_at_d"]["after"]
-    assert_equal 2, records.facets["facet_dates"]["created_at_d"]["before"]
-    assert_equal 0, records.facets["facet_dates"]["created_at_d"]["between"]
-    
-    assert_equal 0, records.facets["facet_dates"]["updated_at_d"]["after"]
-    assert_equal 1, records.facets["facet_dates"]["updated_at_d"]["before"]
-    assert_equal 1, records.facets["facet_dates"]["updated_at_d"]["between"]
-  end
 end

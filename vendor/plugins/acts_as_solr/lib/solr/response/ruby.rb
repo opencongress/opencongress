@@ -11,10 +11,10 @@
 # limitations under the License.
 
 class Solr::Response::Ruby < Solr::Response::Base
-  attr_reader :data, :header
+  attr_reader :data
 
   def initialize(ruby_code)
-    super
+    super(ruby_code)
     begin
       #TODO: what about pulling up data/header/response to ResponseBase,
       #      or maybe a new middle class like SelectResponseBase since
@@ -38,5 +38,5 @@ class Solr::Response::Ruby < Solr::Response::Base
   def query_time
     @header['QTime']
   end
-  
+
 end

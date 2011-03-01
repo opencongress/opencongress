@@ -15,7 +15,7 @@ class Solr::Response::Standard < Solr::Response::Ruby
   include Enumerable
   
   def initialize(ruby_code)
-    super
+    super(ruby_code)
     @response = @data['response']
     raise "response section missing" unless @response.kind_of? Hash
   end
@@ -36,7 +36,6 @@ class Solr::Response::Standard < Solr::Response::Ruby
     @response['maxScore']
   end
   
-  # TODO: consider the use of json.nl parameter
   def field_facets(field)
     facets = []
     values = @data['facet_counts']['facet_fields'][field]
@@ -51,14 +50,15 @@ class Solr::Response::Standard < Solr::Response::Ruby
     @data['highlighting'][id.to_s][field.to_s] rescue nil
   end
   
-  def highlighting
-    @data['highlighting']
-  end
-  
   # supports enumeration of hits
   # TODO revisit - should this iterate through *all* hits by re-requesting more?
   def each
     @response['docs'].each {|hit| yield hit}
   end
+  
+  alias num_found total_hits
+  alias total total_hits
+  alias offset start
+  alias docs hits
 
 end

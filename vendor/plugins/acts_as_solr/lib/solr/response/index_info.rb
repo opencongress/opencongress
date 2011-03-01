@@ -12,7 +12,7 @@
 
 class Solr::Response::IndexInfo < Solr::Response::Ruby
   def initialize(ruby_code)
-    super
+    super(ruby_code)
   end
 
   def num_docs

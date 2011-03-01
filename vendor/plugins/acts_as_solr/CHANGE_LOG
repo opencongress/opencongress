@@ -1,23 +1,4 @@
 == CHANGE_LOG
-
-=== Development
-<b>FIX</b>:: Small fix for detecting libxml-ruby in Ruby 1.9. (Nick Zadrozny)
-<b>FIX</b>:: Updated bundled Solr to 1.4. (Kyle Maxwell)
-<b>NEW</b>:: A unit test suite based on Shoulda, not requiring a running Solr or a Rails environment. (Mathias Meyer)
-<b>NEW</b>:: Added the :offline option to the acts_as_solr method. (Mathias Meyer)
-<b>NEW</b>:: Added :lazy flag to find_by_solr, and with that support to load records lazily. (Mathias Meyer)
-<b>FIX</b>:: Added test: to solr.yml so you don't need to do this by hand. (Ken Harris)
-<b>FIX</b>:: Updated bundled Solr to 1.3. (Mathias Meyer)
-<b>FIX</b>:: Updated bundled solr-ruby to 0.0.6 which comes bundled with Solr 1.3. (Mathias Meyer)
-<b>FIX</b>:: Improved logging of the reindex rake task. (David Stevenson)
-<b>FIX</b>:: Added requirement for libxml-ruby > 0.7, if libxml-ruby is installed. (David Stevenson)
-<b>FIX</b>:: Ruby 1.9 compatibility fixes. (David Palm)
-<b>FIX</b>:: Fixed compatibility with Desert by renaming environment.rb to solr_environment.rb. (David Stevenson)
-<b>FIX</b>:: Moved the require of solr_environment only into tasks that need it. (David Stevenson)
-<b>NEW</b>:: Added support to alias fields and includes using the option :as for acts_as_solr. See the RDoc for details. (Nick Hengeveld)
-<b>NEW</b>:: Added support to attach the score to multi search results. (Mathias Meyer)
-<b>NEW</b>:: Added support for facets on date fields. (Curtis Hatter)
-
 === 06-18-2007: Version 0.9
 <b>NEW</b>:: Added the option :scores when doing a search. If set to true this will return the score as a 'solr_score' attribute or each one of the instances found
   books = Book.find_by_solr 'ruby OR splinter', :scores => true

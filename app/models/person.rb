@@ -20,13 +20,13 @@ class Person < ViewableObject
 
   has_many :person_approvals
 
-  named_scope :republican, :conditions => {:party => "Republican"}
-  named_scope :democrat, :conditions => {:party => "Democrat"}
-  named_scope :independent, :conditions => ["party != 'Republican' AND party != 'Democrat'"]
-  named_scope :in_state, lambda { |state| {:conditions => {:state => state.upcase}}}
+  scope :republican, :conditions => {:party => "Republican"}
+  scope :democrat, :conditions => {:party => "Democrat"}
+  scope :independent, :conditions => ["party != 'Republican' AND party != 'Democrat'"]
+  scope :in_state, lambda { |state| {:conditions => {:state => state.upcase}}}
 
-  named_scope :sen, :joins => :roles, :select => "people.*", :conditions => ["roles.person_id = people.id AND roles.role_type='sen' AND roles.enddate > ?", Date.today]
-  named_scope :rep, :joins => :roles, :select => "people.*", :conditions => ["roles.person_id = people.id AND roles.role_type='rep' AND roles.enddate > ?", Date.today]
+  scope :sen, :joins => :roles, :select => "people.*", :conditions => ["roles.person_id = people.id AND roles.role_type='sen' AND roles.enddate > ?", Date.today]
+  scope :rep, :joins => :roles, :select => "people.*", :conditions => ["roles.person_id = people.id AND roles.role_type='rep' AND roles.enddate > ?", Date.today]
 
 
   has_many :news, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='t'"

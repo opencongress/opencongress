@@ -62,7 +62,7 @@
   <div class="news_blogs">
     <div class="col1">      
 
-      <% cache ("#{@person.fragment_cache_key}_news_preview") do %>
+      <% cache("#{@person.fragment_cache_key}_news_preview") do %>
       <!-- cached: <%= "#{@person.fragment_cache_key}_news_preview" %> // <%= Time.now %> -->
       <a class="feed" href="<%= url_for :action => 'atom_news', :id => @person %>">FEED</a>
       <h5 class="short">Recent News Coverage</h5>
@@ -82,7 +82,7 @@
       </div> <!-- // col1 -->
 
       <div class="col2">
-        <% cache ("#{@person.fragment_cache_key}_blog_preview") do %>
+        <% cache("#{@person.fragment_cache_key}_blog_preview") do %>
         <!-- cached: <%= "#{@person.fragment_cache_key}_blog_preview" %> // <%= Time.now %> -->
         <a class="feed" href="<%= url_for :action => 'atom_blogs', :id => @person %>">FEED</a>
         <h5 class="short">Recent Blog Coverage</h5>

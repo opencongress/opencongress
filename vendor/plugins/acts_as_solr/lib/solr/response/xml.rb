@@ -17,7 +17,7 @@ class Solr::Response::Xml < Solr::Response::Base
   attr_reader :doc, :status_code, :status_message
 
   def initialize(xml)
-    super
+    super(xml)
     # parse the xml
     @doc = REXML::Document.new(xml)
 

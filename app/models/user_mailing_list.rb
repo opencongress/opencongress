@@ -7,8 +7,8 @@ class UserMailingList < ActiveRecord::Base
   BOUNCED=2
   DISABLED=3
 
-  named_scope :all_ok, :conditions => ["user_mailing_lists.status = ?", OK]
-  named_scope :all_admin, :include => [{:user => :user_role}], :conditions => ["user_roles.name = ?", "Administrator"]
+  scope :all_ok, :conditions => ["user_mailing_lists.status = ?", OK]
+  scope :all_admin, :include => [{:user => :user_role}], :conditions => ["user_roles.name = ?", "Administrator"]
 
   def self.find_or_create_from_user(user)
     if user.user_mailing_list.blank?

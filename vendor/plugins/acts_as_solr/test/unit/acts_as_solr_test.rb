@@ -1,39 +1,15 @@
-# encoding: utf-8
 require "#{File.dirname(File.expand_path(__FILE__))}/../test_helper"
 
 class ActsAsSolrTest < Test::Unit::TestCase
   
-  fixtures :books, :movies, :electronics, :postings, :authors
-
+  fixtures :books, :movies, :electronics, :postings
+  
   # Inserting new data into Solr and making sure it's getting indexed
   def test_insert_new_data
     assert_equal 2, Book.count_by_solr('ruby OR splinter OR bob')
     b = Book.create(:name => "Fuze in action", :author => "Bob Bobber", :category_id => 1)
     assert b.valid?
     assert_equal 3, Book.count_by_solr('ruby OR splinter OR bob')
-  end
-  
-  # Check the type column stored in the index isn't stemmed by SOLR.  If it is stemmed,
-  # then both Post and Posting will be stored as type:Post, so a query for Posts will
-  # return Postings and vice versa
-  
-  def test_insert_new_data_doesnt_stem_type
-    assert_equal 0, Post.count_by_solr('aardvark')
-    p = Posting.new :name => 'aardvark', :description => "An interesting animal"
-    p.guid = '12AB'
-    p.save!
-    assert_equal 0, Post.count_by_solr('aardvark')
-  end
-
-  def test_type_determined_from_database_if_not_explicitly_set
-    assert Post.configuration[:solr_fields][:posted_at][:type] == :date
-  end
-  
-  def test_search_includes_subclasses
-    Novel.create! :name => 'Wuthering Heights', :author => 'Emily Bronte'
-    Book.create! :name => 'Jane Eyre', :author => 'Charlotte Bronte'
-    assert_equal 1, Novel.find_by_solr('Bronte').total_hits
-    assert_equal 2, Book.find_by_solr('Bronte').total_hits
   end
 
   # Testing basic solr search:
@@ -49,7 +25,7 @@ class ActsAsSolrTest < Test::Unit::TestCase
       assert_equal ({"id" => 2, 
                       "category_id" => 2, 
                       "name" => "Ruby for Dummies", 
-                      "author" => "Peter McPeterson", "published_on" => (Date.today - 2.years), "type" => nil}), records.docs.first.attributes
+                      "author" => "Peter McPeterson"}), records.docs.first.attributes
     end
   end
   
@@ -64,7 +40,7 @@ class ActsAsSolrTest < Test::Unit::TestCase
       assert_equal "Splinter Cell", records.docs.first.name
       assert_equal "Tom Clancy", records.docs.first.author
       assert_equal ({"id" => 1, "category_id" => 1, "name" => "Splinter Cell", 
-                     "author" => "Tom Clancy", "published_on" => (Date.today - 1.year), "type" => nil}), records.docs.first.attributes
+                     "author" => "Tom Clancy"}), records.docs.first.attributes
     end
   end
   
@@ -270,13 +246,11 @@ class ActsAsSolrTest < Test::Unit::TestCase
   # Testing the :auto_commit option set to false in the model
   # should not send the commit command to Solr
   def test_auto_commit_turned_off
-    assert_equal 0, Author.count_by_solr('raymond chandler')
-    
-    original_count = Author.count
-    Author.create(:name => 'Raymond Chandler', :biography => 'Writes noirish detective stories')
-    
-    assert_equal original_count + 1, Author.count
-    assert_equal 0, Author.count_by_solr('raymond chandler')
+    assert_equal 0, Author.count
+    Author.create(:name => 'Tom Clancy', :biography => 'Writes novels of adventure and espionage')
+    assert_equal 1, Author.count
+    records = Author.find_by_solr 'tom clancy'
+    assert_equal 0, records.total
   end
   
   # Testing models that use a different key as the primary key
@@ -312,11 +286,11 @@ class ActsAsSolrTest < Test::Unit::TestCase
   def test_find_by_solr_with_score
     books = Book.find_by_solr 'ruby^10 OR splinter', :scores => true
     assert_equal 2, books.total
-    assert_equal 0.41763234, books.max_score
+    assert_equal 0.50338805, books.max_score
     
     books.records.each { |book| assert_not_nil book.solr_score }
-    assert_equal 0.41763234, books.docs.first.solr_score
-    assert_equal 0.14354616, books.docs.last.solr_score
+    assert_equal 0.50338805, books.docs.first.solr_score
+    assert_equal 0.23058894, books.docs.last.solr_score
   end
   
   # Making sure nothing breaks when html entities are inside
@@ -385,29 +359,17 @@ class ActsAsSolrTest < Test::Unit::TestCase
   # for each individual record and orders them accordingly
   def test_find_by_solr_order_by_score
     books = Book.find_by_solr 'ruby^10 OR splinter', {:scores => true, :order => 'score asc' }
-    assert (books.docs.collect(&:solr_score).compact.size == books.docs.size), "Each book should have a score"
-    assert_equal 0.41763234, books.docs.last.solr_score
+    assert_equal 0.23058894, books.docs.first.solr_score
+    assert_equal 0.50338805, books.docs.last.solr_score
     
     books = Book.find_by_solr 'ruby^10 OR splinter', {:scores => true, :order => 'score desc' }
-    assert_equal 0.41763234, books.docs.first.solr_score
-    assert_equal 0.14354616, books.docs.last.solr_score
+    assert_equal 0.50338805, books.docs.first.solr_score
+    assert_equal 0.23058894, books.docs.last.solr_score
   end
   
   # Search based on fields with the :date format
   def test_indexed_date_field_format
     movies = Movie.find_by_solr 'time_on_xml:[NOW-1DAY TO NOW]'
     assert_equal 2, movies.total
-  end
-  
-  def test_query_time_is_returned
-    results = Book.find_by_solr('ruby')
-    assert_not_nil(results.query_time)
-    assert_equal(results.query_time.class,Fixnum)
-  end
-  
-  def test_should_not_index_the_record_when_offline_proc_returns_true
-    Gadget.search_disabled = true
-    gadget = Gadget.create(:name => "flipvideo mino")
-    assert_equal 0, Gadget.find_id_by_solr('flipvideo').total
   end
 end

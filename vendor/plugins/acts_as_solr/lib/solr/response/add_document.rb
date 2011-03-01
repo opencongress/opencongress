@@ -12,6 +12,6 @@
 
 class Solr::Response::AddDocument < Solr::Response::Xml
   def initialize(xml)
-    super
+    super(xml)
   end
 end

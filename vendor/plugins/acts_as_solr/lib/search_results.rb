@@ -29,7 +29,6 @@ module ActsAsSolr #:nodoc:
   class SearchResults
     def initialize(solr_data={})
       @solr_data = solr_data
-      # $log.debug "sd:#{solr_data.inspect}"
     end
     
     # Returns an array with the instances. This method
@@ -53,10 +52,6 @@ module ActsAsSolr #:nodoc:
     # also aliased as highest_score
     def max_score
       @solr_data[:max_score]
-    end
-    
-    def query_time
-      @solr_data[:query_time]
     end
     
     alias docs results

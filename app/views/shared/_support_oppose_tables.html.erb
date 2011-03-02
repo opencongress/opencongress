@@ -26,7 +26,7 @@
         <ul class="mini_sens_list">
         <% tracking_suggestions[1][:my_approved_sens_facet].each do |p| %>
           <li><%= link_to "#{p[:object].short_name} <i>[#{p[:object].party_and_state}]</i>", person_url(p[:object].ident) %> 
-            <%= link_to "<span>#{p[:trackers]}</span>".html_safew, :controller => 'friends', :action => 'supporting_person', :id => p[:object].ident %></li>
+            <%= link_to "<span>#{p[:trackers]}</span>".html_safe, :controller => 'friends', :action => 'supporting_person', :id => p[:object].ident %></li>
         <% end %>
         </ul>
       </td>

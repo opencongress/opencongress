@@ -1,4 +1,4 @@
-package_assets: on
+package_assets: off
 javascripts:
     defaults:
         - public/javascripts/prototype.js

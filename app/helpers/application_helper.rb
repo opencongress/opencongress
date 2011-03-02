@@ -4,28 +4,28 @@ module ApplicationHelper
     list.empty? ? [] :
       [
       list[0...item_limit].map {|l| 
-        "<li>" + link_to_item(l, attribute, action,
-        controller, show_views, trunc) + "</li>" }.join,
-      list[item_limit...list.size].map {|l| "<li>" + link_to_item(l, attribute, action,
-        controller, trunc) + "</li>"}.join
+        "<li>".html_safe + link_to_item(l, attribute, action,
+        controller, show_views, trunc) + "</li>".html_safe }.join,
+      list[item_limit...list.size].map {|l| "<li>".html_safe + link_to_item(l, attribute, action,
+        controller, trunc) + "</li>".html_safe}.join
     ]
   end
 	
   def link_to_item(item, attribute, action, controller = nil, show_views = false, trunc = false)
     link_text = ""
-    link_text += trunc ? "<span class=\"title\">#{truncate(item.send(attribute), :length => trunc)}</span>" :
-                         "<span class=\"title\">#{item.send(attribute)}</span>"
+    link_text += trunc ? "<span class=\"title\">#{truncate(item.send(attribute), :length => trunc)}</span>".html_safe :
+                         "<span class=\"title\">#{item.send(attribute)}</span>".html_safe
     if item.kind_of? Bill
-      link_text +=  "<span class=\"date\"><span>#{temp_url_strip(item.status)}</span>#{item.last_action.formatted_date if item.last_action}</span>"
+      link_text +=  "<span class=\"date\"><span>#{temp_url_strip(item.status)}</span>#{item.last_action.formatted_date if item.last_action}</span>".html_safe
     end
-    link_text += show_views ? "<span class=\"views_count\"><span>#{item.views(Settings.default_count_time) if show_views}</span> views</span>" : ""
+    link_text += show_views ? "<span class=\"views_count\"><span>#{item.views(Settings.default_count_time) if show_views}</span> views</span>".html_safe : ""
 
     if item.kind_of? Bill
-      controller ? link_to(link_text, { :action => action, :controller => controller, :id => item.ident }) :
-                   link_to(link_text, { :action => action, :id => item.ident })
+      controller ? link_to(link_text.html_safe, { :action => action, :controller => controller, :id => item.ident }) :
+                   link_to(link_text.html_safe, { :action => action, :id => item.ident })
     else
-      controller ? link_to(link_text, { :action => action, :controller => controller, :id => item }) :
-                   link_to(link_text, { :action => action, :id => item })
+      controller ? link_to(link_text.html_safe, { :action => action, :controller => controller, :id => item }) :
+                   link_to(link_text.html_safe, { :action => action, :id => item })
     end
   end
   
@@ -34,8 +34,8 @@ module ApplicationHelper
     parts = split_list(list, attribute, item_limit, action, controller, show_views, trunc)
     return "" if parts.empty?
     return parts[0] if parts[1].empty?
-    parts[0].html_safe +
-      %Q{<span id="#{more_id}"> <li class="small"><a href="javascript:replace('#{extra_id}','#{more_id}')" class="more_link">#{text_for_more}</a></li></span><span style="display: none" id="#{extra_id}">#{parts[1]}</span>}.html_safe
+    (parts[0] +
+      %Q{<span id="#{more_id}"> <li class="small"><a href="javascript:replace('#{extra_id}','#{more_id}')" class="more_link">#{text_for_more}</a></li></span><span style="display: none" id="#{extra_id}">#{parts[1]}</span>}).html_safe
   end
 	                 
   def link_to_person(person)

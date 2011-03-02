@@ -31,10 +31,10 @@ class BattleRoyaleController < ApplicationController
 #    unless read_fragment(@cache_key)
       unless params[:q].blank?
         @r_count = Bill.count_all_by_most_user_votes_for_range(@range, :search => prepare_tsearch_query(params[:q]), :order => sort + " " + order, :per_page => 20, :page => page)
-        @results = Bill.paginate_by_most_user_votes_for_range(@range, :search => prepare_tsearch_query(params[:q]), :order => sort + " " + order, :per_page => 20, :page => page, :total_entries => @r_count)        
+        @results = Bill.find_all_by_most_user_votes_for_range(@range, :search => prepare_tsearch_query(params[:q]), :order => sort + " " + order, :total_entries => @r_count).paginate(:per_page => 20, :page => page)        
       else
         @r_count = Bill.count_all_by_most_user_votes_for_range(@range, :order => sort + " " + order, :per_page => 20, :page => page)
-        @results = Bill.paginate_by_most_user_votes_for_range(@range, :order => sort + " " + order, :per_page => 20, :page => page, :total_entries => @r_count)    
+        @results = Bill.find_all_by_most_user_votes_for_range(@range, :order => sort + " " + order, :total_entries => @r_count).paginate(:page => page, :per_page => 20) 
       end
 #    end
 #     get_counts
@@ -81,13 +81,13 @@ class BattleRoyaleController < ApplicationController
 #    unless read_fragment(@cache_key)    
       unless params[:q].blank?    
         @r_count = Person.count_all_by_most_tracked_for_range(@range, :search => prepare_tsearch_query(params[:q]), :order => sort + " " + order, :per_page => 20, :page => page)
-        @results = Person.paginate_by_most_tracked_for_range(@range, :search => prepare_tsearch_query(params[:q]), :order => sort + " " + order, :per_page => 20, :page => page, :total_entries => @r_count)
+        @results = Person.find_all_by_most_tracked_for_range(@range, :search => prepare_tsearch_query(params[:q]), :order => sort + " " + order, :per_page => 20, :page => page, :total_entries => @r_count)
       else
         logger.info "Person.count_all_by_most_tracked_for_range(#{@range}, :order => \"#{sort} #{order}\", :per_page => 20, :page => #{page})"
-        @r_count = Person.count_all_by_most_tracked_for_range(@range, :order => sort + " " + order, :per_page => 20, :page => page)
+        @r_count = Person.count_all_by_most_tracked_for_range(@range, :order => sort + " " + order).paginate(:per_page => 20, :page => page)
         logger.info @r_count.to_yaml
         
-        @results = Person.paginate_by_most_tracked_for_range(@range, :order => sort + " " + order, :per_page => 20, :page => page, :total_entries => @r_count)
+        @results = Person.find_all_by_most_tracked_for_range(@range, :order => sort + " " + order, :total_entries => @r_count).paginate(:per_page => 20, :page => page)
       end
 #    end
 #    get_counts

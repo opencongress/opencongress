@@ -3,11 +3,11 @@
 <table class="thunderdome" cellspacing="0" cellpadding="0">
   <tr>
 	<th class="main_title">Bills</th>
-                <th class="votes_td"><%= th_sort("<span>Votes</span>", "vote_count_1", params[:order]) %></th>
-                <th class="ayes_td aye"><%= th_sort("<span>Ayes</span>", "current_support_pb", params[:order]) %></th>
-                <th class="nays_td nay"><%= th_sort("<span>Nays</span>", "support_count_1", params[:order]) %></th>
-                <th class="tracking_td"><%= th_sort("<span>Tracking</span>", "bookmark_count_1", params[:order]) %></th>
-                <th class="comments_td"><%= th_sort("<span>Comments</span>", "total_comments", params[:order]) %></th>
+                <th class="votes_td"><%= th_sort("<span>Votes</span>".html_safe, "vote_count_1", params[:order]) %></th>
+                <th class="ayes_td aye"><%= th_sort("<span>Ayes</span>".html_safe, "current_support_pb", params[:order]) %></th>
+                <th class="nays_td nay"><%= th_sort("<span>Nays</span>".html_safe, "support_count_1", params[:order]) %></th>
+                <th class="tracking_td"><%= th_sort("<span>Tracking</span>".html_safe, "bookmark_count_1", params[:order]) %></th>
+                <th class="comments_td"><%= th_sort("<span>Comments</span>".html_safe, "total_comments", params[:order]) %></th>
                 <th colspan="2" class="vote_td">Vote!</th></tr>
   <% count = 0 %>
 	<% (2..params[:page].to_i).each {|i| count += 20} %>
@@ -52,9 +52,9 @@
 			</span>
 			
 			<span class="linkage">
-          <%= link_to "<span class='news_11'>News</span>", :controller => 'bill', :action => 'news', :id => bill.ident %>
-     		  <%= link_to "<span class='blogs_11'>Blogs</span>", :controller => 'bill', :action => 'blogs', :id => bill.ident %>
-     		  <%= link_to "<span class='comments_11'>Comments</span>", :controller => 'bill', :action => 'comments', :id => bill.ident %>
+          <%= link_to "<span class='news_11'>News</span>".html_safe, :controller => 'bill', :action => 'news', :id => bill.ident %>
+     		  <%= link_to "<span class='blogs_11'>Blogs</span>".html_safe, :controller => 'bill', :action => 'blogs', :id => bill.ident %>
+     		  <%= link_to "<span class='comments_11'>Comments</span>".html_safe, :controller => 'bill', :action => 'comments', :id => bill.ident %>
      		</span>
         
       </td>

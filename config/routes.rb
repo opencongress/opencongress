@@ -238,12 +238,7 @@ OpenCongress::Application.routes.draw do |map|
   map.connect '*path', :controller => 'index', :action => 'notfound' unless ::ActionController::Base.consider_all_requests_local
   
   Jammit::Routes.draw(map)
-  
-  
-  
-  
-  
-  
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

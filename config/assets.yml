@@ -31,6 +31,7 @@ javascripts:
 stylesheets:
     application:
         - public/stylesheets/reset.css
+        - public/stylesheets/classes.css
         - public/stylesheets/typo.css
         - public/stylesheets/master.css
         - public/stylesheets/jqModal.css

@@ -25,7 +25,7 @@
       <td style="vertical-align:top;">
         <ul class="mini_sens_list">
         <% tracking_suggestions[1][:my_approved_sens_facet].each do |p| %>
-          <li><%= link_to "#{p[:object].short_name} <i>[#{p[:object].party_and_state}]</i>", person_url(p[:object].ident) %> 
+          <li><%= link_to "#{p[:object].short_name} <i>[#{p[:object].party_and_state}]</i>".html_safe, person_url(p[:object].ident) %> 
             <%= link_to "<span>#{p[:trackers]}</span>".html_safe, :controller => 'friends', :action => 'supporting_person', :id => p[:object].ident %></li>
         <% end %>
         </ul>
@@ -35,7 +35,7 @@
       <td style="vertical-align:top;">
         <ul class="mini_reps_list">
         <% tracking_suggestions[1][:my_approved_reps_facet].each do |p| %>
-          <li><%= link_to "#{p[:object].short_name} <i>[#{p[:object].party_and_state}]</i>", person_url(p[:object].ident) %> 
+          <li><%= link_to "#{p[:object].short_name} <i>[#{p[:object].party_and_state}]</i>".html_safe, person_url(p[:object].ident) %> 
             <%= link_to "<span>#{p[:trackers]}</span>".html_safe, :controller => 'friends', :action => 'supporting_person', :id => p[:object].ident %></li>
         <% end %>
         </ul>
@@ -68,7 +68,7 @@
       <td style="vertical-align:top;">
         <ul class="mini_sens_list">
         <% tracking_suggestions[1][:my_disapproved_sens_facet].each do |p| %>
-          <li><%= link_to "#{p[:object].short_name} <i>[#{p[:object].party_and_state}]</i>", person_url(p[:object].ident) %> 
+          <li><%= link_to "#{p[:object].short_name} <i>[#{p[:object].party_and_state}]</i>".html_safe, person_url(p[:object].ident) %> 
             <%= link_to "<span>#{p[:trackers]}</span>".html_safe, :controller => 'friends', :action => 'opposing_person', :id => p[:object].ident %></li>
         <% end %>
         </ul>
@@ -79,7 +79,7 @@
       <td style="vertical-align:top;">
         <ul class="mini_reps_list">
         <% tracking_suggestions[1][:my_disapproved_reps_facet].each do |p| %>
-          <li><%= link_to "#{p[:object].short_name} <i>[#{p[:object].party_and_state}]</i>", person_url(p[:object].ident) %> 
+          <li><%= link_to "#{p[:object].short_name} <i>[#{p[:object].party_and_state}]</i>".html_safe, person_url(p[:object].ident) %> 
             <%= link_to "<span>#{p[:trackers]}</span>".html_safe, :controller => 'friends', :action => 'opposing_person', :id => p[:object].ident %></li>
         <% end %>
         </ul>

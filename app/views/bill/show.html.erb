@@ -56,16 +56,16 @@
   <div id="bill-status-box" class="clearfix">
 		<%= bill_status_table.html_safe %>
 		
-		<a href="/bill/<%= @bill.ident %>/actions_votes" class="action_button"><span class="title">Latest Action</span> <span class="dater"><%= @bill.last_action.formatted_date %></span><span class="action_details"><%= truncate(h(@bill.last_action), :length => 39) %></span></a>
+		<a href="/bill/<%= @bill.ident %>/actions_votes" class="button blue margin-bottom margin-top floatleft small"><span class="title">View Latest Action</span> <span class="dater"><%= @bill.last_action.formatted_date %></span><span class="action_details"><%= truncate(h(@bill.last_action), :length => 39) %></span></a>
 		
 		    <% if ((@bill.related_bills.size > 0) or (@bill.subjects.size > 0)) %>
-  				<a href="#bill_list" class="stats_button">
-  				  <span>Related Bills (<%= @bill.related_bills.size %>) &amp; Issues (<%= @bill.subjects.size %>)</span>
+  				<a href="#bill_list" class="jump-to button silver floatleft small margin-top margin-left">
+  				  <span>Jump to</span> Related Bills (<%= @bill.related_bills.size %>) &amp; Issues (<%= @bill.subjects.size %>)
   				</a>
         <% end %>
         
 				<% unless @tracking_suggestions[0] == 0 %>
-				  <a href="#users_tracking" class="users_button"><span>Users Tracking <%= @bill.typenumber %> (<%= @tracking_suggestions[0] %>)</span></a>
+				  <a href="#users_tracking" class="jump-to button silver floatleft small margin-top margin-left"><span>Jump to</span>Users Tracking <%= @bill.typenumber %> (<%= @tracking_suggestions[0] %>)</a>
 				<% end %>
 
 	</div>
@@ -202,7 +202,11 @@
 	</div>            
 
 <div class="users_also" id="users_tracking">
-  <% unless @tracking_suggestions[0] == 0 %>
+  		  <br/>
+		  <br/>
+
+
+<% unless @tracking_suggestions[0] == 0 %>
     <%= render :partial => "shared/tracking_suggestions_table",
                :locals => {:object => @bill,
                            :title => @bill.typenumber,
@@ -211,6 +215,7 @@
 
   <% end %>
 
+		  <br/>
 
 
 			<% unless @supporting_suggestions[0] == 0 %>
@@ -221,7 +226,9 @@
 		                          :stance => "supporting",
 		                          :tracking_suggestions => @supporting_suggestions} %>
 		  <% end %>
-		  <br/>
+		  <br/>		  <br/>		  <br/>
+
+
 		  <% unless @opposing_suggestions[0] == 0 %>
 		    <%= render :partial => "shared/support_oppose_tables",
 		              :locals => {:object => @bill,
@@ -234,12 +241,15 @@
 
 			
 </div>
+		  <br/>
+		  <br/>
+
 
   <% unless @bill.related_bills.empty? && @bill.subjects.empty? %>
 		<% unless @bill.related_bills.empty? %>
 			<div class="related_bills_list" id="bill_list">
 			  <h2>Related Bills</h2>
-			  <ul>
+			  <ul class="lined_list">
 				  <%= bill_related_list.html_safe %>
 			  </ul>
 			</div>
@@ -249,7 +259,7 @@
 		<% unless @bill.subjects.empty? %>
   		<div class="related_issues_list" id="issue_list">
   		  <h2>Related Issue Areas</h2>
-  		  <ul>
+			  <ul class="lined_list">
   			  <%= bill_subject_list.html_safe %>
   		  </ul>
   		  <span class="small">Data from the Congressional Research Service</span>

@@ -157,8 +157,9 @@ background: #fff url('../images/top_bar.png') -830px -32px no-repeat;
 	float: right;
 	}
 
-
-
+#header h1{
+	width: 257px;
+}
 
 a.logo{
 	float:left;

@@ -1178,11 +1178,6 @@ float: left;
 width: 100%;
 }
 
-#committees {
-float: left;
-width: 200px;
-padding-top: 0px !important;
-}
 
 /*///////////////////////////////////
 
@@ -1334,8 +1329,9 @@ font-size: 14px;
 .titles_trigger {
 color: #777 !important;
 padding: 0px 18px 0 2px !important;
-margin: 26px 0 0 0;
+margin: 6px 0 0 0;
 line-height: 1em;
+display: inline-block;
 clear: both;
 }
 
@@ -1503,7 +1499,7 @@ clear: both;
 width: 195px;
 margin: 10px 0;
 padding: 30px 25px 5px 45px;
-font-size: 11px;
+font-size: 12px;
 }
         
 
@@ -1667,36 +1663,19 @@ float: left;
 width: 240px;
 }
 
-.action_button {
+
+.dater {
+font-weight: normal;
 display: block;
-clear: both;
-padding: 0px 0 0px 5px;
-font-size: 11px;
-text-decoration: none;
-margin: 0px 0 0 0;
-overflow: hidden;
-float: left;
-width: 405px;
+float: right;
 }
 
-.action_button:hover {
 
-}
-
-.action_button span {
+.action_details {
+font-weight: normal;
 display: block;
-float: left;
-padding-top: 1px !important;
-line-height: 4.1em;
 }
 
-
-.action_button .dater {
-font-weight: bold;
-background: url('../images/action.png') 5px 14px no-repeat !important;
-_background: url('../images/action.gif') 5px 14px no-repeat !important;
-padding: 0 20px 0 30px;
-}
 
 #bill.show .related_bills_list {
 margin: 20px 0 0 35px;
@@ -1723,6 +1702,11 @@ width: 280px;
 #bill.show .related_issues_list a {
 padding: 3px 0;
 display: block;
+}
+
+.jump-to span{
+display: block;
+font-weight: normal;
 }
 
 
@@ -1766,7 +1750,8 @@ margin-bottom: 0;
 margin-top: 10px !important;
 }
 
-
+.users_also{
+}
 
 
 .tracking_count {

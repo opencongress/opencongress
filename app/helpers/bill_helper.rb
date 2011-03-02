@@ -123,7 +123,7 @@ module BillHelper
   end
 
   def co_sponsor_list
-   	text = "<ul>"
+   	text = "<ul class='lined_list'>"
 		@bill.co_sponsors[0..@bill.co_sponsors.size].each do |c|
 		  text += "<li>"
 		  text += link_to c.name, :controller => 'people', :action => 'show', :id => c.id
@@ -134,7 +134,7 @@ module BillHelper
   end
 	
 	def committee_list(start,stop)
-		text = "<ul class='button'>"
+		text = "<ul class='lined_list'>"
 		@bill.committees[start..stop].each do |c|
 		  text += "<li>"
 		  text += link_to c.proper_name, :controller => 'committee', :action => 'show', :id => c.id

@@ -1,4 +1,5 @@
 
+
 /*///////////////////////////////////////////////////////
 =========================================================
 
@@ -57,97 +58,6 @@ h3{ font-size: 13px; }
 
 =========================================================
 ///////////////////////////////////////////////////////*/
-
-
-
-
-.marginright{
-margin-right: 20px;
-margin-bottom: 20px;
-}
-
-
-.marginleft{
-margin-left: 20px;
-margin-bottom: 20px;
-}
-
-
-
-.leftcolumn{
-width: 430px;
-float: left;
-}
-
-
-.rightcolumn{
-width: 430px;
-float: right;
-}
-
-
-.normal_p{
-margin-bottom: 15px;
-}
-
-.extra_description{
-background: url('../images/carousel_dark_bg.png') top left repeat-x;
-border-bottom: 1px solid #aaa;
-}
-
-.image{ 
-padding: 4px; 
-border: 1px solid #ddd; 
-background: #fff;
-
-}
-
-/* clearfix */
-
-.clearfix:after{
-    content: "."; 
-    display: block; 
-    height: 0; 
-    clear: both; 
-    visibility: hidden;
-}
-
-
-.clearnone{ clear: none !important;}
-
-.clear{ clear: both;}
-
-.blue{ color: #4b86c0;}
-
-.fontweightnormal{ font-weight: normal !important; }
-
-.padding-left{ padding-left: 20px;}
-
-.paddingtopnone{ padding-top: 0 !important}
-
-.small{ font-size: 11px; color: #666;}
-
-.padding{ padding: 35px;}
-
-.small_padding{ padding: 15px;}
-
-.behave{ margin-bottom: 10px;}
-
-.bold{font-weight: bold;}
-
-.floatleft{float: left !important;}
-
-.floatright{float: right !important;}
-
-.aye, .aye *{color: #569a31 !important;}
-
-.nay, .nay *{	color: #d05829 !important;}
-
-.pushright{margin-right: 13px;}
-
-.center{text-align: center;}
-
-.margin-top { margin-top: 20px;}
 
 
 
@@ -2515,8 +2425,8 @@ _background:url("/images/sprites.gif") -131px -136px;
 
 #heading{
 padding: 28px 30px 10px 27px;
-background: url('../images/bill_heading_blue.png') left top;
-_background: url('../images/bill_heading_blue.gif') left top;
+background: #c4dcf3;
+background: rgba(196,220,243,0.3);
 }
 
 #heading h2{
@@ -4896,6 +4806,17 @@ background: url('../images/sunlight-small.png') 0px 4px no-repeat;
 }
 .errorExplanation h2 {
   font-size: 1.5em;
+
+.construct{
+position: absolute;
+top: 0;
+left: 500px;
+top: 90px;
+height: 0px;
+overflow: hidden;
+padding-top: 120px;
+width: 120px;
+background: url('/images/construct.png') 0px 4px no-repeat;
 }
 
 

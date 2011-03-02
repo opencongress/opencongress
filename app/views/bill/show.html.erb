@@ -7,7 +7,7 @@
 <div class="sponsorship_data">
   
 	<div id="sponsors">
-		<h5 class="gray">Sponsor</h5>
+		<h2 class="gray">Sponsor</h2>
 		<% unless @bill.co_sponsors.empty? %>
 
 		<% end %>
@@ -29,7 +29,7 @@
 	</div>
 
 	<div id="committees">
-		<h5 class="gray">Committees</h5>
+		<h2 class="gray">Committees</h2>
 		<% unless @bill.committees.empty? %>	
 		<div class="details">              
 			<%= committee_list(0,1).html_safe %>
@@ -74,7 +74,7 @@
 	<% unless @roll_call.nil? %>
 	
   <div class="padding">
-    <h3 class="header">Latest Vote</h3>
+    <h2 class="header">Latest Vote</h2>
     <div class="votes">
     <%= render :partial => 'vote', :object => @bill.roll_calls.first %>
     </div>
@@ -120,7 +120,7 @@
 		<% unless @bill.bill_position_organizations.empty? %>
   		<div id="money_trail_summary">
         <div class="col1 lowpadding">
-          <h3>Organizations Supporting <%= @bill.typenumber %></h3>
+          <h2>Organizations Supporting <%= @bill.typenumber %></h2>
           <% unless @bill.bill_position_organizations.select{|g| g.disposition == 'support'}.empty? %>
             <ul>
             <% supporting_orgs = @bill.bill_position_organizations.select{|g| g.disposition == 'support'} %>
@@ -136,7 +136,7 @@
         </div>
       
         <div class="col2 lowpadding">
-          <h3>Organizations Opposing <%= @bill.typenumber %></h3>
+          <h2>Organizations Opposing <%= @bill.typenumber %></h2>
           <% unless @bill.bill_position_organizations.select{|g| g.disposition == 'oppose'}.empty? %>
             <ul>
               <% opposing_orgs = @bill.bill_position_organizations.select{|g| g.disposition == 'oppose'} %>
@@ -167,7 +167,7 @@
 			<% cache ("#{@bill.fragment_cache_key}_news_preview") do %>
 			  <!-- cached: <%= "#{@bill.fragment_cache_key}_news_preview" %> // <%= Time.now %> -->
 			  <a class="feed" href="<%= url_for :action => 'atom_news', :id => @bill.ident %>">FEED</a>
-			  <h5 class="short">Recent News Coverage</h5>
+			  <h2 class="short">Recent News Coverage</h2>
 			  <div id="news_list">
 				  <a name="news"></a>
   				<%=
@@ -185,7 +185,7 @@
 			<% cache ("#{@bill.fragment_cache_key}_blog_preview") do %>
 			  <!-- cached: <%= "#{@bill.fragment_cache_key}_blog_preview" %> // <%= Time.now %> -->
 			  <a class="feed" href="<%= url_for :action => 'atom_blogs', :id => @bill.ident %>">FEED</a>
-			  <h5 class="short">Recent Blog Coverage</h5>
+			  <h2 class="short">Recent Blog Coverage</h2>
 			  <div id="blogs_list">
 				  <a name="blogs"></a>
 
@@ -238,7 +238,7 @@
   <% unless @bill.related_bills.empty? && @bill.subjects.empty? %>
 		<% unless @bill.related_bills.empty? %>
 			<div class="related_bills_list" id="bill_list">
-			  <h3>Related Bills</h3>
+			  <h2>Related Bills</h2>
 			  <ul>
 				  <%= bill_related_list.html_safe %>
 			  </ul>
@@ -248,7 +248,7 @@
 			
 		<% unless @bill.subjects.empty? %>
   		<div class="related_issues_list" id="issue_list">
-  		  <h3>Related Issue Areas</h3>
+  		  <h2>Related Issue Areas</h2>
   		  <ul>
   			  <%= bill_subject_list.html_safe %>
   		  </ul>
@@ -260,7 +260,7 @@
 	
 	<% unless @bill.videos.empty? %>  
     <div id="bill_video" class="cols-box clearfix">
-      <h3 class="darkline clear">Videos of <%= @bill.typenumber %></h3>
+      <h2 class="darkline clear">Videos of <%= @bill.typenumber %></h2>
       <%= render :partial => 'shared/videos', :object => @bill.videos.find(:all, :limit => 2), 
                  :locals => { :more_url => (@bill.videos.size > 2) ? link_to("See more videos (#{@bill.videos.size} total)", { :controller => 'bill', :action => 'videos', :id => @bill.ident }, :class => "arrow") : nil } %>
     </div>

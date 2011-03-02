@@ -15,24 +15,36 @@ b.light { 	color:#909090;}
 h1, h2, h3, h4, h5 {  font-weight:bold; }
           
 
+h1 {
+	color:#333;
+	font-size:18px;
+	margin-bottom:13px;
+  padding: 5px 0 0 0;
+  float: left;
+  min-height: 20px;
+  font-style: italic;
+  font-family: Georgia, Times, serif;
+	}                
+     
+
 h2 {
 	color:#333;
-	font-size:17px;
+	font-size:16px;
 	margin-bottom:13px;
 	}                
 
 h3 {
-	font-size:15px;
+	font-size:14px;
 	margin-bottom:11.5px;
 	}                
 
 h4 {
-	font-size:13px;      
+	font-size:12px;      
 	margin-bottom:10px;
 	}
 
 h5 {
-  font-size:12px;
+  font-size:11px;
   margin-bottom:9px;
 }            
 h5.gray {

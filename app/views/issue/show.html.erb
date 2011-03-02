@@ -12,8 +12,8 @@
   </select>
   </form>
 </div>
-<a href="/issues" class="med_button floatleft clearnone pushright"><span>Back to All Issues</span></a>
-<a href="/bill/hot" class="med_button floatleft clearnone"><span>View Hot Bills By Issues Area</span></a>
+<a href="/issues" class="silver button small floatleft clearnone pushright"><span>Back to All Issues</span></a>
+<a href="/bill/hot" class="silver button small floatleft clearnone"><span>View Hot Bills By Issues Area</span></a>
 
 
 <div style="float:right;">
@@ -37,7 +37,7 @@
   <%= render :partial => "bill/related_bills_list", :locals => {:related_bills_list => @bills, :subject => @subject } -%>
   <%= will_paginate @bills %>
 <% else %>
-  <div class="padding">
+  <div class="padding clear">
   
     <% if params[:filter] && params[:filter] == 'enacted' %>
       <p class="behave">No bills at this time. The Congressional Research Service -- the official
@@ -74,7 +74,6 @@
     topic and others on your free "My OpenCongress" profile.</p>
   </div>
 <% end %>
-<br /><br />
   <% unless @tracking_suggestions[0] == 0 %>
     <%= render :partial => "shared/tracking_suggestions_table", 
                :locals => {:object => @subject, 
@@ -85,11 +84,11 @@
   <% end %>
 <br /><br />
 
-  <div class="syndicate">
-    <h3 class="dark inline">Make a Widget for this Issue By:</h3>
-    <a href="/resources/issue_bills?issue_id=<%= @subject.id %>&item_type=new-bill">Newest Bills</a>&nbsp;&middot;&nbsp;
-    <a href="/resources/issue_bills?issue_id=<%= @subject.id %>&item_type=viewed-bill">Most Viewed Bills</a>
-
+  <div class="huge">
+    <p>Make a Widget for this Issue By:
+    <a class="small_bill" href="/resources/issue_bills?issue_id=<%= @subject.id %>&item_type=new-bill">Newest Bills</a>&nbsp;&middot;&nbsp;
+    <a class="small_bill" href="/resources/issue_bills?issue_id=<%= @subject.id %>&item_type=viewed-bill">Most Viewed Bills</a>
+</p>
 		<%= dbox_trigger('widgets') %>
 
 		<div class="dboxed">

@@ -1,4 +1,4 @@
- <li class="people">
+ <li class="yellow no_sides no_top">
    <a href="<%= url_for :controller => 'people', :action => 'show', :id => person %>">
 
    
@@ -9,7 +9,7 @@
      </span>
 
    	<% unless count_type == :none %>
-   	  <div class="mini_box"><%= homepage_object_count(person, count_type) %></div>
+   	  <span class="small_views"><%= homepage_object_count(person, count_type) %></span>
      <% end %>
    </a>
  </li>

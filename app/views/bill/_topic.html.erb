@@ -1,4 +1,4 @@
-<div class="title">
+<div class="margin-left push-left margin-top push-top">
 
 <h1><span><%= @bill.typenumber %></span> - <%= @bill.title_common %></h1>
 
@@ -35,20 +35,25 @@
 	</div> -->
 		
 		
-<div class="cp">
+<div class="padding">
 <% if can_blog? %>
-  <%= link_to "Add/Edit Plain Language Summary", :controller => 'admin/bill_summaries', :action => 'edit', :id => @bill.ident %>  
-  <%= link_to "Add/Edit Sidebar Box/Image", :controller => 'admin/sidebar_boxes', :action => 'edit', :sidebarable_type => 'Bill', :sidebarable_id => @bill.id %> | 
-  <%= link_to "Select Default Title",  :controller => 'admin/bill_summaries', :action => 'defaulttitle', :id => @bill.ident %>  
-  <%= link_to "Add Related Bill (Different Session)",  :controller => 'admin/bill_summaries', :action => 'session_relations', :bill_id => @bill.ident %>
-  <%= link_to "New news/blog article", :controller => 'admin/commentary', :action => 'new', :commentariable_type => 'Bill', :commentariable_id => @bill.id %>
-  <%= link_to "Check pending news/blog articles", :controller => 'admin/commentary', :action => 'pending', :commentariable_type => 'Bill', :commentariable_id => @bill.id %>
+
+
+
+
+  <%= link_to "Add/Edit Plain Language Summary", { :controller => 'admin/bill_summaries', :action => 'edit', :id => @bill.ident }, :class => 'silver floatleft margin-right button small margin-bottom' %>  
+  <%= link_to "Add/Edit Sidebar Box/Image", { :controller => 'admin/sidebar_boxes', :action => 'edit', :sidebarable_type => 'Bill', :sidebarable_id => @bill.id }, :class => 'silver floatleft margin-right button small margin-bottom' %>
+  <%= link_to "Select Default Title",  { :controller => 'admin/bill_summaries', :action => 'defaulttitle', :id => @bill.ident }, :class => 'silver floatleft margin-right button small margin-bottom' %>  
+  <%= link_to "Add Related Bill (Different Session)", { :controller => 'admin/bill_summaries', :action => 'session_relations', :bill_id => @bill.ident }, :class => 'silver floatleft margin-right button small margin-bottom' %>
+  <%= link_to "New news/blog article", { :controller => 'admin/commentary', :action => 'new', :commentariable_type => 'Bill', :commentariable_id => @bill.id }, :class => 'silver floatleft margin-right button small margin-bottom' %>
+  <%= link_to "Check pending news/blog articles", { :controller => 'admin/commentary', :action => 'pending', :commentariable_type => 'Bill', :commentariable_id => @bill.id }, :class => 'silver floatleft margin-right button small margin-bottom' %>
   
-  <%= link_to @bill.is_frontpage_hot? ? "Remove from frontpage" : "Add to frontpage",  :controller => 'admin/bill_summaries', :action => 'toggle_frontpage_hot', :bill_id => @bill.ident %>
+  <%= link_to @bill.is_frontpage_hot? ? "Remove from frontpage" : "Add to frontpage", { :controller => 'admin/bill_summaries', :action => 'toggle_frontpage_hot', :bill_id => @bill.ident }, :class => 'silver floatleft margin-right button small margin-bottom' %>
+  <a class="silver floatleft margin-right button small margin-bottom" href="#" onclick="Element.show('addtitle_form'); return false;">Add a Title</a>   
+  <a class="silver floatleft margin-right button small margin-bottom" href="#" onclick="Element.show('hot_addbill_form'); return false;">Make/Edit "Hot"</a> 
   <br style="clear: both;"/>
-  <a href="#" onclick="Element.show('addtitle_form'); return false;">Add a Title</a>   
-  <a href="#" onclick="Element.show('hot_addbill_form'); return false;">Make/Edit "Hot"</a> 
-  <div id="addtitle_form" style="display: none; margin-bottom: 10px;">
+ 
+ <div id="addtitle_form" style="display: none; margin-bottom: 10px;">
   	<form action="/admin/bill_summaries/addtitle">
   		<b></b><br />
   		<%= hidden_field "title", "bill_id", :value => @bill.id %>

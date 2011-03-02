@@ -16,6 +16,10 @@
 
   <%= include_stylesheets :application, :media => 'all' %>
   
+  <%= stylesheet_link_tag 'classes' %>
+
+  <%= stylesheet_link_tag '960' %>
+
   <%= stylesheet_link_tag('admin') if @admin_styles %>
 
   <% unless @admin_styles %>

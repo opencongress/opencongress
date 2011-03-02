@@ -74,3 +74,4 @@ group :test do
   gem 'capybara'
   gem 'capybara-envjs'
 end
+

@@ -51,15 +51,6 @@ h3{ font-size: 13px; }
 
 
 
-/*///////////////////////////////////////////////////////
-=========================================================
-
-~ Classes
-
-=========================================================
-///////////////////////////////////////////////////////*/
-
-
 
 /*///////////////////////////////////////////////////////
 =========================================================
@@ -2526,13 +2517,9 @@ width: 617px;
 height: 564px;
 overflow: auto;
 float: left;
-/*_float: right;*/
 display: block;
 .margin-left: 380px;
-/*_margin-left: 0;
-_position: relative;
-_margin-top: -100px;*/
-/*background: url(../images/zip_arrow.png) 0 -71px no-repeat;*/
+
 }
 
 ul.listed li{
@@ -4024,7 +4011,7 @@ padding: 0 !important;
 
 .mediawiki #p-navigation ul li a{
 display: block;
-padding: 5px 15px!important;
+padding: 5px 15px !important;
 border-right: 1px solid #ccc;
 }
 
@@ -4115,29 +4102,6 @@ border-right: none !important;
 }
 
 
-
-/*///////////////////////////////////////////
-
-~ Safari Hacks
-
-///////////////////////////////////////////*/
-
-
-@media all and/*! YUI-Compresser */(min-width: 0px) { /* disable it on webkit */
-body:not(:root:root) select.flag-22x14 {
-#search_submit{
-margin-top: 2px;
-}
-
-#autocomplete-spin{
-float: left;
-position: absolute;
-margin-left: 10px;
-margin-top: 14px;
-z-index: 1000;
-}
-}
-}
 
 
 

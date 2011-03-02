@@ -30,6 +30,7 @@ javascripts:
 
 stylesheets:
     application:
+        - public/stylesheets/960.css
         - public/stylesheets/reset.css
         - public/stylesheets/classes.css
         - public/stylesheets/typo.css

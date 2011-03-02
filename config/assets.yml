@@ -31,13 +31,15 @@ javascripts:
 stylesheets:
     application:
         - public/stylesheets/960.css
-        - public/stylesheets/reset.css
         - public/stylesheets/classes.css
+        - public/stylesheets/reset.css
         - public/stylesheets/typo.css
         - public/stylesheets/master.css
         - public/stylesheets/jqModal.css
         - public/stylesheets/jquery.rating.css
     frontpage:
+        - public/stylesheets/960.css
+        - public/stylesheets/classes.css
         - public/stylesheets/reset.css
         - public/stylesheets/typo.css
         - public/stylesheets/master.css

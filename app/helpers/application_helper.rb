@@ -34,8 +34,8 @@ module ApplicationHelper
     parts = split_list(list, attribute, item_limit, action, controller, show_views, trunc)
     return "" if parts.empty?
     return parts[0] if parts[1].empty?
-    parts[0] +
-      %Q{<span id="#{more_id}"> <li class="small"><a href="javascript:replace('#{extra_id}','#{more_id}')" class="more_link">#{text_for_more}</a></li></span><span style="display: none" id="#{extra_id}">#{parts[1]}</span>}
+    (parts[0] +
+      %Q{<span id="#{more_id}"> <li class="small"><a href="javascript:replace('#{extra_id}','#{more_id}')" class="more_link">#{text_for_more}</a></li></span><span style="display: none" id="#{extra_id}">#{parts[1]}</span>}).html_safe
   end
 	                 
   def link_to_person(person)

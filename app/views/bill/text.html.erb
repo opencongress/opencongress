@@ -130,7 +130,7 @@
 <!-- <p class="print">Preview and Print Bill Text</p> -->
 
 <div id="bill_text" style="display:none;">
-  <%= @bill_text %>
+  <%= @bill_text.html_safe %>
 </div>
 
 <% unless logged_in? %>

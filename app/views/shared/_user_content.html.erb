@@ -3,7 +3,7 @@
 	<% if object.class.to_s == "Bill" %>
     <% if @bill_text %>
       <div id="bill-text" class="un">
-        <%= link_to "View Bill Overview <span>Official info, comments, more</span>", {:action => 'show'}, :class => 'overview_button' %>
+        <%= link_to "View Bill Overview <span>Official info, comments, more</span>".html_safe, {:action => 'show'}, :class => 'overview_button' %>
       </div>
       <% else %>
         <% unless @bill.current_bill_text_version.nil? %>

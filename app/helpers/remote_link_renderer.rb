@@ -1,4 +1,4 @@
-class RemoteLinkRenderer < WillPaginate::LinkRenderer
+class RemoteLinkRenderer < WillPaginate::ViewHelpers::LinkRenderer
   def prepare(collection, options, template)
     @remote = options.delete(:remote) || {}
     super

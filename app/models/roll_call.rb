@@ -66,7 +66,7 @@ class RollCall < ViewableObject
                            :conditions => ['roll_calls.date > ? AND 
                                           ((roll_calls.roll_type IN (?) AND bills.key_vote_category_id IS NOT NULL) OR
                                            (roll_calls.roll_type IN (?) AND amendments.key_vote_category_id IS NOT NULL))', 
-                  CONGRESS_START_DATES[Settings.default_congress], @@BILL_PASSAGE_TYPES, @@AMDT_PASSAGE_TYPES])
+                  OpenCongress::Application::CONGRESS_START_DATES[Settings.default_congress], @@BILL_PASSAGE_TYPES, @@AMDT_PASSAGE_TYPES])
   end
   
   def vote_for_person(person)

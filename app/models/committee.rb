@@ -79,12 +79,12 @@ class Committee < ViewableObject
   end
   
   def atom_id_as_feed
-    "tag:opencongress.org,#{Settings.congress_start_dates[Settings.default_congress]}:/committee_feed/#{id}"
+    "tag:opencongress.org,#{OpenCongress::Application::CONGRESS_START_DATES[Settings.default_congress]}:/committee_feed/#{id}"
   end
   
   def atom_id_as_entry
     # dates for committees are weird, so let use the beginning of each congress session
-    "tag:opencongress.org,#{Settings.congress_start_dates[Settings.default_congress]}:/committee/#{id}"
+    "tag:opencongress.org,#{OpenCongress::Application::CONGRESS_START_DATES[Settings.default_congress]}:/committee/#{id}"
   end
 
   def Committee.random(limit)

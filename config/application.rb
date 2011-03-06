@@ -50,6 +50,18 @@ module OpenCongress
     # than going through the proxy server (twice)
 
     ENV['FACEBOOKER_CALLBACK_PATH'] = '/facebook'
+  
+    # following should go in application_settings.yml, but it appears settingslogic
+    # does not support hashes
+    CONGRESS_START_DATES = {
+      113 => '2013-01-01',
+      112 => '2011-01-01',
+      111 => '2009-01-01',
+      110 => '2007-01-01',
+      109 => '2005-01-01',
+      108 => '2003-01-01',
+      107 => '2001-01-01'
+    }
     
     require 'ostruct'  
   end

@@ -12,7 +12,7 @@
     <title>OpenCongress - 112th Congress - Track bills, votes, senators, and representatives in the U.S. Congress</title>
   	<link rel="shortcut icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <%= raw bookmarking_image %>
+    <%= bookmarking_image.html_safe %>
 
     <%= include_stylesheets :frontpage, :media => 'all' %>
 
@@ -25,7 +25,8 @@
   	<![endif]-->
   
     <%= include_javascripts :defaults, :frontpage %>
- 
+    <%= remote_forgery_protection %>
+
     <script type="text/javascript">
      // Disable and pause carousel autoscrolling
      function mycarousel_initCallback(a){a.buttonNext.bind("click",function(){a.startAuto(0)});a.buttonPrev.bind("click",

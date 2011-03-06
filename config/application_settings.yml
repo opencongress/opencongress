@@ -1,23 +1,14 @@
 defaults: &defaults
-  congress_start_dates: {
-      113: '2013-01-01',
-      112: '2011-01-01',
-      111: '2009-01-01',
-      110: '2007-01-01',
-      109: '2005-01-01',
-      108: '2003-01-01',
-      107: '2001-01-01'
-    }
-  available_congresses:
-    - 112
-    - 111
-    - 110
-    - 109
   current_opensecrets_cycle: '2010'
   default_search_page_size: 10
   default_congress: 112
   default_count_time: <%= 7.days %>
   default_search_page_size: 10
+  available_congresses:
+    - 112
+    - 111
+    - 110
+    - 109
 
   scraper_useragent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.1) Gecko/20060111 Firefox/1.5.0.1
   

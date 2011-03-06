@@ -734,7 +734,7 @@ class Person < ViewableObject
   end
   
   def Person.random(role, limit=3, congress=109)
-    Person.find_by_sql ["SELECT * FROM (SELECT random(), people.* FROM people LEFT OUTER JOIN roles on roles.person_id=people.id WHERE roles.role_type = ? AND roles.startdate <= ? AND roles.enddate >= ? ORDER BY 1) as peeps LIMIT ?;", role, Settings.congress_start_dates[congress], Settings.congress_start_dates[congress], limit]
+    Person.find_by_sql ["SELECT * FROM (SELECT random(), people.* FROM people LEFT OUTER JOIN roles on roles.person_id=people.id WHERE roles.role_type = ? AND roles.startdate <= ? AND roles.enddate >= ? ORDER BY 1) as peeps LIMIT ?;", role, OpenCongress::Application::CONGRESS_START_DATES[congress], OpenCongress::Application::CONGRESS_START_DATES[congress], limit]
   end
 
   def Person.find_all_by_last_name_ci_and_state(name, state)
@@ -1165,7 +1165,7 @@ class Person < ViewableObject
   
   def representative_for_congress?(congress = Settings.default_congress )
     #may be able to simplify this as >= 400000
-    not (roles.select { |r| r.role_type == 'rep' && r.startdate <= DateTime.parse(Settings.congress_start_dates[congress]) && r.enddate >= DateTime.parse(Settings.congress_start_dates[congress])  }.empty?)
+    not (roles.select { |r| r.role_type == 'rep' && r.startdate <= DateTime.parse(OpenCongress::Application::CONGRESS_START_DATES[congress]) && r.enddate >= DateTime.parse(OpenCongress::Application::CONGRESS_START_DATES[congress])  }.empty?)
   end
 
   def representative?
@@ -1178,7 +1178,7 @@ class Person < ViewableObject
 
   def senator_for_congress? (congress = Settings.default_congress)
     #may be able to simplify this as < 400000
-    not (roles.select { |r| r.role_type == 'sen' && r.startdate <= DateTime.parse(Settings.congress_start_dates[congress]) && r.enddate >= DateTime.parse(Settings.congress_start_dates[congress])  }.empty?)
+    not (roles.select { |r| r.role_type == 'sen' && r.startdate <= DateTime.parse(OpenCongress::Application::CONGRESS_START_DATES[congress]) && r.enddate >= DateTime.parse(OpenCongress::Application::CONGRESS_START_DATES[congress])  }.empty?)
   end
   
   def senator?
@@ -1186,7 +1186,7 @@ class Person < ViewableObject
   end
 
   def congress? (congress = Settings.default_congress)
-    not (roles.select { |r| r.startdate <= DateTime.parse(Settings.congress_start_dates[congress]) && r.enddate >= DateTime.parse(Settings.congress_start_dates[congress])  }.empty?)
+    not (roles.select { |r| r.startdate <= DateTime.parse(OpenCongress::Application::CONGRESS_START_DATES[congress]) && r.enddate >= DateTime.parse(OpenCongress::Application::CONGRESS_START_DATES[congress])  }.empty?)
   end
 
   def belongs_to_major_party?
@@ -1277,14 +1277,14 @@ class Person < ViewableObject
     Person.find_by_sql(["SELECT * FROM oc_votes_together(?, ?) 
                          AS (v_id integer, v_count bigint) 
                          LEFT OUTER JOIN people ON v_id=people.id 
-                         ORDER BY v_count DESC", self.id, Settings.congress_start_dates[Settings.default_congress]])
+                         ORDER BY v_count DESC", self.id, OpenCongress::Application::CONGRESS_START_DATES[Settings.default_congress]])
   end
   
   def votes_apart_list
     Person.find_by_sql(["SELECT * FROM oc_votes_apart(?, ?) 
                          AS (v_id integer, v_count bigint) 
                          LEFT OUTER JOIN people ON v_id=people.id 
-                         ORDER BY v_count DESC", self.id, Settings.congress_start_dates[Settings.default_congress]])
+                         ORDER BY v_count DESC", self.id, OpenCongress::Application::CONGRESS_START_DATES[Settings.default_congress]])
   end
   
   def is_sitting?
@@ -1305,7 +1305,7 @@ class Person < ViewableObject
   end
 
   def roll_call_votes_for_congress(congress = Settings.default_congress)
-    self.roll_call_votes.find(:all, :conditions => [ "roll_calls.date > ?", Settings.congress_start_dates[Settings.default_congress]],
+    self.roll_call_votes.find(:all, :conditions => [ "roll_calls.date > ?", OpenCongress::Application::CONGRESS_START_DATES[Settings.default_congress]],
                               :include => { :roll_call => { :roll_call_votes => :person }})
   end
   

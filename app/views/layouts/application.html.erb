@@ -33,6 +33,8 @@
   <![endif]-->
   
   <%= include_javascripts :defaults, :common %>
+  <%= remote_forgery_protection %>
+  
 
   <%= javascript_include_tag 'jquery.jcarousel' if @carousel %>
   <%= javascript_include_tag 'swfobject' if (@roll_call || @roll_calls) %>

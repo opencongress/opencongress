@@ -678,7 +678,7 @@ class Bill < ViewableObject
     end
   
     def session_from_date(date)
-      session_a = CONGRESS_START_DATES.to_a.sort { |a, b| a[0] <=> b[0] }
+      session_a = OpenCongress::Application::CONGRESS_START_DATES.to_a.sort { |a, b| a[0] <=> b[0] }
 
       session_a.each_with_index do |s, i|
         return nil if s == session_a.last

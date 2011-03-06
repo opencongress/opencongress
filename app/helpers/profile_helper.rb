@@ -69,7 +69,7 @@ module ProfileHelper
 			end
     end
 		out += "\n</td>"
-		return out
+		return out.html_safe
 	end
 	
   def link_to_report(report)

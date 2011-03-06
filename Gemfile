@@ -20,6 +20,7 @@ gem "govkit"
 
 # jammit support
 gem "jammit"
+gem "closure-compiler"
 
 # notifier for production errors
 gem "hoptoad_notifier"
@@ -55,16 +56,14 @@ gem "okkez-open_id_authentication"
 
 gem "acts-as-taggable-on", :git => 'http://github.com/mbleigh/acts-as-taggable-on.git'
 
-group :development do
-  # bundler requires these gems in development
-  # gem "rails-footnotes"
-end
+
+
 
 
 # Testing
-group :test do
-  gem 'rspec', '1.3.1'
-  gem 'rspec-rails', '1.3.3'
+group :test, :development do
+  gem 'rspec'
+  gem 'rspec-rails', '~> 2.4'
   gem 'cucumber', '0.8.5'
   gem 'cucumber-rails'
   gem 'webrat'
@@ -73,5 +72,7 @@ group :test do
   
   gem 'capybara'
   gem 'capybara-envjs'
+
+  gem 'autotest'
 end
 

@@ -1,5 +1,4 @@
-package_assets: always
-javascript_compressor: closure
+package_assets: off
 javascripts:
     defaults:
         - public/javascripts/prototype.js

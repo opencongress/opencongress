@@ -14,6 +14,8 @@
   <link rel="me" type="text/html" href="http://www.google.com/profiles/donnyopencongress" />
   <%= bookmarking_image.html_safe %>
 
+  <%= include_javascripts :common, :defaults  %>
+
   <%= include_stylesheets :application, :media => 'all' %>
 
   <%= stylesheet_link_tag('admin') if @admin_styles %>
@@ -32,7 +34,6 @@
   <%= javascript_include_tag 'ie8/IE8' %>
   <![endif]-->
   
-  <%= include_javascripts :common, :defaults  %>
   <%= remote_forgery_protection %>
   
 

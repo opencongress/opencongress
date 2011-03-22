@@ -19,6 +19,7 @@ gem 'simple_captcha', :git => 'git://github.com/galetahub/simple-captcha.git'
 gem "govkit"
 
 # jammit support
+gem 'yui-compressor', :git => "git://github.com/oleander/ruby-yui-compressor.git", :require  => "yui/compressor"
 gem "jammit"
 gem "closure-compiler"
 

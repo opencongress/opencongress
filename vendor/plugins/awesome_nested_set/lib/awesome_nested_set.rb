@@ -570,7 +570,7 @@ module CollectiveIdea
           else
             new_parent = target[parent_column_name]
           end
-
+          
           self.class.base_class.update_all([
             "#{quoted_left_column_name} = CASE " +
               "WHEN #{quoted_left_column_name} BETWEEN :left AND :right " +
@@ -591,7 +591,7 @@ module CollectiveIdea
             {:left => left, :right => right, :b_left => b_left, :b_right => b_right,
               :shift => shift, :updown => updown, :id => self.id,
               :new_parent => new_parent}
-          ], nested_set_scope.proxy_options[:conditions])
+          ], "comments.root_id=#{self.root_id}")
           target.reload_nested_set if target
           self.reload_nested_set
         end

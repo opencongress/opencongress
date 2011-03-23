@@ -26,7 +26,6 @@ class Comment < ActiveRecord::Base
   validates_length_of :comment, :in => 1..1000, :too_short => " : Your comment is not verbose enough, write more.", :too_long => " : Your comment is too verbose, keep it under 1000 characters."
 
   acts_as_nested_set :scope => :root
-#  acts_as_tree
   
   def score_count_sum
     plus_score_count.to_i - minus_score_count.to_i

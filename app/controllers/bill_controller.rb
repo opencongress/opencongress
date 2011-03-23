@@ -162,7 +162,7 @@ class BillController < ApplicationController
       @atom = {'link' => "/bill/atom/most/blog", 'title' => @page_title}
     end
     
-    if @congress != Setting.default_congress
+    if @congress != Settings.default_congress
       order = (@sort == 'news') ? 'news_article_count' : 'blog_article_count'
       @bills = Bill.find(:all, :select => "bills.*, bills.#{order} AS article_count", 
                          :conditions => ["session = ? AND #{order} IS NOT NULL", params[:congress]], 

@@ -70,7 +70,7 @@ outline: none;
 .button.silver{
   border: 1px solid #aaa;
   border-top: 1px solid #dbdbdb;
-  border-bottom: 1px solid #666;
+  border-bottom: 1px solid #777;
   
   -moz-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
   -webkit-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
@@ -80,7 +80,8 @@ outline: none;
   background: -moz-linear-gradient(top,  #fff,  #eee); /* for firefox 3.6+ */
 
   text-shadow: 0 1px 0px #fff;
-
+opacity: .7;
+color: rgba(0,0,0,.9)
   }
 
 
@@ -103,7 +104,8 @@ outline: none;
   }
 
 
-.button.silver:active{
+.button.silver:active,
+.active .button.silver{
   border: 1px solid #999;
   border-top: 1px solid #666;
   border-bottom: 1px solid #ccc;
@@ -147,7 +149,6 @@ outline: none;
 
   text-shadow: 0 1px 0px #f3faff;
 
-
 }
 
 
@@ -178,7 +179,8 @@ outline: none;
   }
 
 
-.button.blue:active{
+.button.blue:active,
+.active .button.blue{
   border: 1px solid #9fc9e5;
   border-top: 1px solid #badcf2;
   border-bottom: 1px solid #79aed2;
@@ -259,7 +261,8 @@ border: 1px solid #f5e8d5;
 
 
 
-.button.yellow:active{
+.button.yellow:active,
+.active .button.yellow{
   border: 1px solid #cfcc79;
   border-top: 1px solid #e7e5a3;
   border-bottom: 1px solid #bdb959;
@@ -730,6 +733,11 @@ background: #fff;
     height: 0; 
     clear: both; 
     visibility: hidden;
+}
+
+
+.inline{
+display: inline;
 }
 
 .no_underline{ text-decoration: none !important;}

@@ -1,3 +1,24 @@
+
+
+.sorts{
+text-align: center;
+padding-top: 20px;
+min-height: 110px;
+}
+
+
+.sorts li{
+text-align: center;
+display: inline-block;
+padding: 15px 0 10px;
+}
+
+li#blog{
+
+
+}
+
+
 div#sort_nav {
 clear: both;
 background: url(../images/sen-sort.png) left 83px repeat-x !important;
@@ -15,10 +36,6 @@ div#sort_nav #heading h2 {
 padding-top: 5px;
 }
  
-#sort_nav ul#sort {
-line-height: inherit;
-float: right;
-}
 
 ul#in {
 float: right;
@@ -31,7 +48,7 @@ float: right;
 ul#in li#all {
 float: left;
 }
-
+/*
 #timeframe_select.popular {
 margin-left: 278px;
 float: left;
@@ -46,6 +63,7 @@ float: left;
 margin-left: 480px;
 float: left;
 }
+*/
 
 .list_count {
 line-height: .8em;

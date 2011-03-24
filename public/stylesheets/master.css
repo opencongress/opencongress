@@ -809,31 +809,40 @@ a.small_button.small_arrow:hover span{
 ///////////////////////////////////////////////////////*/
 
 #nav{
-	width:1004px;
+	width:1001px;
 	_height:48px;
 	_overflow: hidden;
-	}
+
+  -moz-border-radius-topright: 4px;
+  -moz-border-radius-topleft: 4px;
+
+  -webkit-border-top-left-radius: 4px;
+  -webkit-border-top-right-radius: 4px;
+
+  border: 1px solid rgba(0,0,0,.3);
+  border-bottom: 1px solid rgba(0,0,0,.9);	
+  border-top: 1px solid rgba(0,0,0,.1);	
+
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #ddd); /* for firefox 3.6+ */
+
+}
 
 #nav .left, #nav .right, #nav ul{
-  height:48px;
+  height:45px;
 	}
 
 #nav .left{
 	padding-left:3px;
-	background: url('../images/nav-left.png') no-repeat left top;
-	_background: url('../images/nav-left.gif') no-repeat left top; 
+
 	}  
          
 #nav .right{
-	padding-right:2px;
-	background: url('../images/nav-right.png') no-repeat right top;
-	_background: url('../images/nav-right.gif') no-repeat right top; 
 	}
 
 #nav ul{
-	padding: 8px 0 0 10px;
-	background: url('../images/nav-bg.png') repeat-x left top ;
-	_background: url('../images/nav-bg.gif') repeat-x left top ;
+	padding: 12px 0 0 10px;
+	
 	cursor: default !important;
 	}
 
@@ -841,30 +850,55 @@ a.small_button.small_arrow:hover span{
   padding: 0px ;
   display: block ;
   float: left ;
-  margin: 0 8px 0 0 ;
+  margin: 0 13px 0 0 ;
   cursor: pointer ;     
   white-space:nowrap ;
 	}
 
 #nav ul li a{
-	display: block;
-	padding-right: 13px ;
-	background: url('../images/nav_right.png') -9999px center no-repeat;
-	_background: url('../images/nav_right.gif') -9999px center no-repeat ;
-	}
+  display: block;
+  font-size: 12px;
+  padding: 2px 16px;
+  
+  text-shadow: 0 1px 0px #fff;
+  opacity: .7;
+  color: rgba(0,0,0,.9);
+  
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  
+  }
 
 #nav ul li a span{
 	display: block;
-	padding: 5px 1px 5px 14px;
 	cursor: pointer;
-	background: url('../images/nav_left.png') -9999px center no-repeat;
-	_background: url('../images/nav_left.gif') -9999px center no-repeat;
 	}
 
 #nav a:hover, #nav #tool_nav:hover a{
 	background-position: right center;
-	color: #777;
+	color: #000;
+
+  -moz-box-shadow: 0 0px 1px rgba(0,0,0,.6), inset 0 1px 0px #fff;
+  -webkit-box-shadow: 0 0px 1px rgba(0,0,0,1), inset 0 1px 0px #fff;
+  
+  background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#ccc)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #eee,  #ccc); /* for firefox 3.6+ */
 	}
+
+
+#nav a:active, #nav #tool_nav:active a{
+	background-position: right center;
+	color: #000;
+
+  -moz-box-shadow:inset 0 1px 2px rgba(0,0,0,.9);
+  -webkit-box-shadow:inset 0 1px 2px rgba(0,0,0,.9);
+
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,.02)), to(rgba(0,0,0,.2))); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  rgba(0,0,0,.02),  rgba(0,0,0,.2)); /* for firefox 3.6+ */
+	}
+
+
+
 
 #nav a:hover span, #nav #tool_nav:hover a span{
 	background-position: left center;
@@ -872,12 +906,13 @@ a.small_button.small_arrow:hover span{
 
 #nav li ul.sub, #wiki li ul{ /* second-level lists */
 	position: absolute;
-	background: url('../images/dropdown.png') left bottom no-repeat;
-	_background: url('../images/dropdown.gif') left bottom no-repeat;
+
+  background: #eee;
+
 	height:auto;
-	margin: 0px 0 0 0;
+	margin: 0px 0px 0 -35px;
 	width:165px;
-	padding: 0 0 10px 4px;
+	padding: 0 0 0px 0px;
 	left: -999em; /* using left instead of display to hide menus because display: none isn't read by screen readers */
 	}
 
@@ -888,10 +923,14 @@ a.small_button.small_arrow:hover span{
 
 #nav li ul.sub li a, #wiki li ul li a{
 	display: block;
-	width:161px;
+	width:155px;
 	clear: both;
-	padding: 0;
+	padding: 5px 0 5px 10px;
 	background: none;
+
+
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
 	}
 		
 #nav li ul.sub li a span, #wiki li ul li a span{
@@ -914,10 +953,15 @@ a.small_button.small_arrow:hover span{
 #money_trail #muny_nav a,
 #wiki #wiki_nav a,
 #articles #blog_nav a,
-#tool_nav a,
-#tool_nav a,#forum #disc_nav a{
-	background-position: right center;
-	color: #777;
+#forum #disc_nav a{
+
+  -moz-box-shadow: 0 1px 0px rgba(255,255,255,.8), inset 0 1px 1px rgba(0,0,0,.5);
+  -webkit-box-shadow: 0 1px 0px rgba(255,255,255,.8), inset 0 1px 1px rgba(0,0,0,.5);
+
+  
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,.2)), to(rgba(0,0,0,.02))); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  rgba(0,0,0,.2),  rgba(0,0,0,.02)); /* for firefox 3.6+ */
+
 	}
 
 #bill #bill_nav a span,
@@ -937,7 +981,7 @@ a.small_button.small_arrow:hover span{
 /* sub-nav */
 
 #nav #wiki_nav{
-	margin-left: 15px;
+	margin-left: 27px;
 	}
 
 #nav li.sub{
@@ -957,7 +1001,8 @@ a.small_button.small_arrow:hover span{
 #tool_nav span{
 	padding-right: 0;
 	
-	}
+}
+
 
 /*///////////////////////////////////////////////////////
 
@@ -1198,10 +1243,11 @@ a.small_button.small_arrow:hover span{
 	line-height: 10px;
 	}
 	
-#sort li a.rss{
+a.rss{
 	background: none;
+margin: 8px 45px 0 0;
 	padding: 0;
-}
+   }
 
 #sort li a.rss img {
   padding-top: 5px; 
@@ -1238,9 +1284,16 @@ a.small_button.small_arrow:hover span{
 	}
 
 #timeframe{
-	clear: both;
-	height: 30px;
-	}
+  padding: 10px 0;
+  min-height: 11px;
+  line-height: 1em;
+  margin: 0 30px 30px;
+  -moz-border-radius: 54px;
+  font-size: 12px;
+  -webkit-border-radius: 54px;
+  border-radius: 54px;
+  background: rgba(0,0,0,.04);
+  }
 
 #timeframe_select{
 	float: left;
@@ -1257,8 +1310,9 @@ a.small_button.small_arrow:hover span{
 	display: block;
 	text-decoration: none;
 	color: #444;
+
 	font-weight: bold;
-	padding: 4px .5em;
+	padding: 0px 1em 0 .5em;
 	color: #888;
 	}
 
@@ -3791,9 +3845,8 @@ float: left;
 
 
 #twitter_nav a span{
-background: url(../images/twitter.png) 10px 8px no-repeat !important;
-_background: url(../images/twitter.gif) 10px 8px no-repeat !important;
-padding-left: 37px !important;
+background: url(../images/twitter.png) 0px 4px no-repeat !important;
+padding-left: 31px !important;
 }
 
 /*///////////////////////////////////////
@@ -4102,6 +4155,29 @@ border-right: none !important;
 }
 
 
+
+/*///////////////////////////////////////////
+
+~ Safari Hacks
+
+///////////////////////////////////////////*/
+
+
+@media all and/*! YUI-Compresser */(min-width: 0px) { /* disable it on webkit */
+body:not(:root:root) select.flag-22x14 {
+#search_submit{
+margin-top: 2px;
+} 
+
+#autocomplete-spin{
+float: left;
+position: absolute;
+margin-left: 10px;
+margin-top: 14px;
+z-index: 1000;
+}
+}
+}
 
 
 

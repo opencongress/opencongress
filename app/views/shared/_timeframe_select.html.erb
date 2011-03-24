@@ -1,3 +1,6 @@
+<div id="timeframe">
+
+
 <% @sort ||= "" %>
 <% if (@congress.nil? or (@congress == DEFAULT_CONGRESS)) %>
   <ul id="timeframe_select" class="<%= @sort %>">
@@ -16,3 +19,4 @@
   </ul>
 <% end %>
 <!-- // timeframe-->
+</div>

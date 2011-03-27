@@ -3,9 +3,15 @@
 
 <% if logged_in? %>
 <div id="add" class="comment-add" style="clear:both;">
- <div class="count">characters remaining:&nbsp;&nbsp;<span id="counter"></span></div>
  <h3>Speak Your Mind</h3>
-
+  <div class="comment_instructions">
+    OpenCongress comments now supports Textile formatting!
+    <ul>
+      <li>To insert links, use this format: <strong>"OpenCongress Home Page":http://www.opencongress.org</strong></li>
+      <li>To insert quotes, use: <strong>bq. This is a quote that someone said</strong></li>
+      <li>For more Textile options, see <a href="http://www.textism.com/tools/textile/index.php?sample=2" target="_new">this page</a>. (Not all features supported.)</li>
+    </ul>
+  </div>   
   
   <div style="color: red"><%= error_messages_for :comment, :header_message => "Please try again.", :message => "Your comment couldn't be saved because of the following errors:" %></div>
   <% remote_form_for :comment, :url => { :controller => 'comments', :action => 'add_comment', :id => object.id, :type => object.class.to_s }, :update => master_container.nil? ? nil : master_container do |f| %>
@@ -14,7 +20,7 @@
   <% unless logged_in? %>
 
 
-Please <%= link_to "Login", login_url %> or
+  Please <%= link_to "Login", login_url %> or
     <%= link_to "Signup", signup_url %>, unless you wish to post anonymously
     
     
@@ -36,10 +42,11 @@ Please <%= link_to "Login", login_url %> or
 
 		</script>
     <% unless controller_name == 'articles' %>
-    <%= f.text_area :comment, :rows => 6, :cols => 60 %>
+      <%= f.text_area :comment, :rows => 6, :cols => 60 %>
     <% else %>
-    <%= f.text_area :comment, :rows => 6, :cols => 40 %>
+      <%= f.text_area :comment, :rows => 6, :cols => 40 %>
     <% end %>
+    <div class="count">characters remaining:&nbsp;&nbsp;<span id="counter"></span></div>
     
 
     <% unless logged_in? %>

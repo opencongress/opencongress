@@ -17,16 +17,16 @@
     <% if comments.total_pages > 1 %>
       <p class="this_many">Displaying <%= comments.offset + 1 %>-<%= (comments.offset + comments.per_page > comments.total_entries ) ? comments.total_entries : comments.offset + comments.per_page %> of <b><%= comments.total_entries %></b> total comments.</p>
     <% end %>
+    
     <% if object.kind_of? BillTextNode %>
       <%= will_paginate comments, { :renderer => 'RemoteLinkRenderer', :param_name => 'comment_page', :params => { :controller => 'comments', :action => 'bill_text_comments', :version => object.bill_text_version.id, :nid => object.nid, :comment_sort => params[:comment_sort], :anchor => 'comments'}, :remote => {:update => "bill_text_comments_#{object.nid}" }} %>
-    
     <% elsif object.kind_of? Article %>      
         <%= will_paginate comments, :param_name => 'comment_page', :params => { :controller => object.display_object_name.downcase, :action => 'view', :id => object.to_param, :comment_sort => params[:comment_sort], :anchor => 'comments'} %>
-
     <% else %>
       <%= will_paginate comments, :param_name => 'comment_page', :params => { :controller => object.display_object_name.downcase, :action => 'comments', :id => ((object.display_object_name == 'Bill') ? object.ident : object.id), :navtab => 'comments', :comment_sort => params[:comment_sort], :anchor => 'comments'} %>
     <% end %>
     <br />
+    
     <% if (params[:comment_sort] == 'newest' || params[:comment_sort] == 'rating') # just display a flat list since nesting doesn't make sense when sort=newest, likewise for rating %>
       <% comments.each do |node| %>
         <%= render :partial => 'shared/comments_recursive', :locals => {:object => object, :comment => node, :myscores => myscores, :flat => true} %>
@@ -36,6 +36,7 @@
             render :partial => 'shared/comments_recursive', :locals => {:object => object, :comment => node, :myscores => myscores} 
           } %>
     <% end %>
+    
     <% if object.kind_of? BillTextNode %>
       <%= will_paginate comments, { :renderer => 'RemoteLinkRenderer', :param_name => 'comment_page', :params => { :controller => 'comments', :action => 'bill_text_comments', :version => object.bill_text_version.id, :nid => object.nid, :comment_sort => params[:comment_sort], :anchor => 'comments'}, :remote => {:update => "bill_text_comments_#{object.nid}" }} %>
     <% elsif object.kind_of? Article %>
@@ -45,6 +46,7 @@
     <% end %>
   <% end %>
   <br/>
+  
   <%= render :partial => 'shared/comment_form2', :locals => {:parent_id => 0, :object => object, :master_container => master_container, :redirect => true } %>
 
 <% if @goto_comment %>

@@ -2149,17 +2149,24 @@ font-weight: normal;
 }
 .comment_pic img{
   border:0px;margin:0px;padding:0px;
-}               
-p.com_content{
+}    
+.com_content {
+  padding: 0 10px;
+}           
+.com_content p {
   color:#313131;
   margin:13px 0;
 }   
 
-p.com_content span{
-padding-bottom: 10px;
+.com_content p {
 display: block;
 }   
 
+.com_content blockquote {
+color: #888;
+font-style: italic;
+margin: 0 0 0 20px;
+}
 .comm_comm{
   font-size:11px;
   color:#383838;
@@ -2346,6 +2353,18 @@ clear: both;
 #small_comment textarea{
 padding: 10px;
 }
+
+.comment_instructions {
+  font-size: 11px;
+}
+.comment_instructions ul {
+  list-style: square;
+  list-style-position: inside;
+}
+.comment_instructions li {
+  padding-left: 20px;
+}
+
 
 .rate{
 /*	margin:10px 0 0 0;
@@ -4219,6 +4238,9 @@ span.over{
   font-size:11px;
 }
 
+.comment-add .count {
+  float: left;
+}
 
 
 .health_box{

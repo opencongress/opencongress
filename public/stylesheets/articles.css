@@ -173,7 +173,7 @@ padding-left: 10px !important;
 p {
 }
 
-blockquote {
+.blog-body blockquote {
 padding: 20px;
 color: #5d5d5d;
 margin: 20px 20px 0;
@@ -660,3 +660,4 @@ div.simple_captcha_image {
 margin-right: 15px !important;
 float: left !important;
 }
+

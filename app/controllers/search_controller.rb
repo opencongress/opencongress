@@ -94,7 +94,7 @@ class SearchController < ApplicationController
         end
         
         if (@search_comments)
-          @comments = Comment.full_text_search(query_stripped, :page => @page)
+          @comments = Comment.full_text_search(query_stripped, { :page => @page, :congresses => @congresses })
                     
           @found_items += @comments.total_entries
         end

@@ -143,7 +143,13 @@ class Comment < ActiveRecord::Base
   end
 
   def self.full_text_search(q, options = {})    
-    s_count = Comment.count(:all, :conditions => ["fti_names @@ to_tsquery('english', ?)", q])
+    congresses = options[:congresses].nil? ? [Settings.default_congress] : options[:congresses]
+
+    s_count = Comment.count(:all, 
+                            :joins => "LEFT OUTER JOIN bills ON (bills.id = comments.commentable_id AND comments.commentable_type='Bill')",
+                            :conditions => ["(comments.fti_names @@ to_tsquery('english', ?) AND comments.commentable_type='Bill' AND bills.session IN (?)) OR
+                                             (comments.fti_names @@ to_tsquery('english', ?) AND comments.commentable_type != 'Bill')", q, congresses, q])
+    
     
     # Note: This takes (current_page, per_page, total_entries)
     # We need to do this so we can put LIMIT and OFFSET inside the subquery.
@@ -153,9 +159,10 @@ class Comment < ActiveRecord::Base
       # See http://www.postgresql.org/docs/8.4/static/textsearch-controls.html
       pager.replace Comment.find_by_sql(["SELECT
           comments.*, ts_headline(comment, ?) as headline
-        FROM (SELECT * from comments
-          WHERE (fti_names @@ to_tsquery('english', ?))
-          ORDER BY created_at DESC LIMIT ? OFFSET ?) AS comments", q, q, pager.per_page, pager.offset])
+        FROM (SELECT * from comments LEFT OUTER JOIN bills ON (bills.id = comments.commentable_id AND comments.commentable_type='Bill')
+          WHERE ((comments.fti_names @@ to_tsquery('english', ?) AND comments.commentable_type='Bill' AND bills.session IN (?)) OR
+                 (comments.fti_names @@ to_tsquery('english', ?) AND comments.commentable_type != 'Bill'))
+          ORDER BY comments.created_at DESC LIMIT ? OFFSET ?) AS comments", q, q, congresses, q, pager.per_page, pager.offset])
     end
   end
   

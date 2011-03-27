@@ -1,5 +1,5 @@
 <li class="blue no_sides no_top">
-  <a class="bill" href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>">
+  <a class="bill" href="<%= url_for :controller => 'bill', :action => 'show', :id => bill.ident %>" title="<%= bill.title_common %>">
   	<span class="title">
   	  <%= bill.typenumber %> - <span><%= truncate(bill.title_common, :length => 50) rescue nil %></span>
   	</span>

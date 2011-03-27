@@ -143,9 +143,9 @@
   <% else %>
     <div style="clear:left;"></div>
   <% end %>
-  <p class="com_content clearfix">
-  	<span><%= h(comment.comment).gsub(/\n/, "<br/>") %></span>
-  </p>  
+  <div class="com_content clearfix">
+  	<%= RedCloth.new(comment.comment).to_comments_html.html_safe %>
+  </div>  
 
   <div id="com_<%= comment.id.to_s %>" style="clear:both;display:none;"> </div>
 

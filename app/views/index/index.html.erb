@@ -134,7 +134,7 @@
       <ul class="latest_votes">
         <% RollCall.latest_votes_for_unique_bills(5).each do |r| %>
         <li>
-          <a href="<%= r.vote_url %>">
+          <a href="<%= r.vote_url %>" title="<%= r.bill.title_full_common %>">
             <span><%= truncate(r.bill.title_full_common, :length => 58) %></span><br />
 
             <span class="votes"><span class="aye">Ayes</span> <%= r.ayes %>&nbsp;&nbsp;&nbsp;<span class="nay">Nays</span> <%= r.nays %></span>

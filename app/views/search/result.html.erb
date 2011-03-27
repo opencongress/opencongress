@@ -92,7 +92,7 @@
         <li>
         <a href="<%= url_for(comment.commentable_link.merge({:goto_comment => comment.id})) %>" class="comment">
             
-            <span class="text"><%= truncate(comment.headline, :length => 120) %></span>
+            <span class="text"><%= truncate(comment.headline.html_safe, :length => 120) %></span>
             
             <span class="user"><%= (comment.user.nil?) ? 'Anonymous' : h(comment.user.login) %></span>
             

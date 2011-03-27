@@ -25,7 +25,6 @@ document.write(unescape("%3Cscript src='http://scripts.dotspots.com/publisher.js
   
   <div class="blog_social_ref">Like this post? Stay in touch by following us on <a href="http://twitter.com/opencongress">Twitter</a>, joining us on <a href="http://www.facebook.com/OpenCongress">Facebook</a>, <a href="http://feeds.feedburner.com/OpenCongressCongressGossipBlog">or by Subscribing with RSS</a>.</div>
   
-
   <div class="share_blog">
    <!-- <%= link_to '<span>Permalink</span>', article_url(article), :class => 'med_button' %> -->
     
@@ -42,7 +41,7 @@ $j().ready(function() {
 					
 					<li class="email_friend"><a href="<%= url_for :controller => 'resources', :action => 'email_friend_form', :object_class => article.class, :object_id => article.id %>" class="e_trigger">Share via Email</a></li>
 					<li class="facebook"><a target="_blank" href="http://www.facebook.com/sharer.php?u=<%=u article_url(article) %>&t=<%=u article.title %>">Facebook</a></li>	
-					<li class="twitter"><a href="http://twitter.com/home?status=Currently reading <%=u article_url(article) %>" title="Click to share this post on Twitter">Share on Twitter</a></li>
+					<li class="twitter"><a href="http://twitter.com/home?status=<%=u "#{article.title} #{(bitly_url(article) || article_url(article))} (via @OpenCongress)"%>" title="Click to share this post on Twitter">Share on Twitter</a></li>
 					<li class="reddit"><a target="_blank" href="http://www.reddit.com/submit?url=<%=u article_url(article) %>&title=<%=u article.title %>">Reddit</a></li>	
 					<li class="digg"><a href="http://digg.com/submit?phase=2&url=<%=u article_url(article) %>">Digg this</a> </li>	
 					

@@ -894,4 +894,25 @@ EOT
   def opensecrets_cycle_years
     "#{Settings.current_opensecrets_cycle.to_i - 1}-#{Settings.current_opensecrets_cycle}"
   end
+  
+  def bitly_url(object)
+    require 'open-uri'
+    
+    case object
+    when Article
+      url = url_for(:only_path => false, :controller => 'articles', :action => 'view', :id => object)
+    end
+    
+    begin
+      json = JSON.parse(open("http://api.bit.ly/shorten?login=arossoc&apiKey=#{ApiKeys.bitly}&longUrl=#{url}").read)
+      
+      if json['errorCode'] == 0
+        return json['results'][url]['shortUrl']
+      else
+        return nil
+      end
+    rescue Exception => e
+      return nil
+    end
+  end
 end

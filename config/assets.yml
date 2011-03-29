@@ -1,5 +1,5 @@
 package_assets: on
-gzip_assets: off
+gzip_assets: on
 
 javascripts:
     defaults:

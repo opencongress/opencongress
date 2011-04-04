@@ -133,7 +133,6 @@ GEM
     net-ssh (2.1.3)
     net-ssh-gateway (1.0.1)
       net-ssh (>= 1.99.1)
-    newrelic_rpm (2.13.4)
     nokogiri (1.4.4)
     oauth (0.4.4)
     okkez-open_id_authentication (1.0.1)
@@ -230,7 +229,6 @@ DEPENDENCIES
   json
   mediacloth
   mysql
-  newrelic_rpm
   oauth
   okkez-open_id_authentication
   pg

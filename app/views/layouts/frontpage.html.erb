@@ -14,7 +14,15 @@
   	<link rel="shortcut icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <%= bookmarking_image.html_safe %>
-
+    
+    <%= include_javascripts :defaults, :common  %>
+    <script>
+      var $j = jQuery.noConflict();
+    </script>
+    <%= include_javascripts :frontpage  %>
+    <%= csrf_meta_tag %>
+    <%= remote_forgery_protection %>
+    
     <%= include_stylesheets :frontpage, :media => 'all' %>
 
     <!--[if lt IE 7]><style type="text/css">@import url("/stylesheets/ie6.css");</style><![endif]-->
@@ -24,9 +32,6 @@
    	<!--[if lt IE 7]>
   	<%= javascript_include_tag 'ie8/IE8' %>
   	<![endif]-->
-  
-    <%= include_javascripts :frontpage, :defaults %>
-    <%= remote_forgery_protection %>
 
     <script type="text/javascript">
      // Disable and pause carousel autoscrolling

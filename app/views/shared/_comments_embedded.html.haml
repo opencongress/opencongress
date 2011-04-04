@@ -1,0 +1,16 @@
+%ul
+  - if object.comments.length > 0
+    - object.comments.find(:all, :order => "comments.id DESC", :include => "user", :limit => 2).each do |c|
+      %li= "#{c.user ? c.user.login : 'Anonymous'} : #{c.comment}"
+      
+    - if object.is_a?(Bill)
+      = link_to "#{object.comments.length - 2} More", bill_path(:id => object.ident, :anchor => "comments"), :class => "arrow"
+    - elsif object.is_a?(Person)
+      = link_to "#{object.comments.length - 2} More", person_url(object.to_param), :class => "arrow"
+    -elsif object.is_a?(Subject)
+      = link_to "#{object.comments.length - 2} More", issue_url(object.to_param), :class => "arrow"
+      
+  - else
+    %li
+      %p No New Comments
+      

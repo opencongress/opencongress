@@ -35,7 +35,7 @@
     <div id="<%= s.id %>-most_useful" style="display:none;">
         Top 3 most useful comments:<br/>
         <% s.comments.uncensored.most_useful.each do |c| %>
-          <%= render :partial => "shared/comments_recursive", :locals => {:comment => c, :object => s, :myscores => @user.comment_scores} %>
+          <%= render :partial => "shared/comments_comment", :locals => {:comment => c, :object => s, :myscores => @user.comment_scores} %>
          <% end %>
     </div>
     <% if @user.friends.count > 0 %>
@@ -43,7 +43,7 @@
     <div id="<%= s.id %>-my_friends" style="display:none;">
       My friends' comments on this Senator:
       <% s.comments.uncensored.find_all_by_user_id(@user.friends.collect{|p| p.friend_id}).each do |fc| %>
-        <%= render :partial => "shared/comments_recursive", :locals => {:comment => fc, :object => s, :myscores => @user.comment_scores} %>
+        <%= render :partial => "shared/comments_comment", :locals => {:comment => fc, :object => s, :myscores => @user.comment_scores} %>
       <% end %>
       <br/>    
     </div>  

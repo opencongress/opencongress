@@ -4,12 +4,13 @@ gzip_assets: on
 javascripts:
     defaults:
         - public/javascripts/prototype.js
+        - public/javascripts/rails.js
         - public/javascripts/effects.js
         - public/javascripts/dragdrop.js
         - public/javascripts/controls.js
         - public/javascripts/application.js
     common:
-        - public/javascripts/jquery-1.3.2.min.js
+        - public/javascripts/jquery-1.5.2.min.js
         - public/javascripts/jquery.qtip-1.0.0-rc3.min.js
         - public/javascripts/jquery.simplyCountable.js
         - public/javascripts/jqmodal.js
@@ -21,10 +22,7 @@ javascripts:
         - public/javascripts/m.js
         - public/javascripts/styles.js
     frontpage:
-        - public/javascripts/jquery-1.3.2.min.js
-        - public/javascripts/jqmodal.js
         - public/javascripts/jquery.jcarousel.js
-        - public/javascripts/m.js
         - public/javascripts/frontpage.js
     distmap:
         - public/javascripts/gmap-wms.js

@@ -1,0 +1,133 @@
+- flat ||= false
+- preview ||= false
+- if comment.censored
+  .commentfl{ :style => "clear:both;float:none;border-top:1px solid #D0D6E2;" }
+    %p Moderated Comment
+
+- else
+  - if comment.parent_id && !flat
+    .replytri= image_tag 'comm_reply.png'
+
+
+  - def_fil = 5
+  - def_fil = ( current_user.default_filter ? current_user.default_filter : 5 ) if logged_in?
+  .commentfl{ :id => "comfl#{comment.id.to_s}", :style => "clear:both;float:none;#{'display:none;' if (def_fil <= comment.average_rating)}"}
+    %p 
+      Filtered Comment [
+      = link_to_function "show", "new Effect.Appear('com#{comment.id.to_s}');Element.hide('comfl#{comment.id.to_s}');"
+      ]
+
+  .comment{ :id => "com#{comment.id.to_s}", :style => "clear:both;float:none;width: 100%;#{'display:none;'  if (def_fil > comment.average_rating)}" }
+
+    .comm_comm{ :id => "comm_comm_#{comment.id.to_s}" }
+      .comm_user
+
+        - if comment.user
+          = link_to h(comment.user.login), user_profile_path(:login => comment.user.login)
+        - else
+          Anonymous
+
+        = comment.created_at.strftime('%m/%d/%Y')
+        = comment.created_at.strftime('%I:%M%p').gsub(/^0+/, '').downcase
+
+      .comm_action
+        - if logged_in?
+          %a.flag{ :href => preview ? '#' : url_for(:controller => 'comments', :action => 'flag', :id => comment.id), :id => "flag_#{comment.id.to_s}" }
+            = image_tag('flag.png', :alt => 'flag')
+
+          :javascript
+            $j().ready(function(){
+              $j("#flag_#{comment.id.to_s}").qtip({
+                content: "Click this flag to mark this comment as inappropriate",
+                show: 'mouseover',
+                hide: 'mouseout',
+                position:{
+                  corner: {
+                    target: 'bottomLeft',
+                    tooltip: 'topRight'
+                  }
+                },
+                style: {
+                  border: {
+                    width: 2,
+                    radius: 5,
+                    color: '#BBBBBB'
+                  },
+                  tip: {
+                    corner: 'topRight',
+                    color: '#999999',
+                    size: {
+                      x:20,
+                      y:12
+                    }
+                  }
+                }
+              })
+            });
+
+        = link_to '<span>Link</span>'.html_safe, preview ? '#' : url_for(comment.commentable_link.merge({:goto_comment => comment.id})), { :class => 'small_button' }
+        = link_to_remote "<span>Reply</span>".html_safe, :url => preview ? '#' : {:controller => 'comments', :action => 'showcomfield', :parent_id => comment.id, :object => object.id, :type => object.class.to_s}, :update => "com_" + comment.id.to_s, :complete => "Element.toggle('com_" + comment.id.to_s + "');", :html => { :class => 'small_button' }
+            
+        .rate_comm{ :id => "rate_comment_#{comment.id.to_s}" }   
+        
+        - if logged_in?
+          - comment_score = myscores.select{ |s| s.comment_id == comment.id }.first
+          = link_to_remote("<span>+</span>".html_safe, :url => preview ? '#' : {:controller => 'comments', :action => :rate, :id => comment.id, :value => 10}, :html => {:id => 'plus', :class => "small_button#{comment_score.score < 5 ? ' active' : '' unless comment_score.nil?}"})
+        - else
+          = link_to("<span>+</span>".html_safe, :url => preview ? '#' : login_url(:modal => true), :id => 'plus', :class => 'small_button rate_trigger' )
+
+        %span.comm_score{ :id => "comm_score_#{comment.id}", :style => "color:#{integer_to_color(comment.score_count_sum.to_i)}" }
+          = comment.score_count_sum
+
+      - unless comment.plus_score_count == 0  && comment.minus_score_count == 0
+        :javascript
+          off_#{comment.id.to_s} = false
+          $j(document).ready(function(){
+            $j("#comm_comm_#{comment.id.to_s}").hover(
+              function(){
+                if ( $j("#rates_more_#{comment.id}").is(":hidden")) {
+                  $j("#rates_show_#{comment.id.to_s}").slideDown("normal");
+                }
+              },
+              function(){
+                t=setTimeout(function(){
+                  $j("#rates_show_#{comment.id.to_s}").slideUp("normal");
+                }, 2000);
+              }
+            );
+          });
+
+      .comm_comm_more
+        = link_to_function "&darr;", "Element.hide('rates_show_#{comment.id}');new Effect.BlindDown('rates_more_#{comment.id}');off_#{comment.id.to_s}=true", :id => "rates_show_#{comment.id}", :class => "comm_more_tab"
+      
+    .comm_rating{ :id => "rates_more_#{comment.id}", :style => "display:none;" }
+      .comm_rating_inner
+        = link_to_function "&uarr;", "new Effect.BlindUp('rates_more_#{comment.id}');Element.show('rates_show_#{comment.id}');off_#{comment.id.to_s}=false", :class => "comm_more_tab less" 
+        %span{ :id => "comm_overall_#{comment.id}" }
+          Overall Rating:
+          = number_with_precision(comment.average_rating,:precision => 1)
+          &nbsp;|&nbsp;&nbsp;
+          = "#{comment.plus_score_count} of #{comment.score_count_all} found useful."
+
+      - if flat && comment.parent_id
+        = link_to "in reply to #{comment.parent.user ? comment.parent.user.login : "Anonymous"} #{comment.parent.created_at.strftime('%b %d, %Y')} #{comment.parent.created_at.strftime('%I:%M%p').gsub(/^0+/, '').downcase}", url_for(comment.parent.commentable_link.merge({:goto_comment => comment.parent.id})), {:class => 'inreply'}
+
+      - if comment.user && comment.user.small_picture
+        .comment_pic
+          %img{ :src => "/images/users/%{h(comment.user.login)}_s.jpg" }
+          - unless comment.user.user_role.id ==  0
+            %br
+            = image_tag 'staff.png', :alt => "OpenCongress Staff"
+      - else
+    %div{ :style => "clear:left;" }
+
+    .com_content.clearfix
+      = RedCloth.new(comment.comment).to_comments_html.html_safe
+
+    %div{ :id => "com_#{comment.id.to_s}", :style => "clear:both;display:none;" }
+
+    - if logged_in? && current_user.user_role.can_moderate_articles
+      %div{ :style => "clear:left;" }
+        %form.button-to{ :action => "/comments/censor/#{h comment.id }",  :method => "post"}
+          = submit_tag "Censor", :value => "Censor"
+          = submit_tag "Censor+BanIP", :value => "Censor+BanIP"

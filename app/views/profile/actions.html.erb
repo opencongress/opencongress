@@ -27,7 +27,7 @@
     	    <% logged_in? ? myscores = current_user.comment_scores.find(:all) : myscores = Array.new %>
 		
 		  <% @my_comments.each do |com| %>
-           <%= render :partial => 'shared/comments_recursive', :locals => {:object => com.commentable_type, :comment => com, :myscores => myscores } %>
+           <%= render :partial => 'shared/comments_comment', :locals => {:object => com.commentable_type, :comment => com, :myscores => myscores } %>
 		<% end %>
 		<br />
 		

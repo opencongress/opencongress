@@ -1409,12 +1409,6 @@ bottom: -35px;
 padding: 6px;
 }
 
-#bill_text * {/*
-text-align: left !important;
-*/
-}
-
-
 #summary {
 padding: 45px 20px 0 0;
 }

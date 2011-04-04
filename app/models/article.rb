@@ -115,5 +115,4 @@ class Article < ActiveRecord::Base
       end
     end
   end # class << self
-
 end

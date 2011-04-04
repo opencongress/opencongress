@@ -1,0 +1,1 @@
+$("bill_text_comments_<%=@nid%>").update("<%= escape_javascript(render(:partial => 'shared/comments_list', :locals => {:object => @btn, :master_container => "bill_text_comments_#{@nid}"})) %>");

@@ -493,12 +493,10 @@ class PeopleController < ApplicationController
     @party = params[:party] == 'democrat' ? 'Democrat' : 'Republican'
     @party_adj = @party == 'Democrat' ? 'Democratic' : 'Republican'
     @people_names = @chamber == 'house' ? 'Representatives' : 'Senators'
-    
-    
+       
     @people = Person.list_by_votes_with_party_ranking(@chamber, @party)
 
     @median = @people[(@people.size/2)]
-
   end
   
   def bills

@@ -121,11 +121,11 @@ def tree_walk(element, version, in_inline = false, in_removed = false)
       
       comments.elements << comments_clearer
       
-      # img = Element.new "img"
-      # img.attributes['style'] = 'margin: 5px; text-align: center;'
-      # img.attributes['src'] = '/images/flat-loader.gif'
-      # 
-      # comments.elements << img
+      img = Element.new "img"
+      img.attributes['style'] = 'margin: 5px; text-align: center;'
+      img.attributes['src'] = '/images/flat-loader.gif'
+      
+      comments.elements << img
 
       menu.elements << comments_show
       menu.elements << comments_hide

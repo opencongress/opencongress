@@ -1,0 +1,60 @@
+#comments-container
+  %a#comments{ :name => "comments" }
+
+  = render :partial => 'shared/sort_comments'
+
+  %h2.comments_title
+    Comments 
+    - if @bill or @person
+      - link = @bill ? "/comments/atom/bill/#{@bill.id}" : "/comments/atom/person/#{@person.id}" 
+      %a.feed{ :href => link} Feed
+      %a.feed.comment_feed{ :href => "/articles/all_comments_atom" }
+    = dbox_trigger('about_comments')
+                            
+  .dboxed= dbox_content("about_comments")
+
+  /
+    .rating_filter
+      %h3 Filter Comments to a Rating of at least
+      .dboxed= dbox_content("about_ratings")
+    
+      = hidden_field_tag "filterscore", ( logged_in? ? current_user.default_filter : 5 )
+      .rate
+        .filtertrack
+          .filterhandle
+            %span#sfilterscore= logged_in? ? current_user.default_filter : 5
+
+      :javascript
+        new Control.Slider('filterhandle','filtertrack',{range:$R(0,10),
+          values:[0,1,2,3,4,5,6,7,8,9,10],
+          sliderValue:#{logged_in? ? current_user.default_filter : 5},
+          onSlide:function(v){$('sfilterscore').innerHTML=v},
+          onChange:function(v){$('filterscore').value=v;new Ajax.Request('/comments/filter_by_rating/#{object.id}', {asynchronous:true, evalScripts:true, parameters:'type=' + escape("#{object.class.to_s}") + '&value=' + escape(v) + '&comment_page=' + escape("#{params[:comment_page]}") + '&comment_sort=' + escape("#{params[:comment_sort]}")})}});
+
+  - if object.comments.size > 0
+    - @show_comments = true
+    - unless @show_comments
+      %h3.dark= toggler("comment", "#{object.comments.size} comments - View All", "Hide comments", "arrow", "arrow-hide")
+    #comment{ :style => "clear:left;#{'display:none;' unless @show_comments}" }
+
+  -else
+    %h3#no_comments.no_comments
+      %strong No Comments
+      Start the Conversation!
+    #comment{ :style => "clear:left;" }
+
+  #comments_master{ :style => "float:none;clear:left;" }
+    = render :partial => 'shared/comments_list', :locals => {:object => object, :master_container => 'comments_master'}
+
+- unless logged_in?
+  :javascript
+    $j().ready(function() {
+      $j('#login_rate').jqm({ajax:'@href', trigger: 'a.rate_trigger'});
+    });
+
+  #login_rate.jqmWindow
+
+- if params[:comment_id]
+  :javascript
+    new Effect.ScrollTo('com<%= params[:comment_id] %>');
+    new Effect.Highlight('com<%= params[:comment_id] %>', {duration: 8} );

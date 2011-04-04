@@ -4,103 +4,72 @@ class CommentsController < ApplicationController
   before_filter :admin_login_required, :only => [:censor, :ban_ip]
 
   def add_comment
-    object = Object.const_get(params[:type]).find_by_id(params[:id])
-    if object
+    @object = Object.const_get(params[:type]).find_by_id(params[:id])
+    if @object
       @comment = Comment.new(params[:comment])
       
-      @comment.commentable_id = object.id
-      @comment.commentable_type = object.class.to_s
+      @comment.commentable_id = @object.id
+      @comment.commentable_type = @object.class.to_s
 
       @comment.user_id = current_user.id if logged_in?
       @comment.ip_address = request.remote_ip
 
-      parent = nil
+      @parent = nil
       unless params[:comment][:parent_id].blank?
-        parent = Comment.find_by_id(params[:comment][:parent_id])
-        @comment.root_id = parent.root_id
+        @parent = Comment.find_by_id(params[:comment][:parent_id])
+        @comment.root_id = @parent.root_id
       end
-        
-      dup = Comment.find(:first, :conditions => ["commentable_type = ? AND comment = ? AND commentable_id = ?", object.class.to_s,@comment.comment,object.id])
+      
+      @is_preview = params[:preview_button].nil? ? false : true
+      if @is_preview
+        @comment.created_at = Time.now
+        return
+      end
+      
+      
+      dup = Comment.find(:first, :conditions => ["commentable_type = ? AND comment = ? AND commentable_id = ?", @object.class.to_s,@comment.comment,@object.id])
       if dup
-        flash[:notice] = "Duplicate Comment"
-        render :partial => "shared/comments3", :locals => {:object => object}
+        @error_msg = "Duplicate Comment"
         return
       end 
 
       if logged_in? 
         unless @comment.save
-          flash[:error] = "Failed to save."
-          if parent
-            render :partial => "shared/comment_form_recursive", :locals => {:parent_id => parent.id, :object => object }
-          else
-            render :partial => 'shared/comment_form2', :locals => {:parent_id => 0, :object => object, :master_container => nil, :redirect => true } 
-          end
+          @error_msg = "Failed to save."
           return
-        else
-          if params[:redirect] == 'false'
-            render :update do |page|
-              page.replace_html "small_comment", "Your comment has been saved<br />" + link_to("View it Now", @comment.commentable_link.merge(:action => 'comments', :comment_page => @comment.page), :class => 'jump_to_comment')
-            end
-            return
-          end
-          flash[:notice] = "Your comment has been saved."
         end
       else
-        unless @comment.save_with_captcha
-          flash[:error] = "Failed to save."
-          if parent
-            render :partial => "shared/comment_form_recursive", :locals => {:parent_id => parent.id, :object => object } 
-          else
-            render :partial => 'shared/comment_form2', :locals => {:parent_id => 0, :object => object, :master_container => nil, :redirect => true } 
-          end
-          return
-        else
-          flash[:notice] = "Your comment has been saved."
-        end
+        @error_msg = "Must Be Logged In To Comment"
+        return
       end
 
       # if this is a reply, make it a child, otherwise, make it a parent
-      if parent
-        if parent.children.empty?
-          @comment.move_to_child_of parent
+      if @parent
+        if @parent.children.empty?
+          @comment.move_to_child_of @parent
         else
           # normally, we just would do: @comment.move_to_child_of parent
           # but move_to_child_of adds to the left of siblings, and we want the right
-          @comment.move_to_right_of parent.children.last
+          @comment.move_to_right_of @parent.children.last
         end
         
         # if this is a reply to a comment, just render the new comment
-        render :partial => 'shared/comments_recursive', :locals => {:object => object, :comment => @comment, :myscores => Array.new}
+        @reply = true
       else
-        @comment.update_attribute('root_id', @comment.id)
-        
-        @ajax_comment = true
-        
-        if @comment.commentable_type == "Article"
-           render :update do |page|
-             page.redirect_to @comment.commentable_link.merge(:comment_page => @comment.page)
-           end
-        elsif @comment.commentable_type == "BillTextNode"
-          params[:comment_page] = @comment.page
-          @goto_comment = @comment
-          @comment = nil
-          render :partial => "shared/comments3", :locals => {:object => object, :master_container => "bill_text_comments_#{object.nid}"}
-        else
-#        render :partial => "shared/comments3", :locals => {:object => object}
-         render :update do |page|
-           page.redirect_to @comment.commentable_link.merge(:action => 'comments', :comment_page => @comment.page)
-         end
-       end
+        params[:comment_page] = @comment.page
+        @reply = false
       end      
     else
       flash[:warning] = "Huh?...Logged"
       redirect_to '/' 
     end
   end
+
   def showcomfield
     object = Object.const_get(params[:type]).find_by_id(params[:object])
-    render :partial => "shared/comment_form_recursive", :locals => {:parent_id => params[:parent_id], :object => object } 
+    render :partial => "shared/comments_add_reply", :locals => {:parent_id => params[:parent_id], :object => object } 
   end
+
   def rate
     # as of Nov 21, 2010 we are only allowing positive comment ratings (value = 10)
     # due to rampant comment bombing
@@ -236,9 +205,13 @@ class CommentsController < ApplicationController
     return if params[:version].blank? or params[:nid].blank?
     
     @comments = []
+    @nid = params[:nid]
     btv = BillTextVersion.find_by_id(params[:version])
-    btn = btv.bill_text_nodes.find_or_create_by_nid(params[:nid])
+    @btn = btv.bill_text_nodes.find_or_create_by_nid(@nid)
     
-    render(:partial => 'shared/comments3', :locals => {:object => btn, :master_container => "bill_text_comments_#{params[:nid]}"}) + "</div>"
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 end

@@ -1,0 +1,29 @@
+<% if @error_msg %>
+  <% if @parent %>
+    $('comment_reply_<%= @parent.id %>').update("<%= escape_javascript(render :partial => 'shared/comments_add_reply', :locals => {:parent_id => @parent.id, :object => @object }) %>")
+  <% else %>
+    $('add').update("<%= escape_javascript(render :partial => 'shared/comments_add', :locals => {:parent_id => 0, :object => @object, :master_container => nil, :redirect => true }) %>")
+  <% end %>
+<% elsif @is_preview %>
+  $j('#comment-preview').hide();
+  $j('#comment-preview').html("<%= escape_javascript(render :partial => 'shared/comments_comment', :locals => {:object => @object, :comment => @comment, :myscores => Array.new, :preview => true }) %>")
+  $j('#comment-preview').slideDown('slow');
+<% else %>
+  <% if @parent %>
+    $('comment_reply_<%= @parent.id %>').update("<%= escape_javascript(render :partial => 'shared/comments_comment', :locals => {:object => @object, :comment => @comment, :myscores => Array.new}) %>")
+    new Effect.Highlight('comment_reply_<%= @parent.id %>', {duration: 2});
+  <% else %>
+    <% if @object.kind_of? BillTextNode %>
+      $('bill_text_comments_<%= @object.nid %>').update("<%= escape_javascript(render :partial => 'shared/comments_list', :locals => {:object => @object, :master_container => "bill_text_comments_#{@object.nid}"}) %>")
+    <% else %>
+      $('comments_master').update("<%= escape_javascript(render :partial => 'shared/comments_list', :locals => {:object => @object, :master_container => 'comments_master'}) %>")
+    <% end %>
+    new Effect.Highlight('com<%= @comment.id %>', {duration: 2});
+    if ($('no_comments') != undefined) {
+      $('no_comments').hide();
+    }
+    $('comment-preview').hide();
+  <% end %>
+<% end %>
+
+$j('#comment-spinner').hide();

@@ -1,0 +1,65 @@
+%br
+
+- if logged_in?
+  #add.comment-add
+    %h3 Speak Your Mind
+    = render :partial => 'shared/comments_instructions'
+    
+    %div{ :style => "color: red"}
+      = error_messages_for :comment, :header_message => "Please try again.", :message => "Your comment couldn't be saved because of the following errors:"
+
+    = form_for :comment, :url => { :controller => 'comments', :action => 'add_comment', :id => object.id, :type => object.class.to_s }, :remote => true, :id => "add_comment_form" do |f|
+      = hidden_field_tag 'comment_page', "#{params[:comment_page]}"
+
+      :javascript
+        $j(document).ready(function() {
+          $j('#comment_comment').simplyCountable({
+            maxCount:1000,
+            countDirection:'down'
+          });
+        });
+
+      - unless controller_name == 'articles'
+        = f.text_area :comment, :rows => 6, :cols => 60
+      - else
+        = f.text_area :comment, :rows => 6, :cols => 40 
+
+      .count 
+        characters remaining:&nbsp;&nbsp;
+        %span#counter
+          
+      .submit
+        = submit_tag "Add Comment", :id => 'post', :class => 'large button silver'
+        = submit_tag "Preview", :name => 'preview_button', :id => 'preview', :class => 'large button silver'
+        = image_tag 'spinner-ovals.gif', :id => 'comment-spinner', :style => "display: none;"
+        :javascript
+          $j("#post").click(function() { 
+            $j("#comment-spinner").show();
+          });
+          $j("#preview").click(function() { 
+            $j("#comment-spinner").show();
+          });
+          
+      #comment-preview{ :style => 'display: none;' }
+
+      .comment-message
+        %p 
+          OpenCongress comment boards are an open forum for discussion. Let's build public knowledge about Congress together, so please keep the discussion civil -- no harsh language, subject to our community 
+          %a{ :href => "/about/terms_of_service", :target => "_blank" } Comment Policy.
+          Do not post any information here (for example, your name or email) that you do not wish to be public.
+        %p Comments are limited to 1000 characters -- in the ballpark of 150 words, or one paragraph of text. If your comment is rejected, please check the length, as OpenCongress staff cannot post your comment for you (though we're interested in your opinion!).
+
+        .clear &nbsp;
+        
+- else
+  :javascript
+    $j().ready(function() {
+      $j('#login_comment').jqm({ajax:'@href', trigger: 'a.comment_login'});
+    });
+    
+  .comment-login_message
+    Please
+    = link_to("login or signup",{:controller => 'account', :action => 'login', :modal => true}, :class => 'comment_login')
+    to post a comment.       
+
+  #login_comment.jqmWindow

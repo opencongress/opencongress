@@ -1,0 +1,45 @@
+- if params[:comment_sort] == 'rating' 
+  - comments = object.comments.paginate(:page => params[:comment_page], :include => [:user], :order => "comments.plus_score_count - comments.minus_score_count DESC" )
+- elsif params[:comment_sort] == 'newest'
+  - comments = object.comments.paginate(:page => params[:comment_page], :include => [:user], :order => "comments.created_at DESC" ) 
+- else
+  - comments = object.comments.paginate(:page => params[:comment_page], :include => [:user], :order => "comments.root_id ASC, comments.lft ASC" ) 
+     
+- if comments.size > 0
+
+- logged_in? ? myscores = current_user.comment_scores.find(:all) : myscores = Array.new
+     
+- if comments.total_pages > 1
+  %p.this_many
+    = "Displaying #{comments.offset + 1}-#{(comments.offset + comments.per_page > comments.total_entries ) ? comments.total_entries : comments.offset + comments.per_page} of "
+    %b= comments.total_entries 
+    total comments.
+
+- if object.kind_of? BillTextNode
+  = will_paginate comments, { :renderer => 'RemoteLinkRenderer', :param_name => 'comment_page', :params => { :controller => 'comments', :action => 'bill_text_comments', :version => object.bill_text_version.id, :nid => object.nid, :comment_sort => params[:comment_sort], :anchor => 'comments'}, :remote => {:update => "bill_text_comments_#{object.nid}" }}
+- elsif object.kind_of? Article
+  = will_paginate comments, :param_name => 'comment_page', :params => { :controller => object.display_object_name.downcase, :action => 'view', :id => object.to_param, :comment_sort => params[:comment_sort], :anchor => 'comments'}
+- else
+  = will_paginate comments, :param_name => 'comment_page', :params => { :controller => object.display_object_name.downcase, :action => 'comments', :id => ((object.display_object_name == 'Bill') ? object.ident : object.id), :navtab => 'comments', :comment_sort => params[:comment_sort], :anchor => 'comments'}
+
+- if (params[:comment_sort] == 'newest' || params[:comment_sort] == 'rating') # just display a flat list since nesting doesn't make sense when sort=newest, likewise for rating
+  - comments.each do |node|
+    = render :partial => 'shared/comments_comment', :locals => {:object => object, :comment => node, :myscores => myscores, :flat => true}
+- else
+  = display_nested_set_rows(comments) { |node| render :partial => 'shared/comments_comment', :locals => {:object => object, :comment => node, :myscores => myscores} }
+
+- if object.kind_of? BillTextNode
+  = will_paginate comments, { :renderer => 'RemoteLinkRenderer', :param_name => 'comment_page', :params => { :controller => 'comments', :action => 'bill_text_comments', :version => object.bill_text_version.id, :nid => object.nid, :comment_sort => params[:comment_sort], :anchor => 'comments'}, :remote => {:update => "bill_text_comments_#{object.nid}" }}
+- elsif object.kind_of? Article
+  = will_paginate comments, :param_name => 'comment_page', :params => { :controller => object.display_object_name.downcase, :action => 'view', :id => object.id, :comment_sort => params[:comment_sort], :anchor => 'comments'}
+- else
+  = will_paginate comments, :param_name => 'comment_page', :params => { :controller => object.display_object_name.downcase, :action => 'comments', :id => ((object.display_object_name == 'Bill') ? object.ident : object.id), :navtab => 'comments', :comment_sort => params[:comment_sort], :anchor => 'comments'}
+  
+= render :partial => 'shared/comments_add', :locals => {:parent_id => 0, :object => object, :master_container => master_container, :redirect => true }
+
+- if @goto_comment
+  :javascript
+    = "window.onload = function() {" unless @ajax_comment
+    new Effect.ScrollTo('com#{@goto_comment.id}', {offset: -10});
+    new Effect.Highlight('com#{@goto_comment.id}', {duration: 2});
+    = ";" unless @ajax_comment

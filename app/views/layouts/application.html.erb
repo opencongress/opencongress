@@ -14,8 +14,12 @@
   <link rel="me" type="text/html" href="http://www.google.com/profiles/donnyopencongress" />
   <%= bookmarking_image.html_safe %>
 
-  <%= include_javascripts :common, :defaults  %>
-
+  <%= include_javascripts :defaults, :common  %>
+  <script>
+    var $j = jQuery.noConflict();
+  </script>
+  <%= csrf_meta_tag %>
+    
   <%= include_stylesheets :application, :media => 'all' %>
 
   <%= stylesheet_link_tag('admin') if @admin_styles %>
@@ -44,9 +48,8 @@
   <%= yield(:header) %>
 
   <% if @atom %>
-  <link rel="alternate" type="application/atom+xml" title="<%= @atom['title'] %> actions" href="<%= @atom['link'] %>" />
+    <link rel="alternate" type="application/atom+xml" title="<%= @atom['title'] %> actions" href="<%= @atom['link'] %>" />
   <% end %>
-	
 </head>
 
 <body <%= id_class.html_safe %>>

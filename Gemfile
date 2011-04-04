@@ -56,10 +56,6 @@ gem "okkez-open_id_authentication"
 
 gem "acts-as-taggable-on", :git => 'http://github.com/mbleigh/acts-as-taggable-on.git'
 
-
-
-
-
 # Testing
 group :test, :development do
   gem 'rspec'

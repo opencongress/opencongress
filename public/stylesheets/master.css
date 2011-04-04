@@ -685,7 +685,7 @@ a.small_button.small_arrow:hover span{
 .pagination{
 	height: 20px;
 	float: none;
-	margin-bottom: 0px;
+	margin-bottom: 10px;
 	padding: 10px 0px 8px;
 	}
 
@@ -2039,6 +2039,7 @@ margin: 10px 0 15px;
 
 #comments-container .submit{
 float: right;
+clear: right;
 padding: 10px 0px 20px 0px;
 }
 
@@ -2062,6 +2063,7 @@ line-height: 1.5em !important;
 
 .comments_title{
 float: left;
+margin-bottom: 20px;
 }
 
 #comments-container .comment-add p{
@@ -2356,6 +2358,7 @@ padding: 10px;
 
 .comment_instructions {
   font-size: 11px;
+  padding-left:9px;
 }
 .comment_instructions ul {
   list-style: square;
@@ -3526,31 +3529,37 @@ background:url('../images/share.png') no-repeat -150px -30px !important;
 
 .submit{
 border: 0;
-width: 201px;
+width: 410px;
 display: block;
 background: 0;
 margin-bottom: 6px;
+float: right;
 }
 
 #tertiary-content #small_comment{
 margin-left: 9px;
 }
-.submit input{
+.submit input {
 border: 0;
-width: 100%;
-display: block;
+float: right;
+display: inline;
 background: 0;
-height: 0px;
 padding-top: 33px;
 overflow: hidden;
-  background:url('../images/post.png') no-repeat left top;
-_background:url('../images/post.gif') no-repeat left top;
+margin-left: 15px;
 }
 
 .submit input:hover{
-  background:url('../images/post.png') 0 -36px no-repeat;
-_background:url('../images/post.gif') 0 -36px no-repeat;
 cursor: pointer;
+}
+
+.submit img {
+border: 0;
+float: right;
+display: inline;
+background: 0;
+margin-left: 15px;
+padding-top: 5px;
 }
 
 #tertiary-content .comment-add p{
@@ -4237,11 +4246,33 @@ span.over{
   color:#333;
   font-size:11px;
 }
-
+.comment-add {
+  clear: both;
+}
 .comment-add .count {
   float: left;
 }
 
+#comment-preview {
+  padding: 15px;
+  width: 93%;
+  margin: 20px 0;
+  border: 1px solid #ccc;
+  -moz-box-shadow: 4px 4px 5px #aeafb2;
+  -webkit-box-shadow: 4px 4px 5px #aeafb2;
+  box-shadow: 4px 4px 5px #aeafb2;
+  /* For IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#aeafb2')";
+  /* For IE 5.5 - 7 */
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#aeafb2');
+  clear: both;
+
+}
+
+#comment-preview p {
+  color: #313131;
+  font-size: 12px;
+}
 
 .health_box{
 background: url('../images/healthcare_bill.png') left 0px no-repeat;

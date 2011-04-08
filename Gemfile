@@ -61,7 +61,7 @@ gem 'mechanize'
 gem "formageddon", '0.0.0', :require => 'formageddon', :path => '/tmp/formageddon'
 
 # Testing
-group :test, :development do
+group :test, :development, :staging do
   gem 'rspec'
   gem 'rspec-rails', '~> 2.4'
   gem 'cucumber', '0.8.5'

@@ -11,7 +11,7 @@ GIT
     acts-as-taggable-on (2.0.6)
 
 PATH
-  remote: /Users/aross/pcf-work/gitbranches/formageddon
+  remote: /tmp/formageddon
   specs:
     formageddon (0.0.0)
 

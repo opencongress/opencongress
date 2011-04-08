@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
                            :my_approved_reps, :my_approved_sens, :my_disapproved_reps, 
                            :my_disapproved_sens, :my_state_f, :my_district_f], :auto_commit => false
 
+  acts_as_formageddon_sender
+
   attr_accessor :password_confirmation
   
   # the following is so acts_as_autheticated doesn't bomb since we added devise compatibility

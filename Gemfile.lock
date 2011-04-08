@@ -10,6 +10,11 @@ GIT
   specs:
     acts-as-taggable-on (2.0.6)
 
+PATH
+  remote: /Users/aross/pcf-work/gitbranches/formageddon
+  specs:
+    formageddon (0.0.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -20,47 +25,42 @@ GEM
     RedCloth (4.2.7)
     ZenTest (4.5.0)
     abstract (1.0.0)
-    actionmailer (3.0.4)
-      actionpack (= 3.0.4)
+    actionmailer (3.0.6)
+      actionpack (= 3.0.6)
       mail (~> 2.2.15)
-    actionpack (3.0.4)
-      activemodel (= 3.0.4)
-      activesupport (= 3.0.4)
+    actionpack (3.0.6)
+      activemodel (= 3.0.6)
+      activesupport (= 3.0.6)
       builder (~> 2.1.2)
       erubis (~> 2.6.6)
-      i18n (~> 0.4)
+      i18n (~> 0.5.0)
       rack (~> 1.2.1)
-      rack-mount (~> 0.6.13)
+      rack-mount (~> 0.6.14)
       rack-test (~> 0.5.7)
       tzinfo (~> 0.3.23)
-    activemodel (3.0.4)
-      activesupport (= 3.0.4)
+    activemodel (3.0.6)
+      activesupport (= 3.0.6)
       builder (~> 2.1.2)
-      i18n (~> 0.4)
-    activerecord (3.0.4)
-      activemodel (= 3.0.4)
-      activesupport (= 3.0.4)
+      i18n (~> 0.5.0)
+    activerecord (3.0.6)
+      activemodel (= 3.0.6)
+      activesupport (= 3.0.6)
       arel (~> 2.0.2)
       tzinfo (~> 0.3.23)
-    activeresource (3.0.4)
-      activemodel (= 3.0.4)
-      activesupport (= 3.0.4)
-    activesupport (3.0.4)
+    activeresource (3.0.6)
+      activemodel (= 3.0.6)
+      activesupport (= 3.0.6)
+    activesupport (3.0.6)
     arel (2.0.9)
     autotest (4.4.6)
       ZenTest (>= 4.4.1)
     bluecloth (2.1.0)
     builder (2.1.2)
-    capistrano (2.5.20)
-      highline
+    capistrano (2.5.21)
       highline
       net-scp (>= 1.0.0)
-      net-scp
-      net-sftp
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
-      net-ssh
-      net-ssh-gateway
       net-ssh-gateway (>= 1.0.0)
     capistrano-ext (1.2.1)
       capistrano (>= 1.0.0)
@@ -127,6 +127,8 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mechanize (1.0.0)
+      nokogiri (>= 1.2.1)
     mediacloth (0.0.3)
     mime-types (1.16)
     mysql (2.8.1)
@@ -153,17 +155,17 @@ GEM
       ruby-openid (>= 2.1.8)
     rack-test (0.5.7)
       rack (>= 1.0)
-    rails (3.0.4)
-      actionmailer (= 3.0.4)
-      actionpack (= 3.0.4)
-      activerecord (= 3.0.4)
-      activeresource (= 3.0.4)
-      activesupport (= 3.0.4)
+    rails (3.0.6)
+      actionmailer (= 3.0.6)
+      actionpack (= 3.0.6)
+      activerecord (= 3.0.6)
+      activeresource (= 3.0.6)
+      activesupport (= 3.0.6)
       bundler (~> 1.0)
-      railties (= 3.0.4)
-    railties (3.0.4)
-      actionpack (= 3.0.4)
-      activesupport (= 3.0.4)
+      railties (= 3.0.6)
+    railties (3.0.6)
+      actionpack (= 3.0.6)
+      activesupport (= 3.0.6)
       rake (>= 0.8.7)
       thor (~> 0.14.4)
     rake (0.8.7)
@@ -227,6 +229,7 @@ DEPENDENCIES
   closure-compiler
   cucumber (= 0.8.5)
   cucumber-rails
+  formageddon (= 0.0.0)!
   govkit
   haml
   hoptoad_notifier
@@ -234,6 +237,7 @@ DEPENDENCIES
   htmlentities
   jammit
   json
+  mechanize
   mediacloth
   mysql
   newrelic_rpm
@@ -241,7 +245,7 @@ DEPENDENCIES
   okkez-open_id_authentication
   pg
   rack-openid
-  rails (= 3.0.4)
+  rails (= 3.0.6)
   rmagick (= 2.13.1)
   rspec
   rspec-rails (~> 2.4)

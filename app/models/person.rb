@@ -3,6 +3,8 @@ class Person < ViewableObject
 #               :facets => [:party]
   require 'yahoo_geocoder'
 
+  acts_as_formageddon_recipient
+  
   has_many :committees, :through => :committee_people
   has_many :committee_people, :conditions => [ "committees_people.session = ?", Settings.default_congress ]
   has_many :bills, :foreign_key => :sponsor_id, :conditions => [ "bills.session = ?", Settings.default_congress ], :include => [ :bill_titles, :actions ], :order => 'bills.introduced DESC'
@@ -1246,6 +1248,10 @@ class Person < ViewableObject
 
   def popular_name
     "#{sunlight_nickname || nickname || firstname} #{lastname}"
+  end
+
+  def to_s
+    name
   end
   
   def to_param

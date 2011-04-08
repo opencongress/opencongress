@@ -42,7 +42,9 @@
 <% if admin_logged_in? %>
   <div style="padding-left: 30px;">
     <%= link_to "New news/blog article", :controller => 'admin/commentary', :action => 'new', :commentariable_type => 'Person', :commentariable_id => @person.id %> | 
-    <%= link_to "Cleanup news/blog articles (This may take several minutes)", :controller => 'admin/commentary', :action => 'person_cleanup', :person_id => @person.id %>  
+    <%= link_to "Cleanup news/blog articles (This may take several minutes)", :controller => 'admin/commentary', :action => 'person_cleanup', :person_id => @person.id %> | 
+    
+    <%= link_to "Configure Formageddon", "/formageddon/contact_steps/new?recipient_id=#{@person.id}&recipient_type=Person" %>
   </div>
 <% end %>
 

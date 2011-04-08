@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.4'
+gem 'rails', '3.0.6'
 
 # database gems -- need both pg and mysql for app and wiki
 gem 'pg'
@@ -55,6 +55,10 @@ gem "validates_captcha"
 gem "okkez-open_id_authentication"
 
 gem "acts-as-taggable-on", :git => 'http://github.com/mbleigh/acts-as-taggable-on.git'
+
+### temp just for showing to drm
+gem 'mechanize'
+gem "formageddon", '0.0.0', :require => 'formageddon', :path => '/Users/aross/pcf-work/gitbranches/formageddon'
 
 # Testing
 group :test, :development do

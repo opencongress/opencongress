@@ -59,7 +59,18 @@ gem "acts-as-taggable-on", :git => 'http://github.com/mbleigh/acts-as-taggable-o
 ### temp just for showing to drm
 gem 'mechanize'
 gem "formageddon", '0.0.0', :require => 'formageddon', :path => '/tmp/formageddon'
+
 gem 'rspec'
+gem 'rspec-rails', '~> 2.4'
+gem 'cucumber', '0.8.5'
+gem 'cucumber-rails'
+gem 'webrat'
+gem 'selenium-client'
+
+gem 'capybara'
+gem 'capybara-envjs'
+
+gem 'autotest'
 
 # Testing
 group :test, :development do

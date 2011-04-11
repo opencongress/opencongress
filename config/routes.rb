@@ -233,7 +233,7 @@ OpenCongress::Application.routes.draw do |map|
   map.connect 'house_reconciliation', :controller => 'index', :action => 'house_reconciliation'
   
   # Install the default route as the lowest priority.
-  #map.connect ':controller/:action/:id'
+  map.connect ':controller/:action/:id'
   
   map.connect '*path', :controller => 'index', :action => 'notfound' unless ::ActionController::Base.consider_all_requests_local
     
@@ -294,5 +294,5 @@ OpenCongress::Application.routes.draw do |map|
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  match ':controller(/:action(/:id(.:format)))'
+  # match ':controller(/:action(/:id(.:format)))'
 end

@@ -2,8 +2,6 @@ class Person < ViewableObject
 #  acts_as_solr :fields => [:party, {:with_party_percentage => :float}, {:abstains_percentage => :float}, {:against_party_percentage => :float}], 
 #               :facets => [:party]
   require 'yahoo_geocoder'
-
-  acts_as_formageddon_recipient
   
   has_many :committees, :through => :committee_people
   has_many :committee_people, :conditions => [ "committees_people.session = ?", Settings.default_congress ]

@@ -1,0 +1,36 @@
+#heading
+  %h2 Contact Congress
+  
+.contact_congress
+  = render 'contact_congress_status_bar', :step => 3
+  
+  %p
+    %strong Congratulations!
+    Your letter to your elected representatives has been sent!  We will be tracking this correspondence and alert you to any replies immediately.
+  %p
+    Your communication can be more effective by following the steps below.
+    
+  .after_steps
+    .step
+      %h2 Share
+      .desc
+        A
+        = link_to 'page with your letter', :controller => 'contact', :action => 'showthread', :id => @thread.id
+        has been set up. Share it with your friends and followers!
+      = render 'contact_congress_share'
+    .step
+      %h2 Mail
+      .desc
+        = link_to 'Print', '#'
+        this letter and send it through the mail.  Here's the address:
+      %p
+        = @thread.formageddon_recipient.formageddon_display_address.gsub(/\n/, "<br />").html_safe
+    .step.noborder
+      %h2 Call
+      .desc
+        Call your representatives at the numbers below:
+    
+      %p
+        = "#{@thread.formageddon_recipient.title_long} #{@thread.formageddon_recipient.firstname} #{@thread.formageddon_recipient.lastname}"
+        %br
+        = @thread.formageddon_recipient.phone

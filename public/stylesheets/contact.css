@@ -51,7 +51,7 @@ clear: none;
   padding: 20px;
 }
 .formageddon_contact_form label {
-  width: 120px;
+  width: 100px;
   display: inline-block;
   vertical-align: top;
   line-height: 2em;
@@ -62,11 +62,54 @@ clear: none;
   margin-top: 15px;
 }
 
+.contact_congress {
+  padding: 35px;
+}
+
+.contact_congress .status_bar {
+  width: 900px;
+  float: left;
+  margin: 0 15px 30px 15px;
+  background-color: #ddd;
+  font-size: 1.4em;
+  -moz-box-shadow: 4px 4px 5px #aeafb2;
+  -webkit-box-shadow: 4px 4px 5px #aeafb2;
+  box-shadow: 4px 4px 5px #aeafb2;
+  /* For IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#aeafb2')";
+  /* For IE 5.5 - 7 */
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#aeafb2');
+}
+.contact_congress .status_bar .step {
+  float: left;
+  width: 299px;
+  text-align: center;
+  padding: 10px 0;
+  color: #888;
+  border-right: 1px solid #bbb;
+}
+
+.contact_congress .status_bar .active {
+  background-color: #cbe2f2;
+  color: #333;
+  font-weight: bold;
+}
+.contact_congress .status_bar .noborder {
+  border-right: 0;
+}
+.contact_letter {
+  width: 450px;
+  float: left;
+  padding: 15px;
+}
+
 .contact_message_builder {
   float: right;
   width: 360px;
-  background-color: #eee;
+  background-color: #F7F7F7;
   padding: 30px;
+  border: 1px dashed #ddd;
+  margin-bottom: 20px;
 }
 .contact_message_builder h3 {
   text-decoration: underline !important;
@@ -102,6 +145,11 @@ clear: none;
 }
 .contact_message_builder .contribution_data td, .contact_message_builder .contribution_data th {
   padding: 5px;
+  border: 1px dashed #aaa;
+}
+.contact_message_builder .contribution_data th.topleft {
+  border-top: 0;
+  border-left: 0;
 }
 .contact_message_builder .contribution_data th.group_column {
   width: 175px;
@@ -126,3 +174,77 @@ clear: none;
   margin-right: 5px;
 }
 
+.contact_thread_share {
+  padding: 10px 0 10px 10px;
+  margin-bottom: 30px;
+  font-size: 12px;
+  color: #888;
+  line-height: 1em;
+  height: 2em;
+  background-color: #f8f8f8;
+  position: relative;
+  border: 1px solid #eee;
+  width: 270px;
+  float: right;
+  -moz-border-radius: 4px;
+}
+.contact_thread_share span {
+  padding-top: 5px;
+  display: block;
+  float: left;
+  width: 150px;
+}
+.contact_thread_share .share {
+  position: relative !important;
+  float: right;
+  right: 0px;
+  margin-right: 10px;
+}
+
+.contact_thread_share ul.share li{
+list-style: none !important;
+float: left;
+}
+
+.contact_thread_share ul.share li a{ 
+width: 27px !important;
+height: 0px !important;;
+overflow: hidden !important;;
+padding-top: 27px !important;;
+float: left !important;
+}
+
+.contact_congress .after_steps {
+  width: 954px;
+  margin: 30px 0 30px 0;
+  float: left;
+  background: #f2f1cb;
+  -moz-box-shadow: 4px 4px 5px #aeafb2;
+  -webkit-box-shadow: 4px 4px 5px #aeafb2;
+  box-shadow: 4px 4px 5px #aeafb2;
+  /* For IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#aeafb2')";
+  /* For IE 5.5 - 7 */
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#aeafb2');
+}
+
+.contact_congress .after_steps .step {
+  width: 297px;
+  float: left;
+  border-right: 1px dashed #ccc;
+  padding: 10px;
+  height: 160px;
+}
+
+.contact_congress .after_steps .step h2 {
+  text-align: center;
+}
+
+.contact_congress .after_steps .step .desc {
+  margin-bottom: 15px;
+  padding: 10px;
+}
+
+.contact_congress .after_steps .noborder {
+  border-right: 0 !important;
+}

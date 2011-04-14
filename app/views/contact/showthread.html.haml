@@ -1,0 +1,17 @@
+#heading
+  %h2 Contact Congress
+
+.padding
+  -# FOR REFACTOR.  should combine with share on blog
+  = render :partial => 'contact_congress_share'
+
+        
+  .contact_thread_header
+    Below is a thread of correspondence between
+    = link_to @thread.formageddon_sender.login, user_profile_path(@thread.formageddon_sender)
+    and
+    = link_to @thread.formageddon_recipient.name, person_path(@thread.formageddon_recipient)
+    \.
+    
+    
+  = render 'formageddon/threads/thread', :thread => @thread

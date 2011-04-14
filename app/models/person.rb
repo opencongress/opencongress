@@ -1362,6 +1362,24 @@ class Person < ViewableObject
     average_approval_from_state(self.state)    
   end
 
+  def contrib_for_interest_group(num = 10, cycle = Settings.current_opensecrets_cycle)
+    igs = CrpInterestGroup.find_by_sql(["SELECT crp_interest_groups.*, top_ind_igs.ind_contrib_total, top_pac_igs.pac_contrib_total, (COALESCE(top_ind_igs.ind_contrib_total, 0) + COALESCE(top_pac_igs.pac_contrib_total, 0)) AS contrib_total FROM crp_interest_groups
+    LEFT JOIN
+      (SELECT crp_interest_group_osid, SUM(crp_contrib_individual_to_candidate.amount)::integer as ind_contrib_total 
+      FROM crp_contrib_individual_to_candidate
+      WHERE cycle=? AND recipient_osid=? AND crp_contrib_individual_to_candidate.contrib_type IN ('10', '11', '15 ', '15', '15E', '15J', '22Y')
+      GROUP BY crp_interest_group_osid)
+        top_ind_igs ON crp_interest_groups.osid=top_ind_igs.crp_interest_group_osid
+    LEFT JOIN
+      (SELECT crp_interest_group_osid, SUM(crp_contrib_pac_to_candidate.amount)::integer as pac_contrib_total 
+      FROM crp_contrib_pac_to_candidate
+      WHERE cycle=? AND recipient_osid=?
+      GROUP BY crp_interest_group_osid)
+        top_pac_igs ON crp_interest_groups.osid=top_pac_igs.crp_interest_group_osid
+    ORDER BY contrib_total DESC
+    LIMIT ?", cycle, osid, cycle, osid, num])
+  end
+
   def top_interest_groups(num = 10, cycle = Settings.current_opensecrets_cycle)
     igs = CrpInterestGroup.find_by_sql(["SELECT crp_interest_groups.*, top_ind_igs.ind_contrib_total, top_pac_igs.pac_contrib_total, (COALESCE(top_ind_igs.ind_contrib_total, 0) + COALESCE(top_pac_igs.pac_contrib_total, 0)) AS contrib_total FROM crp_interest_groups
     LEFT JOIN
@@ -1448,6 +1466,10 @@ class Person < ViewableObject
     end
   end
   
+  def office_zip
+    senator? ? "20510" : "20515"
+  end
+  
   # expiring the cache
   def fragment_cache_key
     "person_#{id}"
@@ -1507,5 +1529,12 @@ class Person < ViewableObject
       end
     end
     deleted
+  end
+  
+  def formageddon_display_address
+    addr = ""
+    addr += "#{title_long} #{firstname} #{lastname}\n"
+    addr += "#{congress_office}\n" unless congress_office.blank?
+    addr += "Washington, DC #{office_zip}\n"
   end
 end

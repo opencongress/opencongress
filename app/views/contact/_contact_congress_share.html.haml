@@ -1,0 +1,13 @@
+.contact_thread_share
+  %span Share this correspondence:
+  %ul.share
+    %li.email_friend
+      %a.e_trigger{ :href => url_for(:controller => 'resources', :action => 'email_friend_form', :object_class => nil, :object_id => nil)} Share via Email
+    %li.facebook
+      %a{ :target => "_blank", :href => "http://www.facebook.com/sharer.php?u=#{}&t=#{}" } Facebook
+    %li.twitter
+      %a{ :href => "http://twitter.com/home?status=#{} #{} (via @OpenCongress)", :title => "Click to share this post on Twitter" } Share on Twitter
+    :javascript
+      $j().ready(function() {
+        $j('#e_friend').jqm({ajax:'@href', trigger:'a.e_trigger'});
+      });

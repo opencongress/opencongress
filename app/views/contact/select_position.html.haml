@@ -1,8 +1,10 @@
 #heading
   %h2 Contact Congress
   
-.padding
+.contact_congress
 
+  = render 'contact_congress_status_bar', :step => 1
+  
   %p.behave 
     You are contacting your representatives in Congress regarding:
     %strong= "#{@bill.typenumber} #{@bill.title_common}"

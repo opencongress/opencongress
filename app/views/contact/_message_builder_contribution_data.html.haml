@@ -6,7 +6,7 @@
 
     %table
       %tr
-        %th
+        %th.topleft
         - (@sens + @reps).each do |p|
           %th= p.lastname
       - @bill.bill_interest_groups.select{|g| g.disposition == position}.each do |big|

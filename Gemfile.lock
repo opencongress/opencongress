@@ -241,6 +241,7 @@ DEPENDENCIES
   mediacloth
   mysql
   newrelic_rpm
+  nokogiri
   oauth
   okkez-open_id_authentication
   pg

@@ -23,7 +23,7 @@ class BillTextNode < ActiveRecord::Base
     
     path = "#{Settings.oc_billtext_path}/#{bill_text_version.bill.session}/#{bill_text_version.bill.bill_type}#{bill_text_version.bill.number}#{bill_text_version.version}.gen.html-oc"
     
-    doc = Nokogiri::HTML(open(path))
+    doc = Nokogiri::XML(open(path))
     
     node = doc.css("p[@id='bill_text_section_#{nid}']")
     

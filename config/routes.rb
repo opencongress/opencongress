@@ -232,8 +232,19 @@ OpenCongress::Application.routes.draw do |map|
   map.connect 'senate_health_care_bill', :controller => 'bill', :action => 'text', :id => '111-h3590', :version => 'ocas'
   map.connect 'house_reconciliation', :controller => 'index', :action => 'house_reconciliation'
   
+  
+  #######TEMP REMOVE
+  scope :module => 'formageddon', :as => 'formageddon' do    
+    resources :formageddon_threads, :controller => 'threads', :path => '/formageddon/threads'
+    resources :formageddon_contact_steps, :controller => 'contact_steps', :path => '/formageddon/contact_steps'
+  end
+  
+  
+  
+  
+  
   # Install the default route as the lowest priority.
-  #map.connect ':controller/:action/:id'
+  map.connect ':controller/:action/:id'
   
   map.connect '*path', :controller => 'index', :action => 'notfound' unless ::ActionController::Base.consider_all_requests_local
     
@@ -294,5 +305,5 @@ OpenCongress::Application.routes.draw do |map|
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  match ':controller(/:action(/:id(.:format)))'
+  # match ':controller(/:action(/:id(.:format)))'
 end

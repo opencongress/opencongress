@@ -35,8 +35,19 @@ class ContactController < ApplicationController
   
     @formageddon_thread = Formageddon::FormageddonThread.new
     @formageddon_thread.prepare(:user => current_user, :subject => @bill.typenumber, :message => message_start)
+    @formageddon_thread.formageddon_recipient = @sens.first
   end
   
   def person
+  end
+  
+  def showthread
+    @thread = Formageddon::FormageddonThread.find(params[:id])
+    
+    @page_title = "Letter to #{@thread.formageddon_recipient.name}"
+  end
+  
+  def aftersend
+    @thread = Formageddon::FormageddonThread.find(params[:thread_id])
   end
 end

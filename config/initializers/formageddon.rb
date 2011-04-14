@@ -7,7 +7,7 @@ if defined? Formageddon
       :sender_first_name => :full_name,
       :sender_email => :email,
       :sender_zip5 => :zipcode,
-      :sender_state => :my_state
+      :sender_state => :state
     }
   end
 end

@@ -88,21 +88,19 @@
 		<% end %>
 		
 		<% if logged_in? %>
-		  <% if object.is_house_bill? %>
-		    <% if current_user.my_reps[0] and current_user.my_reps[0].has_contact_webform? %>
-		      <%= render :partial => 'shared/write_rep_external', :locals => { :people => [current_user.my_reps[0]] } %>
-		    <% end %>
-		  <% else %>
-		    <%= render :partial => 'shared/write_rep_external', 
-		               :locals => { :people => current_user.my_sens.select{|p| p.has_contact_webform? } } %>
-      <% end %>
+      <a href="<%= url_for :controller => 'contact', :action => 'bill', :id => object.ident %>" class="writeextrigger">
+        <div>
+        <span class="write">Write <%= (params[:controller] == 'bill') ? 'Your' : 'This' %></span>
+        <span class="who"><%= object.is_house_bill? ? "Representative" : "Senators" %></span>
+        </div>
+      </a>
     <% else %>
       <script type="text/javascript">
   		$j().ready(function() {
   			$j('#login_writerep').jqm({ajax:'@href', trigger: 'a#login_writerep_trigger'});
   		});
   		</script>
-      <a href="<%= url_for login_url(:modal => true, :login_action => 'writerep_external') %>" id="login_writerep_trigger" class="writeextrigger">
+      <a href="<%= url_for login_url(:modal => true, :login_action => 'contact_congress') %>" id="login_writerep_trigger" class="writeextrigger">
         <div>
         <span class="write">Write Your</span>
         <span class="who"><%= object.is_house_bill? ? "Representative" : "Senators" %></span>

@@ -1,0 +1,22 @@
+- ['support', 'oppose'].each do |position|
+  .contribution_data
+    The following table shows contributions to each candidate by interest groups that
+    %strong= position
+    = @bill.typenumber
+
+    %table
+      %tr
+        %th
+        - (@sens + @reps).each do |p|
+          %th= p.lastname
+      - @bill.bill_interest_groups.select{|g| g.disposition == position}.each do |big|
+        %tr
+          %th.group_column= big.crp_interest_group.name
+          - (@sens + @reps).each do |p|
+            - contribution_amount = big.crp_interest_group.contrib_for_person(p)
+            %td
+              %span.message_builder_clickable
+                = "$#{number_with_delimiter(contribution_amount)}"
+                %span.message_builder_add_text
+                  = "I know that you took $#{number_with_delimiter(contribution_amount)} from #{big.crp_interest_group.name.downcase} interest groups who #{position} #{@bill.typenumber}."
+                  

@@ -44,3 +44,85 @@ width: 420px;
 float: left !important;
 clear: none;
 }
+
+
+.formageddon_contact_form {
+  float:left;
+  padding: 20px;
+}
+.formageddon_contact_form label {
+  width: 120px;
+  display: inline-block;
+  vertical-align: top;
+  line-height: 2em;
+}
+
+.formageddon_contact_form #formageddon_formageddon_thread_submit {
+  float: right;
+  margin-top: 15px;
+}
+
+.contact_message_builder {
+  float: right;
+  width: 360px;
+  background-color: #eee;
+  padding: 30px;
+}
+.contact_message_builder h3 {
+  text-decoration: underline !important;
+  margin-left: 0 !important;
+}
+
+.contact_message_builder .section {
+  margin-bottom: 20px;
+}
+
+.contact_message_builder .message_builder_clickable:hover {
+  background-color:#a3a3a3;
+  cursor: pointer;
+}
+
+.contact_message_builder .message_builder_add_text {
+  display: none;
+}
+.contact_message_builder strong {
+  margin-top: 10px;
+}
+.contact_message_builder ul {
+  margin: 5px;
+}
+.contact_message_builder ul.bulleted {
+  margin: 5px;
+}
+.contact_message_builder .contribution_data {
+  margin-bottom: 10px;
+}
+.contact_message_builder .contribution_data th {
+  text-align: left;
+}
+.contact_message_builder .contribution_data td, .contact_message_builder .contribution_data th {
+  padding: 5px;
+}
+.contact_message_builder .contribution_data th.group_column {
+  width: 175px;
+}
+.contact_recipients input {
+  float: left;
+  margin-right: 15px;
+  padding-top: 10px;
+  vertical-align: bottom;
+}
+.contact_recipients li {
+  width: 400px;
+}
+.contact_recipients li, .contact_message_builder li {
+  padding: 3px;
+  margin: 10px 0;
+}
+.contact_recipients li img {
+  float: left;
+  height: 35px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+

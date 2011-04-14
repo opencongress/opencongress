@@ -168,6 +168,10 @@ class User < ActiveRecord::Base
     self.comments.count + self.friends.count + self.bill_votes.count + self.person_approvals.count + self.bookmarks.count
   end
 
+  def state
+    my_state.empty? ? nil : my_state.first
+  end
+  
   def my_state
     ZipcodeDistrict.zip_lookup(self.zipcode, self.zip_four).collect {|p| p.state}.uniq
   end

@@ -10,6 +10,7 @@ class CreateFormageddonTables < ActiveRecord::Migration
     create_table :formageddon_forms do |t|
       t.integer :formageddon_contact_step_id
       t.integer :form_number
+      t.boolean :use_field_names
       t.string :success_string
     end
 
@@ -18,6 +19,12 @@ class CreateFormageddonTables < ActiveRecord::Migration
       t.integer :field_number
       t.string :name
       t.string :value
+    end
+    
+    create_table :formageddon_form_captcha_images do |t|
+      t.integer :formageddon_form_id
+      t.integer :image_number
+      t.string :css_selector
     end
     
     create_table :formageddon_threads do |t|
@@ -59,6 +66,7 @@ class CreateFormageddonTables < ActiveRecord::Migration
     drop_table :formageddon_contact_steps
     drop_table :formageddon_forms
     drop_table :formageddon_form_fields
+    drop_table :formageddon_form_captcha_images
     drop_table :formageddon_threads
     drop_table :formageddon_letters
   end

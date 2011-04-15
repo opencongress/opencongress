@@ -248,3 +248,7 @@ float: left !important;
 .contact_congress .after_steps .noborder {
   border-right: 0 !important;
 }
+
+.contact_congress .after_thread {
+  padding-top: 20px;
+}

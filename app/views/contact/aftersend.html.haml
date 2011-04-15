@@ -34,3 +34,9 @@
         = "#{@thread.formageddon_recipient.title_long} #{@thread.formageddon_recipient.firstname} #{@thread.formageddon_recipient.lastname}"
         %br
         = @thread.formageddon_recipient.phone
+  
+  .after_thread
+    .padding-left 
+      Here is your letter.  Permalink:
+      = link_to url_for(:only_path => false, :controller => 'contact', :action => 'showthread', :id => @thread), url_for(:only_path => false, :controller => 'contact', :action => 'showthread', :id => @thread)
+    = render 'formageddon/threads/thread', :thread => @thread

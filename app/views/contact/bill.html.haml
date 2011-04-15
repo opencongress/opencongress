@@ -49,7 +49,7 @@
           %strong= @bill.last_action.formatted_date
           %span.message_builder_clickable
             = @bill.last_action
-            %span.message_builder_add_text= "I know that the last action on this bill, taken #{@bill.last_action.formatted_date}, was: \"#{@bill.last_action}\""
+            %span.message_builder_add_text= "I know the most recent action for this bill is as follows: \"#{@bill.last_action}\" on #{@bill.last_action.formatted_date}"
     .section
       %h3 Highly Rated Blog Articles
       %ul
@@ -107,13 +107,16 @@
             %strong= "#{@bill.vote_on_passage(@reps.first)}"
       Please enter your contact info in the form below.  Senators and representatives will usually only respond to their own constituents, so it is important to enter this information correctly.
     = render 'formageddon/threads/form', :thread => @formageddon_thread, :after_send_url => '/contact/aftersend'
+    %p Click send, and we will automatically deliver your letter to the members of Congress you selected above. OpenCongress is the only not-for-profit website that enables you to write all three of your members of Congress at once. Also, OpenCongress is the only website that gives this information back to the public commons, enabling you to find other constituents near you who are tracking the same bills and issues. 
+
+    %p On the next page, you may review your letter, share it with your community using social media, and track any official replies you may receive from members of Congress.
   
 :javascript
   $j(".message_builder_clickable").click(
     function () {
       txt = $j(this).find("span.message_builder_add_text:first").text();
       msg = $j('div.formageddon_contact_form textarea:first')
-      msg.val(msg.val()+unescape(txt)); 
+      msg.val(msg.val()+"\n\n"+unescape(txt)); 
     }
   );
   $j(document).ready(function() {

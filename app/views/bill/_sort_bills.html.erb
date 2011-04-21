@@ -36,7 +36,9 @@
 			<%= link_to "<span>Major Bills & Issue</span>".html_safe, {:action => 'major'}, :types => @types, :class => 'button silver huge fullyrounded push-right' %>
 		</li>
 
-
+		<li id="hot" class="<%= @sort == 'hot' ? "active" : "" %>">
+			<%= link_to "<span>Hot Bills on OC</span>".html_safe, {:action => 'hot'}, :types => @types, :class => 'button silver huge fullyrounded push-right' %>
+		</li>
     
   
 		<li id="pending" class="<%= @sort == 'pending' ? "active" : "" %>">

@@ -556,16 +556,16 @@ EOT
 			nah = yah
 		end
 		logger.info params[:controller]
-		if request.path_parameters['controller'] == "battle_royale"
+		if params[:controller] == "bill" and params[:action] == 'hot'
 			if logged_in?
 			"" +
 			link_to_remote("Aye",
-			{ :url => {:controller => 'battle_royale', :action => 'br_bill_vote', :bill => bill.ident, :id => 0}},
+			{ :url => {:controller => 'bill', :action => 'br_bill_vote', :bill => bill.ident, :id => 0}},
 			:class => "aye #{yah}") +
 			"" +
 
 			link_to_remote("Nay",
-			{:url => {:controller => 'battle_royale', :action => 'br_bill_vote', :bill => bill.ident, :id => 1}},
+			{:url => {:controller => 'bill', :action => 'br_bill_vote', :bill => bill.ident, :id => 1}},
 			:class => "nay #{nah}") +
 			""
       else

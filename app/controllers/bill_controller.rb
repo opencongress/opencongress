@@ -6,6 +6,7 @@ class BillController < ApplicationController
   before_filter :get_params, :only => [:index, :all, :popular, :pending, :hot, :most_commentary, :readthebill]
   before_filter :bill_profile_shared, :only => [:show, :comments, :money, :votes, :actions, :amendments, :text, :actions_votes, :news_blogs, :videos, :news, :blogs, :news_blogs, :topnews, :topblogs]
   before_filter :aavtabs, :only => [:actions, :amendments, :votes, :actions_votes]
+  before_filter :get_range, :only => [:hot]
   skip_before_filter :store_location, :only => [:bill_vote, :status_text, :user_stats_ajax, :atom, :atom_blogs, :atom_news, :atom_top20, :atom_top_commentary, :atom_topblogs, :atom_topnews]
 
   TITLE_MAX_LENGTH = 150
@@ -135,6 +136,8 @@ class BillController < ApplicationController
   end
   
   def hot
+    @page_title = "Hot Bills on OpenCongress"
+    @sort = 'hot'
     @bill = Bill.find_by_ident(params[:bill]) if params[:bill]
     @p_title_class = "bills"
     @p_title = "Bills"
@@ -171,9 +174,7 @@ class BillController < ApplicationController
 #    end
 #     get_counts
      respond_to do |format|
-       format.html {
-         render :action => 'index'
-       }
+       format.html
        format.xml {
          render :xml => @results.to_xml(:methods => [:title_full_common, :status, :ident], 
                                         :except => [:rolls, :hot_bill_category_id, :summary, 
@@ -764,4 +765,46 @@ private
     res
   end
 
+  def get_range
+    params[:timeframe] ||= "30days"
+    case params[:timeframe]
+      when "1day"
+        @range = 1.day.to_i
+      when "5days"
+        @range = 5.days.to_i
+      when "30days"
+        @range = 30.days.to_i
+      when "1year"
+        @range = 1.year.to_i
+      when "AllTime"
+        @range = 20.years.to_i
+    end
+    
+    @perc_diff_in_days = Bill.percentage_difference_in_periods(@range).to_f
+    
+    @time_collection = [["1 Day","1day"],
+                        ["5 Days","5days"],
+                        ["30 Days","30days"],
+                        ["1 Year","1year"],
+                        ["All Time","AllTime"]]
+  end
+  
+  def get_counts
+    objects = @results.collect{|p| p.id}
+    object_type = @results.first.class.to_s
+    if object_type == "Person"
+       @blog_count = {}
+       Commentary.count(:id, :conditions => ["is_news = ? AND commentariable_type = 'Person' AND commentariable_id in (?) AND created_at > ?", false, objects, @range.seconds.ago], :group => "commentariable_id").each {|x| @blog_count[x[0]] = x[1]}
+       @news_count = {}
+       Commentary.count(:id, :conditions => ["is_news = ? AND commentariable_type = 'Person' AND commentariable_id in (?) AND created_at > ?", true, objects, @range.seconds.ago], :group => "commentariable_id").each {|x| @news_count[x[0]] = x[1]}
+   elsif object_type == "Bill"
+       @blog_count = {}
+       Commentary.count(:id, :conditions => ["is_news = ? AND commentariable_type = 'Bill' AND commentariable_id in (?) AND created_at > ?", false, objects, @range.seconds.ago], :group => "commentariable_id").each {|x| @blog_count[x[0]] = x[1]}
+       @news_count = {}
+       Commentary.count(:id, :conditions => ["is_news = ? AND commentariable_type = 'Bill' AND commentariable_id in (?) AND created_at > ?", true, objects, @range.seconds.ago], :group => "commentariable_id").each {|x| @news_count[x[0]] = x[1]}
+   else   
+      @blog_count = {}
+      @news_count = {}
+    end
+  end
 end

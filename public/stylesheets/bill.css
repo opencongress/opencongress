@@ -2060,8 +2060,10 @@ border-left: 1px solid #eee;
 text-align: left;
 }
 
-#bill.hot #content th.main_title {
-padding: 0px 0 0 16px;
+th.main_title,
+th.vote_td {
+padding: 11px 10px 0 16px !important;
+vertical-align: top !important;
 }
 
 

@@ -10,11 +10,6 @@ GIT
   specs:
     acts-as-taggable-on (2.0.6)
 
-PATH
-  remote: /tmp/formageddon
-  specs:
-    formageddon (0.0.0)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -127,8 +122,6 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mechanize (1.0.0)
-      nokogiri (>= 1.2.1)
     mediacloth (0.0.3)
     mime-types (1.16)
     mysql (2.8.1)
@@ -229,7 +222,6 @@ DEPENDENCIES
   closure-compiler
   cucumber (= 0.8.5)
   cucumber-rails
-  formageddon (= 0.0.0)!
   govkit
   haml
   hoptoad_notifier
@@ -237,7 +229,6 @@ DEPENDENCIES
   htmlentities
   jammit
   json
-  mechanize
   mediacloth
   mysql
   newrelic_rpm

@@ -56,10 +56,6 @@ gem "okkez-open_id_authentication"
 
 gem "acts-as-taggable-on", :git => 'http://github.com/mbleigh/acts-as-taggable-on.git'
 
-### temp just for showing to drm
-gem 'mechanize'
-gem "formageddon", '0.0.0', :require => 'formageddon', :path => '/tmp/formageddon'
-
 gem 'rspec'
 gem 'rspec-rails', '~> 2.4'
 gem 'cucumber', '0.8.5'

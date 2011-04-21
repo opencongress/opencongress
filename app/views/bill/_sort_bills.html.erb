@@ -32,8 +32,8 @@
 			<%= link_to "<span>Most on Blogs</span>".html_safe, {:action => 'most_commentary'}, :type => 'blog', :types => @types, :class => 'button silver huge fullyrounded push-right clear' %>
 		</li>
 
-		<li id="hot" class="<%= @sort == 'hot' ? "active" : "" %>">
-			<%= link_to "<span>Major Bills & Issue</span>".html_safe, {:action => 'hot'}, :types => @types, :class => 'button silver huge fullyrounded push-right' %>
+		<li id="major" class="<%= @sort == 'major' ? "active" : "" %>">
+			<%= link_to "<span>Major Bills & Issue</span>".html_safe, {:action => 'major'}, :types => @types, :class => 'button silver huge fullyrounded push-right' %>
 		</li>
 
 

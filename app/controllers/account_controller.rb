@@ -54,11 +54,14 @@ class AccountController < ApplicationController
       session[:return_to] = "#{Settings.wiki_base_url}/#{params[:wiki_return_page]}"
     end
 
+    # if the return_to is nil at this point, try setting it with the referrer
+    if session[:return_to].nil?
+      session[:return_to] = request.referer
+    end
+    
     if using_open_id?
        open_id_authentication(params[:openid_url])
     elsif params[:user]
-      beer = User.find_by_login(params[:user][:login])
-      logger.info beer.to_yaml
       self.current_user = User.authenticate(params[:user][:login], params[:user][:password])
       return unless request.post?
     else
@@ -95,7 +98,6 @@ class AccountController < ApplicationController
         user.accepted_tos = true
         user.accepted_tos_at = Time.now
         user.save!
-        logger.info "USER TOS: #{user.accepted_tos}"
         self.current_user = User.find_by_id(user.id)
         redirect_back_or_default(user_profile_path(:login => current_user.login))
       end

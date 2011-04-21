@@ -297,8 +297,8 @@ float: none;
 width: inherit;
 padding: 30px;
 }
-#bill.hot li#senate,
-#bill.hot li#house {
+#bill.major li#senate,
+#bill.major li#house {
 display: none;
 }
 .hot_category {
@@ -1205,7 +1205,7 @@ width: 100%;
 
 .popular .bills_list, 
 .most_commentary .bills_list,
-.hot #the-bills,
+.major #the-bills,
 .pending #the-bills,
 div.single {
 padding: 0 35px;

@@ -114,13 +114,13 @@ class BillController < ApplicationController
     end
   end
 
-  def hot
+  def major
     @page_title = "Hot Bills"
-    @sort = 'hot'
+    @sort = 'major'
     @title_desc = SiteText.find_title_desc('bill_hot')
     @types = 'all'
     @hot_bill_categories = PvsCategory.find(:all, :order => :name)
-    @atom = {'link' => "/bill/hot.rss", 'title' => "Hot Bills"}
+    @atom = {'link' => "/bill/major.rss", 'title' => "Major Bills"}
     @congress = params[:congress].blank? ? Settings.default_congress : params[:congress]
     
     respond_to do |format|
@@ -129,10 +129,61 @@ class BillController < ApplicationController
       format.rss {
         @hot_bills = Bill.find(:all, :conditions => ["session = ? AND hot_bill_category_id IS NOT NULL", @congress], 
                            :order => 'introduced DESC')
-        render :action => 'hot.rxml'
+        render :action => 'major.rxml'
       }
     end
   end
+  
+  def hot
+    @bill = Bill.find_by_ident(params[:bill]) if params[:bill]
+    @p_title_class = "bills"
+    @p_title = "Bills"
+    order = params[:order] ||= "desc" 
+    if order == "asc"
+      @p_subtitle = "Least "
+    else
+      @p_subtitle = "Most "
+    end
+    sort = params[:sort] ||= "vote_count_1"
+    case sort
+      when "vote_count_1"
+        @p_subtitle << "Votes"
+      when "current_support_pb"
+        @p_subtitle << "Support"
+      when "support_count_1"
+        @p_subtitle << "Opposition"
+      when "bookmark_count_1"
+        @p_subtitle << "Users Tracking"
+      when "total_comments"
+        @p_subtitle << "Comments"
+    end
+    page = params[:page] ||= 1
+
+#    @cache_key = "br-bill-#{page}-#{sort}-#{order}-#{logged_in? ? current_user.login : nil}-#{@range}-#{params[:q].blank? ? nil : Digest::SHA1.hexdigest(params[:q])}"
+#    unless read_fragment(@cache_key)
+      unless params[:q].blank?
+        @r_count = Bill.count_all_by_most_user_votes_for_range(@range, :search => prepare_tsearch_query(params[:q]), :order => sort + " " + order, :per_page => 20, :page => page)
+        @results = Bill.find_all_by_most_user_votes_for_range(@range, :search => prepare_tsearch_query(params[:q]), :order => sort + " " + order, :total_entries => @r_count).paginate(:per_page => 20, :page => page)        
+      else
+        @r_count = Bill.count_all_by_most_user_votes_for_range(@range, :order => sort + " " + order, :per_page => 20, :page => page)
+        @results = Bill.find_all_by_most_user_votes_for_range(@range, :order => sort + " " + order, :total_entries => @r_count).paginate(:page => page, :per_page => 20) 
+      end
+#    end
+#     get_counts
+     respond_to do |format|
+       format.html {
+         render :action => 'index'
+       }
+       format.xml {
+         render :xml => @results.to_xml(:methods => [:title_full_common, :status, :ident], 
+                                        :except => [:rolls, :hot_bill_category_id, :summary, 
+                                                    :current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, 
+                                                    :support_count_2, :vote_count_2]) 
+       }
+
+     end
+  end
+    
 
   def list_bill_type
     congress = params[:congress] ? params[:congress] : Settings.default_congress

@@ -32,7 +32,7 @@
 			<%= link_to "<span>Most on Blogs</span>".html_safe, {:action => 'most_commentary'}, :type => 'blog', :types => @types, :class => 'button silver small fullyrounded push-right clear' %>
 		</li>
 		<li id="major" class="<%= @sort == 'major' ? "active" : "" %>">
-			<%= link_to "<span>Major Bills & Issue</span>".html_safe, {:action => 'major'}, :types => @types, :class => 'button silver small fullyrounded push-right' %>
+			<%= link_to "<span>Major Bills by Issue Area</span>".html_safe, {:action => 'major'}, :types => @types, :class => 'button silver small fullyrounded push-right' %>
 		</li>
 
 		<li id="hot" class="<%= @sort == 'hot' ? "active" : "" %>">

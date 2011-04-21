@@ -2172,8 +2172,8 @@ float: left;
 }
 
 #sortby {
-width: 400px;
 float: right;
+padding-right: 25px;
 }
 
 

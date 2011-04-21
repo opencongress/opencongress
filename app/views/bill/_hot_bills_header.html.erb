@@ -6,7 +6,7 @@
   <%= hidden_field_tag :timeframe, params[:timeframe] %>
   <%= hidden_field_tag :page, 1 %>
   <span><%= text_field_tag :q, h(params[:q]) %></span>
-  <%= submit_tag "Search" %>
+  <%= submit_tag "Search", :class => 'button silver small' %>
 </form>  
 
 

@@ -31,7 +31,6 @@
 		<li id="blog" class="<%= @sort == 'blog' ? "active" : "" %>">
 			<%= link_to "<span>Most on Blogs</span>".html_safe, {:action => 'most_commentary'}, :type => 'blog', :types => @types, :class => 'button silver small fullyrounded push-right clear' %>
 		</li>
-
 		<li id="major" class="<%= @sort == 'major' ? "active" : "" %>">
 			<%= link_to "<span>Major Bills & Issue</span>".html_safe, {:action => 'major'}, :types => @types, :class => 'button silver small fullyrounded push-right' %>
 		</li>
@@ -44,7 +43,9 @@
 		<li id="pending" class="<%= @sort == 'pending' ? "active" : "" %>">
 			<%= link_to "<span>Recent Action</span>".html_safe, {:action => 'pending'}, :types => @types, :class => 'button silver small fullyrounded push-right' %>
 		</li>
+
 		<li id="gpo" class="<%= @sort == 'gpo' ? "active" : "" %>">
+
 			<%= link_to "<span>Rushed Bills</span>".html_safe, {:action => 'readthebill'}, :types => @types, :class => 'button silver small fullyrounded push-right' %>
 		</li>
 

@@ -20,25 +20,30 @@
 </div>
  <ul class="sorts">
 		<li id="all" class="inline <%= @sort == 'all' ? "active" : "" %>">
-			<%= link_to "<span>All Bills - By Date Introduced</span>".html_safe, { :action => 'all' }, :types => @types, :class => 'button silver small fullyrounded push-right' %>
+			<%= link_to "<span>All Bills - By Date Introduced</span>".html_safe, { :action => 'all' }, :types => @types, :class => 'button silver huge fullyrounded push-right' %>
 	 	</li>
  		<li id="popular" class="<%= @sort == 'popular' ? "active" : "" %>">
-			<%= link_to "<span>Most-View Bills</span>".html_safe, {:action => 'popular'}, :types => @types, :class => 'button silver small fullyrounded push-right' %>
+			<%= link_to "<span>Most-Viewed</span>".html_safe, {:action => 'popular'}, :types => @types, :class => 'button silver huge fullyrounded push-right' %>
 		</li>
 		<li id="news" class="<%= @sort == 'news' ? "active" : "" %>">
-			<%= link_to "<span>Most in the News</span>".html_safe, {:action => 'most_commentary'}, :type => 'news', :types => @types, :class => 'button silver small fullyrounded push-right' %>
+			<%= link_to "<span>Most in the News</span>".html_safe, {:action => 'most_commentary'}, :type => 'news', :types => @types, :class => 'button silver huge fullyrounded push-right' %>
 		</li>
 		<li id="blog" class="<%= @sort == 'blog' ? "active" : "" %>">
-			<%= link_to "<span>Most on Blogs</span>".html_safe, {:action => 'most_commentary'}, :type => 'blog', :types => @types, :class => 'button silver small fullyrounded push-right clear' %>
+			<%= link_to "<span>Most on Blogs</span>".html_safe, {:action => 'most_commentary'}, :type => 'blog', :types => @types, :class => 'button silver huge fullyrounded push-right clear' %>
 		</li>
+
 		<li id="hot" class="<%= @sort == 'hot' ? "active" : "" %>">
-			<%= link_to "<span>Major Bills & Issue</span>".html_safe, {:action => 'hot'}, :types => @types, :class => 'button silver small fullyrounded push-right' %>
+			<%= link_to "<span>Major Bills & Issue</span>".html_safe, {:action => 'hot'}, :types => @types, :class => 'button silver huge fullyrounded push-right' %>
 		</li>
+
+
+    
+  
 		<li id="pending" class="<%= @sort == 'pending' ? "active" : "" %>">
-			<%= link_to "<span>Pending (Recent Action)</span>".html_safe, {:action => 'pending'}, :types => @types, :class => 'button silver small fullyrounded push-right' %>
+			<%= link_to "<span>Pending Bills - (Recent Action)</span>".html_safe, {:action => 'pending'}, :types => @types, :class => 'button silver huge fullyrounded push-right' %>
 		</li>
 		<li id="gpo" class="<%= @sort == 'gpo' ? "active" : "" %>">
-			<%= link_to "<span>Rushed Bills</span>".html_safe, {:action => 'readthebill'}, :types => @types, :class => 'button silver small fullyrounded push-right' %>
+			<%= link_to "<span>Rushed Bills</span>".html_safe, {:action => 'readthebill'}, :types => @types, :class => 'button silver huge fullyrounded push-right' %>
 		</li>
 
 	</ul>

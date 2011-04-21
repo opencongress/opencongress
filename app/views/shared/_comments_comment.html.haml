@@ -68,16 +68,15 @@
         = link_to '<span>Link</span>'.html_safe, preview ? '#' : url_for(comment.commentable_link.merge({:goto_comment => comment.id})), { :class => 'small_button' }
         = link_to_remote "<span>Reply</span>".html_safe, :url => preview ? '#' : {:controller => 'comments', :action => 'showcomfield', :parent_id => comment.id, :object => object.id, :type => object.class.to_s}, :update => "com_" + comment.id.to_s, :complete => "Element.toggle('com_" + comment.id.to_s + "');", :html => { :class => 'small_button' }
             
-        .rate_comm{ :id => "rate_comment_#{comment.id.to_s}" }   
-        
-        - if logged_in?
-          - comment_score = myscores.select{ |s| s.comment_id == comment.id }.first
-          = link_to_remote("<span>+</span>".html_safe, :url => preview ? '#' : {:controller => 'comments', :action => :rate, :id => comment.id, :value => 10}, :html => {:id => 'plus', :class => "small_button#{comment_score.score < 5 ? ' active' : '' unless comment_score.nil?}"})
-        - else
-          = link_to("<span>+</span>".html_safe, :url => preview ? '#' : login_url(:modal => true), :id => 'plus', :class => 'small_button rate_trigger' )
+        .rate_comm{ :id => "rate_comment_#{comment.id.to_s}" }
+          - if logged_in?
+            - comment_score = myscores.select{ |s| s.comment_id == comment.id }.first
+            = link_to("<span>+</span>".html_safe, preview ? '#' : {:controller => 'comments', :action => :rate, :id => comment.id, :value => 10}, {:id => 'plus', :class => "small_button#{comment_score.score < 5 ? ' active' : '' unless comment_score.nil?}", :remote => true})
+          - else
+            = link_to("<span>+</span>".html_safe, preview ? '#' : login_url(:modal => true), { :id => 'plus', :class => 'small_button rate_trigger' })
 
-        %span.comm_score{ :id => "comm_score_#{comment.id}", :style => "color:#{integer_to_color(comment.score_count_sum.to_i)}" }
-          = comment.score_count_sum
+          %span.comm_score{ :id => "comm_score_#{comment.id}", :style => "color:#{integer_to_color(comment.score_count_sum.to_i)}" }
+            = comment.score_count_sum
 
       - unless comment.plus_score_count == 0  && comment.minus_score_count == 0
         :javascript
@@ -114,7 +113,7 @@
 
       - if comment.user && comment.user.small_picture
         .comment_pic
-          %img{ :src => "/images/users/%{h(comment.user.login)}_s.jpg" }
+          %img{ :src => "/images/users/#{comment.user.login}_s.jpg" }
           - unless comment.user.user_role.id ==  0
             %br
             = image_tag 'staff.png', :alt => "OpenCongress Staff"

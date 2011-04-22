@@ -5,15 +5,18 @@ GIT
     simple_captcha (0.1.1)
 
 GIT
+  remote: git://github.com/opencongress/formageddon.git
+  revision: 9af12611f567dea5eb712fd49bd0b004b13a99fa
+  specs:
+    formageddon (0.0.0)
+      haml
+      mechanize
+
+GIT
   remote: http://github.com/mbleigh/acts-as-taggable-on.git
   revision: 2752cfef4c66318d0925fbe880d5392ad188bb50
   specs:
     acts-as-taggable-on (2.0.6)
-
-PATH
-  remote: /tmp/formageddon
-  specs:
-    formageddon (0.0.0)
 
 GEM
   remote: http://rubygems.org/
@@ -112,7 +115,7 @@ GEM
       builder
     hpricot (0.8.4)
     htmlentities (4.3.0)
-    httparty (0.7.4)
+    httparty (0.7.7)
       crack (= 0.1.8)
     i18n (0.5.0)
     jammit (0.6.0)
@@ -122,7 +125,7 @@ GEM
       stackdeck (~> 0.2)
     json (1.5.1)
     json_pure (1.4.6)
-    mail (2.2.15)
+    mail (2.2.17)
       activesupport (>= 2.3.6)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -145,7 +148,7 @@ GEM
     okkez-open_id_authentication (1.0.1)
       ruby-openid (>= 2.0.4)
     open4 (1.0.1)
-    pg (0.10.1)
+    pg (0.11.0)
     polyglot (0.3.1)
     rack (1.2.2)
     rack-mount (0.6.14)
@@ -186,7 +189,7 @@ GEM
     ruby-openid (2.1.8)
     rubyzip (0.9.4)
     selenium-client (1.2.18)
-    selenium-webdriver (0.1.4)
+    selenium-webdriver (0.2.0)
       childprocess (>= 0.1.7)
       ffi (>= 1.0.7)
       json_pure
@@ -229,7 +232,7 @@ DEPENDENCIES
   closure-compiler
   cucumber (= 0.8.5)
   cucumber-rails
-  formageddon (= 0.0.0)!
+  formageddon!
   govkit
   haml
   hoptoad_notifier

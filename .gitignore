@@ -7,6 +7,6 @@ db/schema.rb
 public/assets/*
 public/robots.txt
 vendor/plugins/acts_as_solr/solr/tmp/*
-vendor/plugins/acts_as_solr/solr/solr/**/*
+vendor/plugins/acts_as_solr/solr/solr/data/**/*
 vendor/plugins/acts_as_solr/solr/logs/*
 .bundle

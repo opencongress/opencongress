@@ -11,7 +11,8 @@
 <% else %>
   <% if @parent %>
     $('comment_reply_<%= @parent.id %>').update("<%= escape_javascript(render :partial => 'shared/comments_comment', :locals => {:object => @object, :comment => @comment, :myscores => Array.new}) %>")
-    new Effect.Highlight('comment_reply_<%= @parent.id %>', {duration: 2});
+    new Effect.ScrollTo('comment_reply_<%= @parent.id %>');
+    new Effect.Highlight('comment_reply_<%= @parent.id %>', {duration: 4});
   <% else %>
     <% if @object.kind_of? BillTextNode %>
       $('bill_text_comments_<%= @object.nid %>').update("<%= escape_javascript(render :partial => 'shared/comments_list', :locals => {:object => @object, :master_container => "bill_text_comments_#{@object.nid}"}) %>")
@@ -19,7 +20,7 @@
       $('comments_master').update("<%= escape_javascript(render :partial => 'shared/comments_list', :locals => {:object => @object, :master_container => 'comments_master'}) %>")
     <% end %>
     new Effect.ScrollTo('com<%= @comment.id %>');
-    new Effect.Highlight('com<%= @comment.id %>', {duration: 2});
+    new Effect.Highlight('com<%= @comment.id %>', {duration: 4});
     if ($('no_comments') != undefined) {
       $('no_comments').hide();
     }

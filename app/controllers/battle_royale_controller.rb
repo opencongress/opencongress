@@ -7,6 +7,9 @@ class BattleRoyaleController < ApplicationController
   end
 
   def senators
+    redirect_to :controller => 'people', :action => 'senators'
+    return
+    
     @person = Person.find(params[:person]) if params[:person]
 
     sort = params[:sort] ||= "bookmark_count_1"
@@ -56,6 +59,9 @@ class BattleRoyaleController < ApplicationController
   end
 
   def representatives
+    redirect_to :controller => 'people', :action => 'representatives'
+    return
+    
     @person = Person.find(params[:person]) if params[:person]
 
     sort = params[:sort] ||= "bookmark_count_1"
@@ -105,6 +111,10 @@ class BattleRoyaleController < ApplicationController
   end
 
   def issues
+    ## phasing out battle royale
+    redirect_to :controller => 'issue', :action => 'index'
+    return
+    
     @issue = Subject.find(params[:issue]) if params[:issue]
     
     sort = params[:sort] ||= "bookmark_count_1"

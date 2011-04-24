@@ -26,10 +26,10 @@
 			<%= link_to "<span>Most-View Bills</span>".html_safe, {:action => 'popular'}, :types => @types, :class => 'button silver small fullyrounded push-right' %>
 		</li>
 		<li id="news" class="<%= @sort == 'news' ? "active" : "" %>">
-			<%= link_to "<span>Most in the News</span>".html_safe, {:action => 'most_commentary'}, :type => 'news', :types => @types, :class => 'button silver small fullyrounded push-right' %>
+			<%= link_to "<span>Most in the News</span>".html_safe, bill_most_commentary_path(:type => 'news', :types => @types), :class => 'button silver small fullyrounded push-right' %>
 		</li>
 		<li id="blog" class="<%= @sort == 'blog' ? "active" : "" %>">
-			<%= link_to "<span>Most on Blogs</span>".html_safe, {:action => 'most_commentary'}, :type => 'blog', :types => @types, :class => 'button silver small fullyrounded push-right clear' %>
+			<%= link_to "<span>Most on Blogs</span>".html_safe, bill_most_commentary_path(:type => 'blogs', :types => @types), :class => 'button silver small fullyrounded push-right clear' %>
 		</li>
 		<li id="hot" class="<%= @sort == 'hot' ? "active" : "" %>">
 			<%= link_to "<span>Major Bills & Issue</span>".html_safe, {:action => 'hot'}, :types => @types, :class => 'button silver small fullyrounded push-right' %>

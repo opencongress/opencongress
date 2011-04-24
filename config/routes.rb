@@ -72,7 +72,7 @@ OpenCongress::Application.routes.draw do |map|
     b.connect 'bill/compare_by_issues', :action => 'compare_by_issues'
     b.connect 'bill/hot_temp', :action => 'hot_temp'
     b.connect 'bill/most/viewed', :action => 'popular'  
-    b.connect 'bill/most/:type', :action => 'most_commentary'
+    b.bill_most_commentary 'bill/most/:type', :action => 'most_commentary'
     b.connect 'bill/atom_top20', :action => 'atom_top20'
     b.connect 'bill/atom/most/viewed', :action => 'atom_top20'
     b.connect 'bill/atom/most/:type', :action => 'atom_top_commentary'

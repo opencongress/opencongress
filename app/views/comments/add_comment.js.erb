@@ -18,6 +18,7 @@
     <% else %>
       $('comments_master').update("<%= escape_javascript(render :partial => 'shared/comments_list', :locals => {:object => @object, :master_container => 'comments_master'}) %>")
     <% end %>
+    new Effect.ScrollTo('com<%= @comment.id %>');
     new Effect.Highlight('com<%= @comment.id %>', {duration: 2});
     if ($('no_comments') != undefined) {
       $('no_comments').hide();

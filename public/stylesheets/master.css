@@ -4266,12 +4266,13 @@ span.over{
   /* For IE 5.5 - 7 */
   filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#aeafb2');
   clear: both;
-
+  color: #313131 !important;
+  font-size: 12px !important;
 }
 
 #comment-preview p {
-  color: #313131;
-  font-size: 12px;
+  color: #313131 !important;
+  font-size: 12px !important;
 }
 
 .health_box{

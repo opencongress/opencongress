@@ -2,93 +2,95 @@
 
 <%= render :partial => "hot_bills_header" %>
 
-<table class="thunderdome" cellspacing="0" cellpadding="0">
-  <tr>
-  <th class="main_title">Bills</th>
-    <th class="votes_td"><%= th_sort("<span>Votes</span>".html_safe, "vote_count_1", params[:order]) %></th>
-    <th class="ayes_td aye"><%= th_sort("<span>Ayes</span>".html_safe, "current_support_pb", params[:order]) %></th>
-    <th class="nays_td nay"><%= th_sort("<span>Nays</span>".html_safe, "support_count_1", params[:order]) %></th>
-    <th class="tracking_td"><%= th_sort("<span>Tracking</span>".html_safe, "bookmark_count_1", params[:order]) %></th>
-    <th class="comments_td"><%= th_sort("<span>Comments</span>".html_safe, "total_comments", params[:order]) %></th>
-    <th colspan="2" class="vote_td">Vote!</th></tr>
-  <% count = 0 %>
-  <% (2..params[:page].to_i).each {|i| count += 20} %>
-  <% @results.each do |bill| %>
-    <% count += 1 %>
+<% cache(@cache_key, :expires_in => 20.minutes) do %>
+  <table class="thunderdome" cellspacing="0" cellpadding="0">
     <tr>
+    <th class="main_title">Bills</th>
+      <th class="votes_td"><%= th_sort("<span>Votes</span>".html_safe, "vote_count_1", params[:order]) %></th>
+      <th class="ayes_td aye"><%= th_sort("<span>Ayes</span>".html_safe, "current_support_pb", params[:order]) %></th>
+      <th class="nays_td nay"><%= th_sort("<span>Nays</span>".html_safe, "support_count_1", params[:order]) %></th>
+      <th class="tracking_td"><%= th_sort("<span>Tracking</span>".html_safe, "bookmark_count_1", params[:order]) %></th>
+      <th class="comments_td"><%= th_sort("<span>Comments</span>".html_safe, "total_comments", params[:order]) %></th>
+      <th colspan="2" class="vote_td">Vote!</th></tr>
+    <% count = 0 %>
+    <% (2..params[:page].to_i).each {|i| count += 20} %>
+    <% @results.each do |bill| %>
+      <% count += 1 %>
+      <tr>
       
-	  <td valign="top" class="bills" id="<%= bill.ident %>">
-		  <span class="count bill"><%= count %></span>
+  	  <td valign="top" class="bills" id="<%= bill.ident %>">
+  		  <span class="count bill"><%= count %></span>
 
-		<% if bill.is_vote_hot?(@perc_diff_in_days,bill.vote_count_2.to_f, bill.vote_count_1.to_f, @range) %>
-		   <%= image_tag 'hot.jpg', :style => 'border:0;vertical-align:middle;' %>
-		<% elsif bill.is_vote_cold?(@perc_diff_in_days,bill.vote_count_2.to_f, bill.vote_count_1.to_f, @range) %>
-		   <%= image_tag 'cold.jpg', :style => 'border:0;vertical-align:middle;' %>
-		<% end %>
+  		<% if bill.is_vote_hot?(@perc_diff_in_days,bill.vote_count_2.to_f, bill.vote_count_1.to_f, @range) %>
+  		   <%= image_tag 'hot.jpg', :style => 'border:0;vertical-align:middle;' %>
+  		<% elsif bill.is_vote_cold?(@perc_diff_in_days,bill.vote_count_2.to_f, bill.vote_count_1.to_f, @range) %>
+  		   <%= image_tag 'cold.jpg', :style => 'border:0;vertical-align:middle;' %>
+  		<% end %>
 		
-	  <div class="title">
-						<% unless bill.title_popular_only.blank? %>
-            <%= link_to "#{bill.typenumber} - #{truncate(bill.title_popular_only, :length => 103)}", :controller => 'bill', :action => 'show', :id => bill.ident %>        
-						<% else %>                                 
-						<%= link_to "#{bill.typenumber}", :controller => 'bill', :action => 'show', :id => bill.ident %>        
-         		<% end %>
+  	  <div class="title">
+  						<% unless bill.title_popular_only.blank? %>
+              <%= link_to "#{bill.typenumber} - #{truncate(bill.title_popular_only, :length => 103)}", :controller => 'bill', :action => 'show', :id => bill.ident %>        
+  						<% else %>                                 
+  						<%= link_to "#{bill.typenumber}", :controller => 'bill', :action => 'show', :id => bill.ident %>        
+           		<% end %>
            
            
-		<% unless bill.title_official.blank? %>
-			<p><%= truncate(bill.title_official, :length => 145) %></p>
-		<% end %>
+  		<% unless bill.title_official.blank? %>
+  			<p><%= truncate(bill.title_official, :length => 145) %></p>
+  		<% end %>
            
-             </div>        
+               </div>        
 
-<!-- <span class="date">(<%= bill.session.ordinalize %> Congress)</span>  -->
+  <!-- <span class="date">(<%= bill.session.ordinalize %> Congress)</span>  -->
 
-<span class="status">            
+  <span class="status">            
             
-            <span><%= temp_url_strip(bill.status) %></span>
+              <span><%= temp_url_strip(bill.status) %></span>
             
-            <span class="date"><%= bill.last_action.formatted_date if bill.last_action %></span>
-						<% unless bill.session == Settings.default_congress %>
-              <span>(<%= bill.session.ordinalize %> congress)</span>
-            <% end %>
+              <span class="date"><%= bill.last_action.formatted_date if bill.last_action %></span>
+  						<% unless bill.session == Settings.default_congress %>
+                <span>(<%= bill.session.ordinalize %> congress)</span>
+              <% end %>
 
-			</span>
+  			</span>
 			
-			<span class="linkage">
-          <%= link_to "<span class='news_11'>News</span>".html_safe, :controller => 'bill', :action => 'news', :id => bill.ident %>
-     		  <%= link_to "<span class='blogs_11'>Blogs</span>".html_safe, :controller => 'bill', :action => 'blogs', :id => bill.ident %>
-     		  <%= link_to "<span class='comments_11'>Comments</span>".html_safe, :controller => 'bill', :action => 'comments', :id => bill.ident %>
-     		</span>
+  			<span class="linkage">
+            <%= link_to "<span class='news_11'>News</span>".html_safe, :controller => 'bill', :action => 'news', :id => bill.ident %>
+       		  <%= link_to "<span class='blogs_11'>Blogs</span>".html_safe, :controller => 'bill', :action => 'blogs', :id => bill.ident %>
+       		  <%= link_to "<span class='comments_11'>Comments</span>".html_safe, :controller => 'bill', :action => 'comments', :id => bill.ident %>
+       		</span>
         
-      </td>
-      <td valign="top" class="br_td"><%= bill.vote_count_1 || "0" %></td>
-	  <td valign="top" class="br_td"><span id="<%= "support_#{bill.id}"%>" class="aye"><%= bill.vote_count_1.to_i - bill.support_count_1.to_i %></span></td>
-      <td class="br_td"><span id="<%= "oppose_#{bill.id}"%>" class="nay"><%= bill.support_count_1 %></span></td>
-      <td class="br_td"><%= bill.bookmark_count_1 || "0" %></td>
-      <td class="br_td"><%= bill.total_comments || "0" %></td>
+        </td>
+        <td valign="top" class="br_td"><%= bill.vote_count_1 || "0" %></td>
+  	  <td valign="top" class="br_td"><span id="<%= "support_#{bill.id}"%>" class="aye"><%= bill.vote_count_1.to_i - bill.support_count_1.to_i %></span></td>
+        <td class="br_td"><span id="<%= "oppose_#{bill.id}"%>" class="nay"><%= bill.support_count_1 %></span></td>
+        <td class="br_td"><%= bill.bookmark_count_1 || "0" %></td>
+        <td class="br_td"><%= bill.total_comments || "0" %></td>
 
-      <td id="<%= "vote_results_#{bill.id.to_s}"%>" class="br_td vote_line">
-				<%# @bs =  bill.total_support %>
-	      <%# @bo = bill.total_opposed %>
-         <%= draw_inline_user_bill_vote(bill) %>      
-      </td>
-   </tr>
-   <tr style="display:none;">
-    <td colspan="8"><p id="vote_message_<%= bill.id.to_s %>"></p></td>
-   </tr>
-  <% end %>
-</table>
+        <td id="<%= "vote_results_#{bill.id.to_s}"%>" class="br_td vote_line">
+  				<%# @bs =  bill.total_support %>
+  	      <%# @bo = bill.total_opposed %>
+           <%= draw_inline_user_bill_vote(bill) %>      
+        </td>
+     </tr>
+     <tr style="display:none;">
+      <td colspan="8"><p id="vote_message_<%= bill.id.to_s %>"></p></td>
+     </tr>
+    <% end %>
+  </table>
 
-<script type="text/javascript">
-$j().ready(function() {
-	$j('#login_vote').jqm({ajax:'@href', trigger: 'a.modal_fire'});
-});
-</script>
-<div id="login_vote" class="jqmWindow">
-</div>
+  <script type="text/javascript">
+  $j().ready(function() {
+  	$j('#login_vote').jqm({ajax:'@href', trigger: 'a.modal_fire'});
+  });
+  </script>
+  <div id="login_vote" class="jqmWindow">
+  </div>
 
-<div class="padding floatright">
-	<%= will_paginate @results %>
-</div>
+  <div class="padding floatright">
+  	<%= will_paginate @results %>
+  </div>
+<% end %>
 
 <% if @bill %>
    <% javascript_tag :defer => 'defer' do -%>

@@ -1080,7 +1080,7 @@ class Person < ViewableObject
     
     date_method = :"entered_top_#{type}"
     (people.select {|p| p.stats.send(date_method).nil? }).each do |pv|
-      pv.stats.write_attribute(date_method, Time.now)
+      pv.stats.send("#{date_method}=", Time.now)
       pv.save
     end
     

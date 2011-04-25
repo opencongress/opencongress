@@ -162,8 +162,8 @@ class BillController < ApplicationController
     end
     page = params[:page] ||= 1
 
-#    @cache_key = "br-bill-#{page}-#{sort}-#{order}-#{logged_in? ? current_user.login : nil}-#{@range}-#{params[:q].blank? ? nil : Digest::SHA1.hexdigest(params[:q])}"
-#    unless read_fragment(@cache_key)
+    @cache_key = "br-bill-#{page}-#{sort}-#{order}-#{logged_in? ? current_user.login : nil}-#{@range}-#{params[:q].blank? ? nil : Digest::SHA1.hexdigest(params[:q])}"
+    unless read_fragment(@cache_key)
       unless params[:q].blank?
         @r_count = Bill.count_all_by_most_user_votes_for_range(@range, :search => prepare_tsearch_query(params[:q]), :order => sort + " " + order, :per_page => 20, :page => page)
         @results = Bill.find_all_by_most_user_votes_for_range(@range, :search => prepare_tsearch_query(params[:q]), :order => sort + " " + order, :total_entries => @r_count).paginate(:per_page => 20, :page => page)        
@@ -171,18 +171,18 @@ class BillController < ApplicationController
         @r_count = Bill.count_all_by_most_user_votes_for_range(@range, :order => sort + " " + order, :per_page => 20, :page => page)
         @results = Bill.find_all_by_most_user_votes_for_range(@range, :order => sort + " " + order, :total_entries => @r_count).paginate(:page => page, :per_page => 20) 
       end
-#    end
-#     get_counts
-     respond_to do |format|
-       format.html
-       format.xml {
-         render :xml => @results.to_xml(:methods => [:title_full_common, :status, :ident], 
-                                        :except => [:rolls, :hot_bill_category_id, :summary, 
-                                                    :current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, 
-                                                    :support_count_2, :vote_count_2]) 
-       }
+    end
 
-     end
+    respond_to do |format|
+      format.html
+      format.xml {
+        render :xml => @results.to_xml(:methods => [:title_full_common, :status, :ident], 
+                                       :except => [:rolls, :hot_bill_category_id, :summary, 
+                                                   :current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, 
+                                                   :support_count_2, :vote_count_2]) 
+      }
+
+    end
   end
  
   def hot_bill_vote

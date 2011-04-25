@@ -726,7 +726,7 @@ class Bill < ViewableObject
     
       date_method = :"entered_top_#{type}"
       (bills.select {|b| b.stats.send(date_method).nil? }).each do |bv|
-        bv.stats.write_attribute(date_method, Time.now)
+        bv.stats.send("#{date_method}=", Time.now)
         bv.save
       end
     

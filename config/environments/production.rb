@@ -31,15 +31,4 @@ OpenCongress::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-  
-  if defined?(PhusionPassenger)
-      PhusionPassenger.on_event(:starting_worker_process) do |forked|
-          if forked
-              # We're in smart spawning mode.
-              Rails.cache.instance_variable_get(:@data).reset
-          else
-              # We're in conservative spawning mode. We don't need to do anything.
-          end
-      end
-  end
 end

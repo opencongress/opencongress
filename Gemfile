@@ -29,6 +29,9 @@ gem "hoptoad_notifier"
 gem 'ruby-openid'
 gem 'rack-openid'
 
+# memcache
+gem 'memcache-client'
+
 # markup tools and parsers
 gem 'simple-rss'
 gem 'mediacloth'

@@ -123,6 +123,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mediacloth (0.0.3)
+    memcache-client (1.8.5)
     mime-types (1.16)
     mysql (2.8.1)
     net-scp (1.0.4)
@@ -230,6 +231,7 @@ DEPENDENCIES
   jammit
   json
   mediacloth
+  memcache-client
   mysql
   newrelic_rpm
   oauth

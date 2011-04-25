@@ -899,7 +899,7 @@ class Bill < ViewableObject
         top_recips_pac ON people.osid=top_recips_pac.recipient_osid
      WHERE people.title=?
      ORDER BY contrib_total DESC
-     LIMIT ?", groups_ids, CURRENT_OPENSECRETS_CYCLE, groups_ids, CURRENT_OPENSECRETS_CYCLE, title, num])
+     LIMIT ?", groups_ids, Settings.current_opensecrets_cycle, groups_ids, Settings.current_opensecrets_cycle, title, num])
   end
   
   class << self

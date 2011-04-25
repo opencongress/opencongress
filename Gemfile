@@ -30,6 +30,7 @@ gem 'ruby-openid'
 gem 'rack-openid'
 
 # memcache
+gem 'memcache'
 gem 'memcache-client'
 
 # markup tools and parsers
@@ -53,23 +54,10 @@ gem 'oauth'
 
 gem 'will_paginate', '~> 3.0.pre2'
 
-#gem "acts_as_solr"
 gem "validates_captcha"
 gem "okkez-open_id_authentication"
 
 gem "acts-as-taggable-on", :git => 'git://github.com/mbleigh/acts-as-taggable-on.git'
-
-gem 'rspec'
-gem 'rspec-rails', '~> 2.4'
-gem 'cucumber', '0.8.5'
-gem 'cucumber-rails'
-gem 'webrat'
-gem 'selenium-client'
-
-gem 'capybara'
-gem 'capybara-envjs'
-
-gem 'autotest'
 
 # Testing
 group :test, :development do

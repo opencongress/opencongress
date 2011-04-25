@@ -123,6 +123,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mediacloth (0.0.3)
+    memcache (1.2.13)
     memcache-client (1.8.5)
     mime-types (1.16)
     mysql (2.8.1)
@@ -231,6 +232,7 @@ DEPENDENCIES
   jammit
   json
   mediacloth
+  memcache
   memcache-client
   mysql
   newrelic_rpm
@@ -240,7 +242,6 @@ DEPENDENCIES
   rack-openid
   rails (= 3.0.6)
   rmagick (= 2.13.1)
-  rspec
   rspec-rails (~> 2.4)
   ruby-openid
   selenium-client

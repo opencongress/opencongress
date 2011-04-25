@@ -1,4 +1,4 @@
-class FacebookPublisher < Facebooker::Rails::Publisher   
+class FacebookPublisher #< Facebooker::Rails::Publisher   
   
   def profile_update(user, fb_user) 
     send_as :profile 

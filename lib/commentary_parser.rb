@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/../app/models/page_view'
-require File.dirname(__FILE__) + '/../app/models/person.rb'
-require File.dirname(__FILE__) + '/../app/models/bill.rb'
+#require File.dirname(__FILE__) + '/../app/models/page_view.rb'
+#require File.dirname(__FILE__) + '/../app/models/person.rb'
+#require File.dirname(__FILE__) + '/../app/models/bill.rb'
 
 require 'uri'
 require 'rexml/document'
@@ -163,7 +163,7 @@ module CommentaryParser
     OCLogger.log "Looking for technorati cosmos items matching '#{query}'"
 
     host = "api.technorati.com"
-    path = "/cosmos?key=#{API_KEYS["technorati_api_key"]}&limit=50&language=en&query=#{query}"
+    path = "/cosmos?key=#{ApiKeys.technorati_api_key}&limit=50&language=en&query=#{query}"
     
     get_technorati_items_for_host_and_path(host, path)
   end
@@ -172,7 +172,7 @@ module CommentaryParser
     OCLogger.log "Looking for technorati search items matching '#{query}'"
 
     host = "api.technorati.com"
-    path = "/search?key=#{API_KEYS["technorati_api_key"]}&limit=50&language=en&query=#{query}"
+    path = "/search?key=#{ApiKeys.technorati_api_key}&limit=50&language=en&query=#{query}"
     
     get_technorati_items_for_host_and_path(host, path)
   end
@@ -180,10 +180,10 @@ module CommentaryParser
   def CommentaryParser.get_daylife_items_for_query(query)
     OCLogger.log "Looking for daylife search items matching '#{URI.unescape(query)}'"
 
-    signature = Digest::MD5.hexdigest("#{API_KEYS["daylife_access_key"]}#{API_KEYS["daylife_secret"]}#{URI.unescape(query)}")
+    signature = Digest::MD5.hexdigest("#{ApiKeys.daylife_access_key}#{ApiKeys.daylife_secret}#{URI.unescape(query)}")
 
     host = "freeapi.daylife.com"
-    path = "/xmlrest/publicapi/4.3/search_getRelatedArticles?query=#{query}&accesskey=#{API_KEYS["daylife_access_key"]}&signature=#{signature}"
+    path = "/xmlrest/publicapi/4.3/search_getRelatedArticles?query=#{query}&accesskey=#{ApiKeys.daylife_access_key}&signature=#{signature}"
     
     get_daylife_items_for_host_and_path(host, path)
   end

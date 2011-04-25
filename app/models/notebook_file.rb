@@ -1,15 +1,15 @@
 class NotebookFile < NotebookItem
 
-  has_attachment :content_type => ['application/pdf', :image,'application/msword', 'text/plain'],     
-    :storage => :file_system, 
-    :max_size => 1024.kilobytes, 
-    :resize_to => '600x>', 
-    :thumbnails => { 
-      :small => '48x48>',
-      :medium => '200x>'       
-    } 
-  
-  validates_as_attachment 
+  # has_attachment :content_type => ['application/pdf', :image,'application/msword', 'text/plain'],     
+  #   :storage => :file_system, 
+  #   :max_size => 1024.kilobytes, 
+  #   :resize_to => '600x>', 
+  #   :thumbnails => { 
+  #     :small => '48x48>',
+  #     :medium => '200x>'       
+  #   } 
+  # 
+  # validates_as_attachment 
 
   #validates_presence_of :url, :title
   

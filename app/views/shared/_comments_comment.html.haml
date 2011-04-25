@@ -127,6 +127,6 @@
 
     - if logged_in? && current_user.user_role.can_moderate_articles
       %div{ :style => "clear:left;" }
-        %form.button-to{ :action => "/comments/censor/#{h comment.id }",  :method => "post"}
+        %form.button-to{ :action => "/comments/censor/#{h comment.id }",  :method => "get"}
           = submit_tag "Censor", :value => "Censor"
           = submit_tag "Censor+BanIP", :value => "Censor+BanIP"

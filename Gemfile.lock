@@ -46,6 +46,7 @@ GEM
       activemodel (= 3.0.6)
       activesupport (= 3.0.6)
     activesupport (3.0.6)
+    addressable (2.2.5)
     arel (2.0.9)
     autotest (4.4.6)
       ZenTest (>= 4.4.1)
@@ -86,10 +87,14 @@ GEM
       cucumber (>= 0.8.0)
     culerity (0.2.15)
     diff-lcs (1.1.2)
+    em-websocket (0.2.1)
+      addressable (>= 2.1.1)
+      eventmachine (>= 0.12.9)
     envjs (0.3.8)
       johnson (>= 2.0.0.pre3)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    eventmachine (0.12.10)
     fastercsv (1.5.4)
     ffi (1.0.7)
       rake (>= 0.8.7)
@@ -100,6 +105,12 @@ GEM
       httparty (>= 0.5.2)
       json (>= 1.4.3)
       nokogiri (>= 1.4.4)
+    guard (0.3.4)
+      thor (~> 0.14.6)
+    guard-livereload (0.1.10)
+      em-websocket (~> 0.2.0)
+      guard (>= 0.2.2)
+      json (~> 1.5.1)
     haml (3.0.25)
     highline (1.6.1)
     hoptoad_notifier (2.4.9)
@@ -223,6 +234,8 @@ DEPENDENCIES
   cucumber (= 0.8.5)
   cucumber-rails
   govkit
+  guard
+  guard-livereload
   haml
   hoptoad_notifier
   hpricot

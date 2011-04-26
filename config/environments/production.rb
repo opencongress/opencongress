@@ -1,5 +1,6 @@
 OpenCongress::Application.configure do
   # Use a different cache store in production
+  config.cache_classes = true
   config.action_controller.perform_caching = true
   config.cache_store = :mem_cache_store, '10.13.219.6:11211', { :namespace => 'opencongress_production' }
 
@@ -10,6 +11,14 @@ OpenCongress::Application.configure do
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
 
+  # Use the git revision of this release
+  RELEASE_NUMBER = %x{cat REVISION | cut -c -7}.rstrip
+
+  # Enable serving of images, stylesheets, and javascripts from CloudFront
+  config.action_controller.asset_host = Proc.new {
+     |source, request| "#{request.ssl? ? 'https' : 'http'}://d1f0ywl7f2vxwh.cloudfront.net/r-#{RELEASE_NUMBER}"
+  }
+  
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
 

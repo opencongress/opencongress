@@ -14,7 +14,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
       if c.commentable_type == "Bill"
         xml.link    "rel" => "alternate", "href" => bill_url(commentable.to_param)
       end
-      xml.updated Time.at(c.updated_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+      xml.updated c.updated_at.strftime("%Y-%m-%dT%H:%M:%SZ")
       xml.content "type" => "html" do
         xml.text! c.comment
       end

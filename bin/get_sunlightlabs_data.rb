@@ -12,7 +12,7 @@ require 'open-uri'
 
 
 Person.all_sitting.each do |p|
-  url = "http://services.sunlightlabs.com/api/legislators.get.xml?apikey=#{API_KEYS['sunlightlabs_key']}&govtrack_id=#{p.id}"
+  url = "http://services.sunlightlabs.com/api/legislators.get.xml?apikey=#{ApiKeys.sunlightlabs_key}&govtrack_id=#{p.id}"
   puts "Getting Sublight Labs data for: #{p.name}"
   
   doc = REXML::Document.new open(url)

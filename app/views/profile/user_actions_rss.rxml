@@ -15,7 +15,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
           xml.title   'Tracking ' + i.bookmarkable.title_full_name_party_state
           xml.link    "rel" => "alternate", "href" => person_url(i.bookmarkable.ident)
           xml.id      i.bookmarkable.atom_id_as_entry
-          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.updated i.created_at.strftime("%Y-%m-%dT%H:%M:%SZ")
           xml.content "type" => "html" do
             xml.text! "View profile for #{link_to(i.bookmarkable.title_full_name_party_state, person_url(i.bookmarkable.ident))}"
           end
@@ -23,7 +23,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
           xml.title   'Tracking ' + i.bookmarkable.typenumber + (i.bookmarkable.title_short == i.bookmarkable.typenumber ? "" : ": " + i.bookmarkable.title_short)
           xml.link    "rel" => "alternate", "href" => bill_url(i.bookmarkable)
           xml.id      i.bookmarkable.atom_id_as_entry
-          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.updated i.created_at.strftime("%Y-%m-%dT%H:%M:%SZ")
           xml.content "type" => "html" do
             xml.text! i.bookmarkable.title_official + "<br/>View #{link_to "Bill", bill_url(i.bookmarkable)} on OpenCongress"
           end
@@ -31,7 +31,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
           xml.title   'Tracking the Issue of ' + i.bookmarkable.term
           xml.link    "rel" => "alternate", "href" => issue_url(i.bookmarkable.to_param)
           xml.id      i.bookmarkable.atom_id_as_entry
-          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.updated i.created_at.strftime("%Y-%m-%dT%H:%M:%SZ")
           xml.content "type" => "html" do
             xml.text! "View recent bills in issue area: #{link_to i.bookmarkable.term, issue_url(i.bookmarkable.to_param)} on OpenCongress"
           end
@@ -42,7 +42,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
           xml.title   'Commented on: ' + i.commentable.title_full_name_party_state
           xml.link    "rel" => "alternate", "href" => person_url(i.commentable.ident)
           xml.id      i.commentable.atom_id_as_entry
-          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.updated i.created_at.strftime("%Y-%m-%dT%H:%M:%SZ")
           xml.content "type" => "html" do
             xml.text! "#{@user.login} wrote: #{i.comment}<br/>View #{link_to "Person", person_url(i.commentable.ident)} on OpenCongress"
           end
@@ -50,7 +50,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
           xml.title   'Commented on: ' + i.commentable.typenumber + (i.commentable.title_short == i.commentable.typenumber ? "" : ": " + i.commentable.title_short)
           xml.link    "rel" => "alternate", "href" => bill_url(i.commentable)
           xml.id      i.commentable.atom_id_as_entry
-          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.updated i.created_at.strftime("%Y-%m-%dT%H:%M:%SZ")
           xml.content "type" => "html" do
             xml.text! "#{@user.login} wrote: #{i.comment}<br/>View #{link_to "Bill", bill_url(i.commentable)} on OpenCongress"
           end
@@ -58,7 +58,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
           xml.title   'Commented on the Issue of ' + i.commentable.term
           xml.link    "rel" => "alternate", "href" => issue_url(i.commentable.to_param)
           xml.id      i.commentable.atom_id_as_entry
-          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.updated i.created_at.strftime("%Y-%m-%dT%H:%M:%SZ")
           xml.content "type" => "html" do
             xml.text! "#{@user.login} wrote: #{i.comment}<br/>View #{link_to "Issue", issue_url(i.commentable.to_param)} on OpenCongress"
           end
@@ -66,7 +66,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
           xml.title   'Commented on Article: ' + i.commentable.title
           xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'article', :action => 'show', :id => i.commentable.to_param)
           xml.id      i.commentable.atom_id_as_entry
-          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.updated i.created_at.strftime("%Y-%m-%dT%H:%M:%SZ")
           xml.content "type" => "html" do
             xml.text! "#{@user.login} wrote: #{i.comment}<br/>View #{link_to "Article", :controller => 'article', :action => 'show', :id => i.commentable.to_param} on OpenCongress"
           end
@@ -75,7 +75,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
           xml.title   "Voted #{i.support == 0 ? "Aye" : "Nay"} on: " + i.bill.typenumber + (i.bill.title_short == i.bill.typenumber ? "" : ": " + i.bill.title_short)
           xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'bill', :action => 'show', :id => i.bill.ident)
           xml.id      i.bill.atom_id_as_entry
-          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.updated i.created_at.strftime("%Y-%m-%dT%H:%M:%SZ")
           xml.content "type" => "html" do
             xml.text! i.bill.title_official + "<br/>View #{link_to "Bill", bill_url(i.bill)} on OpenCongress"
           end
@@ -83,14 +83,14 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
           xml.title   "Gave " + i.person.title_full_name_party_state + " a #{i.rating * 10}% Approval Rating"
           xml.link    "rel" => "alternate", "href" => person_url(i.person.ident)
           xml.id      i.person.atom_id_as_entry
-          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.updated i.created_at.strftime("%Y-%m-%dT%H:%M:%SZ")
           xml.content "type" => "html" do
             xml.text! i.person.title_full_name_party_state
           end                   
         when 'Friend'
           xml.title   "Became Friends with " + i.friend.login
           xml.link    "rel" => "alternate", "href" => user_profile_url(i.friend.login)
-          xml.updated Time.at(i.created_at).strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.updated i.created_at.strftime("%Y-%m-%dT%H:%M:%SZ")
           xml.content "type" => "html" do
             xml.text! "View #{link_to(i.friend.login + "'s Profile", user_profile_url(i.friend.login))}"
           end    

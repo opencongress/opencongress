@@ -363,9 +363,6 @@ expires_in 60.minutes, :public => true
   end
 
   def do_render(object, parameters)
-#    require 'json/pure' 
-#     require 'json/add/rails'
-    require 'activesupport'
     case @format
     when 'xml'
       render :xml => object.to_xml(parameters)

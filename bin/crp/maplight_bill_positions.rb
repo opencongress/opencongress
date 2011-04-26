@@ -14,8 +14,7 @@ begin
   response = nil;
   http = Net::HTTP.new('maplight.org')
   http.start do |http|
-    #request = Net::HTTP::Get.new("/services_open_api/map.bill_positions_v1.xml?apikey=#{API_KEYS['maplight']}&jurisdiction=us&session=#{b.session}&prefix=#{b.bill_type}&number=#{b.number}")
-    request = Net::HTTP::Get.new("/services_open_api/map.bill_list_v1.xml?apikey=#{API_KEYS['maplight']}&jurisdiction=us&session=#{Settings.default_congress}&include_organizations=1&has_organizations=1")
+    request = Net::HTTP::Get.new("/services_open_api/map.bill_list_v1.xml?apikey=#{ApiKeys.maplight}&jurisdiction=us&session=#{Settings.default_congress}&include_organizations=1&has_organizations=1")
     response = http.request(request)
   end
     

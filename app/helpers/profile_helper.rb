@@ -97,10 +97,11 @@ module ProfileHelper
         unless rc_votes.empty?
           out_ar = []
           rc_votes.each do |rcv|
-            out_ar << (rcv.vote == "+" ? "Aye" : ( rcv.vote == "-" ? "Nay" : "Abstain" )) + ' <span style="font-size:10px;font-style:italics;">' + rcv.roll_call.roll_type + '</span>'
+            out_ar << (rcv.vote == "+" ? "Aye" : ( rcv.vote == "-" ? "Nay" : "Abstain" )) + ' : <span style="font-size:10px;font-style:italics;">' + rcv.roll_call.roll_type + '</span>'
           end
           out << out_ar.join('<br/>')
         end
+
       end
       if out == ""
         if vote_origin = bill.originating_chamber_vote
@@ -123,7 +124,7 @@ module ProfileHelper
           out << "None"
         end
       end
-      return out
+      return out.html_safe
   end
     
 end

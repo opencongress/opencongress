@@ -13,7 +13,7 @@ require 'o_c_logger'
 bill_types = {"hcres"=>"hc", "hres"=>"hr", "hr"=>"h", "hjres"=>"hj", "sjres"=>"sj", "scres"=>"sc", "s"=>"s", "sres"=>"sr"}
 
 begin
-  roll_doc = JSON.parse(open("http://drumbone.services.sunlightlabs.com/v1/api/rolls.json?apikey=#{API_KEYS['sunlightlabs_key']}&order=voted_at&sort=desc").read)
+  roll_doc = JSON.parse(open("http://drumbone.services.sunlightlabs.com/v1/api/rolls.json?apikey=#{ApiKeys.sunlightlabs_key}&order=voted_at&sort=desc").read)
   
   rolls = roll_doc['rolls']
   

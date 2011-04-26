@@ -66,6 +66,7 @@ OpenCongress::Application.routes.draw do |map|
     b.connect 'bill/popular', :action => 'popular'
     b.connect 'bill/major', :action => 'major'
     b.connect 'bill/major.rss', :action => 'major', :format => 'rss'
+    b.connect 'bill/hot', :action => 'hot'
     b.connect 'bill/readthebill', :action => 'readthebill'
     b.connect 'bill/readthebill.:format', :action => 'readthebill'
     b.connect 'bill/compare', :action => 'compare'

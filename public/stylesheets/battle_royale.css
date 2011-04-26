@@ -102,7 +102,7 @@ text-align: left;
 }
 
 #battle_royale #content th.main_title {
-padding: 0px 0 0 16px;
+padding: 0px 0 0 16px !important;
 }
 
 
@@ -213,7 +213,6 @@ float: left;
 }
 
 #sortby {
-width: 400px;
 float: right;
 }
 

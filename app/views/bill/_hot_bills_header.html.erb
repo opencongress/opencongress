@@ -1,0 +1,39 @@
+<div id="objects">
+
+<h3 class="battle <%= @p_title_class %>"><%= @p_title %><br /><em><%= @p_subtitle %></em></h3>
+
+<form id="search" action="" method="get">
+  <%= hidden_field_tag :timeframe, params[:timeframe] %>
+  <%= hidden_field_tag :page, 1 %>
+  <span><%= text_field_tag :q, h(params[:q]) %></span>
+  <%= submit_tag "Search", :class => 'button silver small' %>
+</form>  
+
+
+
+  <div id="sortby">
+  
+  <form id="timeframe_select" action="" method="get">
+  <label for="sort-by">Timeframe</label>
+  <select name="timeframe" onchange="submit();">
+  <%= options_for_select(@time_collection, params[:timeframe]) %>
+  </select>
+  </form>
+  
+  
+<span class="xml">
+    <%= link_to (image_tag "xml-trans.png", :style => "vertical-align:top;margin-top:2px;"), params.merge(:format => "xml"), :target => "_blank" %>
+</span>
+  </div>
+
+  
+</div>
+
+
+<% unless params[:order] && params[:order] == "asc" %>
+<% link_to "Show Ascending", :order => "asc" %>
+<% else %>
+<% link_to "Show Descending", :order => "desc" %>
+<% end %>
+
+

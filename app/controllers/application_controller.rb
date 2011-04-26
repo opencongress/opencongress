@@ -13,28 +13,6 @@ class ApplicationController < ActionController::Base
   before_filter :get_site_text_page
   before_filter :is_banned?
 
-  def paginate_collection(collection, options = {})
-    # from http://www.bigbold.com/snippets/posts/show/389
-    options[:page] = options[:page] || params[:page] || 1
-    default_options = {:per_page => 10, :page => 1}
-    options = default_options.merge options
-    
-    pages = Paginator.new self, collection.size, options[:per_page], options[:page]
-    first = pages.current.offset
-    last = [first + options[:per_page], collection.size].min
-    slice = collection[first...last]
-    return [pages, slice]
-  end
-
-  # this is only used for search results
-  # CLEANUP TASK: combine this and the above pagintor
-  def pages_for(size, options = {})
-    default_options = {:per_page => Settings.default_search_page_size }
-    options = default_options.merge options
-    pages = Paginator.new self, size, options[:per_page], (params[:page]||1)
-    pages
-  end
-
   def is_valid_email?(e, with_headers = false)
     if with_headers == false
       email_check = Regexp.new('^[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$')

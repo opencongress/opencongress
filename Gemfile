@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.6'
+gem 'rails', '3.0.7'
 
 # database gems -- need both pg and mysql for app and wiki
 gem 'pg'
@@ -29,6 +29,10 @@ gem "hoptoad_notifier"
 gem 'ruby-openid'
 gem 'rack-openid'
 
+# memcache
+gem 'memcache'
+gem 'memcache-client'
+
 # markup tools and parsers
 gem 'simple-rss'
 gem 'mediacloth'
@@ -51,7 +55,6 @@ gem 'oauth'
 
 gem 'will_paginate', '~> 3.0.pre2'
 
-#gem "acts_as_solr"
 gem "validates_captcha"
 gem "okkez-open_id_authentication"
 
@@ -88,5 +91,8 @@ group :test, :development do
   gem 'capybara-envjs'
 
   gem 'autotest'
+
+  gem 'guard'
+  gem 'guard-livereload'
 end
 

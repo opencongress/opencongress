@@ -14,17 +14,14 @@
       %h3 Bill Statistics on OpenCongress
       %ul
       - unless @position == 'tracking' or @bill.users_percentage_at_position(@position).nil?
-        %li
-          .users_position.message_builder_clickable
-            = "#{@bill.users_percentage_at_position(@position)}% of users #{@position} #{@bill.typenumber}"
-            %span.message_builder_add_text
-              = "#{@bill.users_percentage_at_position(@position)}% of users on OpenCongress.org, a free, non-partisan resource, #{@position} #{@bill.typenumber}."
-      %li
-        .page_views.message_builder_clickable
-          = "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times"
+        %li.users_position.message_builder_clickable          
+          = "#{@bill.users_percentage_at_position(@position)}% of users #{@position} #{@bill.typenumber}"
           %span.message_builder_add_text
-            = "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times on OpenCongress.org, a free, non-partisan resource."
-    
+            = "#{@bill.users_percentage_at_position(@position)}% of users on OpenCongress.org, a free, non-partisan resource, #{@position} #{@bill.typenumber}."
+      %li.page_views.message_builder_clickable
+        = "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times"      
+        = render 'will_add_text_box', :text => "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times on OpenCongress.org, a free, non-partisan resource."
+
     .section
       %h3 Contribution Data
       = render :partial => 'message_builder_contribution_data'
@@ -33,23 +30,21 @@
       %h3 Most-commented sections of the bill text
       %ul
         - @bill.bill_text_versions.last.top_comment_nodes(5).each do |n|
-          %li
-            %span.message_builder_clickable
-              %span.message_builder_add_text
-                = "specifically, this section of the legislation: \"#{n.bill_text}\","
-              = n.bill_text
+          %li.message_builder_clickable
+            = n.bill_text
             = " (#{n.comments.count} comments, "
             = link_to 'Link', bill_text_path(:id => n.bill_text_version.bill, :nid => n.nid, :version => n.bill_text_version.version)
             = ")"
+            
+            = render 'will_add_text_box', :text => "specifically, this section of the legislation: \"#{n.bill_text}\","
 
     .section
       %h3 Latest Action
       %ul
-        %li
+        %li.message_builder_clickable
           %strong= @bill.last_action.formatted_date
-          %span.message_builder_clickable
-            = @bill.last_action
-            %span.message_builder_add_text= "I know the most recent action for this bill is as follows: \"#{@bill.last_action}\" on #{@bill.last_action.formatted_date}"
+          = @bill.last_action
+          = render 'will_add_text_box', :text => "I know the most recent action for this bill is as follows: \"#{@bill.last_action}\" on #{@bill.last_action.formatted_date}"
     .section
       %h3 Highly Rated Blog Articles
       %ul
@@ -67,20 +62,15 @@
       %h3 Highest Rated User Comments
       %ul
         - @bill.comments.order("comments.plus_score_count - comments.minus_score_count DESC").limit(3).each do |c|
-          %li
+          %li.message_builder_clickable
             On
             = "#{c.created_at.strftime("%B %d, %Y")},"
             by
             = link_to c.user.login, user_profile_path(c.user.login)
             \-
-            %span.message_builder_clickable
-              = c.comment
-              %span.message_builder_add_text<
-                As noted by 
-                = "#{c.user.login}, "
-                a user on OpenCongress.org, on 
-                = "#{c.created_at.strftime("%B %d, %Y")}, "
-                = "\"#{c.comment}\""
+            = c.comment
+            = render 'will_add_text_box', :text => "As noted by #{c.user.login}, a user on OpenCongress.org, on #{c.created_at.strftime("%B %d, %Y")}, \"#{c.comment}\""
+            
   .contact_letter
     .contact_recipients
       You are sending this message to:
@@ -112,9 +102,17 @@
     %p On the next page, you may review your letter, share it with your community using social media, and track any official replies you may receive from members of Congress.
   
 :javascript
+  $j(".message_builder_clickable").hover(
+    function () {
+      $j(this).find("div.will_add_text_box:first").show();
+    },
+    function () {
+      $j(this).find("div.will_add_text_box:first").hide();
+    }
+  );
   $j(".message_builder_clickable").click(
     function () {
-      txt = $j(this).find("span.message_builder_add_text:first").text();
+      txt = $j(this).find("div.message_builder_add_text:first").text();
       msg = $j('div.formageddon_contact_form textarea:first')
       msg.val(msg.val()+"\n\n"+unescape(txt)); 
     }

@@ -125,7 +125,7 @@ clear: none;
   cursor: pointer;
 }
 
-.contact_message_builder .message_builder_add_text {
+.contact_message_builder .will_add_text_box {
   display: none;
 }
 .contact_message_builder strong {

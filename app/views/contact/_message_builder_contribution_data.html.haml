@@ -17,6 +17,5 @@
             %td
               %span.message_builder_clickable
                 = "$#{number_with_delimiter(contribution_amount)}"
-                %span.message_builder_add_text
-                  = "I know that you took $#{number_with_delimiter(contribution_amount)} from #{big.crp_interest_group.name.downcase} interest groups who #{position} #{@bill.typenumber}."
+                = render 'will_add_text_box', :text => "I know that you took $#{number_with_delimiter(contribution_amount)} from #{big.crp_interest_group.name.downcase} interest groups who #{position} #{@bill.typenumber}."
                   

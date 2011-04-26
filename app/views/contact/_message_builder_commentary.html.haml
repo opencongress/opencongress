@@ -4,9 +4,4 @@
   = a.date.strftime("%B %d, %Y")
   \-
   = a.excerpt.html_safe
-  %span.message_builder_add_text
-    As noted in
-    = a.source
-    on
-    = "#{a.date.strftime("%B %d, %Y")},"
-    = "\"#{a.excerpt}\""
+  = render 'will_add_text_box', :text => "As noted in #{a.source} on #{a.date.strftime("%B %d, %Y")}, \"#{a.excerpt}\""

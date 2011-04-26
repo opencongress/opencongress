@@ -48,6 +48,7 @@ clear: none;
 
 .formageddon_contact_form {
   float:left;
+width: 400px;
   padding: 20px;
 }
 .formageddon_contact_form label {
@@ -98,22 +99,42 @@ clear: none;
   border-right: 0;
 }
 .contact_letter {
-  width: 450px;
-  float: left;
+
+
   padding: 15px;
 }
 
 .contact_message_builder {
-  float: right;
+height: 600px;
+overflow: auto;
   width: 360px;
   background-color: #F7F7F7;
-  padding: 30px;
-  border: 1px dashed #ddd;
-  margin-bottom: 20px;
+  padding: 0px;
+  border: 1px solid #ddd;
+  margin: 400px 0 0;
+right: 0;
+position: absolute;
+
 }
+
+
+.contact_message_builder h2{
+padding: 20px 20px 0;
+font-weight: normal;
+}
+
+.instructions{
+padding: 0px 20px 0;
+color: #666 !important;
+}
+
 .contact_message_builder h3 {
-  text-decoration: underline !important;
-  margin-left: 0 !important;
+margin: 0;
+border-top: 1px solid #ddd;
+padding: 7px 20px;
+border-bottom: 1px solid #aaa;
+
+background: #fff;
 }
 
 .contact_message_builder .section {
@@ -154,6 +175,15 @@ clear: none;
 .contact_message_builder .contribution_data th.group_column {
   width: 175px;
 }
+
+.contact_recipients {
+  float: left;
+width: 400px;
+
+}
+
+
+
 .contact_recipients input {
   float: left;
   margin-right: 15px;

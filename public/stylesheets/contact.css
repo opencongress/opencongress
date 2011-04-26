@@ -49,6 +49,7 @@ clear: none;
 .formageddon_contact_form {
   float:left;
 width: 400px;
+margin-bottom: 900px;
   padding: 20px;
 }
 .formageddon_contact_form label {
@@ -282,3 +283,15 @@ float: left !important;
 .contact_congress .after_thread {
   padding-top: 20px;
 }
+
+
+.message_fields{
+height: 900px;
+width: 650px;
+left: 0;
+top: 900px;
+position: absolute;
+background: #999;
+
+}
+

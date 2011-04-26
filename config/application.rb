@@ -23,10 +23,10 @@ module OpenCongress
     # Disable delivery errors if you bad email addresses should just be ignored
     # config.action_mailer.raise_delivery_errors = false
     config.action_mailer.delivery_method = :sendmail
-    config.action_mailer.sendmail_settings = {
-      :location       => '/usr/sbin/sendmail',
-      :arguments      => '-XV -f bounces-main -i -t'
-    }
+    # config.action_mailer.sendmail_settings = {
+    #   :location       => '/usr/sbin/sendmail',
+    #   :arguments      => '-i'
+    # }
     
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.

@@ -4,6 +4,8 @@
 .contact_congress
   = render 'contact_congress_status_bar', :step => 2
 
+  %h3 OpenCongress Message Builder
+  
   .contact_message_builder
     %h2 OpenCongress Message Builder
     
@@ -16,8 +18,7 @@
       - unless @position == 'tracking' or @bill.users_percentage_at_position(@position).nil?
         %li.users_position.message_builder_clickable          
           = "#{@bill.users_percentage_at_position(@position)}% of users #{@position} #{@bill.typenumber}"
-          %span.message_builder_add_text
-            = "#{@bill.users_percentage_at_position(@position)}% of users on OpenCongress.org, a free, non-partisan resource, #{@position} #{@bill.typenumber}."
+          = render 'will_add_text_box', :text => "#{@bill.users_percentage_at_position(@position)}% of users on OpenCongress.org, a free, non-partisan resource, #{@position} #{@bill.typenumber}."
       %li.page_views.message_builder_clickable
         = "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times"      
         = render 'will_add_text_box', :text => "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times on OpenCongress.org, a free, non-partisan resource."

@@ -1,13 +1,12 @@
-%li
+%li.message_builder_clickable
   = link_to a.title.html_safe, a.url
   \-
   = a.date.strftime("%B %d, %Y")
   \-
-  %span.message_builder_clickable
-    = a.excerpt.html_safe
-    %span.message_builder_add_text
-      As noted in
-      = a.source
-      on
-      = "#{a.date.strftime("%B %d, %Y")},"
-      = "\"#{a.excerpt}\""
+  = a.excerpt.html_safe
+  %span.message_builder_add_text
+    As noted in
+    = a.source
+    on
+    = "#{a.date.strftime("%B %d, %Y")},"
+    = "\"#{a.excerpt}\""

@@ -73,5 +73,8 @@ group :test, :development do
   gem 'capybara-envjs'
 
   gem 'autotest'
+
+  gem 'guard'
+  gem 'guard-livereload'
 end
 

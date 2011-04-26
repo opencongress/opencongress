@@ -20,7 +20,7 @@ class CommitteeReport < ActiveRecord::Base
 
   def rss_date
     if self.reported_at
-      Time.at(self.reported_at) 
+      self.reported_at
     else
       nil
     end

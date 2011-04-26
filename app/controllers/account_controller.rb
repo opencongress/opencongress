@@ -19,7 +19,7 @@ class AccountController < ApplicationController
   end
 
   def get_user_email
-    if params[:id] == API_KEYS['wiki_callback_key']
+    if params[:id] == ApiKeys.wiki_callback_key
       user = User.find(:first, :conditions => ["lower(login) = ?", params[:login].downcase])
       render :text => "#{user.email}"
     else
@@ -28,7 +28,7 @@ class AccountController < ApplicationController
   end
 
   def get_user_full_name
-    if params[:id] == API_KEYS['wiki_callback_key']
+    if params[:id] == ApiKeys.wiki_callback_key
       user = User.find(:first, :conditions => ["lower(login) = ?", params[:login].downcase])
       render :text => "#{user.full_name}"
     else
@@ -317,7 +317,7 @@ class AccountController < ApplicationController
 
         cookie_domain = '.opencongress.org'
 
-        data = "wpName=#{CGI::escape(current_user.login)}&wpPassword=#{API_KEYS['wiki_pass']}&wpLoginattempt=Log%20in&#{API_KEYS['wiki_key']}=true"
+        data = "wpName=#{CGI::escape(current_user.login)}&wpPassword=#{ApiKeys.wiki_pass}&wpLoginattempt=Log%20in&#{ApiKeys.wiki_key}=true"
 
         headers = {
           'Content-Type' => 'application/x-www-form-urlencoded'

@@ -23,7 +23,7 @@ require 'iconv'
 require 'fileutils'
 require 'cgi'
 
-AUTH_PART = "&key=#{API_KEYS['civicrm_system_key']}&api_key=#{API_KEYS['civicrm_user_key']}"
+AUTH_PART = "&key=#{ApiKeys.civicrm_system_key}&api_key=#{ApiKeys.civicrm_user_key}"
 
 # The group_id of OpenCongress in CiviCRM
 OC_CIVICRM_GROUP_ID = "4"

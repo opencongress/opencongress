@@ -145,8 +145,8 @@ class SearchController < ApplicationController
       bill_titles << [ bill.title_full_common, bill.title_full_common, bill ]
     end
      
-    @people_hits = names.select{|h| h[0] =~ /#{params[:value]}/i }
-    @bill_hits = bill_titles.select{|h| h[0] =~ /#{params[:value]}/i }
+    @people_hits = names.select{|h| h[0] =~ /#{Regexp.escape(params[:value])}/i }
+    @bill_hits = bill_titles.select{|h| h[0] =~ /#{Regexp.escape(params[:value])}/i }
 
     render :layout => false
   end

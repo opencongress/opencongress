@@ -7,6 +7,9 @@ class BattleRoyaleController < ApplicationController
   end
 
   def senators
+    redirect_to :controller => 'people', :action => 'senators'
+    return
+    
     @person = Person.find(params[:person]) if params[:person]
 
     sort = params[:sort] ||= "bookmark_count_1"
@@ -56,6 +59,9 @@ class BattleRoyaleController < ApplicationController
   end
 
   def representatives
+    redirect_to :controller => 'people', :action => 'representatives'
+    return
+    
     @person = Person.find(params[:person]) if params[:person]
 
     sort = params[:sort] ||= "bookmark_count_1"
@@ -105,6 +111,9 @@ class BattleRoyaleController < ApplicationController
   end
 
   def issues
+    redirect_to :controller => 'issues', :action => 'index'
+    return
+
     @issue = Subject.find(params[:issue]) if params[:issue]
     
     sort = params[:sort] ||= "bookmark_count_1"
@@ -148,44 +157,6 @@ class BattleRoyaleController < ApplicationController
     @bill = Bill.find_by_id(params[:id])
     render :action => 'show_bill_details', :layout => false
   end
-  
-  def br_bill_vote
-     @bill = Bill.find_by_ident(params[:bill])
-       @bv = current_user.bill_votes.find_by_bill_id(@bill.id)
-       unless @bv
-         @bv = current_user.bill_votes.create({:bill_id => @bill.id, :user_id  => current_user.id, :support => (params[:id] == "1" ? 1 : 0) }) unless @bv
-         update = {(params[:id] == "1" ? 'oppose' : 'support') => '+'}
-       else
-         if params[:id] == "1"
-            if @bv.support == true
-               @bv.destroy
-               update = {'oppose' => '-'}
-            else
-               @bv.support = true
-               @bv.save
-               update = {'oppose' => '+', 'support' => '-'}
-            end
-         else
-            if @bv.support == false
-               @bv.destroy
-               update = {'support' => '-'}
-            else
-               @bv.support = false
-               @bv.save
-               update = {'support' => '+', 'oppose' => '-'}
-            end
-         end
-       end                                         
-       render :update do |page|
-         page.replace_html 'vote_results_' + @bill.id.to_s, :partial => "/bill/bill_votes"
-           
-           update.each_pair do |view, op|
-             page << "$('#{view}_#{@bill.id.to_s}').update(parseInt($('#{view}_#{@bill.id.to_s}').innerHTML)#{op}1)"
-             page.visual_effect :pulsate, "#{view}_#{@bill.id.to_s}"
-           end
-       end
-     
-   end
     
   private
 
@@ -212,8 +183,6 @@ class BattleRoyaleController < ApplicationController
                         ["30 Days","30days"],
                         ["1 Year","1year"],
                         ["All Time","AllTime"]]
-
-    
   end
   
   def get_counts
@@ -222,22 +191,17 @@ class BattleRoyaleController < ApplicationController
     if object_type == "Person"
        @blog_count = {}
        Commentary.count(:id, :conditions => ["is_news = ? AND commentariable_type = 'Person' AND commentariable_id in (?) AND created_at > ?", false, objects, @range.seconds.ago], :group => "commentariable_id").each {|x| @blog_count[x[0]] = x[1]}
-#       logger.info @blog_count.to_yaml
        @news_count = {}
        Commentary.count(:id, :conditions => ["is_news = ? AND commentariable_type = 'Person' AND commentariable_id in (?) AND created_at > ?", true, objects, @range.seconds.ago], :group => "commentariable_id").each {|x| @news_count[x[0]] = x[1]}
-#       logger.info @news_count.to_yaml
    elsif object_type == "Bill"
        @blog_count = {}
        Commentary.count(:id, :conditions => ["is_news = ? AND commentariable_type = 'Bill' AND commentariable_id in (?) AND created_at > ?", false, objects, @range.seconds.ago], :group => "commentariable_id").each {|x| @blog_count[x[0]] = x[1]}
-       logger.info @blog_count.to_yaml
        @news_count = {}
        Commentary.count(:id, :conditions => ["is_news = ? AND commentariable_type = 'Bill' AND commentariable_id in (?) AND created_at > ?", true, objects, @range.seconds.ago], :group => "commentariable_id").each {|x| @news_count[x[0]] = x[1]}
-       logger.info @news_count.to_yaml
    else   
       @blog_count = {}
       @news_count = {}
     end
-
   end
 
 end

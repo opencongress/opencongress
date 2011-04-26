@@ -1,3 +1,5 @@
+require 'memcache_expiration'
+
 module FragmentCacheSweeper
   # not really a sweeper, more of a deleter
   

@@ -12,8 +12,8 @@ margin-top: 13px;
 
 #heading{
 padding: 15px;
-background: url('/images/bill_heading_blue.png') left top;
-   _background: url('/images/bill_heading_blue.gif') repeat left top;
+background: url('../images/bill_heading_blue.png') left top;
+_background: url('../images/bill_heading_blue.gif') repeat left top;
 height: 45px !important; 
 border-bottom: 1px solid #abd1e2;
 overflow: hidden;

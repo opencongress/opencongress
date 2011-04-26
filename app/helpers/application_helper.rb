@@ -220,26 +220,26 @@ EOT
   
   def opensecrets_button(person = nil)
     if person
-      %Q{<h3>See more campaign contribution data by visiting #{person.full_name}'s profile on <a class="arrow" target="_blank" href="http://www.opensecrets.org/politicians/summary.asp?cid=#{person.osid}">OpenSecrets</a></h3>}
+      %Q{<h3>See more campaign contribution data by visiting #{person.full_name}'s profile on <a class="arrow" target="_blank" href="http://www.opensecrets.org/politicians/summary.asp?cid=#{person.osid}">OpenSecrets</a></h3>}.html_safe
     else
-      %Q{<h3>See more at </h3><br /><a class="arrow" target="_blank" href="http://www.opensecrets.org">OpenSecrets</a><br />}
+      %Q{<h3>See more at </h3><br /><a class="arrow" target="_blank" href="http://www.opensecrets.org">OpenSecrets</a><br />}.html_safe
     end
   end
 
   def maplight_link(bill = nil)
     if bill
-      '<div class="maplight"><a href="http://maplight.org">Data on bill support and opposition provided by <img src="/images/maplight-trans.png" alt="Maplight.org" /></a></div>'
+      '<div class="maplight"><a href="http://maplight.org">Data on bill support and opposition provided by <img src="/images/maplight-trans.png" alt="Maplight.org" /></a></div>'.html_safe
     else
-      '<h3>For more info about the campaign contributions behind the bills in Congress, visit <a class="arrow" target="_blank" href="http://maplight.org"><img class="noborder maplight" src="/images/maplight-trans.png" alt="Maplight.org" /></a>.</h3>'
+      '<h3>For more info about the campaign contributions behind the bills in Congress, visit <a class="arrow" target="_blank" href="http://maplight.org"><img class="noborder maplight" src="/images/maplight-trans.png" alt="Maplight.org" /></a>.</h3>'.html_safe
     end
   end
   
   def govtrack_button
-    '<div class="credit_button govtrack"><table cellspacing="0" cellpadding="0"><tr><td class="left" /><td class="center"><h3>Data made available by</h3> <a class="i" target="_blank" href="http://www.govtrack.us"><img src="/images/govtrack_button.gif" alt="Govtrack.US" /></a></td><td class="right" /></tr></table></div>'
+    '<div class="credit_button govtrack"><table cellspacing="0" cellpadding="0"><tr><td class="left" /><td class="center"><h3>Data made available by</h3> <a class="i" target="_blank" href="http://www.govtrack.us"><img src="/images/govtrack_button.gif" alt="Govtrack.US" /></a></td><td class="right" /></tr></table></div>'.html_safe
   end
 
   def openhouse_button
-    '<div class="credit_button openhouse"><table cellspacing="0" cellpadding="0"><tr><td class="left" /><td class="center"><h3>Help Open Congress</h3> <a class="i" target="_blank" href="http://www.theopenhouseproject.com/"><img src="/images/openhouse_button.gif" alt="The OpenHouse Project" /></a></td><td class="right" /></tr></table></div>'
+    '<div class="credit_button openhouse"><table cellspacing="0" cellpadding="0"><tr><td class="left" /><td class="center"><h3>Help Open Congress</h3> <a class="i" target="_blank" href="http://www.theopenhouseproject.com/"><img src="/images/openhouse_button.gif" alt="The OpenHouse Project" /></a></td><td class="right" /></tr></table></div>'.html_safe
   end
   
   def technorati_button
@@ -556,16 +556,17 @@ EOT
 			nah = yah
 		end
 		logger.info params[:controller]
-		if request.path_parameters['controller'] == "battle_royale"
+		if (params[:controller] == "bill" and params[:action] == 'hot') or
+		   (params[:controller] == "bill" and params[:action] == 'hot_bill_vote')
 			if logged_in?
 			"" +
 			link_to_remote("Aye",
-			{ :url => {:controller => 'battle_royale', :action => 'br_bill_vote', :bill => bill.ident, :id => 0}},
+			{ :url => {:controller => 'bill', :action => 'hot_bill_vote', :bill => bill.ident, :id => 0}},
 			:class => "aye #{yah}") +
 			"" +
 
 			link_to_remote("Nay",
-			{:url => {:controller => 'battle_royale', :action => 'br_bill_vote', :bill => bill.ident, :id => 1}},
+			{:url => {:controller => 'bill', :action => 'hot_bill_vote', :bill => bill.ident, :id => 1}},
 			:class => "nay #{nah}") +
 			""
       else

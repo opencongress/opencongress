@@ -6,6 +6,7 @@ class BillController < ApplicationController
   before_filter :get_params, :only => [:index, :all, :popular, :pending, :hot, :most_commentary, :readthebill]
   before_filter :bill_profile_shared, :only => [:show, :comments, :money, :votes, :actions, :amendments, :text, :actions_votes, :news_blogs, :videos, :news, :blogs, :news_blogs, :topnews, :topblogs]
   before_filter :aavtabs, :only => [:actions, :amendments, :votes, :actions_votes]
+  before_filter :get_range, :only => [:hot]
   skip_before_filter :store_location, :only => [:bill_vote, :status_text, :user_stats_ajax, :atom, :atom_blogs, :atom_news, :atom_top20, :atom_top_commentary, :atom_topblogs, :atom_topnews]
 
   TITLE_MAX_LENGTH = 150
@@ -135,6 +136,8 @@ class BillController < ApplicationController
   end
   
   def hot
+    @page_title = "Hot Bills on OpenCongress"
+    @sort = 'hot'
     @bill = Bill.find_by_ident(params[:bill]) if params[:bill]
     @p_title_class = "bills"
     @p_title = "Bills"
@@ -159,8 +162,8 @@ class BillController < ApplicationController
     end
     page = params[:page] ||= 1
 
-#    @cache_key = "br-bill-#{page}-#{sort}-#{order}-#{logged_in? ? current_user.login : nil}-#{@range}-#{params[:q].blank? ? nil : Digest::SHA1.hexdigest(params[:q])}"
-#    unless read_fragment(@cache_key)
+    @cache_key = "br-bill-#{page}-#{sort}-#{order}-#{logged_in? ? current_user.login : nil}-#{@range}-#{params[:q].blank? ? nil : Digest::SHA1.hexdigest(params[:q])}"
+    unless read_fragment(@cache_key)
       unless params[:q].blank?
         @r_count = Bill.count_all_by_most_user_votes_for_range(@range, :search => prepare_tsearch_query(params[:q]), :order => sort + " " + order, :per_page => 20, :page => page)
         @results = Bill.find_all_by_most_user_votes_for_range(@range, :search => prepare_tsearch_query(params[:q]), :order => sort + " " + order, :total_entries => @r_count).paginate(:per_page => 20, :page => page)        
@@ -168,22 +171,56 @@ class BillController < ApplicationController
         @r_count = Bill.count_all_by_most_user_votes_for_range(@range, :order => sort + " " + order, :per_page => 20, :page => page)
         @results = Bill.find_all_by_most_user_votes_for_range(@range, :order => sort + " " + order, :total_entries => @r_count).paginate(:page => page, :per_page => 20) 
       end
-#    end
-#     get_counts
-     respond_to do |format|
-       format.html {
-         render :action => 'index'
-       }
-       format.xml {
-         render :xml => @results.to_xml(:methods => [:title_full_common, :status, :ident], 
-                                        :except => [:rolls, :hot_bill_category_id, :summary, 
-                                                    :current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, 
-                                                    :support_count_2, :vote_count_2]) 
-       }
+    end
 
-     end
+    respond_to do |format|
+      format.html
+      format.xml {
+        render :xml => @results.to_xml(:methods => [:title_full_common, :status, :ident], 
+                                       :except => [:rolls, :hot_bill_category_id, :summary, 
+                                                   :current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, 
+                                                   :support_count_2, :vote_count_2]) 
+      }
+
+    end
   end
-    
+ 
+  def hot_bill_vote
+     @bill = Bill.find_by_ident(params[:bill])
+       @bv = current_user.bill_votes.find_by_bill_id(@bill.id)
+       unless @bv
+         @bv = current_user.bill_votes.create({:bill_id => @bill.id, :user_id  => current_user.id, :support => (params[:id] == "1" ? 1 : 0) }) unless @bv
+         update = {(params[:id] == "1" ? 'oppose' : 'support') => '+'}
+       else
+         if params[:id] == "1"
+            if @bv.support == true
+               @bv.destroy
+               update = {'oppose' => '-'}
+            else
+               @bv.support = true
+               @bv.save
+               update = {'oppose' => '+', 'support' => '-'}
+            end
+         else
+            if @bv.support == false
+               @bv.destroy
+               update = {'support' => '-'}
+            else
+               @bv.support = false
+               @bv.save
+               update = {'support' => '+', 'oppose' => '-'}
+            end
+         end
+       end                                         
+       render :update do |page|
+         page.replace_html 'vote_results_' + @bill.id.to_s, :partial => "/bill/bill_votes"
+           
+           update.each_pair do |view, op|
+             page << "$('#{view}_#{@bill.id.to_s}').update(parseInt($('#{view}_#{@bill.id.to_s}').innerHTML)#{op}1)"
+             page.visual_effect :pulsate, "#{view}_#{@bill.id.to_s}"
+           end
+       end
+   end   
 
   def list_bill_type
     congress = params[:congress] ? params[:congress] : Settings.default_congress
@@ -764,4 +801,46 @@ private
     res
   end
 
+  def get_range
+    params[:timeframe] ||= "30days"
+    case params[:timeframe]
+      when "1day"
+        @range = 1.day.to_i
+      when "5days"
+        @range = 5.days.to_i
+      when "30days"
+        @range = 30.days.to_i
+      when "1year"
+        @range = 1.year.to_i
+      when "AllTime"
+        @range = 20.years.to_i
+    end
+    
+    @perc_diff_in_days = Bill.percentage_difference_in_periods(@range).to_f
+    
+    @time_collection = [["1 Day","1day"],
+                        ["5 Days","5days"],
+                        ["30 Days","30days"],
+                        ["1 Year","1year"],
+                        ["All Time","AllTime"]]
+  end
+  
+  def get_counts
+    objects = @results.collect{|p| p.id}
+    object_type = @results.first.class.to_s
+    if object_type == "Person"
+       @blog_count = {}
+       Commentary.count(:id, :conditions => ["is_news = ? AND commentariable_type = 'Person' AND commentariable_id in (?) AND created_at > ?", false, objects, @range.seconds.ago], :group => "commentariable_id").each {|x| @blog_count[x[0]] = x[1]}
+       @news_count = {}
+       Commentary.count(:id, :conditions => ["is_news = ? AND commentariable_type = 'Person' AND commentariable_id in (?) AND created_at > ?", true, objects, @range.seconds.ago], :group => "commentariable_id").each {|x| @news_count[x[0]] = x[1]}
+   elsif object_type == "Bill"
+       @blog_count = {}
+       Commentary.count(:id, :conditions => ["is_news = ? AND commentariable_type = 'Bill' AND commentariable_id in (?) AND created_at > ?", false, objects, @range.seconds.ago], :group => "commentariable_id").each {|x| @blog_count[x[0]] = x[1]}
+       @news_count = {}
+       Commentary.count(:id, :conditions => ["is_news = ? AND commentariable_type = 'Bill' AND commentariable_id in (?) AND created_at > ?", true, objects, @range.seconds.ago], :group => "commentariable_id").each {|x| @news_count[x[0]] = x[1]}
+   else   
+      @blog_count = {}
+      @news_count = {}
+    end
+  end
 end

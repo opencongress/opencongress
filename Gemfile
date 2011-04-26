@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.6'
+gem 'rails', '3.0.7'
 
 # database gems -- need both pg and mysql for app and wiki
 gem 'pg'
@@ -29,6 +29,10 @@ gem "hoptoad_notifier"
 gem 'ruby-openid'
 gem 'rack-openid'
 
+# memcache
+gem 'memcache'
+gem 'memcache-client'
+
 # markup tools and parsers
 gem 'simple-rss'
 gem 'mediacloth'
@@ -51,7 +55,6 @@ gem 'oauth'
 
 gem 'will_paginate', '~> 3.0.pre2'
 
-#gem "acts_as_solr"
 gem "validates_captcha"
 gem "okkez-open_id_authentication"
 
@@ -59,8 +62,7 @@ gem "acts-as-taggable-on", :git => 'http://github.com/mbleigh/acts-as-taggable-o
 
 ### temp just for showing to drm
 gem 'mechanize'
-#gem "formageddon", '0.0.0', :require => 'formageddon', :path => '/Users/aross/pcf-work/gitbranches/formageddon'
-gem "formageddon", '0.0.0', :require => 'formageddon', :path => '/tmp/formageddon'
+gem "formageddon", :git => 'git://github.com/opencongress/formageddon.git'
 
 
 gem 'rspec'
@@ -89,5 +91,8 @@ group :test, :development do
   gem 'capybara-envjs'
 
   gem 'autotest'
+
+  gem 'guard'
+  gem 'guard-livereload'
 end
 

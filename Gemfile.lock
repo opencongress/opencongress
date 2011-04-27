@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/opencongress/formageddon.git
-  revision: 9af12611f567dea5eb712fd49bd0b004b13a99fa
+  revision: 7cd081fca8994c351108be2efc5b42ae6a8051cf
   specs:
     formageddon (0.0.0)
       haml

@@ -5,11 +5,13 @@
 
   = render 'contact_congress_status_bar', :step => 1
   
-  %p.behave 
+  %p.behave.center 
     You are contacting your representatives in Congress regarding:
     %strong= "#{@bill.typenumber} #{@bill.title_common}"
-  %p 
-    %h3 What is your position on this bill?
+  %br
+  %br
+  %p.margin-top 
+    %h3.center What is your position on this bill?
   
   .position_buttons.padding
     %a.button.blue.huge.margin-right{ :href => url_for(:action => 'bill', :position => 'support') }
@@ -18,3 +20,6 @@
       %span= "I Oppose #{@bill.typenumber}"
     %a.button.silver.huge.margin-right{ :href => url_for(:action => 'bill', :position => 'tracking') }
       %span= "I Am Tracking #{@bill.typenumber}"
+  %br
+  %br
+ 

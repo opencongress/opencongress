@@ -79,6 +79,7 @@ font-size: 10px;
 
 .contact_congress {
   padding: 35px;
+display: relative;
 }
 
 
@@ -90,13 +91,14 @@ font-size: 10px;
   width: 900px;
   float: left;
   margin: 0 15px 30px 15px;
-  background-color: #ddd;
+  background-color: #eee;
   font-size: 1.4em;
 
 
-  -moz-box-shadow: 0px 1px 5px #aeafb2;
-  -webkit-box-shadow: 0px 1px 5px #aeafb2;
-  box-shadow: 0px 1px 5px #aeafb2;
+border: 1px solid #afafaf;
+
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
 
 
 
@@ -110,15 +112,23 @@ font-size: 10px;
   float: left;
   width: 299px;
   text-align: center;
-  padding: 10px 0;
+  padding: 15px 0;
   color: #888;
   border-right: 1px solid #bbb;
 }
 
 .contact_congress .status_bar .active {
-  background-color: #cbe2f2;
+
   color: #333;
-  font-weight: bold;
+  font-weight: bold;  
+  background-color: #cbe2f2;
+
+-moz-box-shadow:inset 0 1px 2px rgba(255,255,255,.5);
+-webkit-box-shadow:inset 0 1px 2px rgba(255,255,255,.5);
+
+background: -webkit-gradient(linear, left top, left bottom, from(#b4d5ec), to(#d9efff)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #d9efff,  #b4d5ec); /* for firefox 3.6+ */
+
 }
 .contact_congress .status_bar .noborder {
   border-right: 0;
@@ -136,10 +146,10 @@ overflow: auto;
   background-color: #F7F7F7;
   padding: 0px 0 200px;
   border: 1px solid #ddd;
-  margin: 520px 0 0;
+  margin: 0;
 right: 0;
 position: absolute;
-
+top: 669px;
 }
 
 
@@ -221,19 +231,19 @@ padding: 15px 20px;
 
 
 .contact_message_builder h2{
-padding: 20px 20px 0;
+padding: 30px 35px 0;
 font-weight: normal;
 }
 
 .instructions{
-padding: 0px 20px 0;
+padding: 0px 35px 15px;
 color: #666 !important;
 }
 
 .contact_message_builder h3 {
 margin: 0;
 border-top: 1px solid #ddd;
-padding: 7px 20px;
+padding: 7px 35px;
 border-bottom: 1px solid #aaa;
 background: #fff;
 }
@@ -278,8 +288,8 @@ background: #fff;
   float: left;
 width: 360px;
 background: #eee;
--moz-border-radius: 3px;
--webkit-border-radius: 3px;
+-moz-border-radius: 7px;
+-webkit-border-radius: 7px;
 padding: 20px;
 }
 
@@ -307,23 +317,23 @@ padding: 20px;
 
 .contact_thread_share {
   padding: 10px 0 10px 10px;
-  margin-bottom: 30px;
   font-size: 12px;
   color: #888;
+  margin-right: -10px;
   line-height: 1em;
   height: 2em;
   background-color: #f8f8f8;
   position: relative;
   border: 1px solid #eee;
-  width: 270px;
+  width: 265px;
   float: right;
-  -moz-border-radius: 4px;
+
 }
 .contact_thread_share span {
   padding-top: 5px;
   display: block;
   float: left;
-  width: 150px;
+
 }
 .contact_thread_share .share {
   position: relative !important;
@@ -347,24 +357,33 @@ float: left !important;
 
 .contact_congress .after_steps {
   width: 954px;
-  margin: 30px 0 30px 0;
+  margin: 30px 0 30px 14px;
   float: left;
-  background: #f2f1cb;
-  -moz-box-shadow: 4px 4px 5px #aeafb2;
-  -webkit-box-shadow: 4px 4px 5px #aeafb2;
-  box-shadow: 4px 4px 5px #aeafb2;
-  /* For IE 8 */
-  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#aeafb2')";
-  /* For IE 5.5 - 7 */
-  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#aeafb2');
+
 }
 
 .contact_congress .after_steps .step {
-  width: 297px;
+  width: 257px;
   float: left;
-  border-right: 1px dashed #ccc;
-  padding: 10px;
+  padding: 20px 10px;
   height: 160px;
+-moz-border-radius: 5px;
+margin-right: 33px;
+-webkit-border-radius: 5px;
+
+  border: 1px solid #aaa;
+  border-top: 1px solid #dbdbdb;
+  border-bottom: 1px solid #777;
+  
+  -moz-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+  -webkit-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+  box-shadow:  0 1px 0px #ddd, inset 0 1px 0px #fff;
+  
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #eee); /* for firefox 3.6+ */
+
+
+
 }
 
 .contact_congress .after_steps .step h2 {
@@ -372,12 +391,18 @@ float: left !important;
 }
 
 .contact_congress .after_steps .step .desc {
-  margin-bottom: 15px;
+
   padding: 10px;
+}
+.contact_congress .after_steps .step p {
+  margin: 0px;
+font-size: 12px;
+color: #888;
+text-align: center;
 }
 
 .contact_congress .after_steps .noborder {
-  border-right: 0 !important;
+margin-right: none !important;
 }
 
 .contact_congress .after_thread {
@@ -390,9 +415,11 @@ height: 705px;
 width: 510px;
 left: 0;
 border-right: 1px solid #777;
-margin-top: 111px;
+top: 669px;
 position: absolute;
 background: #999;
+-moz-box-shadow:inset -2px 1px 46px rgba(0,0,0,.2);
+-webkit-box-shadow:inset 0 1px 5px rgba(0,0,0,.8);
 }
 
 
@@ -401,18 +428,22 @@ background: #999;
 padding: 30px 0 0px;
 font-weight: normal;
 color: #666;
+display: none;
 }
 
 
 
 .message_fields{
-height: 530px;
-width: 360px;
+height: 580px;
+width: 380px;
 background: #fff;
 padding: 30px;
+margin-top: 35px;
 margin-left: 35px;
 -moz-box-shadow: 0 1px 4px rgba(0,0,0,.5);
 -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.5);
+
+
 }
 
 
@@ -425,18 +456,23 @@ padding: 0;
 
 
 .message_fields label{
-display: none;
+color: #aaa;
+text-transform: uppercase;
+font-size: 8px;
+letter-spacing: .05em;
 }
 
 
 .subject input{
--moz-box-shadow:inset 0 1px 2px rgba(0,0,0,.1);
+-moz-box-shadow:inset 0 1px 2px rgba(0,0,0,.1) ;
 -webkit-box-shadow:inset 0 1px 2px rgba(0,0,0,.1);
 border: 1px solid #e0e0e0;
 -moz-border-radius: 3px;
 -webkit-border-radius: 3px;
+
+
 padding: 10px 13px 8px !important;
-width: 335px !important;
+width: 355px !important;
 font-family: Helvetica, Arial, sans-serif;
 font-size: 11px;
 line-height: 1.4em;
@@ -453,7 +489,7 @@ border: 1px solid #e0e0e0;
 -moz-border-radius: 3px;
 -webkit-border-radius: 3px;
 padding: 15px;
-width: 329px;
+width: 349px;
 height: 465px;
 font-family: Helvetica, Arial, sans-serif;
 font-size: 11px;
@@ -468,9 +504,10 @@ border-bottom: 1px solid #444;
 display: block !important;
 float: none !important;
 width: 927px;
-margin: 460px 0 0 -35px;
+margin: 0px 0 0 -35px;
 padding: 20px 40px 20px 35px; 
 font-size: 16px;
+top: 609px;
   background: #999; /* for non-css3 browsers */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='#ddd'); /* for IE */
   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd)); /* for webkit browsers */
@@ -501,8 +538,8 @@ font-size: 9px;
 
 .contact_letter .button{
 position: absolute;
-margin-top: 60px !important;
-right: 10px;
+right: 8px;
+top: 604px;
 }
 
 
@@ -579,7 +616,7 @@ font-weight: normal
 
 
 .people{
-margin: 0 !important;
+margin: 10px 0 0 !important;
 }
 
 
@@ -628,7 +665,70 @@ padding-left: 6px;
 }
 
 
+.perm{
+clear: both;
+-moz-border-radius: 30px;
+-webkit-border-radius: 30px;
+background: #eee;
+padding: 10px 20px;
+width: 500px;
+text-align: center;
+margin: 30px auto 0;
+}
+
+.congrats{
+font-size: 20px;
+line-height: 1.4em;
+}
 
 
 
 
+
+.formageddon_letter{
+  border: 1px solid #ddd;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #ccc;
+  
+  -moz-box-shadow: 0 1px 2px #ddd, inset 0 1px 0px #fff;
+  -webkit-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+
+  
+  background: #999; 
+
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd)); 
+  background: -moz-linear-gradient(top,  #fff,  #f9f9f9); 
+
+  text-shadow: 0 1px 0px #fff;
+font-family: helvetica, arial, sans-serif;
+font-size: 13px;
+padding: 70px;
+
+
+
+
+}
+
+
+.contact_thread_header{
+text-align: center;
+font-size: 16px;
+}
+
+
+.permshare .contact_thread_share{
+float: none !important;
+position: absolute;
+margin-top: 76px;
+margin-left: 95px;
+}
+
+#contact .inner .padding{
+display: relative !important;
+}
+
+
+
+.position_buttons{
+text-align: center;
+}

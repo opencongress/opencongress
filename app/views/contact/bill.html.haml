@@ -105,10 +105,10 @@
 :javascript
   $j(".message_builder_clickable").hover(
     function () {
-      $j(this).find("div.will_add_text_box:first").show();
+      $j(this).find("div.will_add_text_box:first").fadeIn();
     },
     function () {
-      $j(this).find("div.will_add_text_box:first").hide();
+      $j(this).find("div.will_add_text_box:first").fadeOut();
     }
   );
   $j(".message_builder_clickable").click(

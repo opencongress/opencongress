@@ -4,11 +4,12 @@
 .contact_congress
   = render 'contact_congress_status_bar', :step => 3
   
-  %p
-    %strong Congratulations!
-    Your letter to your elected representatives has been sent!  We will be tracking this correspondence and alert you to any replies immediately.
-  %p
-    Your communication can be more effective by following the steps below.
+  .congrats
+    %p
+      %strong Congratulations!
+      Your letter to your elected representatives has been sent!  We will be tracking this correspondence and alert you to any replies immediately.
+
+    %p Your communication can be more effective by following the steps below.
     
   .after_steps
     .step
@@ -36,7 +37,7 @@
         = @thread.formageddon_recipient.phone
   
   .after_thread
-    .padding-left 
+    .perm 
       Here is your letter.  Permalink:
       = link_to url_for(:only_path => false, :controller => 'contact', :action => 'showthread', :id => @thread), url_for(:only_path => false, :controller => 'contact', :action => 'showthread', :id => @thread)
     = render 'formageddon/threads/thread', :thread => @thread

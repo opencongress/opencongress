@@ -4,7 +4,7 @@
 .contact_congress
   = render 'contact_congress_status_bar', :step => 2
 
-  %h3 OpenCongress Message Builder
+  %h3.large_heading OpenCongress Message Builder
   
   .contact_message_builder
     %h2 OpenCongress Message Builder
@@ -81,9 +81,9 @@
             = check_box_tag :check, '1', true
             = image_tag "photos/thumbs_50/#{s.id}-50px.jpeg", :class =>"photo", :alt => 'photo'
             = link_to s.name, person_path(s)
-            %br
-            = "Vote on Passage of #{@bill.typenumber}: " 
-            %strong= "#{@bill.vote_on_passage(s)}"
+            %span
+              = "Vote on Passage of #{@bill.typenumber}: " 
+              %strong= "#{@bill.vote_on_passage(s)}"
         - if @reps.size > 1
           %li
             We can't determine your Representative. Please configure zip+4 and address on your
@@ -93,9 +93,9 @@
             = check_box_tag :check, '1', true
             = image_tag "photos/thumbs_50/#{@reps.first.id}-50px.jpeg", :class =>"photo", :alt => 'photo'
             = link_to @reps.first.name, person_path(@reps.first)
-            %br
-            = "Vote on Passage of #{@bill.typenumber}: " 
-            %strong= "#{@bill.vote_on_passage(@reps.first)}"
+            %span
+              = "Vote on Passage of #{@bill.typenumber}: " 
+              %strong= "#{@bill.vote_on_passage(@reps.first)}"
       Please enter your contact info in the form below.  Senators and representatives will usually only respond to their own constituents, so it is important to enter this information correctly.
     = render 'formageddon/threads/form', :thread => @formageddon_thread, :after_send_url => '/contact/aftersend'
     %p Click send, and we will automatically deliver your letter to the members of Congress you selected above. OpenCongress is the only not-for-profit website that enables you to write all three of your members of Congress at once. Also, OpenCongress is the only website that gives this information back to the public commons, enabling you to find other constituents near you who are tracking the same bills and issues. 

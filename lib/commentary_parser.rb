@@ -275,8 +275,6 @@ module CommentaryParser
         
         place += 1
         t = d.at("h2.title a")
-        
-        puts "GOT T: #{t.inspect}"
 
         os = OpenStruct.new
       

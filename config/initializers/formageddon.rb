@@ -9,5 +9,11 @@ if defined? Formageddon
       :sender_zip5 => :zipcode,
       :sender_state => :state
     }
+    
+    config.privacy_options = [
+      ['Public -- Anyone', 'PUBLIC'], 
+      ['Friends -- MyOC Friends Only', 'FRIENDS_ONLY'], 
+      ['Private -- You Only', 'PRIVATE']
+    ]
   end
 end

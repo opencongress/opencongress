@@ -42,7 +42,7 @@ class CreateFormageddonTables < ActiveRecord::Migration
       t.string :sender_zip4
       t.string :sender_phone
       t.string :sender_email
-      t.boolean :is_public
+      t.string :privacy
 
       t.integer :formageddon_sender_id
       t.string :formageddon_sender_type

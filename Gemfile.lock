@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/opencongress/formageddon.git
-  revision: 7cd081fca8994c351108be2efc5b42ae6a8051cf
+  revision: 0cf136832154c4167a32a53ff30cea7137b8ca21
   specs:
     formageddon (0.0.0)
       haml
@@ -60,12 +60,12 @@ GEM
       ZenTest (>= 4.4.1)
     bluecloth (2.1.0)
     builder (2.1.2)
-    capistrano (2.5.21)
+    capistrano (2.6.0)
       highline
       net-scp (>= 1.0.0)
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
-      net-ssh-gateway (>= 1.0.0)
+      net-ssh-gateway (>= 1.1.0)
     capistrano-ext (1.2.1)
       capistrano (>= 1.0.0)
     capybara (0.4.1.2)
@@ -153,7 +153,7 @@ GEM
     net-sftp (2.0.5)
       net-ssh (>= 2.0.9)
     net-ssh (2.1.4)
-    net-ssh-gateway (1.0.1)
+    net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
     newrelic_rpm (2.14.1)
     nokogiri (1.4.4)

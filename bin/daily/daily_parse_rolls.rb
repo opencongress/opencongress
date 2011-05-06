@@ -9,7 +9,7 @@ end
 class NoUpdateException < StandardError
 end
 
-PATH = Settings.govtrack_data_path + '/#{Settings.default_congress}/rolls'
+PATH = Settings.govtrack_data_path + "/#{Settings.default_congress}/rolls"
 
 force_parse = ENV['FORCE_ALL'] == 'true' ? true : false
 

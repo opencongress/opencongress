@@ -1,4 +1,12 @@
 OpenCongress::Application.routes.draw do |map|
+  namespace :admin do
+    resources :wiki_links, :pvs_category_mappings
+
+    match '/' => 'index#index', :as => 'admin'
+    match 'stats/bills.:format' => 'stats#bills'
+    match 'stats/partner_email.:format' => 'stats#partner_email'
+  end
+  
   map.resources :mailing_list_items
   map.resources :watch_dogs
 
@@ -6,7 +14,6 @@ OpenCongress::Application.routes.draw do |map|
     s.resources :districts
   end
 
-  map.resources :wiki_links, :path_prefix => '/admin'
   map.resource :political_notebook, :path_prefix => '/users/:login/profile', :collection => ['update_privacy'] do |notebook|
     notebook.resources :notebook_links, :collection => ['faceform', 'update']
     notebook.resources :notebook_videos
@@ -123,10 +130,6 @@ OpenCongress::Application.routes.draw do |map|
   end
 
   map.connect 'roll_call/text/summary/:id', :controller => 'roll_call', :action => 'summary_text'
-
-  map.admin 'admin', :controller => 'admin/index'
-  map.connect 'admin/stats/bills.:format', :controller => 'admin/stats', :action => 'bills'
-  map.connect 'admin/stats/partner_email.:format', :controller => 'admin/stats', :action => 'partner_email'
 
   map.with_options :controller => 'battle_royale' do |br|
     br.battle_royale 'battle_royale.:format',  :action => 'index'

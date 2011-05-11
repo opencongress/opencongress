@@ -25,6 +25,9 @@
     <li><%= link_to 'Manage Site Text', :controller => 'site_text', :action => :list  %></li>  
     <li><%= link_to 'Manage Frontpage Featured People', :controller => 'featured_people'  %></li>
     <li><%= link_to 'Manage Gossip', '/gossip/admin' %></li>
+    <br/>
+    <h3> PVS Category Mappings </h3>
+    <li><%= link_to 'Manage PVS Category Mappings', admin_pvs_category_mappings_path %></li>
   <% end %>
   <% if current_user.user_role.can_moderate_articles %>
     <br/>

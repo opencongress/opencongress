@@ -1,0 +1,55 @@
+<%= form_for(@pvs_category_mapping, :url => admin_pvs_category_mappings_path) do |f| %>
+  <% if @pvs_category_mapping.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pvs_category_mapping.errors.count, "error") %> prohibited this pvs_category_mapping from being saved:</h2>
+
+      <ul>
+      <% @pvs_category_mapping.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <p>
+      <label for="pvs_category_id">Select PVS Category:</label>
+      <%= f.select :pvs_category_id, PvsCategory.order('name ASC').all.collect { |c| [c.name, c.id] } %>
+    </p>
+
+    <p>
+      <label for="pvs_category_mappable_type">Select Mapping Type:</label>
+      <%= f.select :pvs_category_mappable_type, [['--', '--'], ['Issue', 'Subject'], ['CRP Industry', 'CrpIndustry'], ['CRP Sector', 'CrpSector']] %>
+    </p>
+
+    <p>
+      <label for="pvs_category_mappable_id">Select Mapping (hold down Command to select multiple):</label><br/>
+      <%= f.select :pvs_category_mappable_id, [], {}, { :multiple => true, :size => 20 } %>
+    </p>
+    
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<select id="Subject_options" style="display:none">
+  <%= options_from_collection_for_select(Subject.order('term ASC').all, 'id', 'term') %>
+</select>
+
+<select id="CrpIndustry_options" style="display:none">
+  <%= options_from_collection_for_select(CrpIndustry.order('name ASC').all, 'id', 'name') %>
+</select>
+
+<select id="CrpSector_options" style="display:none">
+  <%= options_from_collection_for_select(CrpSector.order('name ASC').all, 'id', 'name') %>
+</select>
+
+<script>
+  // $('pvs_category_mapping_pvs_category_mappable_type').observe('click', function() {
+  //   $('pvs_category_mapping_pvs_category_mappable_id').update($(this.getValue() + '_options').innerHTML);
+  // });
+
+  $j('#pvs_category_mapping_pvs_category_mappable_type').change(function() {
+    $j('#pvs_category_mapping_pvs_category_mappable_id').append($j('#' + $j(this).val() + '_options').html());
+  });
+</script>
+

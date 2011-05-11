@@ -63,14 +63,16 @@ OpenCongress::Application.routes.draw do
 
   match 'admin' => 'admin#index'
 
-  
-  scope 'admin' do
-    resources :wiki_links
 
-    scope 'stats', :controller => 'admin/stats' do
-      match 'bills.:format', :action => 'bills'
-      match 'partner_email.:format', :action => 'partner_email'
-    end
+  namespace :admin do
+     resources :wiki_links, :pvs_category_mappings
+
+     match '/' => 'index#index', :as => 'admin'
+
+     scope 'stats', :controller => 'stats' do
+       match 'bills.:format', :action => 'bills'
+       match 'partner_email.:format', :action => 'partner_email'
+     end
   end
 
   match 'battle_royale' => 'battle_royale#index'

@@ -2,6 +2,9 @@ class CrpIndustry < ActiveRecord::Base
   has_many :crp_interest_groups, :order => '"order"'
   belongs_to :crp_sector
   
+  has_many :pvs_category_mappings, :as => :pvs_category_mappable
+  has_many :pvs_categories, :through => :pvs_category_mappings
+  
   def top_recipients(chamber = 'house', num = 10)
     title = (chamber == 'house') ? 'Rep.' : 'Sen.'
     Person.find_by_sql("SELECT * FROM people INNER JOIN 

@@ -11,7 +11,6 @@ require 'rexml/document'
 require 'ostruct'
 require 'date'
 require 'yaml'
-require 'action_controller/integration'
 
 class PeopleListener 
   attr_reader :count

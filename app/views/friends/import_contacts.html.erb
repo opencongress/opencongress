@@ -79,7 +79,7 @@
   <br/>
   <h3 style="clear:both;">Contacts to Invite to OpenCongress</h3>
   <% if @results.length > 0 %>
-  <form action="<%= friends_import_emails_path %>" method="POST">
+  <form action="<%= friends_invite_contacts_path %>" method="POST">
   <table class="importtable">
     <tr><th>Invite?</th><th>Email</th><th>Name</th></tr>
     <% @results.each do |r| %>

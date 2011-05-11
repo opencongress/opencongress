@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   include SimpleCaptcha::ControllerHelpers
 
   before_filter :store_location, :except => ["rescue_action_in_public"]
-  before_filter :show_comments?
   before_filter :current_tab
   before_filter :has_accepted_tos?
   before_filter :get_site_text_page
@@ -73,11 +72,6 @@ class ApplicationController < ActionController::Base
 
   def current_tab
     @current_tab = params[:navtab].blank? ? nil : params[:navtab]
-  end
-  def show_comments?
-      if params[:show_comments] == "1"
-        @show_comments = true
-      end
   end
   def admin_login_required
     if !(logged_in? && current_user.user_role.can_administer_users)

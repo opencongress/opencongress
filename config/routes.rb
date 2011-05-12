@@ -65,18 +65,19 @@ OpenCongress::Application.routes.draw do
 
   match 'person/*path' => redirect("/people/%{path}")
 
-  match 'admin' => 'admin#index'
-
   namespace :admin do
      resources :wiki_links, :pvs_category_mappings
 
      match '/' => 'index#index', :as => 'admin'
-
+     
      scope 'stats', :controller => 'stats' do
        match 'bills.:format', :action => 'bills'
        match 'partner_email.:format', :action => 'partner_email'
      end
+     
   end
+  match '/:controller(/:action(/:id))', :controller => /admin\/[^\/]+/
+  
 
   match 'battle_royale' => 'battle_royale#index'
   match 'battle_royale/:action', :controller => 'battle_royale'

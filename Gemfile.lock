@@ -198,6 +198,7 @@ GEM
       json_pure
       rubyzip
     settingslogic (2.0.6)
+    silent-postgres (0.0.8)
     simple-rss (1.2.3)
     sqlite3 (1.3.3)
     stackdeck (0.2.0)
@@ -259,6 +260,7 @@ DEPENDENCIES
   ruby-openid
   selenium-client
   settingslogic
+  silent-postgres
   simple-rss
   simple_captcha!
   sqlite3

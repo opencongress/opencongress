@@ -60,6 +60,12 @@ OpenCongress::Application.routes.draw do
     match 'compare.:format', :action => 'compare'
     match 'show/:id', :action => 'show', :as => 'person'
   end
+  
+  scope 'person', :controller => 'people' do
+    match 'show/:id', :action => 'show'
+    match 'atom/:id', :action => 'show'
+  end
+  
 
   match 'admin' => 'admin#index'
 

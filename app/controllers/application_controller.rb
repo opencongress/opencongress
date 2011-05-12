@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include SimpleCaptcha::ControllerHelpers
 
-  before_filter :store_location, :except => ["rescue_action_in_public"]
+  before_filter :store_location
   before_filter :current_tab
   before_filter :has_accepted_tos?
   before_filter :get_site_text_page
@@ -29,16 +29,6 @@ class ApplicationController < ActionController::Base
   def days_from_params(days)
     days = days.to_i if (days && !days.kind_of?(Integer))
     return (days && ((days == 7) || (days == 14) || (days == 30) || (days == 365))) ? days.days : Settings.default_count_time
-  end
-
-  def rescue_action_in_public(exception)
-    case exception
-    when ::ActionController::RoutingError, ::ActionController::UnknownAction then
-      render :partial => "index/notfound_page", :layout => 'application', :status => "404"
-    else
-      notify_hoptoad(exception)
-      render :partial => "index/error_page", :layout => 'application', :locals => { :exception => exception }, :status => "500"
-    end
   end
 
   def comment_redirect(comment_id)

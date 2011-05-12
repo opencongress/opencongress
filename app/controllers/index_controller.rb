@@ -64,10 +64,6 @@ class IndexController < ApplicationController
 
   end
   
-  def notfound
-    render :partial => "index/notfound_page", :layout => 'application', :status => "404"
-  end
-  
   def about
     redirect_to :controller => 'about'
   end

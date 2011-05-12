@@ -173,6 +173,6 @@ OpenCongress::Application.routes.draw do
   match 'house_reconciliation' => 'index#house_reconciliation'
 
   match ':controller(/:action(/:id))'
-  match '*path' => 'index#notfound' unless ::ActionController::Base.consider_all_requests_local
+  #match '*path' => 'index#notfound' #unless Rails.application.config.consider_all_requests_local
   
 end  

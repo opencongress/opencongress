@@ -61,6 +61,7 @@ gem "acts-as-taggable-on", :git => 'git://github.com/mbleigh/acts-as-taggable-on
 
 # Testing
 group :test, :development do
+  gem 'silent-postgres'	# Quieter postgres log messages
 
   gem 'rspec-rails', '~> 2.4'
   gem 'cucumber', '0.8.5'
@@ -73,5 +74,8 @@ group :test, :development do
   gem 'capybara-envjs'
 
   gem 'autotest'
+
+  gem 'guard'
+  gem 'guard-livereload'
 end
 

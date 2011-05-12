@@ -1,0 +1,9 @@
+max_requests: 150
+max_objects: 10
+classes:
+  "ActionController::Base": true
+  "ActionController::Session::AbstractStore::SessionHash": true
+  "ActiveRecord::Base":
+    print_objects: true
+    foo: bar
+    show_fields: [id, updated_at]

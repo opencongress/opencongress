@@ -234,9 +234,14 @@ class Subject < ViewableObject
 
     facet_results_hsh = {:my_people_tracked_facet => [], :my_issues_tracked_facet => [], :my_bills_tracked_facet => []}
     my_trackers = 0
-
-    users = User.find_by_solr('[* TO *]', :facets => {:fields => [:my_people_tracked, :my_issues_tracked, :my_bills_tracked], :browse => ["my_issues_tracked:#{self.id}"], :limit => 6, :zeros => false, :sort =>  true}, :limit => 1)
-    facets = users.facets
+    
+    begin
+      users = User.find_by_solr('[* TO *]', :facets => {:fields => [:my_people_tracked, :my_issues_tracked, :my_bills_tracked], :browse => ["my_issues_tracked:#{self.id}"], :limit => 6, :zeros => false, :sort =>  true}, :limit => 1)
+      facets = users.facets
+    rescue
+      return [0, {}] unless Rails.env == 'production'
+      raise
+    end
 
     facet_results_ff = facets['facet_fields']
     if facet_results_ff && facet_results_ff != []

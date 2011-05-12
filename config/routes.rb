@@ -1,302 +1,178 @@
-OpenCongress::Application.routes.draw do |map|
-  namespace :admin do
-    resources :wiki_links, :pvs_category_mappings
+OpenCongress::Application.routes.draw do
+  resources :mailing_list_items
+  resources :watch_dogs
 
-    match '/' => 'index#index', :as => 'admin'
-    match 'stats/bills.:format' => 'stats#bills'
-    match 'stats/partner_email.:format' => 'stats#partner_email'
-  end
-  
-  map.resources :mailing_list_items
-  map.resources :watch_dogs
-
-  map.resources :states do |s|
-    s.resources :districts
+  resources :states do
+    resources :districts
   end
 
-  map.resource :political_notebook, :path_prefix => '/users/:login/profile', :collection => ['update_privacy'] do |notebook|
-    notebook.resources :notebook_links, :collection => ['faceform', 'update']
-    notebook.resources :notebook_videos
-    notebook.resources :notebook_notes
-    notebook.resources :notebook_files    
-  end
-
-  # resources :political_notebook, :path_prefix => '/users/:login/profile' do
-  #   collection do 
-  #     get :update_privacy
-  #   end
-  #   
-  #   resources :notebook_links do
-  #     collection do
-  #       get :faceform
-  #       get :update
-  #     end
-  #   end
-  #   
-  #   resources :notebook_videos
-  #   resources :notebook_notes
-  #   resources :notebook_files    
-  # end
-  # 
-
-  #  map.connect 'users/:login/profile/political_notebook/:action', :controller => 'notebook_items'
-  # The priority is based upon order of creation: first created -> highest priority.
-  
-  # Sample of regular route:
-  # map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  # map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # You can have the root of your site routed by hooking up '' 
-  # -- just remember to delete public/index.html.
-  # map.connect '', :controller => 'welcome'
-  map.connect '', :controller => 'index'
-  map.home '', :controller => 'index', :action => 'index'
+  match '/' => 'index#index', :as => :home
 
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'
-  map.connect ':controller/service.wsdl', :action => 'wsdl'
-
-  map.simple_captcha '/simple_captcha/:id', :controller => 'simple_captcha', :action => 'show'
+  # match ':controller/service.wsdl' => 'wsdl'
 
   # Handle bill routing. The action determines what information about the bill will 
   # be displayed.
-  map.users_tracking_bill 'bill/:id/users_tracking', :controller => 'friends', :action => 'tracking_bill'
-  map.users_tracking_bill_by_state 'bill/:id/users_tracking/:state', :controller => 'friends', :action => 'tracking_bill', :state => /\w{2}/
+  match 'bill/:id/users_tracking' => 'friends#tracking_bill', :as => :users_tracking_bill
+  match 'bill/:id/users_tracking/:state' => 'friends#tracking_bill', :state => /\w{2}/, :as => :users_tracking_bill_by_state
 
-  map.with_options :controller => 'bill' do |b|
-    b.connect 'bill/all', :action => 'all'
-    b.connect 'bill/pending', :action => 'pending'
-    b.connect 'bill/popular', :action => 'popular'
-    b.connect 'bill/major', :action => 'major'
-    b.connect 'bill/major.rss', :action => 'major', :format => 'rss'
-    b.connect 'bill/hot', :action => 'hot'
-    b.connect 'bill/readthebill', :action => 'readthebill'
-    b.connect 'bill/readthebill.:format', :action => 'readthebill'
-    b.connect 'bill/compare', :action => 'compare'
-    b.connect 'bill/compare_by_issues', :action => 'compare_by_issues'
-    b.connect 'bill/hot_temp', :action => 'hot_temp'
-    b.connect 'bill/most/viewed', :action => 'popular'  
-    b.bill_most_commentary 'bill/most/:type', :action => 'most_commentary'
-    b.connect 'bill/atom_top20', :action => 'atom_top20'
-    b.connect 'bill/atom/most/viewed', :action => 'atom_top20'
-    b.connect 'bill/atom/most/:type', :action => 'atom_top_commentary'
-    b.connect 'bill/type/:bill_type', :action => 'list_bill_type'
-    b.connect 'bill/type/:bill_type/:page', :action => 'list_bill_type'
-    b.connect 'bill/text/status/:id', :action => 'status_text'
-    b.connect 'bill/:id/blogs/search', :action => 'commentary_search', :commentary_type => 'blog'
-    b.connect 'bill/:id/news/search', :action => 'commentary_search', :commentary_type => 'news'
-    b.connect 'bill/:id/blogs/search/:page', :action => 'commentary_search', :commentary_type => 'blog'
-    b.connect 'bill/:id/news/search/:page', :action => 'commentary_search', :commentary_type => 'news'
-    b.blogs_bill 'bill/:id/blogs', :action => 'blogs'
-    b.news_bill 'bill/:id/news', :action => 'news'
-    b.connect 'bill/:id/blogs/:page', :action => 'blogs'
-    b.connect 'bill/:id/news/:page', :action => 'news'
-    b.connect 'bill/upcoming/:id', :action => 'upcoming'
-    b.connect 'bill/:show_comments/:id/show', :action => 'show'  
-    b.connect 'bill/bill_vote/:bill/:id', :action => 'bill_vote'
-    b.bill_text 'bill/:id/text', :action => 'text'
-    b.bill_comments 'bill/:id/comments', :action => 'comments'
-    b.bill 'bill/:id/show', :action => 'show'
-    b.connect 'bill/:id/:action'
-    b.connect 'bill/:id/:action.:format'
+  scope 'bill', :controller => 'bill' do
+    for action in %w{ all pending popular major hot readthebill compare compare_by_issues atom_top20 }
+      match action, :action => action, :as => 'bill_' + action
+    end
+    
+    match 'most/:type', :action => 'most_commentary'
+    match 'most/viewed', :action => 'popular'
+    match 'atom/most/viewed', :action => 'atom_top_20'
+    match 'atom/most/:type', :action => 'atom_top_commentary', :as => :bill_most_commentary
+    match 'type/:bill_type(/:page)', :action => 'list_bill_type'
+    match 'text/status/:id', :action => 'status_text'
+    match 'upcoming/:id', :action => 'upcoming'
+    match 'bill_vote/:bill/:id', :action => 'bill_vote'
+
+    scope ':id' do
+      match 'blogs(/:page)', :action => 'blogs', :as => :blogs_bill
+      match 'blogs/search(/:page)', :action => 'commentary_search', :commentary_type => 'blog'        
+      match 'news(/:page)', :action => 'news', :as => :news_bill
+      match 'news/search(/:page)', :action => 'commentary_search', :commentary_type => 'news'        
+      match 'text', :action => 'text', :as => :bill_text
+      match 'comments', :action => 'comments', :as => :bill_comments
+      match 'show', :action => 'show', :as => :bill
+      match ':action'
+    end
+
+  end
+  match 'bill' => redirect('/bill/all')
+
+  scope 'people', :controller => 'people' do
+    match 'senators', :action => 'people_list', :person_type => 'senators'
+    match 'representatives', :action => 'people_list', :person_type => 'representatives'
+    match ':person_type/most/:type', :action => 'most_commentary'
+    match ':person_type/atom/most/:type', :action => 'atom_top_commentary'
+    match 'atom/featured', :action => 'atom_featured'
+    match 'wiki/:id', :action => 'wiki'
+    match 'comments/:id', :action => 'comments'
+    match 'news/:id(/:page)', :action => 'news', :as => :news_person
+    match 'blogs/:id(/:page)', :action => 'blogs', :as => :blogs_person
+    match 'votes_with_party/:chamber/:party', :action => 'votes_with_party'
+    match 'voting_history/:id/:page', :action => 'voting_history'
+    match 'compare.:format', :action => 'compare'
+    match 'show/:id', :action => 'show', :as => 'person'
   end
 
-  map.with_options :controller => 'people' do |p|
-    p.senators 'people/senators', :action => 'people_list', :person_type => 'senators'
-    p.representatives 'people/representatives', :action => 'people_list', :person_type => 'representatives'
-    p.connect 'people/:person_type/most/:type', :action => 'most_commentary'
-    p.connect 'people/:person_type/atom/most/:type', :action => 'atom_top_commentary'
-    p.connect 'people/atom/featured', :action => 'atom_featured'
+  match 'admin' => 'admin#index'
 
-    p.connect 'people/:show_comments/show/:id', :action => 'show'
-    p.connect 'people/wiki/:id', :action => 'wiki'
-    p.connect 'people/comments/:id', :action => 'comments'
-    p.news_person 'people/news/:id', :action => 'news'
-    p.blogs_person 'people/blogs/:id', :action => 'blogs'
-    p.connect 'people/news/:id/:page', :action => 'news'
-    p.connect 'people/blogs/:id/:page', :action => 'blogs'
-    p.connect 'people/votes_with_party/:chamber/:party', :action => 'votes_with_party'
 
-    p.connect 'people/voting_history/:id/:page', :action => 'voting_history'
-    p.connect 'person/compare.:format', :action => 'compare'
-    p.person  'person/show/:id', :action => 'show'
-    p.connect 'people/:action/:id'
-    p.connect 'person/:action/:id'
-    p.connect 'person/:action/:id.:format'
+  namespace :admin do
+     resources :wiki_links, :pvs_category_mappings
+
+     match '/' => 'index#index', :as => 'admin'
+
+     scope 'stats', :controller => 'stats' do
+       match 'bills.:format', :action => 'bills'
+       match 'partner_email.:format', :action => 'partner_email'
+     end
   end
 
-  map.connect 'roll_call/text/summary/:id', :controller => 'roll_call', :action => 'summary_text'
+  match 'battle_royale' => 'battle_royale#index'
+  match 'battle_royale/:action', :controller => 'battle_royale'
 
-  map.with_options :controller => 'battle_royale' do |br|
-    br.battle_royale 'battle_royale.:format',  :action => 'index'
-    br.connect 'battle_royale/:action.:format'
+  match 'blog(/:tag)' => 'articles#list', :as => :blogs
+  
+  scope 'articles', :controller => 'articles' do
+    match 'view/:id', :action => 'view', :as => :article
+    match ':id/atom', :action => 'article_atom'
+  end
+
+  match 'issues' => 'issue#index'
+
+  scope 'issues', :controller => 'issue' do
+    match 'show/:id', :action => 'show', :as => :issue
+    match ':action/:id'
   end
   
-  map.with_options :controller => 'articles' do |a|
-    a.blogs 'blog', :action => 'list'
-    a.blog 'blog/:tag', :action => 'list'
-    a.article 'articles/view/:id', :action => 'view'
-    a.connect 'articles/view/:show_comments/:id', :action => 'view' 
-    a.connect 'articles/:id/atom', :action => 'article_atom'
-  end
-
-  map.with_options :controller => 'issue' do |i|
-    i.issues 'issues'
-    i.issue 'issues/show/:id', :action => 'show'
-    i.connect 'issue/:show_comments/show/:id', :action => 'show'
-  end
-
-  map.connect 'industry/:show_comments/show/:id', :controller => 'industry', :action => 'show'
-  map.connect 'committee/:show_comments/show/:id', :controller => 'committee', :action => 'show'
-  map.connect 'issues/:action/:id', :controller => 'issue'
- 
-  map.connect 'howtouse', :controller => 'about', :action => 'howtouse'
-
-  map.with_options :controller => 'account' do |a|
-    a.login 'login', :action => 'login'
-    a.connect 'why', :action => 'why'
-    a.logout 'logout', :action => 'logout'
-    a.signup 'register', :action => 'signup'
-    a.welcome 'welcome', :action => 'welcome'
-    a.confirmation 'account/confirm/:login', :action => 'confirm'
-  end
-
-  map.with_options :controller => 'comments' do |c|
-    c.connect 'comments/all_comments/:object/:id', :action => 'all_comments'
-    c.connect 'comments/atom/:object/:id', :action => 'atom_comments'
-  end
+  match 'howtouse' => 'about#howtouse'
   
-  map.with_options :controller => 'friends' do |fr|
-    fr.friends_import_contacts 'users/:login/profile/friends/import_contacts', :action => 'import_contacts'
-    fr.friends_like_voters 'users/:login/profile/friends/like_voters', :action => 'like_voters'
-    fr.friends_import_emails 'users/:login/profile/friends/invite_contacts', :action => 'invite_contacts'
-    fr.friends_near_me 'users/:login/profile/friends/near_me', :action => 'near_me'
-    fr.friends_add_confirm 'users/:login/profile/friends/confirm/:id', :action => 'confirm'
-    fr.friends_add_deny 'users/:login/profile/friends/deny/:id', :action => 'deny'
-    fr.friends_invite 'users/:login/profile/friends/invite', :action => 'invite'
-    fr.friends_invite_form 'users/:login/profile/friends/invite_form', :action => 'invite_form'
-  end
-  
-  map.resources :friends, :path_prefix => '/users/:login/profile'
-
-  map.with_options :controller => 'profile' do |p|
-    p.user_profile 'users/:login/profile', :action => 'show'
-    p.user_profile_actions 'users/:login/profile/actions', :action => 'actions'
-    p.user_profile_items_tracked 'users/:login/profile/items_tracked', :action => 'items_tracked'
-    p.user_watchdog 'users/:login/profile/watchdog', :action => 'watchdog'
-    p.connect 'users/:login/profile/edit_profile', :action => 'edit_profile'
-    p.connect 'users/:login/profile/bills_supported', :action => 'bills_supported'
-    p.connect 'users/:login/profile/tracked_rss', :action => 'tracked_rss'
-    p.connect 'users/:login/profile/user_actions_rss', :action => 'user_actions_rss'
-    p.connect 'users/:login/profile/bills_supported/rss', :action => 'bills_supported', :format => "rss"
-    p.connect 'users/:login/profile/bills_opposed', :action => 'bills_opposed'
-    p.connect 'users/:login/profile/bills_opposed/rss', :action => 'bills_opposed', :format => "rss"
-    p.connect 'users/:login/profile/my_votes', :action => 'my_votes'
-    p.connect 'users/:login/profile/my_votes/rss', :action => 'my_votes', :format => "rss"
-    p.connect 'users/:login/profile/bills', :action => 'bills'
-    p.connect 'users/:login/profile/bills/rss', :action => 'bills', :format => "rss"
-    p.connect 'users/:login/profile/comments', :action => 'comments'
-    p.connect 'users/:login/profile/comments/rss', :action => 'comments', :format => "rss"
-    p.connect 'users/:login/profile/issues', :action => 'issues'
-    p.connect 'users/:login/profile/issues/rss', :action => 'issues', :format => "rss"
-    p.connect 'users/:login/profile/committees', :action => 'committees'
-    p.connect 'users/:login/profile/committees/rss', :action => 'committees', :format => "rss"
-    p.connect 'users/:login/profile/:person_type/rss', :action => 'person', :format => "rss"
-    p.connect 'users/:login/profile/:person_type', :action => 'person'
+  scope :controller => 'account' do
+    for action in %w{ login why logout signup welcome }
+      match action, :action => action
+    end
+    
+    match 'register', :action => 'signup'
+    match 'account/confirm/:login', :action => 'confirm'
   end
 
-  map.connect 'users/:login/feeds/:action', :controller => 'user_feeds'
-  map.connect 'users/:login/feeds/:action/:key', :controller => 'user_feeds'
-  
-  map.connect 'video/rss', :controller => 'video', :action => 'all', :format => 'atom'
-  
-  map.with_options :controller => 'roll_call', :action => 'by_number',
-                    :year => /\d{4}/, :chamber => /[hs]/, :number => /\d+/ do |rc|
-    rc.roll_call 'vote/:year/:chamber/:number'
-    rc.connect "vote/:year/:chamber/:number/:state", :state => /\w{2}/
+  scope :controller => 'comments' do
+    match 'comments/all_comments/:object/:id', :action => 'all_comments'
+    match 'comments/atom/:object/:id', :action => 'atom_comments'
   end
 
-  map.connect 'users/:login/profile/political_notebook/:action', :controller => 'notebook_items'
+  match 'users/:login/profile' => 'profile#show', :as => :user_profile
 
-  map.connect 'tools/:action/:id', :controller => 'resources'
-  map.tools 'tools', :controller => 'resources'
+  scope 'users/:login' do
 
-  # Temporary home for api URLS
-  map.api 'api', :controller => 'api', :action => 'index'
-  map.connect 'api/bill/text_summary/:id', :controller => 'bill', :action => 'status_text'
-  map.connect 'api/roll_call/text_summary/:id', :controller => 'roll_call', :action => 'summary_text'  
+    scope 'profile' do 
+      resource :political_notebook do
+        collection do
+          post :update_privacy
+        end
+        resources :notebook_links do
+          collection do
+            get :faceform
+          end
+        end
+        resources :notebook_videos
+        resources :notebook_notes
+        resources :notebook_files    
+      end
+    
+      scope 'friends', :controller => 'friends' do
+        for action in %w{ import_contacts like_voters invite_contacts near_me invite invite_form }
+          match action, :action => action, :as => 'friends_' + action
+        end
+
+        for action in %w{ confirm deny } do
+          match action + '/:id', :action => action, :as => 'friends_add_' + action
+        end
+      end
+  
+      resources :friends
+
+      scope :controller => 'profile' do
+        for action in %w{ actions items_tracked watchdog edit_profile bills_supported tracked_rss user_actions_rss bills_opposed my_votes bills comments issues committees } do
+          match action, :action => action, :as => 'user_' + action
+        end
+
+        match ':person_type', :action => 'person'
+      end
+    end # profile
+    
+    match 'feeds/:action(/:key)', :controller => 'user_feeds'
+    
+  end # users/:login
+
+  match 'video/rss' => 'video#all', :format => 'atom'
+
+  scope :controller => 'roll_call' do
+    match 'roll_call/text/summary/:id', :action => 'summary_text'      
+    match 'vote/:year/:chamber/:number(/:state)', :action => 'by_number', :year => /\d{4}/, :chamber => /[hs]/, :number => /\d+/, :state => /\w{2}/
+  end
+
+  match 'tools(/:action/:id)', :controller => 'resources', :as => 'tools'
+
+  # API
+  match 'api' => 'api#index'
+  match 'api/bill/text_summary/:id' => 'bill#status_text'
+  match 'api/roll_call/text_summary/:id' => 'roll_call#summary_text'
 
   # Temporary routes for health care legislation
-  map.connect 'baucus_bill_health_care.html', :controller => 'index', :action => 's1796_redirect'
-  map.connect 'presidents_health_care_proposal', :controller => 'index', :action => 'presidents_health_care_proposal'
-  map.connect 'senate_health_care_bill', :controller => 'bill', :action => 'text', :id => '111-h3590', :version => 'ocas'
-  map.connect 'house_reconciliation', :controller => 'index', :action => 'house_reconciliation'
+  match 'baucus_bill_health_care.html' => 'index#s1796_redirect'
+  match 'presidents_health_care_proposal' => 'index#presidents_health_care_proposal'
+  match 'senate_health_care_bill' => 'bill#text', :id => '111-h3590', :version => 'ocas'
+  match 'house_reconciliation' => 'index#house_reconciliation'
+
+  match ':controller(/:action(/:id))'
+  #match '*path' => 'index#notfound' #unless Rails.application.config.consider_all_requests_local
   
-  # Install the default route as the lowest priority.
-  map.connect ':controller/:action/:id'
-  
-  map.connect '*path', :controller => 'index', :action => 'notfound' unless ::ActionController::Base.consider_all_requests_local
-    
-  Jammit::Routes.draw(map)
-
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  # root :to => "welcome#index"
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
-end
+end  

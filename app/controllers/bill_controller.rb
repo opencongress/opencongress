@@ -777,7 +777,11 @@ private
     if @bill = Bill.find_by_session_and_bill_type_and_number(session, bill_type, number, { :include => :actions })
       key = "page_view_ip:Bill:#{@bill.id}:#{request.remote_ip}"
       unless read_fragment(key)
-        @bill.increment!(:page_views_count)
+        begin
+          @bill.increment!(:page_views_count)
+        rescue
+          raise if Rails.env == 'production'
+        end
         @bill.page_view
         @bill.log_referrer(request.referer)
         write_fragment(key, "c", :expires_in => 1.hour)

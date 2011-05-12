@@ -21,10 +21,10 @@ OpenCongress::Application.routes.draw do
     for action in %w{ all pending popular major hot readthebill compare compare_by_issues atom_top20 }
       match action, :action => action, :as => 'bill_' + action
     end
-    
+
     match 'most/:type', :action => 'most_commentary'
     match 'most/viewed', :action => 'popular'
-    match 'atom/most/viewed', :action => 'atom_top_20'
+    match 'atom/most/viewed', :action => 'atom_top20'
     match 'atom/most/:type', :action => 'atom_top_commentary', :as => :bill_most_commentary
     match 'type/:bill_type(/:page)', :action => 'list_bill_type'
     match 'text/status/:id', :action => 'status_text'
@@ -41,6 +41,8 @@ OpenCongress::Application.routes.draw do
       match 'show', :action => 'show', :as => :bill
       match ':action'
     end
+    
+    match ':id' => 'bill#show'
 
   end
   match 'bill' => redirect('/bill/all')

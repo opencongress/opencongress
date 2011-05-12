@@ -62,20 +62,10 @@ OpenCongress::Application.routes.draw do
     match 'compare.:format', :action => 'compare'
     match 'show/:id', :action => 'show', :as => 'person'
   end
-  
-  # TODO: /person paths should just redirect to their /people counterpart.
-  scope 'person', :controller => 'people' do
-    match 'wiki/:id', :action => 'wiki'
-    match 'show/:id', :action => 'show'
-    match 'atom/:id', :action => 'show'
-    match 'news/:id(/:page)', :action => 'news', :as => :news_person
-    match 'blogs/:id(/:page)', :action => 'blogs', :as => :blogs_person
-    match 'comments/:id', :action => 'comments'
-  end
-  
+
+  match 'person/*path' => redirect("/people/%{path}")
 
   match 'admin' => 'admin#index'
-
 
   namespace :admin do
      resources :wiki_links, :pvs_category_mappings

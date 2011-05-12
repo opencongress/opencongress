@@ -339,9 +339,9 @@ class PeopleController < ApplicationController
     ## check if cache fragment exists
     unless read_fragment("#{@person.fragment_cache_key}_news_#{@sort}_page_#{@page}")
       if @sort == 'toprated'
-        @news = @person.news.find(:all, :order => 'commentaries.average_rating IS NOT NULL DESC').paginate :page => @page
+        @news = @person.news.paginate(:order => 'commentaries.average_rating IS NOT NULL DESC', :page => @page)
       elsif @sort == 'oldest'
-        @news = @person.news.find(:all, :order => 'commentaries.date ASC').paginate :page => @page
+        @news = @person.news.paginate(:order => 'commentaries.date ASC', :page => @page)
       else
         @news = @person.news.paginate :page => @page
       end
@@ -373,9 +373,9 @@ class PeopleController < ApplicationController
     ## check if cache fragment exists
     unless read_fragment("#{@person.fragment_cache_key}_blogs_#{@sort}_page_#{@page}")
       if @sort == 'toprated'
-        @blogs = @person.blogs.find(:all, :order => 'commentaries.average_rating IS NOT NULL DESC').paginate :page => @page
+        @blogs = @person.blogs.paginate(:all, :order => 'commentaries.average_rating IS NOT NULL DESC', :page => @page)
       elsif @sort == 'oldest'
-        @blogs = @person.blogs.find(:all, :order => 'commentaries.date ASC').paginate :page => @page
+        @blogs = @person.blogs.paginate(:all, :order => 'commentaries.date ASC', :page => @page)
       else
         @blogs = @person.blogs.paginate :page => @page
       end

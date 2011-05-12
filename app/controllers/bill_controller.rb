@@ -570,9 +570,9 @@ class BillController < ApplicationController
     
     unless read_fragment("#{@bill.fragment_cache_key}_blogs_#{@sort}_page_#{@page}")
       if @sort == 'toprated'
-        @blogs = @bill.blogs.find(:all, :order => 'commentaries.average_rating IS NOT NULL DESC').paginate :page => @page
+        @blogs = @bill.blogs.paginate(:order => 'commentaries.average_rating IS NOT NULL DESC', :page => @page)
       elsif @sort == 'oldest'
-        @blogs = @bill.blogs.find(:all, :order => 'commentaries.date ASC').paginate :page => @page
+        @blogs = @bill.blogs.paginate(:order => 'commentaries.date ASC', :page => @page)
       else
         @blogs = @bill.blogs.paginate :page => params[:page]
       end
@@ -615,9 +615,9 @@ class BillController < ApplicationController
 
     unless read_fragment("#{@bill.fragment_cache_key}_news_#{@sort}_page_#{@page}")
       if @sort == 'toprated'
-        @news = @bill.news.find(:all, :order => 'commentaries.average_rating IS NOT NULL DESC').paginate :page => @page
+        @news = @bill.news.paginate(:order => 'commentaries.average_rating IS NOT NULL DESC', :page => @page)
       elsif @sort == 'oldest'
-        @news = @bill.news.find(:all, :order => 'commentaries.date ASC').paginate :page => @page
+        @news = @bill.news.paginate(:order => 'commentaries.date ASC', :page => @page)
       else
         @news = @bill.news.paginate :page => params[:page]
       end
@@ -647,10 +647,10 @@ class BillController < ApplicationController
 
     if params[:commentary_type] == 'news'
       @commentary_type = 'news'
-      @articles = @bill.news.find(:all, :conditions => ["fti_names @@ to_tsquery('english', ?)", query_stripped]).paginate :page => @page
+      @articles = @bill.news.paginate(:conditions => ["fti_names @@ to_tsquery('english', ?)", query_stripped], :page => @page)
     else
       @commentary_type = 'blogs'
-      @articles = @bill.blogs.find(:all, :conditions => ["fti_names @@ to_tsquery('english', ?)", query_stripped]).paginate :page => @page
+      @articles = @bill.blogs.paginate(:conditions => ["fti_names @@ to_tsquery('english', ?)", query_stripped], :page => @page)
     end
     
     @page_title = "Search #{@commentary_type.capitalize} for bill #{@bill.typenumber}"

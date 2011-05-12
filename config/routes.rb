@@ -41,7 +41,7 @@ OpenCongress::Application.routes.draw do
       match 'show', :action => 'show', :as => :bill
       match ':action'
     end
-    
+
     match ':id' => 'bill#show'
 
   end
@@ -129,6 +129,7 @@ OpenCongress::Application.routes.draw do
       resource :political_notebook do
         collection do
           post :update_privacy
+          get :feed
         end
         resources :notebook_links do
           collection do

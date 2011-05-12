@@ -58,7 +58,7 @@ OpenCongress::Application.routes.draw do
     match 'votes_with_party/:chamber/:party', :action => 'votes_with_party'
     match 'voting_history/:id/:page', :action => 'voting_history'
     match 'compare.:format', :action => 'compare'
-    match 'show/:id', :action => 'show'
+    match 'show/:id', :action => 'show', :as => 'person'
   end
 
   match 'admin' => 'admin#index'
@@ -81,7 +81,7 @@ OpenCongress::Application.routes.draw do
   match 'blog(/:tag)' => 'articles#list', :as => :blogs
   
   scope 'articles', :controller => 'articles' do
-    match 'view/:id', :action => 'view'
+    match 'view/:id', :action => 'view', :as => :article
     match ':id/atom', :action => 'article_atom'
   end
 
@@ -159,9 +159,10 @@ OpenCongress::Application.routes.draw do
     match 'vote/:year/:chamber/:number(/:state)', :action => 'by_number', :year => /\d{4}/, :chamber => /[hs]/, :number => /\d+/, :state => /\w{2}/
   end
 
-  match 'tools(/:action/:id)', :controller => 'resources'
+  match 'tools(/:action/:id)', :controller => 'resources', :as => 'tools'
 
   # API
+  match 'api' => 'api#index'
   match 'api/bill/text_summary/:id' => 'bill#status_text'
   match 'api/roll_call/text_summary/:id' => 'roll_call#summary_text'
 

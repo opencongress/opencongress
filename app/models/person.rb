@@ -1275,8 +1275,9 @@ class Person < ViewableObject
   end
 
   def ident
-    "#{id}_#{firstname.downcase}_#{lastname.downcase}"
+    self.to_param
   end
+
 	def rep_info
 	foo = /(\[.*\])/.match(name)
 	"#{foo.captures}"

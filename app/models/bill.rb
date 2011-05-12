@@ -238,10 +238,17 @@ class Bill < ViewableObject
     facet_results_hsh = {:my_people_tracked_facet => [], :my_issues_tracked_facet => [], :my_bills_tracked_facet => []}
     my_trackers = 0
 
-    users = User.find_by_solr('placeholder:placeholder', :facets => {:fields => [:my_people_tracked, :my_issues_tracked, :my_bills_tracked], 
-                                                      :browse => ["my_bills_tracked:#{self.ident}"], 
-                                                      :limit => 6, :zeros => false, :sort =>  true}, :limit => 1)
-    facets = users.facets
+    begin
+      users = User.find_by_solr('placeholder:placeholder', :facets => {:fields => [:my_people_tracked, :my_issues_tracked, :my_bills_tracked], 
+                                                        :browse => ["my_bills_tracked:#{self.ident}"], 
+                                                        :limit => 6, :zeros => false, :sort =>  true}, :limit => 1)
+      facets = users.facets
+    rescue
+      return [0, {}] unless Rails.env == 'production'
+      raise
+    end
+
+
 
     facet_results_ff = facets['facet_fields']
     if facet_results_ff && facet_results_ff != []
@@ -283,11 +290,16 @@ class Bill < ViewableObject
   end
   
   def support_suggestions
-
-    users = User.find_by_solr('placeholder:placeholder', :facets => {:fields => [:my_bills_supported, :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens, :my_bills_opposed], 
-                                                      :browse => ["my_bills_supported:#{self.id}"], 
-                                                      :limit => 6, :zeros => false, :sort =>  true}, :limit => 1)
-                                                      logger.debug users.to_yaml
+    begin
+      users = User.find_by_solr('placeholder:placeholder',
+        :facets => {:fields => [:my_bills_supported, :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens, :my_bills_opposed], 
+        :browse => ["my_bills_supported:#{self.id}"], 
+        :limit => 6, :zeros => false, :sort =>  true}, :limit => 1)
+        logger.debug users.to_yaml
+    rescue
+      return [0, {}] unless Rails.env == 'production'
+      raise
+    end
                                                       
     return parse_facets(users.facets, "my_bills_supported_facet", ["my_approved_reps_facet","my_approved_sens_facet","my_disapproved_reps_facet","my_disapproved_sens_facet",
                                                                    "my_bills_supported_facet", "my_bills_opposed_facet"])
@@ -295,10 +307,16 @@ class Bill < ViewableObject
   end
   
   def oppose_suggestions
-    users = User.find_by_solr('placeholder:placeholder', :facets => {:fields => [:my_bills_supported, :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens, :my_bills_opposed], 
-                                                      :browse => ["my_bills_opposed:#{self.id}"], 
-                                                      :limit => 6, :zeros => false, :sort =>  true}, :limit => 1)
-                                                      logger.debug users.to_yaml
+    begin
+      users = User.find_by_solr('placeholder:placeholder', :facets => {:fields => [:my_bills_supported, :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens, :my_bills_opposed], 
+            :browse => ["my_bills_opposed:#{self.id}"], 
+            :limit => 6, :zeros => false, :sort =>  true}, :limit => 1)
+            logger.debug users.to_yaml
+    rescue
+      return [0, {}] unless Rails.env == 'production'
+      raise
+    end
+
                                                       
     return parse_facets(users.facets, "my_bills_opposed_facet", ["my_approved_reps_facet","my_approved_sens_facet","my_disapproved_reps_facet","my_disapproved_sens_facet",
                                                                  "my_bills_supported_facet", "my_bills_opposed_facet"])

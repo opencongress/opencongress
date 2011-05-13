@@ -400,10 +400,6 @@ class BillController < ApplicationController
       format.html {
         comment_redirect(params[:goto_comment]) and return if params[:goto_comment]
 
-        @br_link = Rails.cache.fetch("bill_link_#{@bill.id}", :expires_in => 20.minutes) {
-          @bill.br_link
-        }
-
         @include_vids_styles = true
         
         @tracking_suggestions = @bill.tracking_suggestions

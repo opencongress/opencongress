@@ -100,10 +100,6 @@ class IssueController < ApplicationController
 
     comment_redirect(params[:goto_comment]) and return if params[:goto_comment]
 
-    @br_link = Rails.cache.fetch("issue_link_#{@subject.id}", :expires_in => 20.minutes) {
-         @subject.br_link
-    }
-	
     @sidebar_stats_object = @subject
     @user_object = @subject
     @page_title_prefix = "U.S. Congress"

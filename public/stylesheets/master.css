@@ -3665,29 +3665,6 @@ line-height: 1em;
 }
 
 
-
-
-
-
-
-
-
-
-
-.br_link a{
-font-size: 11px;
-display: block;
-padding-top: 40px;
-height: 0;
-overflow: hidden;
-background: url('../images/br_button.png') 8px 9px no-repeat;
-_background: url('../images/br_button.gif') 8px 9px no-repeat;
-}
-
-.br_link{
-margin-bottom: 20px;
-}
-
 #mycarousel .cap{
 height: 10px;
 background: url('../images/cap.png') 0px 0px no-repeat;

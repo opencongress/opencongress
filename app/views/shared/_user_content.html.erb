@@ -73,19 +73,6 @@
 				<% end %>
 			</div>
 		</div>
-
-
-		<% if @br_link %>
-		<div class="br_link small_box">
-		<div class="small_box_top">
-		<p><%= link_to "View this Bill's Popularity in Bill Battle", @br_link %></p>
-		</div>
-		</div>
-		
-		<% else %>
-		
-		
-		<% end %>
 		
 		<% if logged_in? %>
 		  <% if object.is_house_bill? %>

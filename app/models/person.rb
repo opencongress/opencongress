@@ -137,32 +137,6 @@ class Person < ViewableObject
     end  
   end
 
-  # returns the battle royale index
-  def place_in_battle_royale_100
-    b = Person.find_all_by_most_tracked_for_range(nil, {:limit => 100, :offset => 0, :person_type => self.title})
-    b.rindex(self)
-  end
-
-  def br_page
-    rindex = self.place_in_battle_royale_100
-    if rindex
-      return  ((rindex.to_f + 1.0) / 20.0).ceil
-    else
-      return nil
-    end
-  end
-
-  def br_link
-    page = self.br_page
-    action_link = "representatives" if self.title == "Rep."
-    action_link = "senators" if self.title == "Sen."
-    if page
-      return {:controller => :battle_royale, :action => action_link, :page => page, :person => self.ident, :timeframe => "AllTime"}
-    else
-      return nil
-    end
-  end
-
   def to_light_xml(options = {})
     default_options = {:methods => [:oc_user_comments, :oc_users_tracking], :except => [:fti_names]}
     self.to_xml(default_options.merge(options))

@@ -247,10 +247,6 @@ class PeopleController < ApplicationController
 		  #@top_issues = issue_hash.to_a.sort { |a, b| b[1] <=> a[1] }[0..20]
 		  #@top_issues.sort! {|a,b| a[0].term <=> b[0].term }
 		  #logger.warn "TOP ISSUES: #{@top_issues}"
-
-      @br_link = Rails.cache.fetch("person_link_#{@person.id}", :expires_in => 20.minutes) {
-         @person.br_link
-      }
 		  
 		  @include_vids_styles = true
       

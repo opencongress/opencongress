@@ -367,30 +367,6 @@ class Bill < ViewableObject
     end    
   end
 
-  # returns the battle royale index
-  def place_in_battle_royale_100
-    b = Bill.find_all_by_most_user_votes_for_range(nil, {:limit => 100, :offset => 0})
-    b.rindex(self)
-  end
-
-  def br_page
-    rindex = self.place_in_battle_royale_100
-    if rindex
-      return  ((rindex.to_f + 1.0) / 20.0).ceil
-    else
-      return nil
-    end
-  end
-
-  def br_link
-    page = self.br_page
-    if page
-      return {:controller => :battle_royale, :action => :index, :page => page, :bill => self.ident, :timeframe => "AllTime"}
-    else
-      return nil
-    end
-  end
-
   def to_light_xml(options = {})
     default_options = {:except => [:rolls, :hot_bill_category_id, :summary, :fti_titles,:bookmark_count_2,
                                    :fti_names,:current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, 

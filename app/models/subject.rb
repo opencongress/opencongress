@@ -38,30 +38,6 @@ class Subject < ViewableObject
     term
   end
 
-  def place_in_battle_royale_100
-    b = Subject.find_all_by_most_tracked_for_range(nil, {:limit => 100, :offset => 0})
-    b.rindex(self)
-  end
-
-  def br_page
-    rindex = self.place_in_battle_royale_100
-    if rindex
-      return  ((rindex.to_f + 1.0) / 20.0).ceil
-    else
-      return nil
-    end
-  end
-
-  def br_link
-    page = self.br_page
-    action_link = "issues"
-    if page
-      return {:controller => :battle_royale, :action => action_link, :page => page, :issue => self.id, :timeframe => "AllTime"}
-    else
-      return nil
-    end
-  end
-
   def self.find_all_by_most_tracked_for_range(range, options)
     range = 630720000 if range.nil?
 

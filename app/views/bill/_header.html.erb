@@ -12,13 +12,6 @@
 		<p id="vote_message_<%= @bill.id %>" style="display:none;border:2px solid #48A100;padding:3px;"></p>
 	</div>
 </div>
-<!--
-<div style="float:right;clear:right;">
-	   <% if @br_link %>
-		  <%= link_to image_tag('battle_royale_button_d_bill.gif'), @br_link %>
-	<% end %>
-</div>
--->
 <h2 class="title"><%= @bill.title_common %></h2>
 <% unless @bill.title_popular_only.blank? %>
   <h3 class="official-title"><%= em_official_title %></h3>

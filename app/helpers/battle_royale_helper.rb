@@ -6,9 +6,6 @@ module BattleRoyaleHelper
 		i = 0
 		text += "<tr>"
 		status_hash['steps'].each do |s|
-			#if s.has_value?('Introduced')
-			# i += 1
-			#else
 			if i != 0
 				text += %Q{<td rowspan="2" class="divide"><img src="/images/#{s['result']}.gif" alt="result"></td>}
 			end

@@ -1,19 +1,28 @@
-# Settings specified here will take precedence over those in config/environment.rb
+OpenCongress::Application.configure do
+  # Use a different cache store in production
+  # config.cache_store = :mem_cache_store
 
-Settings.base_url = 'http://drm.dev.opencongress.org'
-Settings.wiki_base_url = 'http://wiki-dev.opencongress.org/wiki'
+  # Disable Rails's static asset server
+  # In production, Apache or nginx will already do this
+  config.serve_static_assets = true
 
-# In the development environment your application's code is reloaded on
-# every request.  This slows down response time but is perfect for development
-# since you don't have to restart the webserver when you make code changes.
-config.cache_classes = false
+  # Enable serving of images, stylesheets, and javascripts from an asset server
+  # config.action_controller.asset_host = "http://assets.example.com"
 
-# Log error messages when you accidentally call methods on nil.
-config.whiny_nils = true
+  config.action_controller.perform_caching             = false
+  config.action_view.debug_rjs                         = true
 
-# Show full error reports and disable caching
-config.action_controller.consider_all_requests_local = true
-config.action_controller.perform_caching             = false
-config.action_view.debug_rjs                         = true
+  # Disable delivery errors, bad email addresses will be ignored
+  # config.action_mailer.raise_delivery_errors = false
 
-MINI_MAILER_FROM = "alert@dev.opencongress.org"
+  # Enable threaded mode
+  # config.threadsafe!
+
+  # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
+  # the I18n.default_locale when a translation can not be found)
+  config.i18n.fallbacks = true
+
+  # Send deprecation notices to registered listeners
+  config.active_support.deprecation = :notify
+  
+end

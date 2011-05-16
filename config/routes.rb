@@ -22,10 +22,10 @@ OpenCongress::Application.routes.draw do
       match action, :action => action, :as => 'bill_' + action
     end
 
-    match 'most/:type', :action => 'most_commentary'
+    match 'most/:type', :action => 'most_commentary', :as => :bill_most_commentary
     match 'most/viewed', :action => 'popular'
     match 'atom/most/viewed', :action => 'atom_top20'
-    match 'atom/most/:type', :action => 'atom_top_commentary', :as => :bill_most_commentary
+    match 'atom/most/:type', :action => 'atom_top_commentary'
     match 'type/:bill_type(/:page)', :action => 'list_bill_type'
     match 'text/status/:id', :action => 'status_text'
     match 'upcoming/:id', :action => 'upcoming'

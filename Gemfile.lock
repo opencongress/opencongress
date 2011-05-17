@@ -5,14 +5,6 @@ GIT
     simple_captcha (0.1.1)
 
 GIT
-  remote: git://github.com/opencongress/formageddon.git
-  revision: 0cf136832154c4167a32a53ff30cea7137b8ca21
-  specs:
-    formageddon (0.0.0)
-      haml
-      mechanize
-
-GIT
   remote: http://github.com/mbleigh/acts-as-taggable-on.git
   revision: 2752cfef4c66318d0925fbe880d5392ad188bb50
   specs:
@@ -54,8 +46,8 @@ GEM
       activemodel (= 3.0.7)
       activesupport (= 3.0.7)
     activesupport (3.0.7)
-    addressable (2.2.5)
-    arel (2.0.9)
+    addressable (2.2.6)
+    arel (2.0.10)
     autotest (4.4.6)
       ZenTest (>= 4.4.1)
     bluecloth (2.1.0)
@@ -81,7 +73,7 @@ GEM
       capybara (~> 0.4.0)
       envjs (>= 0.3.7)
     celerity (0.8.9)
-    childprocess (0.1.8)
+    childprocess (0.1.9)
       ffi (~> 1.0.6)
     closure-compiler (1.1.1)
     crack (0.1.8)
@@ -104,8 +96,7 @@ GEM
       abstract (>= 1.0.0)
     eventmachine (0.12.10)
     fastercsv (1.5.4)
-    ffi (1.0.7)
-      rake (>= 0.8.7)
+    ffi (1.0.8)
     gherkin (2.1.5)
       trollop (~> 1.16.2)
     govkit (0.6.1)
@@ -115,12 +106,12 @@ GEM
       nokogiri (>= 1.4.4)
     guard (0.3.4)
       thor (~> 0.14.6)
-    guard-livereload (0.1.10)
+    guard-livereload (0.1.11)
       em-websocket (~> 0.2.0)
       guard (>= 0.2.2)
       json (~> 1.5.1)
     haml (3.1.1)
-    highline (1.6.1)
+    highline (1.6.2)
     hoptoad_notifier (2.4.9)
       activesupport
       builder
@@ -155,7 +146,7 @@ GEM
     net-ssh (2.1.4)
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
-    newrelic_rpm (2.14.1)
+    newrelic_rpm (3.0.0)
     nokogiri (1.4.4)
     oauth (0.4.4)
     okkez-open_id_authentication (1.0.1)
@@ -186,19 +177,19 @@ GEM
       thor (~> 0.14.4)
     rake (0.8.7)
     rmagick (2.13.1)
-    rspec (2.5.0)
-      rspec-core (~> 2.5.0)
-      rspec-expectations (~> 2.5.0)
-      rspec-mocks (~> 2.5.0)
-    rspec-core (2.5.1)
-    rspec-expectations (2.5.0)
+    rspec (2.6.0)
+      rspec-core (~> 2.6.0)
+      rspec-expectations (~> 2.6.0)
+      rspec-mocks (~> 2.6.0)
+    rspec-core (2.6.0)
+    rspec-expectations (2.6.0)
       diff-lcs (~> 1.1.2)
-    rspec-mocks (2.5.0)
-    rspec-rails (2.5.0)
+    rspec-mocks (2.6.0)
+    rspec-rails (2.6.0)
       actionpack (~> 3.0)
       activesupport (~> 3.0)
       railties (~> 3.0)
-      rspec (~> 2.5.0)
+      rspec (~> 2.6.0)
     ruby-openid (2.1.8)
     rubyzip (0.9.4)
     selenium-client (1.2.18)
@@ -245,7 +236,6 @@ DEPENDENCIES
   closure-compiler
   cucumber (= 0.8.5)
   cucumber-rails
-  formageddon!
   govkit
   guard
   guard-livereload

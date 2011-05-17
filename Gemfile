@@ -62,7 +62,6 @@ gem "acts-as-taggable-on", :git => 'http://github.com/mbleigh/acts-as-taggable-o
 
 ### temp just for showing to drm
 gem 'mechanize'
-gem "formageddon", :git => 'git://github.com/opencongress/formageddon.git'
 
 
 gem 'rspec'

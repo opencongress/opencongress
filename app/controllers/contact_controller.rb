@@ -46,6 +46,14 @@ class ContactController < ApplicationController
   def person
   end
   
+  def get_recipients
+    @sens, @reps = Person.find_current_congresspeople_by_zipcode(params[:zip], nil)
+    
+    @reps = [] unless @reps.size == 1
+    
+    render :partial => 'contact/contact_recipients'
+  end
+  
   def showthread
     @thread = Formageddon::FormageddonThread.find(params[:id])
     

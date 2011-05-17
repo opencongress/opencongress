@@ -76,7 +76,7 @@
             = render 'will_add_text_box', :text => "As noted by #{c.user.login}, a user on OpenCongress.org, on #{c.created_at.strftime("%B %d, %Y")}, \"#{c.comment}\""
             
   .contact_letter
-    .contact_recipients_container
+    #contact_recipients_container
       = render 'contact_recipients', :show_checkboxes => true
               
     = render 'formageddon/threads/form', :thread => @formageddon_thread, :after_send_url => '/contact/aftersend'
@@ -100,8 +100,20 @@
       msg.val(msg.val()+"\n\n"+unescape(txt)); 
     }
   );
+  
+  $j("#formageddon_formageddon_thread_sender_zip5").keyup(function() {
+    if ($j(this).val().length == 5) {
+      $j.ajax({
+        url: '/contact/get_recipients?zip=' + $j(this).val(),
+        success: function(data) {
+          $j('#contact_recipients_container').html(data);
+        }
+      });
+    }
+  });
+  
   $j(document).ready(function() {
-    $j('#formageddon_formageddon_thread_submit').addClass("button blue huge");
+    $j('.formageddon_submit').addClass("button blue huge");
   });
   
   

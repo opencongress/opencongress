@@ -4,21 +4,19 @@
 
 <div class="main">
   
+<%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
+	
 <div class="sponsorship_data">
-  
 	<div id="sponsors">
 		<h2 class="gray">Sponsor</h2>
-		<% unless @bill.co_sponsors.empty? %>
-
-		<% end %>
 		<div class="details">
 			<% unless @bill.sponsor.nil? %>
 			  <%= link_to(("<img src='/images/photos/thumbs_42/" + @bill.sponsor.id.to_s + ".png'>").html_safe, person_url(@bill.sponsor)) %>
-			<p><%= @bill.sponsor.title_long %></p>
-			<%= link_to(@bill.sponsor.full_name, person_url(@bill.sponsor)) %>
-			<p><%= @bill.sponsor.party_and_state %></p>
+			  <p><%= @bill.sponsor.title_long %></p>
+			  <%= link_to(@bill.sponsor.full_name, person_url(@bill.sponsor)) %>
+			  <p><%= @bill.sponsor.party_and_state %></p>
 			<% else %>
-			<p>No sponsor found for this Bill</p>
+			  <p>No sponsor found for this Bill</p>
 			<% end %>
 		</div>
 		<%= toggler("bill_cosponsors_more", "View Co-Sponsors (#{@bill.co_sponsors.size})", "Hide Co-Sponsors", "toggle", "toggle").html_safe %>
@@ -54,23 +52,9 @@
 
   
   <div id="bill-status-box" class="clearfix">
-		<%= bill_status_table.html_safe %>
-		
-		<a href="/bill/<%= @bill.ident %>/actions_votes" class="button blue margin-bottom margin-top floatleft small"><span class="title">View Latest Action</span> <span class="dater"><%= @bill.last_action.formatted_date %></span><span class="action_details"><%= truncate(h(@bill.last_action), :length => 39) %></span></a>
-		
-		    <% if ((@bill.related_bills.size > 0) or (@bill.subjects.size > 0)) %>
-  				<a href="#bill_list" class="jump-to button silver floatleft small margin-top margin-left">
-  				  <span>Jump to</span> Related Bills (<%= @bill.related_bills.size %>) &amp; Issues (<%= @bill.subjects.size %>)
-  				</a>
-        <% end %>
-        
-				<% unless @tracking_suggestions[0] == 0 %>
-				  <a href="#users_tracking" class="jump-to button silver floatleft small margin-top margin-left"><span>Jump to</span>Users Tracking <%= @bill.typenumber %> (<%= @tracking_suggestions[0] %>)</a>
-				<% end %>
+    <%= bill_status_table.html_safe %>
+  </div>
 
-	</div>
-	
-	
 	<% unless @roll_call.nil? %>
 	
   <div class="padding">
@@ -92,30 +76,14 @@
 	</div>
 	<% end %>
 
-        <% cache("bill_wiki_summary_#{@bill.id}", :expires_in => 6.hours) do %>
-        <!-- bill_wiki_summary_<%= @bill.id %>: <%= Time.now %> -->
-	<ul id="summaries_nav">
-		<li id="wiki_button" <%= @bill.wiki_summary.blank? ? '' : "class='active'" %>><%= link_to_function "<span>Wiki Summary</span>".html_safe, "Element.hide('summary');Element.show('wiki_summary');Element.removeClassName('official_button', 'active');Element.addClassName('wiki_button','active');" %></li>
-		<li id="official_button" <%= @bill.wiki_summary.blank? ? "class='active'" : '' %>><%= link_to_function "<span>Official Summary</span>".html_safe, "Element.hide('wiki_summary');Element.show('summary');Element.removeClassName('wiki_button', 'active');Element.addClassName('official_button','active');" %></li>
-	</ul>
 
-	<div id="summaries">
-		  <div id="wiki_summary" <%= @bill.wiki_summary.blank? ? "style='display:none;'" : "" %>>
-		    <% if @bill.wiki_summary %>
-			    <p><%= @bill.wiki_summary.html_safe %></p>
-			    <p id="contribute">This summary provided by people like you <a href="<%= @wiki_url %>">Contribute to it</a></p>
-			  <% else %>
-			    <p id="contribute">This bill currently has no wiki summary. <a href="<%= @wiki_url ? @wiki_url : @wiki_create_url %>" class="<%= "wiki_link" unless logged_in? %>">Create Summary</a></p>
-			  <% end %> 
-		  </div>
 
-  		<div id="summary" class="clearfix" <%= @bill.wiki_summary.blank? ? "" : "style='display:none;'" %>>
-  			<div class="official_summary"><%= bill_summary_with_more.html_safe %></div>
-		  </div>                      
-	</div>
-	<% end %>
 
-		<div class="clearfix"></div>
+  <div id="summary" class="clearfix" <%= @bill.wiki_summary.blank? ? "" : "style='display:none;'" %>>
+    <div class="official_summary"><%= bill_summary_with_more.html_safe %></div>
+  </div>
+  
+  <div class="clearfix"></div>
 		
 		<% unless @bill.bill_position_organizations.empty? %>
   		<div id="money_trail_summary">

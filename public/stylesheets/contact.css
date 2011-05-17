@@ -47,12 +47,21 @@ clear: none;
 
 
 .formageddon_contact_form {
-  float:left;
-width: 460px;
+float:left;
+width: 480px;
 margin-bottom: 900px;
-  padding: 20px;
+padding: 20px 0 0 20px;
+margin-right: 0;
+overflow: hidden;
 font-size: 11px;
 }
+
+#new_formageddon_formageddon_thread{
+width: 500px;
+}
+
+
+
 .formageddon_contact_form label {
   width: 100px;
   display: inline-block;
@@ -112,8 +121,9 @@ border: 1px solid #afafaf;
   float: left;
   width: 299px;
   text-align: center;
-  padding: 15px 0;
+  padding: 10px 0;
   color: #888;
+font-size: 12px;
   border-right: 1px solid #bbb;
 }
 
@@ -149,7 +159,7 @@ overflow: auto;
   margin: 0;
 right: 0;
 position: absolute;
-top: 669px;
+top: 739px;
 }
 
 
@@ -253,7 +263,6 @@ background: #fff;
 }
 
 
-
 .contact_message_builder .will_add_text_box {
   display: none;
 }
@@ -271,10 +280,12 @@ background: #fff;
 }
 .contact_message_builder .contribution_data th {
   text-align: left;
+border: 1px solid #ddd;;
 }
-.contact_message_builder .contribution_data td, .contact_message_builder .contribution_data th {
+.contact_message_builder .contribution_data td, 
+.contact_message_builder .contribution_data th {
   padding: 5px;
-  border: 1px dashed #aaa;
+
 }
 .contact_message_builder .contribution_data th.topleft {
   border-top: 0;
@@ -415,7 +426,7 @@ height: 705px;
 width: 510px;
 left: 0;
 border-right: 1px solid #777;
-top: 669px;
+top: 739px;
 position: absolute;
 background: #999;
 -moz-box-shadow:inset -2px 1px 46px rgba(0,0,0,.2);
@@ -507,7 +518,7 @@ width: 927px;
 margin: 0px 0 0 -35px;
 padding: 20px 40px 20px 35px; 
 font-size: 16px;
-top: 609px;
+top: 679px;
   background: #999; /* for non-css3 browsers */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='#ddd'); /* for IE */
   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd)); /* for webkit browsers */
@@ -539,7 +550,7 @@ font-size: 9px;
 .contact_letter .button{
 position: absolute;
 right: 8px;
-top: 604px;
+top: 674px;
 }
 
 
@@ -560,7 +571,6 @@ margin-top: 3px;
 .sender_state label{
 width: 30px;
 margin: 0 10px 0 35px;
-
 }
 
 
@@ -732,3 +742,48 @@ display: relative !important;
 .position_buttons{
 text-align: center;
 }
+
+
+
+
+
+
+h1.regarding{
+padding: 0 30px;
+font-size: 14px;
+font-family: Helvetica, Arial, sans-serif;
+font-style: normal;
+width: 800px;
+text-align: center;
+float: none;
+margin: 0 auto !important;
+}
+
+
+
+
+span.regarding{
+
+font-size: 14px;
+font-family: Helvetica, Arial, sans-serif;
+font-style: normal;
+width: 900px !important;
+text-align: center;
+display: block;
+padding: 30px 0 10px;
+float: none !important;
+margin: 0 auto 10px !important;
+border-bottom: 1px solid #eee;
+}
+
+
+
+
+.contact_letter p{
+}
+
+
+
+
+
+

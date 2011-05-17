@@ -1,3 +1,6 @@
+%span.regarding You are writing regarding
+%h1.regarding= "#{@bill.typenumber} #{@bill.title_common}"
+
 #heading
   %h2 Contact Congress
   
@@ -96,9 +99,7 @@
             %span
               = "Vote on Passage of #{@bill.typenumber}: " 
               %strong= "#{@bill.vote_on_passage(@reps.first)}"
-      You are writing regarding:
-      %p
-        %strong= link_to "#{@bill.typenumber} #{@bill.title_common}", bill_path(@bill)
+              
     = render 'formageddon/threads/form', :thread => @formageddon_thread, :after_send_url => '/contact/aftersend'
     %p Click send, and we will automatically deliver your letter to the members of Congress you selected above. OpenCongress is the only not-for-profit website that enables you to write all three of your members of Congress at once. Also, OpenCongress is the only website that gives this information back to the public commons, enabling you to find other constituents near you who are tracking the same bills and issues. 
 

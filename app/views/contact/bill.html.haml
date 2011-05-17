@@ -1,5 +1,5 @@
 %span.regarding You are writing regarding
-%h1.regarding= "#{@bill.typenumber} #{@bill.title_common}"
+%h1.regarding= truncate("#{@bill.typenumber} #{@bill.title_common}", :length => 170)
 
 #heading
   %h2 Contact Congress
@@ -76,7 +76,8 @@
             = render 'will_add_text_box', :text => "As noted by #{c.user.login}, a user on OpenCongress.org, on #{c.created_at.strftime("%B %d, %Y")}, \"#{c.comment}\""
             
   .contact_letter
-    = render 'contact_recipients', :show_checkboxes => true
+    .contact_recipients_container
+      = render 'contact_recipients', :show_checkboxes => true
               
     = render 'formageddon/threads/form', :thread => @formageddon_thread, :after_send_url => '/contact/aftersend'
     %p Click send, and we will automatically deliver your letter to the members of Congress you selected above. OpenCongress is the only not-for-profit website that enables you to write all three of your members of Congress at once. Also, OpenCongress is the only website that gives this information back to the public commons, enabling you to find other constituents near you who are tracking the same bills and issues. 

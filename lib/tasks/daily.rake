@@ -173,21 +173,6 @@ namespace :update do
     end
   end
 
-  task :open_secrets => :environment do
-    begin
-      Person.transaction {
-        load 'bin/daily/daily_parse_opensecrets.rb'
-      }
-    rescue Exception => e
-      if (['production', 'staging'].include?(Rails.env))
-        Emailer.deliver_rake_error(e, "Error parsing open secrets!")
-      else
-        puts "Error parsing open secrets! Maybe an invalid api key?"
-      end
-      throw e
-    end
-  end
-
   task :committee_schedule => :environment do
     begin
       CommitteeMeeting.transaction {
@@ -380,8 +365,8 @@ namespace :update do
     end
   end
 
-  task :all => [:rsync, :photos, :people, :bills, :amendments, :roll_calls, :committee_reports, :committee_schedule, :open_secrets, :person_voting_similarities, :sponsored_bill_stats, :expire_cached_bill_fragments, :expire_cached_person_fragments]
-  task :parse_all => [ :people, :bills, :amendments, :roll_calls, :committee_reports, :committee_schedule, :open_secrets]
+  task :all => [:rsync, :photos, :people, :bills, :amendments, :roll_calls, :committee_reports, :committee_schedule, :person_voting_similarities, :sponsored_bill_stats, :expire_cached_bill_fragments, :expire_cached_person_fragments]
+  task :parse_all => [ :people, :bills, :amendments, :roll_calls, :committee_reports, :committee_schedule]
   task :govtrack => [ :rsync, :people, :bills, :amendments, :roll_calls, :expire_cached_bill_fragments, :expire_cached_person_fragments]
   task :committee_info => [:committee_reports, :committee_schedule]
   task :people_meta_data => [:person_voting_similarities, :sponsored_bill_stats, :expire_cached_person_fragments]

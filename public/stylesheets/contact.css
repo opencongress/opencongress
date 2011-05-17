@@ -187,8 +187,17 @@ padding: 10px 15px;
 }
 
 .contact_message_builder .message_builder_clickable:hover {
-  background-color:#d1e1ef;
-cursor: pointer;
+
+  -moz-box-shadow:  0 2px 3px rgba(0,0,0,.9), inset 0 1px 0px #fff;
+  -webkit-box-shadow:  0 2px 3px rgba(0,0,0,.9), inset 0 1px 0px #fff;
+  box-shadow:  0 2px 3px rgba(0,0,0,.9), inset 0 1px 0px #fff;
+  
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #eee); /* for firefox 3.6+ */
+
+  text-shadow: 0 1px 0px #fff;
+
+cursor: pointer !important;
 }
 
 div.will_add_text_box{
@@ -280,13 +289,26 @@ background: #fff;
 }
 .contact_message_builder .contribution_data th {
   text-align: left;
-border: 1px solid #ddd;;
+border: 1px solid #ddd;
+  padding: 7px 10px;
 }
-.contact_message_builder .contribution_data td, 
-.contact_message_builder .contribution_data th {
-  padding: 5px;
+
+
+.contact_message_builder .contribution_data td {
+border-right: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
+background: rgba(255,255,255,.9)
+}
+
+
+.contact_message_builder .contribution_data td span.message_builder_clickable{
+  padding: 7px 10px;
 
 }
+
+
+
+
 .contact_message_builder .contribution_data th.topleft {
   border-top: 0;
   border-left: 0;
@@ -763,7 +785,6 @@ margin: 0 auto !important;
 
 
 span.regarding{
-
 font-size: 14px;
 font-family: Helvetica, Arial, sans-serif;
 font-style: normal;
@@ -783,7 +804,31 @@ border-bottom: 1px solid #eee;
 }
 
 
+.second_submit{
+
+position: absolute;
+top: 1443px;
+left: 0;
 
 
+
+position: absolute;
+border-top: 1px solid #ddd;
+border-bottom: 1px solid #444;
+display: block !important;
+float: none !important;
+width: 927px;
+margin: 0px;
+padding: 20px 40px 20px 35px; 
+font-size: 16px;
+
+
+  background: #999; /* for non-css3 browsers */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='#ddd'); /* for IE */
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #ddd); /* for firefox 3.6+ */
+
+
+}
 
 

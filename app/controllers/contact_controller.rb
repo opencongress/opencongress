@@ -4,11 +4,7 @@ class ContactController < ApplicationController
   def bill
     @page_title = "Contact Congress"
     @bill = Bill.find_by_ident(params[:id])
-    
-    if params[:position].nil?
-      render 'select_position'
-      return
-    end
+  
 
     if logged_in?
       @sens = current_user.my_sens
@@ -21,7 +17,12 @@ class ContactController < ApplicationController
     else
       @sens = @reps = []
     end
-    
+  
+    if params[:position].nil?
+      render 'select_position'
+      return
+    end
+      
     formageddon_configured = false
     ### loop through recipients and see if formageddon is configured
     

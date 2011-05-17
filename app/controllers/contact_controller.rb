@@ -1,5 +1,5 @@
 class ContactController < ApplicationController
-  before_filter :login_required, :except => :index
+  #before_filter :login_required, :except => :index
   
   def bill
     @page_title = "Contact Congress"
@@ -10,12 +10,16 @@ class ContactController < ApplicationController
       return
     end
 
-    @sens = current_user.my_sens
-    @reps = current_user.my_reps
-    
-    if @sens.empty? && @reps.empty?
-      flash[:notice] = "In order to contact your representatives in Congress, you must configure your account.  Please enter your zipcode and address in the form below."
-      redirect_to user_profile
+    if logged_in?
+      @sens = current_user.my_sens
+      @reps = current_user.my_reps
+  
+      if @sens.empty? && @reps.empty?
+        flash[:notice] = "In order to contact your representatives in Congress, you must configure your account.  Please enter your zipcode and address in the form below."
+        redirect_to user_profile
+      end
+    else
+      @sens = @reps = []
     end
     
     formageddon_configured = false

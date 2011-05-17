@@ -742,15 +742,13 @@ private
 
       @tabs = [
         ["Overview",{:action => 'show', :id => @bill.ident}],
-        ["Actions <span>(#{number_with_delimiter(@bill.actions.size)})</span> & Votes <span>(#{number_with_delimiter(@bill.roll_calls.size)})</span>",{:action => 'actions_votes', :id => @bill.ident}]
+        ["Actions & Votes",{:action => 'actions_votes', :id => @bill.ident}]
       ]
       @tabs << ["Money Trail",{:action => 'money', :id => @bill.ident}] unless @bill.bill_interest_groups.empty?
-      @tabs.concat([
-        ["Wiki","#{@wiki_url}"],
-        ["News <span>(#{number_with_delimiter(@bill.news_article_count)})</span> & Blogs <span>(#{number_with_delimiter(@bill.blog_article_count)})</span>".html_safe,{:action => 'news_blogs', :id => @bill.ident}],
-        ["Videos <span>(#{number_with_delimiter(@bill.videos.size)})</span>".html_safe,{:action => 'videos', :id => @bill.ident}],
-        ["Comments <span>(#{number_with_delimiter(@comments.comments.size)})</span>".html_safe,{:action => 'comments', :id => @bill.ident}]
-      ])
+      @tabs << ["News <span>(#{number_with_delimiter(@bill.news_article_count)})</span> & Blogs <span>(#{number_with_delimiter(@bill.blog_article_count)})</span>".html_safe,{:action => 'news_blogs', :id => @bill.ident}]
+      @tabs << ["Videos".html_safe,{:action => 'videos', :id => @bill.ident}] unless @bill.videos.empty?
+      @tabs << ["Comments <span>(#{number_with_delimiter(@comments.comments.size)})</span>".html_safe,{:action => 'comments', :id => @bill.ident}]
+      
       @top_comments = @bill.comments.find(:all,:include => [:user], :order => "comments.plus_score_count - comments.minus_score_count DESC", :limit => 2)
       @bookmarking_image = "/images/fb-bill.jpg"
       @atom = {'link' => url_for(:only_path => false, :controller => 'bill', :id => @bill.ident, :action => 'atom'), 'title' => "#{@bill.typenumber} activity"}

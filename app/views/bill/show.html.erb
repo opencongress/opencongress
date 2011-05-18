@@ -94,8 +94,9 @@
 </div>
 
 
-	<% unless @roll_call.nil? %>	
-    <div class="padding">
+	<% unless @roll_call.nil? %>
+	  <div class="clear">&nbsp;</div>
+    <div class="padding paddingtopnone">
       <h2 class="header">Latest Vote</h2>
       <div class="votes">
       <%= render :partial => 'vote', :object => @bill.roll_calls.first %>

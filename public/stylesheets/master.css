@@ -2957,9 +2957,9 @@ _background: url(../images/sprites.gif) -199px -109px no-repeat;
 }
 
 #tabs{
-  padding:24px 0 0 30px;
+  padding:34px 0 0 30px;
   clear:both;
-  height: 25px;
+  height: 33px;
 width: 100%;
 border-bottom:1px solid #dfdfdf;
 }
@@ -2970,51 +2970,59 @@ margin-right: 5px;
 }               
 
 #tabs ul li a{
-padding: 0 5px 0 0;
+padding:8px 15px;
 display: block;
 clear: none;
-font-size: 11px;
+font-size: 14px;
 text-decoration: none;
-background: url('../images/large_buttons.png') right -880px no-repeat;
-_background: url('../images/large_buttons.gif') right -880px no-repeat;
+margin-right: 10px;
+background: #fff;
 color: #555;
-}
+-moz-border-radius-topright: 3px; 
+-moz-border-radius-topleft: 3px;
 
-#tabs ul li a span{
-padding: 5px 4px 3px 10px;
-color: #555;
-display: block;
-background: url('../images/large_buttons.png') 0 -880px no-repeat;
-_background: url('../images/large_buttons.gif') 0 -880px no-repeat;
-}
-
-#tabs ul li a span span{
-padding: 0px !important;
-color: #aaa !important;
-display: inline !important;
-background: none !important;
+-webkit-border-top-left-radius: 3px;
+-webkit-border-tpo-right-radius: 3px;
+opacity: .5;
 }
 
 #tabs ul li a:hover{
-background: url('../images/large_buttons.png') right -844px no-repeat;
-_background: url('../images/large_buttons.gif') right -844px no-repeat;
+opacity: 1;
+}
+
+#tabs ul li.here a{
+opacity: 1;
+}
+
+
+
+
+#tabs ul li a span{
+
+}
+
+
+
+#tabs ul li a span span{
+
+}
+
+#tabs ul li a:hover{
+
 
 }
 
 #tabs ul li a:hover span{
-background: url('../images/large_buttons.png') 0 -844px no-repeat;
-_background: url('../images/large_buttons.gif') 0 -844px no-repeat;
+
 
 }
 
 #tabs ul li.here a, #bill.blogs #tabs ul li a, #bill.news #tabs ul li a{
-background: url('../images/large_buttons.png') right -844px no-repeat;
-_background: url('../images/large_buttons.gif') right -844px no-repeat;
+
 }
 
 #tabs ul li.here a span, #bill.blogs #tabs ul li a span, #bill.news #tabs ul li a span{
-background: url('../images/large_buttons.png') 0 -844px no-repeat;
-_background: url('../images/large_buttons.gif') 0 -844px no-repeat;
+
 }
 
 .email_trigger{

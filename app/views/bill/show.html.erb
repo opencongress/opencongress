@@ -6,6 +6,10 @@
   
 <%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
 
+<div id="bill-status-box" class="clearfix">
+  <%= bill_status_table.html_safe %>
+</div>
+
 <% unless @bill.current_bill_text_version.nil? %>
   <div id="bill-text" class="un">
     <%= link_to "Official Bill Text <span>Comment on about #{number_with_delimiter(@bill.current_bill_text_version.pages)} Pages</span>".html_safe, :action => 'text' %>
@@ -55,9 +59,7 @@
 		</div>
 </div>
   
-  <div id="bill-status-box" class="clearfix">
-    <%= bill_status_table.html_safe %>
-  </div>
+
 
 	<% unless @bill.subjects.empty? %>
 		<div class="related_issues_list" id="issue_list">

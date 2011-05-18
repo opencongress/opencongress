@@ -47,22 +47,28 @@
 				<% end %>
 		</div>
 </div>
-
-
-
   
   <div id="bill-status-box" class="clearfix">
     <%= bill_status_table.html_safe %>
   </div>
 
-	<% unless @roll_call.nil? %>
-	
-  <div class="padding">
-    <h2 class="header">Latest Vote</h2>
-    <div class="votes">
-    <%= render :partial => 'vote', :object => @bill.roll_calls.first %>
+	<% unless @bill.subjects.empty? %>
+		<div class="related_issues_list" id="issue_list">
+		  <h2>Related Issue Areas</h2>
+		  <ul class="lined_list">
+			  <%= bill_subject_list.html_safe %>
+		  </ul>
+		  <span class="small">Data from the Congressional Research Service</span>
+		</div>
+	<% end  %>
+  		
+	<% unless @roll_call.nil? %>	
+    <div class="padding">
+      <h2 class="header">Latest Vote</h2>
+      <div class="votes">
+      <%= render :partial => 'vote', :object => @bill.roll_calls.first %>
+      </div>
     </div>
-  </div>
 	<% end %>
 	
 	
@@ -213,28 +219,15 @@
 		  <br/>
 
 
-  <% unless @bill.related_bills.empty? && @bill.subjects.empty? %>
-		<% unless @bill.related_bills.empty? %>
-			<div class="related_bills_list" id="bill_list">
-			  <h2>Related Bills</h2>
-			  <ul class="lined_list">
-				  <%= bill_related_list.html_safe %>
-			  </ul>
-			</div>
-		<% end %>
+	<% unless @bill.related_bills.empty? %>
+		<div class="related_bills_list" id="bill_list">
+		  <h2>Related Bills</h2>
+		  <ul class="lined_list">
+			  <%= bill_related_list.html_safe %>
+		  </ul>
+		</div>
+	<% end %>	
 
-			
-		<% unless @bill.subjects.empty? %>
-  		<div class="related_issues_list" id="issue_list">
-  		  <h2>Related Issue Areas</h2>
-			  <ul class="lined_list">
-  			  <%= bill_subject_list.html_safe %>
-  		  </ul>
-  		  <span class="small">Data from the Congressional Research Service</span>
-  		</div>
-		<% end  %>			
-	<% end %>
-	
 	
 	<% unless @bill.videos.empty? %>  
     <div id="bill_video" class="cols-box clearfix">

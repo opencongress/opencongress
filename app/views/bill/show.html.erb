@@ -85,9 +85,10 @@
 
 
 
-  <div id="summary" class="clearfix" <%= @bill.wiki_summary.blank? ? "" : "style='display:none;'" %>>
-    <div class="official_summary"><%= bill_summary_with_more.html_safe %></div>
-  </div>
+		  <div class="official_summary">
+		  			<h4>Official Summary</h4>
+
+		  <%= bill_summary_with_more.html_safe %></div>
   
   <div class="clearfix"></div>
 		

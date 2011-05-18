@@ -1408,6 +1408,11 @@ background: url('../images/wiki_bg.png') 20px 0 no-repeat;
 min-height: 100px;
 }
 
+.official_summary{
+padding: 0 50px;
+}
+
+
 .official_summary h4 {
 display: inline;
 clear: both;
@@ -1489,7 +1494,7 @@ background: url('../images/large_buttons.png') left -376px no-repeat;
 _background: url('../images/large_buttons.gif') left -376px no-repeat;
 }
 
-#sponsors, #committees {
+#sponsors {
 min-height: 105px;
 clear: both;
 width: 195px;
@@ -1497,8 +1502,33 @@ margin: 10px 0;
 padding: 30px 25px 5px 45px;
 font-size: 12px;
 }
-        
+      
+#committees {
+min-height: 105px;
+clear: both;
+width: 195px;
+margin: 10px 0;
+padding: 30px 25px 5px 45px;
+font-size: 12px;
+}
+      
 
+      
+#issue_list {
+min-height: 105px;
+width: 195px;
+margin: 10px 0;
+padding: 14px 25px 5px 10px;
+font-size: 12px;
+}
+            
+        
+#issue_list h2{
+margin-bottom: 7px;
+}
+ 
+ 
+     
 #sponsors a img {
 width: 42px;
 }

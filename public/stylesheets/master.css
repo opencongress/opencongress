@@ -3164,30 +3164,41 @@ float: left;
 line-height: 1em;
 }
 
-
 #stats{
-padding-bottom: 0 !important;
+background: #efefef;
+float: left;
+margin: 25px 0 10px 40px;
+height: 2.3em;
+width: 666px;
+clear: both;
+-moz-border-radius: 50px;
+-webkit-border-radius: 50px;
 }
 
 
 #stats li{
-float: none;
 font-size: 11px;
-padding: 6px 0 5px 10px;
-display: block !important;
+height: 2.3em;
 font-weight: normal;
-width: 186px;
+float: left;
+margin-right: 30px;
+padding-top:5px;
 }
 
 
 #stats li .time{
 float: left;
-width: 100px;
+margin-right: 20px
+
 }
 
 
 #stats h3{
-padding: 10px 0 3px 10px;
+height: 2.3em;
+margin-right: 30px;
+padding-top: 4px;
+padding-left: 20px;
+float: left;
 }
 
 

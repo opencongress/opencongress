@@ -2976,7 +2976,7 @@ clear: none;
 font-size: 12px;
 text-decoration: none;
 margin-right: 6px;
-background: rgba(255,255,255, .3);
+background: rgba(190,190,190, .1);
 color: #555;
 -moz-border-radius-topright: 3px; 
 -moz-border-radius-topleft: 3px;
@@ -2988,7 +2988,7 @@ color: #555;
 }
 
 #tabs ul li a:hover{
-background: rgba(255,255,255, .8);
+background: rgba(190,190,190, .6);
 }
 
 #tabs ul li.here a{

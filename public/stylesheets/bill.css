@@ -1389,6 +1389,7 @@ min-height: 100px;
 }
 
 .official_summary{
+clear: both;
 padding: 0 50px;
 }
 

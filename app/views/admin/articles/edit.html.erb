@@ -1,5 +1,5 @@
 <div class='padding'>	
-  
+
 <% form_tag :action => 'update', :id => @article do -%>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
@@ -7,4 +7,13 @@
 
 <%= link_to 'Show', :action => 'show', :id => @article %> |
 <%= link_to 'Back', :action => 'list' %>
+
+<br /><br />
+All photos for this article:
+  <div id="images">
+    <%= render :partial => 'admin/article_images/image', :collection => @article.article_images %>
+  </div>
+
+  Save the article before you <%= link_to 'Add an image', new_admin_article_article_image_path(@article) %>.
+
 </div>

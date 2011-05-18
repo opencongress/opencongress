@@ -67,6 +67,13 @@ OpenCongress::Application.routes.draw do
 
   namespace :admin do
      resources :wiki_links, :pvs_category_mappings
+     resources :articles do
+       collection do
+         get :list
+         get :edit_blogroll
+       end
+       resources :article_images
+     end
 
      match '/' => 'index#index', :as => 'admin'
      

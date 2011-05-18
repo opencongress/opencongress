@@ -745,7 +745,7 @@ private
         ["Actions & Votes",{:action => 'actions_votes', :id => @bill.ident}]
       ]
       @tabs << ["Money Trail",{:action => 'money', :id => @bill.ident}] unless @bill.bill_interest_groups.empty?
-      @tabs << ["News <span>(#{number_with_delimiter(@bill.news_article_count)})</span> & Blogs <span>(#{number_with_delimiter(@bill.blog_article_count)})</span>".html_safe,{:action => 'news_blogs', :id => @bill.ident}]
+      @tabs << ["News <span>(#{news_blog_count(@bill.news_article_count)})</span> & Blogs <span>(#{news_blog_count(@bill.blog_article_count)})</span>".html_safe,{:action => 'news_blogs', :id => @bill.ident}]
       @tabs << ["Videos".html_safe,{:action => 'videos', :id => @bill.ident}] unless @bill.videos.empty?
       @tabs << ["Comments <span>(#{number_with_delimiter(@comments.comments.size)})</span>".html_safe,{:action => 'comments', :id => @bill.ident}]
       
@@ -758,6 +758,14 @@ private
     end    
   end
 
+  def news_blog_count(count)
+    if count >= 1000
+      "#{(count/1000).floor}K"
+    else
+      count
+    end
+  end
+  
   def aavtabs
     @aavtabs = []
     @aavtabs <<  ["Amendments", {:controller => 'bill', :action => 'amendments', :id => @bill.ident}] unless @bill.amendments.empty?

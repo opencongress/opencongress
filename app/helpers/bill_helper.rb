@@ -88,7 +88,7 @@ module BillHelper
     item_limit = 4
     text = partial_list(@bill.subjects, :term, item_limit,
       "#{@bill.subjects.size - item_limit} more", "bill_subjects_extra",
-      "bill_subjects_more", "show", "issue", true, false)
+      "bill_subjects_more", "show", "issue", false, false)
     # Show nothing if the list is empty
     text == "" ? '' : "#{text}"
   end

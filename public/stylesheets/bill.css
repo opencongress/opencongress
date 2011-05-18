@@ -560,45 +560,27 @@ padding: 0 10px 0 1px;
 }
 
 #bill-text {
-padding: 0px
-margin: 20px 0;
+
+float: left;
 }
 
 #bill-text a {
 display: block;
-padding: 10px 30px 10px 20px;
+padding: 23px 0px 23px 90px;
 font-weight: bold;
 text-decoration: none;
+font-size: 14px;
 color: #43617d;
-margin: 20px 35px 0 -1px;
+margin: 38px 0 20px 38px;
 float: left;
-width: 178px;
+background: url(../images/bill-text.png) left 0px no-repeat !important;
 
--moz-border-radius-topright: 3px;
--moz-border-radius-bottomright: 3px;
-
--webkit-border-radius-bottom-right: 3px;
--webkit-border-radius-bottom-left: 3px;
-border-radius:3px;
-
-border: 1px solid #a7c3c9;
-border-top: 1px solid #c6d9de;
-border-bottom: 1px solid #4e7179;
-
-
--moz-box-shadow: 0 1px 0px #a7c3c9, inset 0 1px 0px #fff;
--webkit-box-shadow: 0 1px 0px #a7c3c9, inset 0 1px 0px #fff;
-box-shadow: 0 1px 0px #a7c3c9, inset 0 1px 0px #fff;
-
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ecf9fc', endColorstr='#d6e8eb'); /* for IE */
-background: -webkit-gradient(linear, left top, left bottom, from(#ecf9fc), to(#d6e8eb)); /* for webkit browsers */
-background: -moz-linear-gradient(top,  #e0ebf7,  #dce9f6); /* for firefox 3.6+ */
 }
 
 
 
 #bill-text a:hover {
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ecf9fc', endColorstr='#d6e8eb'); /* for IE */
+
 background: -webkit-gradient(linear, left top, left bottom, from(#ecf9fc), to(#d6e8eb)); /* for webkit browsers */
 background: -moz-linear-gradient(top,  #eaf2fb,  #e3eef9); /* for firefox 3.6+ */
 }
@@ -624,28 +606,26 @@ color: #43617d;
 #bill-text a span {
 display: block;
 font-size: 11px;
+width: 100px;
 font-weight: normal;
 }
 
 
 #bill-text a.overview_button {
-background: url('../images/large_buttons.png') left -1009px no-repeat ;
-_background: url('../images/large_buttons.gif') left -1009px no-repeat ;
+margin-left: 30px;
 }
 
 
 #bill-text a.overview_button:hover {
-background: url('../images/large_buttons.png') left -1074px no-repeat ;
-_background: url('../images/large_buttons.gif') left -1074px no-repeat ;
+
 }
 
 #av-box {
 float: left;
 width: 179px;
 height: 155px;
-background: url('../images/bill/av-box-bg.png') no-repeat left top;
-_background: url('../images/bill/av-box-bg.gif') no-repeat left top;
 }
+
 #av-box table {
 color: #212121;
 margin: 16px 20px 18px;
@@ -1496,19 +1476,20 @@ _background: url('../images/large_buttons.gif') left -376px no-repeat;
 
 #sponsors {
 min-height: 105px;
-clear: both;
+float: left;
 width: 195px;
 margin: 10px 0;
-padding: 30px 25px 5px 45px;
+padding: 10px 25px 5px 45px;
 font-size: 12px;
 }
       
 #committees {
 min-height: 105px;
-clear: both;
-width: 195px;
+float: left !important;
+clear: none !important;
+width: 165px;
 margin: 10px 0;
-padding: 30px 25px 5px 45px;
+padding: 10px 14px 5px 25px;
 font-size: 12px;
 }
       
@@ -1516,10 +1497,13 @@ font-size: 12px;
       
 #issue_list {
 min-height: 105px;
-width: 195px;
-margin: 10px 0;
-padding: 14px 25px 5px 10px;
+width: 205px !important;
+margin: 0px 0;
+padding: 3px 0px 5px 0px;
 font-size: 12px;
+
+clear: none !important;
+float: left;
 }
             
         
@@ -1686,7 +1670,7 @@ _background: url('../images/large_buttons.gif') left -591px no-repeat;
 
 .sponsorship_data {
 float: left;
-width: 240px;
+
 }
 
 

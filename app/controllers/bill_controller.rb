@@ -757,14 +757,6 @@ private
       redirect_to :action => 'all'
     end    
   end
-
-  def news_blog_count(count)
-    if count >= 1000
-      "#{(count/1000).floor}K"
-    else
-      count
-    end
-  end
   
   def aavtabs
     @aavtabs = []

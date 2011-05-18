@@ -1,5 +1,4 @@
-	<div id="stats" class="small_box">
-	<div class="small_box_top">
+	<div id="stats">
   <% cache("page_views_#{stats_box.display_object_name}_#{stats_box.id}", :expires_in => 3.hours) do %>
     <!-- cached: page_views_<%= "#{stats_box.display_object_name}_#{stats_box.id}" %> // <%= Time.now %> -->
     <h3><%= stats_box.display_object_name %>'s Views</h3>
@@ -10,8 +9,6 @@
       </li>
       <li><span class="time">All-Time:</span> <span class="count"><%= number_with_delimiter(stats_box.views) %></span></li>
     </ul>
-    <br class="clear" />
     <!-- /page_views_<%= "#{stats_box.display_object_name}_#{stats_box.id}" %> -->
   <% end %>
-	</div>
 	</div>

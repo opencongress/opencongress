@@ -649,10 +649,9 @@ class PeopleController < ApplicationController
       @tabs = [
         ["Overview",{:action => 'show', :id => @person}],
         ["Wiki Bio","#{@wiki_url}"],
-        ["Bills",{:action => 'bills', :id => @person}],
         ["Votes",{:action => 'voting_history', :id => @person}],
         ["Money Trail",{:action => 'money', :id => @person}],
-        ["News <span>(#{number_with_delimiter(@person.news_article_count)})</span> & Blogs <span>(#{number_with_delimiter(@person.blog_article_count)})</span>",{:action => 'news_blogs', :id => @person}],
+        ["News <span>(#{news_blog_count(@person.news_article_count)})</span> & Blogs <span>(#{news_blog_count(@person.blog_article_count)})</span>",{:action => 'news_blogs', :id => @person}],
         ["Videos <span>(#{number_with_delimiter(@person.videos.size)})</span>",{:action => 'videos', :id => @person}],
         ["Comments <span>(#{@person.comments.size})</span>",{:action => 'comments', :id => @person}]
       ]

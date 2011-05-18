@@ -1670,7 +1670,7 @@ _background: url('../images/large_buttons.gif') left -591px no-repeat;
 
 .sponsorship_data {
 float: left;
-
+clear: left;
 }
 
 

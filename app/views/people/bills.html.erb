@@ -1,14 +1,13 @@
-<%= render :partial => 'shared/generic_search_field', :locals => { :field_text => @search_text }%>
 <div class="all_bills">
-<h3 id='sponsored'>Sponsored Bills</h3>
-<%= will_paginate @sponsored_bills %>
-<%= render(:partial => 'bill/related_bills_list', :locals => { :related_bills_list => @sponsored_bills })%> 
-<%= will_paginate @sponsored_bills %>
+  <h3 id='sponsored'>Sponsored Bills</h3>
+  <%= will_paginate @sponsored_bills %>
+  <%= render(:partial => 'bill/related_bills_list', :locals => { :related_bills_list => @sponsored_bills })%> 
+  <%= will_paginate @sponsored_bills %>
 
-<h3 id='cosponsored'>Co-sponsored Bills</h3>
-<%= will_paginate @cosponsored_bills %>
-<%= render(:partial => 'bill/related_bills_list', :locals => { :related_bills_list => @cosponsored_bills })%> 
-<%= will_paginate @cosponsored_bills %>
+  <h3 id='cosponsored'>Co-sponsored Bills</h3>
+  <%= will_paginate @cosponsored_bills %>
+  <%= render(:partial => 'bill/related_bills_list', :locals => { :related_bills_list => @cosponsored_bills })%> 
+  <%= will_paginate @cosponsored_bills %>
 </div>
 
 

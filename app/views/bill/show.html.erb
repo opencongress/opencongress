@@ -30,47 +30,70 @@
 			  <p>No sponsor found for this Bill</p>
 			<% end %>
 		</div>
-		<%= toggler("bill_cosponsors_more", "View Co-Sponsors (#{@bill.co_sponsors.size})", "Hide Co-Sponsors", "toggle", "toggle").html_safe %>
-
-		<ul id="bill_cosponsors_more" style="display:none;">
-			<%= co_sponsor_list.html_safe %>		
-		</ul>
+		<% if @bill.co_sponsors.empty? %>
+		  <span class="small">No Co-Sponsors</span>
+		<% else %>
+  		<%= toggler("bill_cosponsors_more", "View Co-Sponsors (#{@bill.co_sponsors.size})", "Hide Co-Sponsors", "toggle", "toggle").html_safe %>
+  		<ul id="bill_cosponsors_more" style="display:none;">
+  			<%= co_sponsor_list.html_safe %>		
+  		</ul>
+    <% end %>
 	</div>
 
 	<div id="committees">
 		<h2 class="gray">Committees</h2>
 		<% unless @bill.committees.empty? %>	
-		<div class="details">              
-			<%= committee_list(0,1).html_safe %>
-			<% if @bill.committees.size > 1 %>
-			<div id="bill_committee_more" style="display:none;">
-				<%= committee_list(2,@bill.committees.size).html_safe %>
+		  <div class="details">              
+			  <%= committee_list(0,1).html_safe %>
+			  <% if @bill.committees.size > 1 %>
+  			  <div id="bill_committee_more" style="display:none;">
+  				  <%= committee_list(2,@bill.committees.size).html_safe %>
+  			  </div>
+			  <% end %>
 			</div>
-			<% end %>
-			<% else %>
+		<% else %>
 			<div class="details">              
 				<p>No Committees found for this Bill</p>
-				<% end %>
-			</div>
-<br />
-				<% if @bill.committees.size > 1 %>
-				<%= toggler("bill_committee_more", "View all Committees (#{@bill.committees.size - 2} more)", "Hide Extra Committees", "toggle", "toggle").html_safe %>
-				<% end %>
-		</div>
-</div>
+      </div>
+		<% end %>
+
+		<% if @bill.committees.size > 2 %>
+		  <%= toggler("bill_committee_more", "View all Committees (#{@bill.committees.size - 2} more)", "Hide Committees", "toggle", "toggle").html_safe %>
+		<% end %>
+	</div>
+
   
 
 
 	<% unless @bill.subjects.empty? %>
 		<div class="related_issues_list" id="issue_list">
 		  <h2>Related Issue Areas</h2>
-		  <ul class="lined_list">
-			  <%= bill_subject_list.html_safe %>
-		  </ul>
-		  <span class="small">Data from the Congressional Research Service</span>
+  		<% unless @bill.subjects.empty? %>	
+  		  <div class="details">              
+  			  <%= issue_list(0,1).html_safe %>
+  			  <% if @bill.subjects.size > 1 %>
+    			  <div id="bill_issues_more" style="display:none;">
+    				  <%= issue_list(2,@bill.subjects.size).html_safe %>
+    			  </div>
+  			  <% end %>
+  			</div>
+  		<% else %>
+  			<div class="details">              
+  				<p>No Issue Areas found for this Bill</p>
+        </div>
+  		<% end %>
+
+  		<p class="small">Data via Congressional Research Service</span>
+
+  		<% if @bill.subjects.size > 2 %>
+  		  <%= toggler("bill_issues_more", "View all Issues (#{@bill.subjects.size - 2} more)", "Hide Issues", "toggle", "toggle").html_safe %>
+  		<% end %>
 		</div>
 	<% end  %>
-  		
+
+</div>
+
+
 	<% unless @roll_call.nil? %>	
     <div class="padding">
       <h2 class="header">Latest Vote</h2>
@@ -93,17 +116,19 @@
 
 
 
+  <% unless @bill.summary.blank? %>
+    <div class="official_summary">
+      <h4>Official Summary</h4>
 
-		  <div class="official_summary">
-		  			<h4>Official Summary</h4>
-
-		  <%= bill_summary_with_more.html_safe %></div>
+      <%= bill_summary_with_more.html_safe %>
+    </div>
+  <% end %>
   
-  <div class="clearfix"></div>
+    <div class="clearfix"></div>
 		
 		<% unless @bill.bill_position_organizations.empty? %>
   		<div id="money_trail_summary">
-        <div class="col1 lowpadding">
+        <div class="col1">
           <h2>Organizations Supporting <%= @bill.typenumber %></h2>
           <% unless @bill.bill_position_organizations.select{|g| g.disposition == 'support'}.empty? %>
             <ul>
@@ -119,7 +144,7 @@
           <% end %>
         </div>
       
-        <div class="col2 lowpadding">
+        <div class="col2">
           <h2>Organizations Opposing <%= @bill.typenumber %></h2>
           <% unless @bill.bill_position_organizations.select{|g| g.disposition == 'oppose'}.empty? %>
             <ul>
@@ -137,7 +162,7 @@
       </div>
       
       <div class='money_trail_summary_more'>
-        See the <a href="<%= url_for :controller => 'bill', :action => 'money', :id => @bill.ident %>">money trail</a> behind this bill for more info on how campaign contributions may be influencing senators'/representatives' votes.</p>
+        See the <a href="<%= url_for :controller => 'bill', :action => 'money', :id => @bill.ident %>">money trail</a> behind this bill for more info on how campaign contributions may be influencing senators' and representatives' votes.</p>
       </div>
     <% end %>
       

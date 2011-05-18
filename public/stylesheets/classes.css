@@ -615,9 +615,9 @@ margin: 0;
 
 
 .lined_list li{
-padding: 0;
+padding: 5px 0;
 margin: 0;
-line-height: 2.4em;
+line-height: 1.4em;
 border-bottom: 1px solid #ddd;
 }
 

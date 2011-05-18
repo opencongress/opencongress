@@ -85,7 +85,7 @@ module BillHelper
 	
   def bill_subject_list
     # item_limit is the initial number of items to show
-    item_limit = 4
+    item_limit = 2
     text = partial_list(@bill.subjects, :term, item_limit,
       "#{@bill.subjects.size - item_limit} more", "bill_subjects_extra",
       "bill_subjects_more", "show", "issue", false, false)
@@ -126,18 +126,29 @@ module BillHelper
    	text = "<ul class='lined_list'>"
 		@bill.co_sponsors[0..@bill.co_sponsors.size].each do |c|
 		  text += "<li>"
-		  text += link_to c.name, :controller => 'people', :action => 'show', :id => c.id
+		  text += link_to "<span class='small'>#{c.name}</span>".html_safe, :controller => 'people', :action => 'show', :id => c.id
 		  text += "</li>"
 		end
     text += "</ul>"
 		return text
   end
 	
+	def issue_list(start,stop)
+		text = "<ul class='lined_list'>"
+		@bill.subjects[start..stop].each do |s|
+		  text += "<li>"
+		  text += link_to s.term, :controller => 'issues', :action => 'show', :id => s
+		  text += "</li>"
+		end
+    text += "</ul>"
+		return text
+	end
+	
 	def committee_list(start,stop)
 		text = "<ul class='lined_list'>"
 		@bill.committees[start..stop].each do |c|
 		  text += "<li>"
-		  text += link_to c.proper_name, :controller => 'committee', :action => 'show', :id => c.id
+		  text += link_to c.proper_name, :controller => 'committee', :action => 'show', :id => c
 		  text += "</li>"
 		end
     text += "</ul>"

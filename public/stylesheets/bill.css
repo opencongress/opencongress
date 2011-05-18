@@ -446,6 +446,10 @@ float: left;
 padding: 30px 42px 65px 40px;
 }
 
+#money_trail_summary .col2 {
+padding-right: 5px !important;
+}
+
 #content-main .col1 {
 border-right: #f4f4f4 1px solid;
 }
@@ -1378,7 +1382,7 @@ padding: 45px 20px 0 0;
 }
 
 #oc_summary {
-padding: 45px 50px 10px;
+padding: 20px 50px 10px;
 clear: both;
 }
 
@@ -1395,7 +1399,6 @@ padding: 0 50px;
 
 
 .official_summary h4 {
-display: inline;
 clear: both;
 }
 
@@ -1478,7 +1481,7 @@ _background: url('../images/large_buttons.gif') left -376px no-repeat;
 #sponsors {
 min-height: 105px;
 float: left;
-width: 195px;
+width: 165px;
 margin: 10px 0;
 padding: 10px 25px 5px 45px;
 font-size: 12px;
@@ -1488,7 +1491,7 @@ font-size: 12px;
 min-height: 105px;
 float: left !important;
 clear: none !important;
-width: 165px;
+width: 205px;
 margin: 10px 0;
 padding: 10px 14px 5px 25px;
 font-size: 12px;
@@ -1499,8 +1502,8 @@ font-size: 12px;
 #issue_list {
 min-height: 105px;
 width: 205px !important;
-margin: 0px 0;
-padding: 3px 0px 5px 0px;
+margin: 10px 0 0 10px;
+padding: 10px 0px 5px 0px;
 font-size: 12px;
 
 clear: none !important;
@@ -1508,9 +1511,6 @@ float: left;
 }
             
         
-#issue_list h2{
-margin-bottom: 7px;
-}
  
  
      
@@ -1705,14 +1705,8 @@ width: 300px !important;
 }
 
 #bill.show .related_issues_list {
-margin: 20px 0px 30px 35px;
 float: left;
 width: 280px;
-}
-
-#bill.show .related_issues_list a {
-padding: 3px 0;
-display: block;
 }
 
 .jump-to span{
@@ -1926,9 +1920,11 @@ padding: 35px;
   margin-bottom: 20px;
 } 
 
-
+#money_trail_summary {
+  padding-left: 10px;
+}
 .money_trail_summary_more {
-  padding: 0 35px;
+  padding: 0 50px;
   margin-top: 5px;
   clear: left;
 }

@@ -126,9 +126,7 @@
       <span>OpenGovernment Profile</span>
     </a>
   </div>
- 	
- 	<%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
- 	
+ 	 	
 	<div class="uc-box-bottom">
 		<div class="uc-box">
   		<%= render :partial => 'people/approval', :locals => {:person => @person, :user_approval => @user_approval} %>
@@ -138,9 +136,6 @@
   <% if object.has_contact_webform? %>
     <%= render :partial => 'shared/write_rep_external', :locals => { :people => [object] } %>
   <% end %>
-<% elsif object.class.to_s == "Subject" %>
-  <%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
-  <br />
 <% end %>
 
 <% if logged_in? %>

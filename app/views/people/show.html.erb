@@ -1,3 +1,5 @@
+<%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
+
 <% cache("#{@person.fragment_cache_key}_header") do %>
   <!-- <div class="issue_cloud">
     <h2 class="dark">Issue Cloud</h2>

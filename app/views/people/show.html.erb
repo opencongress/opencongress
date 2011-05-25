@@ -24,8 +24,9 @@
 			<h2>Most Recent Sponsored Bills</h2>
 			<%= render(:partial => 'bill/related_bills_list', :locals => { :related_bills_list => sponsored_bills })%>
 			<% if @person.bills.size > 3 %>
-				<a href="/people/bills/<%= @person.to_param %>#sponsored" class="med_button bold clearnone"><span>View All Sponsored Bills (<%= @person.bills.size %>)</span></a>
+				<a href="/people/bills/<%= @person.to_param %>#sponsored" class="med_button bold"><span>View All Sponsored Bills (<%= @person.bills.size %>)</span></a>
 				<% end %>
+				<div class="clear">&nbsp;</div>
 		<% end %>
 		
 		<% cosponsored_bills = @person.bills_cosponsored.find(:all, :limit => 3) %>
@@ -33,12 +34,12 @@
 			<h2>Most Recent Co-Sponsored Bills</h2>
 			<%= render(:partial => 'bill/related_bills_list', :locals => { :related_bills_list => cosponsored_bills })%>
   		<% if @person.bills_cosponsored.size > 3 %>
-  			<a href="/people/bills/<%= @person.to_param %>#cosponsored" class="med_button bold clearnone co"><span>View All Co-Sponsored Bills (<%= @person.bills_cosponsored.size %>)</span></a>
+  			<a href="/people/bills/<%= @person.to_param %>#cosponsored" class="med_button bold co"><span>View All Co-Sponsored Bills (<%= @person.bills_cosponsored.size %>)</span></a>
   		<% end %>
     <% end %>
 	</div>
 
-  <br style="clear: both;" />
+	<div class="clear">&nbsp;</div>
 
   <% if @person.votes(3).any? %>
     <div id="voting_history">

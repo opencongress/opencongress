@@ -18,7 +18,9 @@
   </h3>
 
     <% unless most_recent.frontpage_image_url.blank? %>
-      <img class="frontpage-blog-image" src="<%= most_recent.frontpage_image_url %>">
+      <a href="<%= url_for article_url(most_recent) %>">
+        <img class="frontpage-blog-image" src="<%= most_recent.frontpage_image_url %>">
+      </a>
     <% end %>
 
     <%= most_recent.excerpt.html_safe %>

@@ -57,6 +57,7 @@ class ContactController < ApplicationController
   end
   
   def letter
+    @contact_congress_letter = ContactCongressLetter.find(params[:id])
   end
   
   def showthread

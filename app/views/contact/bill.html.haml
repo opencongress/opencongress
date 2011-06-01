@@ -49,6 +49,22 @@
           %strong= @bill.last_action.formatted_date
           = @bill.last_action
           = render 'will_add_text_box', :text => "I know the most recent action for this bill is as follows: \"#{@bill.last_action}\" on #{@bill.last_action.formatted_date}"
+          
+          
+          
+    .section
+      %h3 Highest Rated User Comments
+      %ul
+        - @bill.comments.order("comments.plus_score_count - comments.minus_score_count DESC").limit(3).each do |c|
+          %li.message_builder_clickable
+            On
+            = "#{c.created_at.strftime("%B %d, %Y")},"
+            by
+            = link_to c.user.login, user_profile_path(c.user.login)
+            \-
+            = c.comment
+            = render 'will_add_text_box', :text => "As noted by #{c.user.login}, a user on OpenCongress.org, on #{c.created_at.strftime("%B %d, %Y")}, \"#{c.comment}\""
+
     .section
       %h3 Highly Rated Blog Articles
       %ul
@@ -62,24 +78,23 @@
           = render 'message_builder_commentary', :a => a
 
 
-    .section
-      %h3 Highest Rated User Comments
-      %ul
-        - @bill.comments.order("comments.plus_score_count - comments.minus_score_count DESC").limit(3).each do |c|
-          %li.message_builder_clickable
-            On
-            = "#{c.created_at.strftime("%B %d, %Y")},"
-            by
-            = link_to c.user.login, user_profile_path(c.user.login)
-            \-
-            = c.comment
-            = render 'will_add_text_box', :text => "As noted by #{c.user.login}, a user on OpenCongress.org, on #{c.created_at.strftime("%B %d, %Y")}, \"#{c.comment}\""
-            
-  .contact_letter
-    #contact_recipients_container
-      = render 'contact_recipients', :show_checkboxes => true
-              
-    = render 'formageddon/threads/form', :thread => @formageddon_thread, :after_send_url => '/contact/aftersend'
+  
+  
+  = form_for @formageddon_thread do |f|
+    .contact_letter   
+      #contact_recipients_container
+        - if @sens.empty? and @reps.empty?
+          .contact_recipients
+            #none.none
+              Input your address on the right and we'll find your reps.
+        - else
+          = render 'contact_recipients', :show_checkboxes => true
+
+      .formageddon_contact_form
+        = render 'formageddon/threads/form', :f => f, :thread => @formageddon_thread
+        
+        = hidden_field_tag :after_send_url, "/contact/aftersend?bill=#{@bill.ident}&disposition=#{@position}"
+        
     %p Click send, and we will automatically deliver your letter to the members of Congress you selected above. OpenCongress is the only not-for-profit website that enables you to write all three of your members of Congress at once. Also, OpenCongress is the only website that gives this information back to the public commons, enabling you to find other constituents near you who are tracking the same bills and issues. 
 
     %p On the next page, you may review your letter, share it with your community using social media, and track any official replies you may receive from members of Congress.
@@ -103,13 +118,25 @@
   
   $j("#formageddon_formageddon_thread_sender_zip5").keyup(function() {
     if ($j(this).val().length == 5) {
+      $j("#none").html("<img src='/images/spinner-ovals.gif' />");
       $j.ajax({
-        url: '/contact/get_recipients?zip=' + $j(this).val(),
+        url: '/contact/get_recipients?bill=#{@bill.ident}' + '&address=' + escape($j("#formageddon_formageddon_thread_sender_address1").val()) + '&zip=' + $j(this).val(),
         success: function(data) {
           $j('#contact_recipients_container').html(data);
         }
       });
     }
+  });
+  
+  $j("#formageddon_formageddon_thread_sender_address1").change(function() {
+    $j(".contact_recipients").html("<div id='none' class='none'><img src='/images/spinner-ovals.gif' /></div>");
+
+    $j.ajax({
+      url: '/contact/get_recipients?bill=#{@bill.ident}' + '&address=' + escape($j(this).val()) + '&zip=' + $j("#formageddon_formageddon_thread_sender_zip5").val(),
+      success: function(data) {
+        $j('#contact_recipients_container').html(data);
+      }
+    });
   });
   
   $j(document).ready(function() {

@@ -57,7 +57,7 @@ font-size: 11px;
 }
 
 #new_formageddon_formageddon_thread{
-width: 500px;
+
 }
 
 
@@ -296,25 +296,39 @@ border: 1px solid #ddd;;
 }
 
 .contact_recipients {
-  float: left;
+overflow: hidden !important;
+float: left;
 width: 360px;
 background: #eee;
 -moz-border-radius: 7px;
 -webkit-border-radius: 7px;
 padding: 20px;
+min-height: 240px;
 }
 
-
-
+.contact_recipients ul {
+  position: relative;
+  width: 340px;
+}
 .contact_recipients input {
   float: left;
   margin-right: 15px;
   padding-top: 10px;
   vertical-align: bottom;
 }
+
 .contact_recipients li {
   width: 400px;
+  position: absolute;
+  -webkit-transition: all 1s ease-in-out;
+  -moz-transition: all 1s ease-in-out;
+  -o-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out;
 }
+.contact_recipients li.hide {
+  top: -300px;
+}
+  
 .contact_recipients li, .contact_message_builder li {
   padding: 3px;
   margin: 10px 0;
@@ -324,6 +338,13 @@ padding: 20px;
   height: 35px;
   vertical-align: middle;
   margin-right: 5px;
+}
+.contact_recipients span.sending {
+  opacity: 0.0;
+  -webkit-transition: all 2s ease-in-out;
+  -moz-transition: all 2s ease-in-out;
+  -o-transition: all 2s ease-in-out;
+  transition: all 2s ease-in-out;
 }
 
 .contact_thread_share {
@@ -554,41 +575,25 @@ top: 674px;
 }
 
 
-.sender_state{
+.sender_zip5 {
 float: left;
 margin: 0 !important;
+width: 250px;
+}
+
+.sender_zip4{
+margin-left: 5px !important;
+float: left;
 width: 150px;
 }
 
 
 
-.sender_state select{
-margin-top: 3px;
-}
-
-
-
-.sender_state label{
-width: 30px;
-margin: 0 10px 0 35px;
-}
-
-
-.sender_zip5,
-.sender_zip4{
-float: left;
-margin: 0 !important;
-width: 133px;
-}
-
-.sender_zip4{
-margin-left: 5px !important;
-}
-
-
 .sender_zip5 label{
 float: left;
-width: 58px !important;
+width: 100px !important;
+margin: 0 0 0 35px;
+font-weight: bold;
 }
 
 
@@ -602,9 +607,32 @@ margin-left: 20px;
 .sender_zip5 input,
 .sender_zip4 input{
 float: left;
+margin-left: 3px;
 width: 60px !important;
 }
 
+.sender_title {
+  padding-top:20px;
+  clear:left;
+}
+
+.sender_city {
+  float:left;
+} 
+
+.sender_state {
+  float: left;
+}
+
+.sender_state label {
+  width: 40px;
+}
+.sender_state select{
+  margin-top: 3px;
+}
+.sender_city input {
+  width: 100px !important;
+}
 
 #contact.bill #heading{
 background: none !important;
@@ -783,7 +811,27 @@ border-bottom: 1px solid #eee;
 }
 
 
+.selections {
+  width: 420px;
+  margin-bottom: 50px;
+}
 
+.selections a {
+  display:block;
+  margin: 0 auto 20px;
+  width: 300px;
+}
 
+.selections p {
+  padding: 0;
+  margin: 0;
+}
 
+.none {
+  font-weight: bold;
+  width: 250px;
+  text-align: center;
+  margin: 25% auto 0;
+  color: rgba(0,0,0, .4);
+}
 

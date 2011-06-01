@@ -6,7 +6,7 @@
     %li.facebook
       %a{ :target => "_blank", :href => "http://www.facebook.com/sharer.php?u=#{}&t=#{}" } Facebook
     %li.twitter
-      %a{ :href => "http://twitter.com/home?status=#{} #{} (via @OpenCongress)", :title => "Click to share this post on Twitter" } Share on Twitter
+      %a{ :href => "http://twitter.com/home?status=#{}", :title => "Click to share your letter on Twitter" } Share on Twitter
     :javascript
       $j().ready(function() {
         $j('#e_friend').jqm({ajax:'@href', trigger:'a.e_trigger'});

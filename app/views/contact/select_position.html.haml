@@ -8,23 +8,27 @@
 
   = render 'contact_congress_status_bar', :step => 1
   
-  %p.margin-top 
-    %h3.center What is your position on this bill?
+  .selections.floatright
+    %p.margin-top 
+      %h3.center What is your position on this bill?
   
-  .position_buttons.padding
-    %a.button.blue.huge.margin-right{ :href => url_for(:action => 'bill', :position => 'support') }
-      %span= "I Support #{@bill.typenumber}"
-    %a.button.yellow.huge.margin-right{ :href => url_for(:action => 'bill', :position => 'oppose') }
-      %span= "I Oppose #{@bill.typenumber}"
-    %a.button.silver.huge.margin-right{ :href => url_for(:action => 'bill', :position => 'tracking') }
-      %span= "I Am Tracking #{@bill.typenumber}"
+    .position_buttons.padding
+      %a.button.blue.huge.margin-right{ :href => url_for(:action => 'bill', :position => 'support') }
+        %span= "I Support #{@bill.typenumber}"
+      %a.button.yellow.huge.margin-right{ :href => url_for(:action => 'bill', :position => 'oppose') }
+        %span= "I Oppose #{@bill.typenumber}"
+      %a.button.silver.huge.margin-right{ :href => url_for(:action => 'bill', :position => 'tracking') }
+        %span= "I Am Tracking #{@bill.typenumber}"
   
   
-  
-  - if @sens.empty? and @reps.empty?
-    .contact_recipients.none
-  -else
-    = render :partial => 'contact_recipients'
+  .margin-left
+    - if @sens.empty? and @reps.empty?
+      .contact_recipients
+        .none
+          Select your position and we'll find your reps on the next page.
+        
+    -else
+      = render :partial => 'contact_recipients'
 
   %br
   %br

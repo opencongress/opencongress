@@ -5,6 +5,14 @@ GIT
     simple_captcha (0.1.1)
 
 GIT
+  remote: git://github.com/opencongress/formageddon.git
+  revision: c0344bc53e6f862ff8071ffc3add4e8d0453d36d
+  specs:
+    formageddon (0.0.0)
+      haml
+      mechanize
+
+GIT
   remote: http://github.com/mbleigh/acts-as-taggable-on.git
   revision: 2752cfef4c66318d0925fbe880d5392ad188bb50
   specs:
@@ -236,6 +244,7 @@ DEPENDENCIES
   closure-compiler
   cucumber (= 0.8.5)
   cucumber-rails
+  formageddon!
   govkit
   guard
   guard-livereload

@@ -619,7 +619,7 @@ class PeopleController < ApplicationController
                 :include => [:roles, :person_stats],
                 :conditions => [ "roles.role_type=? AND roles.enddate > ? AND person_stats.#{@rankby}_rank IS NOT NULL",
                                  @person_type,  Date.today ], 
-                :order => "#{@rankby}_rank")
+                :order => "person_stats.#{@rankby} DESC")
     @page_title = "#{@person_type_display} by #{@rankby.humanize.downcase}"
   end
   

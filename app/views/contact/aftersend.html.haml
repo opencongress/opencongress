@@ -5,9 +5,14 @@
   = render 'contact_congress_status_bar', :step => 3
   
   .congrats
-    %p
-      %strong Congratulations!
-      Your letter to your elected representatives has been sent!  We will be tracking this correspondence and alert you to any replies immediately.
+    - if @new_user_notice
+      %p.new_user
+        %strong You must verify your email before we can send your letter.
+        We have created a new OpenCongress account for you and sent you a verification email.  As soon as you verify your email address, we'll sent your letter.
+    - else 
+      %p
+        %strong Congratulations!
+        Your letter to your elected representatives has been sent!  We will be tracking this correspondence and alert you to any replies immediately.
 
     %p Your communication can be more effective by following the steps below.
     
@@ -16,7 +21,7 @@
       %h2 Share
       .desc
         A
-        = link_to 'page with your letter', :controller => 'contact', :action => 'showthread', :id => @thread.id
+        = link_to 'page with your letter', :controller => 'contact', :action => 'letter', :id => @contact_congress_letter
         has been set up. Share it with your friends and followers!
       = render 'contact_congress_share'
     .step
@@ -25,19 +30,22 @@
         = link_to 'Print', '#'
         this letter and send it through the mail.  Here's the address:
       %p
-        = @thread.formageddon_recipient.formageddon_display_address.gsub(/\n/, "<br />").html_safe
+        - @contact_congress_letter.formageddon_threads.each do |thread|
+          %p  
+            = thread.formageddon_recipient.formageddon_display_address.gsub(/\n/, "<br />").html_safe
     .step.noborder
       %h2 Call
       .desc
         Call your representatives at the numbers below:
-    
-      %p
-        = "#{@thread.formageddon_recipient.title_long} #{@thread.formageddon_recipient.firstname} #{@thread.formageddon_recipient.lastname}"
-        %br
-        = @thread.formageddon_recipient.phone
+
+      - @contact_congress_letter.formageddon_threads.each do |thread|
+        %p  
+          = "#{thread.formageddon_recipient.title_long} #{thread.formageddon_recipient.firstname} #{thread.formageddon_recipient.lastname}"
+          %br
+          = thread.formageddon_recipient.phone
   
   .after_thread
     .perm 
       Here is your letter.  Permalink:
-      = link_to url_for(:only_path => false, :controller => 'contact', :action => 'showthread', :id => @thread), url_for(:only_path => false, :controller => 'contact', :action => 'showthread', :id => @thread)
-    = render 'formageddon/threads/thread', :thread => @thread
+      = link_to url_for(:only_path => false, :controller => 'contact', :action => 'letter', :id => @contact_congress_letter), url_for(:only_path => false, :controller => 'contact', :action => 'letter', :id => @contact_congress_letter)
+    = render 'formageddon/threads/thread', :thread => @contact_congress_letter.formageddon_threads.first

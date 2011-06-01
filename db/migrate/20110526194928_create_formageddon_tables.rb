@@ -60,6 +60,24 @@ class CreateFormageddonTables < ActiveRecord::Migration
       
       t.timestamps
     end
+    
+    create_table :formageddon_delivery_attempts do |t|
+      t.integer :formageddon_letter_id
+      t.string :result
+      t.integer :letter_contact_step
+      t.text :before_browser_state_id
+      t.text :after_browser_state_id
+      
+      t.timestamps
+    end
+    
+    create_table :formageddon_browser_states do |t|
+      t.text :uri
+      t.text :cookie_jar
+      t.text :raw_html
+      
+      t.timestamps
+    end
   end
   
   def self.down
@@ -69,5 +87,7 @@ class CreateFormageddonTables < ActiveRecord::Migration
     drop_table :formageddon_form_captcha_images
     drop_table :formageddon_threads
     drop_table :formageddon_letters
+    drop_table :formageddon_delivery_attempts
+    drop_table :formageddon_browser_states
   end
 end

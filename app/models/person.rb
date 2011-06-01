@@ -52,6 +52,8 @@ class Person < ViewableObject
   
 #  acts_as_bookmarkable
 
+  acts_as_formageddon_recipient
+  
   has_one :person_stats, :dependent => :destroy
   
   has_one :wiki_link, :as => "wikiable"

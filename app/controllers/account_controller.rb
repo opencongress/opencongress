@@ -105,7 +105,7 @@ class AccountController < ApplicationController
   end
 
   def signup
-   @page_title = "Create a New Account"
+    @page_title = "Create a New Account"
 
     logger.info session.inspect
 

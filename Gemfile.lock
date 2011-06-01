@@ -55,7 +55,11 @@ GEM
       activesupport (= 3.0.7)
     activesupport (3.0.7)
     addressable (2.2.6)
+<<<<<<< HEAD
     arel (2.0.9)
+=======
+    arel (2.0.10)
+>>>>>>> a08056a0a09c0138357b959c664efe626dc1969e
     autotest (4.4.6)
       ZenTest (>= 4.4.1)
     bluecloth (2.1.0)

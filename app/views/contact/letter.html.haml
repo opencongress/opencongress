@@ -6,11 +6,10 @@
     #bill
       This letter was sent regarding:
       %strong= link_to truncate("#{@contact_congress_letter.bill.typenumber} #{@contact_congress_letter.bill.title_common}", :length => 170), bill_path(@contact_congress_letter.bill)
-  #recipients{ :class => "num#{@contact_congress_letter.formageddon_threads.size}" }
-    %span
-      These legislators received this communication written by
       - if @contact_congress_letter.formageddon_threads.first.formageddon_sender
+        by
         = link_to @contact_congress_letter.formageddon_threads.first.formageddon_sender.login, user_profile_path(@contact_congress_letter.formageddon_threads.first.formageddon_sender)
+  #recipients{ :class => "num#{@contact_congress_letter.formageddon_threads.size}" }
     %ul
       - @contact_congress_letter.formageddon_threads.each do |t|
         %li

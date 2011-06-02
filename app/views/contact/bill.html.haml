@@ -28,7 +28,8 @@
 
     .section
       %h3 Contribution Data
-      = render :partial => 'message_builder_contribution_data'
+      #contribution_data_container
+        = render :partial => 'message_builder_contribution_data'
 
           
       %h3 Most-commented sections of the bill text
@@ -99,31 +100,12 @@
 
     %p On the next page, you may review your letter, share it with your community using social media, and track any official replies you may receive from members of Congress.
   
-:javascript
-  $j(".message_builder_clickable").hover(
-    function () {
-      $j(this).find("div.will_add_text_box:first").fadeIn(.3);
-    },
-    function () {
-      $j(this).find("div.will_add_text_box:first").fadeOut(.3);
-    }
-  );
-  $j(".message_builder_clickable").click(
-    function () {
-      txt = $j(this).find("div.message_builder_add_text:first").text();
-      msg = $j('div.formageddon_contact_form textarea:first')
-      msg.val(msg.val()+"\n\n"+unescape(txt)); 
-    }
-  );
-  
+:javascript  
   $j("#formageddon_formageddon_thread_sender_zip5").keyup(function() {
     if ($j(this).val().length == 5) {
       $j("#none").html("<img src='/images/spinner-ovals.gif' />");
       $j.ajax({
-        url: '/contact/get_recipients?bill=#{@bill.ident}' + '&address=' + escape($j("#formageddon_formageddon_thread_sender_address1").val()) + '&zip=' + $j(this).val(),
-        success: function(data) {
-          $j('#contact_recipients_container').html(data);
-        }
+        url: '/contact/get_recipients?bill=#{@bill.ident}' + '&address=' + escape($j("#formageddon_formageddon_thread_sender_address1").val()) + '&zip=' + $j(this).val()
       });
     }
   });
@@ -132,10 +114,7 @@
     $j(".contact_recipients").html("<div id='none' class='none'><img src='/images/spinner-ovals.gif' /></div>");
 
     $j.ajax({
-      url: '/contact/get_recipients?bill=#{@bill.ident}' + '&address=' + escape($j(this).val()) + '&zip=' + $j("#formageddon_formageddon_thread_sender_zip5").val(),
-      success: function(data) {
-        $j('#contact_recipients_container').html(data);
-      }
+      url: '/contact/get_recipients?bill=#{@bill.ident}' + '&address=' + escape($j(this).val()) + '&zip=' + $j("#formageddon_formageddon_thread_sender_zip5").val()
     });
   });
   

@@ -21,4 +21,19 @@
                   = "$#{number_with_delimiter(contribution_amount)}"
                   = render 'will_add_text_box', :text => "#{p.title} #{p.lastname}, I know that you took $#{number_with_delimiter(contribution_amount)} from #{big.crp_interest_group.name.downcase} interest groups who #{position} #{@bill.typenumber}."
                 
-                  
+:javascript
+  $j(".message_builder_clickable").hover(
+    function () {
+      $j(this).find("div.will_add_text_box:first").fadeIn(.3);
+    },
+    function () {
+      $j(this).find("div.will_add_text_box:first").fadeOut(.3);
+    }
+  );
+  $j(".message_builder_clickable").click(
+    function () {
+      txt = $j(this).find("div.message_builder_add_text:first").text();
+      msg = $j('div.formageddon_contact_form textarea:first')
+      msg.val(msg.val()+"\n\n"+unescape(txt)); 
+    }
+  );

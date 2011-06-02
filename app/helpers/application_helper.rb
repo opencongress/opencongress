@@ -894,6 +894,8 @@ EOT
     case object
     when Article
       url = url_for(:only_path => false, :controller => 'articles', :action => 'view', :id => object)
+    when ContactCongressLetter
+      url = url_for(:only_path => false, :controller => 'contact', :action => 'letter', :id => object)
     end
     
     begin

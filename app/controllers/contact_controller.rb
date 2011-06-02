@@ -50,10 +50,10 @@ class ContactController < ApplicationController
     
     @sens, @reps = Person.find_current_congresspeople_by_address_and_zipcode(params[:address], params[:zip])
     #Person.find_current_congresspeople_by_zipcode(params[:zip], nil)
+    @sens = [] unless @sens
+    @reps = [] unless @reps and @reps.size == 1
     
-    @reps = [] unless @reps.size == 1
-    
-    render :partial => 'contact/contact_recipients', :locals => { :show_checkboxes => true }
+    #render :partial => 'contact/contact_recipients', :locals => { :show_checkboxes => true }
   end
   
   def letter

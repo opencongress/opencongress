@@ -912,12 +912,17 @@ padding-top: 20px;
 
 .contact_congress_letter .formageddon_letter{
 float: left;
+width: 420px;
 margin-left: 30px;
-width: 300px;
+
 margin-bottom: 60px;
 clear: none;
 }
 
+.contact_congress_letter #recipients ul{
+float: left;
+width: 100%;
+}
 
 
 .contact_congress_letter #recipients li{
@@ -935,9 +940,9 @@ margin-bottom: 30px;
 }
 
 
-.contact_congress_letter #recipients li .image{
+.contact_congress_letter #recipients li .photo{
 float: left !important;
-
+margin-right: 10px;
 }
 
 
@@ -971,15 +976,16 @@ float: left;
 -o-border-radius: 15px;
 -ms-border-radius: 15px;
 background: #eee;
+width: 870px;
 margin: 0 30px 90px;
 
 }
 
 
-.comment{
+.comment-thing{
 float: right;
-background: url(/images/comment.png) no-repeat;
-width: 500px;
+background: url(/images/comment.png) center no-repeat;
+width: 400px;
 text-align: center;
 font-size: 18px;
 font-weight: bold;

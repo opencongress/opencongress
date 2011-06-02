@@ -93,7 +93,38 @@ display: relative;
 }
 
 
+.formageddon_thread {
+  width: 100%;
+  padding: 10px 0;
+}
 
+.formageddon_letter {
+  width: 600px;
+  background: #fff;
+  border: 1px solid #000;
+  text-align: left;
+  margin: auto;
+  padding: 15px 20px;
+  font-family:"Times New Roman",Georgia,Serif;
+  font-size:1.2em;
+  clear: both;
+}
+.formageddon_letter .from {
+  float: right;
+  clear: left;
+}
+.formageddon_letter .to {
+  clear: right;
+  margin-bottom: 20px;
+}
+.formageddon_letter .date {
+  margin-bottom: 20px;
+}
+
+.formageddon_letter .subject {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
 
 
 
@@ -421,7 +452,7 @@ float: left !important;
   width: 257px;
   float: left;
   padding: 20px 10px;
-  height: 250px;
+  min-height: 250px;
 -moz-border-radius: 5px;
 margin-right: 33px;
 -webkit-border-radius: 5px;
@@ -458,10 +489,6 @@ text-align: center;
 
 .contact_congress .after_steps .noborder {
 margin-right: none !important;
-}
-
-.contact_congress .after_thread {
-  padding-top: 20px;
 }
 
 
@@ -734,7 +761,7 @@ background: #eee;
 padding: 10px 20px;
 width: 500px;
 text-align: center;
-margin: 30px auto 0;
+margin: 0 auto 30px;
 }
 
 .congrats{

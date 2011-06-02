@@ -13,11 +13,11 @@
       %h3.center What is your position on this bill?
   
     .position_buttons.padding
-      %a.button.blue.huge.margin-right{ :href => url_for(:action => 'bill', :position => 'support') }
+      %a.button.blue.huge.margin-right{ :href => "/contact/bill/#{@bill.ident}?position=support" }
         %span= "I Support #{@bill.typenumber}"
-      %a.button.yellow.huge.margin-right{ :href => url_for(:action => 'bill', :position => 'oppose') }
+      %a.button.yellow.huge.margin-right{ :href => "/contact/bill/#{@bill.ident}?position=oppose" }
         %span= "I Oppose #{@bill.typenumber}"
-      %a.button.silver.huge.margin-right{ :href => url_for(:action => 'bill', :position => 'tracking') }
+      %a.button.silver.huge.margin-right{ :href => "/contact/bill/#{@bill.ident}?position=tracking" }
         %span= "I Am Tracking #{@bill.typenumber}"
   
   

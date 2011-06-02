@@ -116,6 +116,12 @@ OpenCongress::Application.routes.draw do
   # 
   # # Install the default route as the lowest priority.
   # map.connect ':controller/:action/:id'
+  
+  scope :controller => 'contact' do
+    match 'bill/:id', :action => 'bill'
+    match 'aftersend', :action => 'aftersend'
+    match 'letter/:id', :action => 'letter'
+  end
 
   match 'howtouse' => 'about#howtouse'
   

@@ -777,13 +777,6 @@ font-size: 13px;
 padding: 70px;
 }
 
-.contact_congress_letter .formageddon_letter{
-float: left;
-margin-left: 30px;
-width: 300px;
-margin-bottom: 60px;
-}
-
 
 .contact_thread_header{
 text-align: center;
@@ -917,6 +910,16 @@ padding-top: 20px;
 }
 
 
+.contact_congress_letter .formageddon_letter{
+float: left;
+margin-left: 30px;
+width: 300px;
+margin-bottom: 60px;
+clear: none;
+}
+
+
+
 .contact_congress_letter #recipients li{
 float: left;
 padding: 20px;
@@ -948,7 +951,7 @@ padding-bottom: 20px;
 }
 
 .contact_congress_letter #recipients li span{
-
+text-align: left;
 padding-bottom: 0px;
 
 }
@@ -963,14 +966,22 @@ width: 100%;
 
 #comments-container{
 float: left;
-width: 420px;
 -moz-border-radius: 15px;
 -webkit-border-radius: 15px;
 -o-border-radius: 15px;
 -ms-border-radius: 15px;
 background: #eee;
-margin-left: 20px;
+margin: 0 30px 90px;
 
 }
 
 
+.comment{
+float: right;
+background: url(/images/comment.png) no-repeat;
+width: 500px;
+text-align: center;
+font-size: 18px;
+font-weight: bold;
+padding: 90px 0;
+}

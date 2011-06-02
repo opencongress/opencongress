@@ -936,7 +936,7 @@ margin-bottom: 30px;
 
 
 .contact_congress_letter #recipients li .image{
-float: left;
+float: left !important;
 
 }
 
@@ -985,3 +985,13 @@ font-size: 18px;
 font-weight: bold;
 padding: 90px 0;
 }
+
+.recipient_info{
+float: left;
+width: 140px;
+}
+
+
+
+
+

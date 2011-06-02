@@ -7,15 +7,19 @@
   .congrats
     - if @new_user_notice
       %p.new_user
-        %strong You must verify your email before we can send your letter.
+        %strong You must verify your email before we can send your letter. 
+        %br
+        %br
         We have created a new OpenCongress account for you and sent you a verification email.  As soon as you verify your email address, we'll sent your letter.
     - else 
       %p
         %strong Congratulations!
         Your letter to your elected representatives has been sent!  We will be tracking this correspondence and alert you to any replies immediately.
+    %br
 
-    %p Your communication can be more effective by following the steps below.
-    
+    %p.center.bold Your communication can be more effective by following the steps below.
+
+
   .after_steps
     .step
       %h2 Share
@@ -23,7 +27,13 @@
         A
         = link_to 'page with your letter', :controller => 'contact', :action => 'letter', :id => @contact_congress_letter
         has been set up. Share it with your friends and followers!
-      = render 'contact_congress_share'
+        
+        .tweet 
+          <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+        
+        .face 
+          <div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=217834678241023&amp;xfbml=1"></script><fb:like href="opencongress.org" send="true" layout="button_count" width="450" show_faces="true" font="lucida grande"></fb:like>
+
     .step
       %h2 Mail
       .desc

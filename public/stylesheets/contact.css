@@ -39,6 +39,7 @@ float: left;
 clear: none;
 }
 
+
 #content p.right{
 width: 420px;
 float: left !important;
@@ -420,7 +421,7 @@ float: left !important;
   width: 257px;
   float: left;
   padding: 20px 10px;
-  height: 160px;
+  height: 250px;
 -moz-border-radius: 5px;
 margin-right: 33px;
 -webkit-border-radius: 5px;
@@ -449,7 +450,7 @@ margin-right: 33px;
   padding: 10px;
 }
 .contact_congress .after_steps .step p {
-  margin: 0px;
+  margin: 0px 0 20px;
 font-size: 12px;
 color: #888;
 text-align: center;
@@ -737,11 +738,22 @@ margin: 30px auto 0;
 }
 
 .congrats{
-font-size: 20px;
+font-size: 14px;
 line-height: 1.4em;
 }
 
 
+.new_user{
+font-size: 16px;
+padding: 40px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+-o-border-radius: 3px;
+-ms-border-radius: 3px;
+border-radius: 3px;
+background: #f1d95b;
+clear: both;
+}
 
 
 
@@ -763,10 +775,13 @@ line-height: 1.4em;
 font-family: helvetica, arial, sans-serif;
 font-size: 13px;
 padding: 70px;
+}
 
-
-
-
+.contact_congress_letter .formageddon_letter{
+float: left;
+margin-left: 30px;
+width: 300px;
+margin-bottom: 60px;
 }
 
 
@@ -832,11 +847,6 @@ border-bottom: 1px solid #eee;
 }
 
 
-.second_submit{
-
-position: absolute;
-top: 1443px;
-left: 0;
 
 .selections {
   width: 420px;
@@ -863,22 +873,103 @@ left: 0;
   color: rgba(0,0,0, .4);
 }
 
+
+.second_submit{
+position: absolute;
+top: 1443px;
+left: 0;
+
 position: absolute;
 border-top: 1px solid #ddd;
 border-bottom: 1px solid #444;
 display: block !important;
 float: none !important;
-width: 927px;
+width: 1002px;
 margin: 0px;
-padding: 20px 40px 20px 35px; 
-font-size: 16px;
+height:74px;font-size: 16px;
 
 
   background: #999; /* for non-css3 browsers */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='#ddd'); /* for IE */
   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd)); /* for webkit browsers */
   background: -moz-linear-gradient(top,  #fff,  #ddd); /* for firefox 3.6+ */
 
+
+}
+
+
+.second_submit .blue.huge{
+top: 3px;
+right: 15px;
+
+position: absolute;
+
+
+}
+
+
+.tweet{
+padding-top: 20px;
+}
+
+
+.face{
+padding-top: 20px;
+}
+
+
+.contact_congress_letter #recipients li{
+float: left;
+padding: 20px;
+-moz-border-radius: 15px;
+-webkit-border-radius: 15px;
+-o-border-radius: 15px;
+-ms-border-radius: 15px;
+background: #eee;
+width: 200px;
+margin-right: 30px;
+border-radius: 15px;
+margin-bottom: 30px;
+}
+
+
+.contact_congress_letter #recipients li .image{
+float: left;
+
+}
+
+
+
+.contact_congress_letter #recipients span{
+text-align: center;
+display: block;
+font-weight: bold;
+padding-bottom: 20px;
+
+}
+
+.contact_congress_letter #recipients li span{
+
+padding-bottom: 0px;
+
+}
+
+.contact_congress_letter #bill{
+text-align: center;
+font-size: 16px;
+height: 30px;
+padding-top: 20px ;
+width: 100%;
+}
+
+#comments-container{
+float: left;
+width: 420px;
+-moz-border-radius: 15px;
+-webkit-border-radius: 15px;
+-o-border-radius: 15px;
+-ms-border-radius: 15px;
+background: #eee;
+margin-left: 20px;
 
 }
 

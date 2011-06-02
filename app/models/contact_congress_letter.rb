@@ -6,4 +6,9 @@ class ContactCongressLetter < ActiveRecord::Base
   belongs_to :user
   
   has_many :comments, :as => :commentable
+  
+  def to_param
+    subject = formageddon_threads.first.formageddon_letters.first.subject
+    subject.blank? ? "#{id}" : "#{id}-#{subject.gsub(/[^a-z0-9]+/i, '-')}"
+  end
 end

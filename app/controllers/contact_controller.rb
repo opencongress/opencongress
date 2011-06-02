@@ -104,12 +104,12 @@ class ContactController < ApplicationController
         if current_user == :false
           user = create_new_user_from_formageddon_thread(@contact_congress_letter.formageddon_threads.first)
           @contact_congress_letter.user = user
+          @new_user_notice = true
         else
           @contact_congress_letter.user = current_user
+          @new_user_notice = false
         end
         @contact_congress_letter.save
-        
-        @new_user_notice = true
       else
         @new_user_notice = false
       end

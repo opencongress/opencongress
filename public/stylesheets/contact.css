@@ -1094,7 +1094,25 @@ margin-bottom: 40px;
 width: 120px;
 }
 
+.facebook span{
+padding: 10px 10px 12px 15px !important;
+}
 
+.facebook{
+clear: none !important;
+}
+
+.twitter{
+margin-right: 10px;
+}
+
+.twitter span{
+padding: 9px 10px 10px 15px !important;
+}
+
+.after_steps .share_buttons {
+  margin: 30px 0 0 30px;
+}
 
 
 

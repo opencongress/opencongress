@@ -32,11 +32,16 @@
         = link_to 'page with your letter', :controller => 'contact', :action => 'letter', :id => @contact_congress_letter
         has been set up. Share it with your friends and followers!
         
-        .tweet 
-          <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-        
-        .face 
-          <div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=217834678241023&amp;xfbml=1"></script><fb:like href="#{url_for :only_path => false, :controller => 'contact', :action => 'letter', :id => @contact_congress_letter}" send="true" layout="button_count" width="450" show_faces="true" font="lucida grande"></fb:like>
+        .share_buttons
+          <a class="med_button twitter" href="http://twitter.com/opencongress"><span>#{image_tag 'twitter_logo.png'}</span></a>
+          <a class="med_button facebook" href="http://www.facebook.com/OpenCongress"><span>#{image_tag 'facebook_badge.png', :alt=>'Find our Facebook'}</span></a>
+
+        /
+          .tweet 
+            <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+        /
+          .face 
+            <div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=217834678241023&amp;xfbml=1"></script><fb:like href="#{url_for :only_path => false, :controller => 'contact', :action => 'letter', :id => @contact_congress_letter}" send="true" layout="button_count" width="450" show_faces="true" font="lucida grande"></fb:like>
 
     .step
       %h2 Mail

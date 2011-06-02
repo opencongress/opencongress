@@ -5,19 +5,6 @@
       <div id="bill-text" class="un">
         <%= link_to "View Bill Overview <span>Official info, comments, more</span>".html_safe, {:action => 'show'}, :class => 'overview_button' %>
       </div>
-      <% else %>
-        <% unless @bill.current_bill_text_version.nil? %>
-          <div id="bill-text" class="un">
-            <%= link_to "Official Bill Text <span>Comment on about #{number_with_delimiter(@bill.current_bill_text_version.pages)} Pages</span>".html_safe, :action => 'text' %>
-          </div>
-        <% end %>
-    <% end %>
-
-
-    <% if @bill.text_comments_count > 0 %>
-      <p class="most_button">
-        <%= link_to "View Most Commented Paragraphs", :action => 'text', :anchor => 'most_commented' %>
-      </p>
     <% end %>
   
 		<script type="text/javascript">
@@ -43,9 +30,7 @@
   	    <% end %>
   	  </div>
   	<% end %>
-  				
-  	<%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
-  	
+  				  	
 		<div id="vote">
 			<script type="text/javascript">
 			$j().ready(function() {
@@ -73,19 +58,6 @@
 				<% end %>
 			</div>
 		</div>
-
-
-		<% if @br_link %>
-		<div class="br_link small_box">
-		<div class="small_box_top">
-		<p><%= link_to "View this Bill's Popularity in Bill Battle", @br_link %></p>
-		</div>
-		</div>
-		
-		<% else %>
-		
-		
-		<% end %>
 		
 		<% if logged_in? %>
       <a href="<%= url_for :controller => 'contact', :action => 'bill', :id => object.ident %>" class="writeextrigger">
@@ -139,9 +111,7 @@
       <span>OpenGovernment Profile</span>
     </a>
   </div>
- 	
- 	<%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
- 	
+ 	 	
 	<div class="uc-box-bottom">
 		<div class="uc-box">
   		<%= render :partial => 'people/approval', :locals => {:person => @person, :user_approval => @user_approval} %>
@@ -151,9 +121,6 @@
   <% if object.has_contact_webform? %>
     <%= render :partial => 'shared/write_rep_external', :locals => { :people => [object] } %>
   <% end %>
-<% elsif object.class.to_s == "Subject" %>
-  <%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
-  <br />
 <% end %>
 
 <% if logged_in? %>

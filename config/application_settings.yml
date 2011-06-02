@@ -14,6 +14,7 @@ defaults: &defaults
   
   mini_mailer_from: alert@dev.opencongress.org
   
+  data_path: /data
   govtrack_data_path: /data/govtrack
   govtrack_billtext_path: /data/govtrack/bills.text
   govtrack_billtext_diff_path: /data/govtrack/bills.text.cmp
@@ -37,6 +38,11 @@ development:
   committee_reports_path: /Users/aross/pcf-work/committee_reports
 
   base_url: http://localhost:3003/
+
+drm:
+  <<: *defaults
+  base_url: http://drm.dev.opencongress.org
+  wiki_base_url: http://wiki-dev.opencongress.org/wiki 
   
 test:
   <<: *defaults

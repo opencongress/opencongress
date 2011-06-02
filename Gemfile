@@ -15,6 +15,10 @@ gem "haml"
 gem 'rmagick', '2.13.1'
 gem 'simple_captcha', :git => 'git://github.com/galetahub/simple-captcha.git'
 
+# Image uploads
+gem 'carrierwave'
+gem 'fog'
+
 # GovKit
 gem "govkit"
 
@@ -79,6 +83,7 @@ gem 'autotest'
 
 # Testing
 group :test, :development do
+  gem 'silent-postgres'	# Quieter postgres log messages
 
   gem 'rspec-rails', '~> 2.4'
   gem 'cucumber', '0.8.5'

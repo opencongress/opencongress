@@ -1,6 +1,4 @@
 class Committee < ViewableObject
-  validates_uniqueness_of :subcommittee_name, :scope => :name
-
   has_many :committee_people
   has_many :people, :through => :committee_people
   alias :members :people #for convenience, seems to make more sense

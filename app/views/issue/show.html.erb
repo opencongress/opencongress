@@ -4,6 +4,8 @@
 
 <div class="padding">
 
+<%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
+
 <!-- ><div style="width: 180px;" class="floatright"> -->
 <div class="floatright clearnone">
   <form id="timeframe_select" action="" method="get">
@@ -14,14 +16,6 @@
 </div>
 <a href="/issues" class="silver button small floatleft clearnone pushright"><span>Back to All Issues</span></a>
 <a href="/bill/hot" class="silver button small floatleft clearnone"><span>View Hot Bills By Issues Area</span></a>
-
-<!--
-<div style="float:right;">
-  <% if @br_link %>
-		<%= link_to image_tag('battle_royale_button_d_issue.gif'), @br_link %>
-	<% end %>
-</div>
--->
 
 <div id="issue_summary_text">
 <%= @subject.summary %>

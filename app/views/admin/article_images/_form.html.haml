@@ -1,0 +1,7 @@
+= form_for [@image.article, @image], :url => admin_article_article_images_path, :html => {:multipart => true} do |f|
+  %p
+    %label Article Image
+    = f.error_messages
+    = f.file_field :image
+    = f.hidden_field :image_cache
+    = f.submit "Save"

@@ -247,10 +247,6 @@ class PeopleController < ApplicationController
 		  #@top_issues = issue_hash.to_a.sort { |a, b| b[1] <=> a[1] }[0..20]
 		  #@top_issues.sort! {|a,b| a[0].term <=> b[0].term }
 		  #logger.warn "TOP ISSUES: #{@top_issues}"
-
-      @br_link = Rails.cache.fetch("person_link_#{@person.id}", :expires_in => 20.minutes) {
-         @person.br_link
-      }
 		  
 		  @include_vids_styles = true
       
@@ -339,9 +335,9 @@ class PeopleController < ApplicationController
     ## check if cache fragment exists
     unless read_fragment("#{@person.fragment_cache_key}_news_#{@sort}_page_#{@page}")
       if @sort == 'toprated'
-        @news = @person.news.find(:all, :order => 'commentaries.average_rating IS NOT NULL DESC').paginate :page => @page
+        @news = @person.news.paginate(:order => 'commentaries.average_rating IS NOT NULL DESC', :page => @page)
       elsif @sort == 'oldest'
-        @news = @person.news.find(:all, :order => 'commentaries.date ASC').paginate :page => @page
+        @news = @person.news.paginate(:order => 'commentaries.date ASC', :page => @page)
       else
         @news = @person.news.paginate :page => @page
       end
@@ -373,9 +369,9 @@ class PeopleController < ApplicationController
     ## check if cache fragment exists
     unless read_fragment("#{@person.fragment_cache_key}_blogs_#{@sort}_page_#{@page}")
       if @sort == 'toprated'
-        @blogs = @person.blogs.find(:all, :order => 'commentaries.average_rating IS NOT NULL DESC').paginate :page => @page
+        @blogs = @person.blogs.paginate(:all, :order => 'commentaries.average_rating IS NOT NULL DESC', :page => @page)
       elsif @sort == 'oldest'
-        @blogs = @person.blogs.find(:all, :order => 'commentaries.date ASC').paginate :page => @page
+        @blogs = @person.blogs.paginate(:all, :order => 'commentaries.date ASC', :page => @page)
       else
         @blogs = @person.blogs.paginate :page => @page
       end
@@ -653,10 +649,9 @@ class PeopleController < ApplicationController
       @tabs = [
         ["Overview",{:action => 'show', :id => @person}],
         ["Wiki Bio","#{@wiki_url}"],
-        ["Bills",{:action => 'bills', :id => @person}],
         ["Votes",{:action => 'voting_history', :id => @person}],
         ["Money Trail",{:action => 'money', :id => @person}],
-        ["News <span>(#{number_with_delimiter(@person.news_article_count)})</span> & Blogs <span>(#{number_with_delimiter(@person.blog_article_count)})</span>",{:action => 'news_blogs', :id => @person}],
+        ["News <span>(#{news_blog_count(@person.news_article_count)})</span> & Blogs <span>(#{news_blog_count(@person.blog_article_count)})</span>",{:action => 'news_blogs', :id => @person}],
         ["Videos <span>(#{number_with_delimiter(@person.videos.size)})</span>",{:action => 'videos', :id => @person}],
         ["Comments <span>(#{@person.comments.size})</span>",{:action => 'comments', :id => @person}]
       ]

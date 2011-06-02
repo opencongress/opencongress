@@ -30,13 +30,7 @@
           onSlide:function(v){$('sfilterscore').innerHTML=v},
           onChange:function(v){$('filterscore').value=v;new Ajax.Request('/comments/filter_by_rating/#{object.id}', {asynchronous:true, evalScripts:true, parameters:'type=' + escape("#{object.class.to_s}") + '&value=' + escape(v) + '&comment_page=' + escape("#{params[:comment_page]}") + '&comment_sort=' + escape("#{params[:comment_sort]}")})}});
 
-  - if object.comments.size > 0
-    - @show_comments = true
-    - unless @show_comments
-      %h3.dark= toggler("comment", "#{object.comments.size} comments - View All", "Hide comments", "arrow", "arrow-hide")
-    #comment{ :style => "clear:left;#{'display:none;' unless @show_comments}" }
-
-  -else
+  - if object.comments.size == 0
     %h3#no_comments.no_comments
       %strong No Comments
       Start the Conversation!

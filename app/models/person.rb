@@ -139,32 +139,6 @@ class Person < ViewableObject
     end  
   end
 
-  # returns the battle royale index
-  def place_in_battle_royale_100
-    b = Person.find_all_by_most_tracked_for_range(nil, {:limit => 100, :offset => 0, :person_type => self.title})
-    b.rindex(self)
-  end
-
-  def br_page
-    rindex = self.place_in_battle_royale_100
-    if rindex
-      return  ((rindex.to_f + 1.0) / 20.0).ceil
-    else
-      return nil
-    end
-  end
-
-  def br_link
-    page = self.br_page
-    action_link = "representatives" if self.title == "Rep."
-    action_link = "senators" if self.title == "Sen."
-    if page
-      return {:controller => :battle_royale, :action => action_link, :page => page, :person => self.ident, :timeframe => "AllTime"}
-    else
-      return nil
-    end
-  end
-
   def to_light_xml(options = {})
     default_options = {:methods => [:oc_user_comments, :oc_users_tracking], :except => [:fti_names]}
     self.to_xml(default_options.merge(options))
@@ -925,13 +899,17 @@ class Person < ViewableObject
   # Returns the number of people tracking this bill, as well as suggestions of what other people
   # tracking this bill are also tracking.
   def tracking_suggestions
-
     facet_results_hsh = {:my_people_tracked_facet => [], :my_issues_tracked_facet => [], :my_bills_tracked_facet => []}
     my_trackers = 0
 
-    users = User.find_by_solr('placeholder:placeholder', :facets => {:fields => [:my_people_tracked, :my_issues_tracked, :my_bills_tracked], :browse => ["my_people_tracked:#{self.id}"], :limit => 6, :zeros => false, :sort =>  true}, :limit => 1)
+    begin
+      users = User.find_by_solr('placeholder:placeholder', :facets => {:fields => [:my_people_tracked, :my_issues_tracked, :my_bills_tracked], :browse => ["my_people_tracked:#{self.id}"], :limit => 6, :zeros => false, :sort =>  true}, :limit => 1)
+    rescue
+      return [0, {}] unless Rails.env == 'production'
+      raise
+    end
+    
     facets = users.facets
-
     facet_results_ff = facets['facet_fields']
     if facet_results_ff && facet_results_ff != []
       
@@ -977,9 +955,14 @@ class Person < ViewableObject
         
     return [0,{}] if (self.title.blank? or primary.blank?)
     
-    users = User.find_by_solr('placeholder:placeholder', :facets => {:fields => [:my_bills_supported, :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens, :my_bills_opposed], 
-                                                      :browse => ["#{primary.gsub('_facet', '')}:#{self.id}"], 
-                                                      :limit => 6, :zeros => false, :sort =>  true}, :limit => 1)
+    begin
+      users = User.find_by_solr('placeholder:placeholder', :facets => {:fields => [:my_bills_supported, :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens, :my_bills_opposed], 
+                                                        :browse => ["#{primary.gsub('_facet', '')}:#{self.id}"], 
+                                                        :limit => 6, :zeros => false, :sort =>  true}, :limit => 1)
+    rescue
+      return [0, {}] unless Rails.env == 'production'
+      raise
+    end
                                                       
     return parse_facets(users.facets, primary, ["my_approved_reps_facet","my_approved_sens_facet","my_disapproved_reps_facet","my_disapproved_sens_facet",
                                                                    "my_bills_supported_facet", "my_bills_opposed_facet"])
@@ -991,10 +974,15 @@ class Person < ViewableObject
     primary = "my_disapproved_sens_facet" if self.roles.first.role_type == "sen"
  
     return [0,{}] if self.title.blank?
-                
-    users = User.find_by_solr('placeholder:placeholder', :facets => {:fields => [:my_bills_supported, :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens, :my_bills_opposed], 
-                                                      :browse => ["#{primary.gsub('_facet', '')}:#{self.id}"], 
-                                                      :limit => 6, :zeros => false, :sort =>  true}, :limit => 1)
+    
+    begin
+      users = User.find_by_solr('placeholder:placeholder', :facets => {:fields => [:my_bills_supported, :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens, :my_bills_opposed], 
+                                                        :browse => ["#{primary.gsub('_facet', '')}:#{self.id}"], 
+                                                        :limit => 6, :zeros => false, :sort =>  true}, :limit => 1)
+    rescue
+      return [0, {}] unless Rails.env == 'production'
+      raise
+    end
                                                       
     return parse_facets(users.facets, primary, ["my_approved_reps_facet","my_approved_sens_facet","my_disapproved_reps_facet","my_disapproved_sens_facet",
                                                                  "my_bills_supported_facet", "my_bills_opposed_facet"])
@@ -1263,8 +1251,9 @@ class Person < ViewableObject
   end
 
   def ident
-    "#{id}_#{firstname.downcase}_#{lastname.downcase}"
+    self.to_param
   end
+
 	def rep_info
 	foo = /(\[.*\])/.match(name)
 	"#{foo.captures}"
@@ -1349,7 +1338,13 @@ class Person < ViewableObject
   end
   
   def average_approval_from_state(state)
-    ids = User.find_id_by_solr("my_state:\"#{state}\"", :facets => {:browse => ["my_state_f:\"#{state}\"", "my_people_tracked:#{self.id}"]}, :limit => 5000)
+    begin
+      ids = User.find_id_by_solr("my_state:\"#{state}\"", :facets => {:browse => ["my_state_f:\"#{state}\"", "my_people_tracked:#{self.id}"]}, :limit => 5000)
+    rescue
+      return nil unless Rails.env == 'production'
+      raise
+    end
+
     rating = PersonApproval.average(:rating, :conditions => ["user_id in (?)", ids.results])
     if rating
       return (rating * 10.00).round

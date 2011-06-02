@@ -85,7 +85,7 @@ class MailingListItemsController < ApplicationController
     @mailing_list_item.destroy
 
     respond_to do |format|
-      format.html { redirect_to(user_profile_items_tracked(current_user.login)) }
+      format.html { redirect_to(user_items_tracked_path(current_user.login)) }
       format.xml  { head :ok }
     end
   end

@@ -1,0 +1,5 @@
+%div{:id => "image_#{image.id}"}
+  = image_tag(image.image_url(:thumb))
+  = link_to "Thumbnail", image.image_url(:thumb)
+  = link_to "Original size", image.image_url
+  = link_to "Remove", admin_article_article_image_path(@article, image), :method => :delete, :remote => true

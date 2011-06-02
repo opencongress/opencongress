@@ -2957,9 +2957,9 @@ _background: url(../images/sprites.gif) -199px -109px no-repeat;
 }
 
 #tabs{
-  padding:24px 0 0 30px;
+  padding:34px 0 0 30px;
   clear:both;
-  height: 25px;
+  height: 33px;
 width: 100%;
 border-bottom:1px solid #dfdfdf;
 }
@@ -2970,51 +2970,62 @@ margin-right: 5px;
 }               
 
 #tabs ul li a{
-padding: 0 5px 0 0;
+padding:8px 15px;
 display: block;
 clear: none;
-font-size: 11px;
+font-size: 12px;
 text-decoration: none;
-background: url('../images/large_buttons.png') right -880px no-repeat;
-_background: url('../images/large_buttons.gif') right -880px no-repeat;
+margin-right: 6px;
+background: rgba(190,190,190, .1);
 color: #555;
-}
+-moz-border-radius-topright: 3px; 
+-moz-border-radius-topleft: 3px;
+ -webkit-transition: all .1s ease-in-out;
+  -moz-transition: all .1s ease-in-out;
 
-#tabs ul li a span{
-padding: 5px 4px 3px 10px;
-color: #555;
-display: block;
-background: url('../images/large_buttons.png') 0 -880px no-repeat;
-_background: url('../images/large_buttons.gif') 0 -880px no-repeat;
-}
-
-#tabs ul li a span span{
-padding: 0px !important;
-color: #aaa !important;
-display: inline !important;
-background: none !important;
+-webkit-border-top-left-radius: 3px;
+-webkit-border-tpo-right-radius: 3px;
 }
 
 #tabs ul li a:hover{
-background: url('../images/large_buttons.png') right -844px no-repeat;
-_background: url('../images/large_buttons.gif') right -844px no-repeat;
+background: rgba(190,190,190, .6);
+}
+
+#tabs ul li.here a{
+background: rgba(255,255,255, 1);
+}
+
+#tabs ul li a:active{
+-moz-box-shadow: inset 0 2px 3px rgba(0,0,0, .2);
+}
+
+
+#tabs ul li a span{
+
+}
+
+
+
+#tabs ul li a span span{
+
+}
+
+#tabs ul li a:hover{
+
 
 }
 
 #tabs ul li a:hover span{
-background: url('../images/large_buttons.png') 0 -844px no-repeat;
-_background: url('../images/large_buttons.gif') 0 -844px no-repeat;
+
 
 }
 
 #tabs ul li.here a, #bill.blogs #tabs ul li a, #bill.news #tabs ul li a{
-background: url('../images/large_buttons.png') right -844px no-repeat;
-_background: url('../images/large_buttons.gif') right -844px no-repeat;
+
 }
 
 #tabs ul li.here a span, #bill.blogs #tabs ul li a span, #bill.news #tabs ul li a span{
-background: url('../images/large_buttons.png') 0 -844px no-repeat;
-_background: url('../images/large_buttons.gif') 0 -844px no-repeat;
+
 }
 
 .email_trigger{
@@ -3156,30 +3167,41 @@ float: left;
 line-height: 1em;
 }
 
-
 #stats{
-padding-bottom: 0 !important;
+background: #f8f8f8;
+float: left;
+margin: 25px 0 0px 40px;
+height: 2.3em;
+width: 666px;
+clear: both;
+-moz-border-radius: 50px;
+-webkit-border-radius: 50px;
 }
 
 
 #stats li{
-float: none;
 font-size: 11px;
-padding: 6px 0 5px 10px;
-display: block !important;
+height: 2.3em;
 font-weight: normal;
-width: 186px;
+float: left;
+margin-right: 30px;
+padding-top:5px;
 }
 
 
 #stats li .time{
 float: left;
-width: 100px;
+margin-right: 20px
+
 }
 
 
 #stats h3{
-padding: 10px 0 3px 10px;
+height: 2.3em;
+margin-right: 30px;
+padding-top: 4px;
+padding-left: 20px;
+float: left;
 }
 
 
@@ -3664,29 +3686,6 @@ font-size: 14px;
 line-height: 1em;
 }
 
-
-
-
-
-
-
-
-
-
-
-.br_link a{
-font-size: 11px;
-display: block;
-padding-top: 40px;
-height: 0;
-overflow: hidden;
-background: url('../images/br_button.png') 8px 9px no-repeat;
-_background: url('../images/br_button.gif') 8px 9px no-repeat;
-}
-
-.br_link{
-margin-bottom: 20px;
-}
 
 #mycarousel .cap{
 height: 10px;
@@ -4721,20 +4720,20 @@ table.simple-table th, table.simple-table td {
 clear: both;
 
 border: none;
-padding: 8px 15px;
+padding: 8px 15px !important;
 margin: 0px;
+
+
 
 -moz-border-radius-topleft: 4px;
 -moz-border-radius-topright: 4px;
 -webkit-border-radius-top-left: 4px;
 -webkit-border-radius-top-right: 4px;
-border-radius: 4px;
 
 -moz-box-shadow: 0px 1px 1px #666;
 -webkit-box-shadow:  0px 1px 1px #666;
 box-shadow:  0px 1px 1px #666;
 
-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#efefef');
 background:-webkit-gradient(linear,left top,left bottom,from(#ffffff),to(#efefef));
 background:-moz-linear-gradient(top, #ffffff, #efefef);
 

@@ -6,3 +6,8 @@ en:
   
   simple_captcha:
     label: "Enter the text from the image"
+
+  errors:
+    messages:
+      carrierwave_processing_error: 'Cannot resize image.'
+      carrierwave_integrity_error: 'Not an image.'

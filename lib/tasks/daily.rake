@@ -3,7 +3,7 @@ namespace :update do
 
   task :rsync => :environment do
     begin
-      system "sh #{Rails.root}/bin/daily/govtrack-rsync.sh #{DATA_PATH}"
+      system "sh #{Rails.root}/bin/daily/govtrack-rsync.sh #{Settings.data_path}"
     rescue Exception => e
       if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error rsyncing govtrack data!")
@@ -20,9 +20,9 @@ namespace :update do
 
   task :photos => :environment do
     begin
-      system "sh #{Rails.root}/bin/daily/govtrack-photo-rsync.sh #{DATA_PATH}"
+      system "sh #{Rails.root}/bin/daily/govtrack-photo-rsync.sh #{Settings.data_path}"
       unless (['production', 'staging'].include?(Rails.env))
-        system "ln -s -i -F #{DATA_PATH}/govtrack/photos #{Rails.root}/public/images/photos"
+        system "ln -s -i -F #{Settings.data_path}/govtrack/photos #{Rails.root}/public/images/photos"
       end
     rescue Exception => e
       if (['production', 'staging'].include?(Rails.env))
@@ -64,7 +64,7 @@ namespace :update do
     begin
       data = IO.popen("sha1sum -c /tmp/people.sha1").read
       unless data.match(/OK\n$/)
-        system "sha1sum #{DATA_PATH}/govtrack/people.xml >/tmp/people.sha1"
+        system "sha1sum #{Settings.data_path}/govtrack/people.xml >/tmp/people.sha1"
         Person.transaction {
           load 'bin/daily/daily_parse_people.rb'
         }

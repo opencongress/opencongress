@@ -2,6 +2,7 @@ class Article < ActiveRecord::Base
   acts_as_taggable
 
   has_many :comments, :as => :commentable
+  has_many :article_images
   belongs_to :user
   default_scope :order => 'created_at DESC'
 

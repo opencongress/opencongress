@@ -762,7 +762,13 @@ padding-left: 6px;
   margin-left:125px;
   height: 2px;
   border: 0;
-  background-color: rgba(0,0,0, .4);;
+  top: 144px;
+  background-color: rgba(0,0,0, .4);
+  opacity: 0;
+  -webkit-transition: all 4s ease-in-out;
+  -moz-transition: all 4s ease-in-out;
+  -o-transition: all 4s ease-in-out;
+  transition: all 4s ease-in-out;
 }
 .perm{
 clear: both;

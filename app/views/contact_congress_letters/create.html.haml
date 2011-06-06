@@ -19,7 +19,7 @@
 
   .perm 
     Here is your letter's permalink:
-    = link_to url_for(:only_path => false, :controller => 'contact', :action => 'letter', :id => @contact_congress_letter), url_for(:only_path => false, :controller => 'contact', :action => 'letter', :id => @contact_congress_letter)
+    = link_to url_for(:only_path => false, :controller => 'contact_congress_letters', :action => 'show', :id => @contact_congress_letter), url_for(:only_path => false, :controller => 'contact_congress_letters', :action => 'show', :id => @contact_congress_letter)
 
   %p.center.bold Your communication can be more effective by following the steps below.
 
@@ -29,7 +29,7 @@
       %h2 Share
       .desc
         A
-        = link_to 'page with your letter', :controller => 'contact', :action => 'letter', :id => @contact_congress_letter
+        = link_to 'page with your letter', :controller => 'contact_congress_letters', :action => 'show', :id => @contact_congress_letter
         has been set up. Share it with your friends and followers!
         
         .share_buttons

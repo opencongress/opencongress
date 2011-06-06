@@ -94,7 +94,7 @@
       .formageddon_contact_form
         = render 'formageddon/threads/form', :f => f, :thread => @formageddon_thread
         
-        = hidden_field_tag :after_send_url, "/contact/aftersend?bill=#{@bill.ident}&disposition=#{@position}"
+        = hidden_field_tag :after_send_url, "/contact_congress_letters/create_from_formageddon?bill=#{@bill.ident}&disposition=#{@position}"
         
     %p Click send, and we will automatically deliver your letter to the members of Congress you selected above. OpenCongress is the only not-for-profit website that enables you to write all three of your members of Congress at once. Also, OpenCongress is the only website that gives this information back to the public commons, enabling you to find other constituents near you who are tracking the same bills and issues. 
 
@@ -105,16 +105,16 @@
     if ($j(this).val().length == 5) {
       $j("#none").html("<img src='/images/spinner-ovals.gif' />");
       $j.ajax({
-        url: '/contact/get_recipients?bill=#{@bill.ident}' + '&address=' + escape($j("#formageddon_formageddon_thread_sender_address1").val()) + '&zip=' + $j(this).val()
+        url: '/contact_congress_letters/get_recipients?bill=#{@bill.ident}' + '&address=' + escape($j("#formageddon_formageddon_thread_sender_address1").val()) + '&zip=' + $j(this).val()
       });
     }
   });
   
   $j("#formageddon_formageddon_thread_sender_address1").change(function() {
-    $j(".contact_recipients").html("<div id='none' class='none'><img src='/images/spinner-ovals.gif' /></div>");
+    $j("#rep").html("<img class='spin' src='/images/spinner-ovals.gif' />");
 
     $j.ajax({
-      url: '/contact/get_recipients?bill=#{@bill.ident}' + '&address=' + escape($j(this).val()) + '&zip=' + $j("#formageddon_formageddon_thread_sender_zip5").val()
+      url: '/contact_congress_letters/get_recipients?bill=#{@bill.ident}' + '&rep_only=true&address=' + escape($j(this).val()) + '&zip=' + $j("#formageddon_formageddon_thread_sender_zip5").val()
     });
   });
   

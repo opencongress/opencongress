@@ -13,6 +13,7 @@
           %span
             = "Vote on Passage of #{@bill.typenumber}: " 
             %strong= "#{@bill.vote_on_passage(s)}"
+    %hr#separator
     - if @reps.size == 1
       %li#rep.hide
         - if show_checkboxes

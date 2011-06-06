@@ -117,12 +117,12 @@ OpenCongress::Application.routes.draw do
   # # Install the default route as the lowest priority.
   # map.connect ':controller/:action/:id'
   
-  scope :controller => 'contact' do
-    match 'bill/:id', :action => 'bill'
-    match 'aftersend', :action => 'aftersend'
-    match 'letter/:id', :action => 'letter'
-  end
 
+  resources :contact_congress_letters, :only => [:index, :show, :new] do
+    get 'create_from_formageddon', :on => :collection # create uses POST and we'll be redirecting to create
+    get 'get_recipients', :on => :collection 
+  end
+  
   match 'howtouse' => 'about#howtouse'
   
   scope :controller => 'account' do

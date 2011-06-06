@@ -26,12 +26,13 @@
         = "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times"      
         = render 'will_add_text_box', :text => "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times on OpenCongress.org, a free, non-partisan resource."
 
-    .section
+    .section      
       %h3 Contribution Data
       #contribution_data_container
-        = render :partial => 'message_builder_contribution_data'
+        - unless @sens.empty? and @reps.empty? 
+          = render :partial => 'message_builder_contribution_data'
 
-          
+    .section      
       %h3 Most-commented sections of the bill text
       %ul
         - @bill.bill_text_versions.last.top_comment_nodes(5).each do |n|
@@ -118,6 +119,22 @@
     });
   });
   
+  $j(".message_builder_clickable").hover(
+    function () {
+      $j(this).find("div.will_add_text_box:first").fadeIn(.3);
+    },
+    function () {
+      $j(this).find("div.will_add_text_box:first").fadeOut(.3);
+    }
+  );
+  $j(".message_builder_clickable").click(
+    function () {
+      txt = $j(this).find("div.message_builder_add_text:first").text();
+      msg = $j('div.formageddon_contact_form textarea:first')
+      msg.val(msg.val()+"\n\n"+unescape(txt)); 
+    }
+  );
+    
   $j(document).ready(function() {
     $j('.formageddon_submit').addClass("button blue huge");
   });

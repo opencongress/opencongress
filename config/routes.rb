@@ -6,6 +6,8 @@ OpenCongress::Application.routes.draw do
     resources :districts
   end
 
+  resources :groups
+
   match '/' => 'index#index', :as => :home
 
   # Allow downloading Web Service WSDL as a file with an extension

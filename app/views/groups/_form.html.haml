@@ -1,0 +1,25 @@
+= form_for @group do |f|
+  %p
+    = f.label :name
+    = f.text_field :name
+    
+  %p
+    = f.label :description
+    = f.text_area :description
+    
+  %p
+    = f.label :join_type, "Who can join?"
+    = f.radio_button :join_type, 'ANYONE'
+    Anyone
+    = f.radio_button :join_type, 'REQUEST'
+    Anyone can request to join
+    = f.radio_button :join_type, 'INVITE_ONLY'
+    Invite only
+    
+  %p
+    = f.label :invite_type, "Who can send invitation?"
+    = f.radio_button :invite_type, 'ANYONE'
+    Anyone
+    = f.radio_button :invite_type, 'ADMIN'
+    Me only
+  

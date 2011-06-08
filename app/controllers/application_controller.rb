@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   
   include AuthenticatedSystem
   include SimpleCaptcha::ControllerHelpers
+  include Facebooker2::Rails::Controller
 
   before_filter :store_location
   before_filter :current_tab

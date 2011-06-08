@@ -29,4 +29,10 @@
         Please enter your full address on the right 
         %br
         so we can find your Representative.
-        
+- unless @sens.empty? and @reps.empty?
+  :javascript
+    $j('#sen_0').css("top", "0px");
+    $j('#sen_1').css("top", "75px");
+    $j('#rep').css("top", "160px");
+    $j('.sending').css("opacity", "1.0");
+    $j('#separator').css("opacity", "1.0");

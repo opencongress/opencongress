@@ -9,7 +9,7 @@
       %strong= link_to truncate("#{@contact_congress_letter.bill.typenumber} #{@contact_congress_letter.bill.title_common}", :length => 170), bill_path(@contact_congress_letter.bill)
       - if @contact_congress_letter.formageddon_threads.first.formageddon_sender
         by
-        = link_to @contact_congress_letter.formageddon_threads.first.formageddon_sender.login, user_profile_path(@contact_congress_letter.formageddon_threads.first.formageddon_sender)
+        = link_to @contact_congress_letter.formageddon_threads.first.formageddon_sender.login, user_profile_path(@contact_congress_letter.formageddon_threads.first.formageddon_sender.login)
   #recipients{ :class => "num#{@contact_congress_letter.formageddon_threads.size}" }
     .to To:
     %ul

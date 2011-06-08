@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/opencongress/formageddon.git
-  revision: bf9a75ff69b021cfdb81e37798def37f2168fb01
+  revision: 0c5b650ed61dc236ec83bdecbcb3b4171962becc
   specs:
     formageddon (0.0.0)
       delayed_job (~> 2.1)
@@ -130,7 +130,7 @@ GEM
       httparty (>= 0.5.2)
       json (>= 1.4.3)
       nokogiri (>= 1.4.4)
-    guard (0.3.4)
+    guard (0.4.1)
       thor (~> 0.14.6)
     guard-livereload (0.1.11)
       em-websocket (~> 0.2.0)
@@ -143,7 +143,7 @@ GEM
       builder
     hpricot (0.8.4)
     htmlentities (4.3.0)
-    httparty (0.7.7)
+    httparty (0.7.8)
       crack (= 0.1.8)
     i18n (0.5.0)
     jammit (0.6.3)
@@ -206,7 +206,7 @@ GEM
       rspec-core (~> 2.6.0)
       rspec-expectations (~> 2.6.0)
       rspec-mocks (~> 2.6.0)
-    rspec-core (2.6.3)
+    rspec-core (2.6.4)
     rspec-expectations (2.6.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.6.0)

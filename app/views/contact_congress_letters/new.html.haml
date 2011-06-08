@@ -106,7 +106,17 @@
     if ($j(this).val().length == 5) {
       $j("#none").html("<img src='/images/spinner-ovals.gif' />");
       $j.ajax({
-        url: '/contact_congress_letters/get_recipients?bill=#{@bill.ident}' + '&address=' + escape($j("#formageddon_formageddon_thread_sender_address1").val()) + '&zip=' + $j(this).val()
+        url: '/contact_congress_letters/get_recipients?bill=#{@bill.ident}' + '&address=' + escape($j("#formageddon_formageddon_thread_sender_address1").val()) + '&zip5=' + $j(this).val()
+      });
+    }
+  });
+  
+  $j("#formageddon_formageddon_thread_sender_zip4").keyup(function() {
+    if ($j(this).val().length == 4) {
+      $j("#rep").html("<img class='spin' src='/images/spinner-ovals.gif' />");
+
+      $j.ajax({
+        url: '/contact_congress_letters/get_recipients?bill=#{@bill.ident}' + '&rep_only=true&address=' + escape($j(this).val()) + '&zip5=' + $j("#formageddon_formageddon_thread_sender_zip5").val() + '&zip4=' + $j("#formageddon_formageddon_thread_sender_zip4").val()
       });
     }
   });
@@ -115,7 +125,7 @@
     $j("#rep").html("<img class='spin' src='/images/spinner-ovals.gif' />");
 
     $j.ajax({
-      url: '/contact_congress_letters/get_recipients?bill=#{@bill.ident}' + '&rep_only=true&address=' + escape($j(this).val()) + '&zip=' + $j("#formageddon_formageddon_thread_sender_zip5").val()
+      url: '/contact_congress_letters/get_recipients?bill=#{@bill.ident}' + '&rep_only=true&address=' + escape($j(this).val()) + '&zip5=' + $j("#formageddon_formageddon_thread_sender_zip5").val() + '&zip4=' + $j("#formageddon_formageddon_thread_sender_zip4").val()
     });
   });
   

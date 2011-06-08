@@ -45,8 +45,19 @@ class ContactCongressLettersController < ApplicationController
   def get_recipients
     @bill = Bill.find_by_ident(params[:bill])
     
-    @sens, @reps = Person.find_current_congresspeople_by_address_and_zipcode(params[:address], params[:zip])
-    #Person.find_current_congresspeople_by_zipcode(params[:zip], nil)
+    unless params[:zip4].blank?
+      @sens, @reps = Person.find_current_congresspeople_by_zipcode(params[:zip5], params[:zip4])
+    else
+      yg = YahooGeocoder.new("#{params[:address]}, #{params[:zip5]}")
+      unless yg.zip5.nil?
+        @sens, @reps = Person.find_current_congresspeople_by_zipcode(yg.zip5, yg.zip4)
+        @zip4 = yg.zip4
+      end
+      
+      
+      @sens, @reps = Person.find_current_congresspeople_by_address_and_zipcode(params[:address], params[:zip5])
+    end
+
     @sens = [] unless @sens
     @reps = [] unless @reps and @reps.size == 1
     

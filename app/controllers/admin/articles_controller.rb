@@ -2,7 +2,7 @@ class Admin::ArticlesController < Admin::IndexController
   before_filter :can_blog
   
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :destroy, :create, :update ],
+  verify :method => :post, :only => [ :create ],
          :redirect_to => { :action => :list }
          
 #  cache_sweeper :article_sweeper, :only => [ :destroy, :update ]

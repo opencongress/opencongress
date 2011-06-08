@@ -1,6 +1,6 @@
 <div id="admin-section">
 	<%= link_to 'Edit', :action => 'edit', :id => @article %><br/>
-	<%= link_to 'Destroy', { :action => 'destroy', :id => @article }, :confirm => 'Are you sure?', :method => "post" %><br/>
+	<%= link_to 'Destroy', { :action => 'destroy', :id => @article }, :confirm => 'Are you sure?', :method => :delete %><br/>
 	<%= link_to 'Back', :action => 'list' %><br/>
 </div>
 

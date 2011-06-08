@@ -42,7 +42,7 @@
   </tr>
   <tr>
     <td>Comments Per Day: </td>
-    <td><%= number_with_precision((@user.comments.length.to_f / (((((Time.now.to_i - @user.created_at.to_i) / 60 ) / 60 ) / 24) + 1).to_f), 2) %></td>
+    <td><%= number_with_precision((@user.comments.length.to_f / (((((Time.now.to_i - @user.created_at.to_i) / 60 ) / 60 ) / 24) + 1).to_f), :precision => 2) %></td>
   </tr>
 </table>
 		</div>

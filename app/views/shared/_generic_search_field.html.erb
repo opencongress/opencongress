@@ -1,6 +1,6 @@
 <form method="get" class="search_form">
 <div>
-		<%= field_text %> <input name="q" id="search-field" type="text" size="30" value="<%= @q %>" />
+		<%= field_text.html_safe %> <input name="q" id="search-field" type="text" size="30" value="<%= @q %>" />
   		<input type="image" src="<%= image_path 'search_submit.gif' %>" name="submit" id="search_submit" value="Search">
 
 </div>

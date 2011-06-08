@@ -153,11 +153,14 @@ bill_files.each do |f|
             bill.topresident_datetime = act.datetime
           end
           act.result = attrs["result"] 
+          
+          act.save
+          
           e.each_element("reference") { |ref| 
             act.action_references.find_or_create_by_label_and_ref(ref.attributes['label'], ref.attributes['ref'])
           }
         
-          act.save
+          
         end
         # set the lastaction time for the bill
         lastaction = action_times.sort.last

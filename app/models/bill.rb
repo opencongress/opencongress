@@ -1237,7 +1237,32 @@ class Bill < ViewableObject
     typenumber
   end
 
+  def as_json(ops = {})
+    super(stylize_serialization(ops))
+  end
+
+  def as_xml(ops = {})
+    super(stylize_serialization(ops))
+  end
+  
   private
+
+  # different ways we may want to serialize json...
+  SERIALIZATION_STYLES = {:simple => {:except => [:rolls, :hot_bill_category_id]},
+    :full => {:except => [:rolls, :hot_bill_category_id],
+                              :methods => [:title_full_common, :status],
+                              :include => {:co_sponsors => {:methods => [:oc_user_comments, :oc_users_tracking]},
+                                           :sponsor => {:methods => [:oc_user_comments, :oc_users_tracking]},
+                                           :bill_titles => {},
+                                           :most_recent_actions => {}
+                                           }}}
+
+  def stylize_serialization(ops)
+   ops ||= {}
+   style = ops.delete(:style) || :simple
+
+   SERIALIZATION_STYLES[style].merge(ops)
+  end
 
   def official_title
     bill_titles.select { |t| t.title_type == 'official' }.first
@@ -1254,5 +1279,6 @@ class Bill < ViewableObject
   def default_title
     bill_titles.select { |t| t.is_default == true }.first
   end
-
+    
+  
 end

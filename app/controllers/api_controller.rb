@@ -1,8 +1,17 @@
 class ApiController < ApplicationController
 
-  before_filter :check_key, :except => [:index, :key]
-  before_filter :check_format, :except => [:index, :key]
-  before_filter :set_pagination, :except => [:index, :key]
+  with_options :except => [:index, :key] do
+    before_filter :check_key
+    before_filter :set_default_format
+    before_filter :set_pagination
+
+    respond_to :xml, :json
+  end
+
+  before_filter :lookup_bill, :only => [:opencongress_users_tracking_bill_are_also_tracking, :opencongress_users_supporting_bill_are_also, :opencongress_users_opposing_bill_are_also]
+  before_filter :lookup_person, :only => [:opencongress_users_opposing_person_are_also, :opencongress_users_supporting_person_are_also, :opencongress_users_tracking_person_are_also_tracking]
+  before_filter :lookup_state, :only => [:opencongress_users_tracking_in_state, :opencongress_users_tracking_in_state_district]
+  
 
 #  require 'activesupport'
 
@@ -15,16 +24,27 @@ class ApiController < ApplicationController
     
   end
 
-  def people
+  def people    
     seperator = "AND"
     seperator = params[:seperator] if params[:seperator] == "OR"
     conditions = {}
-    if params[:last_name]
-      conditions[:lastname] = params[:last_name]
+    
+    parameter_map = {
+      :osid => :osid,
+      :lastname => :last_name,
+      :firstname => :first_name,
+      :bioguideid => :bioguideid,
+      :party => :party,
+      :state => :state,
+      :title => :title,
+      :district => :district,
+      :id => :person_id
+    }
+
+    parameter_map.each do |k, v|
+      conditions[k] = params[v] if params[v]
     end
-    if params[:first_name]
-      conditions[:firstname] = params[:first_name]
-    end
+
     if params[:gender]
       case params[:gender]
       when 'M'
@@ -33,168 +53,87 @@ class ApiController < ApplicationController
         conditions[:gender] = 'F'
       end
     end
-    if params[:osid]
-      conditions[:osid] = params[:osid]
-    end
+
     if params[:user_approval_from] && params[:user_approval_to]
       conditions[:user_approval] = params[:user_approval_from].to_f..params[:user_approval_to].to_f
     end
-    if params[:bioguideid]
-      conditions[:bioguideid] = params[:bioguideid]
-    end
-    if params[:party]
-      conditions[:party] = params[:party]
-    end
-    if params[:state]
-      conditions[:state] = params[:state]
-    end
-    if params[:title]
-      conditions[:title] = params[:title]
-    end
-    if params[:district]
-      conditions[:district] = params[:district]
-    end
-    if params[:person_id]
-      conditions[:id] = params[:person_id]
-    end
-    
     
     people = Person.paginate(:all, :conditions => conditions, :page => @page, :per_page => @per_page)
     
-    do_render(people, {:methods => [:oc_user_comments, :oc_users_tracking, 
+    do_render(people, :methods => [:oc_user_comments, :oc_users_tracking, 
                                               :abstains_percentage, :with_party_percentage], 
                                               :include => [:recent_news, :recent_blogs, :person_stats],
-                                              :except => ["fti_names"]})
+                                              :except => ["fti_names"])
 
           
   end
 #  Person.find_by_most_commentary(type = 'news', person_type = 'rep', num = 5, since = Settings.default_count_time)
 
   def most_blogged_representatives_this_week
-    people = Person.find_by_most_commentary('blog', 'rep', @per_page, Settings.default_count_time)
-    do_render(people, {:methods => [:oc_user_comments, :oc_users_tracking], :include => [:recent_news, :recent_blogs]})
+    respond_with Person.find_by_most_commentary('blog', 'rep', @per_page, Settings.default_count_time)
   end
 
   def most_blogged_senators_this_week
-    people = Person.find_by_most_commentary('blog', 'sen', @per_page, Settings.default_count_time)
-    do_render(people, {:methods => [:oc_user_comments, :oc_users_tracking], :include => [:recent_news, :recent_blogs]})
+    respond_with Person.find_by_most_commentary('blog', 'sen', @per_page, Settings.default_count_time)
   end
 
   def representatives_most_in_the_news_this_week
-    people = Person.find_by_most_commentary('news', 'rep', @per_page, Settings.default_count_time)
-    do_render(people, {:methods => [:oc_user_comments, :oc_users_tracking], :include => [:recent_news, :recent_blogs]})
+    respond_with Person.find_by_most_commentary('news', 'rep', @per_page, Settings.default_count_time)
   end
 
   def senators_most_in_the_news_this_week
-    people = Person.find_by_most_commentary('news', 'sen', @per_page, Settings.default_count_time)
-    do_render(people, {:methods => [:oc_user_comments, :oc_users_tracking], :include => [:recent_news, :recent_blogs]})
+    respond_with Person.find_by_most_commentary('news', 'sen', @per_page, Settings.default_count_time)
   end
 
   def opencongress_users_tracking_person_are_also_tracking
-    @object = Person.find_by_id(params[:id])
-    @tracking_suggestions = @object.tracking_suggestions
-    render :action => "users_tracking_also_tracking.xml.builder", :layout => false
+    render_via_builder_template("api/users_tracking_also_tracking.xml.builder", @person)
   end
 
-  def opencongress_users_tracking_bill_are_also_tracking
-    @object = Bill.find_by_ident(params[:id])
-    @tracking_suggestions = @object.tracking_suggestions
-    render :action => "users_tracking_also_tracking.xml.builder", :layout => false
-  end
-  
   def opencongress_users_supporting_person_are_also
-    @object = Person.find_by_id(params[:id])
-    @supporting_suggestions = @object.support_suggestions
-    case @format
-    when "xml"
-      render :action => "users_supporting.xml.builder", :layout => false
-    else
-      render :json => Hash.from_xml(render_to_string(:template => "api/users_supporting.xml.builder", :layout => false)).to_json, :layout => false
-    end        
+    render_via_builder_template("api/users_supporting.xml.builder", @person)
   end
 
   def opencongress_users_opposing_person_are_also
-    @object = Person.find_by_id(params[:id])
-    @opposing_suggestions = @object.oppose_suggestions
-    case @format
-    
-    when "xml"
-      render :action => "users_opposing.xml.builder", :layout => false
-    else
-      render :json => Hash.from_xml(render_to_string(:template => "api/users_opposing.xml.builder", :layout => false)).to_json, :layout => false
-    end      
+    render_via_builder_template("api/users_opposing.xml.builder", @person)
   end
 
+  def opencongress_users_tracking_bill_are_also_tracking
+    render_via_builder_template("api/users_tracking_also_tracking.xml.builder", @bill)
+  end
+    
   def opencongress_users_supporting_bill_are_also
-    @object = Bill.find_by_ident(params[:id])
-    @supporting_suggestions = @object.support_suggestions
-    case @format
-    when "xml"
-      render :action => "users_supporting.xml.builder", :layout => false
-    else
-      render :json => Hash.from_xml(render_to_string(:template => "api/users_supporting.xml.builder", :layout => false)).to_json, :layout => false
-    end  
+    render_via_builder_template("api/users_supporting.xml.builder", @bill)
   end
 
   def opencongress_users_opposing_bill_are_also
-    @object = Bill.find_by_ident(params[:id])
-    @opposing_suggestions = @object.oppose_suggestions
-    case @format
-    when "xml"
-      render :action => "users_opposing.xml.builder", :layout => false
-    else
-      render :json => Hash.from_xml(render_to_string(:template => "api/users_opposing.xml.builder", :layout => false)).to_json, :layout => false
-    end      
+    render_via_builder_template("api/users_opposing.xml.builder", @bill)
   end
 
   def opencongress_users_tracking_in_state
-    @object = State.find_by_abbreviation(params[:id])
-    @tracking_suggestions = @object.tracking_suggestions
-    render :action => "users_tracking_also_tracking_location.xml.builder", :layout => false
+    render_via_builder_template("api/users_tracking_also_tracking_location.xml.builder", @state)
   end
 
   def opencongress_users_tracking_in_state_district
-    @state = State.find_by_abbreviation(params[:id])
     dis_num = params[:district].to_i
     @object = @state.districts.find_by_district_number(dis_num)
     @object = @state.districts.find_by_district_number(0) unless @object
-    @tracking_suggestions = @object.tracking_suggestions
-    render :action => "users_tracking_also_tracking_location.xml.builder", :layout => false
+    render_via_builder_template("api/users_tracking_also_tracking_location.xml.builder", @object)
   end
   
-
   def bills
     seperator = "AND"
     seperator = params[:seperator] if params[:seperator] == "OR"
     conditions = {}
-    if params[:id]
-      conditions[:id] = params[:id]
-    end
-    if params[:congress]
-      conditions[:session] = params[:congress]
-    end
-    if params[:number]
-      conditions[:number] = params[:number]
-    end
-    if params[:type]
-      conditions[:bill_type] = params[:type]
-    end
-    if params[:sponsor_id]
-      conditions[:sponsor] = params[:sponsor_id]
-    end
-    
-    bills = Bill.paginate(:all, :conditions => conditions, :page => @page, :per_page => @per_page)
-    
-    do_render(bills, {:except => [:rolls, :hot_bill_category_id], 
-                                :methods => [:title_full_common, :status], 
-                                :include => {:co_sponsors => {:methods => [:oc_user_comments, :oc_users_tracking]}, 
-                                             :sponsor => {:methods => [:oc_user_comments, :oc_users_tracking]}, 
-                                             :bill_titles => {},
-                                             :most_recent_actions => {}
 
-                                             }})
-    
+    parameter_map = {:id => :id, :session => :congress, :number => :number, :bill_type => :type, :sponsor => :sponsor_id}
 
+    parameter_map.each do |k, v|
+      conditions[k] = params[v] if params[v]
+    end
+    
+    @bills = Bill.paginate(:all, :conditions => conditions, :page => @page, :per_page => @per_page)
+
+    do_render(@bills)
   end
   
   def bills_by_ident
@@ -206,16 +145,9 @@ class ApiController < ApplicationController
       these_idents = params[:ident].split(',')
     end
     
-    bills = Bill.find_all_by_ident(these_idents, find_options = {})
+    @bills = Bill.find_all_by_ident(these_idents, find_options = {})
 
-    do_render(bills, {:except => [:rolls, :hot_bill_category_id], 
-                                :methods => [:title_full_common, :status], 
-                                :include => {:co_sponsors => {:methods => [:oc_user_comments, :oc_users_tracking]}, 
-                                             :sponsor => {:methods => [:oc_user_comments, :oc_users_tracking]}, 
-                                             :bill_titles => {},
-                                             :most_recent_actions => {}
-                                             }})
-
+    do_render(@bills, :style => :full)
   end
   
   def bills_introduced_since
@@ -223,87 +155,62 @@ class ApiController < ApplicationController
     page = params[:page] unless params[:page].blank?
     date = Time.parse(params[:date]).to_i
     if date
-      bills = Bill.paginate(:all, :conditions => ["introduced >= ? ", date], :order => "introduced desc", :page => @page, :per_page => @per_page)
+      @bills = Bill.paginate(:all, :conditions => ["introduced >= ? ", date], :order => "introduced desc", :page => @page, :per_page => @per_page)
 
-
-      do_render(bills, {:except => [:rolls, :hot_bill_category_id],
-                                :methods => [:title_full_common, :status],
-                                :include => {:co_sponsors => {:methods => [:oc_user_comments, :oc_users_tracking]},
-                                             :sponsor => {:methods => [:oc_user_comments, :oc_users_tracking]},
-                                             :bill_titles => {},
-                                             :most_recent_actions => {}
-                                             }})
+      do_render(@bills, :style => :full)
     end
   end
   
   def bills_by_query
     query_stripped = prepare_tsearch_query(params[:q])
-    bills = Bill.full_text_search(query_stripped, {:congresses => [Settings.default_congress,Settings.default_congress - 1,Settings.default_congress - 2,Settings.default_congress - 3], :page => 1})
-    do_render(bills, {:except => [:rolls, :hot_bill_category_id], 
-                                :methods => [:title_full_common, :status], 
-                                :include => {:co_sponsors => {:methods => [:oc_user_comments, :oc_users_tracking]}, 
-                                             :sponsor => {:methods => [:oc_user_comments, :oc_users_tracking]}, 
-                                             :bill_titles => {},
-                                             :most_recent_actions => {}
-                                             }})
+    @bills = Bill.full_text_search(query_stripped, {:congresses => [Settings.default_congress,Settings.default_congress - 1,Settings.default_congress - 2,Settings.default_congress - 3], :page => 1})
+    do_render(@bills, :style => :full)
   end
 
   def hot_bills
-    bills = Bill.find_hot_bills
-    do_render(bills, {:except => [:rolls, :hot_bill_category_id]})
+    @bills = Bill.find_hot_bills
+    do_render(@bills)
   end
   
   def stalled_bills
     original_chamber = (params[:passing_chamber] == 's') ? 's' : 'h'
     session = (AVAILABLE_CONGRESSES.include?(params[:session])) ? params[:session] : Settings.default_congress
     
-    bills = Bill.find_stalled_in_second_chamber(original_chamber, session)
-    do_render(bills, {:except => [:rolls, :hot_bill_category_id]})
+    @bills = Bill.find_stalled_in_second_chamber(original_chamber, session)
+    do_render(@bills)
   end
   
   def most_blogged_bills_this_week
-    bills = Bill.find_by_most_commentary('blog', 10, Settings.default_count_time)
-    do_render(bills, {:except => [:rolls, :hot_bill_category_id]})
+    do_render(Bill.find_by_most_commentary('blog', 10, Settings.default_count_time), :style => :simple)
   end
   
   def bills_in_the_news_this_week
-    bills = Bill.find_by_most_commentary('news', 10, Settings.default_count_time)
-    do_render(bills, {:except => [:rolls, :hot_bill_category_id]})
+    do_render(Bill.find_by_most_commentary('news', 10, Settings.default_count_time), :style => :simple)
   end
   
   def most_viewed_bills_this_week
-    bills = ObjectAggregate.popular('Bill', Settings.default_count_time + 30.days, 10) || Bill.find(:first)
-
-    do_render(bills, {:except => [:rolls, :hot_bill_category_id]})
+    @bills = ObjectAggregate.popular('Bill', Settings.default_count_time + 30.days, 10) || Bill.find(:first)
+    do_render(@bills)
   end
-  
+
   def most_tracked_bills_this_week
-    order = "desc"
-    sort = "bookmark_count_1"
-    @range=60*60*24*30
-    bills = Bill.find_all_by_most_user_votes_for_range(@range, :order => sort + " " + order, :limit => 20)
-    do_render(bills, {:except => [:current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, :support_count_2, :vote_count_2]})
+    @order = "bookmark_count_1 desc"
+    render_bill_aggregates(@order)
   end
 
   def most_supported_bills_this_week
-    order = "desc"
-    sort = "current_support_pb"
-    @range=60*60*24*30
-    bills = Bill.find_all_by_most_user_votes_for_range(@range, :order => sort + " " + order, :limit => 20)
-    do_render(bills, {:except => [:current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, :support_count_2, :vote_count_2]})
+    @order = "current_support_pb desc"
+    render_bill_aggregates(@order)
   end
   
   def most_opposed_bills_this_week
-    order = "desc"
-    sort = "support_count_1"
-    @range=60*60*24*30
-    bills = Bill.find_all_by_most_user_votes_for_range(@range, :order => sort + " " + order, :limit => 20)
-    do_render(bills, {:except => [:current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, :support_count_2, :vote_count_2]})
+    @order =  "support_count_1 desc"
+    render_bill_aggregates(@order)
   end
   
   def bill_roll_calls
     bills = Bill.find_all_by_id(params[:bill_id])
-    do_render(bills, {:except => [:current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, :support_count_2, :vote_count_2], :include => [:roll_calls]})    
+    do_render(bills, :except => [:current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, :support_count_2, :vote_count_2], :include => [:roll_calls])    
   end
   
   def issues
@@ -338,8 +245,8 @@ class ApiController < ApplicationController
   def key
   end
   
-
   private
+  
   def check_key
     unless params[:key].blank?
      u = User.find_by_feed_key(params[:key])
@@ -349,10 +256,13 @@ expires_in 60.minutes, :public => true
      redirect_to :action => 'index'
     end
   end
-  
-  def check_format
-    @format = "xml"
-    @format = "json" if params[:format] && params[:format] == "json"
+
+  def set_default_format
+    # If we default this in the routes file, it will unfortunately 
+    # disallow the format to be set via :action(.:format) AS WELL AS via a format= param
+    # And we need to allow a format= param for backwards compatibility.
+
+    request.format = :xml unless [:xml, :json].include?(request.format.to_sym)
   end
 
   def set_pagination
@@ -362,14 +272,36 @@ expires_in 60.minutes, :public => true
     @per_page = params[:per_page].to_i if params[:per_page] && params[:per_page].to_i < 30
   end
 
-  def do_render(object, parameters)
-    case @format
-    when 'xml'
-      render :xml => object.to_xml(parameters)
-    else
-      render :json => Hash.from_xml(object.to_xml(parameters)).to_json
+  def lookup_bill
+    @bill = Bill.find_by_ident(params[:id])
+  end
+
+  def lookup_person
+    @person = Person.find_by_id(params[:id])
+  end
+  
+  def lookup_state
+    @state = State.find_by_abbreviation(params[:id])
+  end
+
+  def render_bill_aggregates(order)
+    @range = 60*60*24*30
+    @bills = Bill.find_all_by_most_user_votes_for_range(@range, :order => order, :limit => 20)
+
+    do_render(@bills, :except => [:current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, :support_count_2, :vote_count_2])
+  end
+
+  def render_via_builder_template(template_name, obj)
+    respond_with do |format|
+      format.xml { render template_name, :locals => {:obj => obj} }
+      format.json { render :json => Hash.from_xml(render_to_string(template_name, :locals => {:obj => obj}, :layout => false)).to_json }
+    end      
+  end
+
+  def do_render(object, parameters = {})
+    respond_with object do |format|
+      format.any(:xml, :json) { render request.format.to_sym => object.try(:"to_#{request.format.to_sym}", parameters) }
     end
-    
   end
   
 end

@@ -1501,4 +1501,15 @@ class Person < ViewableObject
     end
     deleted
   end
+
+  SERIALIZATION_OPS = {:methods => [:oc_user_comments, :oc_users_tracking], :include => [:recent_news, :recent_blogs]}.freeze
+
+  def as_json(ops = {})
+    super(SERIALIZATION_OPS.merge(ops))
+  end
+  
+  def as_xml(ops = {})
+    super(SERIALIZATION_OPS.merge(ops))
+  end
+
 end

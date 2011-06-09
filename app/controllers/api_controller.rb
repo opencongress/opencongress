@@ -11,9 +11,6 @@ class ApiController < ApplicationController
   before_filter :lookup_bill, :only => [:opencongress_users_tracking_bill_are_also_tracking, :opencongress_users_supporting_bill_are_also, :opencongress_users_opposing_bill_are_also]
   before_filter :lookup_person, :only => [:opencongress_users_opposing_person_are_also, :opencongress_users_supporting_person_are_also, :opencongress_users_tracking_person_are_also_tracking]
   before_filter :lookup_state, :only => [:opencongress_users_tracking_in_state, :opencongress_users_tracking_in_state_district]
-  
-
-#  require 'activesupport'
 
   def index
     @page_title = "OC API Documentation"

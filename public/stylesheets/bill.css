@@ -2282,6 +2282,11 @@ border-radius: 8px;
 
 background: rgba(255,255,255, .2);
 
+-moz-box-shadow: 0 2 3px rgba(0,0,0, .2);
+-webkit-box-shadow: 0 2 3px rgba(0,0,0, .2);
+-ms-box-shadow: 0 2 3px rgba(0,0,0, .2);
+-o-box-shadow: 0 2 3px rgba(0,0,0, .2);
+box-shadow: 0 2 3px rgba(0,0,0, .2);
 }
 
 

@@ -63,9 +63,9 @@
       <h2>Send Your Reps a Letter</h2>
       <span>about this bill</span>
 
-      <a href='/contact_congress_letters/new?position=support' class='button medium silver'><span>Support</span></a>
-      <a href='/contact_congress_letters/new?position=oppose' class='button medium silver'><span>Oppose</span></a>
-      <a href='/contact_congress_letters/new?position=tracking' class='button medium silver'><span>Tracking</span></a>
+      <a href='/contact_congress_letters/new?bill=<%= @bill.ident %>&position=support' class='button medium silver'><span>Support</span></a>
+      <a href='/contact_congress_letters/new?bill=<%= @bill.ident %>&position=oppose' class='button medium silver'><span>Oppose</span></a>
+      <a href='/contact_congress_letters/new?bill=<%= @bill.ident %>&position=tracking' class='button medium silver'><span>Tracking</span></a>
     </div>
     
     <h3>Most-Viewed Letters</h3>

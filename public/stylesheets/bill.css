@@ -2269,6 +2269,110 @@ background-position: -35px 0px;
 
 
 
+.contact_congress{
+margin: 0 25px 20px;
+border: 6px solid #fff;
+border: 6px solid rgba(255,255,255, .5);
+
+-moz-border-radius: 8px;
+-webkit-border-radius: 8px;
+-ms-border-radius: 8px;
+-o-border-radius: 8px;
+border-radius: 8px;
+
+background: rgba(255,255,255, .2);
+
+}
+
+
+
+.contact_congress span{
+text-align: center;
+display: block;
+font-size: 10px;
+color: #888;
+padding: 0;
+margin: 0;
+line-height: 1em;
+}
+
+
+
+
+.contact_congress h2{
+display: block;
+margin: 0px;
+padding: 10px 0 0 0 !important;
+}
+
+
+
+
+
+.contact_congress a.button{
+display: block;
+margin: 10px;
+}
+
+
+.contact_congress a.button span{
+padding: 3px 0 3px 20px;
+color: #111;
+font-size: 12px;
+margin-left: 37px;
+background: url('/images/pencil.png') left center no-repeat;
+text-align: left;
+
+}
+
+.most_viewed_letters{
+margin: 0 20px;
+}
+
+
+.most_viewed_letters li{
+margin: 0 0px 0 10px;
+}
+
+
+.most_viewed_letters li a{
+padding: 10px 0 10px 50px;
+text-decoration: none;
+display: block;
+background: url('/images/letters.png') 0 -140px no-repeat;
+}
+
+
+
+.most_viewed_letters li.oppose a{
+background: url('/images/letters.png') 0 -64px no-repeat;
+}
+
+
+.most_viewed_letters li.support a{
+background: url('/images/letters.png') 0 10px no-repeat;
+}
+
+
+
+
+.most_viewed_letters li a .subject{
+font-weight: bold;
+display: block;
+height: 1.4em;
+overflow: hidden;
+}
+
+
+.most_viewed_letters li a .date{
+color: #888;
+font-size: 11px;
+}
+
+
+
+
+
 
 
 

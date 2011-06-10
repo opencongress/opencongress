@@ -363,6 +363,11 @@ padding: 20px;
 min-height: 248px;
 }
 
+.contact_recipients hr{
+display: none;
+}
+
+
 .contact_recipients ul {
   position: relative;
   width: 340px;
@@ -406,6 +411,9 @@ min-height: 248px;
   -moz-transition: all 2s ease-in-out;
   -o-transition: all 2s ease-in-out;
   transition: all 2s ease-in-out;
+  padding-bottom:10px;
+display: block;
+font-size: 16px;
 }
 
 .contact_thread_share {
@@ -474,8 +482,6 @@ margin-right: 33px;
   
   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)); /* for webkit browsers */
   background: -moz-linear-gradient(top,  #fff,  #eee); /* for firefox 3.6+ */
-
-
 
 }
 
@@ -733,13 +739,14 @@ font-weight: normal
 
 
 .people{
-margin: 10px 0 0 !important;
+margin: 0px 0 0 !important;
+height: 225px;
 }
 
 
 .people li{
 padding: 10px 8px 13px;
-margin: 0 0px 10px 0 !important;
+margin: 0 0px 0px 0 !important;
 width: inherit !important;
 background: #fff;
 -moz-border-radius: 3px;

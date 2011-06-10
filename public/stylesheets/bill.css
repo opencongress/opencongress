@@ -474,18 +474,16 @@ border-top: 1px solid #eee;
 #vote {
 float: left;
 width: 254px;
-height: 110px;
-margin: 0 0 20px 0 !important;
+margin: 0 0 0px 0 !important;
 }
 
 #b_myoc {
 margin-top: 10px;
 }
 
-#vote h3 {
-font-size: 18px;
-margin: 0 10px 0 0;
-float: left;
+#vote h2 {
+padding-bottom: 0;
+margin-bottom: 5px !important;
 }
 #vote p {
 font-size: 11px;
@@ -886,7 +884,7 @@ _background: url('../images/button-gray-right.gif') no-repeat right top;
 }
 
 .voting_buttons {
-margin: 30px 0 0 26px;
+margin: 5px 0 0 26px;
 width: 201px;
 }
 
@@ -2345,6 +2343,12 @@ padding: 10px 0 10px 50px;
 text-decoration: none;
 display: block;
 background: url('/images/letters.png') 0 -140px no-repeat;
+}
+
+
+
+.most_viewed_letters li a p{
+margin: 10px 0;
 }
 
 

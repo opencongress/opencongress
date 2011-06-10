@@ -48,7 +48,7 @@ clear: none;
 float:left;
 width: 480px;
 margin-bottom: 900px;
-padding: 20px 0 0 20px;
+padding: 22px 0 0 20px;
 margin-right: 0;
 overflow: hidden;
 font-size: 11px;
@@ -523,10 +523,10 @@ display: none;
 
 
 .message_fields{
-height: 580px;
+height: 530px;
 width: 380px;
 background: #fff;
-padding: 30px;
+padding: 80px 30px 30px 30px;
 margin-top: 35px;
 margin-left: 35px;
 -moz-box-shadow: 0 1px 4px rgba(0,0,0,.5);
@@ -535,6 +535,28 @@ margin-left: 35px;
 
 }
 
+.desk{
+position: absolute;
+top: 800px;
+width: 374px;
+z-index: 999999999;
+
+margin-left: 20px;
+text-align:  center;
+}
+
+
+.desk .from{
+display: block; 
+font-size: 16px;
+font-family: 'La Belle Aurore', arial, serif; 
+}
+
+.desk .the-user{
+font-size: 10px;
+color: #888;
+text-transform: uppercase;
+}
 
 
 .message_fields p{
@@ -579,7 +601,7 @@ border: 1px solid #e0e0e0;
 -webkit-border-radius: 3px;
 padding: 15px;
 width: 349px;
-height: 465px;
+height: 415px;
 font-family: Helvetica, Arial, sans-serif;
 font-size: 11px;
 line-height: 1.4em;

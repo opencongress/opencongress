@@ -2342,7 +2342,7 @@ margin: 0 0px 0 10px;
 padding: 10px 0 10px 50px;
 text-decoration: none;
 display: block;
-background: url('/images/letters.png') 0 -140px no-repeat;
+background: url('/images/letter-tracking.png') 0 10px no-repeat;
 }
 
 
@@ -2354,12 +2354,12 @@ margin: 10px 0;
 
 
 .most_viewed_letters li.oppose a{
-background: url('/images/letters.png') 0 -64px no-repeat;
+background: url('/images/letter-oppose.png') 0 10px no-repeat;
 }
 
 
 .most_viewed_letters li.support a{
-background: url('/images/letters.png') 0 10px no-repeat;
+background: url('/images/letter-approve.png') 0 10px no-repeat;
 }
 
 

@@ -4,18 +4,18 @@ class Person < ViewableObject
   require 'yahoo_geocoder'
   
   has_many :committees, :through => :committee_people
-  has_many :committee_people, :conditions => [ "committees_people.session = ?", Settings.default_congress ]
-  has_many :bills, :foreign_key => :sponsor_id, :conditions => [ "bills.session = ?", Settings.default_congress ], :include => [ :bill_titles, :actions ], :order => 'bills.introduced DESC'
+  has_many :committee_people, :conditions => proc { [ "committees_people.session = ?", Settings.default_congress ] }
+  has_many :bills, :foreign_key => :sponsor_id, :conditions => proc { [ "bills.session = ?", Settings.default_congress ] }, :include => [ :bill_titles, :actions ], :order => 'bills.introduced DESC'
   has_many :bill_cosponsors
-  has_many :bills_cosponsored, :class_name => 'Bill', :through => :bill_cosponsors, :source => :bill, :conditions => [ "bills.session = ?", Settings.default_congress ], :order => 'bills.introduced DESC'
+  has_many :bills_cosponsored, :class_name => 'Bill', :through => :bill_cosponsors, :source => :bill, :conditions => proc { [ "bills.session = ?", Settings.default_congress ] }, :order => 'bills.introduced DESC'
   has_many :roles, :order => 'roles.startdate DESC'
   has_many :roll_call_votes, :include => :roll_call, :order => 'roll_calls.date DESC'
 
   with_options :class_name => "RollCall", :through => :roll_call_votes,
                :source => :roll_call, :include => :bill do |rc|
-    rc.has_many :unabstained_roll_calls, :conditions => ["roll_call_votes.vote != '0' AND bills.session = ?", Settings.default_congress]
-    rc.has_many :abstained_roll_calls, :conditions => ["vote = '0' AND bills.session = ?", Settings.default_congress]
-    rc.has_many :party_votes, :conditions => '((roll_calls.#{party == "Democrat" ? "democratic_position" : "republican_position"} = \'t\' AND vote = \'+\') OR (roll_calls.#{party == "Democrat" ? "democratic_position" : "republican_position"} = \'f\' AND vote = \'-\')) AND bills.session = #{Settings.default_congress}'
+    rc.has_many :unabstained_roll_calls, :conditions => proc { ["roll_call_votes.vote != '0' AND bills.session = ?", Settings.default_congress] }
+    rc.has_many :abstained_roll_calls, :conditions => proc { ["vote = '0' AND bills.session = ?", Settings.default_congress] }
+    rc.has_many :party_votes, :conditions => proc { "((roll_calls.#{party == 'Democrat' ? 'democratic_position' : 'republican_position'} = 't' AND vote = '+') OR (roll_calls.#{party == 'Democrat' ? 'democratic_position' : 'republican_position'} = 'f' AND vote = '-')) AND bills.session = #{Settings.default_congress}" }
   end
 
   has_many :person_approvals
@@ -29,14 +29,14 @@ class Person < ViewableObject
   scope :rep, :joins => :roles, :select => "people.*", :conditions => ["roles.person_id = people.id AND roles.role_type='rep' AND roles.enddate > ?", Date.today]
 
 
-  has_many :news, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='t'"
-  has_many :blogs, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='f'"
+  has_many :news, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC', :conditions => proc { "commentaries.is_ok = 't' AND commentaries.is_news='t'" }
+  has_many :blogs, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC', :conditions => proc { "commentaries.is_ok = 't' AND commentaries.is_news='f'" }
 
   has_many :idsorted_news, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='t'"
   has_many :idsorted_blogs, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='f'"
 
-  has_many :recent_news, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='t'", :limit => 10
-  has_many :recent_blogs, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC', :conditions => "commentaries.is_ok = 't' AND commentaries.is_news='f'", :limit => 10
+  has_many :recent_news, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC', :conditions => proc { "commentaries.is_ok = 't' AND commentaries.is_news='t'" }, :limit => 10
+  has_many :recent_blogs, :as => :commentariable, :class_name => 'Commentary', :order => 'commentaries.date DESC, commentaries.id DESC', :conditions => proc { "commentaries.is_ok = 't' AND commentaries.is_news='f'" }, :limit => 10
 
   has_many :cycle_contributions, :class_name => 'PersonCycleContribution', :order => 'people_cycle_contributions.cycle DESC'
 

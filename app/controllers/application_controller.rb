@@ -2,9 +2,10 @@ require 'authenticated_system'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  
+
   include AuthenticatedSystem
   include SimpleCaptcha::ControllerHelpers
+  include UrlHelper
 
   before_filter :store_location
   before_filter :current_tab
@@ -45,7 +46,7 @@ class ApplicationController < ActionController::Base
 
   def has_accepted_tos?
     if logged_in?
-      logger.info "USER APP TOS: #{current_user.accepted_tos}"
+      Rails.logger.debug "USER APP TOS: #{current_user.accepted_tos}"
       unless current_user.accepted_tos == true
         redirect_to :controller => 'account', :action => 'accept_tos'
       end
@@ -135,20 +136,4 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  protected
-  def dump_session
-    logger.info session.to_yaml
-  end
-
-  def log_error(exception) #:doc:
-    if ActionView::TemplateError === exception
-      logger.fatal(exception.to_s)
-    else
-      logger.fatal(
-        "\n\n[#{Time.now.to_s}] #{exception.class} (#{exception.message}):\n    " + 
-        clean_backtrace(exception).join("\n    ") + 
-        "\n\n"
-      )
-    end
-  end
 end

@@ -10,25 +10,7 @@ module ApplicationHelper
         controller, trunc) + "</li>".html_safe}.join
     ]
   end
-	
-  def link_to_item(item, attribute, action, controller = nil, show_views = false, trunc = false)
-    link_text = ""
-    link_text += trunc ? "<span class=\"title\">#{truncate(item.send(attribute), :length => trunc)}</span>".html_safe :
-                         "<span class=\"title\">#{item.send(attribute)}</span>".html_safe
-    if item.kind_of? Bill
-      link_text +=  "<span class=\"date\"><span>#{temp_url_strip(item.status)}</span>#{item.last_action.formatted_date if item.last_action}</span>".html_safe
-    end
-    link_text += show_views ? "<span class=\"views_count\"><span>#{item.views(Settings.default_count_time) if show_views}</span> views</span>".html_safe : ""
 
-    if item.kind_of? Bill
-      controller ? link_to(link_text.html_safe, { :action => action, :controller => controller, :id => item.ident }) :
-                   link_to(link_text.html_safe, { :action => action, :id => item.ident })
-    else
-      controller ? link_to(link_text.html_safe, { :action => action, :controller => controller, :id => item }) :
-                   link_to(link_text.html_safe, { :action => action, :id => item })
-    end
-  end
-  
   def partial_list(list, attribute, item_limit, text_for_more, extra_id,
     more_id, action, controller, show_views = false, trunc = false)
     parts = split_list(list, attribute, item_limit, action, controller, show_views, trunc)
@@ -38,43 +20,6 @@ module ApplicationHelper
       %Q{<span id="#{more_id}" class="partial_list_more"><a href="javascript:replace('#{extra_id}','#{more_id}')" class="more_link">#{text_for_more}</a></span><span style="display: none" id="#{extra_id}">#{parts[1]}</span>}).html_safe
   end
 	                 
-  def link_to_person(person)
-    link_to person.name, :controller => 'people', :action => 'show', :id => person
-  end
-  
-  def link_to_bill(bill)
-    link_to bill.title_full_common, bill_url(bill)
-  end
-
-  def url_for_object(object)
-    if object.kind_of? Bill
-      bill_url(object)
-    elsif object.kind_of? Person
-      person_url(object)
-    elsif object.kind_of? Subject
-      issue_url(object)
-    else
-      url_for :controller => object.class.name.downcase, :action => 'show', :id => object
-    end
-  end
- 
-  def url_for_internal(link)
-    case link.notebookable.type.to_s
-    when 'Bill'
-      bill_url(link.notebookable)
-    when 'Subject'
-      issue_url(link.notebookable.to_param)
-    when 'Person'
-      person_url(link.notebookable.to_param)
-    when 'Commentary'
-      link.url
-    end    
-  end
-
-  def link_to_internal(link)    
-    link_to link.title, url_for_internal(link)
-  end
-
   def pagination_nav(pages, options = {})
     out = ""
     out += link_to "Previous Page", { :page => pages.current.previous }.merge(options), :class => 'arrow-left' if pages.current.previous
@@ -269,11 +214,7 @@ EOT
   def underscore_spaces(text)
     text.sub(/ /, '_')
   end
-  
-  def server_url_for(options = {})
-    url_for options.update(:only_path => false)
-  end
-  
+
   def dropdown_trigger(text_name, trigger_text)
     "<span class=\"dropdown_trigger\"><a href=\"javascript:dropdown_open('#{text_name}_dropdown')\">#{trigger_text}</a></span>"
   end
@@ -364,7 +305,7 @@ EOT
   end
 
   def search_url(text)
-    "/search/result?q=#{text}&amp;search_congress%5B#{Settings.default_congress}%5D=#{Settings.default_congress}&amp;search_bills=1&amp;search_people=1&amp;search_committees=1&amp;search_industries=1&amp;search_issues=1&amp;search_commentary=1"
+      "/search/result?q=#{text}&amp;search_congress%5B#{Settings.default_congress}%5D=#{Settings.default_congress}&amp;search_bills=1&amp;search_people=1&amp;search_committees=1&amp;search_industries=1&amp;search_issues=1&amp;search_commentary=1"
   end
   
   ### XML/ATOM helpers
@@ -895,7 +836,7 @@ EOT
   def opensecrets_cycle_years
     "#{Settings.current_opensecrets_cycle.to_i - 1}-#{Settings.current_opensecrets_cycle}"
   end
-  
+
   def bitly_url(object)
     require 'open-uri'
     
@@ -916,4 +857,5 @@ EOT
       return nil
     end
   end
+
 end

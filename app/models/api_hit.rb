@@ -1,5 +1,3 @@
 class ApiHit < ActiveRecord::Base
-  
-  belongs_to :user
-  
+  belongs_to :user  
 end

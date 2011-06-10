@@ -91,7 +91,9 @@
               Input your address on the right and we'll find your reps.
         - else
           = render 'contact_recipients', :show_checkboxes => true
-
+      .desk
+        %span.from From the Desk of Username
+        %span.the-user a user out of District something or other
       .formageddon_contact_form
         = render 'formageddon/threads/form', :f => f, :thread => @formageddon_thread
         
@@ -152,5 +154,8 @@
   $j(document).ready(function() {
     $j('.formageddon_submit').addClass("button blue huge");
   });
+  
+  
+<link href='http://fonts.googleapis.com/css?family=La+Belle+Aurore' rel='stylesheet' type='text/css'>
   
   

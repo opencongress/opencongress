@@ -32,6 +32,7 @@
   	<% end %>
   				  	
 		<div id="vote">
+		  <h2>Vote on This Bill</h2>
 			<script type="text/javascript">
 			$j().ready(function() {
 				$j('#login_vote').jqm({ajax:'@href', trigger: 'a.vote_trigger'});
@@ -68,33 +69,7 @@
       <a href='/contact_congress_letters/new?bill=<%= @bill.ident %>&position=tracking' class='button medium silver'><span>Tracking</span></a>
     </div>
     
-    <h3>Most-Viewed Letters</h3>
-    <ul class='most_viewed_letters'>
-      <li class='support'>
-        <a href="#">
-          <span class='subject'>This Bill Sucks!</span>
-          <span class='user'>aross</span>
-          <span class='date'>Jun 8, 2011</span>
-        </a>
-      </li>
-      <li class='oppose'>
-        <a href="#">
-          <span class='subject'>This Bill Sucks!</span>
-          <span class='user'>aross</span>
-          <span class='date'>Jun 8, 2011</span>
-        </a>
-      </li>
-      <li>
-        <a href="#">
-          <span class='subject'>This Bill Sucks!</span>
-          <span class='user'>aross</span>
-          <span class='date'>Jun 8, 2011</span>
-        </a>
-      </li>
-    </ul>
-        
-
-		<div id="login_vote" class="jqmWindow">
+    	<div id="login_vote" class="jqmWindow">
 		</div>    
 	
 <% elsif object.class.to_s == "Person" %>

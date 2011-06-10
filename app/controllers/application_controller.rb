@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
   include Facebooker2::Rails::Controller
   include UrlHelper
 
-
   before_filter :facebook_check
   before_filter :store_location
   before_filter :current_tab
@@ -197,20 +196,4 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  protected
-  def dump_session
-    logger.info session.to_yaml
-  end
-
-  def log_error(exception) #:doc:
-    if ActionView::TemplateError === exception
-      logger.fatal(exception.to_s)
-    else
-      logger.fatal(
-        "\n\n[#{Time.now.to_s}] #{exception.class} (#{exception.message}):\n    " + 
-        clean_backtrace(exception).join("\n    ") + 
-        "\n\n"
-      )
-    end
-  end
 end

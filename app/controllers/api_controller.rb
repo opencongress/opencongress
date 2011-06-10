@@ -1,11 +1,12 @@
 class ApiController < ApplicationController
 
-  with_options :except => [:index, :key] do
-    before_filter :check_key
-    before_filter :set_default_format
-    before_filter :set_pagination
+  with_options :except => [:index, :key] do |o|
+    o.before_filter :record_hit
+    o.before_filter :set_default_format
+    o.before_filter :set_pagination
+    o.before_filter :set_expiration
 
-    respond_to :xml, :json
+    o.respond_to :xml, :json
   end
 
   before_filter :lookup_bill, :only => [:opencongress_users_tracking_bill_are_also_tracking, :opencongress_users_supporting_bill_are_also, :opencongress_users_opposing_bill_are_also]
@@ -15,10 +16,11 @@ class ApiController < ApplicationController
   def index
     @page_title = "OC API Documentation"
     @api_key = ""
+
     if logged_in?
       @api_key = current_user.feed_key
     end
-    
+
   end
 
   def people    
@@ -42,14 +44,7 @@ class ApiController < ApplicationController
       conditions[k] = params[v] if params[v]
     end
 
-    if params[:gender]
-      case params[:gender]
-      when 'M'
-        conditions[:gender] = 'M'
-      when 'F'
-        conditions[:gender] = 'F'
-      end
-    end
+    conditions[:gender] = params[:gender] if ['M', 'F'].include?(params[:gender])
 
     if params[:user_approval_from] && params[:user_approval_to]
       conditions[:user_approval] = params[:user_approval_from].to_f..params[:user_approval_to].to_f
@@ -64,8 +59,7 @@ class ApiController < ApplicationController
 
           
   end
-#  Person.find_by_most_commentary(type = 'news', person_type = 'rep', num = 5, since = Settings.default_count_time)
-
+  
   def most_blogged_representatives_this_week
     respond_with Person.find_by_most_commentary('blog', 'rep', @per_page, Settings.default_count_time)
   end
@@ -171,7 +165,7 @@ class ApiController < ApplicationController
   
   def stalled_bills
     original_chamber = (params[:passing_chamber] == 's') ? 's' : 'h'
-    session = (AVAILABLE_CONGRESSES.include?(params[:session])) ? params[:session] : Settings.default_congress
+    session = (Settings.available_congresses.include?(params[:session])) ? params[:session] : Settings.default_congress
     
     @bills = Bill.find_stalled_in_second_chamber(original_chamber, session)
     do_render(@bills)
@@ -239,18 +233,29 @@ class ApiController < ApplicationController
     render :xml => issues.to_xml(:include => {:recently_introduced_bills => {:methods => :title_common}})
   end    
 
-  def key
-  end
-  
   private
   
-  def check_key
-    unless params[:key].blank?
-     u = User.find_by_feed_key(params[:key])
-     u.api_hits.create({:action => params[:action]})
-expires_in 60.minutes, :public => true
+  def record_hit
+    # TODO: This really isn't the most efficient thing to do; we shouldn't be 
+    # adding a new database row every time someone hits the API.
+    # Look into storing this somewhere else (key/value store?) or 
+    # storing it after the request is done.
+
+    if params[:key].blank?
+      # Only redirect if they 
+      if request.subdomains.try(:first) != 'api'
+        redirect_to params.merge({:host => Settings.api_host})
+      end
+
+      ApiHit.create(
+        :action => params[:action],
+        :ip => request.ip
+      )
     else
-     redirect_to :action => 'index'
+      # Legacy -- record api hits by user_id.
+      # turn this off by mid-2012?
+      u = User.find_by_feed_key(params[:key])
+      u.api_hits.create(:action => params[:action])
     end
   end
 
@@ -263,10 +268,13 @@ expires_in 60.minutes, :public => true
   end
 
   def set_pagination
-    @page = 1
-    @page = params[:page] if params[:page]
+    @page = params[:page] || 1
     @per_page = 30
     @per_page = params[:per_page].to_i if params[:per_page] && params[:per_page].to_i < 30
+  end
+
+  def set_expiration
+    expires_in 60.minutes, :public => true
   end
 
   def lookup_bill
@@ -282,7 +290,7 @@ expires_in 60.minutes, :public => true
   end
 
   def render_bill_aggregates(order)
-    @range = 60*60*24*30
+    @range = 30.days.to_i
     @bills = Bill.find_all_by_most_user_votes_for_range(@range, :order => order, :limit => 20)
 
     do_render(@bills, :except => [:current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, :support_count_2, :vote_count_2])

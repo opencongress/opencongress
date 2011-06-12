@@ -36,9 +36,9 @@ end
 
 def predict_selection(page, input)
   case input.name
-  when 'textarea'
+  when /textarea/i
     return :message
-  when 'select'
+  when /select/i
     case input.attributes["name"].value + label_text_for(page, input)
     when /salutation/i, /prefix/i
       return :title
@@ -47,12 +47,12 @@ def predict_selection(page, input)
     when /topic/i, /subject/i
       return :issue_area
     end
-  when 'input'
+  when /input/i
     unless input.attributes['type'].nil?
       case input.attributes["type"].value
-      when 'image', 'submit'
+      when /image/i, /submit/i
         return :submit_button
-      when 'text'
+      when /text/i
         case input.attributes['name'].value + label_text_for(page, input)
         when /prefix/i
           return :title
@@ -132,18 +132,40 @@ end
 
 def make_letter_for_person(person)
   # formageddon can handle a hash
-
-  letter = {}
-  letter['email'] = "test@formageddon.com"
-  letter['subject'] = "Test Message"
-  letter['body'] = "This is a test message testing your service"
-  letter['title'] = "Mr."
-  letter['first_name'] = "John"
-  letter['last_name'] = "Doe"
-  letter['address1'] = "123 Someplace Ln."
-  letter['city'] = "Some City"
-  letter['state'] = person.state
-
+  # letter = {}
+  # letter['email'] = "test@formageddon.com"
+  # letter['subject'] = "Test Message"
+  # letter['body'] = "This is a test message testing your service"
+  # letter['title'] = "Mr."
+  # letter['first_name'] = "John"
+  # letter['last_name'] = "Doe"
+  # letter['address1'] = "123 Someplace Ln."
+  # letter['city'] = "Some City"
+  # letter['state'] = person.state
+  # 
+  # 
+  # if person.title == 'Rep.'
+  #   zd = ZipcodeDistrict.where(["state=? and district=? and zip5 is not null and zip4 is not null", person.state, person.district]).order('zip4').first
+  # else
+  #   zd = ZipcodeDistrict.where(["state=? and zip5 is not null and zip4 is not null", person.state]).order('zip4').first
+  # end
+  # 
+  # if zd
+  #   letter['zip5'] = zd.zip5
+  #   letter['zip4'] = zd.zip4
+  # end
+  # 
+  # letter['issue_area'] = 'Other'
+  
+  thread = Formageddon::FormageddonThread.new
+  thread.formageddon_recipient = p
+  thread.sender_email = "test@formageddon.com"
+  thread.sender_title = "Mr."
+  thread.sender_first_name = "John"
+  thread.sender_last_name = "Doe"
+  thread.sender_address1 = "123 Someplace Ln."
+  thread.sender_city = "Some City"
+  thread.sender_state = person.state
   
   if person.title == 'Rep.'
     zd = ZipcodeDistrict.where(["state=? and district=? and zip5 is not null and zip4 is not null", person.state, person.district]).order('zip4').first
@@ -152,14 +174,13 @@ def make_letter_for_person(person)
   end
   
   if zd
-    letter['zip5'] = zd.zip5
-    letter['zip4'] = zd.zip4
+    thread.sender_zip5 = zd.zip5
+    thread.sender_zip4 = zd.zip4
   end
   
-  letter['issue_area'] = 'Other'
+  thread.save
   
-  puts "MADE LETTER: #{letter.inspect}"
-  letter
+  thread.formageddon_letters.create(:subject => "TEST MESSAGE", :message => 'This is a test message testing your service', :issue_area => 'Other', :direction => 'TO_RECIPIENT', :status => 'START')
 end
   
 people = Person.all_sitting
@@ -179,9 +200,10 @@ people.each do |p|
       puts "Executing: #{step.command}"
     
       letter = make_letter_for_person(p)
+      delivery_attempt = letter.formageddon_delivery_attempts.create
 
       while (next_steps) do     
-        step.execute(browser, {:letter => letter, :save_states => false})
+        step.execute(browser, {:letter => letter, :delivery_attempt => delivery_attempt, :save_states => true})
     
         if browser.page.nil? or browser.page.forms.empty?
           puts "Error or found no forms... moving on."

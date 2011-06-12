@@ -14,7 +14,9 @@
 
 <div class="blog-body">
   <% unless summary.frontpage_image_url.blank? %>
-    <img class="blogpage-blog-image" src="<%= summary.frontpage_image_url %>">
+    <a href="<%= url_for article_url(summary) %>">
+      <img class="blogpage-blog-image" src="<%= summary.frontpage_image_url %>">
+    </a>
   <% end %>
   
   <p><%= summary.excerpt_for_blog_page.html_safe %></p> 

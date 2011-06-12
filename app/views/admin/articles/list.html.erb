@@ -21,7 +21,7 @@
   	<td><%= article.frontpage %></td>
   	<td><%= article.user.login rescue nil %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => article %> | 
-      <%= link_to 'Delete', { :action => 'destroy', :id => article }, :confirm => 'Are you sure?', :method => "post" %></td>
+      <%= link_to 'Delete', { :action => 'destroy', :id => article }, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

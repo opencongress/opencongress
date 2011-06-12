@@ -59,28 +59,40 @@
 			</div>
 		</div>
 		
-		<% if logged_in? %>
-      <a href="<%= url_for :controller => 'contact', :action => 'bill', :id => object.ident %>" class="writeextrigger">
-        <div>
-        <span class="write">Write <%= (params[:controller] == 'bill') ? 'Your' : 'This' %></span>
-        <span class="who"><%= object.is_house_bill? ? "Representative" : "Senators" %></span>
-        </div>
-      </a>
-    <% else %>
-      <script type="text/javascript">
-  		$j().ready(function() {
-  			$j('#login_writerep').jqm({ajax:'@href', trigger: 'a#login_writerep_trigger'});
-  		});
-  		</script>
-      <a href="<%= url_for login_url(:modal => true, :login_action => 'contact_congress') %>" id="login_writerep_trigger" class="writeextrigger">
-        <div>
-        <span class="write">Write Your</span>
-        <span class="who"><%= object.is_house_bill? ? "Representative" : "Senators" %></span>
-        </div>
-      </a>
-      <div id="login_writerep" class="jqmWindow"></div>
-      
-		<% end %>
+    <div class='contact_congress'>
+      <h2>Send Your Reps a Letter</h2>
+      <span>about this bill</span>
+
+      <a href='/contact_congress_letters/new?bill=<%= @bill.ident %>&position=support' class='button medium silver'><span>Support</span></a>
+      <a href='/contact_congress_letters/new?bill=<%= @bill.ident %>&position=oppose' class='button medium silver'><span>Oppose</span></a>
+      <a href='/contact_congress_letters/new?bill=<%= @bill.ident %>&position=tracking' class='button medium silver'><span>Tracking</span></a>
+    </div>
+    
+    <h3>Most-Viewed Letters</h3>
+    <ul class='most_viewed_letters'>
+      <li class='support'>
+        <a href="#">
+          <span class='subject'>This Bill Sucks!</span>
+          <span class='user'>aross</span>
+          <span class='date'>Jun 8, 2011</span>
+        </a>
+      </li>
+      <li class='oppose'>
+        <a href="#">
+          <span class='subject'>This Bill Sucks!</span>
+          <span class='user'>aross</span>
+          <span class='date'>Jun 8, 2011</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <span class='subject'>This Bill Sucks!</span>
+          <span class='user'>aross</span>
+          <span class='date'>Jun 8, 2011</span>
+        </a>
+      </li>
+    </ul>
+        
 
 		<div id="login_vote" class="jqmWindow">
 		</div>    
@@ -107,7 +119,7 @@
       </div>
       <br />
     <% end %>
-    <a href="<%= object.opengovernment_url %>" class='med_button' target='_new'>
+    <a href="<%= object.opengovernment_url %>" class='med_button margin-bottom' target='_new'>
       <span>OpenGovernment Profile</span>
     </a>
   </div>
@@ -117,10 +129,6 @@
   		<%= render :partial => 'people/approval', :locals => {:person => @person, :user_approval => @user_approval} %>
   	</div>
   </div> 
-
-  <% if object.has_contact_webform? %>
-    <%= render :partial => 'shared/write_rep_external', :locals => { :people => [object] } %>
-  <% end %>
 <% end %>
 
 <% if logged_in? %>

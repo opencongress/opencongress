@@ -91,7 +91,7 @@ padding: 35px;
 background: #fff;
 }
 #people.show #bill_and_status_list{
-width: 375px;
+width: 670px;
 padding: 30px 20px 0 35px;
 }
 .co{
@@ -583,6 +583,9 @@ padding: 20px 35px 0;
 #people.news_blog .bills_list, 
 #people.voting_history .bills_list{
 padding: 35px ;
+}
+#people.bills .all_bills {
+padding-top:20px;
 }
 #people.bills .all_bills h3 {
 padding: 0 35px ;

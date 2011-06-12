@@ -274,7 +274,7 @@ module CommentaryParser
         #OCLogger.log d.inspect
         
         place += 1
-        t = d.at("h2.title a")
+        t = d.at("h2.title a.article")
 
         os = OpenStruct.new
       

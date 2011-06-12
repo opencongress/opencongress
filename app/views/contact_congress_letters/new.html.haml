@@ -96,10 +96,14 @@
         = render 'formageddon/threads/form', :f => f, :thread => @formageddon_thread
         
         = hidden_field_tag :after_send_url, "/contact_congress_letters/create_from_formageddon?bill=#{@bill.ident}&disposition=#{@position}"
-        
-    %p Click send, and we will automatically deliver your letter to the members of Congress you selected above. OpenCongress is the only not-for-profit website that enables you to write all three of your members of Congress at once. Also, OpenCongress is the only website that gives this information back to the public commons, enabling you to find other constituents near you who are tracking the same bills and issues. 
-
-    %p On the next page, you may review your letter, share it with your community using social media, and track any official replies you may receive from members of Congress.
+    
+    %ul.instruction
+      %li Click send, and we will automatically deliver your letter to the members of Congress you selected above.
+      %li On the next page, you may review your letter, share it with your community using social media, and track any official replies you may receive from members of Congress.
+      
+    .value
+      %p OpenCongress is the only not-for-profit website that enables you to write all three of your members of Congress at once.
+      %p OpenCongress is the only website that gives this information back to the public commons, enabling you to find other constituents near you who are tracking the same bills and issues. 
   
 :javascript  
   $j("#formageddon_formageddon_thread_sender_zip5").keyup(function() {

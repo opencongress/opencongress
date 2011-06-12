@@ -765,6 +765,10 @@ class User < ActiveRecord::Base
 
    end
 
+   def facebook_connect_user?
+     !facebook_uid.blank?
+   end
+   
    protected
 
    def make_password_reset_code
@@ -792,12 +796,13 @@ class User < ActiveRecord::Base
    end
 
    def password_required?
-     !openid? && ( crypted_password.blank? || !password.blank? )
+     !openid? && !facebook_connect_user? && ( crypted_password.blank? || !password.blank? )
    end
 
    def openid?
     !identity_url.blank?
    end
+  
    
    private
    def cache_district_and_state

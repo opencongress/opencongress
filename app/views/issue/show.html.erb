@@ -2,11 +2,11 @@
 <h2>Issue: <%= @subject.term %></h2>
 </div>
 
-<div class="padding">
 
 <%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
 
-<!-- ><div style="width: 180px;" class="floatright"> -->
+<div class="issue_wrapper">
+  
 <div class="floatright clearnone">
   <form id="timeframe_select" action="" method="get">
   <select name="filter" onchange="submit();">
@@ -14,8 +14,10 @@
   </select>
   </form>
 </div>
-<a href="/issues" class="silver button small floatleft clearnone pushright"><span>Back to All Issues</span></a>
-<a href="/bill/hot" class="silver button small floatleft clearnone"><span>View Hot Bills By Issues Area</span></a>
+<a href="/issues" class="silver button small floatleft clearnone margin-right margin-bottom">
+  <span>Back to All Issues</span>
+</a>
+<a href="/bill/hot" class="silver button small floatleft clearnone margin-right"><span>View Hot Bills By Issues Area</span></a>
 
 <div id="issue_summary_text">
 <%= @subject.summary %>
@@ -80,17 +82,17 @@
 <br /><br />
 
   <div class="huge">
+
     <p>Make a Widget for this Issue By:
     <a class="small_bill" href="/resources/issue_bills?issue_id=<%= @subject.id %>&item_type=new-bill">Newest Bills</a>&nbsp;&middot;&nbsp;
     <a class="small_bill" href="/resources/issue_bills?issue_id=<%= @subject.id %>&item_type=viewed-bill">Most Viewed Bills</a>
-</p>
-		<%= dbox_trigger('widgets') %>
-
+    <%= dbox_trigger('widgets') %>
 		<div class="dboxed">
-		<%= dbox_content("widgets") %>
+		  <%= dbox_content("widgets") %>
 		</div>
+</p>
+
    
   </div>
-  
-
 </div>
+

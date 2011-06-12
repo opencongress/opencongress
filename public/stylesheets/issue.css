@@ -122,3 +122,8 @@ background: url(../images/zip_arrow.png) 0 11px no-repeat;
 a#widgets_trigger {
   float:left;
 }
+
+.issue_wrapper {
+  padding: 35px;
+  margin-top: 45px;
+}

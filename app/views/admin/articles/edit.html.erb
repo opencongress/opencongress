@@ -1,6 +1,6 @@
 <div class='padding'>	
 
-<% form_tag :action => 'update', :id => @article do -%>
+<% form_for @article, :url => admin_article_path do -%>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
 <% end %>

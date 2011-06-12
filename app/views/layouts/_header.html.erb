@@ -6,7 +6,7 @@
 		</p>
 		
 		<div id="user_account">
-		  
+		  <%= fb_connect_async_js %>
 			<% if logged_in? %>
 
 				Welcome <b><%= link_to h(current_user.login), user_profile_url(current_user.login) %></b> |
@@ -16,16 +16,22 @@
 			    		<%= link_to 'Manage SEO/Site Text for this Page', {:controller => 'admin/site_text_pages', :action => 'edit', :pageparams => params, :page_text_editable_type => @user_object.class.name.capitalize, :page_text_editable_id => @user_object.id }  %> |
 
 			    	<% else %>
-                		<%= link_to 'Manage SEO/Site Text for this Page', {:controller => 'admin/site_text_pages', :action => 'edit', :pageparams => params }  %>  |
+              <%= link_to 'Manage SEO/Site Text for this Page', {:controller => 'admin/site_text_pages', :action => 'edit', :pageparams => params }  %>  |
 	  				<% end %>
 				<% end %>   
 			
-			  	<%= link_to "Logout", logout_path %>
-			
+			    <% if @facebook_user %>
+			      <%= fb_logout_link("Logout", url_for(:controller => 'logout', :only_path => false)) %>
+			    <% else %>
+			  	  <%= link_to "Logout", logout_path %> | 
+			  	  <%= fb_login_and_redirect(request.url, {:text => 'Connect', :perms => 'email'}) %>
+			    <% end %>
 				<% else %>	
 													
 				<%= link_to_function "Search", "['login','login-link','search-toggle'].each(Element.toggle);", :id => "search-toggle", :style => "display:none;" %>
-				<%= link_to_function "Login", "['login','login-link','search-toggle'].each(Element.toggle);", login_url, :id => "login-link" %> | <%= link_to "Register", :controller => 'account', :action => 'signup' %>
+				<%= link_to_function "Login", "['login','login-link','search-toggle'].each(Element.toggle);", login_url, :id => "login-link" %> | 
+				<%= link_to "Register", :controller => 'account', :action => 'signup' %> | 
+				<%= fb_login_and_redirect(request.url, :perms => 'email') %>
 			<% end %>
 		</div>	
 	</div>

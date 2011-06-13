@@ -2,10 +2,12 @@ require 'authenticated_system'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  
+
   include AuthenticatedSystem
   include SimpleCaptcha::ControllerHelpers
   include Facebooker2::Rails::Controller
+  include UrlHelper
+
 
   before_filter :facebook_check
   before_filter :store_location
@@ -105,7 +107,7 @@ class ApplicationController < ActionController::Base
 
   def has_accepted_tos?
     if logged_in?
-      logger.info "USER APP TOS: #{current_user.accepted_tos}"
+      Rails.logger.debug "USER APP TOS: #{current_user.accepted_tos}"
       unless current_user.accepted_tos == true
         redirect_to :controller => 'account', :action => 'accept_tos'
       end
@@ -187,6 +189,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+<<<<<<< HEAD
   protected
   def dump_session
     logger.info session.to_yaml
@@ -203,4 +206,14 @@ class ApplicationController < ActionController::Base
       )
     end
   end
+=======
+  def news_blog_count(count)
+    if count >= 1000
+      "#{(count/1000).floor}K"
+    else
+      count
+    end
+  end
+  
+>>>>>>> 9b2397ba3a16ac257674a52042e1b42a5547aa46
 end

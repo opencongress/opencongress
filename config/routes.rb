@@ -1,4 +1,6 @@
 OpenCongress::Application.routes.draw do
+  resources :group_invites
+
   resources :mailing_list_items
   resources :watch_dogs
 
@@ -6,7 +8,9 @@ OpenCongress::Application.routes.draw do
     resources :districts
   end
 
-  resources :groups
+  resources :groups do
+    resources :group_invites
+  end
 
   match '/' => 'index#index', :as => :home
 
@@ -84,6 +88,7 @@ OpenCongress::Application.routes.draw do
        match 'partner_email.:format', :action => 'partner_email'
      end
      
+     match 'contact_congress' => 'contact_congress#index'
   end
   match '/:controller(/:action(/:id))', :controller => /admin\/[^\/]+/
   

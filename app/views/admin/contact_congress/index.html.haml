@@ -1,0 +1,16 @@
+.padding
+  %table.contact_steps_list
+    %tr
+      %th Recipient
+      %th Number of steps
+      %th Actions
+    - @people.each do |s|
+      %tr
+        %td= s.name
+        %td= s.formageddon_contact_steps.size
+        %td
+          = link_to 'View Steps', :controller => 'formageddon/contact_steps', :action => 'show', :recipient_id => s.id, :recipient_type => s.class
+          \|
+          = link_to 'Re-build Steps', :controller => 'formageddon/contact_steps', :action => 'new', :recipient_id => s.id, :recipient_type => s.class
+          \|
+          = link_to 'Clear Steps', { :controller => 'formageddon/contact_steps', :action => 'destroy', :recipient_id => s.id, :recipient_type => s.class }, :method => :delete

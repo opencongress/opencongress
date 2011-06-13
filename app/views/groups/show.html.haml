@@ -1,0 +1,21 @@
+= render 'groups/heading'
+
+.padding
+  .group_info
+    %ul
+      %li
+        %strong Owner:
+        = link_to @group.user.login, user_profile_path(@group.user.login)
+      %li
+        %strong Website:
+        = link_to @group.website, @group.website
+      - if @group.pvs_category
+        %li
+          %strong Issue Area:
+          = @group.pvs_category.name
+  .description
+    = @group.description
+  
+  
+  #group_comments
+    = render :partial => 'shared/comments', :locals => { :object => @group }

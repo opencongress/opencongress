@@ -140,6 +140,11 @@ GEM
       guard (>= 0.2.2)
       json (~> 1.5.1)
     haml (3.1.1)
+    haml-rails (0.3.4)
+      actionpack (~> 3.0)
+      activesupport (~> 3.0)
+      haml (~> 3.0)
+      railties (~> 3.0)
     highline (1.6.2)
     hoptoad_notifier (2.4.11)
       activesupport
@@ -182,6 +187,9 @@ GEM
     okkez-open_id_authentication (1.0.1)
       ruby-openid (>= 2.0.4)
     open4 (1.0.1)
+    paperclip (2.3.11)
+      activerecord (>= 2.3.0)
+      activesupport (>= 2.3.2)
     pg (0.11.0)
     polyglot (0.3.1)
     rack (1.2.3)
@@ -276,6 +284,7 @@ DEPENDENCIES
   guard
   guard-livereload
   haml
+  haml-rails
   hoptoad_notifier
   hpricot
   htmlentities
@@ -290,12 +299,12 @@ DEPENDENCIES
   nokogiri
   oauth
   okkez-open_id_authentication
+  paperclip
   pg
   rack-openid
   rails (= 3.0.7)
   rake (= 0.8.7)
   rmagick (= 2.13.1)
-  rspec
   rspec-rails (~> 2.4)
   ruby-openid
   selenium-client

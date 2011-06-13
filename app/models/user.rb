@@ -54,6 +54,8 @@ class User < ActiveRecord::Base
   serialize :district_cache
   serialize :state_cache
   
+  has_many :groups
+  
   has_many :api_hits
   has_many :comments
   has_one  :privacy_option

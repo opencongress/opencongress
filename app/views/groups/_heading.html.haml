@@ -1,0 +1,4 @@
+- subtitle ||= nil
+#heading.group
+  = image_tag @group.group_image.url(:thumb)
+  %h2= subtitle.nil? ? @group.name : "#{@group.name} : #{subtitle}"

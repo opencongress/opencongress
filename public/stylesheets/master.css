@@ -2526,6 +2526,20 @@ color: #999
   margin-top:0;
   font-size:12px;
 }
+
+#heading.group {
+  height: 110px;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+#heading.group img {
+  float: left;
+  margin: 5px;
+}
+#heading.group h2 {
+  margin: 25px 0 0 20px;
+}
 .sidebar{
 width: 384px;
 float: left;
@@ -4914,5 +4928,26 @@ background: url('/images/construct.png') 0px 4px no-repeat;
 }
 
 
+.group_help {
+  padding: 30px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.4em;
+  background-color: rgba(101,101,101, .2);
+  border: 5px solid rgba(101,101,101, .1);
+  
+  width: 280px;
+  float: right;
+}
 
+.group_help ul {
+  margin-top: 20px;
+}
 
+.group_help li {
+  margin-bottom: 20px;
+}

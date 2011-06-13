@@ -36,6 +36,8 @@ development:
   govtrack_billtext_diff_path: /Users/aross/pcf-work/govtrack/bills.text.cmp
   oc_billtext_path: /Users/aross/pcf-work/oc_billtext
   committee_reports_path: /Users/aross/pcf-work/committee_reports
+  
+  group_images_path: /Users/aross/pcf-work/gitbranches/opencongress/public/system/group_images
 
   base_url: http://localhost:3003/
 

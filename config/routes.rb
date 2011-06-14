@@ -14,6 +14,10 @@ OpenCongress::Application.routes.draw do
     resources :districts
   end
 
+  resources :groups do
+    resources :group_invites
+  end
+
   match '/' => 'index#index', :as => :home
 
   # Allow downloading Web Service WSDL as a file with an extension
@@ -90,6 +94,7 @@ OpenCongress::Application.routes.draw do
        match 'partner_email.:format', :action => 'partner_email'
      end
      
+     match 'contact_congress' => 'contact_congress#index'
   end
   match '/:controller(/:action(/:id))', :controller => /admin\/[^\/]+/
   

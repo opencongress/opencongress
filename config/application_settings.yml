@@ -22,10 +22,12 @@ defaults: &defaults
   committee_reports_path: /data/committee_reports
   
   base_url: http://www.opencongress.org/
-  
+  api_host: api.opencongress.org
+  api_base_url: http://api.opencongress.org/
+
   wiki_host: www.opencongress.org
   wiki_base_url: http://www.opencongress.org/wiki
-  
+
   ban_file: /u/apps/opencongress/shared/files/banned_users.txt
   
 development:
@@ -39,7 +41,9 @@ development:
   
   group_images_path: /Users/aross/pcf-work/gitbranches/opencongress/public/system/group_images
 
-  base_url: http://localhost:3003/
+  base_url: http://localhost:3000/
+  api_host: api.127localhost.com:3000
+  api_base_url: http://api.127localhost.com:3000/
 
 drm:
   <<: *defaults

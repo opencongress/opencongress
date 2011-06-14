@@ -189,7 +189,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
-<<<<<<< HEAD
+  def news_blog_count(count)
+    if count >= 1000
+      "#{(count/1000).floor}K"
+    else
+      count
+    end
+  end
+  
   protected
   def dump_session
     logger.info session.to_yaml
@@ -206,14 +213,4 @@ class ApplicationController < ActionController::Base
       )
     end
   end
-=======
-  def news_blog_count(count)
-    if count >= 1000
-      "#{(count/1000).floor}K"
-    else
-      count
-    end
-  end
-  
->>>>>>> 9b2397ba3a16ac257674a52042e1b42a5547aa46
 end

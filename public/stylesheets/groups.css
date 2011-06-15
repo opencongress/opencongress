@@ -51,3 +51,6 @@ width: 830px;
 margin: 0 30px 90px;
 }
 
+table.groups td {
+  padding: 5px;
+}

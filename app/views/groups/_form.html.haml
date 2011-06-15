@@ -26,8 +26,9 @@
     = f.label :join_type, "Who can join?"
     = f.radio_button :join_type, 'ANYONE'
     Anyone
-    = f.radio_button :join_type, 'REQUEST'
-    Anyone can request to join
+    /
+      = f.radio_button :join_type, 'REQUEST'
+      Anyone can request to join
     = f.radio_button :join_type, 'INVITE_ONLY'
     Invite only
     
@@ -35,7 +36,18 @@
     = f.label :invite_type, "Who can send invitations?"
     = f.radio_button :invite_type, 'ANYONE'
     Anyone
+    = f.radio_button :invite_type, 'MODERATOR'
+    Moderators only
     = f.radio_button :invite_type, 'ADMIN'
+    Me only
+    
+  %p
+    = f.label :post_type, "Who can post items to the group?"
+    = f.radio_button :post_type, 'ANYONE'
+    Anyone
+    = f.radio_button :post_type, 'MODERATOR'
+    Moderators only
+    = f.radio_button :post_type, 'ADMIN'
     Me only
   
   %p

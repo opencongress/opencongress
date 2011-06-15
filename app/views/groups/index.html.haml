@@ -1,0 +1,19 @@
+#heading
+  %h2 OpenCongress Groups
+  
+.padding
+  %table.groups
+    %thead
+      %tr
+        %th
+        %th Name
+        %th Description
+        %th Issue Area of Focus
+        %th
+    - @groups.each do |g|
+      %tr
+        %td.pic= image_tag g.group_image.url(:thumb)
+        %td.name= link_to g.name, g
+        %td.desc= g.description
+        %td.issue= g.pvs_category.nil? ? "None" : g.pvs_category.name
+        %td.action= link_to 'Join', '#', :class => 'button silver small'

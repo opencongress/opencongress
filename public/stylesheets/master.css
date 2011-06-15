@@ -4951,3 +4951,26 @@ background: url('/images/construct.png') 0px 4px no-repeat;
 .group_help li {
   margin-bottom: 20px;
 }
+
+.registration_complete label {
+  float: left;
+  display: inline-block;
+  line-height: 2em;
+  vertical-align: top;
+  width: 120px;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.registration_complete form p {
+  margin-bottom: 20px;
+  padding: 0 0 25px 50px;
+  clear:both;
+}
+.registration_complete ul {
+  margin-bottom: 20px;
+}
+.registration_complete ul li {
+  list-style: disc inside none;
+  padding: 0 0 5px 20px;
+}

@@ -3,7 +3,7 @@
 
   .actions
     %p
-      = text_area_tag :invites, '', { :class => 'field', :rows => 5, :cols => 70 }
+      = f.text_area :invite_string, { :class => 'field', :rows => 5, :cols => 70 }
   
     %p
       = f.submit 'Invite', :class => 'button huge blue'

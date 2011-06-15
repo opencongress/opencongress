@@ -6,6 +6,7 @@ class GroupsController < ApplicationController
     @group = Group.new
     @group.join_type = 'ANYONE'
     @group.invite_type = 'ANYONE'
+    @group.post_type = 'ANYONE'
   end
   
   
@@ -32,5 +33,7 @@ class GroupsController < ApplicationController
   
   def index
     @page_title = 'OpenCongress Groups'
+
+    @groups = Group.all #where("join_type='ANYONE'")
   end
 end

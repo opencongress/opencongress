@@ -16,6 +16,8 @@ OpenCongress::Application.routes.draw do
 
   resources :groups do
     resources :group_invites
+    resources :group_members
+    resources :group_bill_positions
   end
 
   match '/' => 'index#index', :as => :home

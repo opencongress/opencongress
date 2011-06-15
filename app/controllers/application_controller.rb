@@ -197,6 +197,10 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def random_key
+    Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
+  end
+  
   protected
   def dump_session
     logger.info session.to_yaml

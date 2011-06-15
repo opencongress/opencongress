@@ -1,0 +1,2 @@
+module GroupBillPositionsHelper
+end

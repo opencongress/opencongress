@@ -1,6 +1,17 @@
-%p#notice= notice
-
-
-= link_to 'Edit', edit_group_invite_path(@group_invite)
-\|
-= link_to 'Back', group_invites_path
+= render 'groups/heading', :subtitle => 'Get OpenCongress Account'
+  
+.padding
+  .registration_complete
+    %h2 Almost There!
+    %p.behave Before we can add you to #{@group.name}, we just need a little more info to create an OpenCongress account.
+    %ul
+      %li 
+        %strong Create a user name.
+        This is what will show up when you leave comments and track bills.
+      %li 
+        %strong Enter your zipcode.
+        We'll use this to figure out who is representing you in Congress
+      %li
+        %strong Accept our Terms of Service
+      
+    = render 'account/complete_signup', :user => @user, :action => 'group_signup_complete', :group_invite_id => @group_invite.id

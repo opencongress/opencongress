@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/opencongress/formageddon.git
-  revision: 0c5b650ed61dc236ec83bdecbcb3b4171962becc
+  revision: 364843eb6ab6b7d53bc4265950462aa7a7db4257
   specs:
     formageddon (0.0.0)
       delayed_job (~> 2.1)
@@ -139,7 +139,7 @@ GEM
       em-websocket (~> 0.2.0)
       guard (>= 0.2.2)
       json (~> 1.5.1)
-    haml (3.1.1)
+    haml (3.1.2)
     highline (1.6.2)
     hoptoad_notifier (2.4.11)
       activesupport

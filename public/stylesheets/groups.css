@@ -1,5 +1,10 @@
 #heading{
-  height: 45px;
+  height: 45px !important;
+padding: 10px 0 30px 20px!important;
+}
+#heading h2{
+margin: 0;
+padding: 0;
 }
 
 label {
@@ -19,7 +24,11 @@ form p {
 
 .description {
   font-size: 16px;
-  width: 560px;
+  width: 630px;
+float: left;
+padding-left: 50px;
+margin-top: 30px;
+line-height: 1.4em;
 }
 
 .group_info {
@@ -33,12 +42,34 @@ form p {
   line-height: 1.4em;
   background-color: rgba(101,101,101, .2);
   border: 2px solid rgba(101,101,101, .1);
-  
-  width: 280px;
-  float: right;
+  float: left;
+  width: 900px;
+margin-left: 0px;
+
 }
+
+.group_info li{
+
+  width: 300px;
+float: left;
+
+}
+
+.thumb{
+  background-color: rgba(101,101,101, .2);
+  border: 2px solid rgba(101,101,101, .1);
+float: left;
+margin-top: 30px;
+width: 200px;
+height: 200px;
+padding: 10px;
+
+}
+
 #group_comments {
   margin-top: 40px;
+width: 600px;
+float: left;
   
 }
 #comments-container{
@@ -47,10 +78,21 @@ form p {
 -o-border-radius: 15px;
 -ms-border-radius: 15px;
 background: #eee;
-width: 830px;
+width: 500px;
 margin: 0 30px 90px;
 }
 
 table.groups td {
   padding: 5px;
 }
+.sidebar{
+width: 300px;
+  margin-top: 40px;
+float: left;
+}
+
+#bill_positions .button{
+float: left;
+margin-top: 5px;
+}
+

@@ -26,9 +26,8 @@ form p {
 
 .description {
   font-size: 16px;
-  width: 630px;
 float: left;
-padding-left: 50px;
+padding: 0 30px;
 margin-top: 30px;
 line-height: 1.4em;
 }
@@ -187,6 +186,7 @@ text-shadow: 0 1px 0px #fff;
 }
 
 
+
 .activity_stream{
 width: 600px;
 margin-left: 30px;
@@ -194,5 +194,100 @@ float: left;
 margin-top: 43px;
 }
 
+
+
+.activity_stream li {
+clear: both;
+margin-bottom: 30px;
+}
+
+
+.activity_stream li a{
+font-weight: bold;
+}
+
+
+.activity_stream li .person-activity{
+padding: 8px 0 20px;
+display: block;
+}
+
+
+
+.activity_stream li.photo div,
+.activity_stream li.video div,
+.activity_stream li.letter-track div,
+.activity_stream li.letter-oppose div,
+.activity_stream li.link div,
+.activity_stream li.letter-support div{
+padding-left: 60px;
+}
+
+
+
+.activity_stream li .source{
+color: #999;
+display: block;
+}
+
+
+.icon{
+float: left;
+width: 40px;
+height: 40px;
+}
+
+.activity_stream li.photo .icon{
+background: url(/images/group-icons.png) no-repeat;
+}
+
+
+
+.activity_stream li.video .icon{
+background: url(/images/group-icons.png) 0 -50px no-repeat;
+}
+
+
+
+.activity_stream li.link .icon{
+background: url(/images/group-icons.png) 0 -96px no-repeat;
+}
+
+
+.activity_stream li.letter-track .icon{
+background: url(/images/group-icons.png) 0 -143px no-repeat;
+}
+
+
+.activity_stream li.letter-oppose .icon{
+background: url(/images/group-icons.png) 0 -193px no-repeat;
+}
+
+
+.activity_stream li.letter-support .icon{
+background: url(/images/group-icons.png) 0 -243px no-repeat;
+}
+
+
+.activity_stream li.photo div img{
+max-width: 500px;
+padding: 10px;
+border: 1px solid #ddd;
+}
+
+
+
+.activity_stream li.video div iframe{
+max-width: 500px;
+padding: 10px;
+border: 1px solid #ddd;
+}
+
+
+.load-more{
+display: block;
+text-align: center;
+width: 540px !important;
+}
 
 

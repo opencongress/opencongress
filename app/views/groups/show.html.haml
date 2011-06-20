@@ -65,4 +65,42 @@
       %ul
         %li
           = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
-      
+    %li.photo
+      %span.icon
+      %div
+        %span.person-activity <a href="#">Morgan Knutson</a> shared a photo
+        %span.shared-photo
+          <img src="http://upload.wikimedia.org/wikipedia/en/3/33/SS-Savannah.jpg" />
+        %span.source http://www.ertertert.com
+    %li.video
+      %span.icon
+      %div
+        %span.person-activity <a href="#">Morgan Knutson</a> shared a video
+        %span.shared-video
+          <iframe width="425" height="349" src="http://www.youtube.com/embed/JfSOnncMsF0" frameborder="0" allowfullscreen></iframe>
+        %span.source http://www.ertertert.com
+    %li.link
+      %span.icon
+      %div
+        %span.person-activity <a href="#">Morgan Knutson</a> shared a link 
+        %span.shared-link
+          <a href="#">Title of link goes right here...</a>
+        %span.source http://www.ertertert.com
+    %li.letter-track
+      %span.icon
+      %div
+        %span.person-activity <a href="#">Morgan Knutson</a> wrote a letter to <a href="#">Diane Finestein</a> and <a href="#">Barbara Boxer</a> letting them know they're tracking <a href="#">H.R.234</a>      
+    %li.letter-oppose
+      %span.icon
+      %div
+        %span.person-activity <a href="#">Morgan Knutson wrote a letter to <a href="#">Diane Finestein</a> and <a href="#">Barbara Boxer</a> opposing <a href="#">H.R.234</a>            
+    %li.letter-support
+      %span.icon
+      %div
+        %span.person-activity <a href="#">Morgan Knutson</a> wrote a letter to <a href="#">Diane Finestein</a> and <a href="#">Barbara Boxer</a> supporting <a href="#">H.R.234</a>     
+        
+        
+    <a class="load-more button silver huge clear" href="#">Load More</a>         
+    
+    .clear.space &nbsp;
+    .clear.space &nbsp;

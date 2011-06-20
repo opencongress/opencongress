@@ -3,23 +3,18 @@
   
 .padding
   .groups_search
-    %p
-      Find a group:
-      = text_field_tag 'q'
-  %table.groups
-    %thead
-      %tr
-        %th
-        %th Name
-        %th Description
-        %th Issue Area of Focus
-        %th # of Members
-        %th
-    - @groups.each do |g|
-      %tr
-        %td.pic= image_tag g.group_image.url(:thumb)
-        %td.name= link_to g.name, g
-        %td.desc= g.description
-        %td.issue= g.pvs_category.nil? ? "None" : g.pvs_category.name
-        %td.members= g.active_members.size + 1
-        %td.action= link_to 'Join', '#', :class => 'button silver small'
+    %span Find a group:
+    = text_field_tag 'q', nil, :id => 'group_search_field'
+
+      
+  #groups_list
+    = render 'groups_list', :groups => @groups
+
+        
+        
+:javascript
+  $j('#group_search_field').keyup(function() {
+    $j.ajax({
+      url:'/groups.js?q=' + $j(this).val()
+    });
+  });

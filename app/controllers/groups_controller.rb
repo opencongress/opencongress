@@ -34,6 +34,16 @@ class GroupsController < ApplicationController
   def index
     @page_title = 'OpenCongress Groups'
 
-    @groups = Group.all #where("join_type='ANYONE'")
+    unless params[:q].blank?
+      @groups = Group.where("groups.name ILIKE ? OR groups.description ILIKE ?", "%#{params[:q]}%", "%#{params[:q]}%")
+    else
+      @groups = Group.all #where("join_type='ANYONE'")
+    end
+    
+    respond_to do |format|
+      format.html
+      format.js
+      format.json  { render :json => @groups }
+    end
   end
 end

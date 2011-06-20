@@ -1,5 +1,5 @@
-- ['support', 'oppose'].each do |position|
-  = link_to position.capitalize, '#', :class => "button small silver", :id => "trigger_#{position}_#{b.id}"
+- ['oppose', 'support'].each do |position|
+  = link_to position.capitalize, '#', :class => "button small silver floatright margin-left margin-bottom", :id => "trigger_#{position}_#{b.id}"
   %div.jqmWindow{ :id => "#{position}_#{b.id}" }
     = form_for [@group, @group.group_bill_positions.build] do |f|
       %strong= "Add '#{position}' position to #{b.typenumber}"

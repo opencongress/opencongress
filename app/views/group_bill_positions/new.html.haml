@@ -4,10 +4,11 @@
   - if @group.pvs_category and !@group.pvs_category.hot_bills.empty?
     %h3 Hot Bills in '#{@group.pvs_category.name}'
     
-    - @group.pvs_category.hot_bills.each do |b|
-      .group_bill
-        = link_to b.typenumber, bill_path(b)
-        = b.title_common
-        = render 'position_buttons', :b => b
+    %ul
+      - @group.pvs_category.hot_bills.each do |b|
+        %li.grid_12
+          %span.grid_2.alpha= link_to b.typenumber, bill_path(b)
+          %span.grid_6= b.title_common
+          %span.grid_4.omega= render 'position_buttons', :b => b
 
     

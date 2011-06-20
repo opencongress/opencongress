@@ -2,7 +2,7 @@
 
 
 .padding
-  .group_info
+  .group_info.button.silver
     %ul
       %li
         %strong Owner:
@@ -14,13 +14,22 @@
         %li
           %strong Issue Area:
           = @group.pvs_category.name
-  .thumb
-    = image_tag @group.group_image.url(:thumb)
 
   .description
     = @group.description
   
   .sidebar
+
+
+    %ul.sidebar-nav
+      %li.active
+         <a href="#"><div></div>Full Converstation</a>
+      %li
+         <a href="#"><div></div>Unread <span class="inline-count">2333</span></a>
+
+
+
+
     #bill_positions
       - if @group.bills.empty?
         You have not taken a position on any bills.

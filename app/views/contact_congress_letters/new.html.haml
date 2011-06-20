@@ -16,6 +16,14 @@
       Use the tools in this column to help craft your letter.  Any time your mouse highlights a section, you can click on it to add prepared text to your message.
 
     .section
+      %h3 Latest Action
+      %ul
+        %li.message_builder_clickable
+          %strong= @bill.last_action.formatted_date
+          = @bill.last_action
+          = render 'will_add_text_box', :text => "I know the most recent action for this bill is as follows: \"#{@bill.last_action}\" on #{@bill.last_action.formatted_date}"
+            
+    .section
       %h3 Bill Statistics on OpenCongress
       %ul
       - unless @position == 'tracking' or @bill.users_percentage_at_position(@position).nil?
@@ -32,6 +40,17 @@
         - unless @sens.empty? and @reps.empty? 
           = render :partial => 'message_builder_contribution_data'
 
+    - unless @bill.bill_position_organizations_support.empty?
+      .section
+        %h3 Supporting Organizations
+        = render 'message_builder_organizations', :disposition => 'support', :orgs => @bill.bill_position_organizations_support
+        
+    - unless @bill.bill_position_organizations_oppose.empty?
+      .section
+        %h3 Opposing Organizations
+        = render 'message_builder_organizations', :disposition => 'oppose', :orgs => @bill.bill_position_organizations_oppose
+      
+
     .section      
       %h3 Most-commented sections of the bill text
       %ul
@@ -44,13 +63,6 @@
             
             = render 'will_add_text_box', :text => "specifically, this section of the legislation: \"#{n.bill_text}\","
 
-    .section
-      %h3 Latest Action
-      %ul
-        %li.message_builder_clickable
-          %strong= @bill.last_action.formatted_date
-          = @bill.last_action
-          = render 'will_add_text_box', :text => "I know the most recent action for this bill is as follows: \"#{@bill.last_action}\" on #{@bill.last_action.formatted_date}"
           
           
           

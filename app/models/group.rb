@@ -25,6 +25,10 @@ class Group < ActiveRecord::Base
     'Group'
   end
   
+  def active_members
+    users.where("group_members.status != 'BOOTED'")
+  end
+  
   def is_member?(user)
     membership = group_members.where(["group_members.user_id=?", user.id]).first
     return (membership && membership.status != 'BOOTED')

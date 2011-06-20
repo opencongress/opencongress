@@ -40,6 +40,8 @@ class CreateGroups < ActiveRecord::Migration
       t.integer :group_id
       t.integer :bill_id
       t.string :position
+      t.string :comment
+      t.string :permalink
        
       t.timestamps
     end

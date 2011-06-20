@@ -2,6 +2,10 @@
   %h2 OpenCongress Groups
   
 .padding
+  .groups_search
+    %p
+      Find a group:
+      = text_field_tag 'q'
   %table.groups
     %thead
       %tr
@@ -9,6 +13,7 @@
         %th Name
         %th Description
         %th Issue Area of Focus
+        %th # of Members
         %th
     - @groups.each do |g|
       %tr
@@ -16,4 +21,5 @@
         %td.name= link_to g.name, g
         %td.desc= g.description
         %td.issue= g.pvs_category.nil? ? "None" : g.pvs_category.name
+        %td.members= g.active_members.size + 1
         %td.action= link_to 'Join', '#', :class => 'button silver small'

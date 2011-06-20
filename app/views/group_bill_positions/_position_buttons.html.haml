@@ -1,0 +1,20 @@
+- ['support', 'oppose'].each do |position|
+  = link_to position.capitalize, '#', :class => "button small silver", :id => "trigger_#{position}_#{b.id}"
+  %div.jqmWindow{ :id => "#{position}_#{b.id}" }
+    = form_for [@group, @group.group_bill_positions.build] do |f|
+      %strong= "Add '#{position}' position to #{b.typenumber}"
+      = f.hidden_field :position, :value => position
+      = f.hidden_field :bill_id, :value => b.id
+      %p
+        Add a comment describing your position (optional)
+        = f.text_area :comment
+      %p
+        Add a link to an outside webpage with more info (optional)
+        = f.text_field :permalink
+      %p
+        = f.submit 'Submit', :class => 'button medium blue'
+        = link_to 'Cancel', '#', :class => 'button medium silver', :id => "close_#{position}_#{b.id}"
+  :javascript
+    $j().ready(function() {
+      $j('##{position}_#{b.id}').jqm({trigger:'#trigger_#{position}_#{b.id}'}).jqmAddClose('#close_#{position}_#{b.id}');
+    });

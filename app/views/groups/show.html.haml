@@ -34,7 +34,7 @@
               = link_to b.typenumber, bill_path
               = b.title_common
               .actions
-                = link_to "Write Letter of Support", new_contact_congress_letter_path(:bill => b.ident, :position => 'support')
+                = link_to "Write Letter of Support", new_contact_congress_letter_path(:bill => b.ident, :position => 'support', :group_id => @group.id)
         %h3.support Bills Opposed
         - if @group.bills_opposed.empty?
           %p None
@@ -44,7 +44,7 @@
               = link_to b.typenumber, bill_path
               = b.title_common
               .actions
-                = link_to "Write Letter of Opposition", new_contact_congress_letter_path(:bill => b.ident, :position => 'oppose')       
+                = link_to "Write Letter of Opposition", new_contact_congress_letter_path(:bill => b.ident, :position => 'oppose', :group_id => @group.id)       
       = link_to "Add Bill Positions", new_group_group_bill_position_path(@group), :class => 'button small blue'
     
   #group_comments

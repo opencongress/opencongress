@@ -8,5 +8,6 @@
       .group_bill
         = link_to b.typenumber, bill_path(b)
         = b.title_common
-        = link_to "Support", group_group_bill_positions_path(@group, :bill_id => b.id, :position => 'support'), :method => 'post', :class => "button small silver"
-        = link_to "Oppose", group_group_bill_positions_path(@group, :bill_id => b.id, :position => 'oppose'), :method => 'post', :class => "button small silver"
+        = render 'position_buttons', :b => b
+
+    

@@ -1,7 +1,7 @@
 #comments-container
   %a#comments{ :name => "comments" }
 
-  - if object.comments.size > 1
+  - if object.comments.size > 1 
     = render :partial => 'shared/sort_comments'
 
   %h2.comments_title

@@ -56,5 +56,11 @@
                 = link_to "Write Letter of Opposition", new_contact_congress_letter_path(:bill => b.ident, :position => 'oppose', :group_id => @group.id)       
       = link_to "Add Bill Positions", new_group_group_bill_position_path(@group), :class => 'button small blue'
     
-  #group_comments
-    = render :partial => 'shared/comments', :locals => { :object => @group }
+  %ul.activity_stream
+    %li
+      - comment = Comment.find(215486)
+      = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+      %ul
+        %li
+          = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+      

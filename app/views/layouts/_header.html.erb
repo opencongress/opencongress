@@ -109,11 +109,21 @@
 				<li id="ishu_nav"><%= link_to '<span>Issues</span>'.html_safe, :controller => 'issue' %></li>
 				<li id="comm_nav"><%= link_to '<span>Committees</span>'.html_safe, :controller => 'committee' %></li>
 				<li id="muny_nav"><%= link_to '<span>The Money Trail</span>'.html_safe, :controller => 'money_trail' %></li>
-				<li id="wiki_nav" class="sub"><%= link_to '<span>Wiki</span>'.html_safe, Settings.wiki_base_url  %></li>		
 				<li id="blog_nav" class="sub"><%= link_to '<span>Blog</span>'.html_safe, blogs_url %></li>
+        <li id="groups_nav" class="sub">
+          <%= link_to ('<span>Groups ' + image_tag('tool_arrow-trans.png', :alt => '&gt;') + '</span>').html_safe, groups_url %>
+          <ul class="sub">
+            <li><%= link_to "<span>Planned Parenthood <span class='updates'>26</span></span>".html_safe, new_group_path %></li>
+            <li><%= link_to "<span>Dave's Group</span>".html_safe, new_group_path %></li>
+            <li><%= link_to "<span>Andy's Group <span class='updates'>4</span></span>".html_safe, new_group_path %></li>
+            
+            <li><%= link_to "<span>Start a New Group</span>".html_safe, new_group_path %></li>
+          </ul>
+        </li>
 				<li id="tool_nav" class="sub">		
 				<%= link_to ('<span>Resources ' + image_tag('tool_arrow-trans.png', :alt => '&gt;') + '</span>').html_safe, tools_path %>
 				<ul class="sub">
+  				<li id="wiki_nav"><%= link_to '<span>Wiki</span>'.html_safe, Settings.wiki_base_url  %></li>		
 					<li id="compare_nav"><%= link_to '<span>Vote Comparison</span>'.html_safe, :controller => 'people', :action => 'compare' %></li> 
 					<li id="widget_nav"><a href="/resources#widgets"><span>Site Widgets</span></a></li>
 					<li id="states_nav"><%= link_to '<span>States</span>'.html_safe, states_path %></li>

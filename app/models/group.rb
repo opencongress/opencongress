@@ -10,7 +10,7 @@ class Group < ActiveRecord::Base
   belongs_to :pvs_category
   
   has_many :group_members
-  has_many :users, :through => :group_members
+  has_many :users, :through => :group_members, :order => "users.login ASC"
   
   has_many :group_bill_positions
   has_many :bills, :through => :group_bill_positions
@@ -29,13 +29,17 @@ class Group < ActiveRecord::Base
     users.where("group_members.status != 'BOOTED'")
   end
   
-  def is_member?(user)
-    membership = group_members.where(["group_members.user_id=?", user.id]).first
+  def is_owner?(u)
+    self.user == u
+  end
+  
+  def is_member?(u)
+    membership = group_members.where(["group_members.user_id=?", u.id]).first
     return (membership && membership.status != 'BOOTED')
   end
   
-  def can_join?(user)
-    membership = group_members.where(["group_members.user_id=?", user.id]).first
+  def can_join?(u)
+    membership = group_members.where(["group_members.user_id=?", u.id]).first
     
     case join_type
     when 'ANYONE', 'REQUEST'
@@ -44,15 +48,16 @@ class Group < ActiveRecord::Base
       if membership and membership.status == 'BOOTED'
         return false
       else
-        return !group_invites.where(["user_id=?", user.id]).empty?
+        return !group_invites.where(["user_id=?", u.id]).empty?
       end
     end
   end
   
-  def can_moderate?(user)
-    return true if self.user == user
+  def can_moderate?(u)
+    return false if u == :false
+    return true if self.user == u
 
-    membership = group_members.where(["group_members.user_id=?", user.id]).first
+    membership = group_members.where(["group_members.user_id=?", u.id]).first
     
     return false if membership.nil?
     return true if membership.status == 'MODERATOR'
@@ -60,10 +65,11 @@ class Group < ActiveRecord::Base
     return false
   end
   
-  def can_post?(user)
-    return true if self.user == user
+  def can_post?(u)
+    return false if u == :false
+    return true if self.user == u
 
-    membership = group_members.where(["group_members.user_id=?", user.id]).first
+    membership = group_members.where(["group_members.user_id=?", u.id]).first
     
     return false if membership.nil?
     

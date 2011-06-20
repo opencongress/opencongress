@@ -32,8 +32,10 @@
 
     #bill_positions
       - if @group.bills.empty?
-        You have not taken a position on any bills.
+        %p You have not taken a position on any bills.
       - else
+        .clear.space &nbsp;
+        .clear.space &nbsp;
         %h3.support Bills Supported
         - if @group.bills_supported.empty?
           %p None
@@ -42,8 +44,8 @@
             .support
               = link_to b.typenumber, bill_path
               = b.title_common
-              .actions
-                = link_to "Write Letter of Support", new_contact_congress_letter_path(:bill => b.ident, :position => 'support', :group_id => @group.id)
+        .clear.space &nbsp;
+        .clear.space &nbsp;
         %h3.support Bills Opposed
         - if @group.bills_opposed.empty?
           %p None

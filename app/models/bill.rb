@@ -896,6 +896,13 @@ class Bill < ViewableObject
      LIMIT ?", groups_ids, Settings.current_opensecrets_cycle, groups_ids, Settings.current_opensecrets_cycle, title, num])
   end
   
+  def bill_position_organizations_support
+    bill_position_organizations.where("bill_position_organizations.disposition='support'")
+  end
+  def bill_position_organizations_oppose
+    bill_position_organizations.where("bill_position_organizations.disposition='oppose'")
+  end
+  
   class << self
     def client_id_to_url(client_id)
       client_id.slice!(/\d+_/)

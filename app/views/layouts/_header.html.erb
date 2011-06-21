@@ -23,14 +23,14 @@
 			    <% if @facebook_user %>
 			      <%= fb_logout_link("Logout", url_for(:controller => 'logout', :only_path => false)) %>
 			    <% else %>
-			  	  <%= link_to "Logout", logout_path %> | 
+			  	  <%= link_to "Logout", logout_path %>
 			  	  <%= fb_login_and_redirect(request.url, {:text => 'Connect with Facebook', :perms => 'email'}) %>
 			    <% end %>
 				<% else %>	
 													
 				<%= link_to_function "Search", "['login','login-link','search-toggle'].each(Element.toggle);", :id => "search-toggle", :style => "display:none;" %>
-				<%= link_to_function "Login with OC", "['login','login-link','search-toggle'].each(Element.toggle);", login_url, :id => "login-link" %> | 
-				<%= link_to "Register", :controller => 'account', :action => 'signup' %> | 
+				<%= link_to_function "Login with OC", "['login','login-link','search-toggle'].each(Element.toggle);", login_url, :id => "login-link" %> &nbsp;&nbsp;&nbsp; 
+				<%= link_to "Register", :controller => 'account', :action => 'signup' %>  
 				<%= fb_login_and_redirect(request.url, {:text => 'Login with Facebook', :perms => 'email'}) %>
 			<% end %>
 		</div>	

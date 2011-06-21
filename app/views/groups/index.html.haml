@@ -1,5 +1,4 @@
 #heading
-
   <a class="button silver large margin-right margin-top floatright" href="#">Create a Group</a>
   <a class="button silver large margin-right margin-top floatright" href="#">My Groups</a>
 
@@ -7,11 +6,14 @@
   
 .padding
   .groups_search
-    %span Find a group:
+    %span Find a Group
     = text_field_tag 'q', nil, :id => 'group_search_field', :class => 'field'
     = image_tag 'spinner-ovals.gif',  :id => 'group_search_spinner'
 
-  .groups_instructions
+    .groups_instructions
+      %strong Join Groups, it's free and easy. 
+      %br
+      Find Groups by searching for keyword, browsing by issue area, or by popularity.
     
   #groups_list
     = render 'groups_list', :groups => @groups

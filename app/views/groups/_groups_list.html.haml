@@ -12,7 +12,7 @@
   %li.grid_16.lined
     %span.grid_1.alpha
       .thumb.smaller= image_tag g.group_image.url(:thumb)
-    %span.grid_3= link_to g.name, g
+    %span.grid_3= link_to "<strong>#{g.name}</strong>".html_safe, g
     %span.grid_4.descrip= g.description
     %span.grid_3= g.pvs_category.nil? ? "None" : g.pvs_category.name
     %span.grid_2= g.active_members.size + 1

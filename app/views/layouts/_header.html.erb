@@ -113,9 +113,9 @@
         <li id="groups_nav" class="sub">
           <%= link_to ('<span>Groups ' + image_tag('tool_arrow-trans.png', :alt => '&gt;') + '</span>').html_safe, groups_url %>
           <ul class="sub">
-            <li><%= link_to "<span>Planned Parenthood <span class='updates'>26</span></span>".html_safe, new_group_path %></li>
-            <li><%= link_to "<span>Dave's Group</span>".html_safe, new_group_path %></li>
-            <li><%= link_to "<span>Andy's Group <span class='updates'>4</span></span>".html_safe, new_group_path %></li>
+            <li><%= link_to "<span class='groupname'>Planned Parenthood</span><span class='inline-count'>26</span></span>".html_safe, new_group_path %></li>
+            <li><%= link_to "<span class='groupname'>Dave's Group</span>".html_safe, new_group_path %></li>
+            <li><%= link_to "<span class='groupname'>Andy's Group</span><span class='inline-count'>4</span></span>".html_safe, new_group_path %></li>
             
             <li><%= link_to "<span>Start a New Group</span>".html_safe, new_group_path %></li>
           </ul>

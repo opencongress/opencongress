@@ -5096,3 +5096,23 @@ text-shadow: 0 1px 0 rgba(0,0,0, .3);
 line-height: 2.2em;
 }
 
+.inline-count{
+  float: right;
+  background-color: rgba(101,101,101, .2);
+  -moz-border-radius: 55px;
+  -webkit-border-radius: 55px;
+  -o-border-radius: 55px;
+  -ms-border-radius: 55px;
+  padding: 2px 10px;
+  margin-top: -2px;
+
+
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  rgba(101,101,101, .2),  rgba(101,101,101, 0)); /* for firefox 3.6+ */
+
+  text-shadow: 0 1px 0px #fff;
+  -moz-box-shadow: 0 1px 0px #fff, inset 0 1px 0px #333;
+  -webkit-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+  box-shadow:  0 1px 0px rgba(255,255,255, .4), inset 0 1px 0px rgba(101,101,101, .2);
+
+}

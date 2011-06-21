@@ -62,7 +62,7 @@ float: left;
 float: left;
 width: 52px;
 height: 52px;
-padding: 10px;
+padding: 5px;
 
 }
 
@@ -309,5 +309,23 @@ width: 540px !important;
 overflow: hidden;
 max-height: 10.5em;
 }
+.thumb img {
+  width: 52px;
+}
 
 
+.groups_search span {
+  font-weight: bold;
+  font-size: 14px;
+  margin-left: 20px;
+}
+
+.groups_search input {
+  margin-left: 20px;
+}
+
+#group_search_spinner {
+  margin-left: 10px;
+  padding-top: 10px;
+  display:none;
+}

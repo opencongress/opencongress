@@ -1,16 +1,17 @@
 %ul.container_16
-  %li.grid_16.alpha
+  %li.grid_16.lined
     %span.grid_1.alpha= "&nbsp;".html_safe
-    %span.grid_2 Name
-    %span.grid_6 Description
-    %span.grid_3 Issue Area of Focus
-    %span.grid_2 # of Members
-    %span.grid_2.omega
+    %span.grid_3= link_to 'Name', '#', :id => 'group_name_sort'
+    %span.grid_4.descrip Description
+    %span.grid_3= link_to 'Issue Area of Focus', '#', :id => 'group_issue_sort'
+    %span.grid_2= link_to '# of Members', '#', :id => 'group_members_sort'
+    %span.grid_1.omega
     
 %ul.container_16
 - groups.each do |g|
   %li.grid_16.lined
-    %span.grid_1.alpha= image_tag g.group_image.url(:thumb)
+    %span.grid_1.alpha
+      .thumb= image_tag g.group_image.url(:thumb)
     %span.grid_3= link_to g.name, g
     %span.grid_4.descrip= g.description
     %span.grid_3= g.pvs_category.nil? ? "None" : g.pvs_category.name

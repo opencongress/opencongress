@@ -4,9 +4,11 @@
 .padding
   .groups_search
     %span Find a group:
-    = text_field_tag 'q', nil, :id => 'group_search_field'
+    = text_field_tag 'q', nil, :id => 'group_search_field', :class => 'field'
+    = image_tag 'spinner-ovals.gif',  :id => 'group_search_spinner'
 
-      
+  .groups_instructions
+    
   #groups_list
     = render 'groups_list', :groups => @groups
 
@@ -14,6 +16,7 @@
         
 :javascript
   $j('#group_search_field').keyup(function() {
+    $j('#group_search_spinner').show();
     $j.ajax({
       url:'/groups.js?q=' + $j(this).val()
     });

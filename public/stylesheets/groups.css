@@ -354,7 +354,7 @@ max-height: 10.5em;
 }
 
 #group_search_spinner {
-  margin-left: 10px;
-  padding-top: 10px;
+position: absolute;
   display:none;
+margin-left: 10px;
 }

@@ -206,11 +206,14 @@ a.logo:hover{
 
 #user_account{
 	font-size: 11px;
-	padding: 4px 20px;
+	padding: 4px 200px 4px 20px;
 	margin-bottom: 4px;
 	cursor: default;
 	float: right;
+	position: relative;
 	}
+
+
 
 #user_account a{
 	padding: 0px 0 0 4px;
@@ -222,6 +225,62 @@ a.logo:hover{
 	
 
 
+
+.fb_button.fb_button_medium,
+.fb_button.fb_button_medium:active{
+border: 1px solid;
+height: 30px;
+overflow: hidden;
+float: right;
+position: absolute;
+right: -1px;
+top: 0px;
+margin-top: -5px;
+background: url('/images/facebook-bg.png') 0px 0px no-repeat;
+border: 1px solid #556689;
+border-top: 0 !important;
+  -moz-border-radius-bottomright: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -ms-border-bottom-right-radius: 5px;
+  -o-border-bottom-right-radius: 5px; 
+  border-bottom-right-radius: 5px;   
+
+
+
+}
+
+
+.fb_button.fb_button_medium:active{
+
+-moz-box-shadow:inset 0 1px 0 rgba(0,0,0, .3),inset 0 1px 2px rgba(0,0,0, .3);
+-webkit-box-shadow:inset 0 1px 0 rgba(0,0,0, .3),inset 0 1px 2px rgba(0,0,0, .3);
+-o-box-shadow:inset 0 1px 0 rgba(0,0,0, .3),inset 0 1px 2px rgba(0,0,0, .3);
+-ms-box-shadow:inset 0 1px 0 rgba(0,0,0, .3),inset 0 1px 2px rgba(0,0,0, .3);
+box-shadow:inset 0 1px 0 rgba(0,0,0, .3),inset 0 1px 2px rgba(0,0,0, .3);
+
+
+}
+
+#login-left .fb_button.fb_button_medium{
+position: normal;
+
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;  
+float: left;
+margin-left: 0;
+
+}
+
+.fb_button.fb_button_medium span,
+.fb_button.fb_button_medium:active span{
+border: none !important;
+background: 0 !important;
+text-shadow: 0 1px 0 rgba(0,0,0, .3);
+line-height: 2.2em;
+}
 
 #show_advanced, #hide_advanced {
 float: left;
@@ -456,7 +515,7 @@ a.track_small{
 	_background: url('../images/large_buttons.gif') right -769px no-repeat;
 	}
 
-a.track_small:hover{
+a.track_small:active{
 	background: url('../images/large_buttons.png') right -794px no-repeat;
 	_background: url('../images/large_buttons.gif') right -794px no-repeat;
 	text-decoration: none;
@@ -485,18 +544,18 @@ a.track_small span{
 	text-align: left;
 	}
 
-a.track_small:hover span{
+a.track_small:active span{
 	background: url('../images/large_buttons.png') left -794px no-repeat;
 	_background: url('../images/large_buttons.gif') left -794px no-repeat;
 	}
 
-a.large_track:hover{
+a.large_track:active{
 	background: url('../images/large_buttons.png') right -281px no-repeat;
 	_background: url('../images/large_buttons.gif') right -281px no-repeat;
 	text-decoration: none;
 	}
 
-a.large_track:hover span{
+a.large_track:active span{
 	background: url('../images/large_buttons.png') left -281px no-repeat;
 	_background: url('../images/large_buttons.gif') left -281px no-repeat;
 	}
@@ -552,14 +611,14 @@ a.med_button span{
 	font-size: 11px;
 	}
 
-a.med_button:hover{
+a.med_button:active{
 	background: url('../images/med_button_cap.png') right -31px no-repeat;
 	_background: url('../images/med_button_cap.gif') right -31px no-repeat;
 	text-decoration: none;
 	color: #999;
 	}
 
-a.med_button:hover span{
+a.med_button:active span{
 	background: url('../images/med_button.png') left -31px no-repeat;
 	_background: url('../images/med_button.gif') left -31px no-repeat;
 	}
@@ -583,7 +642,7 @@ a.med_button.med_arrow{
 	_background: url('../images/med_button_cap.gif') right -61px no-repeat;
 	}
 
-a.med_button.med_arrow:hover{
+a.med_button.med_arrow:active{
 	background: url('../images/med_button_cap.png') right -92px no-repeat;
 	_background: url('../images/med_button_cap.gif') right -92px no-repeat;
 	}
@@ -633,14 +692,14 @@ a.small_button span{
 	font-size: 11px;
 	}
 
-a.small_button:hover, a.small_button.active{
+a.small_button:active, a.small_button.active{
 	background: url('../images/small_button_cap.png') right -23px no-repeat;
 	_background: url('../images/small_button_cap.gif') right -23px no-repeat;
 	text-decoration: none;
 	color: #999;
 	}
 
-a.small_button:hover span, a.small_button.active span{
+a.small_button:active span, a.small_button.active span{
 	background: url('../images/small_button.png') left -23px no-repeat;
 	_background: url('../images/small_button.gif') left -23px no-repeat;
 	}
@@ -662,14 +721,14 @@ a.small_button.small_arrow span{
 	font-size: 11px;
 	}
 
-a.small_button.small_arrow:hover{
+a.small_button.small_arrow:active{
 	background: url('../images/small_button_cap.png') right -46px no-repeat;
 	_background: url('../images/small_button_cap.gif') right -46px no-repeat;
 	text-decoration: none;
 	color: #999;
 	}
 
-a.small_button.small_arrow:hover span{
+a.small_button.small_arrow:active span{
 	background: url('../images/small_button.png') left -23px no-repeat;
 	_background: url('../images/small_button.gif') left -23px no-repeat;
 	}
@@ -710,7 +769,7 @@ a.small_button.small_arrow:hover span{
 	margin: 0 4px 0 2px;
 	}
 
-.pagination a:hover{
+.pagination a:active{
 	text-decoration: none;
 	background: url('../images/small_button_cap.png') right -23px no-repeat;
 	_background: url('../images/small_button_cap.gif') right -23px no-repeat;
@@ -723,7 +782,7 @@ a.small_button.small_arrow:hover span{
 	display: block;
 	}
 
-.pagination a:hover span{
+.pagination a:active span{
 	color: #999;
 	
 	background: url('../images/small_button.png') left -23px no-repeat;
@@ -875,7 +934,7 @@ a.small_button.small_arrow:hover span{
 	cursor: pointer;
 	}
 
-#nav a:hover, #nav #tool_nav:hover a{
+#nav a:hover{
 	background-position: right center;
 	color: #000;
 
@@ -887,7 +946,7 @@ a.small_button.small_arrow:hover span{
 	}
 
 
-#nav a:active, #nav #tool_nav:active a{
+#nav a:active{
 	background-position: right center;
 	color: #000;
 
@@ -915,6 +974,16 @@ a.small_button.small_arrow:hover span{
 	width:165px;
 	padding: 0 0 0px 0px;
 	left: -999em; /* using left instead of display to hide menus because display: none isn't read by screen readers */
+	
+	-moz-box-shadow: 0 2px 4px rgba(0,0,0, .7);
+	-webkit-box-shadow: 0 2px 4px rgba(0,0,0, .7);
+	-ms-box-shadow: 0 2px 4px rgba(0,0,0, .7);
+	-o-box-shadow: 0 2px 4px rgba(0,0,0, .7);
+	box-shadow: 0 2px 4px rgba(0,0,0, .7);
+
+
+
+	
 	}
 
 #nav li:hover ul.sub, #wiki li:hover ul{ /* lists nested under hovered list items */
@@ -982,7 +1051,7 @@ a.small_button.small_arrow:hover span{
 /* sub-nav */
 
 #nav #wiki_nav{
-	margin-left: 27px;
+
 	}
 
 #nav li.sub{
@@ -1003,7 +1072,9 @@ a.small_button.small_arrow:hover span{
 	padding-right: 0;
 	
 }
-
+#tool_nav {
+margin: 0 !important; 	
+}
 
 /*///////////////////////////////////////////////////////
 
@@ -4975,52 +5046,6 @@ background: url('/images/construct.png') 0px 4px no-repeat;
   padding: 0 0 5px 20px;
 }
 
-.fb_button.fb_button_medium,
-.fb_button.fb_button_medium:active{
-border: 1px solid;
-height: 30px;
-overflow: hidden;
-float: right;
-margin-left: 10px;
-margin-top: -5px;
-margin-right: -20px;
-background: url('/images/facebook-bg.png') 0px 0px no-repeat;
-border: 1px solid #556689;
-
-  -moz-border-radius-bottomright: 5px;
-  -webkit-border-bottom-right-radius: : 5px;
-  -ms-border-bottom-right-radius: : 5px;
-  -o-border-bottom-right-radius: : 5px; 
-  border-bottom-right-radius: : 5px;   
-
-
-
-}
-
-
-.fb_button.fb_button_medium:active{
--moz-box-shadow:inset 0 1px 0 rgba(0,0,0, .3),inset 0 1px 2px rgba(0,0,0, .3);
-}
-
-#login-left .fb_button.fb_button_medium{
-
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
-  border-radius: 3px;  
-float: left;
-margin-left: 0;
-
-}
-
-.fb_button.fb_button_medium span,
-.fb_button.fb_button_medium:active span{
-border: none !important;
-background: 0 !important;
-text-shadow: 0 1px 0 rgba(0,0,0, .3);
-line-height: 2.2em;
-}
 
 .group_help li {
   margin-bottom: 20px;
@@ -5055,8 +5080,9 @@ border: 1px solid;
 height: 30px;
 overflow: hidden;
 float: right;
+margin: 0 !important;
+
 margin-left: 10px;
-margin-top: -5px;
 margin-right: -20px;
 background: url('/images/facebook-bg.png') 0px 0px no-repeat;
 border: 1px solid #556689;

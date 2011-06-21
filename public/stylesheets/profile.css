@@ -41,23 +41,21 @@ background: url('../images/arrow_button_cap.png') right -34px no-repeat;
 }
 
 
-ul.profile_nav li a:hover {
+ul.profile_nav li a:active {
 color: #888;
 text-decoration: none;
 background: url('../images/arrow_button_cap.png') right -34px no-repeat;
    _background: url('../images/arrow_button_cap.gif') right -34px no-repeat;
 }
 
-ul.profile_nav li a:hover span {
-padding: 9px 16px 7px;
-display: block;
+ul.profile_nav li a:active span {
 background: url('../images/arrow_button.png') left -34px repeat-x;
    _background: url('../images/arrow_button.gif') left -34px repeat-x;
 
 }
 
 ul.profile_nav li a span {
-padding: 9px 16px 7px;
+padding: 7px 16px 8px;
 display: block;
 background: url('../images/arrow_button.png') left 0 repeat-x;
    _background: url('../images/arrow_button.gif') left 0 repeat-x;
@@ -69,6 +67,19 @@ background: url('../images/arrow_button.png') left -34px repeat-x;
    _background: url('../images/arrow_button.gif') left -34px repeat-x;
 }
 
+
+#profile.show ul.profile_nav li#AboutMe a {
+color: #888;
+text-decoration: none;
+background: url('../images/arrow_button_cap.png') right -34px no-repeat;
+   _background: url('../images/arrow_button_cap.gif') right -34px no-repeat;
+}
+
+#profile.show ul.profile_nav li#AboutMe a span {
+background: url('../images/arrow_button.png') left -34px repeat-x;
+   _background: url('../images/arrow_button.gif') left -34px repeat-x;
+
+}
 
 #profile #the-items, #friends .invites, #friends #the-items{
 /* float: right;

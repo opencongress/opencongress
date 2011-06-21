@@ -24,6 +24,25 @@ form p {
   padding-bottom: 30px;
 }
 
+
+.groups_search {
+  padding: 15px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.4em;
+  background-color: rgba(101,101,101, .2);
+  border: 2px solid rgba(101,101,101, .1);
+  float: left;
+  width: 900px;
+margin-left: 0px;
+
+}
+
+
 .description {
   font-size: 16px;
 float: left;
@@ -60,11 +79,19 @@ float: left;
   background-color: rgba(101,101,101, .2);
   border: 2px solid rgba(101,101,101, .1);
 float: left;
-width: 52px;
-height: 52px;
-padding: 5px;
-
+width: 57px;
+height: 57px;
 }
+
+
+.thumb.smaller{
+width: 40px !important;
+height: 40px !important;
+padding: 0;
+}
+
+
+
 
 #group_comments {
   margin-top: 40px;
@@ -309,6 +336,8 @@ width: 540px !important;
 overflow: hidden;
 max-height: 10.5em;
 }
+
+
 .thumb img {
   width: 52px;
 }

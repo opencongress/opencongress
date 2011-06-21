@@ -802,3 +802,37 @@ float: left;
 padding: 10px 0 10px;
 }
 
+
+
+
+/*  faux table header */
+
+.table_header a{
+font-weight: bold;
+padding-right: 25px;
+line-height: 3em;
+background: url(/images/sort-arrows.png) right 1px no-repeat;
+}
+
+
+.table_header a.up{
+background: url(/images/sort-arrows.png) right -48px no-repeat;
+}
+
+
+
+.table_header a.down{
+background: url(/images/sort-arrows.png) right -91px no-repeat;
+}
+
+
+.table_header span{
+font-weight: bold;
+display: block;
+line-height: 3em;
+}
+
+
+
+
+

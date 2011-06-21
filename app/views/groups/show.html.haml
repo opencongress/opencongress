@@ -40,22 +40,23 @@
         - if @group.bills_supported.empty?
           %p None
         -else
-          - @group.bills_supported.each do |b|
-            .support
-              = link_to b.typenumber, bill_path
-              = b.title_common
+          %ul.sidebar-nav
+            - @group.bills_supported.each do |b|
+              %li.support-bills
+                = link_to "#{b.typenumber} #{b.title_common}", bill_path
         .clear.space &nbsp;
         .clear.space &nbsp;
         %h3.support Bills Opposed
         - if @group.bills_opposed.empty?
           %p None
         -else
-          - @group.bills_opposed.each do |b|
-            .oppose
-              = link_to b.typenumber, bill_path
-              = b.title_common
-              .actions
-                = link_to "Write Letter of Opposition", new_contact_congress_letter_path(:bill => b.ident, :position => 'oppose', :group_id => @group.id)       
+          %ul.sidebar-nav
+            - @group.bills_opposed.each do |b|
+              %li.oppose-bills
+                = link_to b.typenumber, bill_path
+                = b.title_common
+                .actions
+                  = link_to "Write Letter of Opposition", new_contact_congress_letter_path(:bill => b.ident, :position => 'oppose', :group_id => @group.id)       
       = link_to "Add Bill Positions", new_group_group_bill_position_path(@group), :class => 'button small blue'
     
   %ul.activity_stream
@@ -65,6 +66,26 @@
       %ul
         %li
           = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+        %ul.non-media
+          %li
+            = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+          %ul.non-media
+            %li
+              = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+            %ul.non-media
+              %li
+                = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+              %ul.non-media
+                %li
+                  = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+                %ul.non-media
+                  %li
+                    = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+                  %ul.non-media
+                    %li
+                      = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+                                    
+                      
     %li.photo
       %span.icon
       %div
@@ -79,6 +100,16 @@
         %span.shared-video
           <iframe width="425" height="349" src="http://www.youtube.com/embed/JfSOnncMsF0" frameborder="0" allowfullscreen></iframe>
         %span.source http://www.ertertert.com
+      %ul.non-media
+        %li
+          = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+        %ul.non-media
+          %li
+            = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+          %ul.non-media
+            %li
+              = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+            
     %li.link
       %span.icon
       %div
@@ -94,6 +125,16 @@
       %span.icon
       %div
         %span.person-activity <a href="#">Morgan Knutson wrote a letter to <a href="#">Diane Finestein</a> and <a href="#">Barbara Boxer</a> opposing <a href="#">H.R.234</a>            
+      %ul.non-media
+        %li
+          = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+        %ul.non-media
+          %li
+            = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+          %ul.non-media
+            %li
+              = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+            
     %li.letter-support
       %span.icon
       %div

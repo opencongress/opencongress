@@ -1,16 +1,18 @@
 %ul.container_16
-  %li
-    %span.grid_1= "&nbsp;".html_safe
+  %li.grid_16.alpha
+    %span.grid_1.alpha= "&nbsp;".html_safe
     %span.grid_2 Name
     %span.grid_6 Description
     %span.grid_3 Issue Area of Focus
     %span.grid_2 # of Members
-    %span.grid_2
+    %span.grid_2.omega
+    
+%ul.container_16
 - groups.each do |g|
-  %li
-    %span.grid_1= image_tag g.group_image.url(:thumb)
-    %span.grid_2= link_to g.name, g
-    %span.grid_6= g.description
+  %li.grid_16.lined
+    %span.grid_1.alpha= image_tag g.group_image.url(:thumb)
+    %span.grid_3= link_to g.name, g
+    %span.grid_4.descrip= g.description
     %span.grid_3= g.pvs_category.nil? ? "None" : g.pvs_category.name
     %span.grid_2= g.active_members.size + 1
-    %span.grid_2= link_to 'Join', '#', :class => 'button silver small'
+    %span.grid_1.omega= link_to 'Join', '#', :class => 'button silver small floatright'

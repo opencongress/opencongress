@@ -796,5 +796,9 @@ display: inline;
 
 .margin-top.push-top { margin-top: 33px;}
 
-
+.lined {
+border-bottom: 1px solid #ddd;
+float: left;
+padding: 10px 0 10px;
+}
 

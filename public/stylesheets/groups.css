@@ -194,7 +194,18 @@ float: left;
 margin-top: 43px;
 }
 
+.activity_stream ul{
+margin-left: 50px;
+}
 
+.activity_stream ul.non-media div{
+padding-left: 10px !important;
+padding-bottom: 0px !important;
+}
+
+.activity_stream ul.non-media .comm_comm{
+padding-bottom: 11px !important;
+}
 
 .activity_stream li {
 clear: both;
@@ -221,6 +232,7 @@ display: block;
 .activity_stream li.link div,
 .activity_stream li.letter-support div{
 padding-left: 60px;
+padding-bottom: 20px;
 }
 
 
@@ -288,6 +300,14 @@ border: 1px solid #ddd;
 display: block;
 text-align: center;
 width: 540px !important;
+}
+
+
+
+
+.descrip{
+overflow: hidden;
+max-height: 10.5em;
 }
 
 

@@ -67,7 +67,7 @@ outline: none;
 
 
 
-.button.silver{
+.button.silver, button{
   border: 1px solid #aaa;
   border-top: 1px solid #dbdbdb;
   border-bottom: 1px solid #777;
@@ -86,7 +86,7 @@ color: rgba(0,0,0,.9)
 
 
 
-.button.silver:hover{
+.button.silver:hover, button:hover{
   border: 1px solid #999;
   border-top: 1px solid #bbb;
   border-bottom: 1px solid #666;
@@ -105,7 +105,7 @@ color: rgba(0,0,0,.9)
 
 
 .button.silver:active,
-.active .button.silver{
+.active .button.silver, button:active{
   border: 1px solid #999;
   border-top: 1px solid #666;
   border-bottom: 1px solid #ccc;
@@ -860,6 +860,28 @@ position: absolute;
 right: 7px;
 }
 
+/*
 
 
+#account .bills_list li .title{
+border: 1px solid !important;
+max-width: 600px;
+}
+
+#account .bills_list li{
+position: relative;
+}
+
+
+#account .bills_list li p{
+padding-top: 0 !important;
+}
+
+#account .bills_list a.track_small{
+top: 0 !important;
+position: absolute;
+right: 0;
+}
+
+*/
 

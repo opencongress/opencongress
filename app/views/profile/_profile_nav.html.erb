@@ -74,39 +74,6 @@
 
 <% end %>
 
-<% if controller.controller_name == "friends" %>
-  <% if @user == current_user %>
-<div class="invites">
-
-	<script type='text/javascript'>
-	$j().ready(function() {
-		$j('#invite_form').jqm({ajax:'@href', trigger: 'a.invite_trigger'});
-	});
-	</script>  
-  
-  <ul>
-<li><%= link_to "See users in my state and district", friends_near_me_path(@user.login), :class => '' %></li>
-
-  <li><%= link_to 'Find users by e-mail, username, or real name', new_friend_path(@user.login), :class => '' %></li>
-
-  	<li><%= link_to "Import friends from G-Mail, Yahoo!, or Hotmail", friends_import_contacts_path, :class => '' %></li>
-
-  <li><%= link_to "Invite more friends to join OpenCongress!", 
-	            friends_invite_form_path(current_user.login), 
-	            :class => "invite_trigger" %></li>
- </ul>
- 
-	<div class="form" id="invite_friend" style="display:none; margin-top:10px;">
-    <%= render :partial => 'invite_form' %>
-    </div>
-   <div style="clear:both;"></div>
-  </div>
-  <div id="invite_form" class="jqmWindow">  </div>
-
-</div>
-<% end %>   
-<% end %>
-
 <% if controller.action_name == "watchdog" %>
 	<% if @user.can_view(:watchdog, current_user) %>
   <div id="alerts">

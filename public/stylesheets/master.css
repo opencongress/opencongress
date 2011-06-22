@@ -4071,7 +4071,7 @@ clear: both;
 
 }
 
-#user_login, #user_password, #user_password_confirmation, #user_email, #openid_url {
+#signupform #user_login, #signupform #user_password, #signupform #user_password_confirmation, #signupform #user_email, #openid_url {
 background: url('../images/forms.png') 0px -124px no-repeat;
 _background: url('../images/forms.gif') 0px -124px no-repeat;
 padding: 7px 10px 7px 7px;
@@ -4085,7 +4085,7 @@ margin-bottom: 12px;
 margin: 0;
 }
 
-#user_zipcode {
+#signupform #user_zipcode {
 background: url('../images/forms.png') 0px 0px no-repeat;
 _background: url('../images/forms.gif') 0px 0px no-repeat;
 padding: 7px;

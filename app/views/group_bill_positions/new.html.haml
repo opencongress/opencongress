@@ -10,5 +10,11 @@
           %span.grid_2.alpha= link_to b.typenumber, bill_path(b)
           %span.grid_6= b.title_common
           %span.grid_4.omega= render 'position_buttons', :b => b
-
+  %h3 Most-viewed Bills
+  %ul
+    - ObjectAggregate.popular('Bill', Settings.default_count_time, 5).each do |b|
+      %li.grid_12
+        %span.grid_2.alpha= link_to b.typenumber, bill_path(b)
+        %span.grid_6= b.title_common
+        %span.grid_4.omega= render 'position_buttons', :b => b
     

@@ -39,6 +39,8 @@ class Group < ActiveRecord::Base
   end
   
   def can_join?(u)
+    return false if u == :false
+    
     membership = group_members.where(["group_members.user_id=?", u.id]).first
     
     case join_type
@@ -51,6 +53,8 @@ class Group < ActiveRecord::Base
         return !group_invites.where(["user_id=?", u.id]).empty?
       end
     end
+    
+    return false
   end
   
   def can_moderate?(u)
@@ -63,6 +67,10 @@ class Group < ActiveRecord::Base
     return true if membership.status == 'MODERATOR'
     
     return false
+  end
+  
+  def can_invite?(u)
+    return true
   end
   
   def can_post?(u)

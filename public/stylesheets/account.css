@@ -228,5 +228,13 @@ list-style: none;
 padding: 14px 0 14px 50px;
 }
 
+.sens {
+  float: left;
+  width: 450px;
+}
 
+.reps {
+  float: right;
+  width: 450px;
+}
 

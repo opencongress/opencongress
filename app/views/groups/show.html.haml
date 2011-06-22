@@ -7,9 +7,10 @@
       %li
         %strong Owner:
         = link_to @group.user.login, user_profile_path(@group.user.login)
-      %li
-        %strong Website:
-        = link_to @group.website, @group.website
+      - unless @group.website.blank?
+        %li
+          %strong Website:
+          = link_to @group.website, @group.website
       - if @group.pvs_category
         %li
           %strong Issue Area:
@@ -20,7 +21,8 @@
   
   .sidebar
 
-
+    = link_to "Post to Group", "#", :class => 'button large silver post'
+    
     %ul.sidebar-nav
       %li.active
         <a class=" " href="#"><div></div>Full Converstation</a>
@@ -32,32 +34,37 @@
 
     #bill_positions
       - if @group.bills.empty?
-        %p You have not taken a position on any bills.
+        %p.margin-top.push-top.margin-bottom.floatleft
+          %strong The group has not taken a position on any bills.
       - else
         .clear.space &nbsp;
-        .clear.space &nbsp;
-        %h3.support Bills Supported
-        - if @group.bills_supported.empty?
-          %p None
-        -else
+        - unless @group.bills_supported.empty?
+          %h3.support Bills Supported
           %ul.sidebar-nav
             - @group.bills_supported.each do |b|
               %li.support-bills
                 = link_to "#{b.typenumber} #{b.title_common}", bill_path
-        .clear.space &nbsp;
-        .clear.space &nbsp;
-        %h3.support Bills Opposed
-        - if @group.bills_opposed.empty?
-          %p None
-        -else
+        .clear
+        - unless @group.bills_opposed.empty?
+          %h3.support Bills Opposed        
           %ul.sidebar-nav
             - @group.bills_opposed.each do |b|
               %li.oppose-bills
                 = link_to b.typenumber, bill_path
                 = b.title_common
                 .actions
-                  = link_to "Write Letter of Opposition", new_contact_congress_letter_path(:bill => b.ident, :position => 'oppose', :group_id => @group.id)       
-      = link_to "Add Bill Positions", new_group_group_bill_position_path(@group), :class => 'button small blue'
+                  = link_to "Write Letter of Opposition", new_contact_congress_letter_path(:bill => b.ident, :position => 'oppose', :group_id => @group.id)
+      - if @group.can_moderate?(current_user)
+        = link_to "Add Bill Position", new_group_group_bill_position_path(@group), :class => 'button small silver post'
+      
+    .clear
+    
+    %h3 Notifications
+    %ul.sidebar-nav
+      %li 
+        = link_to "Receive Emails From Owner <span class='inline-count'>On</span>".html_safe, "#"
+      %li 
+        <a href='#'>RSS <span class='feed'><img src='/images/rss.png' /></span></a>
     
   %ul.activity_stream
     %li

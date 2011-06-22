@@ -58,7 +58,6 @@ float: left;
 }
 
 .thumb{
-  background-color: rgba(101,101,101, .2);
 float: left;
 width: 75px;
 height: 75px;
@@ -107,9 +106,18 @@ table.groups td {
 width: 300px;
   margin-top: 40px;
 float: left;
-
+clear:left;
 }
 
+.sidebar h3 {
+  margin-top: 20px;
+}
+.sidebar .post {
+  float: left;
+  margin-bottom: 20px;
+  width: 223px;
+  text-align: center;
+}
 #bill_positions{
 clear: both;
 }
@@ -307,6 +315,7 @@ max-height: 10.5em;
 }
 
 .groups_search {
+  position: relative;
   padding: 10px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -319,27 +328,44 @@ max-height: 10.5em;
   border: 2px solid rgba(101,101,101, .1);
   float: left;
   width: 900px;
-margin-left: 0px;
+  margin-left: 0px;
 
 }
 
 .groups_search span {
   font-weight: normal;
   font-size: 14px;
-  margin:7px 0 0 20px;
+  margin:5px 0 0 20px;
 }
 
 .groups_search input {
   margin:7px 0 0 20px;
 }
 
+.groups_search select {
+  margin: 9px 150px 0 0;
+  float: right;
+}
+
+.groups_search option {
+  font-size: 14px;
+}
+
 #group_search_spinner {
-position: absolute;
+  position: absolute;
   display:none;
-margin-left: 10px;
+  right: 20px;
+  margin-left: 20px;
+  margin-top: 8px;
 }
 
 .groups_instructions {
+  padding: 0 10px 20px 10px;
+  font-size: 14px;
+  line-height: 1.4em;
+}
+
+.feed {
   float: right;
-  width: 520px;
+  margin-right: 10px;
 }

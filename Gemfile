@@ -5,6 +5,7 @@ gem 'rails', '3.0.7'
 # database gems -- need both pg and mysql for app and wiki
 gem 'pg'
 gem 'mysql'
+gem 'system_timer'
 
 gem "settingslogic"
 

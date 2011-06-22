@@ -229,12 +229,12 @@ display: block;
 
 
 
-.activity_stream li.photo div,
-.activity_stream li.video div,
-.activity_stream li.letter-track div,
-.activity_stream li.letter-oppose div,
-.activity_stream li.link div,
-.activity_stream li.letter-support div{
+li.photo div,
+li.video div,
+li.letter-track div,
+li.letter-oppose div,
+li.link div,
+li.letter-support div{
 padding-left: 60px;
 padding-bottom: 20px;
 }
@@ -253,35 +253,40 @@ width: 40px;
 height: 40px;
 }
 
-.activity_stream li.photo .icon{
+li.photo .icon{
 background: url(/images/group-icons.png) no-repeat;
 }
 
 
 
-.activity_stream li.video .icon{
+li.video .icon{
 background: url(/images/group-icons.png) 0 -50px no-repeat;
 }
 
 
 
-.activity_stream li.link .icon{
+li.link .icon{
 background: url(/images/group-icons.png) 0 -96px no-repeat;
 }
 
 
-.activity_stream li.letter-track .icon{
+li.letter-track .icon{
 background: url(/images/group-icons.png) 0 -143px no-repeat;
 }
 
 
-.activity_stream li.letter-oppose .icon{
+li.letter-oppose .icon{
 background: url(/images/group-icons.png) 0 -193px no-repeat;
 }
 
 
-.activity_stream li.letter-support .icon{
+li.letter-support .icon{
 background: url(/images/group-icons.png) 0 -243px no-repeat;
+}
+
+
+li.comment-post .icon{
+background: url(/images/group-icons.png) 2px -291px no-repeat;
 }
 
 
@@ -368,4 +373,197 @@ max-height: 10.5em;
 .feed {
   float: right;
   margin-right: 10px;
+}
+
+.post-to{
+background: #eee;
+float: left;
+width: 100%;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  border: 2px solid #ddd;
+  margin-top: 30px;
+
+}
+
+.post-to h3{
+padding-top: 10px;
+text-align: center;
+}
+
+.post-to ul{
+background: #eee;
+float: left;
+padding: 0px 0 10px 195px;
+}
+
+
+.post-to ul li{
+background: #eee;
+float: left;
+padding-left: 5px;
+}
+
+
+.post-to .button{
+cursor: pointer;
+}
+
+
+.post-to ul li div{
+padding-left: 14px;
+padding-bottom: 0;
+float: left;
+margin-right: 16px;
+font-size: 12px;
+padding-top: 17px;}
+
+
+
+
+.post-to.modal li.photo .icon{
+background: url(/images/tiny-group-icons.png) 0 4px no-repeat;
+}
+
+
+
+.post-to.modal li.video .icon{
+background: url(/images/tiny-group-icons.png) 0 -18px no-repeat;
+}
+
+
+
+.post-to.modal li.link .icon{
+background: url(/images/tiny-group-icons.png) 0 -40px no-repeat;
+}
+
+
+.post-to.modal li.letter-track .icon{
+background: url(/images/tiny-group-icons.png) 0 -62px no-repeat;
+}
+
+
+.post-to.modal li.letter-oppose .icon{
+background: url(/images/tiny-group-icons.png) 0 -108px no-repeat;
+}
+
+
+.post-to.modal li.letter-support .icon{
+background: url(/images/tiny-group-icons.png) 0 -85px no-repeat;
+}
+
+
+.post-to.modal li.comment-post .icon{
+background: url(/images/tiny-group-icons.png) 0 -128px no-repeat;
+}
+
+
+.post-to.modal .icon{
+width: 20px;
+height: 20px;
+margin-top: 0px;
+}
+
+
+.post-to.modal ul li div{
+padding-left: 14px;
+padding-bottom: 6px;
+float: left;
+margin-right: 16px;
+font-size: 12px;
+padding-top: 6px;
+}
+
+.post-to .icon{
+float: left;
+margin-top: 6px;
+}
+
+
+
+
+
+.post-to li.letter-track, 
+
+.post-to li.letter-oppose,
+
+
+.post-to li.letter-support {
+display: none;
+}
+
+
+
+
+
+.post-to.modal{
+width: 700px;
+bordeR: 0 ;
+  }
+
+
+
+.post-to.modal h3{
+margin-bottom: 0;
+  border: 1px solid #aaa;
+  border-top: 1px solid #dbdbdb;
+  border-bottom: 1px solid #777;
+  height: 30px;
+  -moz-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+  -webkit-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+  box-shadow:  0 1px 0px #ddd, inset 0 1px 0px #fff;
+  
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #eee); /* for firefox 3.6+ */
+
+  text-shadow: 0 1px 0px #fff;
+opacity: .7;
+color: rgba(0,0,0,.9)
+  }
+
+
+.post-to.modal ul{
+bordeR: 0 ;
+width: 680px;
+padding: 10px 10px 0;
+background: rgba(0,0,0,.1)
+  }
+
+.post-to.modal ul .button{
+  border-bottom: none;
+  
+   -moz-box-shadow:inset 0 1px 0px #fff;
+  -webkit-box-shadow:inset 0 1px 0px #fff;
+  box-shadow:  inset 0 1px 0px #fff;
+  
+  border-top: 1px solid #aaa;
+  -moz-border-radius-bottomright: 0px;
+  -webkit-border-bottom-right-radius: 0px;
+  -ms-border-bottom-right-radius: 0px;
+  -o-border-bottom-right-radius:  0px; 
+  border-bottom-right-radius: 0px;   
+
+
+  -moz-border-radius-bottomleft: 0px;
+  -webkit-border-bottom-left-radius: 0px;
+  -ms-border-bottom-left-radius: 0px;
+  -o-border-bottom-left-radius:  0px; 
+  border-bottom-left-radius: 0px;   
+
+
+
+
+  }
+
+
+.post-to.modal .button.active{
+background: #fff;
+opacity: 1;
+  }
+.posting-modal-content{
+padding: 90px 50px 30px;
+background: #fff;
 }

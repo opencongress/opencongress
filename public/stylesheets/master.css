@@ -1472,6 +1472,11 @@ width: 257px;
 float: left;
 overflow:hidden;
 }
+
+#tertiary-content li{
+list-style: none;
+}
+
 .main{
   padding:0 25px;
   background:#fff;

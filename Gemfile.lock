@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/opencongress/formageddon.git
-  revision: 0c5b650ed61dc236ec83bdecbcb3b4171962becc
+  revision: 887a36965fb1ec87c54c36128d6ae7fbff7380dd
   specs:
     formageddon (0.0.0)
       delayed_job (~> 2.1)
@@ -111,6 +111,9 @@ GEM
       abstract (>= 1.0.0)
     eventmachine (0.12.10)
     excon (0.6.3)
+    facebooker2 (0.0.11)
+      mogli (>= 0.0.12)
+      ruby-hmac
     fastercsv (1.5.4)
     ffi (1.0.9)
     fog (0.8.2)
@@ -136,7 +139,7 @@ GEM
       em-websocket (~> 0.2.0)
       guard (>= 0.2.2)
       json (~> 1.5.1)
-    haml (3.1.1)
+    haml (3.1.2)
     highline (1.6.2)
     hoptoad_notifier (2.4.11)
       activesupport
@@ -163,6 +166,8 @@ GEM
     memcache (1.2.13)
     memcache-client (1.8.5)
     mime-types (1.16)
+    mogli (0.0.28)
+      httparty (>= 0.4.3)
     mysql (2.8.1)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -265,6 +270,7 @@ DEPENDENCIES
   closure-compiler
   cucumber (= 0.8.5)
   cucumber-rails
+  facebooker2
   fog
   formageddon!
   govkit

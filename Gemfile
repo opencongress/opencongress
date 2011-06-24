@@ -58,6 +58,7 @@ gem 'newrelic_rpm'
 
 # oauth
 gem 'oauth'
+gem 'facebooker2'
 
 gem 'will_paginate', '~> 3.0.pre2'
 

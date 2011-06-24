@@ -837,6 +837,15 @@ EOT
     "#{Settings.current_opensecrets_cycle.to_i - 1}-#{Settings.current_opensecrets_cycle}"
   end
 
+  def news_blog_count(count)
+    return nil if count.blank?
+    if count >= 1000
+      "#{(count/1000).floor}K"
+    else
+      count
+    end
+  end
+
   def bitly_url(object)
     require 'open-uri'
     

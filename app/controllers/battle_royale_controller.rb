@@ -1,7 +1,5 @@
 class BattleRoyaleController < ApplicationController
  
-  before_filter :get_range
-
   def index
     redirect_to :controller => 'bill', :action => 'hot'
   end

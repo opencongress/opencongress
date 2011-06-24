@@ -813,9 +813,9 @@ private
       when "AllTime"
         @range = 20.years.to_i
     end
-    
+
     @perc_diff_in_days = Bill.percentage_difference_in_periods(@range).to_f
-    
+
     @time_collection = [["1 Day","1day"],
                         ["5 Days","5days"],
                         ["30 Days","30days"],

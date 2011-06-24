@@ -29,7 +29,7 @@
     </ul>
   <% end %>
   
-  <% unless (voting_similarities_html = top_voting_similarities).empty? %>
+  <% unless (voting_similarities_html = top_voting_similarities).nil? %>
     <!-- Should be popup <%# site_text_explain('voting_similarities')%> -->
     <%= voting_similarities_html %>
   <% end %> 

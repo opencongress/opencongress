@@ -128,4 +128,13 @@ class ApplicationController < ActionController::Base
     end
   end
   
+
+  def news_blog_count(count)
+    return nil if count.blank?
+    if count >= 1000
+      "#{(count/1000).floor}K"
+    else
+      count
+    end
+  end  
 end

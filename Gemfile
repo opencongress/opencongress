@@ -6,6 +6,7 @@ gem 'rake', '0.8.7'
 # database gems -- need both pg and mysql for app and wiki
 gem 'pg'
 gem 'mysql'
+gem 'system_timer'
 
 gem "settingslogic"
 

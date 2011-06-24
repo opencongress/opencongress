@@ -1,16 +1,23 @@
-class Array
-  def shuffle
-    clone.shuffle!
-  end
+class SocketTest
+  def self.is_port_open?(ip, port)
+    s = Socket.new(Socket::AF_INET, Socket::SOCK_STREAM, 0)
+    sa = Socket.sockaddr_in(port, ip)
 
-  def shuffle!
-    size.downto(2) do |i|
-      r = rand(i)
-        tmp = self[i-1]
-      self[i-1] = self[r]
-      self[r] = tmp
+    begin
+      s.connect_nonblock(sa)
+    rescue Errno::EINPROGRESS
+      if IO.select(nil, [s], nil, 1)
+        begin
+          s.connect_nonblock(sa)
+        rescue Errno::EISCONN
+          return true
+        rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+          return false
+        end
+      end
     end
-    self
-  end
-end
 
+    return false
+  end
+  
+end

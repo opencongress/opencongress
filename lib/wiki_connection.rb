@@ -8,7 +8,17 @@ class Wiki < ActiveRecord::Base
   establish_connection :oc_wiki
 
   set_table_name 'text'
-  
+
+  # Monkey patch find_by_sql so that we check whether the server is up before we try to connect.
+  # This avoids an issue where the AR socket blocks for a very long time.
+  def self.find_by_sql(query)
+    if (!connected? && !SocketTest.is_port_open?(configurations['oc_wiki']['host'], configurations['oc_wiki']['port'] || 3306))
+      return nil
+    end
+
+    super(query)
+  end
+
   def self.summary_text_for(article_name)
     begin
       a = find_by_sql(['select rev_id, rev_timestamp, t.old_text, p.page_title, p.page_namespace from revision r, page p, text t where r.rev_id = p.page_latest and t.old_id = r.rev_text_id and page_title = ?', article_name])

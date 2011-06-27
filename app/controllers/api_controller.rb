@@ -50,9 +50,9 @@ class ApiController < ApplicationController
       conditions[:user_approval] = params[:user_approval_from].to_f..params[:user_approval_to].to_f
     end
     
-    people = Person.paginate(:all, :conditions => conditions, :page => @page, :per_page => @per_page)
-    
-    do_render(people, :methods => [:oc_user_comments, :oc_users_tracking, 
+    people = Person.where(conditions)
+
+    do_render_paginated(people, :methods => [:oc_user_comments, :oc_users_tracking, 
                                               :abstains_percentage, :with_party_percentage], 
                                               :include => [:recent_news, :recent_blogs, :person_stats],
                                               :except => ["fti_names"])
@@ -122,9 +122,9 @@ class ApiController < ApplicationController
       conditions[k] = params[v] if params[v]
     end
     
-    @bills = Bill.paginate(:all, :conditions => conditions, :page => @page, :per_page => @per_page)
+    @bills = Bill.where(conditions)
 
-    do_render(@bills)
+    do_render_paginated(@bills)
   end
   
   def bills_by_ident
@@ -146,9 +146,9 @@ class ApiController < ApplicationController
     page = params[:page] unless params[:page].blank?
     date = Time.parse(params[:date]).to_i
     if date
-      @bills = Bill.paginate(:all, :conditions => ["introduced >= ? ", date], :order => "introduced desc", :page => @page, :per_page => @per_page)
+      @bills = Bill.where(["introduced >= ? ", date]).order("introduced desc")
 
-      do_render(@bills, :style => :full)
+      do_render_paginated(@bills, :style => :full)
     end
   end
   
@@ -242,7 +242,7 @@ class ApiController < ApplicationController
     # storing it after the request is done.
 
     if params[:key].blank?
-      # Only redirect if they 
+      # Redirect to rate-limited api subdomain if they don't supply a key
       if request.subdomains.try(:first) != 'api'
         redirect_to params.merge({:host => Settings.api_host})
       end
@@ -299,13 +299,18 @@ class ApiController < ApplicationController
   def render_via_builder_template(template_name, obj)
     respond_with do |format|
       format.xml { render template_name, :locals => {:obj => obj} }
-      format.json { render :json => Hash.from_xml(render_to_string(template_name, :locals => {:obj => obj}, :layout => false)).to_json }
+      format.json { render :json => Hash.from_xml(render_to_string(template_name, :locals => {:obj => obj}, :layout => false)) }
     end      
+  end
+
+  def do_render_paginated(relation, parameters = {})
+    do_render(relation.offset((@page-1) * @per_page).limit(@per_page), parameters)
   end
 
   def do_render(object, parameters = {})
     respond_with object do |format|
-      format.any(:xml, :json) { render request.format.to_sym => object.try(:"to_#{request.format.to_sym}", parameters) }
+      format.json { render :json => { object.table.name.to_sym => object }.to_json(parameters) }
+      format.xml { render :xml => object.to_xml(parameters) }
     end
   end
   

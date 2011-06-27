@@ -40,7 +40,8 @@ development:
   committee_reports_path: /Users/aross/pcf-work/committee_reports
   
   group_images_path: /Users/aross/pcf-work/gitbranches/opencongress/public/system/group_images
-
+  notebook_files_path: /Users/aross/pcf-work/gitbranches/opencongress/public/system/notebook_files
+    
   base_url: http://localhost:3000
   api_host: api.127localhost.com:3000
   api_base_url: http://api.127localhost.com:3000/
@@ -57,7 +58,10 @@ staging:
   <<: *defaults
   
   base_url: http://dev.opencongress.org/
-    
+  
+  group_images_path: /u/apps/opencongress-dev/shared/system/group_images
+  notebook_files_path: /u/apps/opencongress-dev/shared/system/notebook_files
+  
 production:
   <<: *defaults
   

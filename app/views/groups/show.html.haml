@@ -19,128 +19,68 @@
   .description
     = @group.description
   
-  
-  
-  
-  
-  .post-to.modal
-    %h3 Post to Group
-    %ul
-      %li.photo.button.silver.margin-right.active
-        %span.icon  
-        %div Photo  
-      %li.video.button.silver.margin-right
-        %span.icon 
-        %div Video   
-      %li.link.button.silver.margin-right
-        %span.icon
-        %div Link    
-      %li.comment-post.button.silver.margin-right
-        %span.icon      
-        %div Comment
-      %li.letter-track.button.silver.margin-right
-        %span.icon      
-        %div Tracking Letter
-      %li.letter-support.button.silver.margin-right
-        %span.icon      
-        %div Supporting Letter
-      %li.letter-oppose.button.silver
-        %span.icon      
-        %div Opposing Letter
-    .posting-modal-content
-     
-      %form
-        %p
-          %label Post a photo
-          %input.field
-          %button.silver.medium.button Post
-  
-  
-  
-  
-  
-  
-  .post-to
-    %h3 Post to this Group
-    %ul
-      %li.photo.button.silver.margin-right
-        %span.icon  
-        %div Photo  
-      %li.video.button.silver.margin-right
-        %span.icon 
-        %div Video   
-      %li.link.button.silver.margin-right
-        %span.icon
-        %div Link    
-      %li.comment-post.button.silver.margin-right
-        %span.icon      
-        %div Comment
-      %li.letter-track.button.silver.margin-right
-        %span.icon      
-        %div Tracking Letter
-      %li.letter-support.button.silver.margin-right
-        %span.icon      
-        %div Supporting Letter
-      %li.letter-oppose.button.silver
-        %span.icon      
-        %div Opposing Letter
-
-
-
-
+  = render :partial => 'post_modal'
+  = render :partial => 'post_menu'
   
   .sidebar
     %ul.sidebar-nav
-      %li.active
+      %li.has-main-content.active
         <a class=" " href="#"><div></div>Full Converstation</a>
-      %li
+      %li.has-main-content
         <a class="" href="#"><div></div>Unread <span class="inline-count">2333</span></a>
 
 
 
 
     #bill_positions
-      - if @group.bills.empty?
-        %p.margin-top.push-top.margin-bottom.floatleft
-          %strong The group has not taken a position on any bills.
-      - else
-        .clear.space &nbsp;
-        - unless @group.bills_supported.empty?
-          %h3.support Bills Supported
-          %ul.sidebar-nav
-            - @group.bills_supported.each do |b|
-              %li.support-bills
-                = link_to "#{b.typenumber} #{b.title_common}", bill_path
-        .clear
-        - unless @group.bills_opposed.empty?
-          %h3.support Bills Opposed        
-          %ul.sidebar-nav
-            - @group.bills_opposed.each do |b|
-              %li.oppose-bills
-                = link_to b.typenumber, bill_path
-                = b.title_common
-                .actions
-                  = link_to "Write Letter of Opposition", new_contact_congress_letter_path(:bill => b.ident, :position => 'oppose', :group_id => @group.id)
-      - if @group.can_moderate?(current_user)
-        = link_to "Add Bill Position", new_group_group_bill_position_path(@group), :class => 'button small silver post'
+      = render :partial => 'bill_positions_sidebar'
       
     .clear
     
     %h3 Notifications
     %ul.sidebar-nav
-      %li 
+      %li
         = link_to "Receive Emails From Owner <span class='inline-count'>On</span>".html_safe, "#"
-      %li 
-        <a href='#'>RSS <span class='feed'><img src='/images/rss.png' /></span></a>
+      %li
+        %a{ :href => group_path(@group, :format => 'rss') } 
+          RSS
+          %span.feed= image_tag '/images/rss.png'
     
-  %ul.activity_stream
-    %li
-      - comment = Comment.find(215486)
-      = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
-      %ul
-        %li
-          = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
-        %ul.non-media
+  #activity_stream_container.main-content
+    = render :partial => 'activity_stream'
+
+  #dummy_div.main-content
+
+  
+  #bill_positions_content
+    = render :partial => 'bill_positions_content'
+    
+  :javascript
+    var $sidebar_links = $j('.has-main-content a');
+    $sidebar_links.click(function() {
+        $sidebar_links.parent().removeClass('active');
+        $j(this).parent().addClass('active');
+        var index = $sidebar_links.index($j(this));
+        $j('.main-content').hide();
+        if (index == 0) {
+          $j('.activity_stream li').show();
+          $j('#activity_stream_container').show();
+        } else if (index == 1) {
+          $j('.activity_stream li').hide();
+          $j('.activity_stream li.new').show();
+          $j('#activity_stream_container').show();
+        } else {
+          $j('.main-content').eq(index).show();
+        }
+        return false;
+    });
+    
+  /  
+    %ul.activity_stream
+      %li
+        - comment = Comment.find(215486)
+        = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+        %ul
           %li
             = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
           %ul.non-media
@@ -158,61 +98,57 @@
                   %ul.non-media
                     %li
                       = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+                    %ul.non-media
+                      %li
+                        = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
                                     
                       
-    %li.photo
-      %span.icon
-      %div
-        %span.person-activity <a href="#">Morgan Knutson</a> shared a photo
-        %span.shared-photo
-          <img src="http://upload.wikimedia.org/wikipedia/en/3/33/SS-Savannah.jpg" />
-        %span.source http://www.ertertert.com
-    %li.video
-      %span.icon
-      %div
-        %span.person-activity <a href="#">Morgan Knutson</a> shared a video
-        %span.shared-video
-          <iframe width="425" height="349" src="http://www.youtube.com/embed/JfSOnncMsF0" frameborder="0" allowfullscreen></iframe>
-        %span.source http://www.ertertert.com
-      %ul.non-media
-        %li
-          = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+      %li.photo
+        %span.icon
+        %div
+          %span.person-activity <a href="#">Morgan Knutson</a> shared a photo
+          %span.shared-photo
+            <img src="http://upload.wikimedia.org/wikipedia/en/3/33/SS-Savannah.jpg" />
+          %span.source http://www.ertertert.com
+      %li.video
+        %span.icon
+        %div
+          %span.person-activity <a href="#">Morgan Knutson</a> shared a video
+          %span.shared-video
+            <iframe width="425" height="349" src="http://www.youtube.com/embed/JfSOnncMsF0" frameborder="0" allowfullscreen></iframe>
+          %span.source http://www.ertertert.com
         %ul.non-media
           %li
             = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
           %ul.non-media
             %li
               = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+            %ul.non-media
+              %li
+                = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
             
-    %li.link
-      %span.icon
-      %div
-        %span.person-activity <a href="#">Morgan Knutson</a> shared a link 
-        %span.shared-link
-          <a href="#">Title of link goes right here...</a>
-        %span.source http://www.ertertert.com
-    %li.letter-track
-      %span.icon
-      %div
-        %span.person-activity <a href="#">Morgan Knutson</a> wrote a letter to <a href="#">Diane Finestein</a> and <a href="#">Barbara Boxer</a> letting them know they're tracking <a href="#">H.R.234</a>      
-    %li.letter-oppose
-      %span.icon
-      %div
-        %span.person-activity <a href="#">Morgan Knutson wrote a letter to <a href="#">Diane Finestein</a> and <a href="#">Barbara Boxer</a> opposing <a href="#">H.R.234</a>            
-      %ul.non-media
-        %li
-          = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+      %li.letter-track
+        %span.icon
+        %div
+          %span.person-activity <a href="#">Morgan Knutson</a> wrote a letter to <a href="#">Diane Finestein</a> and <a href="#">Barbara Boxer</a> letting them know they're tracking <a href="#">H.R.234</a>      
+      %li.letter-oppose
+        %span.icon
+        %div
+          %span.person-activity <a href="#">Morgan Knutson wrote a letter to <a href="#">Diane Finestein</a> and <a href="#">Barbara Boxer</a> opposing <a href="#">H.R.234</a>            
         %ul.non-media
           %li
             = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
           %ul.non-media
             %li
               = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+            %ul.non-media
+              %li
+                = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
             
-    %li.letter-support
-      %span.icon
-      %div
-        %span.person-activity <a href="#">Morgan Knutson</a> wrote a letter to <a href="#">Diane Finestein</a> and <a href="#">Barbara Boxer</a> supporting <a href="#">H.R.234</a>     
+      %li.letter-support
+        %span.icon
+        %div
+          %span.person-activity <a href="#">Morgan Knutson</a> wrote a letter to <a href="#">Diane Finestein</a> and <a href="#">Barbara Boxer</a> supporting <a href="#">H.R.234</a>     
         
         
     <a class="load-more button silver huge clear" href="#">Load More</a>         

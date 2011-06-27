@@ -46,6 +46,16 @@ class CreateGroups < ActiveRecord::Migration
       t.timestamps
     end
     
+    add_column :political_notebooks, :group_id, :integer
+    add_index :political_notebooks, :group_id
+    
+    add_column :notebook_items, :file_file_name, :string
+    add_column :notebook_items, :file_content_type, :string
+    add_column :notebook_items, :file_file_size, :integer
+    add_column :notebook_items, :file_updated_at, :datetime
+
+    add_column :notebook_items, :group_user_id, :integer
+    
     ## join all users to two default groups
     admin_user = User.find_by_login('aross')
     State.all[0..3].each do |s|
@@ -71,5 +81,15 @@ class CreateGroups < ActiveRecord::Migration
     drop_table :group_members
     drop_table :group_invites
     drop_table :group_bill_positions
+    
+    remove_column :political_notebooks, :group_id
+    
+    remove_column :notebook_items, :file_file_name
+    remove_column :notebook_items, :file_content_type
+    remove_column :notebook_items, :file_file_size
+    remove_column :notebook_items, :file_updated_at
+    
+    # remove_column :notebook_items, :group_user_id
+    
   end
 end

@@ -1,6 +1,4 @@
 class PoliticalNotebooksController < ApplicationController
-  layout 'application'
-
   require 'hpricot'
   require 'open-uri'
   require 'timeout'

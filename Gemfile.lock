@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/opencongress/formageddon.git
-  revision: 887a36965fb1ec87c54c36128d6ae7fbff7380dd
+  revision: a4457019837bf3252c666ebc820c1f92a2cd3dda
   specs:
     formageddon (0.0.0)
       delayed_job (~> 2.1)
@@ -97,7 +97,7 @@ GEM
     cucumber-rails (0.3.2)
       cucumber (>= 0.8.0)
     culerity (0.2.15)
-    daemons (1.1.3)
+    daemons (1.1.4)
     delayed_job (2.1.4)
       activesupport (~> 3.0)
       daemons

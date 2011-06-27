@@ -1,5 +1,8 @@
 class NotebookFile < NotebookItem
-
+  has_attached_file :file, :styles => { :medium => "300x300>", :thumb => "100x100>" }, 
+                    :path => "#{Settings.notebook_files_path}/:id/:style/:filename",
+                    :url => "/system/notebook_files/:id/:style/:filename"
+  
   # has_attachment :content_type => ['application/pdf', :image,'application/msword', 'text/plain'],     
   #   :storage => :file_system, 
   #   :max_size => 1024.kilobytes, 
@@ -11,7 +14,7 @@ class NotebookFile < NotebookItem
   # 
   # validates_as_attachment 
 
-  #validates_presence_of :url, :title
+  validates_presence_of :title
   
   def can_render_thumbnail?
     self.image?

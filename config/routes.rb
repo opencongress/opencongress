@@ -18,6 +18,16 @@ OpenCongress::Application.routes.draw do
     resources :group_invites
     resources :group_members
     resources :group_bill_positions
+    
+    resource :political_notebook do
+      collection do
+        get :feed
+      end
+      resources :notebook_links
+      resources :notebook_videos
+      resources :notebook_notes
+      resources :notebook_files    
+    end
   end
 
   match '/' => 'index#index', :as => :home

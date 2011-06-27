@@ -802,6 +802,13 @@ float: left;
 padding: 10px 0 10px;
 }
 
+.nopadding {
+  padding: 0 !important;
+}
+
+.notop {
+  top: 0 !important;
+}
 
 
 

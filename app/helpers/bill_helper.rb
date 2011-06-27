@@ -54,15 +54,15 @@ module BillHelper
   def bill_titles_html
     @bill.bill_titles.map do |bt|
 
-      "<li><em>#{bt.title_type.capitalize}:</em> " +
-      " #{bt.title}" + (bt.as != '' ? "<em> as #{bt.as}.</em>" : ".") + "</li>"
+      "<li><em>#{bt.title_type.capitalize}:</em> ".html_safe +
+      " #{bt.title}" + (bt.as != '' ? "<em> as #{bt.as}.</em>".html_safe : ".") + "</li>".html_safe
     end
   end
 
   def display_bill_titles
     "<a href='#' id='bill_title_link' onclick='change_vis_text(\"bill_titles\", " +
       "\"bill_title_link\", \"...all bill titles\", \"...hide bill titles\");return false'>" +
-      "...all bill titles</a>"
+      "...all bill titles</a>".html_safe
   end
 
   def bill_related_bills_html

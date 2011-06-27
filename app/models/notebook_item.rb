@@ -6,6 +6,7 @@ class NotebookItem < ActiveRecord::Base
   belongs_to :notebookable, :polymorphic => true  
   belongs_to :bill, :foreign_key => "notebookable_id", :conditions => ["notebookable_type = ?", "Bill"]  
   belongs_to :hot_bill_category
+  belongs_to :group_user, :class_name => "User"
   
   # by default, returns zero; to be overridden by child classes
   def count_times_bookmarked

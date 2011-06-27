@@ -1,4 +1,5 @@
 class ContactCongressLettersController < ApplicationController
+  require 'yahoo_geocoder'
   
   def new
     @page_title = "Contact Congress"
@@ -38,7 +39,7 @@ class ContactCongressLettersController < ApplicationController
     end
   
     @formageddon_thread = Formageddon::FormageddonThread.new
-    @formageddon_thread.prepare(:user => current_user, :subject => @bill.typenumber, :message => message_start)
+    @formageddon_thread.prepare(:user => current_user, :subject => "#{@bill.typenumber} #{@bill.title_common}", :message => message_start)
   end
 
   
@@ -59,9 +60,11 @@ class ContactCongressLettersController < ApplicationController
     end
 
     @sens = [] unless @sens
-    @reps = [] unless @reps and @reps.size == 1
-    
-    #render :partial => 'contact/contact_recipients', :locals => { :show_checkboxes => true }
+    if @reps and @reps.size == 1
+      @letter_start = "I am writing as your constituent in the #{@reps.first.district.to_i.ordinalize} Congressional district of #{State.for_abbrev(@reps.first.state)}. "
+    else
+      @reps = []
+    end
   end
   
   def show

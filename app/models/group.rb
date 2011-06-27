@@ -17,6 +17,8 @@ class Group < ActiveRecord::Base
   
   has_many :comments, :as => :commentable
   
+  has_one :political_notebook
+  
   def to_param
     "#{id}_#{name.gsub(/[^A-Za-z]+/i, '_').gsub(/\s/, '_')}"
   end

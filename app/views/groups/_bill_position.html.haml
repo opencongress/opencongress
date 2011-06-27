@@ -1,0 +1,21 @@
+.main-content
+  %h2= "#{bill_position.bill.typenumber}: #{bill_position.bill.title_common}"
+  %p.behave
+    = "#{@group.name} "
+    %strong= "#{bill_position.position}s "
+    this bill.
+    = "Here's why:" unless bill_position.comment.blank?
+  
+  - unless bill_position.comment.blank?
+    %p.behave.bill_position_comment
+      %em= bill_position.comment
+    
+  - unless bill_position.permalink.blank?
+    %p.behave.bill_position_permalink.small
+      Find out more:
+      = link_to bill_position.permalink, bill_position.permalink
+      
+  %h3 Letters to Congress
+  %p.behave No one from the group has written a letter of #{bill_position.position == 'support' ? 'support' : 'opposition' } about this bill to their elected representatives
+  
+  = link_to "Write Letter of #{bill_position.position == 'support' ? 'Support' : 'Opposition' }", new_contact_congress_letter_path(:bill => bill_position.bill.ident, :group_id => bill_position.group.id), :class => 'button huge blue margin-top floatleft'

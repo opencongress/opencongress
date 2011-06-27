@@ -1,6 +1,4 @@
 class NotebookItemsController < ApplicationController
-  layout 'application'
-  #  include PoliticalNotebookSytem  
   helper :profile
   helper :political_notebooks
   before_filter :notebook_env, :except => :remove_item
@@ -65,14 +63,18 @@ class NotebookItemsController < ApplicationController
   
 protected
   def notebook_env
-    get_user
+    get_user_or_group
     get_notebook
     set_title
     set_profile_nav_location
   end
   
   def set_title
-    @page_title = "#{@user.login}'s Profile"    
+    if @group
+      @page_title = "#{@group.name} Activity Stream"
+    else
+      @page_title = "#{@user.login}'s Profile"
+    end  
   end
 
   def set_profile_nav_location
@@ -80,12 +82,20 @@ protected
     @profile_nav = @user    
   end
 
-  def get_user
-    @user = User.find_by_login(params[:login])
+  def get_user_or_group
+    if params[:group_id].blank?
+      @user = User.find_by_login(params[:login])
+    else
+      @group = Group.find(params[:group_id])
+    end
   end
 
   def get_notebook
-    @political_notebook = PoliticalNotebook.find_or_create_from_user(@user)    
+    if @group
+      @political_notebook = PoliticalNotebook.find_or_create_from_group(@group)    
+    else
+      @political_notebook = PoliticalNotebook.find_or_create_from_user(@user)    
+    end
     
     @can_edit = @political_notebook.can_edit?(current_user)
     @can_view = @political_notebook.can_view?(current_user)

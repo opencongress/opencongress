@@ -2,17 +2,22 @@
   = link_to position.capitalize, '#', :class => "button small silver floatright margin-left margin-bottom", :id => "trigger_#{position}_#{b.id}"
   %div.jqmWindow{ :id => "#{position}_#{b.id}" }
     = form_for [@group, @group.group_bill_positions.build] do |f|
-      %strong= "Add '#{position}' position to #{b.typenumber}"
+      %h3
+        Add 
+        %em= position
+        = " position to #{b.typenumber}"
       = f.hidden_field :position, :value => position
       = f.hidden_field :bill_id, :value => b.id
-      %p
+      %p.behave
         Add a comment describing your position (optional)
-        = f.text_area :comment
-      %p
+        %br
+        = f.text_area :comment, :class => 'field', :rows => 3, :cols => 40
+      %p.behave
         Add a link to an outside webpage with more info (optional)
-        = f.text_field :permalink
+        %br
+        = f.text_field :permalink, :class => 'field'
       %p
-        = f.submit 'Submit', :class => 'button medium blue'
+        = f.submit 'Add Bill', :class => 'button medium blue'
         = link_to 'Cancel', '#', :class => 'button medium silver', :id => "close_#{position}_#{b.id}"
   :javascript
     $j().ready(function() {

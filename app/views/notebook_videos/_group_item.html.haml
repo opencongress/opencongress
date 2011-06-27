@@ -1,0 +1,13 @@
+%li.video
+  %span.icon
+  %div
+    %span.person-activity 
+      = link_to group_item.group_user.login, user_profile_path(group_item.group_user.login)
+      shared a video,
+      = "\"#{group_item.title}\""
+      
+    - unless group_item.description.blank?
+      %p.behave= group_item.description
+    %span.shared-video
+      = group_item.embed.html_safe
+    %span.source= group_item.url

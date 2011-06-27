@@ -1,0 +1,8 @@
+%li.group-comment{ :id => "item_#{group_item.id}", :class => (group_item.created_at > Time.parse('2011-06-25 13:27:37.171769')) ? 'new' : '' }
+  %span.icon
+  %div
+    %span.person-activity 
+      = link_to group_item.group_user.login, user_profile_path(group_item.group_user.login)
+      added a comment 
+    
+    %p.desc= group_item.description

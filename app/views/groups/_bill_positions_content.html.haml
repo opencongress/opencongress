@@ -1,0 +1,5 @@
+- @group.group_bill_positions.where("group_bill_positions.position='support'").each do |p|
+  = render :partial => 'bill_position', :object => p
+    
+- @group.group_bill_positions.where("group_bill_positions.position='oppose'").each do |p|
+  = render :partial => 'bill_position', :object => p

@@ -22,6 +22,8 @@ OpenCongress::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   
+  Paperclip.options[:command_path] = "/usr/local/bin"
+  
   ## removed when switched to rails 3.  still necessary?? 
   # if defined?(PhusionPassenger)
   #     PhusionPassenger.on_event(:starting_worker_process) do |forked|

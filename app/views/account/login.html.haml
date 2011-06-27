@@ -15,10 +15,10 @@
       = form_for :user do |f|
         %p
           %label{ :for => "user_login" } Login
-          = f.text_field :login, :size => 30
+          = f.text_field :login, :class => 'field', :size => 30
         %p
           %label{ :for => "user_password" } Password
-          = f.password_field :password, :size => 30 
+          = f.password_field :password, :class => 'field', :size => 30 
         %input.floatright.margintop.behave{ :type => "image", :value => "Login", :src => image_path('login2.png') }
 
       %p.margintop.floatleft.margin-top

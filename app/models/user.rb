@@ -54,7 +54,9 @@ class User < ActiveRecord::Base
   serialize :district_cache
   serialize :state_cache
   
-  has_many :groups
+  has_many :owned_groups, :class_name => 'Group'
+  has_many :group_members
+  has_many :groups, :through => :group_members
   
   has_many :api_hits
   has_many :comments
@@ -163,7 +165,11 @@ class User < ActiveRecord::Base
   def username
     login
   end
-
+  
+  def active_groups
+    owned_groups + groups.where("group_members.status='MEMBER'")
+  end
+  
   def total_number_of_actions
     self.comments.count + self.friends.count + self.bill_votes.count + self.person_approvals.count + self.bookmarks.count
   end

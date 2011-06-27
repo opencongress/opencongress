@@ -28,8 +28,8 @@
 			    <% end %>
 				<% else %>	
 													
-				<%= link_to_function "Search", "['login','login-link','search-toggle'].each(Element.toggle);", :id => "search-toggle", :style => "display:none;" %>
-				<%= link_to_function "Login with OC", "['login','login-link','search-toggle'].each(Element.toggle);", login_url, :id => "login-link" %> &nbsp;&nbsp;&nbsp; 
+				<%= link_to_function "Search", "['login','login-link','search', 'search-toggle'].each(Element.toggle);", :id => "search-toggle", :style => "display:none;" %>
+				<%= link_to_function "Login with OC", "['login','login-link','search','search-toggle'].each(Element.toggle);", login_url, :id => "login-link" %> &nbsp;&nbsp;&nbsp; 
 				<%= link_to "Register", :controller => 'account', :action => 'signup' %>  
 				<%= fb_login_and_redirect(request.url, {:text => 'Login with Facebook', :perms => 'email'}) %>
 			<% end %>
@@ -113,10 +113,11 @@
         <li id="groups_nav" class="sub">
           <%= link_to ('<span>Groups ' + image_tag('tool_arrow-trans.png', :alt => '&gt;') + '</span>').html_safe, groups_url %>
           <ul class="sub">
-            <li><%= link_to "<span class='groupname'>Planned Parenthood</span><span class='inline-count'>26</span></span>".html_safe, new_group_path %></li>
-            <li><%= link_to "<span class='groupname'>Dave's Group</span>".html_safe, new_group_path %></li>
-            <li><%= link_to "<span class='groupname'>Andy's Group</span><span class='inline-count'>4</span></span>".html_safe, new_group_path %></li>
-            
+            <% if logged_in? %>
+              <% current_user.active_groups.each do |g| %>
+                <li><%= link_to "<span class='groupname'>#{g.name}</span><span class='inline-count'>0</span></span>".html_safe, group_path(g) %></li>
+              <% end %>
+            <% end %>
             <li><%= link_to "<span>Start a New Group</span>".html_safe, new_group_path %></li>
           </ul>
         </li>

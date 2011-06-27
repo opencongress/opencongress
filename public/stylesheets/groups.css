@@ -54,10 +54,9 @@ margin-left: 0px;
 }
 
 .group_info li{
-
-  width: 300px;
-float: left;
-
+  margin-right: 60px;
+  min-width: 150px;
+  float: left;
 }
 
 .thumb{

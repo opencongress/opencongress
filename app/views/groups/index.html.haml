@@ -17,7 +17,7 @@
     = text_field_tag 'q', nil, :id => 'group_search_field', :class => 'field'
 
     %span Select Issue Area
-    = select_tag 'issue', options_from_collection_for_select(PvsCategory.order('name').all, :id, :name), :include_blank => true
+    = select_tag 'issue', options_from_collection_for_select(PvsCategory.order('name').all, :id, :name), :include_blank => true, :id => 'group_issue'
     = image_tag 'spinner-ovals.gif',  :id => 'group_search_spinner'
     
   #groups_list
@@ -25,9 +25,14 @@
 
 
 :javascript
-  $j('#group_search_field').keyup(function() {
-    $j('#group_search_spinner').show();
-    $j.ajax({
-      url:'/groups.js?q=' + $j(this).val()
-    });
+  $j(function () {
+    var doSearch = function() {
+      $j('#group_search_spinner').show();
+      $j.ajax({
+       url:'/groups.js?q=' + $j('#group_search_field').val() + '&pvs_category=' +  $j('#group_issue').val()
+      });
+    }
+    
+    $j('#group_search_field').keyup(doSearch);
+    $j('#group_issue').change(doSearch);
   });

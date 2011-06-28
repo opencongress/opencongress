@@ -34,8 +34,23 @@ class GroupsController < ApplicationController
   def index
     @page_title = 'OpenCongress Groups'
 
-    unless params[:q].blank?
-      @groups = Group.where("groups.name ILIKE ? OR groups.description ILIKE ?", "%#{params[:q]}%", "%#{params[:q]}%")
+    unless params[:q].blank? and params[:pvs_category].blank?
+      where = []
+      
+      unless params[:q].blank?
+        where = ["(groups.name ILIKE ? OR groups.description ILIKE ?)", "%#{params[:q]}%", "%#{params[:q]}%"]
+      end
+      
+      unless params[:pvs_category].blank?
+        if where.empty?
+          where = ["groups.pvs_category_id=?", params[:pvs_category]]
+        else
+          where[0] += " AND groups.pvs_category_id=?"
+          where << params[:pvs_category]
+        end
+      end
+      
+      @groups = Group.where(where)
     else
       @groups = Group.all #where("join_type='ANYONE'")
     end

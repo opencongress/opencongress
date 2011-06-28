@@ -39,8 +39,22 @@
     
     %h3 Notifications
     %ul.sidebar-nav
-      %li
-        = link_to "Receive Emails From Owner <span class='inline-count'>On</span>".html_safe, "#"
+      -if logged_in? and @group.is_member?(current_user)
+        %li
+          = link_to "Receive Emails From Owner <span id='receive_owner_emails_label' class='inline-count'>#{@group.membership(current_user).receive_owner_emails? ? 'On' : 'Off' }</span>".html_safe, "#", :id => 'notification_trigger'
+        :javascript
+          $j('#notification_trigger').click(function() {
+            $j('#receive_owner_emails_label').html('#{image_tag('spinner-arrows.gif').html_safe}');
+            $j.ajax({
+              url:'#{url_for group_group_member_path(@group, @group.membership(current_user), :receive_owner_emails => "toggle")}',
+              type: 'PUT',
+              success: function(data) {
+                $j('#receive_owner_emails_label').html(data);
+              }
+            });
+            return false;
+          });
+          
       %li
         %a{ :href => group_path(@group, :format => 'rss') } 
           RSS

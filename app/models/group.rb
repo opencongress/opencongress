@@ -40,6 +40,10 @@ class Group < ActiveRecord::Base
     return (membership && membership.status != 'BOOTED')
   end
   
+  def membership(u)
+    membership = group_members.where(["group_members.user_id=?", u.id]).first
+  end
+  
   def can_join?(u)
     return false if u == :false
     

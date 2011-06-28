@@ -14,15 +14,27 @@ class GroupMembersController < ApplicationController
   def update
     @group = Group.find(params[:group_id])
     
-    if (params[:status] == 'MODERATOR' and @group.is_owner?(current_user)) or
-       (params[:status] != 'MODERATOR' and @group.can_moderate?(current_user))
+    unless params[:status].blank?
+      if (params[:status] == 'MODERATOR' and @group.is_owner?(current_user)) or
+         (params[:status] != 'MODERATOR' and @group.can_moderate?(current_user))
+        @group_member = GroupMember.find(params[:id])
+        @group_member.status = params[:status]
+        @group_member.save
+      
+        redirect_to group_group_members_path(@group), :notice => 'Membership has been updated.'
+      else
+        redirect_to @group, :error => 'You are not allowed to moderate this group!'
+      end
+    end
+    
+    unless params[:receive_owner_emails].blank?
+      @group = Group.find(params[:group_id])
       @group_member = GroupMember.find(params[:id])
-      @group_member.status = params[:status]
+      
+      @group_member.receive_owner_emails = !@group_member.receive_owner_emails?
       @group_member.save
       
-      redirect_to group_group_members_path(@group), :notice => 'Membership has been updated.'
-    else
-      redirect_to @group, :error => 'You are not allowed to moderate this group!'
+      render :text => @group_member.receive_owner_emails? ? 'On' : 'Off'
     end
   end
   

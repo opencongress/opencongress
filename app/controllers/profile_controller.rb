@@ -185,6 +185,12 @@ class ProfileController < ApplicationController
     end
   end
   
+  def groups
+    @user = User.find_by_login(params[:login])
+    
+    render :partial => 'groups/groups_list', :locals => { :groups => @user.active_groups }
+  end
+  
   def my_votes
     @user = User.find_by_login(params[:login])
     @page_title = "Profile of #{@user.login} - Bills Voted On"

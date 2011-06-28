@@ -1,6 +1,10 @@
 #heading
-  <a class="button silver large margin-right margin-top floatright" href="/groups/new">Create a Group</a>
-  <a class="button silver large margin-right margin-top floatright" href="#">My Groups (5)</a>
+  - if logged_in?
+    = link_to "Create a Group", new_group_path, :class => "button silver large margin-right margin-top floatright"
+    - unless current_user.active_groups.empty?
+      = link_to "My Groups (#{current_user.active_groups.size})", user_groups_path(current_user.login), :class => "button silver large margin-right margin-top floatright"
+  - else
+    = link_to "Register or Login to Use Groups", login_path
 
   %h2 OpenCongress Groups
   

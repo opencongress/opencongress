@@ -1,4 +1,6 @@
 class GroupMembersController < ApplicationController
+  before_filter :login_required, :except => [ :index ]
+  
   def index
     @group = Group.find(params[:group_id])
     
@@ -21,6 +23,33 @@ class GroupMembersController < ApplicationController
       redirect_to group_group_members_path(@group), :notice => 'Membership has been updated.'
     else
       redirect_to @group, :error => 'You are not allowed to moderate this group!'
+    end
+  end
+  
+  def create
+    @group = Group.find(params[:group_id])
+    
+    # the only create action is to join a group (for now) so just set status if they can join
+    if @group.can_join?(current_user)
+      @group.group_members.create(:user_id => current_user.id, :status => 'MEMBER')
+      
+      redirect_to @group, :notice => "You have joined #{@group.name}!"
+    else
+      redirect_to groups_path, :notice => "You are not allowed to join that group!"
+    end
+  end
+  
+  def destroy
+    @group = Group.find(params[:group_id])
+    
+    membership = GroupMember.find(params[:id])
+    
+    if (membership.user == current_user && membership.status != 'BOOTED')
+      membership.destroy
+      
+      redirect_to groups_path, :notice => "You have left #{@group.name}"
+    else
+      redirect_to groups_path, :error => "There was an error with your request."
     end
   end
 end

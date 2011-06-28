@@ -197,7 +197,7 @@ OpenCongress::Application.routes.draw do
       resources :friends
 
       scope :controller => 'profile' do
-        for action in %w{ actions items_tracked watchdog edit_profile bills_supported tracked_rss user_actions_rss bills_opposed my_votes bills comments issues committees } do
+        for action in %w{ actions items_tracked watchdog edit_profile bills_supported tracked_rss user_actions_rss bills_opposed my_votes bills comments issues committees groups } do
           match action, :action => action, :as => 'user_' + action
         end
 

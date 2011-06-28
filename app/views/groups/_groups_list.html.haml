@@ -16,4 +16,13 @@
       %span.grid_4.descrip= g.description
       %span.grid_3= g.pvs_category.nil? ? "None" : g.pvs_category.name
       %span.grid_2= g.active_members.size + 1
-      %span.grid_1.omega= link_to 'Join', '#', :class => 'button blue small floatright'
+      - if logged_in?
+        - if g.is_member?(current_user)
+          %span.grid_1.omega= link_to 'Leave', group_group_member_path(g, g.group_members.find_by_user_id(current_user.id)), :method => 'delete', :class => 'button yellow small floatright'
+          
+        - else
+          - if g.can_join?(current_user)
+            %span.grid_1.omega= link_to 'Join', group_group_members_path(g, :status => 'MEMBER'), :method => 'post', :class => 'button blue small floatright'
+      - else
+        - if g.join_type == 'ANYONE'
+          %span.grid_1.omega= link_to 'Join', group_group_members_path(g, :status => 'MEMBER'), :method => 'post', :class => 'button blue small floatright'

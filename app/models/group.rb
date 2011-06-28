@@ -45,6 +45,9 @@ class Group < ActiveRecord::Base
     
     membership = group_members.where(["group_members.user_id=?", u.id]).first
     
+    # if they're already a member, they can't join
+    return false if membership or u == self.user
+    
     case join_type
     when 'ANYONE', 'REQUEST'
       return (membership.nil? or membership.status != 'BOOTED') ? true  : false

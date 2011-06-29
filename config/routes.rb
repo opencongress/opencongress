@@ -181,6 +181,10 @@ OpenCongress::Application.routes.draw do
 
   match 'tools(/:action/:id)', :controller => 'resources', :as => 'tools'
 
+  match '/widgets' => 'widgets#index', :as => 'widgets'
+  match '/widgets/bill' => 'widgets#bill', :as => 'bill_widget'
+  match '/widgets/bills' => 'widgets#bills', :as => 'bills_widget'
+  match '/widgets/people' => 'widgets#people', :as => 'people_widget'
 
   match 'api' => 'api#index'
   match 'api/bill/text_summary/:id' => 'bill#status_text'

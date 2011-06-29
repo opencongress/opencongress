@@ -13,6 +13,9 @@ gem "settingslogic"
 # HAML support
 gem "haml"
 
+# RABL for API / JSON
+gem 'rabl'
+
 # RMagick
 gem 'rmagick', '2.13.1'
 gem 'simple_captcha', :git => 'git://github.com/galetahub/simple-captcha.git'

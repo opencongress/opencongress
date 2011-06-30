@@ -1,4 +1,8 @@
 #heading{
+  height: 45px;
+}
+
+.index #heading{
   height: 95px;
 padding: 0px 0 30px 0px;
 background: #c5d9cd;
@@ -9,7 +13,7 @@ border-bottom: 1px solid #c5d9cd;
 }
 
 
-#heading h2{
+.index #heading h2{
 margin: 20px 0 0 30px;
 padding: 70px 0 0 0 !important;
 height: 0 !important;
@@ -19,7 +23,7 @@ line-height: 4em;
 background: url(/images/groups.png) no-repeat;
 }
  
-#heading p{
+.index #heading p{
 float: left;
 width: 230px;
 padding-top: 37px;
@@ -27,7 +31,7 @@ margin-left: 30px;
 }
 
  
-#heading p strong{
+.index #heading p strong{
 display: block;
 padding-bottom: 5px;
 }
@@ -419,9 +423,8 @@ background: rgba(197,217,205, .2);
 #group_search_spinner {
   position: absolute;
   display:none;
-  right: 70px;
-  margin-left: 20px;
-  margin-top: 8px;
+  right: 60px;
+  margin-top: 0px;
 }
 
 .groups_instructions {

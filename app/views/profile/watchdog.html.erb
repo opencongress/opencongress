@@ -2,12 +2,12 @@
   <h2><%= @user.login %>'s Watchdog</h2>
 </div>
 
-<%= render :partial => "profile_nav" %>
 
 <% if @user.can_view(:watchdog, current_user) %>
 <% if @my_district %>
-
-<div class="dog_senators">
+<div class="container_12">
+<div class="space">&nbsp;</div>
+<div class="grid_12">
 
 
 	<% if @user == current_user %>
@@ -46,3 +46,5 @@
 <% else %>
 <p>Not Publicly Viewable</p>
 <% end %>
+
+</div>

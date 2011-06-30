@@ -4,7 +4,7 @@
     %span.grid_3= link_to 'Name', '#', :id => 'name', :class => group_header_class('groups.name', @sort)
     %span.grid_7.descrip Description
     %span.grid_3= link_to 'Issue Area of Focus', '#', :id => 'pvs_category', :class => group_header_class('pvs_categories', @sort)
-    %span.grid_1.omega= link_to 'Members', '#', :id => 'group_members', :class => group_header_class('group_members', @sort)
+    %span.grid_2.omega= link_to 'Members', '#', :id => 'group_members', :class => group_header_class('group_members', @sort)
     
 %ul.container_12
   - groups.each do |g|

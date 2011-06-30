@@ -12,7 +12,8 @@ module GroupsHelper
   end
   
   def group_members_num(group)
-    group.attributes['group_members_count'].nil? ? group.active_members.size.to_i + 1 : group.attributes['group_members_count'].to_i + 1
+    num = group.attributes['group_members_count'].nil? ? group.active_members.size.to_i + 1 : group.attributes['group_members_count'].to_i + 1
+    number_with_delimiter(num)
   end
 end
 

@@ -118,7 +118,7 @@
                 <% current_user.active_groups.each do |g| %>
                   <li><%= link_to "<span class='groupname'>#{g.name}</span><span class='inline-count'>0</span></span>".html_safe, group_path(g) %></li>
                 <% end %>
-                <li><%= link_to "<span>View all my groups</span>".html_safe, user_groups_path %></li>
+                <li><%= link_to "<span>View all my groups</span>".html_safe, user_groups_path(current_user.login) %></li>
               <% end %>
             <% end %>
             <li><%= link_to "<span>Start a New Group</span>".html_safe, new_group_path %></li>

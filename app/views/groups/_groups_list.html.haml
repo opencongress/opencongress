@@ -1,21 +1,20 @@
-%ul.container_16
-  %li.grid_16.lined.table_header
+%ul.container_12
+  %li.grid_12.table_header
     %span.grid_1.alpha= "&nbsp;".html_safe
     %span.grid_3= link_to 'Name', '#', :id => 'name', :class => group_header_class('groups.name', @sort)
-    %span.grid_4.descrip Description
+    %span.grid_7.descrip Description
     %span.grid_3= link_to 'Issue Area of Focus', '#', :id => 'pvs_category', :class => group_header_class('pvs_categories', @sort)
-    %span.grid_2= link_to 'Members', '#', :id => 'group_members', :class => group_header_class('group_members', @sort)
-    %span.grid_1.omega
+    %span.grid_1.omega= link_to 'Members', '#', :id => 'group_members', :class => group_header_class('group_members', @sort)
     
-%ul.container_16
+%ul.container_12
   - groups.each do |g|
-    %li.grid_16.lined
+    %li.grid_12.lined
       %span.grid_1.alpha
         .thumb.smaller= group_image(g)
       %span.grid_3= link_to "<strong>#{g.name}</strong>".html_safe, g
-      %span.grid_4.descrip= g.description
+      %span.grid_7.descrip= g.description
       %span.grid_3= g.pvs_category.nil? ? "None" : g.pvs_category.name
-      %span.grid_2= group_members_num(g)
+      %span.grid_2.large-count= group_members_num(g)
       - if logged_in?
         - if g.is_member?(current_user)
           %span.grid_1.omega= link_to 'Leave', group_group_member_path(g, g.group_members.find_by_user_id(current_user.id)), :method => 'delete', :class => 'button yellow small floatright'

@@ -59,9 +59,12 @@
         %a{ :href => group_path(@group, :format => 'rss') } 
           RSS
           %span.feed= image_tag '/images/rss.png'
-    
+
+
+  
   #activity_stream_container.main-content
     = render :partial => 'activity_stream'
+
 
   #dummy_div.main-content
 

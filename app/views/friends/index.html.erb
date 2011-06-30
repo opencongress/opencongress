@@ -2,126 +2,80 @@
   <h2><%= @user.login %>'s Friends</h2>
 
 </div>
-  	<div style="font-weight: bold; font-size: 20px; margin: 30px;">THIS PAGE IS UNDER CONSTRUCTION</div>
 
-<div class="profile_content">
+
+<div class="container_16">
+
+<div class="space clear">&nbsp;</div>
+
 <% if @user.can_view(:my_friends, current_user) %>
 
+<div class="space clear">&nbsp;</div>
 
 
-<div class="grid_6">
-
-<h3>Most active users in my state and Congressional district</h3>
 
 
-</div>
+<div class="grid_10"> 
+  <h2>Most active users in my state and Congressional district</h2>
 
-
-<% if controller.controller_name == "friends" %>
-  <% if @user == current_user %>
-<div class="invites">
-
-	<script type='text/javascript'>
-	$j().ready(function() {
-		$j('#invite_form').jqm({ajax:'@href', trigger: 'a.invite_trigger'});
-	});
-	</script>  
+  <% if controller.controller_name == "friends" %>
+    <% if @user == current_user %>
+    
+    
+    
+  <div class="invites">
   
-  <ul>
-    <li><%= link_to "See users in my state and district", friends_near_me_path(@user.login), :class => '' %></li>
+  	<script type='text/javascript'>
+  	$j().ready(function() {
+  		$j('#invite_form').jqm({ajax:'@href', trigger: 'a.invite_trigger'});
+  	});
+  	</script>  
     
-    <li><%= link_to 'Find users by e-mail, username, or real name', new_friend_path(@user.login), :class => '' %></li>
-    
-    <li><%= link_to "Import friends from G-Mail, Yahoo!, or Hotmail", friends_import_contacts_path, :class => '' %></li>
-    
-    <li><%= link_to "Invite more friends to join OpenCongress!", 
-            friends_invite_form_path(current_user.login), 
-            :class => "invite_trigger" %></li>
-  </ul>
- 
-	<div class="form" id="invite_friend" style="display:none; margin-top:10px;">
-    <%= render :partial => 'invite_form' %>
+    <ul>
+      <li><%= link_to "See users in my state and district", friends_near_me_path(@user.login), :class => '' %></li>
+      
+      <li><%= link_to 'Find users by e-mail, username, or real name', new_friend_path(@user.login), :class => '' %></li>
+      
+      <li><%= link_to "Import friends from G-Mail, Yahoo!, or Hotmail", friends_import_contacts_path, :class => '' %></li>
+      
+      <li><%= link_to "Invite more friends to join OpenCongress!", 
+              friends_invite_form_path(current_user.login), 
+              :class => "invite_trigger" %></li>
+    </ul>
+   
+  	<div class="form" id="invite_friend" style="display:none; margin-top:10px;">
+      <%= render :partial => 'invite_form' %>
+      </div>
+     <div style="clear:both;"></div>
     </div>
-   <div style="clear:both;"></div>
-  </div>
-  <div id="invite_form" class="jqmWindow"></div>
-
-</div>
-<% end %>   
-<% end %>
+    <div id="invite_form" class="jqmWindow"></div>
+    <% end %>   
+  <% end %>
 
 
-<div id="the-items" class="friends">
 
-<div class="floatleft">
-
-<% if @friends.length < 1 %>
-<p><%= user_name("You have", " has") %> not yet added any friends.</p>
-
-<% else %>
-
-<h3><!--<%= user_name("My", "'s") %>--> Recent Friends Activity</h3>
-<ul class="activity">
-	<% @recent_friends_ativity.each do |ra| %>
-     <%= render :partial => "recent_list_items", :locals => {:ra => ra} %>
-	<% end %>
-</ul>
-<ul id="more_f_activity" class="activity" style="display:none;width:100%;">
-	<% @more_recent_friends_activity.each do |ra| %>
-     <%= render :partial => "recent_list_items", :locals => {:ra => ra} %>
-	<li><%= link_to h(ra.user.login), user_profile_path(ra.user.login) %>  
-		<% if ra.class.to_s == "BillVote" %>
-		voted <b><%= ra.support == 0 ? "for" : "against" %></b>
-		<%= link_to(ra.bill.typenumber, bill_path(ra.bill)) %>
-		<% elsif ra.class.to_s == "Comment" %>
-		<% if ra.commentable_type == "Bill" %>
-		commented on <%= link_to(ra.bill.typenumber, bill_path(ra.bill)) %>
-		<% elsif ra.commentable_type == "Person" %>
-		commented on <%= link_to ra.person.name, person_url(ra.person.ident) %>
-		<% end %>
-		<% end %>
-		about <%= time_ago_in_words(ra.created_at) %> ago
-	</li>
-	<% end if @more_recent_friends_activity %>
-</ul>
-<% if @more_recent_friends_activity %>
-	<p class="line">
-	   <%= toggler("more_f_activity", "Show More Activity", "Hide Extra Activity", "arrow", "arrow-hide")%>
-  </p>
-<% end %>
-
-<% end %>
-</div>
+<div class="space clear">&nbsp;</div>
+<div class="space clear">&nbsp;</div>
 
 
 
 
 
 
+  <h3>Friend requests pending your approval</h3>
 
-<% unless @fans.length == 0 %>
-
-
-<!-- Pending Friends -->
-
-
-
-
-
-
-
-  <h3 class="grid_12">Friend requests pending your approval</h3>
-
-  <div class="grid_8">
+  <div class="grid_9 alpha">
     <div class="grid_2 alpha">
   
     <% for friend in @fans %>
     	
     	<strong><%=link_to h(friend.user.login), user_profile_path(friend.user.login) %></strong>
+   
+   
     </div>
         
         
-    <div class="grid_4 omega">
+    <div class="grid_3 omega">
         <%=h friend.user.location && !friend.user.location.empty? ? friend.user.location : "[Not Public]" %>
         <% zd = ZipcodeDistrict.zip_lookup(friend.user.zipcode, (friend.user.zip_four ? friend.user.zip_four : nil)).first %>
         
@@ -131,22 +85,15 @@
     </div>
   
   
-    <div class="grid_6 ">
+    <div class="grid_3 alpha">
   
   
-  		
-  		<%= link_to "Tracked Items(#{friend.user.bookmarks.count})", {:controller => 'profile', :login => friend.user.login, :action => 'items_tracked'}, :class => 'button tiny silver' %></td>
-  	 	
-  	 	<%= link_to "Recent Actions", :controller => 'profile', :login => friend.user.login, :action => 'actions' %></td>
-  		
-  		<%= link_to h(friend.user.login) + "'s Political Notebook", :controller => 'political_notebooks', :login => friend.user.login, :action => 'show' %></td>  		
-  	 
-  		
+ 		
   		<%= button_to('Decline', friends_add_deny_path(friend.friend.login,friend.user), :confirm => 'Are you sure?') unless @user != current_user %></td>
   		
   		<%= button_to('Accept', friends_add_confirm_path(friend.friend.login,friend.user), :confirm => 'Are you sure?') unless @user != current_user %></td>
   
-  
+
   
   
   			<div id="coms_friend_<%= friend.id %>" style="display:none;"></div>
@@ -154,6 +101,16 @@
   	
   	
     </div>
+    
+    <div class="grid_8 alpha">
+  		<%= link_to "Tracked Items(#{friend.user.bookmarks.count})", {:controller => 'profile', :login => friend.user.login, :action => 'items_tracked'}, :class => 'button tiny silver' %></td>
+  	 	
+  	 	<%= link_to "Recent Actions", :controller => 'profile', :login => friend.user.login, :action => 'actions' %></td>
+  		
+  		<%= link_to h(friend.user.login) + "'s Political Notebook", :controller => 'political_notebooks', :login => friend.user.login, :action => 'show' %></td>  		
+  	 
+     </div>
+    
   </div>
 
 	<% end %>
@@ -163,11 +120,13 @@
 
 
 
-<% end %>
-
 <% if @friends.length > 0 %>
+<div class="space clear">&nbsp;</div>
+<div class="space clear">&nbsp;</div>
+<div class="space clear">&nbsp;</div>
 
-<div class="friends_table">
+<div class="space clear">&nbsp;</div>
+<div class="clear padding-top">
 <h3 class="inline"><%= user_name("My", "'s") %> Friends</h3>
 
 <% if @user == current_user %>
@@ -243,5 +202,66 @@
 
 <% else %>
 <p>Not Publicly Viewable</p>
+<% end %>
+
+
+  </div>
+
+  </div>
+
+
+<div id="the-items" class="friends grid_6">
+      <% if @friends.length < 1 %>
+    <p><%= user_name("You have", " has") %> not yet added any friends.</p>
+    
+    <% else %>
+    
+  
+  
+  
+    <h3><!--<%= user_name("My", "'s") %>--> Recent Friends Activity</h3>
+    <ul class="activity">
+    	<% @recent_friends_ativity.each do |ra| %>
+         <%= render :partial => "recent_list_items", :locals => {:ra => ra} %>
+    	<% end %>
+    </ul>
+    <ul id="more_f_activity" class="activity" style="display:none;width:100%;">
+    	<% @more_recent_friends_activity.each do |ra| %>
+         <%= render :partial => "recent_list_items", :locals => {:ra => ra} %>
+    	<li><%= link_to h(ra.user.login), user_profile_path(ra.user.login) %>  
+    		<% if ra.class.to_s == "BillVote" %>
+    		voted <b><%= ra.support == 0 ? "for" : "against" %></b>
+    		<%= link_to(ra.bill.typenumber, bill_path(ra.bill)) %>
+    		<% elsif ra.class.to_s == "Comment" %>
+    		<% if ra.commentable_type == "Bill" %>
+    		commented on <%= link_to(ra.bill.typenumber, bill_path(ra.bill)) %>
+    		<% elsif ra.commentable_type == "Person" %>
+    		commented on <%= link_to ra.person.name, person_url(ra.person.ident) %>
+    		<% end %>
+    		<% end %>
+    		about <%= time_ago_in_words(ra.created_at) %> ago
+    	</li>
+    	<% end if @more_recent_friends_activity %>
+    </ul>
+    <% if @more_recent_friends_activity %>
+    	<p class="line">
+    	   <%= toggler("more_f_activity", "Show More Activity", "Hide Extra Activity", "arrow", "arrow-hide")%>
+      </p>
+    <% end %>
+  
+    <% end %>
+  </div>
+
+  <% unless @fans.length == 0 %>
+
+
+
+
+
+
+
+
+
+
 <% end %>
 </div>

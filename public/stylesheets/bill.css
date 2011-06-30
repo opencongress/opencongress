@@ -476,6 +476,7 @@ border-top: 1px solid #eee;
 float: left;
 width: 254px;
 margin: 0 0 0px 0 !important;
+height: 140px;
 }
 
 #b_myoc {
@@ -2279,13 +2280,13 @@ border: 6px solid rgba(255,255,255, .5);
 -o-border-radius: 8px;
 border-radius: 8px;
 
-background: rgba(255,255,255, .2);
+background: rgba(154,255,255, .2);
 
--moz-box-shadow: 0 2 3px rgba(0,0,0, .2);
--webkit-box-shadow: 0 2 3px rgba(0,0,0, .2);
--ms-box-shadow: 0 2 3px rgba(0,0,0, .2);
--o-box-shadow: 0 2 3px rgba(0,0,0, .2);
-box-shadow: 0 2 3px rgba(0,0,0, .2);
+-moz-box-shadow: 0 2px 3px rgba(0,0,0, .6);
+-webkit-box-shadow: 0 2px 3px rgba(0,0,0, .6);
+-ms-box-shadow: 0 2px 3px rgba(0,0,0, .6);
+-o-box-shadow: 0 2px 3px rgba(0,0,0, .6);
+box-shadow: 0 2px 3px rgba(0,0,0, .6);
 }
 
 

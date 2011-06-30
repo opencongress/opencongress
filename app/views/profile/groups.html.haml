@@ -1,4 +1,5 @@
 #heading
   %h2= "#{@user.login}'s Groups"
 
-= render :partial => 'groups/groups_list', :locals => { :groups => @user.active_groups }
+.margin-top.margin-bottom
+  = render :partial => 'groups/groups_list', :locals => { :groups => @user.active_groups }

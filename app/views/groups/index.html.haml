@@ -4,7 +4,7 @@
     - unless current_user.active_groups.empty?
       = link_to "My Groups (#{current_user.active_groups.size})", user_groups_path(current_user.login), :class => "button silver large margin-right margin-top floatright"
   - else
-    = link_to "Register or Login to Use Groups", login_path
+    = link_to "Register or Login to Use Groups", login_path, :class => "button silver large margin-right margin-top floatright"
 
   %h2 OpenCongress Groups
   
@@ -15,7 +15,8 @@
   .groups_search
     %span Find a Group
     = text_field_tag 'q', nil, :id => 'group_search_field', :class => 'field'
-
+    = hidden_field_tag 'sort', @sort, :id => 'group_sort'
+    
     %span Select Issue Area
     = select_tag 'issue', options_from_collection_for_select(PvsCategory.order('name').all, :id, :name), :include_blank => true, :id => 'group_issue'
     = image_tag 'spinner-ovals.gif',  :id => 'group_search_spinner'
@@ -24,15 +25,4 @@
     = render 'groups_list', :groups => @groups
 
 
-:javascript
-  $j(function () {
-    var doSearch = function() {
-      $j('#group_search_spinner').show();
-      $j.ajax({
-       url:'/groups.js?q=' + $j('#group_search_field').val() + '&pvs_category=' +  $j('#group_issue').val()
-      });
-    }
-    
-    $j('#group_search_field').keyup(doSearch);
-    $j('#group_issue').change(doSearch);
-  });
+

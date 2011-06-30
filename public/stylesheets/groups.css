@@ -59,31 +59,6 @@ margin-left: 0px;
   float: left;
 }
 
-.thumb{
-float: left;
-width: 75px;
-height: 75px;
-padding: 0 !important;
-}
-
-.thumb img {
-  width: 75px;
-  height: 75px;
-  padding: 0;
-  margin: 0 !important;
-}
-
-.thumb.smaller{
-width: 40px !important;
-height: 40px !important;
-padding: 0;
-}
-
-.thumb.smaller img{
-width: 40px !important;
-height: 40px !important;
-}
-
 
 #group_comments {
   margin-top: 40px;
@@ -92,13 +67,8 @@ float: left;
   
 }
 #comments-container{
--moz-border-radius: 15px;
--webkit-border-radius: 15px;
--o-border-radius: 15px;
--ms-border-radius: 15px;
-background: #eee;
-width: 500px;
-margin: 0 30px 90px;
+
+width:500px;
 }
 
 table.groups td {
@@ -231,13 +201,7 @@ display: block;
 
 
 
-li.photo div,
-li.video div,
-li.letter-track div,
-li.letter-oppose div,
-li.link div,
-li.group-comment div,
-li.letter-support div{
+.item_content {
 padding-left: 60px;
 padding-bottom: 20px;
 }
@@ -597,4 +561,11 @@ background: #fff;
 
 #comment_form, #photo_form, #video_form {
   display: none;
+}
+
+.item_comments {
+  display: none;
+}
+.item_comment_trigger {
+  float: right;
 }

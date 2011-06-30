@@ -5166,3 +5166,29 @@ line-height: 2.2em;
   box-shadow:  0 1px 0px rgba(255,255,255, .4), inset 0 1px 0px rgba(101,101,101, .2);
 
 }
+
+.thumb{
+float: left;
+width: 75px;
+height: 75px;
+padding: 0 !important;
+}
+
+.thumb img {
+  width: 75px;
+  height: 75px;
+  padding: 0;
+  margin: 0 !important;
+}
+
+.thumb.smaller{
+width: 40px !important;
+height: 40px !important;
+padding: 0;
+}
+
+.thumb.smaller img{
+width: 40px !important;
+height: 40px !important;
+}
+

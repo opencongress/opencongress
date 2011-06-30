@@ -28,7 +28,7 @@ class Group < ActiveRecord::Base
   end
   
   def active_members
-    users.where("group_members.status != 'BOOTED'")
+    users.where("group_members.status != 'BOOTED'")                                             
   end
   
   def is_owner?(u)

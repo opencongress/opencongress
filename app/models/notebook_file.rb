@@ -3,6 +3,9 @@ class NotebookFile < NotebookItem
                     :path => "#{Settings.notebook_files_path}/:id/:style/:filename",
                     :url => "/system/notebook_files/:id/:style/:filename"
   
+  # because the table uses STI a regular polymorphic association doesn't work
+  has_many :comments, :foreign_key => 'commentable_id', :conditions => "commentable_type='NotebookFile'"
+  
   # has_attachment :content_type => ['application/pdf', :image,'application/msword', 'text/plain'],     
   #   :storage => :file_system, 
   #   :max_size => 1024.kilobytes, 

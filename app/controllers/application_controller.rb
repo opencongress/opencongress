@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   before_filter :has_accepted_tos?
   before_filter :get_site_text_page
   before_filter :is_banned?
+  before_filter :set_simple_comments
 
   def facebook_check
     # check to see if the user is logged into and has connected to OC
@@ -189,6 +190,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def set_simple_comments
+    @simple_comments = false
+  end
+  
   def news_blog_count(count)
     if count >= 1000
       "#{(count/1000).floor}K"

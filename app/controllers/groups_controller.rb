@@ -28,32 +28,54 @@ class GroupsController < ApplicationController
   def show
     @group = Group.find(params[:id])
     
+    @simple_comments = true
+    
     @page_title = "#{@group.name} - MyOC Groups"
   end
   
   def index
     @page_title = 'OpenCongress Groups'
 
-    unless params[:q].blank? and params[:pvs_category].blank?
-      where = []
+    unless params[:sort].blank?
+      sort_column, sort_dir = params[:sort].split
       
+      sort_dir = (sort_dir == 'DESC') ? 'DESC' : 'ASC'
+      case sort_column
+      when 'name'
+        @sort = "groups.name #{sort_dir}"
+      when 'pvs_category'
+        @sort = "pvs_categories.name #{sort_dir}, groups.name ASC"
+      when 'group_members'
+        @sort = "group_members_count #{sort_dir}"
+      else
+        @sort = "groups.name #{sort_dir}"
+      end
+    else
+      @sort = 'groups.name ASC'
+    end
+    
+    where = ["groups.publicly_visible='t'"]
+    unless params[:q].blank? and params[:pvs_category].blank?      
       unless params[:q].blank?
-        where = ["(groups.name ILIKE ? OR groups.description ILIKE ?)", "%#{params[:q]}%", "%#{params[:q]}%"]
+        where[0] += " AND (groups.name ILIKE ? OR groups.description ILIKE ?)"
+        where << "%#{params[:q]}%"
+        where << "%#{params[:q]}%"
       end
       
       unless params[:pvs_category].blank?
-        if where.empty?
-          where = ["groups.pvs_category_id=?", params[:pvs_category]]
-        else
-          where[0] += " AND groups.pvs_category_id=?"
-          where << params[:pvs_category]
-        end
+        where[0] += " AND groups.pvs_category_id=?"
+        where << params[:pvs_category]
       end
-      
-      @groups = Group.where(where)
-    else
-      @groups = Group.all #where("join_type='ANYONE'")
     end
+    
+    group_columns = Group.column_names.collect do |c| "#{Group.table_name}.#{c}" end.join(",")
+    pvs_columns = PvsCategory.column_names.collect do |c| "#{PvsCategory.table_name}.#{c}" end.join(",")
+
+   # @groups = Group.includes(:pvs_category).joins("LEFT OUTER JOIN group_members ON groups.id=group_members.group_id").group("#{group_columns}, #{pvs_columns}").select("groups.*, count(group_members.*) as group_members_count").order(@sort).where(where).all #where("join_type='ANYONE'")
+    @groups = Group.find_by_sql(["SELECT groups.*, count(group_members.*) as group_members_count 
+                                 FROM groups LEFT OUTER JOIN group_members ON (groups.id=group_members.group_id AND group_members.status != 'BOOTED')
+                                 LEFT OUTER JOIN pvs_categories ON groups.pvs_category_id=pvs_categories.id 
+                                 WHERE #{where[0]} GROUP BY #{group_columns}, #{pvs_columns} ORDER BY #{@sort}"].concat(where[1..-1]))
     
     respond_to do |format|
       format.html

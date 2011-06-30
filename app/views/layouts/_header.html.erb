@@ -114,8 +114,11 @@
           <%= link_to ('<span>Groups ' + image_tag('tool_arrow-trans.png', :alt => '&gt;') + '</span>').html_safe, groups_url %>
           <ul class="sub">
             <% if logged_in? %>
-              <% current_user.active_groups.each do |g| %>
-                <li><%= link_to "<span class='groupname'>#{g.name}</span><span class='inline-count'>0</span></span>".html_safe, group_path(g) %></li>
+              <% unless current_user.active_groups.empty? %>
+                <% current_user.active_groups.each do |g| %>
+                  <li><%= link_to "<span class='groupname'>#{g.name}</span><span class='inline-count'>0</span></span>".html_safe, group_path(g) %></li>
+                <% end %>
+                <li><%= link_to "<span>View all my groups</span>".html_safe, user_groups_path %></li>
               <% end %>
             <% end %>
             <li><%= link_to "<span>Start a New Group</span>".html_safe, new_group_path %></li>

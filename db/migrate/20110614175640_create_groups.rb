@@ -7,7 +7,7 @@ class CreateGroups < ActiveRecord::Migration
       t.string :join_type
       t.string :invite_type
       t.string :post_type
-      t.string :publicly_visible, :default => 'true'
+      t.boolean :publicly_visible, :default => true
       t.string :website
       t.integer :pvs_category_id
 
@@ -28,6 +28,9 @@ class CreateGroups < ActiveRecord::Migration
       t.timestamps
     end
 
+    add_index :group_members, :group_id
+    add_index :group_members, :user_id
+    
     create_table :group_invites do |t|
       t.integer :group_id
       t.integer :user_id

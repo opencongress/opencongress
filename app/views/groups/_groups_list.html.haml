@@ -1,10 +1,10 @@
 %ul.container_16
   %li.grid_16.lined.table_header
     %span.grid_1.alpha= "&nbsp;".html_safe
-    %span.grid_3= link_to 'Name', '#', :id => 'group_name_sort'
+    %span.grid_3= link_to 'Name', '#', :id => 'name', :class => group_header_class('groups.name', @sort)
     %span.grid_4.descrip Description
-    %span.grid_3= link_to 'Issue Area of Focus', '#', :id => 'group_issue_sort'
-    %span.grid_2= link_to 'Members', '#', :id => 'group_members_sort'
+    %span.grid_3= link_to 'Issue Area of Focus', '#', :id => 'pvs_category', :class => group_header_class('pvs_categories', @sort)
+    %span.grid_2= link_to 'Members', '#', :id => 'group_members', :class => group_header_class('group_members', @sort)
     %span.grid_1.omega
     
 %ul.container_16
@@ -15,7 +15,7 @@
       %span.grid_3= link_to "<strong>#{g.name}</strong>".html_safe, g
       %span.grid_4.descrip= g.description
       %span.grid_3= g.pvs_category.nil? ? "None" : g.pvs_category.name
-      %span.grid_2= g.active_members.size + 1
+      %span.grid_2= group_members_num(g)
       - if logged_in?
         - if g.is_member?(current_user)
           %span.grid_1.omega= link_to 'Leave', group_group_member_path(g, g.group_members.find_by_user_id(current_user.id)), :method => 'delete', :class => 'button yellow small floatright'
@@ -26,3 +26,29 @@
       - else
         - if g.join_type == 'ANYONE'
           %span.grid_1.omega= link_to 'Join', group_group_members_path(g, :status => 'MEMBER'), :method => 'post', :class => 'button blue small floatright'
+
+
+:javascript
+  var doSearch = function() {
+    $j('#group_search_spinner').show();
+    $j.ajax({
+      url:'#{groups_path(:format => "js")}?q=' + $j('#group_search_field').val() + '&pvs_category=' +  $j('#group_issue').val() + '&sort=' + $j('#group_sort').val()
+    });
+  }
+
+  $j('#group_search_field').change(doSearch);
+  $j('#group_issue').change(doSearch);
+
+  $j('.table_header a').click(function() {
+    if (($j(this).attr('class') == '') || ($j(this).attr('class') == 'down')) {
+      $j('.table_header a').attr('class', '');
+      $j(this).attr('class', 'up');
+      $j('#group_sort').val($j(this).attr('id').concat(' ASC'));
+    } else {
+      $j('.table_header a').attr('class', '');
+      $j(this).attr('class', 'down');        
+      $j('#group_sort').val($j(this).attr('id').concat(' DESC'));
+    }
+    doSearch();
+    return false;
+  });

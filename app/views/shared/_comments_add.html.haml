@@ -2,8 +2,9 @@
 
 - if logged_in?
   #add.comment-add
-    %h3 Speak Your Mind
-    = render :partial => 'shared/comments_instructions'
+    - unless @simple_comments
+      %h3 Speak Your Mind
+      = render :partial => 'shared/comments_instructions'
     
     %div{ :style => "color: red"}
       = error_messages_for :comment, :header_message => "Please try again.", :message => "Your comment couldn't be saved because of the following errors:"
@@ -42,14 +43,15 @@
           
       #comment-preview{ :style => 'display: none;' }
 
-      .comment-message
-        %p 
-          OpenCongress comment boards are an open forum for discussion. Let's build public knowledge about Congress together, so please keep the discussion civil -- no harsh language, subject to our community 
-          %a{ :href => "/about/terms_of_service", :target => "_blank" } Comment Policy.
-          Do not post any information here (for example, your name or email) that you do not wish to be public.
-        %p Comments are limited to 1000 characters -- in the ballpark of 150 words, or one paragraph of text. If your comment is rejected, please check the length, as OpenCongress staff cannot post your comment for you (though we're interested in your opinion!).
+      - unless @simple_comments
+        .comment-message
+          %p 
+            OpenCongress comment boards are an open forum for discussion. Let's build public knowledge about Congress together, so please keep the discussion civil -- no harsh language, subject to our community 
+            %a{ :href => "/about/terms_of_service", :target => "_blank" } Comment Policy.
+            Do not post any information here (for example, your name or email) that you do not wish to be public.
+          %p Comments are limited to 1000 characters -- in the ballpark of 150 words, or one paragraph of text. If your comment is rejected, please check the length, as OpenCongress staff cannot post your comment for you (though we're interested in your opinion!).
 
-        .clear &nbsp;
+          .clear &nbsp;
         
 - else
   :javascript

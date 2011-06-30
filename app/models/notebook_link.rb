@@ -4,6 +4,9 @@ class NotebookLink < NotebookItem
   require 'open-uri'
     
   validates_presence_of :url, :title
+
+  # because the table uses STI a regular polymorphic association doesn't work
+  has_many :comments, :foreign_key => 'commentable_id', :conditions => "commentable_type='NotebookLink'"
   
   def is_internal?
     !notebookable_type.blank? && !notebookable_id.blank?

@@ -733,7 +733,7 @@ class Bill < ViewableObject
   end # class << self
   
   def log_referrer(referrer)
-    unless (referrer.blank? || /opencongress\.org/.match(referrer) || /google\.com/.match(referrer))
+    unless (referrer.blank? || BillReferrer.no_follow?(referrer))
       self.bill_referrers.find_or_create_by_url(referrer[0..253])
     end
   end

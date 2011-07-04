@@ -6,7 +6,8 @@ class BillReferrer < ActiveRecord::Base
     /www\.google\./,
     /bing\.com/,
     /search\.yahoo/,
-    /ask\.com/
+    /ask\.com/,
+    /^http:\/\/www.opencongress.org/
   ]
   
   def self.purge

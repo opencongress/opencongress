@@ -25,7 +25,7 @@
        <div class="person_box_big" style="background-color:<%= bgcolor %>;margin-bottom:3px;">
         <%= link_to image_tag("http://www.opencongress.org/images/photos/thumbs_50/#{s.id}-50px.jpeg", :class =>"photo", :alt => 'photo'), person_url(s.id) %>
         <p>
-          <%= link_to s.full_name, person_url(s.id) %>
+          <%= link_to s.full_name, person_url(s.id), :class => 'full_name' %>
           <span><%= s.party %></span>
           <% if s == @senators.first %>
           <strong><%= pluralize(s.consecutive_years, 'year') %> in office</strong>
@@ -49,7 +49,10 @@
        <div class="person_box_big" style="background-color:<%= bgcolor %>;margin-bottom:3px;">
         <%= link_to image_tag("http://www.opencongress.org/images/photos/thumbs_50/#{s.id}-50px.jpeg", :class =>"photo", :alt => 'photo'), person_url(s.id) %>
         <p>
-          <%= link_to s.full_name, person_url(s.id) %>
+          <%= link_to s.full_name, person_url(s.id), :class => 'full_name' %>
+          <% if s.in_a_valid_district? %>
+          <span><%= link_to("#{s.district.to_i.ordinalize} District", state_district_path(s.state, s.district)) %></span>
+          <% end %>
           <span><%= s.party %></span>
           <% if s == @senators.first %>
           <strong><%= pluralize(s.consecutive_years, 'year') %> in office</strong>
@@ -107,8 +110,11 @@
 </div><!-- col2 -->
 </div><!-- col12 -->
 <div class="col3">
-   <% unless logged_in? %><p class="callout"><a href="/register">Join now</a> and connect with <%= @state.user_count %> OpenCongress users in <%= @state.name %> (it's free)</p><% end %>
+   <% unless logged_in? %><p class="callout"><a href="/register">Join now</a> and connect with <%= number_with_delimiter(@state.user_count) %> OpenCongress users in <%= @state.name %> (it's free)</p><% end %>
 
+<% if @state.available_in_og? %>
+<p class="callout">Follow the state legislature at <%= link_to(raw("OpenGovernment #{@state.name} &rarr;"), @state.og_link) %></P>
+<% end %>
 
 <br/>
 <h2 class="dark">Representatives</h2>

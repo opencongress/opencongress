@@ -132,6 +132,14 @@ class State < ActiveRecord::Base
     end
   end
   
+  def available_in_og?
+    ['CA','LA','MD','WI','MN','TX'].include?(abbreviation)
+  end
+  
+  def og_link
+    'http://' + abbreviation.downcase + '.opengovernment.org'
+  end
+  
   def m_thumb_path
     "/images/states/thumbs_250/#{self.image_name}"
   end

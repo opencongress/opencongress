@@ -12,7 +12,7 @@
 
 <div class="padding">
 <div class="col12">
-   <h3><%= link_to "&larr; #{@state.name}", state_url(@state.abbreviation) %></h3>
+   <h3><%= link_to raw("&larr; #{@state.name}"), state_url(@state.abbreviation) %></h3>
 
    <p><%= @district.freebase_description %>
       <em>(More from <%= link_to "Freebase", @state.freebase_link %>)</em></p>

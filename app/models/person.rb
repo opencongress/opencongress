@@ -1000,6 +1000,10 @@ class Person < ViewableObject
     end
   end
 
+  def in_a_valid_district?
+    (representative? && district != '0')
+  end
+
   def parse_facets(facets, primary_facet, selected_facets)
     my_trackers = 0
     facet_results_hsh = {}

@@ -17,52 +17,14 @@
    
    <div class='senators'>
      <h2 class="dark">Senators</h2>
-
-     <% @senators.each do |s| %>
-       <% bgcolor = "#FFFFFF" %>
-       <% bgcolor = "#FFEEEE" if s.party == "Republican" %>
-       <% bgcolor = "#EEEEFF" if s.party == "Democrat" %>
-       <div class="person_box_big" style="background-color:<%= bgcolor %>;margin-bottom:3px;">
-        <%= link_to image_tag("http://www.opencongress.org/images/photos/thumbs_50/#{s.id}-50px.jpeg", :class =>"photo", :alt => 'photo'), person_url(s.id) %>
-        <p>
-          <%= link_to s.full_name, person_url(s.id), :class => 'full_name' %>
-          <span><%= s.party %></span>
-          <% if s == @senators.first %>
-          <strong><%= pluralize(s.consecutive_years, 'year') %> in office</strong>
-          <% else %>
-          <%= pluralize(s.consecutive_years, 'year') %> in office
-          <% end %>          
-        </p>
-        <div style="clear:both;"></div>
-        </div>
-     <% end %>
+     <%= render @senators %>
    </div>
    
     <br />
 
    <div class='representatives'>
      <h2 class="dark">Representatives</h2>
-     <% @representatives.each do |s| %>
-       <% bgcolor = "#FFFFFF" %>
-       <% bgcolor = "#FFEEEE" if s.party == "Republican" %>
-       <% bgcolor = "#EEEEFF" if s.party == "Democrat" %>
-       <div class="person_box_big" style="background-color:<%= bgcolor %>;margin-bottom:3px;">
-        <%= link_to image_tag("http://www.opencongress.org/images/photos/thumbs_50/#{s.id}-50px.jpeg", :class =>"photo", :alt => 'photo'), person_url(s.id) %>
-        <p>
-          <%= link_to s.full_name, person_url(s.id), :class => 'full_name' %>
-          <% if s.in_a_valid_district? %>
-          <span><%= link_to("#{s.district.to_i.ordinalize} District", state_district_path(s.state, s.district)) %></span>
-          <% end %>
-          <span><%= s.party %></span>
-          <% if s == @senators.first %>
-          <strong><%= pluralize(s.consecutive_years, 'year') %> in office</strong>
-          <% else %>
-          <%= pluralize(s.consecutive_years, 'year') %> in office
-          <% end %>          
-        </p>
-        <div style="clear:both;"></div>
-        </div>
-     <% end %>
+     <%= render @representatives %>
   </div>
    
    <p class="district_description"><%= @state.freebase_description %> <em>(More from <%= link_to "Freebase", @state.freebase_link %>)</em></p>

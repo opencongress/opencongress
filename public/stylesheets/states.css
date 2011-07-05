@@ -47,6 +47,17 @@ background: #eee;
 clear: both;
 }
 
+.district-senators-box {
+  display: block;
+  float: left;
+  width: 460px;
+}
+
+.district-rep-box {
+  display: block;
+  float: left;
+  width: 230px;
+}
 
 .person_box p{
 padding: 4px;

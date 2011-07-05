@@ -17,6 +17,16 @@
    <p><%= @district.freebase_description %>
       <em>(More from <%= link_to "Freebase", @state.freebase_link %>)</em></p>
 
+   <div class='district-senators-box'>
+     <h2 class="dark">Senators</h2>
+     <%= render @senators %>
+   </div>
+   
+   <div class='district-rep-box'>
+     <h2 class="dark">Representative</h2>
+     <%= render @representative %>
+  </div>
+
 <div class="col1">
    
    <% unless @tracking_suggestions.last[:my_bills_tracked_facet].first[:trackers] == 0 %>

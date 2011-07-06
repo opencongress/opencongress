@@ -1,0 +1,10 @@
+<% if @sens.nil? && @reps.nil? %>
+  $j('#contact_recipients_container').html("<div class='none'>We could not find your representatives with the info you provided.  Please try again.");
+<% else %>
+  $j('#contact_recipients_container').html("<%= escape_javascript(render :partial => 'contact_congress_letters/contact_recipients', :locals => { :show_checkboxes => true }) %>");
+  $j('#contribution_data_container').html("<%= escape_javascript(render :partial => 'contact_congress_letters/message_builder_contribution_data') %>");
+
+  <% if @zip4 %>
+    $j('#formageddon_formageddon_thread_sender_zip4').val('<%= @zip4 %>');
+  <% end %>
+<% end %>

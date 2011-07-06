@@ -1,7 +1,8 @@
 #comments-container
   %a#comments{ :name => "comments" }
 
-  = render :partial => 'shared/sort_comments'
+  - if object.comments.size > 1
+    = render :partial => 'shared/sort_comments'
 
   %h2.comments_title
     Comments 
@@ -9,9 +10,7 @@
       - link = @bill ? "/comments/atom/bill/#{@bill.id}" : "/comments/atom/person/#{@person.id}" 
       %a.feed{ :href => link} Feed
       %a.feed.comment_feed{ :href => "/articles/all_comments_atom" }
-    = dbox_trigger('about_comments')
-                            
-  .dboxed= dbox_content("about_comments")
+
 
   /
     .rating_filter

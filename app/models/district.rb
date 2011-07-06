@@ -127,7 +127,6 @@ class District < ActiveRecord::Base
     end
   end
 
-
   def ordinalized_number
     if self.district_number == 0
       "At Large"
@@ -135,7 +134,7 @@ class District < ActiveRecord::Base
       district_number.ordinalize
     end
   end
-  
+
   def district_state_text
     self.state.abbreviation + "-" + self.district_number.to_s
   end

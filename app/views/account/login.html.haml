@@ -1,0 +1,40 @@
+- @page_title = "Login"
+
+#heading
+  %h2 Please Login or Register for a Free Account
+
+.padding
+  #login-left.floatleft.padding.paddingtopnone
+    %div
+      %h3 Login With Your Facebook Account
+      = fb_connect_async_js
+      = fb_login_and_redirect(request.url, :perms => 'email')
+
+    #loginform.floatleft.form.clear{ :title => "Account login" }
+      %h3 I have an account:
+      = form_for :user do |f|
+        %p
+          %label{ :for => "user_login" } Login:
+          = f.text_field :login, :size => 30
+        %p
+          %label{ :for => "user_password" } Password:
+          = f.password_field :password, :size => 30 
+        %input.floatright.margintop.behave{ :type => "image", :value => "Login", :src => image_path('login2.png') }
+
+      %p.margintop.floatleft.margin-top
+        = link_to "Forgot Password?", :action => 'forgot_password'
+
+    %h3 Login with OpenID
+    = form_for :user do |f|
+      #oid_loginform.form{ :title => "Account login" }
+        %p.openidform
+          %label{ :for => "identity_url" } OpenID URL:
+          = text_field_tag :openid_url,nil, :size => 30
+        %br
+        %input.floatright.margintop.behave{ :type => "image", :value => "Login with OpenID", :src => image_path('login3.png') }
+
+  #login-right.floatright.padding.paddingtopnone
+    %h3.make_one Create an OpenCongress Account
+    = render :partial => "signup_form"
+  
+    %br{ :style => "clear:both" } &nbsp;

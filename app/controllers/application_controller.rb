@@ -5,14 +5,74 @@ class ApplicationController < ActionController::Base
 
   include AuthenticatedSystem
   include SimpleCaptcha::ControllerHelpers
+  include Facebooker2::Rails::Controller
   include UrlHelper
 
+  before_filter :facebook_check
   before_filter :store_location
   before_filter :current_tab
   before_filter :has_accepted_tos?
   before_filter :get_site_text_page
   before_filter :is_banned?
 
+  def facebook_check
+    # check to see if the user is logged into and has connected to OC
+    if current_facebook_user and current_facebook_client
+      begin
+        @facebook_user = Mogli::User.find(current_facebook_user.id, current_facebook_client)
+      rescue Mogli::Client::HTTPException
+        set_fb_cookie(nil,nil,nil,nil)
+        @facebook_user = nil
+      end
+    else
+      @facebook_user = nil
+    end
+    
+    if @facebook_user
+      # the user isn't logged in, try to find the account based on email
+      if current_user == :false
+        oc_user = User.where(["email=?", @facebook_user.email]).first
+      else
+        # if the logged-in user's email matches the one from facebook, use that user
+        # otherwise, cancel the facebook connect attempt
+        if current_user.email == @facebook_user.email
+          return unless current_user.facebook_uid.blank?
+          oc_user = current_user
+        else
+          flash[:error] = "The email addresses in your Facebook and OpenCongress accounts do not match.  Could not connect."
+          set_fb_cookie(nil,nil,nil,nil)
+          @facebook_user = nil
+          return
+        end
+      end
+        
+      if oc_user
+        # if, for some reason, we don't have these fields, require them
+        if oc_user.login.blank? or oc_user.zipcode.blank? or !oc_user.accepted_tos
+          redirect_to :controller => 'account', :action => 'facebook_complete' unless params[:action] == 'facebook_complete'
+          return
+        end 
+      
+        # make sure we have facebook uid
+        if oc_user.facebook_uid.blank?
+          oc_user.facebook_uid = @facebook_user.id
+          oc_user.save
+          
+          flash.now[:notice] = 'Your Facebook account has now been linked to this OpenCongress account!'
+        else
+          flash.now[:notice] = "Welcome, #{oc_user.login}."
+        end
+      
+        # log the user in
+        self.current_user = oc_user
+      else
+        # new user.  redirect to get essential info
+        redirect_to :controller => 'account', :action => 'facebook_complete' unless params[:action] == 'facebook_complete'
+        return
+      end
+    end
+  end
+  
   def is_valid_email?(e, with_headers = false)
     if with_headers == false
       email_check = Regexp.new('^[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$')
@@ -136,5 +196,6 @@ class ApplicationController < ActionController::Base
     else
       count
     end
-  end  
+  end
+  
 end

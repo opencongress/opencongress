@@ -896,6 +896,13 @@ class Bill < ViewableObject
      LIMIT ?", groups_ids, Settings.current_opensecrets_cycle, groups_ids, Settings.current_opensecrets_cycle, title, num])
   end
   
+  def bill_position_organizations_support
+    bill_position_organizations.where("bill_position_organizations.disposition='support'")
+  end
+  def bill_position_organizations_oppose
+    bill_position_organizations.where("bill_position_organizations.disposition='oppose'")
+  end
+  
   class << self
     def client_id_to_url(client_id)
       client_id.slice!(/\d+_/)
@@ -1151,6 +1158,18 @@ class Bill < ViewableObject
     return status_hash
   end
     
+  def vote_on_passage(person)
+    if (chamber == 'house' and person.title == 'Rep.') or (chamber == 'senate' and person.title = 'Sen.')
+      roll = originating_chamber_vote
+    else
+      roll = other_chamber_vote
+    end
+    
+    return "Not Voted Yet" if roll.nil? or roll.roll_call.nil?
+    
+    roll.roll_call.vote_for_person(person)
+  end
+  
   def self.full_text_search(q, options = {})
     congresses = options[:congresses] || Settings.default_congress
     
@@ -1235,6 +1254,24 @@ class Bill < ViewableObject
 
   def obj_title
     typenumber
+  end
+
+
+  # methods about user interaction
+  def users_at_position(position = 'support')
+    bill_votes.count(:all, :conditions => ["support = ?", position == 'support' ? 0 : 1])
+  end
+  
+  def users_percentage_at_position(position = 'support')
+    vt = bill_votes.count
+    if vt == 0
+      result = nil
+    else
+      bs = users_at_position('support')
+      bo = users_at_position('oppose')
+      result = ((position == 'support' ? bs.to_f : bo.to_f) / vt) * 100
+      result = result.round
+    end
   end
 
   def as_json(ops = {})

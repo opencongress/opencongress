@@ -1,0 +1,1196 @@
+
+p, h3{
+margin: 0 35px 10px 35px;
+}
+
+.inner ul{
+margin: 0 35px 10px 25px;
+}
+
+
+p.big{
+font-size: 16px;
+margin: 30px 35px;
+line-height: 1.5em;
+}
+
+#heading{
+height: 45px;
+}
+
+#content .left{
+width: 440px;
+float: left;
+clear: none;
+}
+
+#content .right{
+width: 440px;
+float: left !important;
+clear: none;
+}
+
+#content p.left{
+width: 220px;
+float: left;
+clear: none;
+}
+
+
+#content p.right{
+width: 420px;
+float: left !important;
+clear: none;
+}
+
+
+.formageddon_contact_form {
+float:left;
+width: 480px;
+margin-bottom: 900px;
+padding: 22px 0 0 20px;
+margin-right: 0;
+overflow: hidden;
+font-size: 11px;
+}
+
+#new_formageddon_formageddon_thread{
+
+}
+
+
+
+.formageddon_contact_form label {
+  width: 100px;
+  display: inline-block;
+  vertical-align: top;
+  line-height: 2em;
+}
+
+.formageddon_contact_form p input {
+-moz-box-shadow:inset 0 1px 2px rgba(0,0,0,.5);
+-webkit-box-shadow:inset 0 1px 2px rgba(0,0,0,.5);
+border: 0;
+
+.border: 1px solid #999;
+_border: 1px solid #999;
+border: 1px solid #999\0/;
+
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+padding: 6px 6px 5px;
+width: 270px;
+font-size: 10px;
+}
+
+
+.formageddon_contact_form #formageddon_formageddon_thread_submit {
+  float: right;
+  margin-top: 15px;
+}
+
+.contact_congress {
+  padding: 35px;
+display: relative;
+}
+
+
+.formageddon_thread {
+  width: 100%;
+  padding: 10px 0;
+}
+
+.formageddon_letter {
+  width: 600px;
+  background: #fff;
+  border: 1px solid #000;
+  text-align: left;
+  margin: auto;
+  padding: 15px 20px;
+  font-family:"Times New Roman",Georgia,Serif;
+  font-size:1.2em;
+  clear: both;
+}
+.formageddon_letter .from {
+  float: right;
+  clear: left;
+}
+.formageddon_letter .to {
+  clear: right;
+  margin-bottom: 20px;
+}
+.formageddon_letter .date {
+  margin-bottom: 20px;
+}
+
+.formageddon_letter .subject {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+
+
+.contact_congress .status_bar {
+  width: 900px;
+  float: left;
+  margin: 0 15px 30px 15px;
+  background-color: #eee;
+  font-size: 1.4em;
+
+
+border: 1px solid #afafaf;
+
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+
+
+
+}
+
+
+
+
+
+.contact_congress .status_bar .step {
+  float: left;
+  width: 299px;
+  text-align: center;
+  padding: 10px 0;
+  color: #888;
+font-size: 12px;
+  border-right: 1px solid #bbb;
+}
+
+.contact_congress .status_bar .active {
+
+  color: #333;
+  font-weight: bold;  
+  background-color: #cbe2f2;
+
+-moz-box-shadow:inset 0 1px 2px rgba(255,255,255,.5);
+-webkit-box-shadow:inset 0 1px 2px rgba(255,255,255,.5);
+
+background: -webkit-gradient(linear, left top, left bottom, from(#b4d5ec), to(#d9efff)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #d9efff,  #b4d5ec); /* for firefox 3.6+ */
+
+}
+.contact_congress .status_bar .noborder {
+  border-right: 0;
+}
+.contact_letter {
+
+
+  padding: 15px;
+}
+
+.contact_message_builder {
+height: 503px;
+overflow: auto;
+  width: 490px;
+  background-color: #F7F7F7;
+  padding: 0px 0 200px;
+  border: 1px solid #ddd;
+  margin: 0;
+right: 0;
+position: absolute;
+top: 739px;
+}
+
+
+.contact_message_builder li,
+span.message_builder_clickable{
+
+display: block;
+}
+
+
+
+.contact_message_builder .contribution_data{
+padding: 35px;
+}
+
+
+
+
+
+.contact_message_builder li.message_builder_clickable{
+margin: 0 20px 0 25px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+padding: 10px 15px 10px 40px;
+background: url(/images/tiny-arrow.png) 10px 10px no-repeat;
+}
+
+.contact_message_builder .message_builder_clickable:hover {
+
+  -moz-box-shadow:  0 2px 3px rgba(0,0,0,.9), inset 0 1px 0px #fff;
+  -webkit-box-shadow:  0 2px 3px rgba(0,0,0,.9), inset 0 1px 0px #fff;
+  box-shadow:  0 2px 3px rgba(0,0,0,.9), inset 0 1px 0px #fff;
+  
+  background: url(/images/tiny-arrow.png) 10px 10px no-repeat, -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)); /* for webkit browsers */
+  background: url(/images/tiny-arrow.png) 10px 10px no-repeat, -moz-linear-gradient(top,  #fff,  #eee); /* for firefox 3.6+ */
+
+  text-shadow: 0 1px 0px #fff;
+
+cursor: pointer !important;
+}
+
+div.will_add_text_box{
+position: absolute;
+margin: 20px;
+background: #fff;
+-webkit-transition: all 1s ease-in-out;
+-moz-transition: all 1s ease-in-out;
+left: 74px;
+width: 280px;
+border: 1px solid #333;
+padding: 0px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+-moz-box-shadow: 0 2px 2px rgba(0,0,0,.5);
+-webkit-box-shadow: 0 2px 2px rgba(0,0,0,.5);
+}
+ 
+
+div.will_add_text_box p{
+margin: 0;
+border-bottom: 1px solid #aaa;
+padding: 10px 19px;
+
+-moz-border-radius-topright: 3px;
+-moz-border-radius-topleft: 3px;
+-webkit-border-top-right-radius: 3px;
+-webkit-border-top-left-radius: 3px;
+
+
+  -moz-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+  -webkit-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+  box-shadow:  0 1px 0px #ddd, inset 0 1px 0px #fff;
+  
+  background: #999; /* for non-css3 browsers */
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #ddd); /* for firefox 3.6+ */
+
+  text-shadow: 0 1px 0px #fff;
+
+
+}
+
+
+
+div.message_builder_add_text{
+padding: 15px 20px;
+}
+
+
+.contact_message_builder h2{
+padding: 30px 35px 0;
+font-weight: normal;
+}
+
+.instructions{
+padding: 0px 35px 15px;
+color: #666 !important;
+}
+
+.contact_message_builder h3 {
+margin: 0;
+border-top: 1px solid #ddd;
+padding: 7px 35px;
+border-bottom: 1px solid #aaa;
+background: #fff;
+}
+
+.contact_message_builder .section {
+  margin-bottom: 20px;
+}
+
+
+.contact_message_builder .will_add_text_box {
+  display: none;
+}
+.contact_message_builder strong {
+  margin-top: 10px;
+}
+.contact_message_builder ul {
+  margin: 5px;
+}
+.contact_message_builder ul.bulleted {
+  margin: 5px;
+}
+.contact_message_builder .contribution_data {
+  margin-bottom: 10px;
+}
+.contact_message_builder .contribution_data th {
+  text-align: left;
+border: 1px solid #ddd;
+  padding: 7px 10px;
+}
+
+
+.contact_message_builder .contribution_data td {
+border-right: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
+background: rgba(255,255,255,.9)
+}
+
+
+.contact_message_builder .contribution_data td span.message_builder_clickable{
+  padding: 7px 10px;
+
+}
+
+
+
+
+.contact_message_builder .contribution_data th.topleft {
+  border-top: 0;
+  border-left: 0;
+}
+.contact_message_builder .contribution_data th.group_column {
+  width: 175px;
+}
+
+.contact_recipients {
+overflow: hidden !important;
+float: left;
+width: 360px;
+background: #eee;
+background: rgba(101,101,101, .2) url(/images/people-arrow.png) 330px 13px no-repeat;
+-moz-border-radius: 7px;
+-webkit-border-radius: 7px;
+padding: 20px;
+min-height: 248px;
+}
+
+.contact_recipients hr{
+display: none;
+}
+
+
+.contact_recipients ul {
+  position: relative;
+  width: 340px;
+}
+.contact_recipients input {
+  float: left;
+  margin-right: 15px;
+  padding-top: 10px;
+  vertical-align: bottom;
+}
+
+.contact_recipients li {
+  width: 400px;
+  position: absolute;
+  min-height: 44px;
+  -webkit-transition: all 1s ease-in-out;
+  -moz-transition: all 1s ease-in-out;
+  -o-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out;
+}
+.contact_recipients li.hide {
+  top: -300px;
+}
+  
+.contact_recipients li, .contact_message_builder li {
+  padding: 3px;
+  margin: 10px 0;
+}
+.contact_recipients li img.photo {
+  float: left;
+  height: 35px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.contact_recipients li img.spin {
+  margin: 7px auto;
+}
+.contact_recipients span.sending {
+  opacity: 0.0;
+  -webkit-transition: all 2s ease-in-out;
+  -moz-transition: all 2s ease-in-out;
+  -o-transition: all 2s ease-in-out;
+  transition: all 2s ease-in-out;
+  padding-bottom:10px;
+display: block;
+font-size: 16px;
+}
+
+.contact_thread_share {
+  padding: 10px 0 10px 10px;
+  font-size: 12px;
+  color: #888;
+  margin-right: -10px;
+  line-height: 1em;
+  height: 2em;
+  background-color: #f8f8f8;
+  position: relative;
+  border: 1px solid #eee;
+  width: 265px;
+  float: right;
+
+}
+.contact_thread_share span {
+  padding-top: 5px;
+  display: block;
+  float: left;
+
+}
+.contact_thread_share .share {
+  position: relative !important;
+  float: right;
+  right: 0px;
+  margin-right: 10px;
+}
+
+.contact_thread_share ul.share li{
+list-style: none !important;
+float: left;
+}
+
+.contact_thread_share ul.share li a{ 
+width: 27px !important;
+height: 0px !important;;
+overflow: hidden !important;;
+padding-top: 27px !important;;
+float: left !important;
+}
+
+.contact_congress .after_steps {
+  width: 954px;
+  margin: 30px 0 30px 14px;
+  float: left;
+
+}
+
+.contact_congress .after_steps .step {
+  width: 257px;
+  float: left;
+  padding: 20px 10px;
+  min-height: 250px;
+-moz-border-radius: 5px;
+margin-right: 33px;
+-webkit-border-radius: 5px;
+
+  border: 1px solid #aaa;
+  border-top: 1px solid #dbdbdb;
+  border-bottom: 1px solid #777;
+  
+  -moz-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+  -webkit-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+  box-shadow:  0 1px 0px #ddd, inset 0 1px 0px #fff;
+  
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #eee); /* for firefox 3.6+ */
+
+}
+
+.contact_congress .after_steps .step h2 {
+  text-align: center;
+}
+
+.contact_congress .after_steps .step .desc {
+
+  padding: 10px;
+}
+.contact_congress .after_steps .step p {
+  margin: 0px 0 20px;
+font-size: 12px;
+color: #888;
+text-align: center;
+}
+
+.contact_congress .after_steps .noborder {
+margin-right: none !important;
+}
+
+
+.message_fields_wrapper{
+height: 705px;
+width: 510px;
+left: 0;
+border-right: 1px solid #777;
+top: 739px;
+position: absolute;
+background: #999;
+-moz-box-shadow:inset -2px 1px 46px rgba(0,0,0,.2);
+-webkit-box-shadow:inset 0 1px 5px rgba(0,0,0,.8);
+}
+
+
+
+.message_fields_wrapper h3{
+padding: 30px 0 0px;
+font-weight: normal;
+color: #666;
+display: none;
+}
+
+
+
+.message_fields{
+height: 530px;
+width: 380px;
+background: #fff;
+padding: 80px 30px 30px 30px;
+margin-top: 35px;
+margin-left: 35px;
+-moz-box-shadow: 0 1px 4px rgba(0,0,0,.5);
+-webkit-box-shadow: 0 1px 4px rgba(0,0,0,.5);
+
+
+}
+
+.desk{
+position: absolute;
+top: 800px;
+width: 374px;
+z-index: 999999999;
+
+margin-left: 20px;
+text-align:  center;
+}
+
+
+.desk .from{
+display: block; 
+font-size: 16px;
+font-family: 'La Belle Aurore', arial, serif; 
+}
+
+.desk .the-user{
+font-size: 10px;
+color: #888;
+text-transform: uppercase;
+}
+
+
+.message_fields p{
+margin: 0;
+padding: 0;
+}
+
+
+
+.message_fields label{
+color: #aaa;
+text-transform: uppercase;
+font-size: 8px;
+letter-spacing: .05em;
+}
+
+
+.subject input{
+-moz-box-shadow:inset 0 1px 2px rgba(0,0,0,.1) ;
+-webkit-box-shadow:inset 0 1px 2px rgba(0,0,0,.1);
+border: 1px solid #e0e0e0;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+
+
+padding: 10px 13px 8px !important;
+width: 355px !important;
+font-family: Helvetica, Arial, sans-serif;
+font-size: 11px;
+line-height: 1.4em;
+margin-bottom: 20px;
+
+}
+
+
+
+.message_fields textarea{
+-moz-box-shadow:inset 0 1px 2px rgba(0,0,0,.1);
+-webkit-box-shadow:inset 0 1px 2px rgba(0,0,0,.1);
+border: 1px solid #e0e0e0;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+padding: 15px;
+width: 349px;
+height: 415px;
+font-family: Helvetica, Arial, sans-serif;
+font-size: 11px;
+line-height: 1.4em;
+}
+
+
+.contact_congress h3.large_heading{
+position: absolute;
+border-top: 1px solid #ddd;
+border-bottom: 1px solid #444;
+display: block !important;
+float: none !important;
+width: 927px;
+margin: 0px 0 0 -35px;
+padding: 20px 40px 20px 35px; 
+font-size: 16px;
+top: 679px;
+  background: #999; /* for non-css3 browsers */
+
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #ddd); /* for firefox 3.6+ */
+
+}
+
+
+
+
+.privacy_options{
+padding-top: 40px;
+width: 540px;
+}
+
+.privacy_options label{
+padding: 0 !important;
+line-height: 1.5em;
+font-weight: bold;
+float: none;
+width: 100%;
+}
+
+.privacy_options select{
+font-size: 9px;
+}
+
+
+.contact_letter .button{
+position: absolute;
+right: 8px;
+top: 674px;
+}
+
+
+.sender_zip5 {
+float: left;
+margin: 0 !important;
+width: 250px;
+}
+
+.sender_zip4{
+margin-left: 5px !important;
+float: left;
+width: 150px;
+}
+
+
+
+.sender_zip5 label{
+float: left;
+width: 100px !important;
+margin: 0 0 0 35px;
+font-weight: bold;
+}
+
+
+.sender_zip4 label{
+float: left;
+width: 39px !important;
+margin-left: 20px;
+}
+
+
+.sender_zip5 input,
+.sender_zip4 input{
+float: left;
+margin-left: 3px;
+width: 60px !important;
+}
+
+.sender_title {
+  padding-top:20px;
+  clear:left;
+}
+
+.sender_city {
+  float:left;
+} 
+
+.sender_state {
+  float: left;
+}
+
+.sender_state label {
+  width: 40px;
+}
+.sender_state select{
+  margin-top: 3px;
+}
+.sender_city input {
+  width: 100px !important;
+}
+
+#contact_congress_letters.new #heading{
+background: none !important;
+position: absolute !important;
+padding: 10px 0 0 50px;
+
+}
+
+
+
+
+
+#contact_congress_letters.new #heading h2{
+font-family: helvetica, arial, sans-serif;
+font-size: 11px;
+color: #999;
+font-weight: normal
+}
+
+
+.people{
+margin: 0px 0 0 !important;
+height: 225px;
+}
+
+
+.people li{
+padding: 10px 8px 13px;
+margin: 0 0px 0px 0 !important;
+width: inherit !important;
+background: #fff;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+}
+
+
+
+.people li img.photo{
+padding: 3px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+  border: 1px solid #999;
+  border-top: 1px solid #bbb;
+  border-bottom: 1px solid #666;
+  
+  -moz-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+  -webkit-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+  box-shadow:  0 1px 0px #ddd, inset 0 1px 0px #fff;
+  
+  background: #999; /* for non-css3 browsers */
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #ddd); /* for firefox 3.6+ */
+
+  text-shadow: 0 1px 0px #fff;
+}
+
+
+.people li a{
+margin: 4px 0px 0px 0 !important;
+display: inline-block;
+padding-left: 6px;
+}
+
+.people li span{
+margin: 4px 0px 0px 0 !important;
+display: inline-block;
+padding-left: 6px;
+}
+
+.people hr {
+  position: absolute;
+  width: 100px;
+  margin-left:125px;
+  height: 2px;
+  border: 0;
+  top: 144px;
+  background-color: rgba(0,0,0, .4);
+  opacity: 0;
+  -webkit-transition: all 4s ease-in-out;
+  -moz-transition: all 4s ease-in-out;
+  -o-transition: all 4s ease-in-out;
+  transition: all 4s ease-in-out;
+}
+.perm{
+clear: both;
+-moz-border-radius: 30px;
+-webkit-border-radius: 30px;
+background: #eee;
+padding: 10px 20px;
+width: 500px;
+text-align: center;
+margin: 0 auto 30px;
+}
+
+.congrats{
+font-size: 14px;
+line-height: 1.4em;
+}
+
+
+.new_user{
+font-size: 16px;
+padding: 40px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+-o-border-radius: 3px;
+-ms-border-radius: 3px;
+border-radius: 3px;
+background: #f1d95b;
+clear: both;
+}
+
+
+
+.formageddon_letter{
+  border: 1px solid #ddd;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #ccc;
+  
+  -moz-box-shadow: 0 1px 2px #ddd, inset 0 1px 0px #fff;
+  -webkit-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+
+  
+  background: #999; 
+
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd)); 
+  background: -moz-linear-gradient(top,  #fff,  #f9f9f9); 
+
+  text-shadow: 0 1px 0px #fff;
+font-family: helvetica, arial, sans-serif;
+font-size: 13px;
+padding: 70px;
+}
+
+
+.contact_thread_header{
+text-align: center;
+font-size: 16px;
+}
+
+
+.permshare .contact_thread_share{
+float: none !important;
+position: absolute;
+margin-top: 76px;
+margin-left: 95px;
+}
+
+#contact_congress_letters .inner .padding{
+display: relative !important;
+}
+
+
+
+.position_buttons{
+text-align: center;
+}
+
+
+
+
+
+
+h1.regarding{
+padding: 0 30px;
+font-size: 14px;
+font-family: Helvetica, Arial, sans-serif;
+font-style: normal;
+width: 800px;
+text-align: center;
+float: none;
+margin: 0 auto !important;
+}
+
+
+
+
+span.regarding{
+font-size: 14px;
+font-family: Helvetica, Arial, sans-serif;
+font-style: normal;
+width: 900px !important;
+text-align: center;
+display: block;
+padding: 30px 0 10px;
+float: none !important;
+margin: 0 auto 10px !important;
+border-bottom: 1px solid #eee;
+}
+
+
+
+
+.contact_letter p{
+}
+
+
+
+.selections {
+  width: 420px;
+  margin-bottom: 50px;
+}
+
+.selections a {
+  display:block;
+  margin: 0 auto 20px;
+  width: 300px;
+}
+
+
+.selections p {
+  padding: 0;
+  margin: 0;
+}
+
+.none {
+  font-weight: bold;
+  width: 250px;
+  text-align: center;
+  margin: 25% auto 0;
+  color: rgba(0,0,0, .4);
+}
+
+
+.second_submit{
+position: absolute;
+top: 1443px;
+left: 0;
+
+position: absolute;
+border-top: 1px solid #ddd;
+border-bottom: 1px solid #444;
+display: block !important;
+float: none !important;
+width: 1002px;
+margin: 0px;
+height:74px;font-size: 16px;
+
+
+  background: #999; /* for non-css3 browsers */
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #ddd); /* for firefox 3.6+ */
+
+
+}
+
+
+.second_submit .blue.huge{
+top: 3px;
+right: 15px;
+
+position: absolute;
+
+
+}
+
+
+.tweet{
+padding-top: 20px;
+}
+
+
+.face{
+padding-top: 20px;
+}
+
+
+.contact_congress_letter .formageddon_letter{
+float: left;
+width: 420px;
+margin-left: 30px;
+
+margin-bottom: 60px;
+clear: none;
+}
+
+
+.contact_congress_letter #recipients{
+position: relative;
+}
+
+
+
+.contact_congress_letter #recipients ul{
+float: left;
+width: 900px;
+-moz-border-radius: 15px;
+-webkit-border-radius: 15px;
+-o-border-radius: 15px;
+-ms-border-radius: 15px;
+background: #f9f9f9;
+margin-bottom: 30px;
+
+}
+
+
+
+.contact_congress_letter #recipients .to{
+position: absolute;
+left: 50px;
+top: 20px;
+font-size: 20px;
+}
+
+.contact_congress_letter #recipients.num1 ul{
+float: left;
+padding-left: 340px;
+width: 610px;
+}
+
+
+.contact_congress_letter #recipients.num2 ul{
+float: left;
+padding-left: 220px;
+width: 730px;
+}
+
+
+
+
+
+.contact_congress_letter #recipients.num3 ul{
+float: left;
+padding-left: 80px;
+width: 870px;
+}
+
+
+
+
+
+.contact_congress_letter #recipients li{
+float: left;
+padding: 20px;
+-moz-border-radius: 15px;
+-webkit-border-radius: 15px;
+-o-border-radius: 15px;
+-ms-border-radius: 15px;
+background: #eee;
+width: 200px;
+margin-right: 30px;
+border-radius: 15px;
+margin-bottom: 20px;
+margin-top: 20px;
+}
+
+
+.contact_congress_letter #recipients li .photo{
+float: left !important;
+margin-right: 10px;
+}
+
+
+
+.contact_congress_letter #recipients span{
+text-align: center;
+display: block;
+font-weight: bold;
+padding-bottom: 20px;
+
+}
+
+.contact_congress_letter #recipients li span{
+text-align: left;
+padding-bottom: 0px;
+
+}
+
+.contact_congress_letter #bill{
+text-align: center;
+font-size: 16px;
+height: 30px;
+padding-top: 20px ;
+padding-bottom: 40px ;
+
+width: 100%;
+}
+
+#comments-container{
+float: left;
+-moz-border-radius: 15px;
+-webkit-border-radius: 15px;
+-o-border-radius: 15px;
+-ms-border-radius: 15px;
+background: #eee;
+width: 870px;
+margin: 0 30px 90px;
+
+}
+
+
+.comment-thing{
+float: right;
+background: url(/images/comment.png) center no-repeat;
+width: 400px;
+text-align: center;
+font-size: 18px;
+font-weight: bold;
+padding: 40px 0px 30px;
+}
+
+.recipient_info{
+float: left;
+width: 140px;
+}
+
+
+.sharing p{
+line-height: 1.4em;
+}
+
+.sharing .tweet{
+float: left;
+width: 120px;
+margin-bottom: 20px;
+margin-left: 120px !important;
+}
+
+.sharing .face{
+float: left;
+margin-bottom: 40px;
+width: 120px;
+}
+
+.facebook span{
+padding: 10px 10px 12px 15px !important;
+}
+
+.facebook{
+clear: none !important;
+}
+
+.twitter{
+margin-right: 10px;
+}
+
+.twitter span{
+padding: 9px 10px 10px 15px !important;
+}
+
+.after_steps .share_buttons {
+  margin: 30px 0 0 30px;
+}
+
+
+.instruction{
+clear: both;
+padding: 40px 0 30px 0;
+font-size: 14px;
+}
+
+.instruction li{
+list-style: disc;
+margin-bottom: 10px;
+margin-left: 0;
+}
+
+
+.value{
+padding: 40px 0px 30px 150px;
+-moz-border-radius: 8px;
+-webkit-border-radius: 8px;
+-ms-border-radius: 8px;
+-o-border-radius: 8px;
+border-radius: 8px;
+font-size: 15px;
+line-height: 1.4em;
+background: rgba(101,101,101, .2) url(/images/promo.gif) 40px center no-repeat;
+text-align: center;
+border: 5px solid rgba(101,101,101, .1);
+}
+
+
+
+
+

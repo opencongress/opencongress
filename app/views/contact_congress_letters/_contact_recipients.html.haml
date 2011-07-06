@@ -1,0 +1,38 @@
+- show_checkboxes ||= false
+
+.contact_recipients
+  %span.sending You are sending this message to:
+  %ul.people
+    - @sens.each_with_index do |s, i|
+      %li.hide{ :id => "sen_#{i}" }
+        - if show_checkboxes
+          = check_box_tag "formageddon_multi_recipients[#{s.id}]", 'Person', true
+        = image_tag "photos/thumbs_50/#{s.id}-50px.jpeg", :class =>"photo", :alt => 'photo'
+        = link_to s.name, person_path(s)
+        - if @bill
+          %span
+            = "Vote on Passage of #{@bill.typenumber}: " 
+            %strong= "#{@bill.vote_on_passage(s)}"
+    %hr#separator
+    - if @reps.size == 1
+      %li#rep.hide
+        - if show_checkboxes
+          = check_box_tag "formageddon_multi_recipients[#{@reps.first.id}]", 'Person', true
+        = image_tag "photos/thumbs_50/#{@reps.first.id}-50px.jpeg", :class =>"photo", :alt => 'photo'
+        = link_to @reps.first.name, person_path(@reps.first)
+        - if @bill
+          %span
+            = "Vote on Passage of #{@bill.typenumber}: " 
+            %strong= "#{@bill.vote_on_passage(@reps.first)}"
+    - else
+      %li#rep.hide.none
+        Please enter your full address on the right 
+        %br
+        so we can find your Representative.
+- unless @sens.empty? and @reps.empty?
+  :javascript
+    $j('#sen_0').css("top", "0px");
+    $j('#sen_1').css("top", "75px");
+    $j('#rep').css("top", "160px");
+    $j('.sending').css("opacity", "1.0");
+    $j('#separator').css("opacity", "1.0");

@@ -554,21 +554,13 @@ EOT
 		end
 	end
   
-  def user_bill_result(bill)
-    vt = bill.bill_votes.count
-    if vt == 0
-      result = nil
-    else
-      bs = bill.bill_votes.count(:all, :conditions => "support = 0")
-      bo = bill.bill_votes.count(:all, :conditions => "support = 1")      
-      result = (bs.to_f / vt) * 100
-      result = result.round
-    end                    
-    color = percent_to_color(result)
+  def user_bill_result(bill)                   
+    color = percent_to_color(bill.users_percentage_at_position('support'))
     %Q{<div id="users_result">
-    <h3 class="clearfix" style="color:#{color};" id="support_#{bill.id.to_s}">#{result.nil? ? "-" : result}%</h3>
+    <h3 class="clearfix" style="color:#{color};" id="support_#{bill.id.to_s}">
+    #{bill.users_percentage_at_position('support').nil? ? "-" : bill.users_percentage_at_position('support')}%</h3>
     <h4>Users Support Bill</h4>
-    <font>#{bs} in favor / #{bo} opposed</font>
+    <font>#{bill.users_at_position('support')} in favor / #{bill.users_at_position('oppose')} opposed</font>
     </div>}.html_safe
   end
   
@@ -843,6 +835,8 @@ EOT
     case object
     when Article
       url = url_for(:only_path => false, :controller => 'articles', :action => 'view', :id => object)
+    when ContactCongressLetter
+      url = url_for(:only_path => false, :controller => 'contact', :action => 'letter', :id => object)
     end
     
     begin

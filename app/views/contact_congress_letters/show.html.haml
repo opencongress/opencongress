@@ -1,0 +1,48 @@
+#heading
+  %h2 Contact Congress
+
+
+.contact_congress_letter
+  - if @contact_congress_letter.bill
+    #bill
+      This letter was sent regarding:
+      %strong= link_to truncate("#{@contact_congress_letter.bill.typenumber} #{@contact_congress_letter.bill.title_common}", :length => 170), bill_path(@contact_congress_letter.bill)
+      - if @contact_congress_letter.formageddon_threads.first.formageddon_sender
+        by
+        = link_to @contact_congress_letter.formageddon_threads.first.formageddon_sender.login, user_profile_path(@contact_congress_letter.formageddon_threads.first.formageddon_sender.login)
+  #recipients{ :class => "num#{@contact_congress_letter.formageddon_threads.size}" }
+    .to To:
+    %ul
+      - @contact_congress_letter.formageddon_threads.each do |t|
+        %li   
+          = image_tag "photos/thumbs_50/#{t.formageddon_recipient.id}-50px.jpeg", :class =>"photo", :alt => 'photo'
+
+          .recipient_info
+            = link_to t.formageddon_recipient.name, person_path(t.formageddon_recipient)
+            - if @contact_congress_letter.bill
+              %span
+                = "Vote on Passage of #{@contact_congress_letter.bill.typenumber}: " 
+                %strong= "#{@contact_congress_letter.bill.vote_on_passage(t.formageddon_recipient)}"
+
+
+         
+  .comment-thing
+    .sharing
+      %p Share this letter with your friends and followers!
+
+      .tweet 
+        <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+
+      .face 
+        <div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=217834678241023&amp;xfbml=1"></script><fb:like href="#{url_for :only_path => false, :controller => 'contact_congress_letters', :action => 'show', :id => @contact_congress_letter}" send="true" layout="button_count" width="450" show_faces="true" font="lucida grande"></fb:like>
+        
+    %p Comment on this letter below
+
+
+
+  .formageddon_letter
+    .subject= @contact_congress_letter.formageddon_threads.first.formageddon_letters.first.subject
+    .body= @contact_congress_letter.formageddon_threads.first.formageddon_letters.first.message.gsub(/\n/, "<br />").html_safe
+  
+  #letter_comments
+    = render :partial => 'shared/comments', :locals => { :object => @contact_congress_letter }

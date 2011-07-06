@@ -1,0 +1,18 @@
+- bgcolor = "#FFFFFF"
+- bgcolor = "#FFEEEE" if person.party == "Republican"
+- bgcolor = "#EEEEFF" if person.party == "Democrat"
+%div{:class => "person_box_big", :style => "background-color:#{bgcolor};margin-bottom:3px;"}
+  = link_to image_tag("http://www.opencongress.org/images/photos/thumbs_50/#{person.id}-50px.jpeg", :class =>"photo", :alt => 'photo'), person_url(person.id)
+  %p
+    = link_to person.full_name, person_url(person.id), :class => 'full_name'
+    - if person.in_a_valid_district?
+      %span= link_to("#{person.district.to_i.ordinalize} District", state_district_path(person.state, person.district))
+    %span= person.party
+    - if person == @senators.first
+      %strong
+      = pluralize(person.consecutive_years, 'year')
+      in office
+    - else
+      = pluralize(person.consecutive_years, 'year')
+      in office
+  %div(style="clear:both;")

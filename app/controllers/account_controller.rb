@@ -36,7 +36,7 @@ class AccountController < ApplicationController
     end
   end
 
-  def login
+  def login    
     if params[:login_action]
       session[:login_action] = {:url => session[:return_to], :action_result => params[:login_action]}
     end
@@ -104,8 +104,32 @@ class AccountController < ApplicationController
     end
   end
 
+  def facebook_complete
+    @page_title = 'Facebook Connect'
+    
+    @user = User.where(['facebook_uid=?', @facebook_user.id]).first
+    if @user.nil?
+      @user = User.new
+    end
+    
+    if request.post?
+      @user.facebook_uid = @facebook_user.id
+      @user.email = @facebook_user.email
+      @user.update_attributes(params[:user])
+      
+      if @user.save
+        @user.activate
+        self.current_user = @user
+        flash[:notice] = 'You have successfully signed up with your Facebook Account!'
+        
+        redirect_to welcome_url
+        return
+      end
+    end
+  end
+  
   def signup
-   @page_title = "Create a New Account"
+    @page_title = "Create a New Account"
 
     logger.info session.inspect
 
@@ -178,6 +202,7 @@ class AccountController < ApplicationController
   end
 
   def welcome
+    @page_title = 'Welcome to OpenCongress!'
     @user = current_user
     @show_tracked_list = true
 

@@ -1,0 +1,35 @@
+%span.regarding You are writing regarding
+%h1.regarding= truncate("#{@bill.typenumber} #{@bill.title_common}", :length => 170)
+
+#heading
+  %h2 Contact Congress
+  
+.contact_congress
+
+  = render 'contact_congress_status_bar', :step => 1
+  
+  .selections.floatright
+    %p.margin-top 
+      %h3.center What is your position on this bill?
+  
+    .position_buttons.padding
+      %a.button.blue.huge.margin-right{ :href => url_for(:action => 'new', :bill => @bill.ident, :position => 'support') }
+        %span= "I Support #{@bill.typenumber}"
+      %a.button.yellow.huge.margin-right{ :href => url_for(:action => 'new', :bill => @bill.ident, :position => 'oppose')  }
+        %span= "I Oppose #{@bill.typenumber}"
+      %a.button.silver.huge.margin-right{ :href => url_for(:action => 'new', :bill => @bill.ident, :position => 'tracking')  }
+        %span= "I Am Tracking #{@bill.typenumber}"
+  
+  
+  .margin-left
+    - if @sens.empty? and @reps.empty?
+      .contact_recipients
+        .none
+          Select your position and we'll find your reps on the next page.
+        
+    -else
+      = render :partial => 'contact_recipients'
+
+  %br
+  %br
+ 

@@ -166,6 +166,10 @@ class User < ActiveRecord::Base
     self.comments.count + self.friends.count + self.bill_votes.count + self.person_approvals.count + self.bookmarks.count
   end
 
+  def state
+    my_state.empty? ? nil : my_state.first
+  end
+  
   def my_state
     ZipcodeDistrict.zip_lookup(self.zipcode, self.zip_four).collect {|p| p.state}.uniq
   end
@@ -761,6 +765,10 @@ class User < ActiveRecord::Base
 
    end
 
+   def facebook_connect_user?
+     !facebook_uid.blank?
+   end
+   
    protected
 
    def make_password_reset_code
@@ -788,12 +796,13 @@ class User < ActiveRecord::Base
    end
 
    def password_required?
-     !openid? && ( crypted_password.blank? || !password.blank? )
+     !openid? && !facebook_connect_user? && ( crypted_password.blank? || !password.blank? )
    end
 
    def openid?
     !identity_url.blank?
    end
+  
    
    private
    def cache_district_and_state

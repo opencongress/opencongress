@@ -1,0 +1,7 @@
+%li.message_builder_clickable
+  = link_to a.title.html_safe, a.url
+  \-
+  = a.date.strftime("%B %d, %Y")
+  \-
+  = a.excerpt.html_safe
+  = render 'will_add_text_box', :text => "As noted in #{a.source} on #{a.date.strftime("%B %d, %Y")}, \"#{a.excerpt}\""

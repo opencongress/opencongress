@@ -1,0 +1,65 @@
+#heading
+  %h2 Contact Congress
+  
+.contact_congress
+  = render 'contact_congress_status_bar', :step => 3
+  
+  .congrats
+    - if @new_user_notice
+      %p.new_user
+        %strong You must verify your email before we can send your letter. 
+        %br
+        %br
+        We have created a new OpenCongress account for you and sent you a verification email.  As soon as you verify your email address, we'll send your letter.
+    - else 
+      %p
+        %strong Congratulations!
+        Your letter to your elected representatives has been sent!  We will be tracking this correspondence and alert you to any replies immediately.
+    %br
+
+  .perm 
+    Here is your letter's permalink:
+    = link_to url_for(:only_path => false, :controller => 'contact_congress_letters', :action => 'show', :id => @contact_congress_letter), url_for(:only_path => false, :controller => 'contact_congress_letters', :action => 'show', :id => @contact_congress_letter)
+
+  %p.center.bold Your communication can be more effective by following the steps below.
+
+
+  .after_steps
+    .step
+      %h2 Share
+      .desc
+        A
+        = link_to 'page with your letter', :controller => 'contact_congress_letters', :action => 'show', :id => @contact_congress_letter
+        has been set up. Share it with your friends and followers!
+        
+        .share_buttons
+          <a class="med_button twitter" href="#{twitter_share_for_letter(@contact_congress_letter)}"><span>#{image_tag 'twitter_logo.png'}</span></a>
+          <a class="med_button facebook" href="http://www.facebook.com/OpenCongress"><span>#{image_tag 'facebook_badge.png', :alt=>'Find our Facebook'}</span></a>
+
+        /
+          .tweet 
+            <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+        /
+          .face 
+            <div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=217834678241023&amp;xfbml=1"></script><fb:like href="#{url_for :only_path => false, :controller => 'contact', :action => 'letter', :id => @contact_congress_letter}" send="true" layout="button_count" width="450" show_faces="true" font="lucida grande"></fb:like>
+
+    .step
+      %h2 Mail
+      .desc
+        = link_to 'Print', '#'
+        this letter and send it through the mail.  Here's the address:
+      %p
+        - @contact_congress_letter.formageddon_threads.each do |thread|
+          %p  
+            = thread.formageddon_recipient.formageddon_display_address.gsub(/\n/, "<br />").html_safe
+    .step.noborder
+      %h2 Call
+      .desc
+        Call your representatives at the numbers below:
+
+      - @contact_congress_letter.formageddon_threads.each do |thread|
+        %p  
+          = "#{thread.formageddon_recipient.title_long} #{thread.formageddon_recipient.firstname} #{thread.formageddon_recipient.lastname}"
+          %br
+          = thread.formageddon_recipient.phone
+  

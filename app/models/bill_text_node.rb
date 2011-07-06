@@ -3,6 +3,8 @@ class BillTextNode < ActiveRecord::Base
 
   has_many :comments, :as => :commentable
   
+  attr_accessor :bill_text_cache
+  
   def display_object_name
     "Bill Text"
   end

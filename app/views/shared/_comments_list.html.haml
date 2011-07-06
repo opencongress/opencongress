@@ -18,6 +18,8 @@
     = will_paginate comments, { :renderer => 'RemoteLinkRenderer', :param_name => 'comment_page', :params => { :controller => 'comments', :action => 'bill_text_comments', :version => object.bill_text_version.id, :nid => object.nid, :comment_sort => params[:comment_sort], :anchor => 'comments'}, :remote => {:update => "bill_text_comments_#{object.nid}" }}
   - elsif object.kind_of? Article
     = will_paginate comments, :param_name => 'comment_page', :params => { :controller => object.display_object_name.downcase, :action => 'view', :id => object.to_param, :comment_sort => params[:comment_sort], :anchor => 'comments'}
+  - elsif object.kind_of? ContactCongressLetter
+    = will_paginate comments, :param_name => 'comment_page', :params => { :controller => 'contact', :action => 'letter', :id => object.id, :comment_sort => params[:comment_sort], :anchor => 'comments'}
   - else
     = will_paginate comments, :param_name => 'comment_page', :params => { :controller => object.display_object_name.downcase, :action => 'comments', :id => ((object.display_object_name == 'Bill') ? object.ident : object.id), :navtab => 'comments', :comment_sort => params[:comment_sort], :anchor => 'comments'}
 
@@ -31,6 +33,8 @@
     = will_paginate comments, { :renderer => 'RemoteLinkRenderer', :param_name => 'comment_page', :params => { :controller => 'comments', :action => 'bill_text_comments', :version => object.bill_text_version.id, :nid => object.nid, :comment_sort => params[:comment_sort], :anchor => 'comments'}, :remote => {:update => "bill_text_comments_#{object.nid}" }}
   - elsif object.kind_of? Article
     = will_paginate comments, :param_name => 'comment_page', :params => { :controller => object.display_object_name.downcase, :action => 'view', :id => object.id, :comment_sort => params[:comment_sort], :anchor => 'comments'}
+  - elsif object.kind_of? ContactCongressLetter
+    = will_paginate comments, :param_name => 'comment_page', :params => { :controller => 'contact', :action => 'letter', :id => object.id, :comment_sort => params[:comment_sort], :anchor => 'comments'}
   - else
     = will_paginate comments, :param_name => 'comment_page', :params => { :controller => object.display_object_name.downcase, :action => 'comments', :id => ((object.display_object_name == 'Bill') ? object.ident : object.id), :navtab => 'comments', :comment_sort => params[:comment_sort], :anchor => 'comments'}
   

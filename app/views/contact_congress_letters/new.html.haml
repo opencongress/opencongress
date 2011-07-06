@@ -1,0 +1,173 @@
+%span.regarding You are writing regarding
+%h1.regarding= truncate("#{@bill.typenumber} #{@bill.title_common}", :length => 170)
+
+#heading
+  %h2 Contact Congress
+  
+.contact_congress
+  = render 'contact_congress_status_bar', :step => 2
+
+  %h3.large_heading OpenCongress Message Builder
+  
+  .contact_message_builder
+    %h2 OpenCongress Message Builder
+    
+    .instructions.margin-bottom
+      Use the tools in this column to help craft your letter.  Any time your mouse highlights a section, you can click on it to add prepared text to your message.
+
+    .section
+      %h3 Latest Action
+      %ul
+        %li.message_builder_clickable
+          %strong= @bill.last_action.formatted_date
+          = @bill.last_action
+          = render 'will_add_text_box', :text => "I know the most recent action for this bill is as follows: \"#{@bill.last_action}\" on #{@bill.last_action.formatted_date}"
+            
+    .section
+      %h3 Bill Statistics on OpenCongress
+      %ul
+      - unless @position == 'tracking' or @bill.users_percentage_at_position(@position).nil?
+        %li.users_position.message_builder_clickable          
+          = "#{@bill.users_percentage_at_position(@position)}% of users #{@position} #{@bill.typenumber}"
+          = render 'will_add_text_box', :text => "#{@bill.users_percentage_at_position(@position)}% of users on OpenCongress.org, a free, non-partisan resource, #{@position} #{@bill.typenumber}."
+      %li.page_views.message_builder_clickable
+        = "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times"      
+        = render 'will_add_text_box', :text => "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times on OpenCongress.org, a free, non-partisan resource."
+
+    .section      
+      %h3 Contribution Data
+      #contribution_data_container
+        - unless @sens.empty? and @reps.empty? 
+          = render :partial => 'message_builder_contribution_data'
+
+    - unless @bill.bill_position_organizations_support.empty?
+      .section
+        %h3 Supporting Organizations
+        = render 'message_builder_organizations', :disposition => 'support', :orgs => @bill.bill_position_organizations_support
+        
+    - unless @bill.bill_position_organizations_oppose.empty?
+      .section
+        %h3 Opposing Organizations
+        = render 'message_builder_organizations', :disposition => 'oppose', :orgs => @bill.bill_position_organizations_oppose
+      
+
+    .section      
+      %h3 Most-commented sections of the bill text
+      %ul
+        - @bill.bill_text_versions.last.top_comment_nodes(5).each do |n|
+          %li.message_builder_clickable
+            = n.bill_text
+            = " (#{n.comments.count} comments, "
+            = link_to 'Link', bill_text_path(:id => n.bill_text_version.bill, :nid => n.nid, :version => n.bill_text_version.version)
+            = ")"
+            
+            = render 'will_add_text_box', :text => "specifically, this section of the legislation: \"#{n.bill_text}\","
+
+          
+          
+          
+    .section
+      %h3 Highest Rated User Comments
+      %ul
+        - @bill.comments.order("comments.plus_score_count - comments.minus_score_count DESC").limit(3).each do |c|
+          %li.message_builder_clickable
+            On
+            = "#{c.created_at.strftime("%B %d, %Y")},"
+            by
+            = link_to c.user.login, user_profile_path(c.user.login)
+            \-
+            = c.comment
+            = render 'will_add_text_box', :text => "As noted by #{c.user.login}, a user on OpenCongress.org, on #{c.created_at.strftime("%B %d, %Y")}, \"#{c.comment}\""
+
+    .section
+      %h3 Highly Rated Blog Articles
+      %ul
+        - @bill.blogs.order('commentaries.average_rating IS NOT NULL DESC').limit(3).each do |a|
+          = render 'message_builder_commentary', :a => a
+
+    .section
+      %h3 Highly Rated News Articles
+      %ul
+        - @bill.news.order('commentaries.average_rating IS NOT NULL DESC').limit(3).each do |a|
+          = render 'message_builder_commentary', :a => a
+
+
+  
+  
+  = form_for @formageddon_thread do |f|
+    .contact_letter   
+      #contact_recipients_container
+        - if @sens.empty? and @reps.empty?
+          .contact_recipients
+            #none.none
+              Input your address on the right and we'll find your reps.
+        - else
+          = render 'contact_recipients', :show_checkboxes => true
+      .desk
+        %span.from From the Desk of Username
+        %span.the-user a user out of District something or other
+      .formageddon_contact_form
+        = render 'formageddon/threads/form', :f => f, :thread => @formageddon_thread
+        
+        = hidden_field_tag :after_send_url, "/contact_congress_letters/create_from_formageddon?bill=#{@bill.ident}&disposition=#{@position}"
+    
+    %ul.instruction
+      %li Click send, and we will automatically deliver your letter to the members of Congress you selected above.
+      %li On the next page, you may review your letter, share it with your community using social media, and track any official replies you may receive from members of Congress.
+      
+    .value
+      %p OpenCongress is the only not-for-profit website that enables you to write all three of your members of Congress at once.
+      %p OpenCongress is the only website that gives this information back to the public commons, enabling you to find other constituents near you who are tracking the same bills and issues. 
+  
+:javascript  
+  $j("#formageddon_formageddon_thread_sender_zip5").keyup(function() {
+    if ($j(this).val().length == 5) {
+      $j("#none").html("<img src='/images/spinner-ovals.gif' />");
+      $j.ajax({
+        url: '/contact_congress_letters/get_recipients?bill=#{@bill.ident}' + '&address=' + escape($j("#formageddon_formageddon_thread_sender_address1").val()) + '&zip5=' + $j(this).val()
+      });
+    }
+  });
+  
+  $j("#formageddon_formageddon_thread_sender_zip4").keyup(function() {
+    if ($j(this).val().length == 4) {
+      $j("#rep").html("<img class='spin' src='/images/spinner-ovals.gif' />");
+
+      $j.ajax({
+        url: '/contact_congress_letters/get_recipients?bill=#{@bill.ident}' + '&rep_only=true&address=' + escape($j(this).val()) + '&zip5=' + $j("#formageddon_formageddon_thread_sender_zip5").val() + '&zip4=' + $j("#formageddon_formageddon_thread_sender_zip4").val()
+      });
+    }
+  });
+  
+  $j("#formageddon_formageddon_thread_sender_address1").change(function() {
+    $j("#rep").html("<img class='spin' src='/images/spinner-ovals.gif' />");
+
+    $j.ajax({
+      url: '/contact_congress_letters/get_recipients?bill=#{@bill.ident}' + '&rep_only=true&address=' + escape($j(this).val()) + '&zip5=' + $j("#formageddon_formageddon_thread_sender_zip5").val() + '&zip4=' + $j("#formageddon_formageddon_thread_sender_zip4").val()
+    });
+  });
+  
+  $j(".message_builder_clickable").hover(
+    function () {
+      $j(this).find("div.will_add_text_box:first").fadeIn(.3);
+    },
+    function () {
+      $j(this).find("div.will_add_text_box:first").fadeOut(.3);
+    }
+  );
+  $j(".message_builder_clickable").click(
+    function () {
+      txt = $j(this).find("div.message_builder_add_text:first").text();
+      msg = $j('div.formageddon_contact_form textarea:first')
+      msg.val(msg.val()+"\n\n"+unescape(txt)); 
+    }
+  );
+    
+  $j(document).ready(function() {
+    $j('.formageddon_submit').addClass("button blue huge");
+  });
+  
+  
+<link href='http://fonts.googleapis.com/css?family=La+Belle+Aurore' rel='stylesheet' type='text/css'>
+  
+  

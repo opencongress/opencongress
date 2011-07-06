@@ -228,5 +228,24 @@ list-style: none;
 padding: 14px 0 14px 50px;
 }
 
+.facebook_complete label {
+  float: left;
+  display: inline-block;
+  line-height: 2em;
+  vertical-align: top;
+  width: 100px;
+}
 
+.facebook_complete form p {
+  margin-bottom: 20px;
+  padding: 0 0 25px 50px;
+  clear:both;
+}
+.facebook_complete ul {
+  margin-bottom: 20px;
+}
+.facebook_complete ul li {
+  list-style: disc inside none;
+  padding: 0 0 5px 20px;
+}
 

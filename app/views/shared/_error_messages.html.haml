@@ -1,0 +1,6 @@
+- if target.errors.any?
+  #errors
+    %h3 There was an error with your submission!
+    %ul  
+      - target.errors.full_messages.each do |msg|
+        %li= msg

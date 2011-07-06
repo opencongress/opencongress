@@ -33,34 +33,53 @@
   				  	
 		<div id="vote">
 		  <h2>Vote on This Bill</h2>
-			<script type="text/javascript">
+					
+			
+
+			<div class="uc-box">
+			
+			
+				<script type="text/javascript">
 			$j().ready(function() {
 				$j('#login_vote').jqm({ajax:'@href', trigger: 'a.vote_trigger'});
 			});
 			</script>	
+			
+				
+				<%= user_bill_result(@bill) %>
+				<% if logged_in? %>
+				<%= my_congresspeople_votes(@bill) %>
+				<% end %>
+			
 			<div class="results" id="vote_results_<%= @bill.id %>">
 			  <%= draw_inline_user_bill_vote(@bill) %>
 			</div>
-			<div id="message-login">
+
+				
+						<div id="message-login">
 				<p id="vote_message_<%= @bill.id %>" style="display:none;border:2px solid #48A100;padding:3px;"></p>
 			</div>
+    <span class="pointer"></span>
+
+			</div>
+
+			
+			
+			
 		</div>  
+					<div class="clear">&nbsp;</div>
+
+		
 			<!--
 					<div id="learn" class="jqmWindow scrolling">
 						<h3>Learn More About this Bill</h3>
 						<div class="ie"><a href="#" class="jqmClose">Close</a></div>
 					</div>
 			-->
-		<div class="uc-box-bottom">
-			<div class="uc-box">
-				<%= user_bill_result(@bill) %>
-				<% if logged_in? %>
-				<%= my_congresspeople_votes(@bill) %>
-				<% end %>
-			</div>
-		</div>
+
 		
     <div class='contact_congress'>
+    <span class="pointer"></span>
       <h2>Send Your Reps a Letter</h2>
       <span>about this bill</span>
 

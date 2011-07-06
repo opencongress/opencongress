@@ -557,10 +557,10 @@ EOT
   def user_bill_result(bill)                   
     color = percent_to_color(bill.users_percentage_at_position('support'))
     %Q{<div id="users_result">
-    <h3 class="clearfix" style="color:#{color};" id="support_#{bill.id.to_s}">
-    #{bill.users_percentage_at_position('support').nil? ? "-" : bill.users_percentage_at_position('support')}%</h3>
-    <h4>Users Support Bill</h4>
-    <font>#{bill.users_at_position('support')} in favor / #{bill.users_at_position('oppose')} opposed</font>
+    <h3 style="color:#{color};" id="support_#{bill.id.to_s}">
+    #{bill.users_percentage_at_position('support').nil? ? "-" : bill.users_percentage_at_position('support')}%
+    Users Support Bill</h3>
+    <span>#{bill.users_at_position('support')} in favor / #{bill.users_at_position('oppose')} opposed</span>
     </div>}.html_safe
   end
   

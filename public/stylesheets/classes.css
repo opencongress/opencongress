@@ -760,6 +760,8 @@ display: inline;
 
 .padding{ padding: 35px;}
 
+.pad{ padding: 15px;}
+
 .small_padding{ padding: 15px;}
 
 .behave{ margin-bottom: 10px;}
@@ -909,4 +911,9 @@ right: 0;
   text-shadow: 0 1px 0px #fff;
   }
 
+.box{
+background: rgba(101,101,101, .2);
+padding: 30px;
+font-size: 13px;
 
+}

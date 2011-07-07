@@ -5,45 +5,52 @@
   <%= render :partial => 'shared/analytics_head' %>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-  <%= meta_description_tag.html_safe %>
-  <%= meta_keywords_tag.html_safe %>
+  <%= meta_description_tag %>
+  <%= meta_keywords_tag %>
+  <%= csrf_meta_tag %>
+
   <title><%= page_title %></title>
 
   <link rel="shortcut icon" href="/favicon.ico" />
   <link rel="icon" type="image/png" href="/favicon.png" /> 
-  <link rel="me" type="text/html" href="http://www.google.com/profiles/donnyopencongress" />
+
   <%= bookmarking_image.html_safe %>
-
-  <%= include_javascripts :defaults, :common  %>
-  <script>
-    var $j = jQuery.noConflict();
-  </script>
-  <%= csrf_meta_tag %>
     
-  <%= include_stylesheets :application, :media => 'all' %>
-
-  <%= stylesheet_link_tag('admin') if @admin_styles %>
-
-  <% unless @admin_styles %>
-      <%= stylesheet_link_tag(controller.controller_name) if FileTest.exist?(Rails.root.join("public", "stylesheets", controller.controller_name + ".css")) %>
+  <% unless content_for?(:javascripts) %>
+    <%= include_javascripts :defaults, :common  %>
+    <script>
+      var $j = jQuery.noConflict();
+    </script>
+    <%= javascript_include_tag 'jquery.jcarousel' if @carousel %>
+    <%= javascript_include_tag 'swfobject' if (@roll_call || @roll_calls) %>
+    <%= javascript_include_tag 'http://metavid.org/w/js2/mwEmbed/jsScriptLoader.php?class=mv_embed' if @include_vids_styles %>
+    <!--[if lt IE 7]>
+    <%= javascript_include_tag 'ie8/IE8' %>
+    <![endif]-->
+  <% else %>
+    <%= content_for(:javascripts) %>
   <% end %>
 
-  <%= stylesheet_link_tag 'vids' if @include_vids_styles %>
-  <%= stylesheet_link_tag 'jquery.jcarousel' if @carousel %>
-  <%= stylesheet_link_tag 'oc-wiki' if @include_wiki_styles %>
+  <% unless content_for?(:stylesheets) %>
+    <%= include_stylesheets :application, :media => 'all' %>
 
-  <!--[if lt IE 7]><style type="text/css">@import url("/stylesheets/ie6.css");</style><![endif]-->
-  <!--[if IE 7]><style type="text/css">@import url("/stylesheets/ie7.css");</style><![endif]-->
-  <!--[if lt IE 7]>
-  <%= javascript_include_tag 'ie8/IE8' %>
-  <![endif]-->
+    <%= stylesheet_link_tag('admin') if @admin_styles %>
+
+    <% unless @admin_styles %>
+        <%= stylesheet_link_tag(controller.controller_name) if FileTest.exist?(Rails.root.join("public", "stylesheets", controller.controller_name + ".css")) %>
+    <% end %>
+
+    <%= stylesheet_link_tag 'vids' if @include_vids_styles %>
+    <%= stylesheet_link_tag 'jquery.jcarousel' if @carousel %>
+    <%= stylesheet_link_tag 'oc-wiki' if @include_wiki_styles %>
+
+    <!--[if lt IE 7]><style type="text/css">@import url("/stylesheets/ie6.css");</style><![endif]-->
+    <!--[if IE 7]><style type="text/css">@import url("/stylesheets/ie7.css");</style><![endif]-->
+  <% else %>
+    <%= content_for(:stylesheets) %>
+  <% end %>
   
   <%= remote_forgery_protection %>
-  
-
-  <%= javascript_include_tag 'jquery.jcarousel' if @carousel %>
-  <%= javascript_include_tag 'swfobject' if (@roll_call || @roll_calls) %>
-  <%= javascript_include_tag 'http://metavid.org/w/js2/mwEmbed/jsScriptLoader.php?class=mv_embed' if @include_vids_styles %>
 
   <%= yield(:header) %>
 

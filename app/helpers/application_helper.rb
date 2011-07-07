@@ -720,25 +720,29 @@ EOT
   end
 
   def meta_description_tag
+    meta_tag = ""
+
     # site text always takes precedence over controller-set meta_description
     if @site_text_page && !@site_text_page.meta_description.blank?
-      "<meta name=\"description\" content=\"#{@site_text_page.meta_description}\" />"
+      meta_tag = "<meta name=\"description\" content=\"#{@site_text_page.meta_description}\" />"
     elsif @meta_description
-      "<meta name=\"description\" content=\"#{truncate(strip_tags(@meta_description), :length => 256)}\" />"
-    else
-      ""
+      meta_tag = "<meta name=\"description\" content=\"#{truncate(strip_tags(@meta_description), :length => 256)}\" />"
     end
+    
+    meta_tag.html_safe
   end
   
   def meta_keywords_tag
+    meta_tag = ""
+
     # site text always takes precedence over controller-set meta_keywords
     if @site_text_page && !@site_text_page.meta_keywords.blank?
-      "<meta name=\"keywords\" content=\"#{@site_text_page.meta_keywords}\" />"
+      meta_tag = "<meta name=\"keywords\" content=\"#{@site_text_page.meta_keywords}\" />"
     elsif @meta_keywords
-      "<meta name=\"keywords\" content=\"#{strip_tags(@meta_keywords)}\" />"
-    else
-      ""
+      meta_tag = "<meta name=\"keywords\" content=\"#{strip_tags(@meta_keywords)}\" />"
     end
+
+    meta_tag.html_safe
   end
 
   def page_title

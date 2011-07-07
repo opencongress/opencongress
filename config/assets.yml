@@ -3,12 +3,14 @@ gzip_assets: off
 
 javascripts:
     defaults:
-        - public/javascripts/prototype.js
         - public/javascripts/rails.js
         - public/javascripts/effects.js
         - public/javascripts/dragdrop.js
         - public/javascripts/controls.js
         - public/javascripts/application.js
+    widgets:
+        - public/javascripts/widget.js
+        - public/javascripts/widget.config.js
     common:
         - public/javascripts/jquery-1.5.2.min.js
         - public/javascripts/jquery.qtip-1.0.0-rc3.min.js
@@ -29,6 +31,14 @@ javascripts:
         - public/javascripts/distmap.js
 
 stylesheets:
+    widgets:
+        - public/stylesheets/960.css
+        - public/stylesheets/reset.css
+        - public/stylesheets/classes.css
+        - public/stylesheets/reset.css
+        - public/stylesheets/typo.css
+        - public/stylesheets/master.css
+        - public/stylesheets/widgets.css
     application:
         - public/stylesheets/960.css
         - public/stylesheets/classes.css

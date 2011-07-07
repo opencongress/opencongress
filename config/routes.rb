@@ -207,6 +207,7 @@ OpenCongress::Application.routes.draw do
   match 'tools(/:action/:id)', :controller => 'resources', :as => 'tools'
 
   match '/widgets' => 'widgets#index', :as => 'widgets'
+  match '/widgets/deprecated' => 'widgets#deprecated', :as => 'deprecated_widgets'
   match '/widgets/bill' => 'widgets#bill', :as => 'bill_widget'
   match '/widgets/bills' => 'widgets#bills', :as => 'bills_widget'
   match '/widgets/people' => 'widgets#people', :as => 'people_widget'

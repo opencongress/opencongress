@@ -1,0 +1,85 @@
+.padding
+  %h1= @page_title = 'Create a custom Bill Status Widget'
+
+  .grid_7
+    .widget_preview.grid_4.omega
+      %h2 Live Preview of your widget
+      #widgetPreview
+        :javascript
+          var testWidget = new OC.Widget({
+            version: 1,
+            type: 'bill_status',
+            bill: '#{@hot_bills.first.to_param}',
+            width: 'auto',
+            preview: true,
+            theme: {
+              background: '#f9f9f9',
+              color: '#555',
+              header: '#333',
+              links: '#333'
+            }
+          }).render();
+
+
+  .widget_config.grid_8.omega.alpha
+    %h2 Customize your widget
+
+    %form
+      -# Storage for the currently selected bill
+      #widgetData
+
+      %label(for="widgetBill") Choose a popular bill:
+      %select(id="widgetBill")
+        - @hot_bills.each do |bill|
+          %option{:'data-bill' => bill.to_param}= bill.typenumber + ' - ' + truncate(bill.title_common, :length => 60)
+
+      :javascript
+        // WHen we choose a bill from the select list, update #widgetBillData to reflect
+        $('#widgetBill').change(function() {
+          var el = $(this).find('option:selected');
+          $('#widgetData').data('bill', el.data('bill'));
+          $('#widgetData').trigger('refresh');
+        });
+
+    %form
+      %label(for="widgetBillLookup") Or lookup any bill by number, eg. '#{@hot_bills.first.number}':
+      %input(type="text" id="widgetBillLookup")
+      %input(type="submit" id="billLookupBtn")
+    #billLookupResults
+
+    :javascript
+      // Search for a bill via jsonp and display the results
+      $('#billLookupBtn').click(function () {
+        $.ajax({
+            dataType: "jsonp",
+            url: '#{escape_javascript(Settings.api_base_url + 'bills')}?callback=?&number=' + $('#widgetBillLookup').val() + '&congress=' + Settings.default_congress,
+            success: function(response) {
+              $('#billLookupResults').html(window.JST['bill_search_results']({ bill_search_results: response }));
+            
+              // Update #widgetBillData to reflect a bill chosen from search results.
+              $('.billSearchResult').click(function() {
+                $('#widgetData').data('bill', $(this).data('bill'));
+                $('#widgetData').trigger('refresh');
+                return false;
+              });
+            }
+        });
+
+        return false;
+      });
+
+    %form
+      = render :partial => 'color_choosers'
+
+      #dimensions
+        %label(for='widgetWidth') Width:
+        %input(type="text" maxlength="3" size="3" id="widgetWidth" class="widgetVar" value="250")
+        %span.note (in px)
+        %p.small 
+          (width changes do not appear in the preview)
+
+    .space
+
+    #get_the_code
+      %h2 Get the Code
+      %textarea(id="embed-code")

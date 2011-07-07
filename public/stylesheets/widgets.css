@@ -1,0 +1,23 @@
+.col1, .col2 {
+    float: left;
+    display: block;
+    padding-right: 10px;
+}
+
+.col1 {
+  width: 416px;
+}
+
+.col2 {
+  width: 476px;
+}
+
+.col12 {
+float: left;
+display: block;
+width: 912px;
+padding-right: 20px;
+}
+
+p{ 
+  margin-bottom: 5px;}

@@ -1,0 +1,14 @@
+<div class="oc-widget-container">
+<h1><a href="<%= domain %>"><strong>Open</strong>Congress</a>
+<span><a href="<%= domain + bill_status.permalink %>">Bill Status</a></span>
+</h1>
+<ul>
+  <li>
+    <h2><a href="<%= domain + bill_status.permalink %>"><strong><%= bill_status.bill_number %></strong>: <%= bill_status.title.truncate(60) %></a></h2>
+    <div class="oc-widget-intro">Introduced <time class="oc-widget-first-bill-action" datetime="<%= bill_status.first_action_at %>"><%= OC.dateFromISO8601(bill_status.first_action_at).format("mediumDate") %></time></div>
+    <div class="oc-widget-bill-action">Last action on <time class="oc-widget-last-bill-action" datetime="<%= bill_status.last_action_at %>"><%= OC.dateFromISO8601(bill_status.last_action_at).format("mediumDate") %></time></div>
+    <div class="oc-widget-clear">&nbsp;</div>
+  </li>
+</ul>
+<a href="<%= domain + bill_status.permalink %>" class="oc-widget-footer">More at OpenCongress &rarr;</a>
+</div>

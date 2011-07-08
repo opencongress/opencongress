@@ -757,7 +757,7 @@ class Bill < ViewableObject
     if subjects.empty?
       Subject.find_by_term("Congress")
     else
-      @top ||= Subject.order("bill_count desc").first(num)
+      @top ||= Subject.order("bill_count desc").limit(num)
       subjects.sort_by { |b| b.bill_count }.reverse.find { |s| ! @top.include?(s) }
     end
   end

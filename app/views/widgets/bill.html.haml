@@ -12,6 +12,7 @@
             bill: '#{@hot_bills.first.to_param}',
             width: 'auto',
             preview: true,
+            #{Rails.env != 'production' ? %Q{domain: '#{Settings.api_host}',} : ''}
             theme: {
               background: '#f9f9f9',
               color: '#555',
@@ -49,12 +50,13 @@
 
     :javascript
       // Search for a bill via jsonp and display the results
-      $('#billLookupBtn').click(function () {
+      $('#billLookupBtn').click(function (e) {
+        e.preventDefault();
         $.ajax({
             dataType: "jsonp",
-            url: '#{escape_javascript(Settings.api_base_url + 'bills')}?callback=?&number=' + $('#widgetBillLookup').val() + '&congress=' + Settings.default_congress,
+            url: '#{escape_javascript(Settings.api_base_url)}bills.json?callback=?&number=' + $('#widgetBillLookup').val() + '&congress=#{Settings.default_congress}',
             success: function(response) {
-              $('#billLookupResults').html(window.JST['bill_search_results']({ bill_search_results: response }));
+              $('#billLookupResults').html(window.JST['bill_search_results']({ bill_search_results: response.bills }));
             
               // Update #widgetBillData to reflect a bill chosen from search results.
               $('.billSearchResult').click(function() {

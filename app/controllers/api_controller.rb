@@ -12,6 +12,8 @@ class ApiController < ApplicationController
   before_filter :lookup_bill, :only => [:opencongress_users_tracking_bill_are_also_tracking, :opencongress_users_supporting_bill_are_also, :opencongress_users_opposing_bill_are_also]
   before_filter :lookup_person, :only => [:opencongress_users_opposing_person_are_also, :opencongress_users_supporting_person_are_also, :opencongress_users_tracking_person_are_also_tracking]
   before_filter :lookup_state, :only => [:opencongress_users_tracking_in_state, :opencongress_users_tracking_in_state_district]
+  
+  before_filter :handle_per_page, :only => [:bills]
 
   def index
     @page_title = "OC API Documentation"
@@ -122,13 +124,10 @@ class ApiController < ApplicationController
       conditions[k] = params[v] if params[v]
     end
     
-    @bills = Bill.where(conditions)
-
-    do_render_paginated(@bills)
+    @bills = Bill.paginate(:conditions => conditions, :page => params[:page], :per_page => @per_page)
   end
-  
+
   def bills_by_ident
-    
     these_idents = []
     if params[:ident] && params[:ident].class.to_s == "Array"
       these_idents = params[:ident]
@@ -137,8 +136,6 @@ class ApiController < ApplicationController
     end
     
     @bills = Bill.find_all_by_ident(these_idents, find_options = {})
-
-    do_render(@bills, :style => :full)
   end
   
   def bills_introduced_since
@@ -301,6 +298,11 @@ class ApiController < ApplicationController
       format.xml { render template_name, :locals => {:obj => obj} }
       format.json { render :json => Hash.from_xml(render_to_string(template_name, :locals => {:obj => obj}, :layout => false)) }
     end      
+  end
+
+  def handle_per_page
+    @per_page = params[:per_page].to_i
+    @per_page = 30 if @per_page == 0 || @per_page > 30
   end
 
   def do_render_paginated(relation, parameters = {})

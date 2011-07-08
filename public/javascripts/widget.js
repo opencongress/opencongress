@@ -36,7 +36,7 @@ OC = window.OC || {};
 
   // Takes an ISO time and returns a Date
   OC.dateFromISO8601 = function (time) {
-  	return new Date((time || "").replace(/-/g,"/").replace(/[TZ]/g," "));
+  	return new Date((time || "").replace(/^(\d+)-(\d+)-(\d+)/,"$1/$2/$3").replace(/[TZ]/g," "));
   };
 
   /*
@@ -269,8 +269,7 @@ OC = window.OC || {};
           this._isBillsWidget = ops.type == 'most_viewed_bills';
           this._isBillWidget = ops.type == 'bill_status';
           this.type = ops.type;
-          this.domain = ops.domain || 'opencongress.org';
-          this._subdomain = 'api.' + domain;
+          this.domain = ops.domain || 'api.opencongress.org';
           this.bill = ops.bill;
           this.preview = ops.preview || false;
           this.url = this._getUrl();
@@ -305,11 +304,11 @@ OC = window.OC || {};
 
         _getUrl: function() {
           if (this._isBillsWidget) {
-            return http + this._subdomain + '/bills.json?sort=views&limit=3&callback=?';
+            return http + this.domain + '/bills.json?sort=views&per_page=3&callback=?';
           } else if (this._isBillWidget) {
-            return http + this._subdomain + '/sessions/' + escape(this.bill.session + '/bills/' + this.bill.number) + '.json?callback=?';
+            return http + this.domain + '/bills_by_ident.json?callback=?&ident[]=' + this.bill;
           } else {
-            return http + this._subdomain + '/people.json?sort=views&limit=3&callback=?';
+            return http + this.domain + '/people.json?sort=views&limit=3&callback=?';
           }
         },
 
@@ -389,8 +388,9 @@ OC = window.OC || {};
           var that = this;
           jsonp.fetch(this.url, function(data) {
             // jsonp callback
-            var params = {state: that.state, subdomain: http + that._subdomain};
+            var params = {domain: http + that.domain};
             params[that['type']] = data;
+            console.log(params);
             that.widgetEl.innerHTML = window.JST[that.type](params);
           });
         },

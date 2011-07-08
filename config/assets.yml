@@ -8,8 +8,17 @@ javascripts:
         - public/javascripts/dragdrop.js
         - public/javascripts/controls.js
         - public/javascripts/application.js
-    widgets:
+    widget:
+        - public/javascripts/underscore-1.1.6.js
         - public/javascripts/widget.js
+        - app/views/widgets/*.jst
+    # Widget configuration tools
+    widget_config:
+        - public/javascripts/underscore-1.1.6.js
+        - app/views/widgets/*.jst
+        - public/javascripts/widget.js
+        - public/javascripts/jscolor.js
+        - public/javascripts/json2.js
         - public/javascripts/widget.config.js
     common:
         - public/javascripts/jquery-1.5.2.min.js
@@ -38,7 +47,7 @@ stylesheets:
         - public/stylesheets/reset.css
         - public/stylesheets/typo.css
         - public/stylesheets/master.css
-        - public/stylesheets/widgets.css
+        - public/stylesheets/widget.css
     application:
         - public/stylesheets/960.css
         - public/stylesheets/classes.css

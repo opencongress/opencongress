@@ -1,0 +1,2 @@
+attributes :oc_user_comments, :oc_users_tracking, :firstname, :middlename, :lastname, :birthday, :gender, :district, :biography, :name, :religion, :url, :email, :user_approval, :unaccented_name, :metavid_id, :youtube_id, :website, :congress_office, :phone, :fax, :contact_webform, :sunlight_nickname, :watchdog_id, :page_views_count, :article_news_count, :blog_article_count, :total_session_votes, :votes_democratic_position, :votes_republican_position
+attributes :id => :person_id, :bioguideid => :bioguide_id

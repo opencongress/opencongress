@@ -1,0 +1,40 @@
+.padding
+  %h1= @page_title = 'Create a Hot Bills Widget'
+
+  .grid_7
+    .widget_preview.grid_4.omega
+      %h2 Live Preview of your widget
+      #widgetPreview
+        :javascript
+          var testWidget = new OC.Widget({
+            version: 1,
+            type: 'most_viewed_bills',
+            width: 'auto',
+            preview: true,
+            #{Rails.env != 'production' ? %Q{domain: '#{Settings.api_host}',} : ''}
+            theme: {
+              background: '#f9f9f9',
+              color: '#555',
+              header: '#333',
+              links: '#333'
+            }
+          }).render();
+
+  .widget_config.grid_8.omega.alpha
+    %h2 Customize your widget
+
+    %form
+      = render :partial => 'color_choosers'
+
+      #dimensions
+        %label(for='widgetWidth') Width:
+        %input(type="text" maxlength="3" size="3" id="widgetWidth" class="widgetVar" value="250")
+        %span.note (in px)
+        %p.small 
+          (width changes do not appear in the preview)
+
+    .space
+
+    #get_the_code
+      %h2 Get the Code
+      %textarea(id="embed-code")

@@ -1,0 +1,18 @@
+<div class="oc-widget-container">
+  <h1><span>Most Viewed Bills on</span> <a href="<%= domain %>">OpenCongress</a></h1>
+  <ul>
+    <% _.each(most_viewed_bills.bills, function(h) {
+      var bill = h.bill; %>
+      <li>
+        <% if (bill.subjects.length > 0) { %>
+          <h3 class="oc-widget-bill-subject"><%= bill.subjects[0] %></h3>
+        <% } %>
+        <h2><a href="<%= domain + bill.permalink %>"><strong><%= bill.typenumber %></strong>: <%= bill.title_common.truncate(140) %></a></h2>
+        <div class="oc-widget-views"><%= bill.page_views_count %> views in the last month</div>
+        <div class="oc-widget-bill-action">Last action on <time class="oc-widget-last-bill-action" datetime="<%= bill.last_action_at %>"><%= OC.dateFromISO8601(bill.last_action_at).format("mediumDate") %></time></div>
+        <div class="oc-widget-clear">&nbsp;</div>
+      </li>
+    <% }); %>
+  </ul>
+  <a href="<%= domain %>" class="oc-widget-footer">More on OpenCongress &rarr;</a>
+</div>

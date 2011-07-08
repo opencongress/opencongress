@@ -1,0 +1,10 @@
+<% if (bill_search_results.length > 0) { %>
+<ul id="searchResults">
+  <% _.each(bill_search_results, function(billContainer) {
+      var bill = billContainer.bill; %>
+    <li><a class="billSearchResult" href="#" data-bill="<%= bill.ident %>"><strong><%= bill.typenumber %></strong> &mdash; <%= bill.title_common.substring(0, 120) + (bill.title_common.length > 120 ? "..." : '') %></a></li>
+  <% }); %>
+</div>
+<% } else { %>
+Sorry, no matching bills were found.
+<% } %>

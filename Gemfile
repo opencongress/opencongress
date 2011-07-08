@@ -39,6 +39,9 @@ gem "xray", :require => "xray/thread_dump_signal_handler"
 gem 'ruby-openid'
 gem 'rack-openid'
 
+# JSONP middleware
+gem 'rack-contrib'
+
 # memcache
 gem 'memcache'
 gem 'memcache-client'

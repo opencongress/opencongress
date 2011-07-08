@@ -757,7 +757,7 @@ class Bill < ViewableObject
     if subjects.empty?
       Subject.find_by_term("Congress")
     else
-      @top ||= Subject.find(:all).sort_by { |b| b.bill_count }.reverse.first(num)
+      @top ||= Subject.order("bill_count desc").first(num)
       subjects.sort_by { |b| b.bill_count }.reverse.find { |s| ! @top.include?(s) }
     end
   end
@@ -952,11 +952,19 @@ class Bill < ViewableObject
   def rss_date
     Time.at(self.introduced)
   end
-  
+
+  def last_action_at
+    Time.at(self.lastaction) if self.lastaction   
+  end
+
+  def introduced_at
+    Time.at(self.introduced) if self.introduced   
+  end
+
   def last_5_actions
     actions.find(:all, :order => "date DESC", :limit => 5)
   end
-  
+
   def status(options = {})
     status_hash = self.bill_status_hash
     return status_hash['steps'][status_hash['current_step']]['text']

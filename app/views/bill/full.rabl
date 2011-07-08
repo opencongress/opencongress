@@ -2,11 +2,11 @@ attributes :bill_type, :number, :sponsor_id, :topresident_date, :last_vote_roll,
 
 code(:permalink) { |b| bill_path(b) }
 
-child :co_sponsors do
+child :co_sponsors => :co_sponsors do
   extends "person/base"
 end
 
-child :sponsor do
+child :sponsor => :sponsor do
   extends "person/base"
 end
 

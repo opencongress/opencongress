@@ -22,6 +22,23 @@
 
 */
 
+String.prototype.pluralize = function(count, plural)
+{ 
+  var r = count + ' ';
+
+  if (count != 1) {
+    if (plural == null) {
+      return (r + this + 's');
+    } else {
+      return (r + plural);
+    }
+  } else {
+    return r + this;
+  }
+
+};
+
+
 OC = window.OC || {};
 
 (function(undefined) {
@@ -38,7 +55,7 @@ OC = window.OC || {};
   OC.dateFromISO8601 = function (time) {
   	return new Date((time || "").replace(/^(\d+)-(\d+)-(\d+)/,"$1/$2/$3").replace(/[TZ]/g," "));
   };
-
+  
   /*
    * Date Format 1.2.3
    * (c) 2007-2009 Steven Levithan <stevenlevithan.com>

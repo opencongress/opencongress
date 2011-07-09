@@ -72,6 +72,9 @@ class ContactCongressLettersController < ApplicationController
   def show
     @contact_congress_letter = ContactCongressLetter.find(params[:id])
     
+    @page_title = "My Letter to Congress: #{@contact_congress_letter.formageddon_threads.first.formageddon_letters.first.subject}"
+    @meta_description = "This is a letter to Congress sent using OpenCongress.org by user #{@contact_congress_letter.user.login} regarding #{@contact_congress_letter.bill.typenumber} #{@contact_congress_letter.bill.title_common}. OpenCongress is a free and open-source public resource website for tracking and contacting the U.S. Congress."
+
     if params[:print_version] == 'true'
       render :partial => 'contact_congress_letters/print', 
              :locals => { :letter => @contact_congress_letter.formageddon_threads.first.formageddon_letters.first },
@@ -82,6 +85,7 @@ class ContactCongressLettersController < ApplicationController
   
   def create_from_formageddon
     ## dont forget to check privacy settings
+    @page_title = 'Contact Congress'
     
     unless params[:letter_ids].blank?
       letter_ids = params[:letter_ids].split(/,/)

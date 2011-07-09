@@ -1,4 +1,6 @@
-class Bill < ViewableObject
+class Bill < ActiveRecord::Base
+  include ViewableObject
+  
   require 'wiki_connection'
   
   acts_as_solr :fields => [{:billtext_txt => :text},:bill_type,:session,{:title_short=>{:boost=>3}}, {:introduced => :integer}],

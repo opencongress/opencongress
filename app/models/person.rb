@@ -1,4 +1,7 @@
-class Person < ViewableObject  
+class Person < ActiveRecord::Base  
+#class Person < ViewableObject  
+  include ViewableObject
+
 #  acts_as_solr :fields => [:party, {:with_party_percentage => :float}, {:abstains_percentage => :float}, {:against_party_percentage => :float}], 
 #               :facets => [:party]
   require 'yahoo_geocoder'

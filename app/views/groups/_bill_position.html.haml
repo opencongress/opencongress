@@ -18,4 +18,4 @@
   %h3 Letters to Congress
   %p.behave No one from the group has written a letter of #{bill_position.position == 'support' ? 'support' : 'opposition' } about this bill to their elected representatives
   
-  = link_to "Write Letter of #{bill_position.position == 'support' ? 'Support' : 'Opposition' }", new_contact_congress_letter_path(:bill => bill_position.bill.ident, :group_id => bill_position.group.id), :class => 'button huge blue margin-top floatleft'
+  = link_to "Write Letter of #{bill_position.position == 'support' ? 'Support' : 'Opposition' }", new_contact_congress_letter_path(:bill => bill_position.bill.ident, :group_id => bill_position.group.id, :position => bill_position.position), :class => 'button huge blue margin-top floatleft'

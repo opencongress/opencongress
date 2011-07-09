@@ -836,7 +836,7 @@ EOT
     when Article
       url = url_for(:only_path => false, :controller => 'articles', :action => 'view', :id => object)
     when ContactCongressLetter
-      url = url_for(:only_path => false, :controller => 'contact', :action => 'letter', :id => object)
+      url = url_for(:only_path => false, :controller => 'contact_congress_letters', :action => 'show', :id => object)
     end
     
     begin
@@ -845,10 +845,10 @@ EOT
       if json['errorCode'] == 0
         return json['results'][url]['shortUrl']
       else
-        return nil
+        return url
       end
     rescue Exception => e
-      return nil
+      return url
     end
   end
 

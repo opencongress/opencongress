@@ -16,6 +16,9 @@ class CreateGroups < ActiveRecord::Migration
       t.integer :group_image_file_size
       t.datetime :group_image_updated_at
 
+      t.integer :state_id
+      t.integer :district_id
+      
       t.timestamps
     end
 
@@ -69,7 +72,9 @@ class CreateGroups < ActiveRecord::Migration
       g.description = "Default group for users in #{s.name}"
       g.join_type = 'INVITE_ONLY'
       g.invite_type = 'MODERATOR'
+      g.post_type = 'ANYONE'
       g.user = admin_user
+      g.state = s
       g.save
       
       users = User.find_by_sql(['select distinct users.id, users.login from users where state_cache like ?;', "%#{s.abbreviation}%"])
@@ -86,6 +91,7 @@ class CreateGroups < ActiveRecord::Migration
       g.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vehicula, quam pretium volutpat pharetra, eros tellus scelerisque velit, eget auctor dolor justo ac purus. Vivamus id urna ac enim faucibus vestibulum. Phasellus pharetra adipiscing lobortis. Proin erat lorem, sagittis at lobortis non, interdum ac diam. Morbi eu neque non magna pretium facilisis ut a ligula. Nullam in metus sit amet nisi pharetra ultricies. In dapibus, neque in rhoncus aliquet, elit metus molestie tortor, quis porta enim elit sit amet lacus. Fusce sit amet sollicitudin urna. Maecenas elit nibh, condimentum ac egestas in, tristique at nunc. Sed varius, neque eget convallis dignissim, orci diam tristique sapien, ac rutrum dolor odio non sapien. Etiam auctor posuere dolor, et volutpat justo hendrerit ut."
       g.join_type = 'ANYONE'
       g.invite_type = 'ANYONE'
+      g.post_type = 'ANYONE'
       g.user = admin_user
       g.pvs_category = c
       

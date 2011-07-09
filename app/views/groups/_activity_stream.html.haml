@@ -4,6 +4,6 @@
       %strong No one has posted anything to this group!
 - else
   %ul.activity_stream
-    - @group.political_notebook.notebook_notes.each do |item|
+    - @group.political_notebook.notebook_items.each do |item|
       = render :partial => "#{item.class.to_s.tableize}/group_item", :object => item
   

@@ -193,7 +193,7 @@ overflow: auto;
   margin: 0;
 right: 0;
 position: absolute;
-top: 739px;
+top: 769px;
 }
 
 
@@ -510,7 +510,7 @@ height: 705px;
 width: 510px;
 left: 0;
 border-right: 1px solid #777;
-top: 739px;
+top: 769px;
 position: absolute;
 background: #999;
 -moz-box-shadow:inset -2px 1px 46px rgba(0,0,0,.2);
@@ -543,7 +543,7 @@ margin-left: 35px;
 
 .desk{
 position: absolute;
-top: 800px;
+top: 830px;
 width: 374px;
 z-index: 999999999;
 
@@ -624,7 +624,7 @@ width: 927px;
 margin: 0px 0 0 -35px;
 padding: 20px 40px 20px 35px; 
 font-size: 16px;
-top: 679px;
+top: 709px;
   background: #999; /* for non-css3 browsers */
 
   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd)); /* for webkit browsers */
@@ -656,7 +656,7 @@ font-size: 9px;
 .contact_letter .button{
 position: absolute;
 right: 8px;
-top: 674px;
+top: 704px;
 }
 
 
@@ -907,6 +907,17 @@ float: none !important;
 margin: 0 auto 10px !important;
 border-bottom: 1px solid #eee;
 }
+span.sponsor{
+font-size: 14px;
+font-family: Helvetica, Arial, sans-serif;
+font-style: normal;
+width: 900px !important;
+text-align: center;
+display: block;
+padding: 5px 0 10px;
+float: none !important;
+margin: 0 auto 10px !important;
+}
 
 
 
@@ -944,7 +955,7 @@ border-bottom: 1px solid #eee;
 
 .second_submit{
 position: absolute;
-top: 1443px;
+top: 1473px;
 left: 0;
 
 position: absolute;

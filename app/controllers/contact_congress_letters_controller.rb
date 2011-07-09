@@ -1,5 +1,7 @@
 class ContactCongressLettersController < ApplicationController
   require 'yahoo_geocoder'
+
+  before_filter :page_view, :only => :show
   
   def new
     @page_title = "Contact Congress"
@@ -69,10 +71,18 @@ class ContactCongressLettersController < ApplicationController
   
   def show
     @contact_congress_letter = ContactCongressLetter.find(params[:id])
+    
+    if params[:print_version] == 'true'
+      render :partial => 'contact_congress_letters/print', 
+             :locals => { :letter => @contact_congress_letter.formageddon_threads.first.formageddon_letters.first },
+             :layout => false
+      return
+    end
   end
   
   def create_from_formageddon
     ## dont forget to check privacy settings
+    
     unless params[:letter_ids].blank?
       letter_ids = params[:letter_ids].split(/,/)
       @letters = Formageddon::FormageddonLetter.find(letter_ids)
@@ -110,6 +120,31 @@ class ContactCongressLettersController < ApplicationController
         else
           @contact_congress_letter.user = current_user
           @new_user_notice = false
+          
+          # check for group
+          unless params[:group_id].blank?
+            @group = Group.find_by_id(params[:group_id])
+            if @group
+              puts("GOT GROUP!!!!!!!!!!!!!!!!! #{@group.name}")
+              puts("INCLUDE BILLS?!!!!!!!!!!!!!!!!!  #{@group.bills.include?(@contact_congress_letter.bill)}")
+
+              # make sure this group is tracking this bill and user is a member
+              if @group.bills.include?(@contact_congress_letter.bill) and 
+                 (@group.is_member?(@contact_congress_letter.user) or @group.is_owner?(@contact_congress_letter.user))
+                 
+                notebook = PoliticalNotebook.find_or_create_from_group(@group)  
+                
+                notebook_item = notebook.notebook_links.create
+                notebook_item.notebookable = @contact_congress_letter
+                notebook_item.init_from_notebookable(@contact_congress_letter)
+                notebook_item.group_user = @contact_congress_letter.user
+                
+                notebook_item.save
+              else
+                @group = nil
+              end
+            end
+          end
         end
         @contact_congress_letter.save
       else
@@ -124,5 +159,16 @@ class ContactCongressLettersController < ApplicationController
    
   def create_new_user_from_formageddon_thread(thread)
     return nil
+  end
+  
+  def page_view
+    if @letter = ContactCongressLetter.find(params[:id])
+      key = "page_view_ip:ContactCongressLetter:#{@letter.id}:#{request.remote_ip}"
+      unless read_fragment(key)
+        #@letter.increment!(:page_views_count)
+        @letter.page_view
+        write_fragment(key, "c", :expires_in => 1.hour)
+      end
+    end
   end
 end

@@ -23,10 +23,14 @@ class NotebookLink < NotebookItem
     when 'Person'
       self.title = "OpenCongress: #{notebookable.name}" if self.title.blank?
       self.url = "internal"      
+    when 'ContactCongressLetter'
+      self.title = notebookable.formageddon_threads.first.formageddon_letters.first.subject if self.title.blank?
+      self.url = "internal"
+      self.description = "#{notebookable.formageddon_threads.first.formageddon_letters.first.message[0..250]}..."      
     when 'Commentary'
       self.title = notebookable.title if self.title.blank?
       self.url = notebookable.url
-    end    
+    end
   end
   
   def count_times_bookmarked

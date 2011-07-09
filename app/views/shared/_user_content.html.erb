@@ -80,7 +80,7 @@
 		
     <div class='contact_congress'>
     <span class="pointer"></span>
-      <h2>Send Your Reps a Letter</h2>
+      <h2>Send Your <%= @bill.chamber == 'house' ? 'Rep' : 'Senator' %> a Letter</h2>
       <span>about this bill</span>
 
       <a href='/contact_congress_letters/new?bill=<%= @bill.ident %>&position=support' class='button medium silver'><span>Support</span></a>

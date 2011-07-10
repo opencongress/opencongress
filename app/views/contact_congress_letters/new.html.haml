@@ -21,12 +21,21 @@
       Use the tools in this column to help craft your letter.  Any time your mouse highlights a section, you can click on it to add prepared text to your message.
 
     .section
-      %h3 Latest Action
+      %h3 Official Bill Info
       %ul
         %li.message_builder_clickable
-          %strong= @bill.last_action.formatted_date
+          %strong= "Latest Action: #{@bill.last_action.formatted_date}"
           = @bill.last_action
           = render 'will_add_text_box', :text => "I know the most recent action for this bill is as follows: \"#{@bill.last_action}\" on #{@bill.last_action.formatted_date}"
+        - @bill.committees.each do |c|
+          %li.message_builder_clickable
+            %strong Committee Assignment:
+            = c.proper_name
+            = render 'will_add_text_box', :text => "This bill has been assigned to  the #{c.proper_name} committee."
+        - unless @bill.roll_calls.empty?
+          #roll_call_container
+            = render 'message_builder_roll_call', :roll_call => @bill.roll_calls.first
+        
             
     .section
       %h3 Bill Statistics on OpenCongress
@@ -72,7 +81,13 @@
             = render 'will_add_text_box', :text => "specifically, this section of the legislation: \"#{n.bill_text}\","
 
           
-          
+    - unless @bill.plain_language_summary.blank?
+      .section
+        %h3 OpenCongress Bill Summary
+        %ul
+          %li.message_builder_clickable
+            = strip_tags(@bill.plain_language_summary)
+            = render 'will_add_text_box', :text => "Here's a summary from OpenCongress.org:\n\n#{strip_tags(@bill.plain_language_summary)}"
           
     .section
       %h3 Highest Rated User Comments

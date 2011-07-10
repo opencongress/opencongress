@@ -72,7 +72,7 @@ class RollCall < ActiveRecord::Base
   end
   
   def vote_for_person(person)
-    RollCallVote.find(:first, :conditions => [ "person_id=? AND roll_call_id=?", person.id, self.id])
+    RollCallVote.where(["person_id=? AND roll_call_id=?", person.id, self.id]).first
   end
   
   def vote_url

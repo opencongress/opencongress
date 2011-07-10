@@ -33,9 +33,9 @@ defaults: &defaults
 development:
   <<: *defaults
 
-  govtrack_data_path: /Users/aross/pcf-work/govtrack
-  govtrack_billtext_path: /Users/aross/pcf-work/govtrack/bills.text
-  govtrack_billtext_diff_path: /Users/aross/pcf-work/govtrack/bills.text.cmp
+  govtrack_data_path: /Users/aross/pcf-work/govtrack_data/us
+  govtrack_billtext_path: /Users/aross/pcf-work/govtrack_data/us/bills.text
+  govtrack_billtext_diff_path: /Users/aross/pcf-work/govtrack_data/us/bills.text.cmp
   oc_billtext_path: /Users/aross/pcf-work/oc_billtext
   committee_reports_path: /Users/aross/pcf-work/committee_reports
   

@@ -136,6 +136,10 @@ class Bill < ActiveRecord::Base
     versions.last
   end
   
+  def current_cosponsor_count
+    bill_cosponsors.where("bills_cosponsors.date_withdrawn IS NULL").size
+  end
+  
   def top_rated_news_items
      ids = CommentaryRating.count(:id, :group => "commentaries.id", 
                             :include => "commentary", 

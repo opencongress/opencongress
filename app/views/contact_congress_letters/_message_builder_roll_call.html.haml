@@ -1,0 +1,15 @@
+%li.page_views.message_builder_clickable
+  This bill's most-recent vote occurred on #{roll_call.date.strftime('%B %d, %Y')}, 
+  with a roll call of #{roll_call.ayes} ayes, #{roll_call.nays} nays, and #{roll_call.abstains} not voting.
+  = render 'will_add_text_box', :text => "This bill's most-recent vote occurred on #{roll_call.date.strftime('%B %d, %Y')}, with a roll call of #{roll_call.ayes} ayes, #{roll_call.nays} nays, and #{roll_call.abstains} not voting."
+
+- @sens.each do |p|
+  - if roll_call.vote_for_person(p)
+    %li.page_views.message_builder_clickable
+      #{p.title} #{p.lastname}, your most-recent roll call vote on this bill was '#{roll_call.vote_for_person(p)}'.
+      = render 'will_add_text_box', :text => "#{p.title} #{p.lastname}, your most-recent roll call vote on this bill was '#{roll_call.vote_for_person(p)}'."
+- @reps.each do |p|
+  - if roll_call.vote_for_person(p)
+    %li.page_views.message_builder_clickable
+      #{p.title} #{p.lastname}, your most-recent roll call vote on this bill was '#{roll_call.vote_for_person(p)}'.
+      = render 'will_add_text_box', :text => "#{p.title} #{p.lastname}, your most-recent roll call vote on this bill was '#{roll_call.vote_for_person(p)}'."

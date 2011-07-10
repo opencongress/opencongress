@@ -2266,7 +2266,9 @@ background: url('/images/vote_squares.png') no-repeat left 0px;
 background-position: -35px 0px;
 }
 
-
+.withdrawn {
+  text-decoration: line-through;
+}
 
 
 

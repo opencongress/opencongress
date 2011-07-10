@@ -33,7 +33,7 @@
 		<% if @bill.co_sponsors.empty? %>
 		  <span class="small">No Co-Sponsors</span>
 		<% else %>
-  		<%= toggler("bill_cosponsors_more", "View Co-Sponsors (#{@bill.co_sponsors.size})", "Hide Co-Sponsors", "toggle", "toggle").html_safe %>
+  		<%= toggler("bill_cosponsors_more", "View Co-Sponsors (#{@bill.current_cosponsor_count})", "Hide Co-Sponsors", "toggle", "toggle").html_safe %>
   		<ul id="bill_cosponsors_more" style="display:none;">
   			<%= co_sponsor_list.html_safe %>		
   		</ul>

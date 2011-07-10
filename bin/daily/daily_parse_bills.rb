@@ -103,7 +103,10 @@ bill_files.each do |f|
       cosponsors = []
       es.each("bill/cosponsors/cosponsor") do |e| 
         id = e.attributes["id"].to_i
-        cosponsors << BillCosponsor.find_or_create_by_bill_id_and_person_id(bill.id, id)
+        cs = BillCosponsor.find_or_create_by_bill_id_and_person_id(bill.id, id)
+        cs.date_added = Date.parse(e.attributes["joined"])
+        cs.date_withdrawn = Date.parse(e.attributes["withdrawn"]) unless e.attributes["withdrawn"].blank?
+        cosponsors << cs
       end
       bill.bill_cosponsors = cosponsors
       bill.save

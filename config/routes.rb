@@ -16,6 +16,18 @@ OpenCongress::Application.routes.draw do
 
   resources :groups do
     resources :group_invites
+    resources :group_members
+    resources :group_bill_positions
+    
+    resource :political_notebook do
+      collection do
+        get :feed
+      end
+      resources :notebook_links
+      resources :notebook_videos
+      resources :notebook_notes
+      resources :notebook_files    
+    end
   end
 
   match '/' => 'index#index', :as => :home
@@ -185,7 +197,7 @@ OpenCongress::Application.routes.draw do
       resources :friends
 
       scope :controller => 'profile' do
-        for action in %w{ actions items_tracked watchdog edit_profile bills_supported tracked_rss user_actions_rss bills_opposed my_votes bills comments issues committees } do
+        for action in %w{ actions items_tracked watchdog edit_profile bills_supported tracked_rss user_actions_rss bills_opposed my_votes bills comments issues committees groups } do
           match action, :action => action, :as => 'user_' + action
         end
 

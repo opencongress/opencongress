@@ -41,23 +41,21 @@ background: url('../images/arrow_button_cap.png') right -34px no-repeat;
 }
 
 
-ul.profile_nav li a:hover {
+ul.profile_nav li a:active {
 color: #888;
 text-decoration: none;
 background: url('../images/arrow_button_cap.png') right -34px no-repeat;
    _background: url('../images/arrow_button_cap.gif') right -34px no-repeat;
 }
 
-ul.profile_nav li a:hover span {
-padding: 9px 16px 7px;
-display: block;
+ul.profile_nav li a:active span {
 background: url('../images/arrow_button.png') left -34px repeat-x;
    _background: url('../images/arrow_button.gif') left -34px repeat-x;
 
 }
 
 ul.profile_nav li a span {
-padding: 9px 16px 7px;
+padding: 7px 16px 8px;
 display: block;
 background: url('../images/arrow_button.png') left 0 repeat-x;
    _background: url('../images/arrow_button.gif') left 0 repeat-x;
@@ -69,6 +67,19 @@ background: url('../images/arrow_button.png') left -34px repeat-x;
    _background: url('../images/arrow_button.gif') left -34px repeat-x;
 }
 
+
+#profile.show ul.profile_nav li#AboutMe a {
+color: #888;
+text-decoration: none;
+background: url('../images/arrow_button_cap.png') right -34px no-repeat;
+   _background: url('../images/arrow_button_cap.gif') right -34px no-repeat;
+}
+
+#profile.show ul.profile_nav li#AboutMe a span {
+background: url('../images/arrow_button.png') left -34px repeat-x;
+   _background: url('../images/arrow_button.gif') left -34px repeat-x;
+
+}
 
 #profile #the-items, #friends .invites, #friends #the-items{
 /* float: right;
@@ -221,15 +232,28 @@ border-bottom: 1px solid #ddd;
 width: 120px;
 }
 
-#picture_detail{
-float: right;
-}
+
 
 #about_me {
   clear:left;
   float:left;
-  width:450px;
+  width: 250px;
 }
+
+#about_me textarea{
+  max-width: 240px;
+  min-height: 180px;
+}
+
+
+
+#about_me label{
+font-weight: bold;
+padding: 0;
+margin: 20px 0 0 0;
+display: block;}
+
+
 #about_me #user_about {
   display:block;
   clear:left;
@@ -265,16 +289,142 @@ a#about_ratings_trigger {
   margin:0 !important;
 }
 
-.editable-content, #user_email.editable-content, #user_zipcode.editable-content {
+
+#user_email.editable-content, #user_zipcode.editable-content {
+background: 0;
+  margin: 0 0 0 -8px !important;
+}
+
+
+
+p span.editable-content{
+
+  margin: 0 0 0 -8px !important;
+  border: 0 !important;
+  padding: 0px 8px 0px !important;
+
+  letter-spacing: .06em;
+
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: normal !important;
+    
+float: left;
+
+}
+
+
+.editable-content:hover, .editor_field{
   border-top: 1px solid #999;
   border-bottom: 1px solid #eee;
   border-right: 1px solid #ccc;
   border-left: 1px solid #ccc;
-  padding: 3px;  
-  margin:0;
+
+
   background-image:none;
   float:none;
+
+  margin: 0 0 0 -8px !important;
+  border: 0 !important;
+  padding: 7px 8px 6px !important;
+
+  letter-spacing: .06em;
+
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: normal !important;
+    
+  -moz-box-shadow: inset 0 1px 2px #333;
+  -webkit-box-shadow:inset 0 1px 2px #333;
+  box-shadow: inset 0 1px 2px #333;  
+  
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+
+  background: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#efefef)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #ddd,  #efefef);
+ 
+
 }
+
+.inplaceeditor-form{
+position: relative;
+}
+
+
+.editor_ok_button{
+position: absolute;
+top: 0;
+right: -63px;
+
+  border: 1px solid #aaa;
+  border-top: 1px solid #dbdbdb;
+  border-bottom: 1px solid #777;
+  
+  -moz-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+  -webkit-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+  box-shadow:  0 1px 0px #ddd, inset 0 1px 0px #fff;
+  
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #eee); /* for firefox 3.6+ */
+
+  text-shadow: 0 1px 0px #fff;
+opacity: .7;
+color: rgba(0,0,0,.9);
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold !important;
+  font-size: 12px;
+  text-decoration: none;
+line-height: 1em;
+
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius:3px;
+padding: 4px 10px !important;
+}
+
+
+.editor_cancel{
+position: absolute;
+top: 0;
+right: -160px;
+dispaly: inline-block;
+  border: 1px solid #aaa;
+  border-top: 1px solid #dbdbdb;
+  border-bottom: 1px solid #777;
+  
+  -moz-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+  -webkit-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+  box-shadow:  0 1px 0px #ddd, inset 0 1px 0px #fff;
+  
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #eee); /* for firefox 3.6+ */
+
+  text-shadow: 0 1px 0px #fff;
+opacity: .7;
+color: rgba(0,0,0,.9)
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold !important;
+  
+  text-decoration: none;
+line-height: 1em;
+
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius:3px;
+padding: 6px 10px !important;
+display: block;
+}
+
+
+.profile-deets label{
+width: 100px !important;
+margin-bottom: 20px;
+}
+
+
+
+
 .profile_content h3{
 float: left;
 margin-top: 20px;
@@ -489,3 +639,5 @@ div.after {
   clear:both;
   border-bottom:1px solid #DDDDDD;
 }
+
+

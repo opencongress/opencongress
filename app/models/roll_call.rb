@@ -1,4 +1,6 @@
-class RollCall < ViewableObject
+class RollCall < ActiveRecord::Base
+  include ViewableObject
+#class RollCall < ViewableObject
   belongs_to :bill
   belongs_to :amendment
   has_one :action

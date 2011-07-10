@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   before_filter :has_accepted_tos?
   before_filter :get_site_text_page
   before_filter :is_banned?
+  before_filter :set_simple_comments
 
   def facebook_check
     # check to see if the user is logged into and has connected to OC
@@ -189,6 +190,10 @@ class ApplicationController < ActionController::Base
   end
   
 
+  def set_simple_comments
+    @simple_comments = false
+  end
+  
   def news_blog_count(count)
     return nil if count.blank?
     if count >= 1000
@@ -198,4 +203,25 @@ class ApplicationController < ActionController::Base
     end
   end
   
+
+  def random_key
+    Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
+  end
+  
+  protected
+  def dump_session
+    logger.info session.to_yaml
+  end
+
+  def log_error(exception) #:doc:
+    if ActionView::TemplateError === exception
+      logger.fatal(exception.to_s)
+    else
+      logger.fatal(
+        "\n\n[#{Time.now.to_s}] #{exception.class} (#{exception.message}):\n    " + 
+        clean_backtrace(exception).join("\n    ") + 
+        "\n\n"
+      )
+    end
+  end
 end

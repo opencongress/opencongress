@@ -1097,8 +1097,7 @@ padding: 3px 0;
 }                                    
 .my_rating {
   border-top:1px solid #E1DED5;
-  padding-top:10px;
-  margin-top:2px;
+  padding-top:0px;
   clear:both;
 }
 .my_rating .rate {

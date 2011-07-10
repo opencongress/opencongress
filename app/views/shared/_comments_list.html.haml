@@ -14,14 +14,7 @@
       %b= comments.total_entries 
       total comments.
 
-  - if object.kind_of? BillTextNode
-    = will_paginate comments, { :renderer => 'RemoteLinkRenderer', :param_name => 'comment_page', :params => { :controller => 'comments', :action => 'bill_text_comments', :version => object.bill_text_version.id, :nid => object.nid, :comment_sort => params[:comment_sort], :anchor => 'comments'}, :remote => {:update => "bill_text_comments_#{object.nid}" }}
-  - elsif object.kind_of? Article
-    = will_paginate comments, :param_name => 'comment_page', :params => { :controller => object.display_object_name.downcase, :action => 'view', :id => object.to_param, :comment_sort => params[:comment_sort], :anchor => 'comments'}
-  - elsif object.kind_of? ContactCongressLetter
-    = will_paginate comments, :param_name => 'comment_page', :params => { :controller => 'contact', :action => 'letter', :id => object.id, :comment_sort => params[:comment_sort], :anchor => 'comments'}
-  - else
-    = will_paginate comments, :param_name => 'comment_page', :params => { :controller => object.display_object_name.downcase, :action => 'comments', :id => ((object.display_object_name == 'Bill') ? object.ident : object.id), :navtab => 'comments', :comment_sort => params[:comment_sort], :anchor => 'comments'}
+  = render :partial => 'shared/comments_pagination', :locals => { :object => object, :comments => comments }
 
   - if (params[:comment_sort] == 'newest' || params[:comment_sort] == 'rating') # just display a flat list since nesting doesn't make sense when sort=newest, likewise for rating
     - comments.each do |node|
@@ -29,14 +22,8 @@
   - else
     = display_nested_set_rows(comments) { |node| render :partial => 'shared/comments_comment', :locals => {:object => object, :comment => node, :myscores => myscores} }
 
-  - if object.kind_of? BillTextNode
-    = will_paginate comments, { :renderer => 'RemoteLinkRenderer', :param_name => 'comment_page', :params => { :controller => 'comments', :action => 'bill_text_comments', :version => object.bill_text_version.id, :nid => object.nid, :comment_sort => params[:comment_sort], :anchor => 'comments'}, :remote => {:update => "bill_text_comments_#{object.nid}" }}
-  - elsif object.kind_of? Article
-    = will_paginate comments, :param_name => 'comment_page', :params => { :controller => object.display_object_name.downcase, :action => 'view', :id => object.id, :comment_sort => params[:comment_sort], :anchor => 'comments'}
-  - elsif object.kind_of? ContactCongressLetter
-    = will_paginate comments, :param_name => 'comment_page', :params => { :controller => 'contact', :action => 'letter', :id => object.id, :comment_sort => params[:comment_sort], :anchor => 'comments'}
-  - else
-    = will_paginate comments, :param_name => 'comment_page', :params => { :controller => object.display_object_name.downcase, :action => 'comments', :id => ((object.display_object_name == 'Bill') ? object.ident : object.id), :navtab => 'comments', :comment_sort => params[:comment_sort], :anchor => 'comments'}
+  = render :partial => 'shared/comments_pagination', :locals => { :object => object, :comments => comments }
+
   
 = render :partial => 'shared/comments_add', :locals => {:parent_id => 0, :object => object, :master_container => master_container, :redirect => true }
 

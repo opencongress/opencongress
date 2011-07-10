@@ -1,0 +1,25 @@
+= render 'groups/heading', :subtitle => "Members"
+
+.padding
+  %p  
+    %strong Owner
+    = link_to @group.user.login, user_profile_path(@group.user.login)
+  
+  %p
+    %strong Members
+    %ul
+      - @group_members.each do |m|
+        %li.grid_11
+          %span.grid_3= link_to m.user.login, user_profile_path(@group.user.login)
+          %span.grid_2= m.status.downcase.capitalize
+          - if @group.can_moderate?(current_user)
+            %span.grid_4
+              - if m.status == 'BOOTED'
+                = link_to "Re-join", group_group_member_path(@group, m, :status => 'MEMBER'), :method => :put, :class => 'button medium blue floatright margin-left margin-bottom'
+              - else
+                = link_to "Boot", group_group_member_path(@group, m, :status => 'BOOTED'), :method => :put, :class => 'button medium yellow floatright margin-left margin-bottom'
+                - if @group.is_owner?(current_user)
+                  - if @group.can_moderate?(m.user)
+                    = link_to "Revoke Moderator", group_group_member_path(@group, m, :status => 'MEMBER'), :method => :put, :class => 'button medium silver floatright margin-left margin-bottom'
+                  - else
+                    = link_to "Make Moderator", group_group_member_path(@group, m, :status => 'MODERATOR'), :method => :put, :class => 'button medium blue floatright margin-left margin-bottom'

@@ -23,14 +23,14 @@
 			    <% if @facebook_user %>
 			      <%= fb_logout_link("Logout", url_for(:controller => 'logout', :only_path => false)) %>
 			    <% else %>
-			  	  <%= link_to "Logout", logout_path %> | 
+			  	  <%= link_to "Logout", logout_path %>
 			  	  <%= fb_login_and_redirect(request.url, {:text => 'Connect with Facebook', :perms => 'email'}) %>
 			    <% end %>
 				<% else %>	
 													
-				<%= link_to_function "Search", "['login','login-link','search-toggle'].each(Element.toggle);", :id => "search-toggle", :style => "display:none;" %>
-				<%= link_to_function "Login with OC", "['login','login-link','search-toggle'].each(Element.toggle);", login_url, :id => "login-link" %> | 
-				<%= link_to "Register", :controller => 'account', :action => 'signup' %> | 
+				<%= link_to_function "Search", "['login','login-link','search', 'search-toggle'].each(Element.toggle);", :id => "search-toggle", :style => "display:none;" %>
+				<%= link_to_function "Login with OC", "['login','login-link','search','search-toggle'].each(Element.toggle);", login_url, :id => "login-link" %> &nbsp;&nbsp;&nbsp; 
+				<%= link_to "Register", :controller => 'account', :action => 'signup' %>  
 				<%= fb_login_and_redirect(request.url, {:text => 'Login with Facebook', :perms => 'email'}) %>
 			<% end %>
 		</div>	
@@ -109,11 +109,25 @@
 				<li id="ishu_nav"><%= link_to '<span>Issues</span>'.html_safe, :controller => 'issue' %></li>
 				<li id="comm_nav"><%= link_to '<span>Committees</span>'.html_safe, :controller => 'committee' %></li>
 				<li id="muny_nav"><%= link_to '<span>The Money Trail</span>'.html_safe, :controller => 'money_trail' %></li>
-				<li id="wiki_nav" class="sub"><%= link_to '<span>Wiki</span>'.html_safe, Settings.wiki_base_url  %></li>		
 				<li id="blog_nav" class="sub"><%= link_to '<span>Blog</span>'.html_safe, blogs_url %></li>
+        <li id="groups_nav" class="sub">
+          <%= link_to ('<span>Groups ' + image_tag('tool_arrow-trans.png', :alt => '&gt;') + '</span>').html_safe, groups_url %>
+          <ul class="sub">
+            <% if logged_in? %>
+              <% unless current_user.active_groups.empty? %>
+                <% current_user.active_groups.each do |g| %>
+                  <li><%= link_to "<span class='groupname'>#{g.name}</span><span class='inline-count'>0</span></span>".html_safe, group_path(g) %></li>
+                <% end %>
+                <li><%= link_to "<span>View all my groups</span>".html_safe, user_groups_path(current_user.login) %></li>
+              <% end %>
+            <% end %>
+            <li><%= link_to "<span>Start a New Group</span>".html_safe, new_group_path %></li>
+          </ul>
+        </li>
 				<li id="tool_nav" class="sub">		
 				<%= link_to ('<span>Resources ' + image_tag('tool_arrow-trans.png', :alt => '&gt;') + '</span>').html_safe, tools_path %>
 				<ul class="sub">
+  				<li id="wiki_nav"><%= link_to '<span>Wiki</span>'.html_safe, Settings.wiki_base_url  %></li>		
 					<li id="compare_nav"><%= link_to '<span>Vote Comparison</span>'.html_safe, :controller => 'people', :action => 'compare' %></li> 
 					<li id="widget_nav"><a href="/resources#widgets"><span>Site Widgets</span></a></li>
 					<li id="states_nav"><%= link_to '<span>States</span>'.html_safe, states_path %></li>

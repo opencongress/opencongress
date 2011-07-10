@@ -1,20 +1,18 @@
 <div id="heading">
 	<h2><%= @user.login %>'s Profile</h2>
 </div>
-<%= render :partial => "profile_nav" %>
-<div class="profile_content">
-	<% if logged_in? && params[:login] == current_user.login %>
-	<p><em>This page shows only the personal information that you have chosen to make
-		public. OpenCongress users are encouraged to share their preferred contact
-		info above: website or IM address (and coming soon, e-mail). This allows
-		other users to get in touch -- for example, users located in the same
-		state or district, or users tracking similar bills and issues, or users
-		with shared opinions on Congress.</em></p>
-		<% else %>
-		<p><em>This page shows only the personal information that this user has chosen to make public. OpenCongress users are encouraged to share their preferred contact info above: website or IM address (and coming soon, email). This allows other users to get in touch -- for example, users located in the same state or district, or users tracking similar bills and issues, or users with shared opinions on Congress.</em></p>
-		<% end %>	
+
+
+
+<div class="container_12">
+
+<div class="clear space">&nbsp;</div>
+
+<div class="grid_4 profile-deets">
+
 		
-		<div id="picture_detail" style="padding-top:30px;padding-bottom:30px;">
+		
+		<div id="picture_detail">
 			<% if @user.main_picture %>
 			<%= image_tag "#{Settings.base_url}/images/users/" + @user.login + "_m.jpg", :alt => @user.login %>
 			<% if @user == current_user %>
@@ -39,7 +37,7 @@
 			<% end %>
 		</div>
 		
-		<h3 class="dark personal">Personal Info</h3>
+
 
 			
 			<div id="about_me">
@@ -62,11 +60,7 @@
 			</p>
 			<% end %>
 
-			<% if @user.can_view(:my_website, current_user) %>
-			<p><label>Website</label>
-			<%= draw_edit_in_place("homepage") %>
-      </p>
-			<% end %>
+
 			
 			<% if @user.can_view(:my_email, current_user) %>
 			<p><label>Email</label>
@@ -82,10 +76,11 @@
 				<% end %>
 			<% end %>
 
+
 			<% if @user.can_view(:my_zip_code, current_user) %>
 			<p><label>Zipcode</label>
 				<%= draw_edit_in_place("zipcode") %>
-				<label style="float:none;padding:0 2px;font-weight:normal;">Zip+4</label>
+				<label style="clear: both;">Zip+4</label>
 				<%= draw_edit_in_place("zip_four") %>
 				<%= dbox_trigger('zip4help') if @user == current_user %>
 				<div class="dboxed">
@@ -100,17 +95,7 @@
         </p>
 				<% end %>
 
-				<% if @user.can_view(:my_instant_messanger_names, current_user) %>
-					<% for i in ["chat_aim","chat_msn","chat_yahoo","chat_gtalk","chat_icq"] do %>
-						<% unless @user[i].blank? && @user != current_user %>
-							<%# logger.info i %>
-							<p>
-							<label><%= i.gsub(/chat_/, '').upcase %></label>
-							<%= draw_edit_in_place(i) %>
-			        </p>
-						<% end %>
-					<% end %>
-				<% end %>
+
 				<p>
 				<label>Registered</label>
 				<span><%=h @user.created_at ? time_ago_in_words(@user.created_at) + " ago." : Date.today()  %></span>
@@ -132,14 +117,18 @@
 					<% end %>
 					</div>
 
-				<p><%= toggler("phide","Change Privacy Settings", "Hide Privacy Settings", "privacy", "privacy").html_safe %></p>				
+				<p class="button silver medium" style="width: 180px; margin-bottom: 10px;"><%= toggler("phide","Change Privacy Settings", "Hide Privacy Settings", "privacy", "privacy").html_safe %></p>				
 				<% end %>
+				
+				<br />
+<div class="clear">&nbsp;</div>
+				
 				</div>
 
 				<div class="settings">
 				<% if logged_in? && params[:login] == current_user.login %>
 				<%= render :partial => "settings" %>
-				<% else %>
+				<% else %> 
 				<% end %>
 				</div>
 			<% if @senators%>
@@ -163,6 +152,77 @@
 						<% end %>
 
 					</div>
+
+</div>	
+</div>		
+	
+
+<div class="grid_6 ">
+	<% if logged_in? && params[:login] == current_user.login %>
+	<p><em>This page shows only the personal information that you have chosen to make
+		public. OpenCongress users are encouraged to share their preferred contact
+		info above: website or IM address (and coming soon, e-mail). This allows
+		other users to get in touch -- for example, users located in the same
+		state or district, or users tracking similar bills and issues, or users
+		with shared opinions on Congress.</em></p>
+		<% else %>
+		<p><em>This page shows only the personal information that this user has chosen to make public. OpenCongress users are encouraged to share their preferred contact info above: website or IM address (and coming soon, email). This allows other users to get in touch -- for example, users located in the same state or district, or users tracking similar bills and issues, or users with shared opinions on Congress.</em></p>
+		<% end %>	
+
+
+<h3 class="margin-top">State Groups</h3>
+
+<ul class='container_16'>
+    <li class='grid_10 lined'> 
+      <span class='grid_1 alpha'> 
+        <div class='thumb smaller'><img alt="Missing" src="/group_images/thumb/missing.png" /></div> 
+      </span> 
+      <span class='grid_3'><a href="/groups/1_OpenCongress_Alabama_Group"><strong>OpenCongress Alabama Group</strong></a></span> 
+      <span class='grid_3'>None</span> 
+      <span class='grid_2'>2318</span> 
+      <span class='grid_1 omega'><a href="#" class="button silver small floatright">Join</a></span> 
+    </li> 
+    <li class='grid_10 lined'> 
+      <span class='grid_1 alpha'> 
+        <div class='thumb smaller'><img alt="Missing" src="/group_images/thumb/missing.png" /></div> 
+      </span> 
+      <span class='grid_3'><a href="/groups/2_OpenCongress_Alaska_Group"><strong>OpenCongress Alaska Group</strong></a></span> 
+      <span class='grid_3'>None</span> 
+      <span class='grid_2'>606</span> 
+      <span class='grid_1 omega'><a href="#" class="button silver small floatright">Join</a></span> 
+    </li> 
+
+</ul>   
+
+<div class="clear space">&nbsp;</div>
+<h3 class="margin-top">Congressional District Groups</h3>
+
+<ul class='container_16'>
+    <li class='grid_10 lined'> 
+      <span class='grid_1 alpha'> 
+        <div class='thumb smaller'><img alt="Missing" src="/group_images/thumb/missing.png" /></div> 
+      </span> 
+      <span class='grid_3'><a href="/groups/1_OpenCongress_Alabama_Group"><strong>OpenCongress Alabama Group</strong></a></span> 
+      <span class='grid_3'>None</span> 
+      <span class='grid_2'>2318</span> 
+      <span class='grid_1 omega'><a href="#" class="button silver small floatright">Join</a></span> 
+    </li> 
+    <li class='grid_10 lined'> 
+      <span class='grid_1 alpha'> 
+        <div class='thumb smaller'><img alt="Missing" src="/group_images/thumb/missing.png" /></div> 
+      </span> 
+      <span class='grid_3'><a href="/groups/2_OpenCongress_Alaska_Group"><strong>OpenCongress Alaska Group</strong></a></span> 
+      <span class='grid_3'>None</span> 
+      <span class='grid_2'>606</span> 
+      <span class='grid_1 omega'><a href="#" class="button silver small floatright">Join</a></span> 
+    </li> 
+
+</ul>   
+
+
+</div>
+
+
+		
 				</div>
-				<br />
 

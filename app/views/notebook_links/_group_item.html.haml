@@ -1,0 +1,38 @@
+- if group_item.notebookable.nil?
+  %li.link{ :id => "item_#{group_item.id}", :class => (group_item.created_at > Time.parse('2011-06-25 13:27:37.171769')) ? 'new' : '' }
+    %span.icon
+    %div.item_content
+      %span.person-activity 
+        = link_to group_item.group_user.login, user_profile_path(group_item.group_user.login)
+        shared a link 
+      %span.shared-link
+        - if group_item.is_internal?
+          = link_to_internal group_item 
+        - else 
+          = link_to h(group_item.title), group_item.url
+      %span.source= group_item.url
+    
+      %p.desc= group_item.description
+
+    = render 'groups/activity_stream_comments', :item => group_item
+    
+- elsif group_item.notebookable.kind_of? Bill
+- elsif group_item.notebookable.kind_of? ContactCongressLetter
+  %li{ :id => "item_#{group_item.id}", :class => (group_item.created_at > Time.parse('2011-06-25 13:27:37.171769')) ? "letter-#{group_item.notebookable.disposition} new" : "letter-#{group_item.notebookable.disposition}" }
+    %span.icon
+    %div.item_content
+      %span.person-activity 
+        = link_to group_item.group_user.login, user_profile_path(group_item.group_user.login)
+        wrote a letter to 
+        = group_item.notebookable.formageddon_threads.collect{ |t| link_to_person(t.formageddon_recipient)}.join(", ").html_safe
+        letting them know that they
+        = group_item.notebookable.disposition == 'tracking' ? " are tracking " : " #{group_item.notebookable.disposition} "
+        = link_to group_item.notebookable.bill.typenumber, bill_path(group_item.notebookable.bill)
+      %span.shared-link
+        - if group_item.is_internal?
+          = link_to_internal group_item 
+        - else 
+          = link_to h(group_item.title), group_item.url  
+      %p.desc= group_item.description
+
+    = render 'groups/activity_stream_comments', :item => group_item

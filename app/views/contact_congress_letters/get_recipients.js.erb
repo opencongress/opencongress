@@ -3,8 +3,13 @@
 <% else %>
   $j('#contact_recipients_container').html("<%= escape_javascript(render :partial => 'contact_congress_letters/contact_recipients', :locals => { :show_checkboxes => true }) %>");
   $j('#contribution_data_container').html("<%= escape_javascript(render :partial => 'contact_congress_letters/message_builder_contribution_data') %>");
+  $j('.contact_recipients').css('background', 'rgba(101,101,101, .2)');
 
   <% if @zip4 %>
     $j('#formageddon_formageddon_thread_sender_zip4').val('<%= @zip4 %>');
+  <% end %>
+  
+  <% if @letter_start %>
+    $j('#formageddon_formageddon_thread_formageddon_letters_attributes_0_message').val("<%= @letter_start %> " + $j('#formageddon_formageddon_thread_formageddon_letters_attributes_0_message').val());
   <% end %>
 <% end %>

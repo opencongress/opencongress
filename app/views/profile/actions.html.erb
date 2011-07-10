@@ -2,9 +2,9 @@
   <h2><%= @user.login %>'s Actions</h2>
 </div>
 
-<%= render :partial => "profile_nav" %>
-
-<div class="profile_content">
+<div class="container_12">
+<div class="space">&nbsp;</div>
+<div class="grid_12">
 
 
 
@@ -19,6 +19,40 @@
 
 <div id="linkcontent">
 		<div class="my_left">
+		  
+<h3 class="dark"><%= user_name("My","'s") %> Letters to Congress</h3>
+<% if @user.contact_congress_letters.empty? %>
+  <p>No letters to Congress written yet.</p>
+<% else %>
+
+
+  <ul class="grid_16">
+    <li class="grid_16">
+      <span class="grid_2"><strong>Date</strong></span>
+      <span class="grid_3"><strong>To</strong></span>
+      <span class="grid_6"><strong>Regarding</strong></span>
+      <span class="grid_2"><strong>Privacy</strong></span>
+    </li>
+    <% @user.contact_congress_letters.each do |l| %>
+      <li class="grid_16 margin-bottom">
+        <div class="grid_2"><%= l.formageddon_threads.first.created_at.strftime('%B %d, %Y')%> </div>
+        <div class="grid_3">
+          <% l.formageddon_threads.each do |t| %>
+            <%= link_to_person(t.formageddon_recipient) %><br />
+          <% end %>
+        </div>
+        <div class="grid_6"><%= l.bill.typenumber %> <%= l.bill.title_common %></div>
+        <div class="grid_2">
+          <%= l.formageddon_threads.first.privacy %>
+        </div>
+        <div class="grid_1">
+          <%= link_to "View", contact_congress_letter_path(l), :class => 'button silver small' %>
+        </div>
+      </li>
+    <% end %>    
+  </ul>
+<% end %>
+
 		<h3 class="dark"><%= user_name("My","'s") %> Comments</h3>
 		<p style="text-align:center;clear:both;"><%= will_paginate(@my_comments) %></p>
 		  <% if @my_comments.empty? %>
@@ -104,6 +138,6 @@
 
       <% end %>
     <hr />
-</div>
 
 </div>
+</div></div>

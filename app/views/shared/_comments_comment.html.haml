@@ -64,8 +64,8 @@
                 }
               })
             });
-
-        = link_to '<span>Link</span>'.html_safe, preview ? '#' : url_for(comment.commentable_link.merge({:goto_comment => comment.id})), { :class => 'small_button' }
+        - unless @simple_comments
+          = link_to '<span>Link</span>'.html_safe, preview ? '#' : url_for(comment.commentable_link.merge({:goto_comment => comment.id})), { :class => 'small_button' }
         = link_to_remote "<span>Reply</span>".html_safe, :url => preview ? '#' : {:controller => 'comments', :action => 'showcomfield', :parent_id => comment.id, :object => object.id, :type => object.class.to_s}, :update => "com_" + comment.id.to_s, :complete => "Element.toggle('com_" + comment.id.to_s + "');", :html => { :class => 'small_button' }
             
         .rate_comm{ :id => "rate_comment_#{comment.id.to_s}" }

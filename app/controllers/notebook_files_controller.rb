@@ -21,6 +21,9 @@ class NotebookFilesController < NotebookItemsController
           end
         }
       }
+      format.html {
+        redirect_to group_path(@political_notebook.group) unless @political_notebook.group.nil?
+      }
     end 
   end 
   

@@ -29,7 +29,7 @@
 
 <div class="col1">
    
-   <% unless @tracking_suggestions.last[:my_bills_tracked_facet].first[:trackers] == 0 %>
+   <% unless @tracking_suggestions.last[:my_bills_tracked_facet].nil? or @tracking_suggestions.last[:my_bills_tracked_facet].first[:trackers] == 0 %>
      <h3 class="dark bill">Top bills tracked by users in this district</h3>
      <ul style="margin-left:20px;">
        <% @tracking_suggestions.last[:my_bills_tracked_facet].each do |bt| %>
@@ -45,7 +45,7 @@
      <br/>
    <% end %>
    
-   <% unless @tracking_suggestions.last[:my_people_tracked_facet].first[:trackers] == 0 %>
+   <% unless @tracking_suggestions.last[:my_people_tracked_facet].nil? or @tracking_suggestions.last[:my_people_tracked_facet].first[:trackers] == 0 %>
      <h3 class="dark rep">Top people tracked by users in this district</h3>
      <ul style="margin-left:20px;">
        <% @tracking_suggestions.last[:my_people_tracked_facet].each do |bt| %>
@@ -86,7 +86,7 @@
 <div class="col12">
 <div class="col1">
 
-   <% unless @tracking_suggestions.last[:my_bills_opposed_facet].first[:trackers] == 0 %>
+   <% unless @tracking_suggestions.last[:my_bills_opposed_facet].nil? or @tracking_suggestions.last[:my_bills_opposed_facet].first[:trackers] == 0 %>
      <h3 class="dark bill">Top bills opposed by users in this district</h3>
      <ul style="margin-left:20px;">
        <% @tracking_suggestions.last[:my_bills_opposed_facet].each do |bt| %>
@@ -103,7 +103,7 @@
 </div>
 <div class="col2">
 
-   <% unless @tracking_suggestions.last[:my_bills_supported_facet].first[:trackers] == 0 %>
+   <% unless @tracking_suggestions.last[:my_bills_supported_facet].nil? or @tracking_suggestions.last[:my_bills_supported_facet].first[:trackers] == 0 %>
      <h3 class="dark bill">Top bills supported by users in this district</h3>
      <ul style="margin-left:20px;">
        <% @tracking_suggestions.last[:my_bills_supported_facet].each do |bt| %>

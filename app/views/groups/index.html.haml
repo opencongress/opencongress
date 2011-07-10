@@ -1,0 +1,29 @@
+#heading
+  - if logged_in?
+    = link_to "Create a Group", new_group_path, :class => "button silver large margin-right margin-top floatright"
+    - unless current_user.active_groups.empty?
+      = link_to "My Groups (#{current_user.active_groups.size})", user_groups_path(current_user.login), :class => "button silver large margin-right margin-top floatright"
+  - else
+    = link_to "Register or Login to Use Groups", login_path, :class => 'button silver medium margin-top floatright margin-right'
+
+  %h2 OpenCongress Groups
+
+  %p.groups_instructions
+    %strong Join Groups, it's free and easy. 
+    Find Groups by searching for keyword, browsing by issue area, or by popularity.
+    
+.groups_search
+  %span Find a Group
+  = text_field_tag 'q', nil, :id => 'group_search_field', :class => 'field'
+  = hidden_field_tag 'sort', @sort, :id => 'group_sort'
+  
+  %span Select Issue Area
+  = select_tag 'issue', options_from_collection_for_select(PvsCategory.order('name').all, :id, :name), :include_blank => true, :id => 'group_issue'
+  = image_tag 'spinner-small.gif',  :id => 'group_search_spinner'
+  
+#groups_list
+  = render 'groups_list', :groups => @groups
+
+
+
+

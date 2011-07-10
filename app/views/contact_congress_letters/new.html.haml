@@ -1,5 +1,10 @@
 %span.regarding You are writing regarding
-%h1.regarding= truncate("#{@bill.typenumber} #{@bill.title_common}", :length => 170)
+%h1.regarding
+  = truncate("#{@bill.typenumber} #{@bill.title_common}", :length => 170) + ", #{@bill.session.ordinalize} Congress"
+%span.sponsor
+  Sponsor:
+  = @bill.sponsor.name
+  
 
 #heading
   %h2 Contact Congress
@@ -39,6 +44,9 @@
       #contribution_data_container
         - unless @sens.empty? and @reps.empty? 
           = render :partial => 'message_builder_contribution_data'
+        - else
+          .padding
+            Enter your street address above, and relevant campaign contribution data for your elected officials will appear here in seconds for you to use in your letter.
 
     - unless @bill.bill_position_organizations_support.empty?
       .section
@@ -100,26 +108,33 @@
         - if @sens.empty? and @reps.empty?
           .contact_recipients
             #none.none
-              Input your address on the right and we'll find your reps.
+              Enter your street address at right to find your members of Congress.
         - else
           = render 'contact_recipients', :show_checkboxes => true
       .desk
         %span.from From the Desk of Username
         %span.the-user a user out of District something or other
       .formageddon_contact_form
-        = render 'formageddon/threads/form', :f => f, :thread => @formageddon_thread
-        
-        = hidden_field_tag :after_send_url, "/contact_congress_letters/create_from_formageddon?bill=#{@bill.ident}&disposition=#{@position}"
+        = render 'formageddon/threads/form', :f => f, :thread => @formageddon_thread, :after_send_url => "/contact_congress_letters/create_from_formageddon?bill=#{@bill.ident}&disposition=#{@position}&group_id=#{params[:group_id]}", :action_on_error => '/contact_congress_letters/new'
     
     %ul.instruction
-      %li Click send, and we will automatically deliver your letter to the members of Congress you selected above.
-      %li On the next page, you may review your letter, share it with your community using social media, and track any official replies you may receive from members of Congress.
+      
+      %li
+        - unless current_user == :false
+          Click "Send Message" above to complete delivery of this email to your members of Congress. 
+        - else
+          Click "Send Message" above to complete delivery of this email. 
+          (If you don't already have a free "My OpenCongress" account, we'll make one for you now.) 
+      %li Congressional offices require all address information in the form above be completed in order to deliver your email. 
+      %li OpenCongress does not share your address information with any outside parties for any reason.
       
     .value
       %p OpenCongress is the only not-for-profit website that enables you to write all three of your members of Congress at once.
       %p OpenCongress is the only website that gives this information back to the public commons, enabling you to find other constituents near you who are tracking the same bills and issues. 
   
-:javascript  
+:javascript
+  var sigLength=0;
+  
   $j("#formageddon_formageddon_thread_sender_zip5").keyup(function() {
     if ($j(this).val().length == 5) {
       $j("#none").html("<img src='/images/spinner-ovals.gif' />");
@@ -147,6 +162,20 @@
     });
   });
   
+  
+  $j("#formageddon_formageddon_thread_sender_last_name").change(function() {
+    var sig = "\n\nSincerely,\n" +
+      $j("#formageddon_formageddon_thread_sender_first_name").val() + " " +
+      $j("#formageddon_formageddon_thread_sender_last_name").val();
+  
+    sigLength = sig.length
+    
+    $j('#formageddon_formageddon_thread_formageddon_letters_attributes_0_message').val(
+       $j('#formageddon_formageddon_thread_formageddon_letters_attributes_0_message').val() + sig
+    )
+  }); 
+   
+  
   $j(".message_builder_clickable").hover(
     function () {
       $j(this).find("div.will_add_text_box:first").fadeIn(.3);
@@ -157,9 +186,14 @@
   );
   $j(".message_builder_clickable").click(
     function () {
+      var insertPoint;
+      
       txt = $j(this).find("div.message_builder_add_text:first").text();
       msg = $j('div.formageddon_contact_form textarea:first')
-      msg.val(msg.val()+"\n\n"+unescape(txt)); 
+      
+      insertPoint = msg.val().length - sigLength;
+      
+      msg.val(msg.val().substring(0, insertPoint)+"\n\n"+unescape(txt)+msg.val().substring(insertPoint)); 
     }
   );
     

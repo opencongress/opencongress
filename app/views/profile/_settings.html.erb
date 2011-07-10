@@ -1,3 +1,8 @@
+<p><label>OpenID URL</label>
+	<% form_tag :controller => :account, :action => :add_openid do %><%= text_field_tag "identity_url", current_user.identity_url, :size => 20 %><%= submit_tag "Set" %><% end %>
+</p>
+
+
 <p><label>RSS feed for all tracked items</label> 
 	<%= link_to image_tag('feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => 'user_feeds', :login => current_user.login, :action => 'tracked_items', :key => current_user.feed_key %>
 </p>
@@ -12,10 +17,7 @@
 	<!--or higher.-->
 	<% end %> 
 
-	<%= dbox_trigger('about_ratings') %>
-	<div class="dboxed">
-		<%= dbox_content("about_ratings")%>
-	</div>
+	
 </p>				
 <p><label>Get E-Mail updates about OpenCongress?</label>   
 	<% form_for :user, nil, :url => {:controller => 'account', :action => 'mailing_list', :id => current_user.id}, :html => {:style => "display:inline;"} do |f| %>
@@ -28,8 +30,9 @@
 	<%= f.check_box :partner_mailing, :onClick => "this.form.submit();" %>
 	<% end %>
 </p>
-
-<p><%= toggler('change_pass', 'Change Password', 'Close', 'arrow-blue settings').html_safe %></p>
+<br />
+<div class="clear">&nbsp;</div>
+<p class="button silver medium"><%= toggler('change_pass', 'Change Password', 'Close', 'arrow-blue settings').html_safe %></p>
 <div id="change_pass" style="display:none;">
 	<% form_for :user, nil, :url => {:controller => 'account', :action => 'change_pw', :id => current_user.id} do |f| %>
 	<p><label>New Password:</label>
@@ -40,7 +43,8 @@
 	</p>
 	<p><%= submit_tag "Change Password" %></p>
 	<% end %>
+
 </div>
-<p><label>OpenID URL</label>
-	<% form_tag :controller => :account, :action => :add_openid do %><%= text_field_tag "identity_url", current_user.identity_url, :size => 20 %><%= submit_tag "Set" %><% end %>
-</p>
+<br />
+<div class="clear">&nbsp;</div>
+<br /><br /><br />

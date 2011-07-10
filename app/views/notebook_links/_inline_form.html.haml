@@ -1,0 +1,19 @@
+- from_bookmarklet ||= 'false'
+- url = @group.nil? ? political_notebook_notebook_links_path({:login =>current_user.login}) : group_political_notebook_notebook_links_path(@group)
+= form_for :notebook_link, :url => url, :remote => true, :html => {:id => "add-link-form", :class => "notebook-form"} do |f|
+  = hidden_field_tag :item_type, 'NotebookLink'
+
+  %p
+    %label.require{:for => 'url'} URL*
+    = f.text_field :url, :onchange=>"NotebookForm.setTitleFromUrl(this);", :class => 'field'
+    
+  %p
+    %label.require{:for => 'title'} Title*
+    %span#finding-title-status{ :style => "display:none" } finding title....
+    = f.text_field :title, :class => 'field'
+    
+  %p
+    %label.require{:for => 'description'} Description
+    = f.text_area :description,:class => 'field', :rows => 4
+  
+  = render 'notebook_items/inline_common', :f => f

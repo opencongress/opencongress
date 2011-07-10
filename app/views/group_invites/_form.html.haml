@@ -1,0 +1,10 @@
+= form_for @group_invite, :url => group_group_invites_path(@group) do |f|
+  = render "shared/error_messages", :target => @group
+
+  .actions
+    %p
+      = f.text_area :invite_string, { :class => 'field', :rows => 5, :cols => 70 }
+  
+    %p
+      = f.submit 'Invite', :class => 'button huge blue'
+      = link_to 'Not Now', group_path(@group), :class => 'button huge silver' 

@@ -1,4 +1,6 @@
-class Committee < ViewableObject
+class Committee < ActiveRecord::Base
+  include ViewableObject
+  
   has_many :committee_people
   has_many :people, :through => :committee_people
   alias :members :people #for convenience, seems to make more sense

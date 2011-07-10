@@ -1,0 +1,9 @@
+.instructions {
+  width: 600px;
+  font-size:16px;
+  margin: 30px 0 30px 40px;
+}
+
+.field, input {
+  margin: 0 10px 20px 40px
+}

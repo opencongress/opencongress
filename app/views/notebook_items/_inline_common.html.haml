@@ -1,0 +1,10 @@
+=# hidden_field_tag 'from_bookmarklet', from_bookmarklet
+= f.hidden_field :group_user_id, :value => current_user.id if @group
+= f.submit "Add", :class => "medium button blue add-button"
+= link_to 'Cancel', '#', :class => 'button medium silver close_add_notebook'
+= image_tag 'spinner-ovals.gif', :class => 'add-spinner'
+
+:javascript
+  $j('.add-button').click(function() {
+    $j('.add-spinner').show();
+  });

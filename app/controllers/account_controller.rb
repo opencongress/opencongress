@@ -113,9 +113,9 @@ class AccountController < ApplicationController
     end
     
     if request.post?
+      @user.update_attributes(params[:user])
       @user.facebook_uid = @facebook_user.id
       @user.email = @facebook_user.email
-      @user.update_attributes(params[:user])
       
       if @user.save
         @user.activate
@@ -124,6 +124,32 @@ class AccountController < ApplicationController
         
         redirect_to welcome_url
         return
+      end
+    end
+  end
+  
+  def group_signup_complete
+    if request.post?
+      @group_invite = GroupInvite.find(params[:group_invite_id])
+      @user = User.new(params[:user])
+      
+      if @user.email != @group_invite.email
+        redirect_to groups_path, :error => 'There was an error with the group invitation.'
+        return
+      end
+      
+      @group = @group_invite.group
+      
+      if @user.save
+        @user.activate
+        self.current_user = @user
+        
+        @group_invite.user = @user
+        @group_invite.save
+        
+        redirect_to group_group_invite_path(@group, @group_invite, :key => @group_invite.key)
+      else
+        render :action => 'group_invites/show'
       end
     end
   end

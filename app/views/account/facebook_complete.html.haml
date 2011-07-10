@@ -2,32 +2,17 @@
   %h2 Facebook Connect
   
 .padding
-  %h2 Almost Done!
-  %p.behave We just need a little more info to create and link your OpenCongress account.
-  %ul
-    %li 
-      %strong Create a user name.
-      This is what will show up when you leave comments and track bills.
-    %li 
-      %strong Enter your zipcode.
-      We'll use this to figure out who is representing you in Congress
-    %li
-      %strong Accept our Terms of Service
+  .registration_complete
+    %h2 Almost Done!
+    %p.behave We just need a little more info to create and link your OpenCongress account.
+    %ul
+      %li 
+        %strong Create a user name.
+        This is what will show up when you leave comments and track bills.
+      %li 
+        %strong Enter your zipcode.
+        We'll use this to figure out who is representing you in Congress
+      %li
+        %strong Accept our Terms of Service
       
-  = form_for @user, :url => { :action => 'facebook_complete' } do |f|
-    = render "shared/error_messages", :target => @user
-  
-    %p
-      = f.label :login, 'Username:'
-      = f.text_field :login
-  
-    %p
-      = f.label :zipcode, 'Zipcode:'
-      = f.text_field :zipcode
-  
-    %p
-      = f.check_box :accepted_tos
-      I agree to the <a href="/about/terms_of_service">Terms of Service</a> and <a href="/about/privacy_policy">Privacy Policy.</a>
-  
-    %p
-      = f.submit 'Connect', :class => 'large button silver'
+    = render 'complete_signup', :user => @user, :action => 'facebook_complete'

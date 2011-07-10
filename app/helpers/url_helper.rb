@@ -50,6 +50,8 @@ module UrlHelper
       issue_url(link.notebookable.to_param)
     when 'Person'
       person_url(link.notebookable.to_param)
+    when 'ContactCongressLetter'
+      url_for contact_congress_letter_path(link.notebookable)
     when 'Commentary'
       link.url
     end    

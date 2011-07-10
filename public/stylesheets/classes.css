@@ -67,7 +67,7 @@ outline: none;
 
 
 
-.button.silver{
+.button.silver, button{
   border: 1px solid #aaa;
   border-top: 1px solid #dbdbdb;
   border-bottom: 1px solid #777;
@@ -86,7 +86,7 @@ color: rgba(0,0,0,.9)
 
 
 
-.button.silver:hover{
+.button.silver:hover, button:hover{
   border: 1px solid #999;
   border-top: 1px solid #bbb;
   border-bottom: 1px solid #666;
@@ -105,7 +105,7 @@ color: rgba(0,0,0,.9)
 
 
 .button.silver:active,
-.active .button.silver{
+.active .button.silver, button:active{
   border: 1px solid #999;
   border-top: 1px solid #666;
   border-bottom: 1px solid #ccc;
@@ -760,6 +760,8 @@ display: inline;
 
 .padding{ padding: 35px;}
 
+.pad{ padding: 15px;}
+
 .small_padding{ padding: 15px;}
 
 .behave{ margin-bottom: 10px;}
@@ -796,5 +798,122 @@ display: inline;
 
 .margin-top.push-top { margin-top: 33px;}
 
+.lined {
+border-bottom: 1px solid #ddd;
+float: left;
+padding: 10px 0 10px;
+}
+
+.nopadding {
+  padding: 0 !important;
+}
+
+.notop {
+  top: 0 !important;
+}
 
 
+
+/*  faux table header */
+
+.table_header a{
+font-weight: bold;
+padding-right: 25px;
+line-height: 3em;
+background: url(/images/sort-arrows.png) right 1px no-repeat;
+}
+
+
+.table_header a.up{
+background: url(/images/sort-arrows.png) right -48px no-repeat;
+}
+
+
+
+.table_header a.down{
+background: url(/images/sort-arrows.png) right -91px no-repeat;
+}
+
+
+.table_header span{
+font-weight: bold;
+display: block;
+line-height: 3em;
+}
+
+
+
+#groups_nav {
+float: left;
+margin-right: 0;
+}
+
+#groups_nav .sub{
+margin-top: 22px !important;
+}
+
+#groups_nav a{
+float: left;
+}
+
+#groups_nav .groupname{
+width: 115px;
+overflow: hidden;
+float: left;
+}
+
+#groups_nav .inline-count{
+background: #d9d9d9 !important;
+float: left;
+position: absolute;
+right: 7px;
+}
+
+/*
+
+
+#account .bills_list li .title{
+border: 1px solid !important;
+max-width: 600px;
+}
+
+#account .bills_list li{
+position: relative;
+}
+
+
+#account .bills_list li p{
+padding-top: 0 !important;
+}
+
+#account .bills_list a.track_small{
+top: 0 !important;
+position: absolute;
+right: 0;
+}
+
+*/
+
+.table_header{
+  border: 1px solid #999;
+  border-top: 1px solid #bbb;
+  border-bottom: 1px solid #666;
+  
+  -moz-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+  -webkit-box-shadow: 0 1px 0px #ddd, inset 0 1px 0px #fff;
+  box-shadow:  0 1px 0px #ddd, inset 0 1px 0px #fff;
+  
+  background: #999; /* for non-css3 browsers */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='#ddd'); /* for IE */
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #ddd); /* for firefox 3.6+ */
+
+  text-shadow: 0 1px 0px #fff;
+  }
+
+.box{
+background: rgba(101,101,101, .2);
+padding: 30px;
+font-size: 13px;
+
+}

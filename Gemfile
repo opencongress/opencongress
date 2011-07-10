@@ -12,6 +12,7 @@ gem "settingslogic"
 
 # HAML support
 gem "haml"
+gem "haml-rails"
 
 # RABL for API / JSON
 gem 'rabl'
@@ -30,6 +31,10 @@ gem "govkit"
 # jammit support
 gem "jammit"
 gem "closure-compiler"
+
+# paperclip -- for attaching files to requests
+gem 'paperclip'
+
 
 # notifier for production errors
 gem "hoptoad_notifier"
@@ -74,22 +79,14 @@ gem "okkez-open_id_authentication"
 
 gem "acts-as-taggable-on", :git => 'http://github.com/mbleigh/acts-as-taggable-on.git'
 
-### temp just for showing to drm
 gem 'mechanize'
 #gem 'formageddon', '0.0.0', :require => 'formageddon', :path => '/Users/aross/pcf-work/gitbranches/formageddon'
 gem 'formageddon', :git => 'git://github.com/opencongress/formageddon.git'
 
-gem 'rspec'
+gem 'autotest'
+
 gem 'rspec-rails', '~> 2.4'
 gem 'cucumber', '0.8.5'
-gem 'cucumber-rails'
-gem 'webrat'
-gem 'selenium-client'
-
-gem 'capybara'
-gem 'capybara-envjs'
-
-gem 'autotest'
 
 # Testing
 group :test, :development do

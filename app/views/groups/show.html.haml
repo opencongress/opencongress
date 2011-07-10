@@ -1,0 +1,174 @@
+= render 'groups/heading'
+
+
+.padding
+  .group_info.button.silver
+    %ul
+      %li
+        %strong Owner:
+        = link_to @group.user.login, user_profile_path(@group.user.login)
+      - unless @group.website.blank?
+        %li
+          %strong Website:
+          = link_to @group.website, @group.website
+      - if @group.pvs_category
+        %li
+          %strong Issue Area:
+          = @group.pvs_category.name
+
+  .description
+    = @group.description
+  
+  = render :partial => 'post_modal'
+  = render :partial => 'post_menu'
+  
+  .sidebar
+    %ul.sidebar-nav
+      %li.has-main-content.active
+        <a class=" " href="#"><div></div>Full Converstation</a>
+      %li.has-main-content
+        <a class="" href="#"><div></div>Unread <span class="inline-count">0</span></a>
+
+
+
+
+    #bill_positions
+      = render :partial => 'bill_positions_sidebar'
+      
+    .clear
+    
+    %h3 Notifications
+    %ul.sidebar-nav
+      -if logged_in? and @group.is_member?(current_user)
+        %li
+          = link_to "Receive Emails From Owner <span id='receive_owner_emails_label' class='inline-count'>#{@group.membership(current_user).receive_owner_emails? ? 'On' : 'Off' }</span>".html_safe, "#", :id => 'notification_trigger'
+        :javascript
+          $j('#notification_trigger').click(function() {
+            $j('#receive_owner_emails_label').html('#{image_tag('spinner-arrows.gif').html_safe}');
+            $j.ajax({
+              url:'#{url_for group_group_member_path(@group, @group.membership(current_user), :receive_owner_emails => "toggle")}',
+              type: 'PUT',
+              success: function(data) {
+                $j('#receive_owner_emails_label').html(data);
+              }
+            });
+            return false;
+          });
+          
+      %li
+        %a{ :href => group_path(@group, :format => 'rss') } 
+          RSS
+          %span.feed= image_tag '/images/rss.png'
+
+
+  
+  #activity_stream_container.main-content
+    = render :partial => 'activity_stream'
+
+
+  #dummy_div.main-content
+
+  
+  #bill_positions_content
+    = render :partial => 'bill_positions_content'
+    
+  :javascript
+    var $sidebar_links = $j('.has-main-content a');
+    $sidebar_links.click(function() {
+        $sidebar_links.parent().removeClass('active');
+        $j(this).parent().addClass('active');
+        var index = $sidebar_links.index($j(this));
+        $j('.main-content').hide();
+        if (index == 0) {
+          $j('.activity_stream li').show();
+          $j('#activity_stream_container').show();
+        } else if (index == 1) {
+          $j('.activity_stream li').hide();
+          $j('.activity_stream li.new').show();
+          $j('#activity_stream_container').show();
+        } else {
+          $j('.main-content').eq(index).show();
+        }
+        return false;
+    });
+    
+  /  
+    %ul.activity_stream
+      %li
+        - comment = Comment.find(215486)
+        = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+        %ul
+          %li
+            = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+          %ul.non-media
+            %li
+              = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+            %ul.non-media
+              %li
+                = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+              %ul.non-media
+                %li
+                  = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+                %ul.non-media
+                  %li
+                    = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+                  %ul.non-media
+                    %li
+                      = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+                    %ul.non-media
+                      %li
+                        = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+                                    
+                      
+      %li.photo
+        %span.icon
+        %div
+          %span.person-activity <a href="#">Morgan Knutson</a> shared a photo
+          %span.shared-photo
+            <img src="http://upload.wikimedia.org/wikipedia/en/3/33/SS-Savannah.jpg" />
+          %span.source http://www.ertertert.com
+      %li.video
+        %span.icon
+        %div
+          %span.person-activity <a href="#">Morgan Knutson</a> shared a video
+          %span.shared-video
+            <iframe width="425" height="349" src="http://www.youtube.com/embed/JfSOnncMsF0" frameborder="0" allowfullscreen></iframe>
+          %span.source http://www.ertertert.com
+        %ul.non-media
+          %li
+            = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+          %ul.non-media
+            %li
+              = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+            %ul.non-media
+              %li
+                = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+            
+      %li.letter-track
+        %span.icon
+        %div
+          %span.person-activity <a href="#">Morgan Knutson</a> wrote a letter to <a href="#">Diane Finestein</a> and <a href="#">Barbara Boxer</a> letting them know they're tracking <a href="#">H.R.234</a>      
+      %li.letter-oppose
+        %span.icon
+        %div
+          %span.person-activity <a href="#">Morgan Knutson wrote a letter to <a href="#">Diane Finestein</a> and <a href="#">Barbara Boxer</a> opposing <a href="#">H.R.234</a>            
+        %ul.non-media
+          %li
+            = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+          %ul.non-media
+            %li
+              = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+            %ul.non-media
+              %li
+                = render :partial => 'shared/comments_comment', :locals => {:object => comment.commentable, :comment => comment, :myscores => Array.new}
+            
+      %li.letter-support
+        %span.icon
+        %div
+          %span.person-activity <a href="#">Morgan Knutson</a> wrote a letter to <a href="#">Diane Finestein</a> and <a href="#">Barbara Boxer</a> supporting <a href="#">H.R.234</a>     
+        
+        
+    <a class="load-more button silver huge clear" href="#">Load More</a>         
+    
+    .clear.space &nbsp;
+    .clear.space &nbsp;

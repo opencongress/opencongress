@@ -1,0 +1,31 @@
+- group_invite_id ||= false
+= form_for user, :url => { :controller => 'account', :action => action } do |f|
+  = render "shared/error_messages", :target => user
+
+  %p
+    = f.label :login, 'Username'
+    = f.text_field :login
+
+  - unless @facebook_user
+    %p
+      = f.label :password, 'Password'
+      = f.password_field :password
+  
+    %p
+      = f.label :password_confirmation, 'Re-type password'
+      = f.password_field :password_confirmation
+
+
+  %p
+    = f.label :zipcode, 'Zipcode'
+    = f.text_field :zipcode
+
+  %p
+    = f.check_box :accepted_tos
+    I agree to the <a href="/about/terms_of_service">Terms of Service</a> and <a href="/about/privacy_policy">Privacy Policy.</a>
+
+  %p
+    = f.hidden_field :email
+    - if group_invite_id
+      = hidden_field_tag 'group_invite_id', group_invite_id
+    = f.submit 'Finish Sign-up', :class => 'large button silver'

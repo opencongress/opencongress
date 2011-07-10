@@ -15,14 +15,26 @@ z-index: 99999999 !important;
     width:auto;
     background-color: #fefefe;
     color: #333;
-    border: 1px solid #a0a0a0;
+    border: 10px solid rgba(101,101,101, .1);
     padding: 30px;
 -moz-border-radius: 5px;
 -webkit-border-radius: 5px;
+-o-border-radius: 5px;
+-ms-border-radius: 5px;
+border-radius: 5px;
+
+
+
     max-height:80%;
- -moz-box-shadow: 0px 5px 165px #777;
--webkit-box-shadow: 10px 5px 5px black;
-        box-shadow: 10px 5px 5px black;} 
+ -moz-box-shadow:0px 3px 10px #000, 0px 5px 165px #777;
+-webkit-box-shadow: 0px 3px 10px #000, 0px 5px 165px #777;
+-ms-box-shadow: 0px 3px 10px #000, 0px 5px 165px #777;
+-o-box-shadow: 0px 3px 10px #000, 0px 5px 165px #777;
+box-shadow: 0px 3px 10px #000, 0px 5px 165px #777;
+
+
+
+} 
 .jqmWindow.closer {
   margin-left:0px;
 }
@@ -45,10 +57,10 @@ z-index: 99999999 !important;
 
 
 .jqmClose{
-	background: url(../images/donate/close.png) no-repeat;
+	background: url(../images/close.png) no-repeat;
 	position:absolute;
-	right:-15px;
-	top:-15px;
+	right:0px;
+	top:10px;
 	cursor:pointer;
 	height:27px;
 	width:27px;
@@ -64,6 +76,14 @@ z-index: 99999999 !important;
 background: #fff url('/images/overlay.png');
 z-index: 9999999 !important;
    _background: #fff url('/images/overlay.gif');
+   
+   
+    -moz-box-shadow:0px 3px 10px #000, 0px 5px 165px #777;
+-webkit-box-shadow: 0px 3px 10px #000, 0px 5px 165px #777;
+-ms-box-shadow: 0px 3px 10px #000, 0px 5px 165px #777;
+-o-box-shadow: 0px 3px 10px #000, 0px 5px 165px #777;
+box-shadow: 0px 3px 10px #000, 0px 5px 165px #777;
+
 }
 
 /* Background iframe styling for IE6. Prevents ActiveX bleed-through (<select> form elements, etc.) */

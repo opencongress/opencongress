@@ -5,11 +5,16 @@
 .contact_congress_letter
   - if @contact_congress_letter.bill
     #bill
-      This letter was sent regarding:
-      %strong= link_to truncate("#{@contact_congress_letter.bill.typenumber} #{@contact_congress_letter.bill.title_common}", :length => 170), bill_path(@contact_congress_letter.bill)
-      - if @contact_congress_letter.formageddon_threads.first.formageddon_sender
-        by
-        = link_to @contact_congress_letter.formageddon_threads.first.formageddon_sender.login, user_profile_path(@contact_congress_letter.formageddon_threads.first.formageddon_sender.login)
+      This letter was sent by OpenCongress user
+      = link_to @contact_congress_letter.formageddon_threads.first.formageddon_sender.login, user_profile_path(@contact_congress_letter.formageddon_threads.first.formageddon_sender.login)
+      on
+      = @contact_congress_letter.formageddon_threads.first.created_at.strftime('%B %d, %Y')
+      = case @contact_congress_letter.disposition when 'support': 'in support of' when 'oppose': 'in opposition to' else 'tracking' end
+      %strong
+        = "#{link_to(truncate(@contact_congress_letter.bill.typenumber + ' ' + @contact_congress_letter.bill.title_common, :length => 170), bill_path(@contact_congress_letter.bill))}.".html_safe
+      Privacy setting:
+      = @contact_congress_letter.formageddon_threads.first.privacy
+      
   #recipients{ :class => "num#{@contact_congress_letter.formageddon_threads.size}" }
     .to To:
     %ul

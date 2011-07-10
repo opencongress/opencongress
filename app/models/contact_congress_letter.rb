@@ -1,4 +1,6 @@
 class ContactCongressLetter < ActiveRecord::Base 
+  include ViewableObject
+  
   has_many :formageddon_threads, :through => :contact_congress_letters_formageddon_threads, :class_name => 'Formageddon::FormageddonThread'
   has_many :contact_congress_letters_formageddon_threads
   

@@ -287,7 +287,7 @@ pading: 10px !important;
 }
 
 a.bill_support, .bill_nosupport {
-margin: 0px 15px 12px;
+margin: 0px 15px 0px;
 display: block;
 padding-top: 31px;
 width: 31px;

@@ -1,0 +1,56 @@
+:css
+  .formageddon_letter {
+    width: 900px;
+    background: #fff;
+    text-align: left;
+    margin: auto;
+    padding: 15px 20px;
+    font-family:"Times New Roman",Georgia,Serif;
+    font-size:1.2em;
+    clear: both;
+  }
+  .formageddon_letter .watermark {
+    width: 60%;
+    text-align: center;
+    margin:0 auto 30px;
+    font-size: 0.8em;
+  }
+  .formageddon_letter .from {
+    float: right;
+    clear: left;
+  }
+  .formageddon_letter .to {
+    clear: right;
+    margin-bottom: 20px;
+  }
+  .formageddon_letter .date {
+    margin-bottom: 20px;
+  }
+
+  .formageddon_letter .subject {
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+.formageddon_letter
+  .formageddon_letter_heading
+    .watermark
+      This letter sent through <a href="http://www.opencongress.org">OpenCongress.org</a>, a free and open-source public resource
+    .from
+      - if letter.direction == 'TO_RECIPIENT'
+        = render 'formageddon/threads/letter_sender_address', :letter => letter
+      - else
+        = render 'formageddon/threads/letter_recipient_address', :letter => letter
+
+    .to
+      - if letter.direction == 'TO_RECIPIENT'
+        = render 'formageddon/threads/letter_recipient_address', :letter => letter
+      - else
+        = render 'formageddon/threads/letter_sender_address', :letter => letter
+    
+    .date= letter.created_at.strftime("%B %d, %Y")
+    .subject= "RE: #{letter.subject}"
+    
+    .body
+      -# will do more extensive markdown later
+      = letter.message.gsub(/\n/, "<br />").html_safe

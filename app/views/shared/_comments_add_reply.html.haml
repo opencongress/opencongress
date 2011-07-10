@@ -5,7 +5,8 @@
 
     %h3= "Reply to Comment (#{link_to_function "Hide", "Element.toggle('com_" + parent_id.to_s + "');"})".html_safe
 
-    = render :partial => 'shared/comments_instructions'
+    - unless @simple_comments
+      = render :partial => 'shared/comments_instructions'
     
     - form_for :comment, :url => { :controller => 'comments', :action => 'add_comment', :id => object.id, :type => object.class.to_s }, :remote => true do |f|
       :javascript

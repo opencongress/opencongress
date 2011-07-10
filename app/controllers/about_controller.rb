@@ -59,5 +59,10 @@ class AboutController < ApplicationController
   def privacy_policy
      @page_title = "Privacy Policy"
   end
+  
+  def version2
+  
+  end
+  
 
 end

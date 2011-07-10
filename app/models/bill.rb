@@ -1,4 +1,6 @@
-class Bill < ViewableObject
+class Bill < ActiveRecord::Base
+  include ViewableObject
+  
   require 'wiki_connection'
   
   acts_as_solr :fields => [{:billtext_txt => :text},:bill_type,:session,{:title_short=>{:boost=>3}}, {:introduced => :integer}],
@@ -132,6 +134,10 @@ class Bill < ViewableObject
     end
     
     versions.last
+  end
+  
+  def current_cosponsor_count
+    bill_cosponsors.where("bills_cosponsors.date_withdrawn IS NULL").size
   end
   
   def top_rated_news_items
@@ -733,7 +739,7 @@ class Bill < ViewableObject
   end # class << self
   
   def log_referrer(referrer)
-    unless (referrer.blank? || /opencongress\.org/.match(referrer) || /google\.com/.match(referrer))
+    unless (referrer.blank? || BillReferrer.no_follow?(referrer))
       self.bill_referrers.find_or_create_by_url(referrer[0..253])
     end
   end

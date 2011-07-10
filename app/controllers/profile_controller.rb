@@ -185,6 +185,10 @@ class ProfileController < ApplicationController
     end
   end
   
+  def groups
+    @user = User.find_by_login(params[:login])
+  end
+  
   def my_votes
     @user = User.find_by_login(params[:login])
     @page_title = "Profile of #{@user.login} - Bills Voted On"

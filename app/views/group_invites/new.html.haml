@@ -1,0 +1,36 @@
+= render 'groups/heading', :subtitle => 'Send Invitations'
+
+.padding      
+  .instructions
+    %strong Now that you've created your group, invite some people to join it!
+    %br
+    %br
+    Enter email addresses or OpenCongress usernames in the box below and click "Invite".
+    - if @facebook_user
+      You can also invite your friends on Facebook in the selector below.
+    
+    
+  = render 'form'
+  
+  - if @facebook_user
+    - fb_connect_async_js
+    /
+      <fb:serverFbml>  
+      <script type="text/fbml">
+      <fb:fbml>
+      <fb:request-form
+      action="<URL for post invite action, see fb:request-form docs for details>"
+      method="POST"
+      invite="true"
+      type="XFBML"
+      content='Join my group on OpenCongress
+      <fb:req-choice url="#{url_for :controller => 'groups', :only_path => false}"
+      label="Join!" />
+      '>
+      </fb:request-form>
+      <fb:multi-friend-selector
+      showborder="false"
+      actiontext="Invite your friends to join #{@group.name}." />
+      </fb:fbml>
+      </script>
+      </fb:serverFbml>

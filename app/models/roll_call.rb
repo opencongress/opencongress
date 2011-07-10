@@ -1,4 +1,6 @@
-class RollCall < ViewableObject
+class RollCall < ActiveRecord::Base
+  include ViewableObject
+#class RollCall < ViewableObject
   belongs_to :bill
   belongs_to :amendment
   has_one :action
@@ -70,7 +72,7 @@ class RollCall < ViewableObject
   end
   
   def vote_for_person(person)
-    RollCallVote.find(:first, :conditions => [ "person_id=? AND roll_call_id=?", person.id, self.id])
+    RollCallVote.where(["person_id=? AND roll_call_id=?", person.id, self.id]).first
   end
   
   def vote_url

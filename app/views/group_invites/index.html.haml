@@ -1,0 +1,17 @@
+%h1 Listing group_invites
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @group_invites.each do |group_invite|
+    %tr
+      %td= link_to 'Show', group_invite
+      %td= link_to 'Edit', edit_group_invite_path(group_invite)
+      %td= link_to 'Destroy', group_invite, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Group invite', new_group_invite_path

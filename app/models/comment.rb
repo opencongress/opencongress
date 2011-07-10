@@ -10,6 +10,8 @@ class Comment < ActiveRecord::Base
     c.belongs_to :committee
     c.belongs_to :subject
     c.belongs_to :upcoming_bill
+    c.belongs_to :notebook_note
+    c.belongs_to :notebook_link
   end
   has_many :comment_scores
   

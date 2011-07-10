@@ -15,6 +15,8 @@ class NotebookLinksController < NotebookItemsController
       @item.political_notebook = @political_notebook      
       @item.init_from_notebookable(@notebookable)
       
+      @item.group_user = current_user if @group
+      
       @success = @item.save
       
       respond_to do |format| 

@@ -1,0 +1,33 @@
+- if logged_in? and @group.can_post?(current_user)
+  .post-to
+    %h3 Post to this Group
+    %ul
+      %li.link.button.silver.margin-right.post_trigger
+        %span.icon
+        %div Link    
+      %li.comment-post.button.silver.margin-right.post_trigger
+        %span.icon      
+        %div Comment
+      %li.photo.button.silver.margin-right.post_trigger
+        %span.icon  
+        %div Photo  
+      %li.video.button.silver.margin-right.post_trigger
+        %span.icon 
+        %div Video   
+      %li.letter-track.button.silver.margin-right
+        %span.icon      
+        %div Tracking Letter
+      %li.letter-support.button.silver.margin-right
+        %span.icon      
+        %div Supporting Letter
+      %li.letter-oppose.button.silver
+        %span.icon      
+        %div Opposing Letter
+:javascript
+  $j().ready(function() {
+    $j('#group_post').jqm({trigger:'.post_trigger'}).jqmAddClose('.close_add_notebook');;
+  });
+  $j('.post_trigger').click(function() {
+    $j('.post_tab').eq($j('.post_trigger').index($j(this))).click();
+  });
+  

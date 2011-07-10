@@ -1,0 +1,10 @@
+- from_bookmarklet ||= 'false'
+- url = @group.nil? ? political_notebook_notebook_notes_path({:login =>current_user.login}) : group_political_notebook_notebook_notes_path(@group)
+= form_for :notebook_note, :url => url, :remote => true, :html => {:id => "add-note-form", :class => "notebook-form"} do |f|
+  = hidden_field_tag :item_type, 'NotebookNote'
+    
+  %p
+    %label.require{:for => 'description'} Comment
+    = f.text_area :description,:class => 'field', :rows => 4
+  
+  = render 'notebook_items/inline_common', :f => f

@@ -14,6 +14,8 @@ class CommentsController < ApplicationController
       @comment.user_id = current_user.id if logged_in?
       @comment.ip_address = request.remote_ip
 
+      @simple_comments = true if @object.kind_of? NotebookItem
+      
       @parent = nil
       unless params[:comment][:parent_id].blank?
         @parent = Comment.find_by_id(params[:comment][:parent_id])
@@ -56,6 +58,7 @@ class CommentsController < ApplicationController
         # if this is a reply to a comment, just render the new comment
         @reply = true
       else
+        @comment.update_attribute('root_id', @comment.id)
         params[:comment_page] = @comment.page
         @reply = false
       end      
@@ -67,6 +70,7 @@ class CommentsController < ApplicationController
 
   def showcomfield
     object = Object.const_get(params[:type]).find_by_id(params[:object])
+    @simple_comments = true if object.kind_of? NotebookItem
     render :partial => "shared/comments_add_reply", :locals => {:parent_id => params[:parent_id], :object => object } 
   end
 

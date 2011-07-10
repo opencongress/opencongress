@@ -1,0 +1,10 @@
+%li.photo
+  %span.icon
+  %div.item_content
+    %span.person-activity 
+      = link_to group_item.group_user.login, user_profile_path(group_item.group_user.login)
+      shared a photo
+    %span.shared-photo= image_tag(group_item.file.url(:medium))
+    
+    
+    

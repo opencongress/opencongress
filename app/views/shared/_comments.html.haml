@@ -1,15 +1,16 @@
 #comments-container
   %a#comments{ :name => "comments" }
 
-  - if object.comments.size > 1
+  - if object.comments.size > 1 and !@simple_comments
     = render :partial => 'shared/sort_comments'
 
-  %h2.comments_title
-    Comments 
-    - if @bill or @person
-      - link = @bill ? "/comments/atom/bill/#{@bill.id}" : "/comments/atom/person/#{@person.id}" 
-      %a.feed{ :href => link} Feed
-      %a.feed.comment_feed{ :href => "/articles/all_comments_atom" }
+  - unless @simple_comments
+    %h2.comments_title
+      Comments 
+      - if @bill or @person
+        - link = @bill ? "/comments/atom/bill/#{@bill.id}" : "/comments/atom/person/#{@person.id}" 
+        %a.feed{ :href => link} Feed
+        %a.feed.comment_feed{ :href => "/articles/all_comments_atom" }
 
 
   /
@@ -31,9 +32,10 @@
           onChange:function(v){$('filterscore').value=v;new Ajax.Request('/comments/filter_by_rating/#{object.id}', {asynchronous:true, evalScripts:true, parameters:'type=' + escape("#{object.class.to_s}") + '&value=' + escape(v) + '&comment_page=' + escape("#{params[:comment_page]}") + '&comment_sort=' + escape("#{params[:comment_sort]}")})}});
 
   - if object.comments.size == 0
-    %h3#no_comments.no_comments
-      %strong No Comments
-      Start the Conversation!
+    - unless @simple_comments
+      %h3#no_comments.no_comments
+        %strong No Comments
+        Start the Conversation!
     #comment{ :style => "clear:left;" }
 
   #comments_master{ :style => "float:none;clear:left;" }

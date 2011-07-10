@@ -54,15 +54,15 @@ module BillHelper
   def bill_titles_html
     @bill.bill_titles.map do |bt|
 
-      "<li><em>#{bt.title_type.capitalize}:</em> " +
-      " #{bt.title}" + (bt.as != '' ? "<em> as #{bt.as}.</em>" : ".") + "</li>"
+      "<li><em>#{bt.title_type.capitalize}:</em> ".html_safe +
+      " #{bt.title}" + (bt.as != '' ? "<em> as #{bt.as}.</em>".html_safe : ".") + "</li>".html_safe
     end
   end
 
   def display_bill_titles
     "<a href='#' id='bill_title_link' onclick='change_vis_text(\"bill_titles\", " +
       "\"bill_title_link\", \"...all bill titles\", \"...hide bill titles\");return false'>" +
-      "...all bill titles</a>"
+      "...all bill titles</a>".html_safe
   end
 
   def bill_related_bills_html
@@ -124,9 +124,12 @@ module BillHelper
 
   def co_sponsor_list
    	text = "<ul class='lined_list'>"
-		@bill.co_sponsors[0..@bill.co_sponsors.size].each do |c|
+		#@bill.co_sponsors[0..@bill.co_sponsors.size].each do |c|
+		@bill.bill_cosponsors.includes(:person).order("people.lastname").each do |c|
 		  text += "<li>"
-		  text += link_to "<span class='small'>#{c.name}</span>".html_safe, :controller => 'people', :action => 'show', :id => c.id
+		  text += link_to "<span class='small#{' withdrawn' unless c.date_withdrawn.blank?}'>#{c.person.name}</span>".html_safe, :controller => 'people', :action => 'show', :id => c.person
+		  text += "<br /><span class='small'>Added #{c.date_added.strftime('%B %d, %Y')}</span>" unless c.date_added.blank?
+		  text += "<br /><span class='small'>Wthdrawn #{c.date_withdrawn.strftime('%B %d, %Y')}</span>" unless c.date_withdrawn.blank?
 		  text += "</li>"
 		end
     text += "</ul>"

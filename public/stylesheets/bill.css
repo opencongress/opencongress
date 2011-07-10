@@ -365,6 +365,7 @@ font-weight: bold;
 }
 
 /* topic n' tabs 
+
 #topic .titlecon {
 margin: 35px 34px 10px 37px;
 float: left;
@@ -474,6 +475,7 @@ border-top: 1px solid #eee;
 #vote {
 float: left;
 width: 254px;
+height: 130px;
 margin: 0 0 0px 0 !important;
 }
 
@@ -492,6 +494,7 @@ line-height: 12px;
 #vote font {
 display: block;
 margin: 0 auto;
+float: left;
 text-align: center;
 font-size: 10px;
 color: #202020;
@@ -502,6 +505,135 @@ color: #58a166;
 h3.oppose {
 color: #c35b5d;
 }
+
+
+
+
+.voting_buttons {
+float: right;
+width: 30px;
+margin: -13px -16px 0 0;
+}
+
+.voting_buttons a{
+float: right;
+  border: 1px solid #aaa;
+  border-top: 1px solid #dbdbdb;
+  border-bottom: 1px solid #777;
+  
+
+
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #eee); /* for firefox 3.6+ */
+
+  text-shadow: 0 1px 0px #fff;
+color: rgba(0,0,0,.9);
+padding: 8px 0 0 10px;
+width: 20px;
+height: 20px;
+opacity: .5;
+}
+
+
+
+.voting_buttons a:hover{
+
+
+opacity: .7;
+}
+
+.voting_buttons a:active{
+  border: 1px solid #999;
+  border-top: 1px solid #666;
+  border-bottom: 1px solid #ccc;
+  
+  -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.3);;
+  -webkit-box-shadow:  inset 0 1px 2px rgba(0,0,0,.3);;
+  box-shadow:  inset 0 1px 1px rgba(0,0,0,.3);;
+  
+  background: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#eee)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #ddd,  #eee); /* for firefox 3.6+ */
+opacity: .5;
+  text-shadow: 0 1px 0px #fff;  
+}
+
+
+
+
+.voting_buttons a span{
+display: none;
+
+}
+
+.voting_buttons a:hover,
+.voting_buttons a.bill_support {
+
+}
+
+.voting_buttons a.no  {
+
+  border-top: none;
+
+
+    -moz-border-radius-bottomright: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -ms-border-bottom-right-radius: 5px;
+  -o-border-bottom-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+
+
+
+}
+
+.voting_buttons a.yes  {
+
+
+
+    -moz-border-radius-topright: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -ms-border-top-right-radius: 5px;
+  -o-border-top-right-radius: 5px;
+  border-top-right-radius: 5px;
+
+
+
+
+}
+
+.voting_buttons a.yes img {
+margin-left: -2px;
+
+}
+
+
+
+.voting_buttons a.yes:hover span,
+.voting_buttons a.yes.bill_support span {
+
+
+}
+
+.voting_buttons a.no:hover span,
+.voting_buttons a.no.bill_support span {
+
+
+}
+
+.voting_buttons a.no span {
+
+
+}
+
+.voting_buttons a img {
+
+
+}
+
+
+
+
+
 
 
 .pie-chart {
@@ -882,64 +1014,6 @@ padding-right: 15px;
 background: url('../images/button-gray-right.png') no-repeat right top;
 _background: url('../images/button-gray-right.gif') no-repeat right top;
 }
-
-.voting_buttons {
-margin: 5px 0 0 26px;
-width: 201px;
-}
-
-.voting_buttons a {
-font-size: 12px;
-float: left;
-margin: 0 10px 6px 16px;
-padding: 0 16px 0 0;
-text-decoration: none;
-font-weight: bold;
-background: url('../images/large_buttons.png') right -1px no-repeat;
-_background: url('../images/large_buttons.gif') right -1px no-repeat;
-}
-
-.voting_buttons a:hover,
-.voting_buttons a.bill_support {
-background: url('../images/large_buttons.png') no-repeat right -32px;
-_background: url('../images/large_buttons.gif') no-repeat right -32px;
-}
-
-.voting_buttons a.yes span {
-padding: 8px 10px 6px 36px;
-background: url('../images/large_buttons.png') no-repeat left -1px;
-_background: url('../images/large_buttons.gif') no-repeat left -1px;
-display: block;
-min-width: 110px;
-}
-
-.voting_buttons a.yes:hover span,
-.voting_buttons a.yes.bill_support span {
-background: url('../images/large_buttons.png') no-repeat left -32px;
-_background: url('../images/large_buttons.gif') no-repeat left -32px;
-display: block;
-}
-
-.voting_buttons a.no:hover span,
-.voting_buttons a.no.bill_support span {
-background: url('../images/large_buttons.png') no-repeat left -94px;
-_background: url('../images/large_buttons.gif') no-repeat left -94px;
-display: block;
-}
-
-.voting_buttons a.no span {
-padding: 8px 8px 6px 36px;
-background: url('../images/large_buttons.png') no-repeat left -63px;
-_background: url('../images/large_buttons.gif') no-repeat left -63px;
-display: block;
-min-width: 110px;
-}
-
-.voting_buttons a img {
-display: none;
-margin: 9px 6px 0 20px;
-}
-
 .button-gray {
 font-size: 11px;
 background: url('../images/button-gray-bg.png') repeat-x left top;
@@ -2264,7 +2338,9 @@ background: url('/images/vote_squares.png') no-repeat left 0px;
 background-position: -35px 0px;
 }
 
-
+.withdrawn {
+  text-decoration: line-through;
+}
 
 
 .contact_congress{
@@ -2277,14 +2353,16 @@ border: 6px solid rgba(255,255,255, .5);
 -ms-border-radius: 8px;
 -o-border-radius: 8px;
 border-radius: 8px;
+clear: both;
+background: rgba(154,255,255, .2);
 
-background: rgba(255,255,255, .2);
+-moz-box-shadow: 0 2px 3px rgba(0,0,0, .6);
+-webkit-box-shadow: 0 2px 3px rgba(0,0,0, .6);
+-ms-box-shadow: 0 2px 3px rgba(0,0,0, .6);
+-o-box-shadow: 0 2px 3px rgba(0,0,0, .6);
+box-shadow: 0 2px 3px rgba(0,0,0, .6);
+position: relative;
 
--moz-box-shadow: 0 2 3px rgba(0,0,0, .2);
--webkit-box-shadow: 0 2 3px rgba(0,0,0, .2);
--ms-box-shadow: 0 2 3px rgba(0,0,0, .2);
--o-box-shadow: 0 2 3px rgba(0,0,0, .2);
-box-shadow: 0 2 3px rgba(0,0,0, .2);
 }
 
 
@@ -2300,11 +2378,22 @@ line-height: 1em;
 }
 
 
+.contact_congress .pointer{
+
+width: 10px;
+left: -14px;
+top: 12px;
+height: 14px;
+background: url('../images/contact-pointer.png') left 0px no-repeat;
+position: absolute;
+} 
+
 
 
 .contact_congress h2{
 display: block;
 margin: 0px;
+font-size: 11px !important;
 padding: 10px 0 0 0 !important;
 }
 

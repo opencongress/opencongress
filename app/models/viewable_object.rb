@@ -1,5 +1,10 @@
-class ViewableObject < ActiveRecord::Base
-  has_many :object_aggregates, :as => :aggregatable
+module ViewableObject
+#class ViewableObject < ActiveRecord::Base
+  def self.included(includer)
+    includer.class_eval do
+      has_many :object_aggregates, :as => :aggregatable
+    end
+  end
   
   def self.abstract_class?
     true

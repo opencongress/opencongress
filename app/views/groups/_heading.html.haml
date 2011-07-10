@@ -1,0 +1,24 @@
+- subtitle ||= nil
+#heading.group
+  - if logged_in?
+    - if @group.is_member?(current_user) or @group.is_owner?(current_user)    
+      = link_to "View Members", group_group_members_path(@group), :class => 'button yellow large floatright margin-top margin-right'
+      - if @group.is_owner?(current_user)
+        = link_to "Edit Group Settings", edit_group_path(@group), :class => 'button yellow large floatright margin-top margin-right'
+      - else
+        = link_to "Leave Group", group_group_member_path(@group, @group.group_members.find_by_user_id(current_user.id)), :method => 'delete', :class => 'button yellow large floatright margin-top margin-right'
+      - if @group.can_invite?(current_user)
+        = link_to "Invite People to this Group", new_group_group_invite_path(@group), :class => 'button silver large floatright margin-top margin-right'
+    - else
+      - if @group.can_join?(current_user)
+        = link_to "Join Group", group_group_members_path(@group, :status => 'MEMBER'), :method => 'post', :class => 'button silver large floatright margin-top margin-right'
+  - else
+    = link_to "Register or Login To Join", login_path, :class => 'button silver large floatright margin-top margin-right'
+    
+
+
+  .thumb
+    = group_image(@group)
+
+  %h2= subtitle.nil? ? @group.name : "#{@group.name} : #{subtitle}"
+  

@@ -401,7 +401,7 @@ module CommentaryParser
     # returns true unless we have all the referrings posts already
     bill.bill_referrers.each do |r|
       #OCLogger.log "#{r}"
-      if /google\.com/.match(r.url)
+      if BillReferrer.no_follow?(r.url)
         #OCLogger.log "From google, skipping."
       else
         unless Commentary.find(:first, :conditions => ["url=?", r.url])
@@ -465,7 +465,7 @@ module CommentaryParser
   end
   
   def CommentaryParser.recent_referrers                                
-    referred_bills = BillReferrer.find(:all).collect{ |br| br.bill }.uniq
+    referred_bills = Bill.where("bills.id IN (SELECT DISTINCT bill_id FROM bill_referrers)")
                                             
     i = 0
     referred_bills.each do |rb|
@@ -473,18 +473,18 @@ module CommentaryParser
       OCLogger.log "Looking for referrers for #{rb.title_full_common}"
       
       if find_referring_posts_for_bill?(rb)
-        #OCLogger.log "Looking for referring posts for bill: #{i}/#{referred_bills.size} (recent_referrers)"
+        OCLogger.log "Looking for referring posts for bill: #{i}/#{referred_bills.size} (recent_referrers)"
         
         do_referrer_queries(bill_referrer_query(rb), rb)
       else
-        #OCLogger.log "Skipping bill (have all referrers or matched stops): #{i}/#{referred_bills.size} (recent_referrers)"
+        OCLogger.log "Skipping bill (have all referrers or matched no-follows): #{i}/#{referred_bills.size} (recent_referrers)"
       end
     end
     
     Bill.expire_meta_commentary_fragments
     
     # delete referrers older than two days
-    BillReferrer.find(:all, :conditions => ["created_at > ?", 2.days.ago]).each{ |br| br.destroy }
+    BillReferrer.purge
   end
 end
 

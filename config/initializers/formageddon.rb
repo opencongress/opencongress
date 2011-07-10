@@ -12,7 +12,6 @@ if defined? Formageddon
     
     config.privacy_options = [
       ['Public -- Anyone', 'PUBLIC'], 
-      ['Friends -- MyOC Friends Only', 'FRIENDS_ONLY'], 
       ['Private -- You Only', 'PRIVATE']
     ]
   end

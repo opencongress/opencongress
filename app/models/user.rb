@@ -152,6 +152,8 @@ class User < ActiveRecord::Base
   
   has_one :political_notebook
   has_many :notebook_items, :through => :political_notebook
+
+  has_many :contact_congress_letters
   
 #  has_many :bill_comments
   def self.human_attribute_name(attr, options = {})

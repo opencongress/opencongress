@@ -83,4 +83,28 @@ class GroupsController < ApplicationController
       format.json  { render :json => @groups }
     end
   end
+  
+  def edit
+    @group = Group.find(params[:id])
+    
+    unless @group.user == current_user
+      redirect_to groups_path, :notice => "You are not that group's owner, so you can't edit settings!"
+      return
+    end
+  end
+  
+  def update
+    @group = Group.find(params[:id])
+
+    respond_to do |format|
+      if @group.update_attributes(params[:group])
+        format.html { redirect_to(@group, :notice => 'Group settings were successfully updated.') }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @group.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
 end

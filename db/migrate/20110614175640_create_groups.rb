@@ -85,6 +85,25 @@ class CreateGroups < ActiveRecord::Migration
       g.save
     end
     
+    District.all[0..3].each do |d|
+      g = Group.new
+      g.name = "OpenCongress #{d.state.abbreviation}-#{d.district_number} Group"
+      g.description = "Default group for users in #{d.state.abbreviation}-#{d.district_number}"
+      g.join_type = 'INVITE_ONLY'
+      g.invite_type = 'MODERATOR'
+      g.post_type = 'ANYONE'
+      g.user = admin_user
+      g.district = d
+      g.save
+      
+      users = User.find_by_sql(['select distinct users.id, users.login from users where district_cache like ?;', "%#{d.state.abbreviation}-#{d.district_number}%"])
+      users.each do |u|
+        g.group_members.create(:user_id => u.id, :status => 'MEMBER')
+      end
+      
+      g.save
+    end
+    
     PvsCategory.all.each do |c|
       g = Group.new
       g.name = "The #{c.name} Group"

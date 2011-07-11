@@ -645,7 +645,9 @@ class User < ActiveRecord::Base
     bv = self.bill_votes.find(:all, :order => "created_at DESC", :limit => limit)
     pa = self.person_approvals.find(:all, :order => "created_at DESC", :limit => limit)
     f = self.friends.find(:all, :conditions => ["confirmed = ?", true], :order => "confirmed_at DESC", :limit => limit)
-    items = b.concat(c).concat(bv).concat(pa).concat(f).compact
+    l = self.contact_congress_letters.order('created_at DESC').limit(limit)
+    
+    items = b.concat(c).concat(bv).concat(pa).concat(f).concat(l).compact
     items.sort! { |x,y| y.created_at <=> x.created_at }
     return items
   end

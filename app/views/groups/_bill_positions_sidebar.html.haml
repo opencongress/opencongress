@@ -19,5 +19,14 @@
           = link_to truncate("#{p.bill.typenumber} #{p.bill.title_common}", :length => 110), '#'
           =# link_to "Write Letter of Opposition", '#', :class => 'button blue tiny'
 
+  .clear
+  - unless @group.group_bill_positions.where("group_bill_positions.position='tracking'").empty?
+    %h3.support Bills Tracked        
+    %ul.sidebar-nav
+      - @group.group_bill_positions.where("group_bill_positions.position='tracking'").each do |p|
+        %li.support-bills.has-main-content
+          = link_to truncate("#{p.bill.typenumber} #{p.bill.title_common}", :length => 110), '#'
+          =# link_to "Write Letter of Opposition", '#', :class => 'button blue tiny'
+          
 - if @group.can_moderate?(current_user)
   = link_to "Add Bill Position", new_group_group_bill_position_path(@group), :class => 'button small silver post margin-top'

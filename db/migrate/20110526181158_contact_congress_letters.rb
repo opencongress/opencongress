@@ -4,6 +4,8 @@ class ContactCongressLetters < ActiveRecord::Migration
       t.integer :user_id
       t.integer :bill_id
       t.string :disposition
+      
+      t.timestamps
     end
     
     create_table :contact_congress_letters_formageddon_threads, :id => false do |t|

@@ -3,6 +3,7 @@ gzip_assets: off
 
 javascripts:
     defaults:
+        - public/javascripts/prototype.js
         - public/javascripts/rails.js
         - public/javascripts/effects.js
         - public/javascripts/dragdrop.js

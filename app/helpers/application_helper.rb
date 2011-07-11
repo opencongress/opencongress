@@ -856,4 +856,7 @@ EOT
     end
   end
 
+  def position_clause(position)
+    case position when 'support': 'in support of' when 'oppose': 'in opposition to' else 'tracking' end
+  end
 end

@@ -1,8 +1,8 @@
 .main-content
   %h2= "#{bill_position.bill.typenumber}: #{bill_position.bill.title_common}"
   %p.behave
-    = "#{@group.name} "
-    %strong= "#{bill_position.position}s "
+    = "#{@group.name} is "
+    %strong= position_clause(bill_position.position)
     this bill.
     = "Here's why:" unless bill_position.comment.blank?
   
@@ -16,6 +16,6 @@
       = link_to bill_position.permalink, bill_position.permalink
       
   %h3 Letters to Congress
-  %p.behave No one from the group has written a letter of #{bill_position.position == 'support' ? 'support' : 'opposition' } about this bill to their elected representatives
+  %p.behave No one from the group has written a letter #{position_clause(bill_position.position)} this bill to their elected representatives
   
-  = link_to "Write Letter of #{bill_position.position == 'support' ? 'Support' : 'Opposition' }", new_contact_congress_letter_path(:bill => bill_position.bill.ident, :group_id => bill_position.group.id, :position => bill_position.position), :class => 'button huge blue margin-top floatleft'
+  = link_to "Write Letter #{position_clause(bill_position.position)} #{bill_position.bill.typenumber}", new_contact_congress_letter_path(:bill => bill_position.bill.ident, :group_id => bill_position.group.id, :position => bill_position.position), :class => 'button huge blue margin-top floatleft'

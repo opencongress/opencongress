@@ -9,7 +9,7 @@
       = link_to @contact_congress_letter.formageddon_threads.first.formageddon_sender.login, user_profile_path(@contact_congress_letter.formageddon_threads.first.formageddon_sender.login)
       on
       = @contact_congress_letter.formageddon_threads.first.created_at.strftime('%B %d, %Y')
-      = case @contact_congress_letter.disposition when 'support': 'in support of' when 'oppose': 'in opposition to' else 'tracking' end
+      = position_clause(@contact_congress_letter.disposition)
       %strong
         = "#{link_to(truncate(@contact_congress_letter.bill.typenumber + ' ' + @contact_congress_letter.bill.title_common, :length => 170), bill_path(@contact_congress_letter.bill))}.".html_safe
       Privacy setting:
@@ -36,7 +36,7 @@
       %p Share this letter with your friends and followers!
 
       .tweet 
-        <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+        <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-text="#{generic_share_message_for_letter(@contact_congress_letter, bitly_url(@contact_congress_letter))}">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 
       .face 
         <div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=217834678241023&amp;xfbml=1"></script><fb:like href="#{url_for :only_path => false, :controller => 'contact_congress_letters', :action => 'show', :id => @contact_congress_letter}" send="true" layout="button_count" width="450" show_faces="true" font="lucida grande"></fb:like>
@@ -51,3 +51,7 @@
   
   #letter_comments
     = render :partial => 'shared/comments', :locals => { :object => @contact_congress_letter }
+    
+  .padding.floatleft
+    %p.small
+      Note to Congressional staff & elected officials reading this: this letter was sent through Contact-Congress features on OpenCongress.org, a free public resource website, but in the future we seek to compel the U.S. Congress to adopt fully open technology for constituent communications. For more information how your office can better handle public feedback through an open API and open standards, <a href="/contact">contact us</a> -- even today, there are significantly more efficient and responsive ways for our elected officials to receive email feedback than the status quo of individual webforms. For greater public accountability in government, we must make the process of writing one's members of Congress more accessible and empowering. Looking ahead, we will release more data from Contact-Congress letters and Congressional response rates back into the public commons. This will result in a new open data source on bills & issues people care about, as well as encourage best practices in constituent communications and make it possible to grade members of Congress on their responsiveness & citizen satisfaction.

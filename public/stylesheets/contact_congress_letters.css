@@ -1202,6 +1202,21 @@ text-align: center;
 border: 5px solid rgba(101,101,101, .1);
 }
 
+.attributions div {
+  float:left;
+  display: inline;
+  width: 280px;
+  margin: 40px 20px 40px 10px;
+}
+.attributions div a, .attributions div a:hover {
+  text-decoration: none;
+}
+.attributions .logo {
+  padding-left: 50px;
+}
+.attributions img {
+  width: 120px;
+}
 
 
 

@@ -87,8 +87,8 @@ class CreateGroups < ActiveRecord::Migration
     
     District.all[0..3].each do |d|
       g = Group.new
-      g.name = "OpenCongress #{d.state.name}-#{d.district_number} Group"
-      g.description = "Default group for users in #{d.state.name}-#{d.district_number}"
+      g.name = "OpenCongress #{d.state.abbreviation}-#{d.district_number} Group"
+      g.description = "Default group for users in #{d.state.abbreviation}-#{d.district_number}"
       g.join_type = 'INVITE_ONLY'
       g.invite_type = 'MODERATOR'
       g.post_type = 'ANYONE'

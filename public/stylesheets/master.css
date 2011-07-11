@@ -15,7 +15,7 @@ body{
 	padding: 0;
 	margin: 0;
 	color:#333;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family:  Helvetica, Arial, sans-serif;
 	font-size:12px;
 	line-height:18px;
 	}  
@@ -4329,7 +4329,7 @@ padding: 0px 0 0 10px;
 
 
 #bodyContent h2{
-font-family: Arial, Helvetica, sans-serif;
+font-family: Helvetica, Arial, sans-serif;
 margin: 0 0 13px 0 !important;
 }
 
@@ -4640,7 +4640,7 @@ font-weight: bold;
 float: left;
 margin-right: 20px;
 width: 70px;
-font-family: Arial, Helvetica, sans-serif;
+font-family: Helvetica, Arial, sans-serif;
 clear: none;
 }
 

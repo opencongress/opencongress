@@ -775,7 +775,7 @@ padding-right: 14px;
 display: block;
 text-align: center;
 font-weight: bold;
-font-family: Arial, sans-serif;
+	font-family:  Helvetica, Arial, sans-serif;
 color: #879f4e;
 height: 44px;
 padding-top: 8px;
@@ -803,7 +803,7 @@ font-size: 10.5px;
 margin-top: 25px;
 padding-top: 13px;
 padding-bottom: 25px;
-font-family: Arial, sans-serif;
+	font-family:  Helvetica, Arial, sans-serif;
 }
 
 #bill-status-box table {

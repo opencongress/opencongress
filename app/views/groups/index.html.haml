@@ -18,7 +18,7 @@
 .container_12  
   .grid_7.box.rounded.center
     %h3 Find Groups for States & Congressional Districts
-    %span.button.silver.medium choose a state map picker    
+    %span.button.silver.medium choose a state map     
   .grid_7.box.rounded.center
     %h3 Select Issue Area
     = select_tag 'issue', options_from_collection_for_select(PvsCategory.order('name').all, :id, :name), :include_blank => true, :id => 'group_issue'

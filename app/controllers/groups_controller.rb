@@ -57,22 +57,20 @@ class GroupsController < ApplicationController
       @sort = 'groups.name ASC'
     end
     
-    where = ["groups.publicly_visible='t'"]
-    unless params[:q].blank? and params[:pvs_category].blank?      
+    @groups = Group.where(:publicly_visible=>true).order(@sort)
+    
+    unless params[:q].blank? and params[:pvs_category].blank?
       unless params[:q].blank?
-        where[0] += " AND (groups.name ILIKE ? OR groups.description ILIKE ?)"
-        where << "%#{params[:q]}%"
-        where << "%#{params[:q]}%"
+        @groups = @groups.where(["groups.name ILIKE ? OR groups.description ILIKE ?", "%#{params[:q]}%", "%#{params[:q]}%"])
       end
       
       unless params[:pvs_category].blank?
-        where[0] += " AND groups.pvs_category_id=?"
-        where << params[:pvs_category]
+        @groups = @groups.where(:pvs_category_id => params[:pvs_category])
       end
     end
-    
-    @groups = Group.select("groups.*, coalesce(gm.group_members_count, 0) as group_members_count").joins(%q{LEFT OUTER JOIN (select group_id, count(group_members.*) as group_members_count from group_members where status != 'BOOTED' group by group_id) gm ON (groups.id=gm.group_id)}).includes(:pvs_category).order(@sort).where([where[0], where[1..-1]])
-  
+
+    @groups = @groups.select("groups.*, coalesce(gm.group_members_count, 0) as group_members_count").joins(%q{LEFT OUTER JOIN (select group_id, count(group_members.*) as group_members_count from group_members where status != 'BOOTED' group by group_id) gm ON (groups.id=gm.group_id)}).includes(:pvs_category)
+
     respond_with @groups
   end
   

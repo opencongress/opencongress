@@ -131,7 +131,7 @@
         %span.from From the Desk of Username
         %span.the-user a user out of District something or other
       .formageddon_contact_form
-        = render 'formageddon/threads/form', :f => f, :thread => @formageddon_thread, :after_send_url => "/contact_congress_letters/create_from_formageddon?bill=#{@bill.ident}&disposition=#{@position}&group_id=#{params[:group_id]}", :action_on_error => '/contact_congress_letters/new'
+        = render 'formageddon/threads/form', :f => f, :thread => @formageddon_thread, :after_send_url => "/contact_congress_letters/create_from_formageddon?bill=#{@bill.ident}&disposition=#{@position}&group_id=#{params[:group_id]}", :action_on_error => '/contact_congress_letters/new', :custom_params => { :bill => @bill.ident }
     
     %ul.instruction
       

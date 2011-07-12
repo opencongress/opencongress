@@ -4,6 +4,13 @@ class GroupMembersController < ApplicationController
   def index
     @group = Group.find(params[:group_id])
     
+    # if there's a status param, they probably got redirected here while trying to join
+    # and not logged in, so run the create action
+    unless params[:status].blank?
+      create
+      return
+    end
+    
     if @group.can_moderate?(current_user)
       @group_members = @group.group_members.includes(:user).order("users.login")
     else

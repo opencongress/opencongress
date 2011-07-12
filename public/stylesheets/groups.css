@@ -332,7 +332,7 @@ max-height: 4.5em;
 
   padding: 10px 10px 15px;
 
-  margin: 30px 0 0px 31px;
+  margin: 0px 0 0px 31px;
 
 float: left;
 
@@ -389,7 +389,7 @@ border-bottom: 0;
 #group_search_spinner {
   position: absolute;
   display:none;
-  right: 60px;
+  left: 40px;
   margin-top: 0px;
 }
 
@@ -626,6 +626,7 @@ font-size: 18px;
 
 .group-map{
 margin-top: 10px;
+margin-bottom: 30px;
 height: 62px;
 background: url(/images/group-map.gif) 0 0 no-repeat;
 }

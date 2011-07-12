@@ -44,8 +44,8 @@
     = text_field_tag 'q', nil, :id => 'group_search_field', :class => 'field small-search-field'
     = hidden_field_tag 'sort', @sort, :id => 'group_sort'
   
-
-  = render 'groups_list', :groups => @groups
+  #groups_list_result
+    = render 'groups_list', :groups => @groups
 
 
 .clear.space.margin-top.margin-bottom &nbsp;

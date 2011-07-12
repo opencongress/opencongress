@@ -289,6 +289,12 @@ li.comment-post .icon{
 background: url(/images/group-icons.png) 2px -291px no-repeat;
 }
 
+li.bill-post .icon{
+background: url(/images/group-icons.png) 2px -345px no-repeat;
+}
+
+
+
 
 .activity_stream li.photo div img{
 max-width: 500px;
@@ -488,6 +494,10 @@ background: url(/images/tiny-group-icons.png) 0 -85px no-repeat;
 background: url(/images/tiny-group-icons.png) 0 -128px no-repeat;
 }
 
+
+.post-to.modal li.bill-post .icon{
+background: url(/images/tiny-group-icons.png) 0 -154px no-repeat;
+}
 
 .post-to.modal .icon{
 width: 20px;

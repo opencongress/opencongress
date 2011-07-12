@@ -1,5 +1,7 @@
 class GroupsController < ApplicationController
   before_filter :login_required, :except => [ :show, :index ]
+  respond_to :html, :json, :xml
+  respond_to :js, :only => [:index]
   
   def new
     @page_title = 'Create a New OpenCongress Group'
@@ -8,7 +10,6 @@ class GroupsController < ApplicationController
     @group.invite_type = 'ANYONE'
     @group.post_type = 'ANYONE'
   end
-  
   
   def create
     @group = Group.new(params[:group])
@@ -31,6 +32,8 @@ class GroupsController < ApplicationController
     @simple_comments = true
     
     @page_title = "#{@group.name} - MyOC Groups"
+    
+    respond_with @group
   end
   
   def index
@@ -68,20 +71,9 @@ class GroupsController < ApplicationController
       end
     end
     
-    group_columns = Group.column_names.collect do |c| "#{Group.table_name}.#{c}" end.join(",")
-    pvs_columns = PvsCategory.column_names.collect do |c| "#{PvsCategory.table_name}.#{c}" end.join(",")
-
-   # @groups = Group.includes(:pvs_category).joins("LEFT OUTER JOIN group_members ON groups.id=group_members.group_id").group("#{group_columns}, #{pvs_columns}").select("groups.*, count(group_members.*) as group_members_count").order(@sort).where(where).all #where("join_type='ANYONE'")
-    @groups = Group.find_by_sql(["SELECT groups.*, count(group_members.*) as group_members_count 
-                                 FROM groups LEFT OUTER JOIN group_members ON (groups.id=group_members.group_id AND group_members.status != 'BOOTED')
-                                 LEFT OUTER JOIN pvs_categories ON groups.pvs_category_id=pvs_categories.id 
-                                 WHERE #{where[0]} GROUP BY #{group_columns}, #{pvs_columns} ORDER BY #{@sort}"].concat(where[1..-1]))
-    
-    respond_to do |format|
-      format.html
-      format.js
-      format.json  { render :json => @groups }
-    end
+    @groups = Group.select("groups.*, gm.group_members_count").joins(%q{LEFT OUTER JOIN (select group_id, count(group_members.*) as group_members_count from group_members where status != 'BOOTED' group by group_id) gm ON (groups.id=gm.group_id)}).includes(:pvs_category).order(@sort).where([where[0], where[1..-1]])
+  
+    respond_with @groups
   end
   
   def edit

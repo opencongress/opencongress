@@ -71,7 +71,7 @@ class GroupsController < ApplicationController
       end
     end
     
-    @groups = Group.select("groups.*, gm.group_members_count").joins(%q{LEFT OUTER JOIN (select group_id, count(group_members.*) as group_members_count from group_members where status != 'BOOTED' group by group_id) gm ON (groups.id=gm.group_id)}).includes(:pvs_category).order(@sort).where([where[0], where[1..-1]])
+    @groups = Group.select("groups.*, coalesce(gm.group_members_count, 0) as group_members_count").joins(%q{LEFT OUTER JOIN (select group_id, count(group_members.*) as group_members_count from group_members where status != 'BOOTED' group by group_id) gm ON (groups.id=gm.group_id)}).includes(:pvs_category).order(@sort).where([where[0], where[1..-1]])
   
     respond_with @groups
   end

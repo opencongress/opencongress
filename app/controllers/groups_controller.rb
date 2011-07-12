@@ -57,15 +57,15 @@ class GroupsController < ApplicationController
       @sort = 'groups.name ASC'
     end
     
-    @groups = Group.where(:publicly_visible=>true).order(@sort)
+    @groups = Group.visible.order(@sort)
     
     unless params[:q].blank? and params[:pvs_category].blank?
       unless params[:q].blank?
-        @groups = @groups.where(["groups.name ILIKE ? OR groups.description ILIKE ?", "%#{params[:q]}%", "%#{params[:q]}%"])
+        @groups = @groups.with_name_or_description_containing(params[:q])
       end
       
       unless params[:pvs_category].blank?
-        @groups = @groups.where(:pvs_category_id => params[:pvs_category])
+        @groups = @groups.in_category(params[:pvs_category])
       end
     end
 

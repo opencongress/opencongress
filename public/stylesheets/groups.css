@@ -620,3 +620,24 @@ background: #fff;
 .large-count{
 font-size: 18px;
 }
+
+
+
+
+.group-map{
+margin-top: 10px;
+height: 62px;
+background: url(/images/group-map.gif) 0 0 no-repeat;
+}
+
+
+.group-map h3{
+font-size: 14px;
+margin-bottom: 25px;
+}
+
+.issue-bg{
+margin-top: 10px;
+height: 62px;
+background: url(/images/issue-bg.png) 0 0 no-repeat;
+}

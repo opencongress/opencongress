@@ -16,9 +16,9 @@
 .space &nbsp;
 
 .container_12  
-  .grid_7.box.rounded.center
+  .grid_7.box.rounded.center.group-map
     %h3 Find Groups for States & Congressional Districts
-    %span.button.silver.medium.jqModal.find_map choose a state map
+    %span.button.silver.huge.jqModal.find_map Launch Map
     
     #map.jqmWindow{ :style => "display:none;" }
       = render :partial => "shared/map"
@@ -30,7 +30,7 @@
         $j('#map').jqm();
       });   
         
-  .grid_7.box.rounded.center
+  .grid_7.box.rounded.center.issue-bg
     %h3 Select Issue Area
     = select_tag 'issue', options_from_collection_for_select(PvsCategory.order('name').all, :id, :name), :include_blank => true, :id => 'group_issue'
     

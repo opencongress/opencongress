@@ -5280,3 +5280,33 @@ margin-bottom: 10px;
 }
 
 
+.builder{
+margin: -47px 20px 0 -30px;
+float: left;
+}
+
+.box.rounded.floatleft{
+position: relative !important;
+}
+
+
+.group-pitch{
+margin-top: 30px;
+}
+.group-pitch img{
+margin: 60px 50px 60px 20px;
+}
+
+.group-pitch h3{
+margin-top: 20px;
+}
+
+
+.builder-pitch{
+height: 190px;
+width: 880px;
+}
+
+.builder-pitch h3{
+margin-top: 10px;
+}

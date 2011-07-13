@@ -289,7 +289,7 @@ EOT
       str
     end
   end
-  
+
   def admin_logged_in?
     return (logged_in? && current_user.user_role.can_blog) ? true : false
   end

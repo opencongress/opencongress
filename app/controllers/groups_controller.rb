@@ -35,7 +35,7 @@ class GroupsController < ApplicationController
     
     respond_with @group
   end
-  
+
   def index
     @page_title = 'OpenCongress Groups'
 

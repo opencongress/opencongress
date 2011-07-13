@@ -70,7 +70,7 @@ class IssueController < ApplicationController
     id = params[:id].to_i
     @subject = Subject.find_by_id(id)
     unless @subject
-       render :partial => "index/notfound_page", :layout => 'application', :status => "404" and return 
+       render_404 and return 
     end
     congress = params[:congress] ? params[:congress] : Settings.default_congress
       respond_to do |format|
@@ -95,7 +95,7 @@ class IssueController < ApplicationController
 
   def show
     unless @subject
-       render :partial => "index/notfound_page", :layout => 'application', :status => "404" and return 
+       render_404 and return 
     end
 
     comment_redirect(params[:goto_comment]) and return if params[:goto_comment]

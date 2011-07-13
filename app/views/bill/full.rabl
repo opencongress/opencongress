@@ -16,4 +16,4 @@ end
 
 child :most_recent_actions do
   attributes :action_type, :date, :datetime, :how, :where, :vote_type, :result, :amendment_id, :text, :roll_call_id, :roll_call_number, :created_at, :govtrack_order
-end  
+end

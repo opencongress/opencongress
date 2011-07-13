@@ -52,14 +52,7 @@ class ApiController < ApplicationController
       conditions[:user_approval] = params[:user_approval_from].to_f..params[:user_approval_to].to_f
     end
     
-    people = Person.where(conditions)
-
-    do_render_paginated(people, :methods => [:oc_user_comments, :oc_users_tracking, 
-                                              :abstains_percentage, :with_party_percentage], 
-                                              :include => [:recent_news, :recent_blogs, :person_stats],
-                                              :except => ["fti_names"])
-
-          
+    @people = Person.paginate(:conditions => conditions, :per_page => @per_page, :page => params[:page])
   end
   
   def most_blogged_representatives_this_week
@@ -138,6 +131,16 @@ class ApiController < ApplicationController
     @bills = Bill.find_all_by_ident(these_idents, find_options = {})
   end
   
+  def comments
+    if ['Bill','Person'].include?(params[:object_type])
+      @comments = Comment.paginate(:order => "comments.root_id desc, comments.lft ASC", :conditions => {:commentable_type => params[:object_type], :commentable_id => params[:object_id]}, :page => params[:page], :per_page => @per_page)
+
+      respond_with @comments
+    else
+      render_404
+    end
+  end
+
   def bills_introduced_since
     page = 1
     page = params[:page] unless params[:page].blank?

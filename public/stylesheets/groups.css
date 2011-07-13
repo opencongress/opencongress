@@ -290,7 +290,7 @@ background: url(/images/group-icons.png) 2px -291px no-repeat;
 }
 
 li.bill-post .icon{
-background: url(/images/group-icons.png) 2px -345px no-repeat;
+background: url(/images/group-icons.png) 2px -343px no-repeat;
 }
 
 
@@ -431,7 +431,7 @@ text-align: center;
 .post-to ul{
 background: #eee;
 float: left;
-padding: 0px 0 10px 195px;
+padding: 0px 0 10px 145px;
 }
 
 
@@ -496,7 +496,7 @@ background: url(/images/tiny-group-icons.png) 0 -128px no-repeat;
 
 
 .post-to.modal li.bill-post .icon{
-background: url(/images/tiny-group-icons.png) 0 -154px no-repeat;
+background: url(/images/tiny-group-icons.png) 0 -149px no-repeat;
 }
 
 .post-to.modal .icon{

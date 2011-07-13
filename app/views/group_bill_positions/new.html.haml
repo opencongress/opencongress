@@ -1,20 +1,29 @@
 = render 'groups/heading', :subtitle => 'Select a Position on a Bill'
 
 .padding
+  .box.tighter
+    %strong Enter a bill number to find a specific bill (ie, "30" for H.R.30)
+    = text_field_tag 'bill_number', nil, :id => 'bill_number_field', :class => 'field'
+    %span#bill_number_button.button.blue.medium Search
+  
+  #bill_lookup
+  
+  :javascript
+    $j('#bill_number_button').click(function() {
+      $j.ajax({
+        url: '#{new_group_group_bill_position_path(@group, :format => 'js')}?number=' + $j('#bill_number_field').val() + '&congress=#{Settings.default_congress}'
+      });
+
+      return false;
+    });
   - if @group.pvs_category and !@group.pvs_category.hot_bills.empty?
     %h3 Hot Bills in '#{@group.pvs_category.name}'
     
     %ul
       - @group.pvs_category.hot_bills.each do |b|
-        %li.grid_12
-          %span.grid_2.alpha= link_to b.typenumber, bill_path(b)
-          %span.grid_6= b.title_common
-          %span.grid_4.omega= render 'position_buttons', :b => b
-  %h3 Most-viewed Bills
+        = render :partial => 'bill_for_add', :object => b
+  %h3 Most-viewed Bills on OpenCongress
   %ul
     - ObjectAggregate.popular('Bill', Settings.default_count_time, 5).each do |b|
-      %li.grid_12
-        %span.grid_2.alpha= link_to b.typenumber, bill_path(b)
-        %span.grid_6= b.title_common
-        %span.grid_4.omega= render 'position_buttons', :b => b
-    
+      = render :partial => 'bill_for_add', :object => b
+      

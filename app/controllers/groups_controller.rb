@@ -1,5 +1,7 @@
 class GroupsController < ApplicationController
   before_filter :login_required, :except => [ :show, :index ]
+  respond_to :html, :json, :xml
+  respond_to :js, :only => [:index]
   
   def new
     @page_title = 'Create a New OpenCongress Group'
@@ -8,7 +10,6 @@ class GroupsController < ApplicationController
     @group.invite_type = 'ANYONE'
     @group.post_type = 'ANYONE'
   end
-  
   
   def create
     @group = Group.new(params[:group])
@@ -31,8 +32,10 @@ class GroupsController < ApplicationController
     @simple_comments = true
     
     @page_title = "#{@group.name} - MyOC Groups"
+    
+    respond_with @group
   end
-  
+
   def index
     @page_title = 'OpenCongress Groups'
 
@@ -54,34 +57,21 @@ class GroupsController < ApplicationController
       @sort = 'groups.name ASC'
     end
     
-    where = ["groups.publicly_visible='t'"]
-    unless params[:q].blank? and params[:pvs_category].blank?      
+    @groups = Group.visible.order(@sort)
+    
+    unless params[:q].blank? and params[:pvs_category].blank?
       unless params[:q].blank?
-        where[0] += " AND (groups.name ILIKE ? OR groups.description ILIKE ?)"
-        where << "%#{params[:q]}%"
-        where << "%#{params[:q]}%"
+        @groups = @groups.with_name_or_description_containing(params[:q])
       end
       
       unless params[:pvs_category].blank?
-        where[0] += " AND groups.pvs_category_id=?"
-        where << params[:pvs_category]
+        @groups = @groups.in_category(params[:pvs_category])
       end
     end
-    
-    group_columns = Group.column_names.collect do |c| "#{Group.table_name}.#{c}" end.join(",")
-    pvs_columns = PvsCategory.column_names.collect do |c| "#{PvsCategory.table_name}.#{c}" end.join(",")
 
-   # @groups = Group.includes(:pvs_category).joins("LEFT OUTER JOIN group_members ON groups.id=group_members.group_id").group("#{group_columns}, #{pvs_columns}").select("groups.*, count(group_members.*) as group_members_count").order(@sort).where(where).all #where("join_type='ANYONE'")
-    @groups = Group.find_by_sql(["SELECT groups.*, count(group_members.*) as group_members_count 
-                                 FROM groups LEFT OUTER JOIN group_members ON (groups.id=group_members.group_id AND group_members.status != 'BOOTED')
-                                 LEFT OUTER JOIN pvs_categories ON groups.pvs_category_id=pvs_categories.id 
-                                 WHERE #{where[0]} GROUP BY #{group_columns}, #{pvs_columns} ORDER BY #{@sort}"].concat(where[1..-1]))
-    
-    respond_to do |format|
-      format.html
-      format.js
-      format.json  { render :json => @groups }
-    end
+    @groups = @groups.select("groups.*, coalesce(gm.group_members_count, 0) as group_members_count").joins(%q{LEFT OUTER JOIN (select group_id, count(group_members.*) as group_members_count from group_members where status != 'BOOTED' group by group_id) gm ON (groups.id=gm.group_id)}).includes(:pvs_category)
+
+    respond_with @groups
   end
   
   def edit

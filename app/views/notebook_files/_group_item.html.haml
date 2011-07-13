@@ -6,5 +6,9 @@
       shared a photo
     %span.shared-photo= image_tag(group_item.file.url(:medium))
     
+    - unless group_item.description.blank?
+      %p.behave= group_item.description
+    
+    
     
     

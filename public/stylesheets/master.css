@@ -5310,3 +5310,17 @@ width: 880px;
 .builder-pitch h3{
 margin-top: 10px;
 }
+
+.tighter {
+  padding: 15px !important;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -o-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px;
+  margin-bottom: 30px;
+}
+.tigher strong {
+  float:left;
+  margin-right: 30px;
+}

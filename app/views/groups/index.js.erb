@@ -1,2 +1,2 @@
-$j('#groups_list_result').html("<%= escape_javascript(render :partial => 'groups/groups_list', :locals => { :groups => @groups }) %>");
+$j('#groups_list_result').html("<%= escape_javascript(render :partial => 'groups/groups_list', :locals => { :groups => @groups, :no_js => true }) %>");
 $j('#group_search_spinner').hide();

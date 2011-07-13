@@ -203,6 +203,16 @@ class ApiController < ApplicationController
     @bills = Bill.select("bills.*, ca.comments_this_week").joins("join (select commentable_id, count(*) as comments_this_week from comments where commentable_type = 'Bill' and created_at > '#{1.week.ago.to_s}' group by commentable_id) ca on (bills.id = ca.commentable_id)").order("ca.comments_this_week desc").limit(20)
     respond_with @bills, :template => 'api/bills'
   end
+
+  def user_stats
+    @user_aggregates = {}
+    
+    @user_aggregates[:user_daily_stats] = User.find_by_sql(["select count(*) as signups, count(distinct activated_at) as activations, date_trunc('day', created_at) as day from users where created_at > ? group by date_trunc('day', created_at)", 3.years.ago])
+  
+    @user_aggregates[:coment_daily_stats] = Comment.find_by_sql(["select count(*) as count, date_trunc('day', created_at) as day from comments where created_at > ? group by date_trunc('day', created_at)", 3.years.ago])
+
+    respond_with @user_aggregates
+  end
   
   def bill_roll_calls
     bills = Bill.find_all_by_id(params[:bill_id])

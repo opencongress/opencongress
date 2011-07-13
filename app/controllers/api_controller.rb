@@ -199,6 +199,11 @@ class ApiController < ApplicationController
     render_bill_aggregates(@order)
   end
   
+  def most_commented_this_week
+    @bills = Bill.select("bills.*, ca.comments_this_week").joins("join (select commentable_id, count(*) as comments_this_week from comments where commentable_type = 'Bill' and created_at > '#{1.week.ago.to_s}' group by commentable_id) ca on (bills.id = ca.commentable_id)").order("ca.comments_this_week desc").limit(20)
+    respond_with @bills, :template => 'api/bills'
+  end
+  
   def bill_roll_calls
     bills = Bill.find_all_by_id(params[:bill_id])
     do_render(bills, :except => [:current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, :support_count_2, :vote_count_2], :include => [:roll_calls])    

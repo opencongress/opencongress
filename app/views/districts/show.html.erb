@@ -12,6 +12,21 @@
 
 <div class="padding">
 <div class="col12">
+  
+  <% if @district.group %>
+    <a class="button silver floatleft grid_4 alpha pad big-but" href="<%= group_path(@district.group) %>">
+    <img src="/images/groups-small.png" />
+    <span>MyOC Group for people in <%= @state.name %>. <span>Join <%= @state.abbreviation %> constituents in tracking bills, votes, issues, and their members of Congress.</span></span>
+    </a>
+  <% end %>
+
+  <a class="button silver floatleft grid_4 alpha pad big-but rt" href="/wiki/<%= @state.abbreviation %>-<%= @district.district_number == 0 ? "AL" : @district.district_number %>">
+  <img src="/images/rt.png" />
+  <span>RaceTracker for <%= @state.name %>'s U.S. Senate seats. <span>See all candidates running for federal office in <%= @state.abbreviation %> in 2012.</span></span>
+  </a>
+
+  <div class="clear">&nbsp;</div>
+
    <h3><%= link_to raw("&larr; #{@state.name}"), state_url(@state.abbreviation) %></h3>
 
    <p><%= @district.freebase_description %>

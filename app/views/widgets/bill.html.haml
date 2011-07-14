@@ -1,25 +1,26 @@
-.padding
+#heading
   %h1= @page_title = 'Create a custom Bill Status Widget'
 
-  .grid_7
-    .widget_preview.grid_4.omega
-      %h2 Live Preview of your widget
-      #widgetPreview
-        :javascript
-          var testWidget = new OC.Widget({
-            version: 1,
-            type: 'bill_status',
-            bill: '#{@hot_bills.first.to_param}',
-            width: 'auto',
-            preview: true,
-            #{Rails.env != 'production' ? %Q{domain: '#{Settings.api_host}',} : ''}
-            theme: {
-              background: '#f9f9f9',
-              color: '#555',
-              header: '#333',
-              links: '#333'
-            }
-          }).render();
+
+.container_16
+  .widget_preview.grid_4.alpha
+    %h2 Live Preview of your widget
+    #widgetPreview
+      :javascript
+        var testWidget = new OC.Widget({
+          version: 1,
+          type: 'bill_status',
+          bill: '#{@hot_bills.first.to_param}',
+          width: 'auto',
+          preview: true,
+          #{Rails.env != 'production' ? %Q{domain: '#{Settings.api_host}',} : ''}
+          theme: {
+            background: '#f9f9f9',
+            color: '#555',
+            header: '#333',
+            links: '#333'
+          }
+        }).render();
 
 
   .widget_config.grid_8.omega.alpha

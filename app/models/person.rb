@@ -1007,6 +1007,12 @@ class Person < ActiveRecord::Base
     (representative? && district != '0')
   end
 
+  def district_rel
+    if state_rel = State.find_by_abbreviation(state)
+      return District.where(:district_number => district, :state_id => state_rel).try(:first)
+    end
+  end
+
   def parse_facets(facets, primary_facet, selected_facets)
     my_trackers = 0
     facet_results_hsh = {}

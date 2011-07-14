@@ -5,8 +5,10 @@
   = link_to image_tag("http://www.opencongress.org/images/photos/thumbs_50/#{person.id}-50px.jpeg", :class =>"photo", :alt => 'photo'), person_url(person.id)
   %p
     = link_to person.full_name, person_url(person.id), :class => 'full_name'
-    - if person.in_a_valid_district?
-      %span= link_to("#{person.district.to_i.ordinalize} District", state_district_path(person.state, person.district))
+    - if dist = person.district_rel
+      %span= link_to("#{dist.ordinalized_number} District", state_district_path(person.state, person.district))
+      - if dist.group
+        %span= link_to("MyOC Group", group_path(dist.group.id))
     %span= person.party
     - if person == @senators.first
       %strong

@@ -6,7 +6,6 @@ class District < ActiveRecord::Base
   has_one :current_watch_dog, :class_name => "WatchDog", :conditions => ["is_active = ?", true], :order => "created_at desc"
   has_one :group
   
-  
   def user_count
     User.count_by_solr("my_district:#{self.state.abbreviation}-#{district_number}")    
   end

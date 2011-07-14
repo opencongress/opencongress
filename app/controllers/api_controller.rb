@@ -209,7 +209,7 @@ class ApiController < ApplicationController
     
     @user_aggregates[:user_daily_stats] = User.find_by_sql(["select count(*) as signups, count(distinct activated_at) as activations, date_trunc('day', created_at) as day from users where created_at > ? group by date_trunc('day', created_at)", 3.years.ago])
   
-    @user_aggregates[:coment_daily_stats] = Comment.find_by_sql(["select count(*) as count, date_trunc('day', created_at) as day from comments where created_at > ? group by date_trunc('day', created_at)", 3.years.ago])
+    @user_aggregates[:comment_daily_stats] = Comment.find_by_sql(["select count(*) as count, date_trunc('day', created_at) as day from comments where created_at > ? group by date_trunc('day', created_at)", 3.years.ago])
 
     respond_with @user_aggregates
   end

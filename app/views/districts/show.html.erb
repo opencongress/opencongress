@@ -20,9 +20,9 @@
     </a>
   <% end %>
 
-  <a class="button silver floatleft grid_4 alpha pad big-but rt" href="/wiki/<%= @state.abbreviation %>-<%= @district.district_number == 0 ? "AL" : @district.district_number %>">
+  <a class="button silver floatleft grid_4 alpha pad big-but rt" href="<%= @district.wiki_link %>">
   <img src="/images/rt.png" />
-  <span>RaceTracker for <%= @state.name %>'s U.S. Senate seats. <span>See all candidates running for federal office in <%= @state.abbreviation %> in 2012.</span></span>
+  <span>RaceTracker for <%= @state.name %>'s <%= @district.ordinalized_number %> District seat. <span>See all candidates for the 2012 election.</span></span>
   </a>
 
   <div class="clear">&nbsp;</div>

@@ -152,6 +152,10 @@ class District < ActiveRecord::Base
     "http://www.freebase.com/view/en/#{name.downcase.gsub(' ', '_')}"
   end
   
+  def wiki_link
+    "/wiki/#{state.abbreviation}-#{district_number == 0 ? "AL" : district_number}"
+  end
+  
   def freebase_guid
      require 'open-uri'
      require 'json'

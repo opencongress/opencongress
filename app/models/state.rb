@@ -1,15 +1,32 @@
 class State < ActiveRecord::Base
   has_many :districts
 
-  has_many :representatives, :class_name => "Person", :finder_sql => 'SELECT people.* from people LEFT OUTER JOIN roles ON roles.person_id = people.id WHERE people.state = \'#{self.abbreviation}\' AND roles.role_type=\'rep\' AND roles.enddate > \'#{Time.new.to_s(:db)}\' ORDER BY people.lastname', :counter_sql => 'SELECT COUNT(people.id) from people LEFT OUTER JOIN roles ON roles.person_id = people.id WHERE people.state = \'#{self.abbreviation}\' AND roles.role_type=\'rep\' AND roles.enddate > \'#{Time.new.to_s(:db)}\''
+  has_many :v_current_roles
+  has_many :roles, :through => :v_current_roles
+  has_many :people, :through => :v_current_roles do
+    def representatives
+      where("v_current_roles.role_type = 'rep'")
+    end
+    def republican_representatives
+      representatives.where("people.party = 'Republican'")
+    end
+    def democrat_representatives
+      representatives.where("people.party = 'Democrat'")
+    end
+    def other_representatives
+      representatives.where("people.party != 'Democrat' and people.party != 'Republican'")
+    end
+    def senators
+      where("v_current_roles.role_type = 'sen'")
+    end
+  end
 
-  has_many :senators, :class_name => "Person", :finder_sql => 'SELECT people.* from people LEFT OUTER JOIN roles ON roles.person_id = people.id WHERE people.state = \'#{self.abbreviation}\' AND roles.role_type=\'sen\' AND roles.enddate > \'#{Time.new.to_s(:db)}\' ORDER BY people.lastname', :counter_sql => 'SELECT COUNT(people.id) from people LEFT OUTER JOIN roles ON roles.person_id = people.id WHERE people.state = \'#{self.abbreviation}\' AND roles.role_type=\'sen\' AND roles.enddate > \'#{Time.new.to_s(:db)}\''
-
-  has_many :republican_representatives, :class_name => "Person", :finder_sql => 'SELECT people.* from people LEFT OUTER JOIN roles ON roles.person_id = people.id WHERE people.state = \'#{self.abbreviation}\' AND roles.role_type=\'rep\' AND people.party = \'Republican\' AND roles.enddate > \'#{Time.new.to_s(:db)}\' ORDER BY people.district', :counter_sql => 'SELECT COUNT(people.id) from people LEFT OUTER JOIN roles ON roles.person_id = people.id WHERE people.state = \'#{self.abbreviation}\' AND roles.role_type=\'rep\' AND people.party = \'Republican\' AND roles.enddate > \'#{Time.new.to_s(:db)}\''
-
-  has_many :democrat_representatives, :class_name => "Person", :finder_sql => 'SELECT people.* from people LEFT OUTER JOIN roles ON roles.person_id = people.id WHERE people.state = \'#{self.abbreviation}\' AND roles.role_type=\'rep\' AND people.party = \'Democrat\' AND roles.enddate > \'#{Time.new.to_s(:db)}\' ORDER BY people.district', :counter_sql => 'SELECT COUNT(people.id) from people LEFT OUTER JOIN roles ON roles.person_id = people.id WHERE people.state = \'#{self.abbreviation}\' AND roles.role_type=\'rep\' AND people.party = \'Democrat\' AND roles.enddate > \'#{Time.new.to_s(:db)}\''
-
-  has_many :other_representatives, :class_name => "Person", :finder_sql => 'SELECT people.* from people LEFT OUTER JOIN roles ON roles.person_id = people.id WHERE people.state = \'#{self.abbreviation}\' AND roles.role_type=\'rep\' AND people.party != \'Democrat\' AND people.party != \'Republican\' AND roles.enddate > \'#{Time.new.to_s(:db)}\' ORDER BY people.district', :counter_sql => 'SELECT COUNT(people.id) from people LEFT OUTER JOIN roles ON roles.person_id = people.id WHERE people.state = \'#{self.abbreviation}\' AND roles.role_type=\'rep\' AND people.party != \'Democrat\' AND people.party != \'Republican\' AND roles.enddate > \'#{Time.new.to_s(:db)}\''  
+  # Pull association methods up to the instance level, for backwards compatibility
+  [:representatives, :republican_representatives, :democrat_representatives, :other_representatives, :senators].each do |method|
+    define_method(method) do
+      people.send(method)
+    end
+  end
 
   has_one :group
   

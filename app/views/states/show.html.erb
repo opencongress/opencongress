@@ -81,7 +81,7 @@
 
 
   <div class="find_form">
-    <% form_remote_tag :url => '/resources/district_from_address', :update => "find" do -%>
+    <%= form_remote_tag :url => '/resources/district_from_address', :update => "find" do -%>
       <p>There are <%= link_to "#{ pluralize(@representatives.length, 'representative') }", representatives_path(:anchor => @state.abbreviation) %> in <%= @state.abbreviation %>.<br /></p>
       <p>Find yours:
         <%= text_field_tag :address, 'enter your address', :onfocus => "if (this.value==this.defaultValue) this.value=''", :size => 30 %> <%= submit_tag 'Find' %>

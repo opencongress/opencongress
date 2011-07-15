@@ -16,7 +16,7 @@ class StatesController < ApplicationController
   def show
     @state = State.find_by_abbreviation(params[:id])
     @page_title = "#{@state.name.titleize}"
-    @representatives = @state.representatives.order(:district)
+    @representatives = @state.representatives.order("CAST(district AS INTEGER)")
     @users = @state.users
     @tracking_suggestions = @state.tracking_suggestions
     @senators = Person.sen.find_all_by_state(@state.abbreviation).sort{|a,b| b.consecutive_years <=> a.consecutive_years }

@@ -85,7 +85,7 @@
           <p class="topline">
 
             <a class="img_a" href="<%= url_for :controller => 'people', :action => 'show', :id => @popular_sen_text.person %>">
-              <img src="/images/photos/thumbs_73/<%= @popular_sen_text.person.id %>.png" alt="popular senator" />
+              <%= image_tag @popular_sen_text.person.photo_path(:medium), :alt => "popular senator" %>
             </a>					
             <%= link_to "<span>View Profile</span>".html_safe, 
             { :controller => 'people', :action => 'show', :id => @popular_sen_text.person }, 
@@ -107,7 +107,7 @@
 
           <p class="topline">
             <a class="img_a" href="<%= url_for :controller => 'people', :action => 'show', :id => @popular_rep_text.person %>">
-              <img src="/images/photos/thumbs_73/<%= @popular_rep_text.person.id %>.png" alt="popular representative" />
+              <%= image_tag @popular_rep_text.person.photo_path(:medium), :alt => "popular representative" %>
             </a>
 
             <%= link_to "<span>View Profile</span>".html_safe, 

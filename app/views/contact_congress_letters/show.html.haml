@@ -20,7 +20,7 @@
     %ul
       - @contact_congress_letter.formageddon_threads.each do |t|
         %li   
-          = image_tag "photos/thumbs_50/#{t.formageddon_recipient.id}-50px.jpeg", :class =>"photo", :alt => 'photo'
+          = image_tag(t.formageddon_recipient.photo_path(:thumb), :class =>"photo", :alt => 'photo')
 
           .recipient_info
             = link_to t.formageddon_recipient.name, person_path(t.formageddon_recipient)

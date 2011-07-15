@@ -2,7 +2,7 @@
 - bgcolor = "#FFEEEE" if person.party == "Republican"
 - bgcolor = "#EEEEFF" if person.party == "Democrat"
 %div{:class => "person_box_big", :style => "background-color:#{bgcolor};margin-bottom:3px;"}
-  = link_to image_tag("http://www.opencongress.org/images/photos/thumbs_50/#{person.id}-50px.jpeg", :class =>"photo", :alt => 'photo'), person_url(person.id)
+  = link_to image_tag(person.photo_path(:thumb), :class =>"photo", :alt => 'photo'), person_url(person.id)
   %p
     - if dist = person.district_rel
       = link_to "#{dist.ordinalized_number} District", state_district_path(person.state, person.district), :class => 'title'

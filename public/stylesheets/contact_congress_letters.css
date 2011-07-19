@@ -545,8 +545,7 @@ margin-left: 35px;
 position: absolute;
 top: 830px;
 width: 374px;
-z-index: 999999999;
-
+z-index: 1;
 margin-left: 20px;
 text-align:  center;
 }
@@ -1202,7 +1201,62 @@ text-align: center;
 border: 5px solid rgba(101,101,101, .1);
 }
 
+.attributions div {
+  float:left;
+  display: inline;
+  width: 280px;
+  margin: 40px 20px 40px 10px;
+}
+.attributions div a, .attributions div a:hover {
+  text-decoration: none;
+}
+.attributions .logo {
+  padding-left: 50px;
+}
+.attributions img {
+  width: 120px;
+}
 
 
+#formageddon_modal {
+  width: 700px;
+  padding: 50px 30px;
+}
+
+#formageddon_modal .sending {
+  font-size: 24px;
+  margin-bottom: 40px;
+  text-align:center;
+}
+
+#formageddon_modal .spinner {
+  text-align: center;
+  margin: 20px;
+}
+
+#formageddon_modal h3 {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+#formageddon_modal ul {
+  margin: 30px 0 30px 50px;
+  list-style: disc;
+}
+
+#formageddon_modal li {
+  font-weight: bold;
+}
+
+#formageddon_modal .button {
+  margin-left: 30px;
+}
 
 
+#formageddon_modal .captcha_recipient img {
+  margin: 0px 0px 0px 20px;
+}
+
+#formageddon_modal .captcha_recipient input {
+  margin: 0 0 35px 35px;
+}

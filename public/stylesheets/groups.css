@@ -289,6 +289,12 @@ li.comment-post .icon{
 background: url(/images/group-icons.png) 2px -291px no-repeat;
 }
 
+li.bill-post .icon{
+background: url(/images/group-icons.png) 2px -343px no-repeat;
+}
+
+
+
 
 .activity_stream li.photo div img{
 max-width: 500px;
@@ -332,35 +338,35 @@ max-height: 4.5em;
 
   padding: 10px 10px 15px;
 
-  margin: 0 0 40px 40px;
+  margin: 0px 0 0px 31px;
 
-  -moz-box-shadow: inset 0px -1px 4px rgba(0,0,0, .2);
+float: left;
 
 
-  -moz-border-radius-bottomright: 4px;
-  -moz-border-radius-bottomleft: 4px;
-  -webkit-border-bottom-left-radius: 4px;
-  -webkit-border-bottom-right-radius: 4px;
+  -moz-border-radius-topright: 4px;
+  -moz-border-radius-topleft: 4px;
+  -webkit-border-top-left-radius: 4px;
+  -webkit-border-top-right-radius: 4px;
 
-  -o-border-bottom-left-radius: 4px;
-  -o-border-bottom-right-radius: 4px;
+  -o-border-top-left-radius: 4px;
+  -o-border-top-right-radius: 4px;
 
-  -ms-border-bottom-left-radius: 4px;
-  -ms-border-bottom-right-radius: 4px;
+  -ms-border-top-left-radius: 4px;
+  -ms-border-top-right-radius: 4px;
 
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 
   font-size: 14px;
   line-height: 1.4em;
 
-
-background: #c5d9cd;
-background: rgba(197,217,205, .2);
+border: 1px solid #ddd;
+background: #eee;
+border-bottom: 0;
 
 
   float: left;
-  width: 900px;
+  width: 920px;
 
 
 }
@@ -372,7 +378,9 @@ background: rgba(197,217,205, .2);
 }
 
 .groups_search input {
-  margin:7px 0 0 20px;
+  margin:7px 7px 0 20px;
+  float: right;
+  width: 310px;
 }
 
 .groups_search select {
@@ -387,7 +395,7 @@ background: rgba(197,217,205, .2);
 #group_search_spinner {
   position: absolute;
   display:none;
-  right: 60px;
+  left: 40px;
   margin-top: 0px;
 }
 
@@ -423,7 +431,7 @@ text-align: center;
 .post-to ul{
 background: #eee;
 float: left;
-padding: 0px 0 10px 195px;
+padding: 0px 0 10px 145px;
 }
 
 
@@ -486,6 +494,10 @@ background: url(/images/tiny-group-icons.png) 0 -85px no-repeat;
 background: url(/images/tiny-group-icons.png) 0 -128px no-repeat;
 }
 
+
+.post-to.modal li.bill-post .icon{
+background: url(/images/tiny-group-icons.png) 0 -149px no-repeat;
+}
 
 .post-to.modal .icon{
 width: 20px;
@@ -617,4 +629,26 @@ background: #fff;
 
 .large-count{
 font-size: 18px;
+}
+
+
+
+
+.group-map{
+margin-top: 10px;
+margin-bottom: 30px;
+height: 62px;
+background: url(/images/group-map.gif) 0 0 no-repeat;
+}
+
+
+.group-map h3{
+font-size: 14px;
+margin-bottom: 25px;
+}
+
+.issue-bg{
+margin-top: 10px;
+height: 62px;
+background: url(/images/issue-bg.png) 0 0 no-repeat;
 }

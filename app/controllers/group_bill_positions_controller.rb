@@ -1,6 +1,17 @@
 class GroupBillPositionsController < ApplicationController
   def new
+    @page_title = 'Add Bill Position to Group'
     @group = Group.find(params[:group_id])
+    
+    unless params[:number].blank?
+      @search_bills = Bill.where(["number=? AND session=?", params[:number].to_i, Settings.default_congress])
+    end
+    
+    respond_to do |format|
+      format.html
+      format.js
+      format.json  { render :json => @groups }
+    end
   end
   
   def create
@@ -13,5 +24,5 @@ class GroupBillPositionsController < ApplicationController
     else
       redirect_to group_path(@group), :error => "You don't have permission to post bill positions to the group!"
     end
-  end  
+  end
 end

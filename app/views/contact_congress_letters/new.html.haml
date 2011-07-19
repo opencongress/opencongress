@@ -71,14 +71,15 @@
     .section      
       %h3 Most-commented sections of the bill text
       %ul
-        - @bill.bill_text_versions.last.top_comment_nodes(5).each do |n|
-          %li.message_builder_clickable
-            = n.bill_text
-            = " (#{n.comments.count} comments, "
-            = link_to 'Link', bill_text_path(:id => n.bill_text_version.bill, :nid => n.nid, :version => n.bill_text_version.version)
-            = ")"
+        - unless @bill.bill_text_versions.empty?
+          - @bill.bill_text_versions.last.top_comment_nodes(5).each do |n|
+            %li.message_builder_clickable
+              = n.bill_text
+              = " (#{n.comments.count} comments, "
+              = link_to 'Link', bill_text_path(:id => n.bill_text_version.bill, :nid => n.nid, :version => n.bill_text_version.version)
+              = ")"
             
-            = render 'will_add_text_box', :text => "specifically, this section of the legislation: \"#{n.bill_text}\","
+              = render 'will_add_text_box', :text => "specifically, this section of the legislation: \"#{n.bill_text}\","
 
           
     - unless @bill.plain_language_summary.blank?
@@ -115,9 +116,21 @@
           = render 'message_builder_commentary', :a => a
 
 
-  
-  
-  = form_for @formageddon_thread do |f|
+  #formageddon_modal.jqmWindow{ :style => "display:none;" }   
+    = render :partial => 'sending_spinner'
+
+  :javascript
+    $j().ready(function() {
+      $j('#formageddon_modal').jqm();
+      $j('.formageddon_submit').click(function() {
+        $j('#formageddon_modal').jqmShow();
+        return true;
+      });
+
+    }); 
+
+
+  = form_for @formageddon_thread, :remote => true do |f|        
     .contact_letter   
       #contact_recipients_container
         - if @sens.empty? and @reps.empty?
@@ -130,7 +143,7 @@
         %span.from From the Desk of Username
         %span.the-user a user out of District something or other
       .formageddon_contact_form
-        = render 'formageddon/threads/form', :f => f, :thread => @formageddon_thread, :after_send_url => "/contact_congress_letters/create_from_formageddon?bill=#{@bill.ident}&disposition=#{@position}&group_id=#{params[:group_id]}", :action_on_error => '/contact_congress_letters/new'
+        = render 'formageddon/threads/form', :f => f, :thread => @formageddon_thread, :after_send_url => "/contact_congress_letters/create_from_formageddon?bill=#{@bill.ident}&disposition=#{@position}&group_id=#{params[:group_id]}", :action_on_error => '/contact_congress_letters/new', :no_sender_redirect => '/account/contact_congress', :custom_params => { :bill => @bill.ident }
     
     %ul.instruction
       
@@ -147,6 +160,21 @@
       %p OpenCongress is the only not-for-profit website that enables you to write all three of your members of Congress at once.
       %p OpenCongress is the only website that gives this information back to the public commons, enabling you to find other constituents near you who are tracking the same bills and issues. 
   
+  .attributions
+    .maplight.small
+      %a{ :href => "http://maplight.org/" }
+        Supporting and Opposing Industries information on this page comes from MAPLight.org, a non-partisan & non-profit organization.
+        .logo.margin-top= image_tag 'maplight-trans.png'
+    
+    .crp.small
+      %a{ :href => "http://www.opensecrets.org/" }
+        Campaign contribution data on this page comes from the Center for Responsive Politics, a non-partisan & non-profit organization.
+        .logo.margin-top= image_tag 'opensecrets.gif'
+      
+    .opencongress.small
+      %a{ :href => "http://www.opencongress.org/about#data_sources" }
+        Other information on this page is uniquely aggregated by OpenCongress, a free & open-source project of the Participatory Politics Foundation, a non-partisan & non-profit organization.
+    
 :javascript
   var sigLength=0;
   
@@ -179,10 +207,11 @@
   
   
   $j("#formageddon_formageddon_thread_sender_last_name").change(function() {
-    var sig = "\n\nSincerely,\n" +
-      $j("#formageddon_formageddon_thread_sender_first_name").val() + " " +
-      $j("#formageddon_formageddon_thread_sender_last_name").val();
-  
+    var name = $j("#formageddon_formageddon_thread_sender_first_name").val() + " " +
+               $j("#formageddon_formageddon_thread_sender_last_name").val();
+    var sig = "\n\nSincerely,\n" + name;
+      
+    $j('#from').html('From the Desk of ' + name);
     sigLength = sig.length
     
     $j('#formageddon_formageddon_thread_formageddon_letters_attributes_0_message').val(

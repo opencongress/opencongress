@@ -306,7 +306,7 @@ p span.editable-content{
   letter-spacing: .06em;
 
   font-size: 12px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   font-weight: normal !important;
     
 float: left;
@@ -331,7 +331,7 @@ float: left;
   letter-spacing: .06em;
 
   font-size: 12px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   font-weight: normal !important;
     
   -moz-box-shadow: inset 0 1px 2px #333;
@@ -371,7 +371,7 @@ right: -63px;
   text-shadow: 0 1px 0px #fff;
 opacity: .7;
 color: rgba(0,0,0,.9);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   font-weight: bold !important;
   font-size: 12px;
   text-decoration: none;
@@ -403,7 +403,7 @@ dispaly: inline-block;
   text-shadow: 0 1px 0px #fff;
 opacity: .7;
 color: rgba(0,0,0,.9)
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   font-weight: bold !important;
   
   text-decoration: none;

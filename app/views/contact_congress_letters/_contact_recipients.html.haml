@@ -6,9 +6,10 @@
     - @sens.each_with_index do |s, i|
       %li.hide{ :id => "sen_#{i}" }
         - if show_checkboxes
-          = check_box_tag "formageddon_multi_recipients[#{s.id}]", 'Person', true
-        = image_tag "photos/thumbs_50/#{s.id}-50px.jpeg", :class =>"photo", :alt => 'photo'
+          = check_box_tag "formageddon[formageddon_multi_recipients[#{s.id}]]", 'Person', true
+          = image_tag(s.photo_path(:thumb), :class =>"photo", :alt => 'photo')
         = link_to s.name, person_path(s)
+        = sponsor_tag(@bill, s)
         - if @bill
           %span
             = "Vote on Passage of #{@bill.typenumber}: " 
@@ -17,9 +18,10 @@
     - if @reps.size == 1
       %li#rep.hide
         - if show_checkboxes
-          = check_box_tag "formageddon_multi_recipients[#{@reps.first.id}]", 'Person', true
-        = image_tag "photos/thumbs_50/#{@reps.first.id}-50px.jpeg", :class =>"photo", :alt => 'photo'
+          = check_box_tag "formageddon[formageddon_multi_recipients[#{@reps.first.id}]]", 'Person', true
+          = image_tag(@reps.first.photo_path(:thumb), :class =>"photo", :alt => 'photo')
         = link_to @reps.first.name, person_path(@reps.first)
+        = sponsor_tag(@bill, p)
         - if @bill
           %span
             = "Vote on Passage of #{@bill.typenumber}: " 

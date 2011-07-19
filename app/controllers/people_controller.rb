@@ -657,7 +657,7 @@ class PeopleController < ApplicationController
       ]
       @top_comments = @person.comments.find(:all,:include => [:user], :order => "comments.plus_score_count - comments.minus_score_count DESC", :limit => 2)
       @atom = {'link' => url_for(:only_path => false, :controller => 'people', :id => @person, :action => 'atom'), 'title' => "#{@person.popular_name} activity"}
-      @bookmarking_image = "/images/photos/thumbs_102/#{@person.id}.png"
+      @bookmarking_image = @person.photo_path
     else
       flash[:error] = "Invalid person URL."
       redirect_to :action => 'all'

@@ -52,14 +52,7 @@ class ApiController < ApplicationController
       conditions[:user_approval] = params[:user_approval_from].to_f..params[:user_approval_to].to_f
     end
     
-    people = Person.where(conditions)
-
-    do_render_paginated(people, :methods => [:oc_user_comments, :oc_users_tracking, 
-                                              :abstains_percentage, :with_party_percentage], 
-                                              :include => [:recent_news, :recent_blogs, :person_stats],
-                                              :except => ["fti_names"])
-
-          
+    @people = Person.paginate(:conditions => conditions, :per_page => @per_page, :page => params[:page])
   end
   
   def most_blogged_representatives_this_week
@@ -138,6 +131,16 @@ class ApiController < ApplicationController
     @bills = Bill.find_all_by_ident(these_idents, find_options = {})
   end
   
+  def comments
+    if ['Bill','Person'].include?(params[:object_type])
+      @comments = Comment.paginate(:order => "comments.root_id desc, comments.lft ASC", :conditions => {:commentable_type => params[:object_type], :commentable_id => params[:object_id]}, :page => params[:page], :per_page => @per_page)
+
+      respond_with @comments
+    else
+      render_404
+    end
+  end
+
   def bills_introduced_since
     page = 1
     page = params[:page] unless params[:page].blank?
@@ -194,6 +197,21 @@ class ApiController < ApplicationController
   def most_opposed_bills_this_week
     @order =  "support_count_1 desc"
     render_bill_aggregates(@order)
+  end
+  
+  def most_commented_this_week
+    @bills = Bill.select("bills.*, ca.comments_this_week").joins("join (select commentable_id, count(*) as comments_this_week from comments where commentable_type = 'Bill' and created_at > '#{1.week.ago.to_s}' group by commentable_id) ca on (bills.id = ca.commentable_id)").order("ca.comments_this_week desc").limit(20)
+    respond_with @bills, :template => 'api/bills'
+  end
+
+  def user_stats
+    @user_aggregates = {}
+    
+    @user_aggregates[:user_daily_stats] = User.find_by_sql(["select count(*) as signups, count(distinct activated_at) as activations, date_trunc('day', created_at) as day from users where created_at > ? group by date_trunc('day', created_at)", 3.years.ago])
+  
+    @user_aggregates[:comment_daily_stats] = Comment.find_by_sql(["select count(*) as count, date_trunc('day', created_at) as day from comments where created_at > ? group by date_trunc('day', created_at)", 3.years.ago])
+
+    respond_with @user_aggregates
   end
   
   def bill_roll_calls

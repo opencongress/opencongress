@@ -2,7 +2,7 @@
 body{
 margin: 0;
 padding: 0 0 0px;
-font-family: Arial, Helvetica, sans-serif;
+font-family: Helvetica, Arial, sans-serif;
 background: url(../images/donate/bg.gif);
 position: relative;
 }
@@ -667,7 +667,7 @@ font-weight: bold;
 float: left;
 margin-right: 20px;
 width: 70px;
-font-family: Arial, Helvetica, sans-serif;
+font-family: Helvetica, Arial, sans-serif;
 clear: none;
 }
 

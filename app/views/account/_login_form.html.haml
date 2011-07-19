@@ -1,0 +1,12 @@
+- login_action ||= nil
+
+= form_for :user, :url => '/account/login' do |f|
+  %p
+    %label{ :for => "user_login" } Login
+    = f.text_field :login, :class => 'field', :size => 30
+  %p
+    %label{ :for => "user_password" } Password
+    = f.password_field :password, :class => 'field', :size => 30 
+  %input.floatright.margintop.behave{ :type => "image", :value => "Login", :src => image_path('login2.png') }
+  - if login_action
+    = hidden_field_tag 'login_action', login_action

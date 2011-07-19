@@ -3,11 +3,20 @@
     %tr
       %th Recipient
       %th Number of steps
+      %th Last delivery attempt
       %th Actions
     - @people.each do |s|
       %tr
         %td= s.name
         %td= s.formageddon_contact_steps.size
+        %td
+          - if s.formageddon_threads.any? and s.formageddon_threads.first.formageddon_letters.first.formageddon_delivery_attempts.first
+            - da = s.formageddon_threads.first.formageddon_letters.first.formageddon_delivery_attempts.first
+            = da
+            %br
+            = link_to "View result text", "/formageddon/delivery_attempts/edit/#{da.id}"
+          - else
+            No Attempt Made Yet
         %td
           = link_to 'View Steps', :controller => 'formageddon/contact_steps', :action => 'show', :recipient_id => s.id, :recipient_type => s.class
           \|

@@ -1,0 +1,24 @@
+#heading
+  %h2 Contact Congress: MyOpenCongress User Account
+
+.padding
+  - if @existing_user
+    .margin-left
+      %p Your email address was recognized in our user database.  Please log in and we'll send your message.
+      #loginform.floatleft.form.clear{ :title => "Account login" }
+        %h3 Login with Your OpenCongress Account
+        = render :partial => 'login_form', :locals => { :login_action => 'contact_congress' }
+        
+  - else
+    .registration_complete
+      %h2 Almost Done!
+      %p.behave We just need a little more info to create your My OpenCongress account and we'll send your letter.
+      %ul
+        %li 
+          %strong Create a user name.
+          This is what will show up when you leave comments and track bills.
+        %li
+          %strong Accept our Terms of Service
+
+
+      = render 'account/complete_signup', :user => @new_user, :action => 'contact_congress'

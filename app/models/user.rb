@@ -25,7 +25,6 @@ class User < ActiveRecord::Base
   validates_length_of       :password, :within => 4..40, :if => :password_required?
   validates_confirmation_of :password,                   :if => :password_required?
   validates_length_of       :login,    :within => 3..40, :unless => :openid?
-  validates_length_of       :zip_four, :within => 0..4, :allow_nil => true, :allow_blank => true
   validates_length_of       :email,    :within => 3..100, :unless => :openid?
   #validates_email_veracity_of :email
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :message => "address invalid"
@@ -645,7 +644,9 @@ class User < ActiveRecord::Base
     bv = self.bill_votes.find(:all, :order => "created_at DESC", :limit => limit)
     pa = self.person_approvals.find(:all, :order => "created_at DESC", :limit => limit)
     f = self.friends.find(:all, :conditions => ["confirmed = ?", true], :order => "confirmed_at DESC", :limit => limit)
-    items = b.concat(c).concat(bv).concat(pa).concat(f).compact
+    l = self.contact_congress_letters.order('created_at DESC').limit(limit)
+    
+    items = b.concat(c).concat(bv).concat(pa).concat(f).concat(l).compact
     items.sort! { |x,y| y.created_at <=> x.created_at }
     return items
   end

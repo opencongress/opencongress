@@ -27,7 +27,7 @@
 			<% end %>
     <li id="p<%= person.id.to_s %>" class="person">
       <%= "<span class='date'>#{(i + 1)}</span>".html_safe unless (@sort == :name or @sort == :state) %>  
-			<%= link_to(("<img src='/images/photos/thumbs_73/" + person.id.to_s + ".png' alt='photo' />").html_safe, {:controller => 'people', :action => 'show', :id => person.to_param}) %>
+			<%= link_to(image_tag(person.photo_path(:medium)), {:controller => 'people', :action => 'show', :id => person.to_param}) %>
       
 			<div class="details">
 				<a class="name" href="/people/show/<%= person.to_param %>">

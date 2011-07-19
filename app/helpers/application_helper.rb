@@ -289,7 +289,7 @@ EOT
       str
     end
   end
-  
+
   def admin_logged_in?
     return (logged_in? && current_user.user_role.can_blog) ? true : false
   end
@@ -856,4 +856,7 @@ EOT
     end
   end
 
+  def position_clause(position)
+    case position when 'support': 'in support of' when 'oppose': 'in opposition to' else 'tracking' end
+  end
 end

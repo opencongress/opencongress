@@ -13,9 +13,12 @@
 <div style="float:right;width:100px;">
   <%= image_tag("private.png", :alt => "private", :title => "Private", :id => 'Privacy', :style => "float:left;margin-right:5px;") %>
 <% form_for :privacy_option, @user.privacy_option, :url => {:controller => "/profile", :action => 'update_privacy' } do |f| %>
-<%= f.select PrivacyOption.column_names[9].to_sym, [["Public",2],["Friends", 1], ["Private",0]], {}, {:onchange => "this.form.submit();"} %>	
+<%= f.select PrivacyOption.column_names[9].to_sym, [["Public",2],["Friends", 1], ["Private",0]], {}, {:onchange => "this.form.submit();"} %>
 </div>
 <% end %>
+<div class="floatright margin-right">
+  <%= link_to image_tag('feed.jpg', {:alt => "Subscribe", :style => "border:0;vertical-align:middle;"}), :controller => 'user_feeds', :login => @user.login, :action => 'actions', :key => current_user == :false ? nil : current_user.feed_key %>
+</div>
 
 <div id="linkcontent">
 		<div class="my_left">

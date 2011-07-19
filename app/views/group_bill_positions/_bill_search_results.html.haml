@@ -1,0 +1,8 @@
+- if bills
+  - if bills.empty?
+    .padding No bills found with that number.
+  - else
+    %h3 Search Results
+    
+    %ul
+      = render :partial => 'bill_for_add', :collection => bills

@@ -93,7 +93,14 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
           xml.updated i.created_at.strftime("%Y-%m-%dT%H:%M:%SZ")
           xml.content "type" => "html" do
             xml.text! "View #{link_to(i.friend.login + "'s Profile", user_profile_url(i.friend.login))}"
-          end    
+          end 
+        when 'ContactCongressLetter'
+          xml.title   "Wrote a letter to Congress " + i.formageddon_threads.first.formageddon_letters.first.subject
+          xml.link    "rel" => "alternate", "href" => contact_congress_letter(i)
+          xml.updated i.created_at.strftime("%Y-%m-%dT%H:%M:%SZ")
+          xml.content "type" => "html" do
+            xml.text! i.formageddon_threads.first.formageddon_letters.first.message
+        end   
       end
     end
   end

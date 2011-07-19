@@ -8,6 +8,8 @@ class NotebookLink < NotebookItem
   # because the table uses STI a regular polymorphic association doesn't work
   has_many :comments, :foreign_key => 'commentable_id', :conditions => "commentable_type='NotebookLink'"
   
+  attr_accessor :bill_type, :bill_number
+  
   def is_internal?
     !notebookable_type.blank? && !notebookable_id.blank?
   end

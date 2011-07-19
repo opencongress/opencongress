@@ -1,4 +1,4 @@
-- ['oppose', 'support'].each do |position|
+- ['tracking', 'oppose', 'support'].each do |position|
   = link_to position.capitalize, '#', :class => "button small silver floatright margin-left margin-bottom", :id => "trigger_#{position}_#{b.id}"
   %div.jqmWindow{ :id => "#{position}_#{b.id}" }
     = form_for [@group, @group.group_bill_positions.build] do |f|

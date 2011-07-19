@@ -62,15 +62,27 @@ class ContactCongressLettersController < ApplicationController
     end
 
     @sens = [] unless @sens
+    
+    # @sens << Person.find(300043)
+    # @sens << Person.find(300011)
+    
     if @reps and @reps.size == 1
       @letter_start = "I am writing as your constituent in the #{@reps.first.district.to_i.ordinalize} Congressional district of #{State.for_abbrev(@reps.first.state)}. "
     else
       @reps = []
+      # @reps << Person.find(412404)
     end
   end
   
   def show
     @contact_congress_letter = ContactCongressLetter.find(params[:id])
+    
+    if @contact_congress_letter.formageddon_threads.first.privacy =~ /PRIVATE/
+      if current_user == :false or current_user != @contact_congress_letter.user
+        redirect_to '/', :notice => 'You do not have permission to read that letter!'
+        return
+      end
+    end
     
     @page_title = "My Letter to Congress: #{@contact_congress_letter.formageddon_threads.first.formageddon_letters.first.subject}"
     @meta_description = "This is a letter to Congress sent using OpenCongress.org by user #{@contact_congress_letter.user.login} regarding #{@contact_congress_letter.bill.typenumber} #{@contact_congress_letter.bill.title_common}. OpenCongress is a free and open-source public resource website for tracking and contacting the U.S. Congress."
@@ -92,6 +104,7 @@ class ContactCongressLettersController < ApplicationController
       @letters = Formageddon::FormageddonLetter.find(letter_ids)
     end
     
+    
     bill = Bill.find_by_ident(params[:bill])
 
     @letters.each do |l|  
@@ -107,6 +120,12 @@ class ContactCongressLettersController < ApplicationController
         @contact_congress_letter.formageddon_threads << l.formageddon_thread
       else
         @contact_congress_letter = cclft.contact_congress_letter
+        
+        if current_user == :false or @letters.first.formageddon_thread.contact_congress_letter.user != current_user
+          redirect_to @contact_congress_letter
+          return
+        end
+        
         break
       end
     end
@@ -129,9 +148,6 @@ class ContactCongressLettersController < ApplicationController
           unless params[:group_id].blank?
             @group = Group.find_by_id(params[:group_id])
             if @group
-              puts("GOT GROUP!!!!!!!!!!!!!!!!! #{@group.name}")
-              puts("INCLUDE BILLS?!!!!!!!!!!!!!!!!!  #{@group.bills.include?(@contact_congress_letter.bill)}")
-
               # make sure this group is tracking this bill and user is a member
               if @group.bills.include?(@contact_congress_letter.bill) and 
                  (@group.is_member?(@contact_congress_letter.user) or @group.is_owner?(@contact_congress_letter.user))
@@ -157,6 +173,29 @@ class ContactCongressLettersController < ApplicationController
     end
     
     render :action => 'create'
+  end
+  
+  def delayed_send
+    formageddon_params = session[:formageddon_params]
+    
+    threads = session[:formageddon_unsent_threads].map{ |t| Formageddon::FormageddonThread.find(t) }
+    threads.each do |t|
+      ##########t.formageddon_letters.first.update_attribute(:status, 'START')
+      t.formageddon_letters.first.update_attribute(:status, 'SENT')
+      t.formageddon_letters.first.update_attribute(:direction, 'TO_RECIPIENT')
+    
+      #####if defined? Delayed
+      #####  t.formageddon_letters.first.delay.send_letter
+      #####else
+        t.formageddon_letters.first.send_letter
+      ######end
+    end
+    
+    @letter_ids = threads.collect{|t| t.id}.join(',')
+            
+    session[:formageddon_after_send_url] = "#{formageddon_params[:after_send_url]}&letter_ids=#{@letter_ids}" unless formageddon_params[:after_send_url].blank?
+    session[:formageddon_params] = nil
+    session[:formageddon_unsent_threads] = nil
   end
   
   private

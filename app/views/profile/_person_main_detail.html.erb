@@ -8,7 +8,7 @@
 
     <li id="p<%= person.id.to_s %>" class="person">
 			<% unless buttons_only %> 
-			  <%= link_to(("<img src='/images/photos/thumbs_73/" + person.id.to_s + ".png' />").html_safe, 
+			  <%= link_to(image_tag(person.photo_path(:medium)), 
 			    {:controller => 'people', :action => 'show', :id => person.to_param}) %>
 			<% end %>
       

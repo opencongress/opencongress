@@ -1,0 +1,13 @@
+.padding
+  - if @contact_congress_signup
+    %h3 Confirm your email address and we'll send your letter
+  
+    %p A confirmation email has been sent to the email address you registered: #{@user.email}
+    %p Please click the link in that email, then we'll send your letter to Congress.
+    %p Thanks! - The OpenCongress Team
+  - else
+    %h3 Thank you for Signing Up
+    
+    %p A confirmation email has been sent to the email address you registered: #{@user.email}
+    %p Please click the link in that email, then you'll be able to login.
+    %p Thanks! - The OpenCongress Team

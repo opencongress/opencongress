@@ -128,6 +128,43 @@ class AccountController < ApplicationController
     end
   end
   
+  def contact_congress
+    @page_title = 'Contact Congress'
+    
+    if session[:formageddon_unsent_threads].nil?
+      # not sure how we got here; redirect to regular signup
+      redirect_to '/signup'
+      return
+    end
+    
+    thread = Formageddon::FormageddonThread.find(session[:formageddon_unsent_threads].first)
+    if thread.nil?
+      # not sure how we got here; redirect to regular signup
+      redirect_to '/signup'
+      return
+    end
+
+    # first see if we recognize the email address
+    @existing_user = User.where(["UPPER(email)=?", thread.sender_email.upcase]).first
+    unless @existing_user
+      @new_user = User.new   
+      @new_user.email = thread.sender_email
+      @new_user.zipcode = thread.sender_zip5
+      @new_user.zip_four = thread.sender_zip4
+      puts "setting zip_four to #{thread.sender_zip4}"
+    end
+    
+    if request.post?
+      @new_user.update_attributes(params[:user])
+      
+      if @new_user.save
+        redirect_to(:controller => 'account', :action => 'confirm', :login => @new_user.login)
+        
+        return
+      end
+    end
+  end
+  
   def group_signup_complete
     if request.post?
       @group_invite = GroupInvite.find(params[:group_invite_id])
@@ -157,8 +194,6 @@ class AccountController < ApplicationController
   def signup
     @page_title = "Create a New Account"
 
-    logger.info session.inspect
-
     @user = User.new(params[:user])
     @user.email = session[:invite].invitee_email unless session[:invite].nil? or request.post?
 
@@ -186,7 +221,11 @@ class AccountController < ApplicationController
   end
 
   def confirm
+    @page_title = 'Confirm Your Email Address'
+    
     @user = User.find_by_login(params[:login], :conditions => ["activated_at is null"])
+
+    @contact_congress_signup = session[:formageddon_unsent_threads].nil? ? false : true
   end
 
   def logout
@@ -215,11 +254,19 @@ class AccountController < ApplicationController
   end
   
   def activate
+    @page_title = 'Account Activation'
+    
     @user = User.find_by_activation_code(params[:id])
     if @user and @user.activate
       self.current_user = @user
-      redirect_to welcome_url
-      return
+      
+      if session[:formageddon_unsent_threads].nil?
+        redirect_to welcome_url
+        return
+      else
+        redirect_to '/contact_congress_letters/delayed_send'
+        return
+      end
     else
       flash[:notice] = "We didn't find that confirmation code; maybe you've already activated your account?"
       redirect_to signup_url
@@ -466,33 +513,47 @@ class AccountController < ApplicationController
             end
           end
         end
-      if session[:login_action][:action_result]
+      end
+      
+      if session[:login_action] and session[:login_action][:action_result]
         if session[:login_action][:action_result] == 'track'
-        case session[:login_action][:url]
-        when /\/bill\/([0-9]{3}-\w{2,})\//
-          ident = $1
-          if ident
-            bill = Bill.find_by_ident(ident)
-            if bill
-              bookmark = Bookmark.new(:user_id => current_user.id)
-              bill.bookmarks << bookmark
-            end    
-          end
-        when /\/([^\/]+)\/[^\/]+\/(\d+)/
-          obj = $1
-          id = $2
-          if id && obj
-            object = Object.const_get(obj)
-            this_object = object.find_by_id(id)
-            if this_object
-              bookmark = Bookmark.new(:user_id => current_user.id)
-              this_object.bookmarks << bookmark
+          case session[:login_action][:url]
+          when /\/bill\/([0-9]{3}-\w{2,})\//
+            ident = $1
+            if ident
+              bill = Bill.find_by_ident(ident)
+              if bill
+                bookmark = Bookmark.new(:user_id => current_user.id)
+                bill.bookmarks << bookmark
+              end    
+            end
+          when /\/([^\/]+)\/[^\/]+\/(\d+)/
+            obj = $1
+            id = $2
+            if id && obj
+              object = Object.const_get(obj)
+              this_object = object.find_by_id(id)
+              if this_object
+                bookmark = Bookmark.new(:user_id => current_user.id)
+                this_object.bookmarks << bookmark
+              end
             end
           end
-        end
+        elsif session[:login_action][:action_result] == 'contact_congress'
+          session[:formageddon_unsent_threads].each do |t|
+            thread = Formageddon::FormageddonThread.find(t)
+            
+            thread.formageddon_sender = current_user
+            
+            # force the email on the letters to the user email 
+            thread.sender_email = current_user.email
+            
+            thread.save
+          end
+          
+          session[:return_to] = "/contact_congress_letters/delayed_send"
         end
       end
     end
-  end
     
 end

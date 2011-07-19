@@ -5,10 +5,16 @@ class NotebookLinksController < NotebookItemsController
     return false unless @can_edit
     
     # if we don't have params to create an internal link, call the super to create an external one
-    if params[:id].blank? || params[:type].blank?
+    if params[:type].blank?
       super
     else
-      @notebookable = Object.const_get(params[:type]).find_by_id(params[:id])
+      if params[:id].blank? and params[:type] == 'Bill'
+        @notebookable = Bill.where(["bill_type=? and number=? and session=?", 
+                                    params[:notebook_link][:bill_type], params[:notebook_link][:bill_number], 
+                                    Settings.default_congress]).first
+      else
+        @notebookable = Object.const_get(params[:type]).find_by_id(params[:id])
+      end
       
       @item = NotebookLink.new(params[:notebook_link])   
       @item.notebookable = @notebookable    
@@ -19,19 +25,8 @@ class NotebookLinksController < NotebookItemsController
       
       @success = @item.save
       
-      respond_to do |format| 
-        format.js {
-          render :update do |page|
-            if @success
-              page.replace_html(params[:from],'Added to MyPN')
-              page.show(params[:msgDiv])
-              page.hide(params[:formFields])            
-              page.replace_html(params[:msgDiv],"The #{params[:type]} was added to Your Political Notebook.<br /><a href='#{political_notebook_path({:login =>current_user.login})}'>Visit Your Political Notebook</a>.")
-            else
-              page.alert("All fields marked with an * are required.")
-            end
-          end
-        }
+      respond_to do |format|      
+        format.js        
       end
 #      redirect_to political_notebook_path(:login => current_user.login)
     end

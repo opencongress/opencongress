@@ -515,7 +515,7 @@ class AccountController < ApplicationController
         end
       end
       
-      if session[:login_action][:action_result]
+      if session[:login_action] and session[:login_action][:action_result]
         if session[:login_action][:action_result] == 'track'
           case session[:login_action][:url]
           when /\/bill\/([0-9]{3}-\w{2,})\//

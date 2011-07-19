@@ -180,14 +180,15 @@ class ContactCongressLettersController < ApplicationController
     
     threads = session[:formageddon_unsent_threads].map{ |t| Formageddon::FormageddonThread.find(t) }
     threads.each do |t|
-      t.formageddon_letters.first.update_attribute(:status, 'START')
+      ##########t.formageddon_letters.first.update_attribute(:status, 'START')
+      t.formageddon_letters.first.update_attribute(:status, 'SENT')
       t.formageddon_letters.first.update_attribute(:direction, 'TO_RECIPIENT')
     
-      if defined? Delayed
-        t.formageddon_letters.first.delay.send_letter
-      else
-       t.formageddon_letters.first.send_letter
-      end
+      #####if defined? Delayed
+      #####  t.formageddon_letters.first.delay.send_letter
+      #####else
+        t.formageddon_letters.first.send_letter
+      ######end
     end
     
     @letter_ids = threads.collect{|t| t.id}.join(',')

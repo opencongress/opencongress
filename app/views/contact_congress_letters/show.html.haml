@@ -48,7 +48,8 @@
   .formageddon_letter
     .subject= @contact_congress_letter.formageddon_threads.first.formageddon_letters.first.subject
     .body= @contact_congress_letter.formageddon_threads.first.formageddon_letters.first.message.gsub(/\n/, "<br />").html_safe
-  
+
+
   #letter_comments
     = render :partial => 'shared/comments', :locals => { :object => @contact_congress_letter }
     

@@ -19,8 +19,8 @@ production:
   url: http://10.13.219.6:8983/oc-solr-prod
 
 morgan:
-  url: http://localhost:8984/solr
+  url: http://localhost:8982/solr
 
 drm:
-  url: http://localhost:8985/solr
+  url: http://localhost:8982/solr
 

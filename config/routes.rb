@@ -1,9 +1,13 @@
 OpenCongress::Application.routes.draw do
   # API
-  constraints(:subdomain => 'api') do
+  constraints :subdomain => 'api' do
     match '/' => redirect(Settings.base_url + 'api')
     match '/bill/text_summary/:id' => 'bill#status_text'
     match '/roll_call/text_summary/:id' => 'roll_call#summary_text'
+    with_options :format => [:json, :xml] do |f|
+      f.match '/groups(.:format)' => 'groups#index'
+      f.match '/groups(/:id(.:format))' => 'groups#show'
+    end
     match '/:action(/:id)', :controller => 'api'
   end
 

@@ -57,7 +57,7 @@
 
                   <% @committee.members.find(:all, :conditions => conditions, :order => "people.lastname asc").each do |m| %>
                   <div class="graph_item">
-                    <a href="<%= person_url m.ident %>"><image src="/images/photos/thumbs_102/<%= m.id %>.png" />
+                    <a href="<%= person_url m.ident %>"><%= image_tag m.photo_path %>
                       <span class="name"><%= m.full_name %></span></a>
                     </div>
                     <% end %>

@@ -47,7 +47,7 @@ class ArticlesController < ApplicationController
     end
 
     def view
-      render :file => "/u/apps/opencongress/current/public/404.html", :layout => false, :status => 404 and return unless params[:id]
+      render_404 and return unless params[:id]
       comment_redirect(params[:goto_comment]) and return if params[:goto_comment]
       
       begin
@@ -58,7 +58,7 @@ class ArticlesController < ApplicationController
         return
       end
       
-      render :file => "/u/apps/opencongress/current/public/404.html", :layout => false, :status => 404 and return unless @article
+      render_404 and return unless @article
 
       @meta_description = @article.excerpt.blank? ? @article.article : @article.excerpt
       @meta_keywords = @article.tags.collect{|t| t.name }.join(", ")

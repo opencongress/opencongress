@@ -39,7 +39,7 @@
 						<div>
 							<div class="comppeeps">
 								<h3><%= link_to @person1.full_name, :controller => 'people', :action => 'show', :id => @person1.ident %></h3>
-								<%= link_to("<img src='/images/photos/thumbs_102/#{@person1.id}.png' alt='#{@person1.full_name}'".html_safe, :controller => 'people', :action => 'show', :id => @person1.ident) %>
+								<%= link_to(image_path(@person1.photo_path, :alt=> @person1.full_name), :controller => 'people', :action => 'show', :id => @person1.ident) %>
 								<p>
 									<b>State:</b> <%= @person1.state %><br/>
 									<b>Party:</b> <%= @person1.party %><br/>
@@ -55,7 +55,7 @@
 							</div>                      
 							<div class="comppeeps right">
 								<h3><%= link_to @person2.full_name, :controller => 'people', :action => 'show', :id => @person2.ident %></h3>
-								<%= link_to("<img src='/images/photos/thumbs_102/#{@person2.id}.png' alt='#{@person2.full_name}'".html_safe, :controller => 'people', :action => 'show', :id => @person2.ident) %>      
+								<%= link_to(image_path(@person2.photo_path, :alt=> @person2.full_name), :controller => 'people', :action => 'show', :id => @person2.ident) %>      
 								<p>
 									<b>State:</b> <%= @person2.state %><br/>
 									<b>Party:</b> <%= @person2.party %><br/>

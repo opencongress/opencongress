@@ -42,25 +42,7 @@
    
    <p class="district_description"><%= @state.freebase_description %> <em>(More from <%= link_to "Freebase", @state.freebase_link %>)</em></p>
 
-<div class="col1">
-   <% unless @tracking_suggestions.last[:my_bills_tracked_facet].nil? or 
-             @tracking_suggestions.last[:my_bills_tracked_facet].first[:trackers] == 0 %>
-     <h3>Top bills among <%= @state.name %> users</h3>
-     <ul class="tiny_list">
-       <% @tracking_suggestions.last[:my_bills_tracked_facet].each do |bt| %>
-         <% unless bt[:trackers] == 0 %>
-         <li class="bill"><%= link_to bt[:object].typenumber, bill_path(bt[:object]) %> - <%= truncate(bt[:object].title_common, :length => 40) %>
-              <br />
-              <div class="meta"><%= link_to "#{bt[:trackers]} followers", users_tracking_bill_by_state_path(bt[:object], @state.abbreviation) %>
-              <%= link_to pluralize(bt[:object].comments.count, 'comment'), bill_comments_path(bt[:object]) %> 
-              <%= link_to "full text", bill_text_path(bt[:object]) %> </div></li>
-         <% end %>
-       <% end %>
-     </ul>
-     <br/>
-   <% end %>
 
-</div><!-- col1 -->
 <div class="col2">
 
 <% unless @tracking_suggestions.last[:my_people_tracked_facet].nil? || 
@@ -99,7 +81,7 @@
 
 
   <div class="find_form">
-    <% form_remote_tag :url => '/resources/district_from_address', :update => "find" do -%>
+    <%= form_remote_tag :url => '/resources/district_from_address', :update => "find" do -%>
       <p>There are <%= link_to "#{ pluralize(@representatives.length, 'representative') }", representatives_path(:anchor => @state.abbreviation) %> in <%= @state.abbreviation %>.<br /></p>
       <p>Find yours:
         <%= text_field_tag :address, 'enter your address', :onfocus => "if (this.value==this.defaultValue) this.value=''", :size => 30 %> <%= submit_tag 'Find' %>

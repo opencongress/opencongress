@@ -131,7 +131,7 @@
   
   <dt>Bills by ident</dt>
   <dd>
-    Returns bills matching the given OpenCongress identification strings.<br/>
+    Returns bills matching the given OpenCongress identification strings (session + chamber + bill number).<br/>
     <%= link_to_shown_url "#{Settings.api_base_url}bills_by_ident?ident[]=110-s1178&ident[]=110-s239" %>
   </dd>
 
@@ -172,6 +172,12 @@
     <%= link_to_shown_url "#{Settings.api_base_url}bills_in_the_news_this_week" %>
   </dd>
   
+  <dt>Most Commented-On Bills This Week</dt>
+  <dd>
+    Returns 20 bills with the most comments added in the last week.<br/>
+    <%= link_to_shown_url "#{Settings.api_base_url}most_commented_this_week" %>
+  </dd>
+
   <dt>Most Tracked Bills this Week</dt>
   <dd>
      Returns the most bills most tracked by OpenCongress Users this week.<br/>
@@ -245,6 +251,20 @@
 </div>
 
 
+<div class="rollcall_section">
+<h3>Comments</h3>
+
+<dl>
+
+  <dt>On Bills and People</dt>
+  <dd>
+    Returns comments on a bill or person.<br/>
+    <%= link_to_shown_url "#{Settings.api_base_url}comments?object_type=Bill&object_id=49937" %>
+    <%= link_to_shown_url "#{Settings.api_base_url}comments?object_type=Person&object_id=300056" %>
+  </dd>
+      
+</dl>
+</div>
 
 
 <div class="semantic_wiki">

@@ -1,0 +1,20 @@
+#heading
+  %h2 Contact Congress
+  
+.padding
+  %p We will now attempt to send your letter.
+  
+  #formageddon_modal.jqmWindow{ :style => "display:none;" }   
+    = render :partial => 'sending_spinner'
+    
+:javascript
+  $j(document).ready(function() {
+    setTimeout(function() {
+      $j('#formageddon_modal').jqm();
+      $j('#formageddon_modal').jqmShow();
+      $j.ajax({
+        url: '#{url_for :controller => "formageddon/delivery_attempts", :action => "show", :format => "js", :letter_ids => @letter_ids}'
+      });
+    }, 2000);
+  });
+  

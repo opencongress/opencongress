@@ -4,7 +4,6 @@ if defined? Formageddon
     config.user_method = :current_user
     config.sender_user_mapping = { 
       :sender_first_name => :full_name,
-      :sender_first_name => :full_name,
       :sender_email => :email,
       :sender_zip5 => :zipcode,
       :sender_state => :state
@@ -14,5 +13,9 @@ if defined? Formageddon
       ['Public -- Anyone', 'PUBLIC'], 
       ['Private -- You Only', 'PRIVATE']
     ]
+    
+    config.tmp_captcha_dir = '/tmp/'
+    
   end
+  
 end

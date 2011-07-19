@@ -475,8 +475,6 @@ left: 33px;
 	}
 
 #openid_url{
-	background: url('../images/forms.png') 0 -123px no-repeat;
-	_background: url('../images/forms.gif') 0 -123px no-repeat;
 	border: none;
 	padding: 8px;
 	margin-left: 10px;
@@ -4115,6 +4113,11 @@ margin: 0 15px 0 0;
 float: left;
 }
 
+#loginform input[type='text'], #loginform input[type='password'] {
+	margin-bottom: 12px;
+	width: 150px;
+}
+
 #login .login_options {
 clear: left;
 display: block;
@@ -4143,8 +4146,7 @@ clear: both;
 }
 
 #signupform #user_login, #signupform #user_password, #signupform #user_password_confirmation, #signupform #user_email, #openid_url {
-background: url('../images/forms.png') 0px -124px no-repeat;
-_background: url('../images/forms.gif') 0px -124px no-repeat;
+width: 150px;
 padding: 7px 10px 7px 7px;
 border: none;
 margin: 0 5px 0 0;
@@ -4157,13 +4159,11 @@ margin: 0;
 }
 
 #signupform #user_zipcode {
-background: url('../images/forms.png') 0px 0px no-repeat;
-_background: url('../images/forms.gif') 0px 0px no-repeat;
 padding: 7px;
 border: none;
 margin: 0 5px 0 0;
 float: left;
-width: 100px;
+width: 50px;
 }
 
 .zip_tell{

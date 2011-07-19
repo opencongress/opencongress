@@ -20,4 +20,13 @@ module ContactCongressLettersHelper
     end
   end
   
+  def formageddon_status_explanation(status)
+    if status =~ /SENT/
+      "We have confirmed delivery of your letter."
+    elsif status =~ /WARNING/
+      "We believe your letter has been sent, but cannot confirm delivery at this time."
+    else
+      "There was an error sending your letter. We are aware of the error and will retry sending when the error has been fixed."
+    end
+  end
 end

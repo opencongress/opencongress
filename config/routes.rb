@@ -146,12 +146,13 @@ OpenCongress::Application.routes.draw do
   resources :contact_congress_letters, :only => [:index, :show, :new] do
     get 'create_from_formageddon', :on => :collection # create uses POST and we'll be redirecting to create
     get 'get_recipients', :on => :collection 
+    get 'delayed_send', :on => :collection
   end
   
   match 'howtouse' => 'about#howtouse'
   
   scope :controller => 'account' do
-    for action in %w{ login why logout signup welcome }
+    for action in %w{ login why logout signup welcome contact_congress}
       match action, :action => action
     end
     

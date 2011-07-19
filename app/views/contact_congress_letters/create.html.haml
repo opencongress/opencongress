@@ -16,11 +16,17 @@
         Going forward, your new "MyOC" account will store your address info to make it easy to write your members of Congress, as well as enable you to join Groups on OpenCongress and more.
     - else 
       %p
-        Congratulations, your letter to your elected officials has been sent. If you receive any replies from the offices of your senators or representative, you will receive an email alert immediately. 
+        Congratulations, your letter to your elected officials has been sent. If you receive any replies from the offices of your senators or representative, you will receive an email alert immediately.
         - if @group
           Also, your letter has been added to the group
           = link_to @group.name, group_path(@group)
           \.
+      %p
+        - @contact_congress_letter.formageddon_threads.each do |t|
+          %strong= t.formageddon_recipient
+          \:
+          = formageddon_status_explanation(t.formageddon_letters.first.status)
+          %br
     %br
 
   .perm 

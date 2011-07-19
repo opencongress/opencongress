@@ -1,24 +1,25 @@
 - group_invite_id ||= false
-= form_for user, :url => { :controller => 'account', :action => action } do |f|
+= form_for user, :url => url_for(:controller => 'account', :action => action) do |f|
   = render "shared/error_messages", :target => user
 
   %p
     = f.label :login, 'Username'
-    = f.text_field :login
+    = f.text_field :login, :class => 'field'
 
   - unless @facebook_user
     %p
       = f.label :password, 'Password'
-      = f.password_field :password
+      = f.password_field :password, :class => 'field'
   
     %p
       = f.label :password_confirmation, 'Re-type password'
-      = f.password_field :password_confirmation
+      = f.password_field :password_confirmation, :class => 'field'
 
 
-  %p
-    = f.label :zipcode, 'Zipcode'
-    = f.text_field :zipcode
+  - if user.zipcode.blank?
+    %p
+      = f.label :zipcode, 'Zipcode'
+      = f.text_field :zipcode, :class => 'field'
 
   %p
     = f.check_box :accepted_tos

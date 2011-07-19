@@ -25,7 +25,6 @@ class User < ActiveRecord::Base
   validates_length_of       :password, :within => 4..40, :if => :password_required?
   validates_confirmation_of :password,                   :if => :password_required?
   validates_length_of       :login,    :within => 3..40, :unless => :openid?
-  validates_length_of       :zip_four, :within => 0..4, :allow_nil => true, :allow_blank => true
   validates_length_of       :email,    :within => 3..100, :unless => :openid?
   #validates_email_veracity_of :email
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :message => "address invalid"

@@ -116,9 +116,21 @@
           = render 'message_builder_commentary', :a => a
 
 
-  
-  
-  = form_for @formageddon_thread do |f|
+  #formageddon_modal.jqmWindow{ :style => "display:none;" }   
+    = render :partial => 'sending_spinner'
+
+  :javascript
+    $j().ready(function() {
+      $j('#formageddon_modal').jqm();
+      $j('.formageddon_submit').click(function() {
+        $j('#formageddon_modal').jqmShow();
+        return true;
+      });
+
+    }); 
+
+
+  = form_for @formageddon_thread, :remote => true do |f|        
     .contact_letter   
       #contact_recipients_container
         - if @sens.empty? and @reps.empty?
@@ -131,7 +143,7 @@
         %span.from From the Desk of Username
         %span.the-user a user out of District something or other
       .formageddon_contact_form
-        = render 'formageddon/threads/form', :f => f, :thread => @formageddon_thread, :after_send_url => "/contact_congress_letters/create_from_formageddon?bill=#{@bill.ident}&disposition=#{@position}&group_id=#{params[:group_id]}", :action_on_error => '/contact_congress_letters/new', :custom_params => { :bill => @bill.ident }
+        = render 'formageddon/threads/form', :f => f, :thread => @formageddon_thread, :after_send_url => "/contact_congress_letters/create_from_formageddon?bill=#{@bill.ident}&disposition=#{@position}&group_id=#{params[:group_id]}", :action_on_error => '/contact_congress_letters/new', :no_sender_redirect => '/account/contact_congress', :custom_params => { :bill => @bill.ident }
     
     %ul.instruction
       
@@ -195,10 +207,11 @@
   
   
   $j("#formageddon_formageddon_thread_sender_last_name").change(function() {
-    var sig = "\n\nSincerely,\n" +
-      $j("#formageddon_formageddon_thread_sender_first_name").val() + " " +
-      $j("#formageddon_formageddon_thread_sender_last_name").val();
-  
+    var name = $j("#formageddon_formageddon_thread_sender_first_name").val() + " " +
+               $j("#formageddon_formageddon_thread_sender_last_name").val();
+    var sig = "\n\nSincerely,\n" + name;
+      
+    $j('#from').html('From the Desk of ' + name);
     sigLength = sig.length
     
     $j('#formageddon_formageddon_thread_formageddon_letters_attributes_0_message').val(

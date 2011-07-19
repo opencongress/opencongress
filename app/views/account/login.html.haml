@@ -12,14 +12,8 @@
 
     #loginform.floatleft.form.clear{ :title => "Account login" }
       %h3 Login with Your OpenCongress Account
-      = form_for :user do |f|
-        %p
-          %label{ :for => "user_login" } Login
-          = f.text_field :login, :class => 'field', :size => 30
-        %p
-          %label{ :for => "user_password" } Password
-          = f.password_field :password, :class => 'field', :size => 30 
-        %input.floatright.margintop.behave{ :type => "image", :value => "Login", :src => image_path('login2.png') }
+      = render :partial => 'login_form'
+
 
       %p.margintop.floatleft.margin-top
         = link_to "Forgot Password?", :action => 'forgot_password'
@@ -29,7 +23,7 @@
       #oid_loginform.form{ :title => "Account login" }
         %p.openidform
           %label{ :for => "identity_url" } OpenID URL
-          = text_field_tag :openid_url,nil, :size => 30
+          = text_field_tag :openid_url,nil, :class => 'field', :size => 30
         %br
         %input.floatright.margintop.behave{ :type => "image", :value => "Login with OpenID", :src => image_path('login3.png') }
 

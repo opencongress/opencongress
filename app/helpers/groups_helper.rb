@@ -16,7 +16,7 @@ module GroupsHelper
   end
 
   def group_members_num_with_delimiter(group)
-    number_with_delimiter(group_members_num(num))
+    number_with_delimiter(group_members_num(group))
   end
   
   def show_search?

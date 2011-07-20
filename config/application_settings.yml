@@ -39,8 +39,8 @@ development:
   oc_billtext_path: /Users/aross/pcf-work/oc_billtext
   committee_reports_path: /Users/aross/pcf-work/committee_reports
   
-  group_images_path: /Users/aross/pcf-work/gitbranches/opencongress/public/system/group_images
-  notebook_files_path: /Users/aross/pcf-work/gitbranches/opencongress/public/system/notebook_files
+  group_images_path: <%= Rails.root %>/public/system/group_images
+  notebook_files_path: <%= Rails.root %>/public/system/notebook_files
     
   base_url: http://localhost:3000/
   api_host: api.127localhost.com:3000

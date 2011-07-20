@@ -56,6 +56,20 @@ OC = window.OC || {};
   	return new Date((time || "").replace(/^(\d+)-(\d+)-(\d+)/,"$1/$2/$3").replace(/[TZ]/g," "));
   };
   
+  OC.ordinalize = function(number) {
+      if (11 <= parseInt(number) % 100 && parseInt(number) % 100 <= 13) {
+          return number + "th";
+      } else {
+          switch (parseInt(number) % 10) {
+              case  1: return number + "st";
+              case  2: return number + "nd";
+              case  3: return number + "rd";
+              default: return number + "th";
+          }
+      }
+  };
+  
+  
   /*
    * Date Format 1.2.3
    * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
@@ -287,6 +301,7 @@ OC = window.OC || {};
           this._isBillWidget = ops.type == 'bill_status';
           this.type = ops.type;
           this.domain = ops.domain || 'api.opencongress.org';
+          this.linkDomain = (this.domain.substr(0, 4) == 'api.') ? this.domain.substr(4) : this.domain
           this.bill = ops.bill;
           this.preview = ops.preview || false;
           this.url = this._getUrl();
@@ -405,7 +420,7 @@ OC = window.OC || {};
           var that = this;
           jsonp.fetch(this.url, function(data) {
             // jsonp callback
-            var params = {domain: http + that.domain};
+            var params = {domain: http + that.linkDomain};
             params[that['type']] = data;
             console.log(params);
             that.widgetEl.innerHTML = window.JST[that.type](params);

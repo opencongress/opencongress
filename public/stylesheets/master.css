@@ -4499,6 +4499,54 @@ background: url(../images/donate/big_arrow.gif) 0 1px repeat;
 
 
 
+
+
+.banner2{
+left: 69px;
+height: 150px;width: 1002px;
+
+background:#e9e8f3;
+top: 257px;
+text-align: center;
+}
+
+
+.banner2 .left_cap{
+position: absolute;
+left: -28px;
+display: none;
+height: 83px;
+width: 28px;
+background: url(../images/donate/banner_caps.gif) repeat-x;
+}
+
+
+.banner2 .right_cap{
+position: absolute;
+right: -28px;
+height: 83px;
+display: none;
+width: 28px;
+background: url(../images/donate/banner_caps.gif) top right repeat-x;
+}
+
+
+.banner2 h1{
+font-size: 30px;
+padding: 45px 0 10px;
+}
+
+
+
+.banner2 h2{
+
+}
+
+
+
+
+
+
 .donate_now{
 float: right;
 padding-top: 49px;
@@ -5290,7 +5338,7 @@ float: left;
 position: relative !important;
 }
 
-#about.version2 .banner{
+#about.version3 .banner{
 display: none;
 }
 

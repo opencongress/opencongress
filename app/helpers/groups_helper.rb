@@ -15,5 +15,9 @@ module GroupsHelper
     num = !group.has_attribute?(:group_members_count) ? group.active_members.count + 1 : group.group_members_count.to_i + 1
     number_with_delimiter(num)
   end
+  
+  def show_search?
+    @state.nil?
+  end
 end
 

@@ -57,7 +57,13 @@ class GroupsController < ApplicationController
       @sort = 'groups.name ASC'
     end
     
-    @groups = Group.visible.order(@sort)
+    if params[:state]
+      @state = State.find_by_abbreviation(params[:state])
+      @groups = Group.in_state(@state.id).order("groups.state_id, groups.name ASC")
+      @page_title = "OpenCongress Groups in #{@state.name}"
+    else
+      @groups = Group.visible.order(@sort)
+    end
     
     unless params[:q].blank? and params[:pvs_category].blank?
       unless params[:q].blank?

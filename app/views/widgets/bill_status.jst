@@ -1,17 +1,17 @@
 <% var bill = bill_status.bills[0]['bill']; %>
 <div class="oc-widget-container">
 <h1><a href="<%= domain %>">OpenCongress</a>
-<span><a href="<%= domain + bill.permalink %>">Bill Status</a></span>
+<span><a href="<%= domain + bill.permalink %>"><%= OC.ordinalize(bill.session) %> US Congress</a></span>
 </h1>
 <ul>
   <li>
     <h2><a href="<%= domain + bill.permalink %>"><strong><%= bill.typenumber %></strong>: <%= bill.title_common.truncate(140) %></a></h2>
     <div class="oc-widget-intro">Introduced <time class="oc-widget-first-bill-action" datetime="<%= bill.introduced_at %>"><%= OC.dateFromISO8601(bill.introduced_at).format("mediumDate") %></time></div>
     <div class="oc-widget-bill-action">Last action on <time class="oc-widget-last-bill-action" datetime="<%= bill.last_action_at %>"><%= OC.dateFromISO8601(bill.last_action_at).format("mediumDate") %></time></div>
-    <div class="og-widget-cosponsor-count"><%= "Co-Sponsor".pluralize(bill.co_sponsors.length) %></div>
+    <div class="oc-widget-cosponsor-count"><%= "Co-Sponsor".pluralize(bill.co_sponsors.length) %></div>
     <div class="oc-widget-clear">&nbsp;</div>
   </li>
 </ul>
-<a href="<%= domain %>/contact_congress_letters/new?bill=<%= bill.ident %>">Write your reps &rarr;</a>
-<a href="<%= domain + bill.permalink %>" class="oc-widget-footer">More at OpenCongress &rarr;</a>
+<a href="<%= domain %>/contact_congress_letters/new?bill=<%= bill.ident %>">Write your Members of Congress &rarr;</a>
+<a href="<%= domain + bill.permalink %>" class="oc-widget-footer">This bill on OpenCongress &rarr;</a>
 </div>

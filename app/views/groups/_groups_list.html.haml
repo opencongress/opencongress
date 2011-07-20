@@ -14,7 +14,7 @@
       %span.grid_3= link_to "<strong>#{g.name}</strong>".html_safe, g
       %span.grid_6.descrip= g.description
       %span.grid_3= g.pvs_category.nil? ? "None" : g.pvs_category.name
-      %span.grid_2.large-count= group_members_num(g)
+      %span.grid_2.large-count= group_members_num_with_delimiter(g)
       - if logged_in?
         - if g.is_member?(current_user)
           %span.grid_1.omega= link_to 'Leave', group_group_member_path(g, g.group_members.find_by_user_id(current_user.id)), :method => 'delete', :class => 'button yellow small floatright'

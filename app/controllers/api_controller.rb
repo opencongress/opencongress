@@ -25,7 +25,7 @@ class ApiController < ApplicationController
 
   end
 
-  def people    
+  def people
     seperator = "AND"
     seperator = params[:seperator] if params[:seperator] == "OR"
     conditions = {}

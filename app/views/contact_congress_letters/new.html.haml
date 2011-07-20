@@ -178,6 +178,22 @@
 :javascript
   var sigLength=0;
   
+  function mbHoverIn(object) {
+    $j(object).find("div.will_add_text_box:first").fadeIn(.3);
+  }
+  function mbHoverOut(object) {
+    $j(object).find("div.will_add_text_box:first").fadeOut(.3);
+  }
+  function mbAddText(object) {
+    var insertPoint;
+  
+    txt = $j(object).find("div.message_builder_add_text:first").text();
+    msg = $j('div.formageddon_contact_form textarea:first')
+  
+    insertPoint = msg.val().length - sigLength;
+    msg.val(msg.val().substring(0, insertPoint)+"\n\n"+unescape(txt)+msg.val().substring(insertPoint)); 
+  }
+  
   $j("#formageddon_formageddon_thread_sender_zip5").keyup(function() {
     if ($j(this).val().length == 5) {
       $j("#none").html("<img src='/images/spinner-ovals.gif' />");
@@ -220,26 +236,8 @@
   }); 
    
   
-  $j(".message_builder_clickable").hover(
-    function () {
-      $j(this).find("div.will_add_text_box:first").fadeIn(.3);
-    },
-    function () {
-      $j(this).find("div.will_add_text_box:first").fadeOut(.3);
-    }
-  );
-  $j(".message_builder_clickable").click(
-    function () {
-      var insertPoint;
-      
-      txt = $j(this).find("div.message_builder_add_text:first").text();
-      msg = $j('div.formageddon_contact_form textarea:first')
-      
-      insertPoint = msg.val().length - sigLength;
-      
-      msg.val(msg.val().substring(0, insertPoint)+"\n\n"+unescape(txt)+msg.val().substring(insertPoint)); 
-    }
-  );
+  $j(".message_builder_clickable").hover(function(){ mbHoverIn(this) }, function(){ mbHoverOut(this) });
+  $j(".message_builder_clickable").click(function(){ mbAddText(this) });
     
   $j(document).ready(function() {
     $j('.formageddon_submit').addClass("button blue huge");

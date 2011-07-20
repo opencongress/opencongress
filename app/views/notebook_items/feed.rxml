@@ -2,7 +2,7 @@ xml.instruct!
 
 xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
 
-  xml.title   "#{@user.login}'s Political Notebook"
+  xml.title   @page_title
   xml.link    "rel" => "self", "href" => url_for(:only_path => false, :controller => 'notebook_items', :action => 'feed')
   xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'notebook_items', :action => 'index')
   xml.id      @political_notebook.atom_id
@@ -33,7 +33,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
       xml.updated item.updated_at.strftime("%Y-%m-%dT%H:%M:%SZ")
       xml.content "type" => "html" do
         @item = item
-        xml.text! item.description
+        xml.text! item.description unless item.description.blank?
       end
     end
   end

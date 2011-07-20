@@ -235,6 +235,11 @@ background: url(/images/tiny-arrow.png) 10px 10px no-repeat;
 cursor: pointer !important;
 }
 
+.contact_message_builder .contribution_data .message_builder_clickable:hover {
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)) !important; /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #eee) !important; /* for firefox 3.6+ */
+}
+
 div.will_add_text_box{
 position: absolute;
 margin: 20px;

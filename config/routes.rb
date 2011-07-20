@@ -24,8 +24,10 @@ OpenCongress::Application.routes.draw do
     resources :group_bill_positions
     
     resource :political_notebook do
-      collection do
-        get :feed
+      resources :notebook_items do
+        collection do
+          get :feed
+        end
       end
       resources :notebook_links
       resources :notebook_videos

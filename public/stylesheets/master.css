@@ -2617,7 +2617,15 @@ color: #999
   padding: 0;
   
 }
-
+h2.group_name a {
+  text-decoration: none;
+}
+h2.group_name a:hover {
+  text-decoration: underline;
+}
+h2.group_name a:visited {
+  color:#333;
+}
 #heading.group .thumb{
 float: left;
 width: 75px;

@@ -37,11 +37,18 @@ class NotebookItemsController < ApplicationController
 
 
   def feed
-    # since rss readers can't log into OC accounts, just see if the user has their PN privacy to 'everyone'
-    unless @user.can_view('my_political_notebook',nil)
-      flash[:notice] = "You don't have permission to subscribe to that user's political notebook!"
-      redirect_to :controller => 'index'
-      return
+    if @group 
+      unless @group.publicly_visible?
+        redirect_to groups_path
+        return
+      end
+    else
+      # since rss readers can't log into OC accounts, just see if the user has their PN privacy to 'everyone'
+      unless @user.can_view('my_political_notebook',nil)
+        flash[:notice] = "You don't have permission to subscribe to that user's political notebook!"
+        redirect_to :controller => 'index'
+        return
+      end
     end
     
     @items = @political_notebook.notebook_items.find(:all, :limit => 20)

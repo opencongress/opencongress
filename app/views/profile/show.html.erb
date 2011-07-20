@@ -170,59 +170,47 @@
 		<% end %>	
 
 
-<h3 class="margin-top">State Groups</h3>
+<% if @user.can_view(:my_congressional_district, current_user) %>
+  <h3 class="margin-top">State Group</h3>
+  <ul class='container_16'>
+    <% @user.groups.where("state_id IS NOT NULL").each do |g| %>
+      <li class='grid_10 lined'> 
+        <span class='grid_1 alpha'> 
+          <div class='thumb smaller'><%= group_image(g) %></div>
+        </span> 
+        <span class='grid_3'><a href="<%= url_for g %>"><strong><%= g.name %></strong></a></span> 
+        <span class='grid_3'>State Group</span> 
+        <span class='grid_2'><%= group_members_num(g) %></span>
+        <% if logged_in? and g.is_member?(current_user) %>
+          <span class='grid_1 omega'>
+            <%= link_to 'Leave', group_group_member_path(g, g.group_members.find_by_user_id(current_user.id)), :method => 'delete', :class => 'button yellow small floatright' %>
+          </span>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
 
-<ul class='container_16'>
-    <li class='grid_10 lined'> 
-      <span class='grid_1 alpha'> 
-        <div class='thumb smaller'><img alt="Missing" src="/group_images/thumb/missing.png" /></div> 
-      </span> 
-      <span class='grid_3'><a href="/groups/1_OpenCongress_Alabama_Group"><strong>OpenCongress Alabama Group</strong></a></span> 
-      <span class='grid_3'>None</span> 
-      <span class='grid_2'>2318</span> 
-      <span class='grid_1 omega'><a href="#" class="button silver small floatright">Join</a></span> 
-    </li> 
-    <li class='grid_10 lined'> 
-      <span class='grid_1 alpha'> 
-        <div class='thumb smaller'><img alt="Missing" src="/group_images/thumb/missing.png" /></div> 
-      </span> 
-      <span class='grid_3'><a href="/groups/2_OpenCongress_Alaska_Group"><strong>OpenCongress Alaska Group</strong></a></span> 
-      <span class='grid_3'>None</span> 
-      <span class='grid_2'>606</span> 
-      <span class='grid_1 omega'><a href="#" class="button silver small floatright">Join</a></span> 
-    </li> 
+  <div class="clear space">&nbsp;</div>
+  <h3 class="margin-top">Congressional District Group</h3>
 
-</ul>   
-
-<div class="clear space">&nbsp;</div>
-<h3 class="margin-top">Congressional District Groups</h3>
-
-<ul class='container_16'>
-    <li class='grid_10 lined'> 
-      <span class='grid_1 alpha'> 
-        <div class='thumb smaller'><img alt="Missing" src="/group_images/thumb/missing.png" /></div> 
-      </span> 
-      <span class='grid_3'><a href="/groups/1_OpenCongress_Alabama_Group"><strong>OpenCongress Alabama Group</strong></a></span> 
-      <span class='grid_3'>None</span> 
-      <span class='grid_2'>2318</span> 
-      <span class='grid_1 omega'><a href="#" class="button silver small floatright">Join</a></span> 
-    </li> 
-    <li class='grid_10 lined'> 
-      <span class='grid_1 alpha'> 
-        <div class='thumb smaller'><img alt="Missing" src="/group_images/thumb/missing.png" /></div> 
-      </span> 
-      <span class='grid_3'><a href="/groups/2_OpenCongress_Alaska_Group"><strong>OpenCongress Alaska Group</strong></a></span> 
-      <span class='grid_3'>None</span> 
-      <span class='grid_2'>606</span> 
-      <span class='grid_1 omega'><a href="#" class="button silver small floatright">Join</a></span> 
-    </li> 
-
-</ul>   
-
-
+  <ul class='container_16'>
+    <% @user.groups.where("district_id IS NOT NULL").each do |g| %>
+      <li class='grid_10 lined'> 
+        <span class='grid_1 alpha'> 
+          <div class='thumb smaller'><%= group_image(g) %></div>
+        </span> 
+        <span class='grid_3'><a href="<%= url_for g %>"><strong><%= g.name %></strong></a></span> 
+        <span class='grid_3'>District Group</span> 
+        <span class='grid_2'><%= group_members_num(g) %></span>
+        <% if logged_in? and g.is_member?(current_user) %>
+          <span class='grid_1 omega'>
+            <%= link_to 'Leave', group_group_member_path(g, g.group_members.find_by_user_id(current_user.id)), :method => 'delete', :class => 'button yellow small floatright' %>
+          </span>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
 </div>
-
-
-		
-				</div>
+</div>
 

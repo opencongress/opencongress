@@ -20,5 +20,5 @@
   .thumb
     = group_image(@group)
 
-  %h2= subtitle.nil? ? @group.name : "#{@group.name} : #{subtitle}"
+  %h2.group_name= subtitle.nil? ? link_to(@group.name, @group).html_safe : "#{link_to(@group.name, @group)} : #{subtitle}".html_safe
   

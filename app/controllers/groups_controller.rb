@@ -33,7 +33,9 @@ class GroupsController < ApplicationController
     
     @page_title = "#{@group.name} - MyOC Groups"
     
-    respond_with @group
+    respond_with(@group) do |format|
+      format.xml { redirect_to feed_group_political_notebook_notebook_items_path(@group) }
+    end
   end
 
   def index

@@ -1,0 +1,25 @@
+<% var g = group.group; %>
+<div class="oc-widget-container">
+<h1><a href="<%= domain %>">OpenCongress</a>
+<% if (g.thumbnail_path) { %>
+  <img src="<%= domain + g.thumbnail_path %>" style="float: left; max-width: 40px; max-height: 40px; padding-right: 5px;">
+<% } %>
+<span><a href="<%= domain + g.permalink %>"><%= g.name.truncate(60) %></a></span>
+</h1>
+<p>has <%= OC.number_with_delimiter(g.member_count) %> members.</p>
+<ul>
+  <li>
+    <h2><%= g.description.truncate(140) %></h2>
+    <% if (g.bill_positions.length) { %>
+      <% var bill_position = g.bill_positions[0].bill_position; var bill = bill_position.bill; %>
+      <div class="oc-widget-group-bill-position">We <%= bill_position.position %> <a href="<%= domain + bill.permalink %>"><strong><%= bill.typenumber %></strong>: <%= bill.title_common.truncate(140) %></a></div>
+    <% } %>
+    <div class="oc-widget-clear">&nbsp;</div>
+  </li>
+</ul>
+<% if (g.bill_positions.length > 1) { %> 
+<a href="<%= domain + g.permalink %>" class="oc-widget-footer">See <%= 'other bill position'.pluralize(g.bill_positions.length - 1) %>  &rarr;</a>
+<% } else { %>
+<a href="<%= domain + g.permalink %>" class="oc-widget-footer">Visit this group on OpenCongress &rarr;</a>
+<% } %>
+</div>

@@ -12,7 +12,7 @@ class Group < ActiveRecord::Base
   has_many :group_members
   has_many :users, :through => :group_members, :order => "users.login ASC"
   
-  has_many :group_bill_positions
+  has_many :group_bill_positions, :order => 'group_bill_positions.created_at desc'
   has_many :bills, :through => :group_bill_positions
   
   has_many :comments, :as => :commentable
@@ -87,7 +87,21 @@ class Group < ActiveRecord::Base
   end
   
   def can_invite?(u)
-    return true
+    return false if u == :false
+    return true if self.user == u
+
+    membership = group_members.where(["group_members.user_id=?", u.id]).first
+    
+    return false if membership.nil?
+    
+    case invite_type
+    when 'ANYONE'
+      return true
+    when 'MODERATOR'  
+      return true if membership.status == 'MODERATOR'
+    end
+    
+    return false
   end
   
   def can_post?(u)

@@ -24,6 +24,8 @@ var refreshTheme = function(widget) {
   // Set additional parameters relevant to specific widgets
   if (widget.type == 'bill_status') {
     widget.setBill($('#widgetData').data('bill'));
+  } else if (widget.type == 'group') {
+    widget.setGroup($('#widgetData').data('group'));
   }
 
   widget.reformat();

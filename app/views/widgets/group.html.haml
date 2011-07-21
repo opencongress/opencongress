@@ -1,0 +1,87 @@
+#heading
+  %h1= @page_title = 'Create a custom MyOC Group Widget'
+
+.container_16
+  .widget_preview.grid_4.alpha
+    %h2 Live Preview of your widget
+    #widgetPreview
+      :javascript
+        var testWidget = new OC.Widget({
+          version: 1,
+          type: 'group',
+          group: '#{@hot_groups.first.to_param}',
+          width: 'auto',
+          preview: true,
+          #{Rails.env != 'production' ? %Q{domain: '#{Settings.api_host}',} : ''}
+          theme: {
+            background: '#f9f9f9',
+            color: '#555',
+            header: '#333',
+            links: '#333'
+          }
+        }).render();
+
+
+  .widget_config.grid_8.omega.alpha
+    %h2 Customize your widget
+
+    %form
+      -# Storage for the currently selected bill
+      #widgetData
+
+      %label(for="widgetGroup") Choose a popular group:
+      %select(id="widgetGroup")
+        - @hot_groups.each do |group|
+          %option{:'data-group' => group.to_param}= truncate(group.name, :length => 70)
+
+      :javascript
+        // WHen we choose a group from the select list, update #widgetData to reflect
+        $('#widgetGroup').change(function() {
+          var el = $(this).find('option:selected');
+          $('#widgetData').data('group', el.data('group'));
+          $('#widgetData').trigger('refresh');
+        });
+
+    %form
+      %label(for="widgetGroupLookup") Or lookup any group by name, eg. 'Alabama':
+      %input(type="text" id="widgetGroupLookup")
+      %input(type="submit" id="groupLookupBtn")
+    #groupLookupResults
+
+    :javascript
+      // Search for a group via jsonp and display the results
+      $('#groupLookupBtn').click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            dataType: "jsonp",
+            url: '#{escape_javascript(Settings.api_base_url)}groups.json?callback=?&name=' + $('#widgetGroupLookup').val(),
+            success: function(response) {
+              $('#groupLookupResults').html(window.JST['group_search_results']({ group_search_results: response.groups }));
+
+              // Update #widgetData to reflect a group chosen from search results.
+              $('.groupSearchResult').click(function() {
+                $('#widgetData').data('group', $(this).data('group'));
+                $('#widgetData').trigger('refresh');
+                return false;
+              });
+            }
+        });
+
+        return false;
+      });
+
+    %form
+      = render :partial => 'color_choosers'
+
+      #dimensions
+        %label(for='widgetWidth') Width:
+        %input(type="text" maxlength="3" size="3" id="widgetWidth" class="widgetVar" value="250")
+        %span.note (in px)
+        %p.small 
+          (width changes do not appear in the preview)
+
+    .space
+
+    #get_the_code
+      %h2 Get the Code
+      %textarea(id="embed-code")

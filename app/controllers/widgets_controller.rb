@@ -12,5 +12,10 @@ class WidgetsController < ApplicationController
     end
   end
 
-
+  def group
+    @hot_groups = ObjectAggregate.popular('Group', Settings.default_count_time, 10)
+    if @hot_groups.empty?
+      @hot_groups = Group.find(:all, :limit => 10)
+    end
+  end
 end

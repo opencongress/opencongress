@@ -4511,9 +4511,10 @@ background: url(../images/donate/big_arrow.gif) 0 1px repeat;
 
 .banner2{
 left: 69px;
-height: 150px;width: 1002px;
-
+height: 151px;width: 1002px;
 background:#e9e8f3;
+background: url(../images/banner2.png) 0 -1px;
+
 top: 257px;
 text-align: center;
 }
@@ -4521,21 +4522,22 @@ text-align: center;
 
 .banner2 .left_cap{
 position: absolute;
-left: -28px;
-display: none;
-height: 83px;
+left: -19px;
+height: 153px;
 width: 28px;
-background: url(../images/donate/banner_caps.gif) repeat-x;
+top: -1px;
+
+background: url(../images/banner2-left.png) no-repeat;
 }
 
 
 .banner2 .right_cap{
 position: absolute;
-right: -28px;
-height: 83px;
-display: none;
+right: -19px;
+height: 153px;
 width: 28px;
-background: url(../images/donate/banner_caps.gif) top right repeat-x;
+top: -1px;
+background: url(../images/banner2-right.png) top right no-repeat;
 }
 
 
@@ -4550,9 +4552,11 @@ padding: 45px 0 10px;
 
 }
 
+.don{
 
-
-
+clear: both;
+margin-top: 30px;
+}
 
 
 .donate_now{

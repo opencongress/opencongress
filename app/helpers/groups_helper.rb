@@ -12,8 +12,11 @@ module GroupsHelper
   end
   
   def group_members_num(group)
-    num = !group.has_attribute?(:group_members_count) ? group.active_members.count + 1 : group.group_members_count.to_i + 1
-    number_with_delimiter(num)
+    !group.has_attribute?(:group_members_count) ? group.active_members.count + 1 : group.group_members_count.to_i + 1
+  end
+
+  def group_members_num_with_delimiter(group)
+    number_with_delimiter(group_members_num(group))
   end
   
   def show_search?

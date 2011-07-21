@@ -1,0 +1,10 @@
+<% if (group_search_results.length > 0) { %>
+<ul id="searchResults">
+  <% _.each(group_search_results, function(groupContainer) {
+      var group = groupContainer.group; %>
+    <li><a class="groupSearchResult" href="#" data-group="<%= group.to_param %>"><strong><%= group.name.substring(0, 120) + (group.name.length > 120 ? "..." : '') %></a></li>
+  <% }); %>
+</div>
+<% } else { %>
+Sorry, no matching groups were found.
+<% } %>

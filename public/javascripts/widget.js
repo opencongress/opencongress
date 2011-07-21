@@ -69,6 +69,13 @@ OC = window.OC || {};
       }
   };
   
+  OC.number_with_delimiter = function (number, delimiter) {
+    number = number + '', delimiter = delimiter || ',';
+    var split = number.split('.');
+    split[0] = split[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + delimiter);
+    return split.join('.');
+  };
+  
   
   /*
    * Date Format 1.2.3
@@ -293,21 +300,25 @@ OC = window.OC || {};
 
       return {
         init: function(ops) {
+          // general parameters
           this.ops = ops;
           this.theme = ops.theme ? ops.theme : this._getDefaultTheme();
           this._widgetNumber = ++OC.Widget.WIDGET_NUMBER;
-          this._isPeopleWidget = ops.type == 'most_viewed_people';
+          this._isGroupWidget = ops.type == 'group';
           this._isBillsWidget = ops.type == 'most_viewed_bills';
           this._isBillWidget = ops.type == 'bill_status';
           this.type = ops.type;
           this.domain = ops.domain || 'api.opencongress.org';
           this.linkDomain = (this.domain.substr(0, 4) == 'api.') ? this.domain.substr(4) : this.domain
-          this.bill = ops.bill;
           this.preview = ops.preview || false;
-          this.url = this._getUrl();
           this.setWidth(ops.width);
           this.id = ops.id || 'oc-widget-' + this._widgetNumber;
 
+          // widget-specific parameters
+          this.bill = ops.bill;
+          this.group = ops.group;
+          
+          this.url = this._getUrl();
           this._reset();
 
           this._ready = isFunction(ops.ready) ? ops.ready : function() { };
@@ -338,9 +349,9 @@ OC = window.OC || {};
           if (this._isBillsWidget) {
             return http + this.domain + '/bills.json?sort=views&per_page=3&callback=?';
           } else if (this._isBillWidget) {
-            return http + this.domain + '/bills_by_ident.json?callback=?&ident[]=' + this.bill;
+            return http + this.domain + '/bills_by_ident.json?callback=?&ident[]=' + encodeURIComponent(this.bill);
           } else {
-            return http + this.domain + '/people.json?sort=views&limit=3&callback=?';
+            return http + this.domain + '/groups/' + encodeURIComponent(this.group) + '.json?callback=?';
           }
         },
 
@@ -405,12 +416,6 @@ OC = window.OC || {};
           return this;
         },
 
-        setBill: function(bill) {
-          this.bill = this.ops.bill = bill;
-          this.url = this._getUrl();
-          return this;
-        },
-
         _injectStyleSheet: function() {
           injectStyleSheet(http + domain + "/stylesheets/widget.css", this.widgetEl);
         },
@@ -421,7 +426,7 @@ OC = window.OC || {};
           jsonp.fetch(this.url, function(data) {
             // jsonp callback
             var params = {domain: http + that.linkDomain};
-            params[that['type']] = data;
+            params[that.type] = data;
             console.log(params);
             that.widgetEl.innerHTML = window.JST[that.type](params);
           });
@@ -436,6 +441,20 @@ OC = window.OC || {};
         setCaption: function(subject) {
           this.subject = subject;
           this.widgetEl.getElementsByTagName('h4')[0].innerHTML = this.subject;
+          return this;
+        },
+
+        // WIDGET-SPECIFIC SETTERS
+        setBill: function(bill) {
+          this.bill = this.ops.bill = bill;
+          this.url = this._getUrl();
+          return this;
+        },
+
+        
+        setGroup: function(group) {
+          this.group = this.ops.group = group;
+          this.url = this._getUrl();
           return this;
         },
 

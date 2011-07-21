@@ -251,7 +251,7 @@
 </div>
 
 
-<div class="rollcall_section">
+<div class="comments_section">
 <h3>Comments</h3>
 
 <dl>
@@ -266,6 +266,16 @@
 </dl>
 </div>
 
+<div class="groups_section">
+<h3>Groups</h3>
+<dl>
+  <dt>All public groups</dt>
+  <dd><%= link_to_show_url "#{Settings.api_base_url}groups" %></dd>
+
+  <dt>Data on a specific group and its bill positions:</dt>
+  <dd><%= link_to_show_url "#{Settings.api_base_url}group/5" %></dd>
+</dl>
+</div>
 
 <div class="semantic_wiki">
 <h3>Wiki APIs</h3>

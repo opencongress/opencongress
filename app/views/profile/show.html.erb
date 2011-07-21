@@ -180,7 +180,7 @@
         </span> 
         <span class='grid_3'><a href="<%= url_for g %>"><strong><%= g.name %></strong></a></span> 
         <span class='grid_3'>State Group</span> 
-        <span class='grid_2'><%= group_members_num(g) %></span>
+        <span class='grid_2'><%= group_members_num_with_delimiter(g) %></span>
         <% if logged_in? and g.is_member?(current_user) %>
           <span class='grid_1 omega'>
             <%= link_to 'Leave', group_group_member_path(g, g.group_members.find_by_user_id(current_user.id)), :method => 'delete', :class => 'button yellow small floatright' %>
@@ -201,7 +201,7 @@
         </span> 
         <span class='grid_3'><a href="<%= url_for g %>"><strong><%= g.name %></strong></a></span> 
         <span class='grid_3'>District Group</span> 
-        <span class='grid_2'><%= group_members_num(g) %></span>
+        <span class='grid_2'><%= group_members_num_with_delimiter(g) %></span>
         <% if logged_in? and g.is_member?(current_user) %>
           <span class='grid_1 omega'>
             <%= link_to 'Leave', group_group_member_path(g, g.group_members.find_by_user_id(current_user.id)), :method => 'delete', :class => 'button yellow small floatright' %>

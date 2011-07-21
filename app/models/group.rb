@@ -12,7 +12,7 @@ class Group < ActiveRecord::Base
   has_many :group_members
   has_many :users, :through => :group_members, :order => "users.login ASC"
   
-  has_many :group_bill_positions
+  has_many :group_bill_positions, :order => 'group_bill_positions.created_at desc'
   has_many :bills, :through => :group_bill_positions
   
   has_many :comments, :as => :commentable

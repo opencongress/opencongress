@@ -640,8 +640,13 @@ top: 709px;
 
 
 .privacy_options{
-padding-top: 40px;
-width: 540px;
+width: 370px;
+padding: 10px 0 10px 15px;
+background: #eee;
+clear: both;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
 }
 
 .privacy_options label{
@@ -650,10 +655,13 @@ line-height: 1.5em;
 font-weight: bold;
 float: none;
 width: 100%;
+font-size: 13px;
 }
 
 .privacy_options select{
-font-size: 9px;
+font-size: 10px;
+padding: 4px;
+
 }
 
 

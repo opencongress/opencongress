@@ -1,4 +1,4 @@
-%li.group-comment{ :id => "item_#{group_item.id}", :class => (group_item.created_at > Time.parse('2011-06-25 13:27:37.171769')) ? 'new' : '' }
+%li.group-comment{ :id => "item_#{group_item.id}", :class => (group_item.created_at > (@last_view || Time.now)) ? 'new' : '' }
   %span.icon
   %div.item_content
     %span.person-activity 
@@ -8,4 +8,4 @@
     %p.desc= group_item.description
 
 
-  = render 'groups/activity_stream_comments', :item => group_item
+  = render 'groups/activity_stream_item_links', :item => group_item

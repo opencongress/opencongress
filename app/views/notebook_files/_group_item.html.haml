@@ -1,14 +1,14 @@
-%li.photo
+%li.photo{ :id => "item_#{group_item.id}", :class => (group_item.created_at > (@last_view || Time.now)) ? 'new' : '' }
   %span.icon
   %div.item_content
     %span.person-activity 
       = link_to group_item.group_user.login, user_profile_path(group_item.group_user.login)
       shared a photo
-    %span.shared-photo= image_tag(group_item.file.url(:medium))
+    %span.shared-photo= image_tag(group_item.file.url(:medium), :class => 'thephoto')
     
     - unless group_item.description.blank?
       %p.behave= group_item.description
     
-    
+  = render 'groups/activity_stream_item_links', :item => group_item
     
     

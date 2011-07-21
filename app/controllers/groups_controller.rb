@@ -1,5 +1,7 @@
 class GroupsController < ApplicationController
   before_filter :login_required, :except => [ :show, :index ]
+  before_filter :check_membership, :only => :show
+  
   respond_to :html, :json, :xml
   respond_to :js, :only => [:index]
   
@@ -26,8 +28,8 @@ class GroupsController < ApplicationController
     end
   end
   
-  def show
-    @group = Group.find(params[:id])
+  def show 
+    # we got the @group object in check_membership
     
     @simple_comments = true
     
@@ -83,6 +85,7 @@ class GroupsController < ApplicationController
   end
   
   def edit
+    @page_title = "Edit Group Settings"
     @group = Group.find(params[:id])
     
     unless @group.user == current_user
@@ -105,4 +108,46 @@ class GroupsController < ApplicationController
     end
   end
 
+  private
+  
+  def check_membership
+    @group = Group.find(params[:id])
+    if @group.nil?
+      redirect_to groups_path
+      return
+    end
+    
+    if !@group.publicly_visible? or @group.join_type == 'INVITE_ONLY'
+      if current_user == :false
+        redirect_to groups_path, :notice => "That group is private!"
+        return
+      else
+        return true if @group.user == current_user
+        
+        membership = @group.group_members.where(["group_members.user_id=?", current_user.id]).first
+      
+        if membership.nil?
+          redirect_to groups_path, :notice => "That group is private!"
+          return
+        elsif membership.status == 'BOOTED'
+          redirect_to groups_path, :notice => "You have been booted from that group."
+          return
+        end
+      end
+    end
+    
+    if current_user == :false
+      @last_view = Time.now
+    else
+      membership = @group.group_members.where(["group_members.user_id=?", current_user.id]).first
+      
+      if membership.nil?
+        @last_view = Time.now
+      else
+        @last_view = membership.last_view
+        membership.last_view = Time.now
+        membership.save
+      end
+    end
+  end
 end

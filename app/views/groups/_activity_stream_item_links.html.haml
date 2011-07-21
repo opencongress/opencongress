@@ -1,0 +1,14 @@
+= link_to "Comments (#{item.comments.size})", '#', :class => 'item_comment_trigger button silver tiny', :id => "item_comment_trigger_#{item.id}"
+- if current_user != :false and ((item.group_user == current_user) or item.political_notebook.group.can_moderate?(current_user))
+  = link_to "Delete", group_political_notebook_notebook_item_path(item.political_notebook.group, item), :confirm => "Are you sure?", :method => 'delete', :class => 'floatright margin-right button yellow tiny'
+
+%div.item_comments{ :id => "item_comments_#{item.id}"}
+  = render :partial => 'shared/comments', :locals => { :object => item, :master_container => "comments_master_#{item.id}" }
+  
+:javascript
+  $j().ready(function() {
+    $j("#item_comment_trigger_#{item.id}").click(function() {
+      $j("#item_comments_#{item.id}").toggle();
+      return false;
+    });
+  });

@@ -6,6 +6,13 @@ class CommentsController < ApplicationController
   def add_comment
     @object = Object.const_get(params[:type]).find_by_id(params[:id])
     if @object
+      if @object.kind_of? NotebookItem and !@object.political_notebook.group.nil?
+        unless @object.political_notebook.group.owner_or_member?(current_user)
+          @error_msg = "You must be a member of the group to post comments!"
+          return
+        end
+      end
+      
       @comment = Comment.new(params[:comment])
       
       @comment.commentable_id = @object.id

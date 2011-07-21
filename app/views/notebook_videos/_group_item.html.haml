@@ -1,4 +1,4 @@
-%li.video
+%li.video{ :id => "item_#{group_item.id}", :class => (group_item.created_at > (@last_view || Time.now)) ? 'new' : '' }
   %span.icon
   %div.item_content
     %span.person-activity 
@@ -11,3 +11,5 @@
     %span.shared-video
       = group_item.embed.html_safe
     %span.source= group_item.url
+
+  = render 'groups/activity_stream_item_links', :item => group_item

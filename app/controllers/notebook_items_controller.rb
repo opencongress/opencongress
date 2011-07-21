@@ -68,6 +68,19 @@ class NotebookItemsController < ApplicationController
     end
   end
   
+  # only used by groups right now
+  def destroy
+    item = NotebookItem.find(params[:id])
+    group = item.political_notebook.group
+    
+    if current_user != :false and ((item.group_user == current_user) or item.political_notebook.group.can_moderate?(current_user))
+      item.destroy
+      redirect_to group, :notice => "The post has been deleted."
+    else
+      redirect_to group, :notice => "Could not delete post."
+    end
+  end
+  
 protected
   def notebook_env
     get_user_or_group
@@ -99,7 +112,13 @@ protected
 
   def get_notebook
     if @group
-      @political_notebook = PoliticalNotebook.find_or_create_from_group(@group)    
+      @political_notebook = PoliticalNotebook.find_or_create_from_group(@group)
+      
+      # ajax requests weren't seeing the PN after creating the first item so force here
+      if @group.political_notebook.nil?
+        @group.political_notebook = @political_notebook
+        @group.save
+      end   
     else
       @political_notebook = PoliticalNotebook.find_or_create_from_user(@user)    
     end

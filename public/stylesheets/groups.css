@@ -101,17 +101,17 @@ width:500px;
 table.groups td {
   padding: 5px;
 }
-.sidebar{
+.groups_sidebar{
 width: 300px;
   margin-top: 40px;
 float: left;
 clear:left;
 }
 
-.sidebar h3 {
+.groups_sidebar h3 {
   margin-top: 20px;
 }
-.sidebar .post {
+.groups_sidebar .post {
   float: left;
   margin: 20px 0;
   width: 235px;
@@ -293,10 +293,7 @@ li.bill-post .icon{
 background: url(/images/group-icons.png) 2px -343px no-repeat;
 }
 
-
-
-
-.activity_stream li.photo div img{
+.activity_stream li.photo div img.thephoto{
 max-width: 500px;
 padding: 10px;
 border: 1px solid #ddd;
@@ -308,6 +305,7 @@ border: 1px solid #ddd;
 max-width: 500px;
 padding: 10px;
 border: 1px solid #ddd;
+z-index: 1;
 }
 
 

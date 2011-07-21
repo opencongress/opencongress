@@ -39,11 +39,17 @@ class Group < ActiveRecord::Base
     users.where("group_members.status != 'BOOTED'")                                             
   end
   
+  def owner_or_member?(u)
+    is_owner?(u) or is_member?(u)
+  end
+  
   def is_owner?(u)
     self.user == u
   end
   
   def is_member?(u)
+    return false if u == :false
+    
     membership = group_members.where(["group_members.user_id=?", u.id]).first
     return (membership && membership.status != 'BOOTED')
   end
@@ -120,6 +126,16 @@ class Group < ActiveRecord::Base
     end
     
     return false
+  end
+  
+  def unviewed_posts(u, last_view = nil)
+    return 0 if u == :false
+    
+    membership = group_members.where(["group_members.user_id=?", u.id]).first
+    
+    return 0 if membership.nil? or membership.status == 'BOOTED' or political_notebook.nil?
+    
+    return political_notebook.notebook_items.where("created_at > ?", last_view.nil? ? membership.last_view : last_view).size
   end
   
   def bills_supported

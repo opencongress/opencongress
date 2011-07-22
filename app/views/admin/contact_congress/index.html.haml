@@ -14,7 +14,7 @@
             - da = s.formageddon_threads.first.formageddon_letters.first.formageddon_delivery_attempts.first
             = da
             %br
-            = link_to "View result text", "/formageddon/delivery_attempts/edit/#{da.id}"
+            = link_to "View delivery attempt", "/formageddon/delivery_attempts/edit/#{da.id}"
           - else
             No Attempt Made Yet
         %td

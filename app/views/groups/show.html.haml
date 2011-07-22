@@ -2,7 +2,7 @@
 
 
 .padding
-  .group_info.button.silver
+  .group_info
     %ul
       %li
         %strong Owner:
@@ -22,12 +22,21 @@
   = render :partial => 'post_modal'
   = render :partial => 'post_menu'
   
-  .sidebar
+  .groups_sidebar
     %ul.sidebar-nav
       %li.has-main-content.active
-        <a class=" " href="#"><div></div>Full Converstation</a>
-      %li.has-main-content
-        <a class="" href="#"><div></div>Unread <span class="inline-count">0</span></a>
+        %a{ :href => "#" }
+          %div
+          Full Converstation
+      - if current_user != :false and @last_view and @group.unviewed_posts(current_user, @last_view) > 0
+        %li.has-main-content
+          %a{ :href => "#" }
+            %div
+            Unread 
+            %span.inline-count= @group.unviewed_posts(current_user, @last_view)
+      - else
+        %li.has-main-content.dummy_li
+          %a{ :href => "#" }
 
 
 
@@ -65,8 +74,7 @@
   #activity_stream_container.main-content
     = render :partial => 'activity_stream'
 
-
-  #dummy_div.main-content
+  .dummy_div.main-content
 
   
   #bill_positions_content

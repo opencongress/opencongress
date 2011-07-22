@@ -6,7 +6,7 @@ class NotebookLink < NotebookItem
   validates_presence_of :url, :title
 
   # because the table uses STI a regular polymorphic association doesn't work
-  has_many :comments, :foreign_key => 'commentable_id', :conditions => "commentable_type='NotebookLink'"
+  has_many :comments, :foreign_key => 'commentable_id', :conditions => "commentable_type='NotebookLink'", :dependent => :destroy
   
   attr_accessor :bill_type, :bill_number
   

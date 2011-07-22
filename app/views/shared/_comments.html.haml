@@ -1,3 +1,4 @@
+- master_container ||= 'comments_master'
 #comments-container
   %a#comments{ :name => "comments" }
 
@@ -38,8 +39,8 @@
         Start the Conversation!
     #comment{ :style => "clear:left;" }
 
-  #comments_master{ :style => "float:none;clear:left;" }
-    = render :partial => 'shared/comments_list', :locals => {:object => object, :master_container => 'comments_master'}
+  %div{ :style => "float:none;clear:left;", :id => master_container }
+    = render :partial => 'shared/comments_list', :locals => {:object => object, :master_container => master_container }
 
 - unless logged_in?
   :javascript

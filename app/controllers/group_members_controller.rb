@@ -3,6 +3,7 @@ class GroupMembersController < ApplicationController
   
   def index
     @group = Group.find(params[:group_id])
+    @page_title = "Members of #{@group.name}"
     
     # if there's a status param, they probably got redirected here while trying to join
     # and not logged in, so run the create action
@@ -49,7 +50,7 @@ class GroupMembersController < ApplicationController
     @group = Group.find(params[:group_id])
     
     # the only create action is to join a group (for now) so just set status if they can join
-    if @group.can_join?(current_user)
+    if logged_in? and @group.can_join?(current_user)
       @group.group_members.create(:user_id => current_user.id, :status => 'MEMBER')
       
       redirect_to @group, :notice => "You have joined #{@group.name}!"

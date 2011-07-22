@@ -116,7 +116,9 @@
             <% if logged_in? %>
               <% unless current_user.active_groups.empty? %>
                 <% current_user.active_groups.each do |g| %>
-                  <li><%= link_to "<span class='groupname'>#{g.name}</span><span class='inline-count'>0</span>".html_safe, group_path(g) %></li>
+                  <% group_link = "<span class='groupname'>#{g.name}</span>" %>
+                  <% group_link += "<span class='inline-count'>#{g.unviewed_posts(current_user)}</span>" if g.unviewed_posts(current_user) > 0 %>
+                  <li><%= link_to group_link.html_safe, group_path(g) %></li>
                 <% end %>
                 <li><%= link_to "<span>View all my groups</span>".html_safe, user_groups_path(current_user.login) %></li>
               <% end %>

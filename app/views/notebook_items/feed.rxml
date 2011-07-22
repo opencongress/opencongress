@@ -15,9 +15,17 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
       xml.id      item.atom_id
       case item.type.to_s
       when 'NotebookFile'
-        xml.link    "rel" => "alternate", "href" => political_notebook_notebook_file_path(:login =>@user.login,:id => item.id)
+        if @group
+          xml.link    "rel" => "alternate", "href" => group_path(@group)
+        else
+          xml.link    "rel" => "alternate", "href" => political_notebook_notebook_file_path(:login =>@user.login,:id => item.id)
+        end
       when 'NotebookNote'
-        xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'notebook_items', :action => 'index')
+        if @group
+          xml.link    "rel" => "alternate", "href" => group_path(@group)
+        else
+          xml.link    "rel" => "alternate", "href" => url_for(:only_path => false, :controller => 'notebook_items', :action => 'index')
+        end
       when 'NotebookLink'
         if item.is_internal?
           xml.link    "rel" => "alternate", "href" => url_for_internal(item)

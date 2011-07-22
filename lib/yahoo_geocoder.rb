@@ -3,6 +3,7 @@ class YahooGeocoder
   attr_accessor :address
   attr_accessor :zip5
   attr_accessor :zip4
+  attr_accessor :city
   
   def initialize(this_address)
     @address = this_address
@@ -17,9 +18,11 @@ class YahooGeocoder
     require 'open-uri'
     begin
       doc = Hpricot.XML(open("http://local.yahooapis.com/MapsService/V1/geocode?appid=#{@key}&location=#{CGI::escape(@address)}"))
+
       if doc
         zip = (doc/:Result/:Zip).inner_html
         @zip5,@zip4 = zip.split('-')
+        @city = (doc/:Result/:City).inner_html
         return true
       else
         return false

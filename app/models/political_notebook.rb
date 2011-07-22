@@ -29,6 +29,8 @@ class PoliticalNotebook < ActiveRecord::Base
       pn = PoliticalNotebook.new
       pn.group_id = group.id
       pn.save
+      group.save
+      
       pn
     else
       group.political_notebook

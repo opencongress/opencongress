@@ -27,6 +27,7 @@ class CreateGroups < ActiveRecord::Migration
       t.integer :user_id
       t.string :status
       t.boolean :receive_owner_emails, :default => true
+      t.datetime :last_view
       
       t.timestamps
     end

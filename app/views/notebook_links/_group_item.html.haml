@@ -1,5 +1,5 @@
 - if group_item.notebookable.nil?
-  %li.link{ :id => "item_#{group_item.id}", :class => (group_item.created_at > Time.parse('2011-06-25 13:27:37.171769')) ? 'new' : '' }
+  %li.link{ :id => "item_#{group_item.id}", :class => (group_item.created_at > (@last_view || Time.now)) ? 'new' : '' }
     %span.icon
     %div.item_content
       %span.person-activity 
@@ -14,10 +14,10 @@
     
       %p.desc= group_item.description
 
-    = render 'groups/activity_stream_comments', :item => group_item
+    = render 'groups/activity_stream_item_links', :item => group_item
     
 - elsif group_item.notebookable.kind_of? Bill
-  %li.bill-post{ :id => "item_#{group_item.id}", :class => (group_item.created_at > Time.parse('2011-06-25 13:27:37.171769')) ? "new" : "" }
+  %li.bill-post{ :id => "item_#{group_item.id}", :class => (group_item.created_at > (@last_view || Time.now)) ? "new" : "" }
     %span.icon
     %div.item_content
       %span.person-activity 
@@ -27,9 +27,9 @@
         = link_to_bill(group_item.notebookable)
       %p.desc= group_item.description
 
-    = render 'groups/activity_stream_comments', :item => group_item
+    = render 'groups/activity_stream_item_links', :item => group_item
 - elsif group_item.notebookable.kind_of? ContactCongressLetter
-  %li{ :id => "item_#{group_item.id}", :class => (group_item.created_at > Time.parse('2011-06-25 13:27:37.171769')) ? "letter-#{group_item.notebookable.disposition} new" : "letter-#{group_item.notebookable.disposition}" }
+  %li{ :id => "item_#{group_item.id}", :class => (group_item.created_at > (@last_view || Time.now)) ? "letter-#{group_item.notebookable.disposition} new" : "letter-#{group_item.notebookable.disposition}" }
     %span.icon
     %div.item_content
       %span.person-activity 
@@ -46,4 +46,4 @@
           = link_to h(group_item.title), group_item.url  
       %p.desc= group_item.description
 
-    = render 'groups/activity_stream_comments', :item => group_item
+    = render 'groups/activity_stream_item_links', :item => group_item

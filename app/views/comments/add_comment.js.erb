@@ -16,6 +16,8 @@
   <% else %>
     <% if @object.kind_of? BillTextNode %>
       $('bill_text_comments_<%= @object.nid %>').update("<%= escape_javascript(render :partial => 'shared/comments_list', :locals => {:object => @object, :master_container => "bill_text_comments_#{@object.nid}"}) %>")
+    <% elsif @object.kind_of? NotebookItem %>
+      $('comments_master_<%= @object.id %>').update("<%= escape_javascript(render :partial => 'shared/comments_list', :locals => {:object => @object, :master_container => "comments_master_#{@object.id}"}) %>")
     <% else %>
       $('comments_master').update("<%= escape_javascript(render :partial => 'shared/comments_list', :locals => {:object => @object, :master_container => 'comments_master'}) %>")
     <% end %>

@@ -71,8 +71,8 @@
   #activity_stream_container.main-content
     = render :partial => 'activity_stream'
 
-
-  #dummy_div.main-content
+  - if current_user != :false and @last_view and @group.unviewed_posts(current_user, @last_view) > 0
+    #dummy_div.main-content
 
   
   #bill_positions_content

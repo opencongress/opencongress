@@ -4,6 +4,7 @@ if defined? Formageddon
     config.user_method = :current_user
     config.sender_user_mapping = { 
       :sender_first_name => :full_name,
+      :sender_last_name => :full_name,
       :sender_email => :email,
       :sender_zip5 => :zipcode,
       :sender_state => :state

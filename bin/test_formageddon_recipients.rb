@@ -11,7 +11,7 @@ Rails.application.require_environment!
 send = false
 people = Person.all_sitting
 people.each do |p|
-  if p.lastname == 'Vitter'
+  if p.lastname == 'Quayle'
     send = true
   end
   

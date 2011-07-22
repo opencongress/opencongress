@@ -650,3 +650,7 @@ margin-top: 10px;
 height: 62px;
 background: url(/images/issue-bg.png) 0 0 no-repeat;
 }
+
+.dummy_div, .dummy_li {
+  display: none;
+}

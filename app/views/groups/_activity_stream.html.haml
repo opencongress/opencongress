@@ -7,3 +7,11 @@
     - @group.political_notebook.notebook_items.each do |item|
       = render :partial => "#{item.class.to_s.tableize}/group_item", :object => item
   
+  :javascript
+    // this fixes youtube embeds from poking out over modals
+    $j(document).ready(function() {
+      $j('iframe').each(function() {
+        var url = $j(this).attr("src");
+        $j(this).attr("src",url+"?wmode=transparent");
+      });
+    });

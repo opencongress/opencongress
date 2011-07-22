@@ -144,5 +144,17 @@ class Group < ActiveRecord::Base
   
   def bills_opposed
     bills.where("group_bill_positions.position='oppose'")
-  end  
+  end
+  
+  def domain_verified?
+    name, email_domain = self.user.email.split(/@/)
+    
+    if self.website.blank?
+      return false
+    else
+      web_domain, junk = self.website.gsub(/http:\/\//, '').split(/\//)
+      
+      return !web_domain.nil? && (web_domain =~ /^#{email_domain}$/ or web_domain =~ /\.#{email_domain}$/)
+    end
+  end
 end

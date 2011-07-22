@@ -11,6 +11,8 @@
         %li
           %strong Website:
           = link_to @group.website, @group.website
+          - if @group.domain_verified?
+            %span.verified (Verified)
       - if @group.pvs_category
         %li
           %strong Issue Area:

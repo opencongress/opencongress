@@ -29,6 +29,10 @@ class GroupMembersController < ApplicationController
         @group_member.status = params[:status]
         @group_member.save
       
+        if @group_member.status == 'BOOTED'
+          GroupMailer.boot_email(@group, @group_member.user).deliver
+        end
+        
         redirect_to group_group_members_path(@group), :notice => 'Membership has been updated.'
       else
         redirect_to @group, :error => 'You are not allowed to moderate this group!'

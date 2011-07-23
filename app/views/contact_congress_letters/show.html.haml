@@ -46,8 +46,17 @@
 
 
   .formageddon_letter
-    .subject= @contact_congress_letter.formageddon_threads.first.formageddon_letters.first.subject
-    .body= @contact_congress_letter.formageddon_threads.first.formageddon_letters.first.message.gsub(/\n/, "<br />").html_safe
+    .subject= @contact_congress_letter.subject
+    .body= @contact_congress_letter.message.gsub(/\n/, "<br />").html_safe
+    
+  - unless @additional_letters.empty?
+    - @additional_letters.each do |l|
+      .formageddon_letter
+        .info
+          %em= letter_info(l)
+        .subject= l.subject
+        .body= l.message.gsub(/\n/, "<br />").html_safe
+    
 
 
   #letter_comments

@@ -2,32 +2,28 @@
   <% if @parent %>
     $('comment_reply_<%= @parent.id %>').update("<%= escape_javascript(render :partial => 'shared/comments_add_reply', :locals => {:parent_id => @parent.id, :object => @object }) %>")
   <% else %>
-    $('add').update("<%= escape_javascript(render :partial => 'shared/comments_add', :locals => {:parent_id => 0, :object => @object, :master_container => nil, :redirect => true }) %>")
+    $('add-<%= @object.id %>').update("<%= escape_javascript(render :partial => 'shared/comments_add', :locals => {:parent_id => 0, :object => @object, :master_container => params[:master_container], :redirect => true }) %>")
   <% end %>
 <% elsif @is_preview %>
-  $j('#comment-preview').hide();
-  $j('#comment-preview').html("<%= escape_javascript(render :partial => 'shared/comments_comment', :locals => {:object => @object, :comment => @comment, :myscores => Array.new, :preview => true }) %>")
-  $j('#comment-preview').slideDown('slow');
+  $j('#comment-preview-<%= @object.id %>').hide();
+  $j('#comment-preview-<%= @object.id %>').html("<%= escape_javascript(render :partial => 'shared/comments_comment', :locals => {:object => @object, :comment => @comment, :myscores => Array.new, :preview => true }) %>")
+  $j('#comment-preview-<%= @object.id %>').slideDown('slow');
 <% else %>
   <% if @parent %>
     $('comment_reply_<%= @parent.id %>').update("<%= escape_javascript(render :partial => 'shared/comments_comment', :locals => {:object => @object, :comment => @comment, :myscores => Array.new}) %>")
     new Effect.ScrollTo('comment_reply_<%= @parent.id %>');
     new Effect.Highlight('comment_reply_<%= @parent.id %>', {duration: 4});
   <% else %>
-    <% if @object.kind_of? BillTextNode %>
-      $('bill_text_comments_<%= @object.nid %>').update("<%= escape_javascript(render :partial => 'shared/comments_list', :locals => {:object => @object, :master_container => "bill_text_comments_#{@object.nid}"}) %>")
-    <% elsif @object.kind_of? NotebookItem %>
-      $('comments_master_<%= @object.id %>').update("<%= escape_javascript(render :partial => 'shared/comments_list', :locals => {:object => @object, :master_container => "comments_master_#{@object.id}"}) %>")
-    <% else %>
-      $('comments_master').update("<%= escape_javascript(render :partial => 'shared/comments_list', :locals => {:object => @object, :master_container => 'comments_master'}) %>")
-    <% end %>
+
+    $('<%= params[:master_container] %>').update("<%= escape_javascript(render :partial => 'shared/comments_list', :locals => {:object => @object, :master_container => params[:master_container] }) %>")
+
     new Effect.ScrollTo('com<%= @comment.id %>');
     new Effect.Highlight('com<%= @comment.id %>', {duration: 4});
     if ($('no_comments') != undefined) {
       $('no_comments').hide();
     }
-    $('comment-preview').hide();
+    $('comment-preview-<%= @object.id %>').hide();
   <% end %>
 <% end %>
 
-$j('#comment-spinner').hide();
+$j('.comment-spinner').hide();

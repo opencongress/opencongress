@@ -29,4 +29,12 @@ module ContactCongressLettersHelper
       "There was an error sending your letter. We are aware of the error and will retry sending when the error has been fixed."
     end
   end
+  
+  def letter_info(letter)
+    if letter.direction == 'TO_RECIPIENT'
+      "This letter was a reply from the office of #{letter.formageddon_thread.formageddon_recipient} on #{letter.created_at.strftime('%B %d, %Y')}."
+    else
+      "This letter was sent from #{letter.formageddon_thread.formageddon_sender.login} to #{letter.formageddon_thread.formageddon_recipient} on #{letter.created_at.strftime('%B %d, %Y')}."
+    end
+  end
 end

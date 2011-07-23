@@ -13,4 +13,12 @@ class ContactCongressLetter < ActiveRecord::Base
     subject = formageddon_threads.first.formageddon_letters.first.subject
     subject.blank? ? "#{id}" : "#{id}-#{subject.gsub(/[^a-z0-9]+/i, '-')}"
   end
+  
+  def subject
+    formageddon_threads.first.formageddon_letters.first.subject
+  end
+  
+  def message
+    formageddon_threads.first.formageddon_letters.first.message
+  end
 end

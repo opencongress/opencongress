@@ -54,12 +54,12 @@
     .step
       %h2 Mail
       .desc
-        = link_to 'Print', contact_congress_letter_path(@contact_congress_letter, :print_version => 'true'), :target => '_new'
-        this letter and send it through the mail.  Here's the address:
+        Print this letter and send it through the mail.  Here's the address:
       %p
-        - @contact_congress_letter.formageddon_threads.each do |thread|
+        - @contact_congress_letter.formageddon_threads.each_with_index do |thread, i|
           %p  
             = thread.formageddon_recipient.formageddon_display_address.gsub(/\n/, "<br />").html_safe
+            = link_to 'Print', contact_congress_letter_path(@contact_congress_letter, :letter => i, :print_version => 'true'), :target => '_new'
     .step.noborder
       %h2 Call
       .desc

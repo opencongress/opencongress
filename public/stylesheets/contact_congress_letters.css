@@ -128,7 +128,9 @@ display: relative;
   margin-bottom: 20px;
 }
 
-
+.formageddon_letter .info {
+  margin-bottom: 20px;
+}
 
 .contact_congress .status_bar {
   width: 900px;

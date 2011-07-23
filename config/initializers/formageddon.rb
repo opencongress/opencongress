@@ -15,8 +15,14 @@ if defined? Formageddon
       ['Private -- You Only', 'PRIVATE']
     ]
     
+    config.reply_domain = 'formageddon.nindy.com'
+    config.incoming_email_config = {
+      'server' => 'mail.formageddon.nindy.com',
+      'username' => 'formageddon@formageddon.nindy.com',
+      'password' => 'f0rmagedd0n'
+    }
+    
     config.tmp_captcha_dir = '/tmp/'
     
   end
-  
 end

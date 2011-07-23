@@ -27,15 +27,16 @@
       .submit
         = submit_tag "Add Comment", :id => 'post', :class => 'large button silver'
         = submit_tag "Preview", :name => 'preview_button', :id => 'preview', :class => 'large button silver'
-        = image_tag 'spinner-ovals.gif', :id => 'comment-spinner', :style => "display: none;"
+        = image_tag 'spinner-ovals.gif', :class => 'comment-spinner', :style => "display: none;"
         :javascript
           $j("#post").click(function() { 
-            $j("#comment-spinner").show();
+            $j(".comment-spinner").show();
           });
           $j("#preview").click(function() { 
-            $j("#comment-spinner").show();
+            $j(".comment-spinner").show();
           });          
-      #comment-preview{ :style => 'display:none;' }
+      %div{ :id => "comment-preview-#{object.id}", :style => 'display: none;' }
+      
 
   - else
     :javascript

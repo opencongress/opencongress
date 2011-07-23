@@ -84,12 +84,20 @@ class ContactCongressLettersController < ApplicationController
       end
     end
     
+    @additional_letters = []
+    @contact_congress_letter.formageddon_threads.each do |t|
+      if t.formageddon_letters.size > 1
+        @additional_letters << t.formageddon_letters[1..-1]
+      end
+    end
+    @additional_letters.flatten!.sort!{|a,b| a.created_at <=> b.created_at } unless @additional_letters.empty?
+    
     @page_title = "My Letter to Congress: #{@contact_congress_letter.formageddon_threads.first.formageddon_letters.first.subject}"
     @meta_description = "This is a letter to Congress sent using OpenCongress.org by user #{@contact_congress_letter.user.login} regarding #{@contact_congress_letter.bill.typenumber} #{@contact_congress_letter.bill.title_common}. OpenCongress is a free and open-source public resource website for tracking and contacting the U.S. Congress."
 
     if params[:print_version] == 'true'
       render :partial => 'contact_congress_letters/print', 
-             :locals => { :letter => @contact_congress_letter.formageddon_threads.first.formageddon_letters.first },
+             :locals => { :letter => @contact_congress_letter.formageddon_threads[params[:letter].to_i].formageddon_letters.first },
              :layout => false
       return
     end
@@ -121,7 +129,7 @@ class ContactCongressLettersController < ApplicationController
       else
         @contact_congress_letter = cclft.contact_congress_letter
         
-        if current_user == :false or @letters.first.formageddon_thread.contact_congress_letter.user != current_user
+        if current_user == :false or @letters.first.formageddon_thread.formageddon_sender_id != current_user.id
           redirect_to @contact_congress_letter
           return
         end
@@ -191,7 +199,7 @@ class ContactCongressLettersController < ApplicationController
       ######end
     end
     
-    @letter_ids = threads.collect{|t| t.id}.join(',')
+    @letter_ids = threads.collect{|t| t.formageddon_letters.first.id}.join(',')
             
     session[:formageddon_after_send_url] = "#{formageddon_params[:after_send_url]}&letter_ids=#{@letter_ids}" unless formageddon_params[:after_send_url].blank?
     session[:formageddon_params] = nil

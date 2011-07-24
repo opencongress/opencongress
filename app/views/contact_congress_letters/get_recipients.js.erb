@@ -12,6 +12,10 @@
     $j('#formageddon_formageddon_thread_sender_zip4').val('<%= @zip4 %>');
   <% end %>
   
+  <% unless @reps.empty? %>
+    $j('.desk .the-user').html("A User Out of <%= State.find_by_abbreviation(@reps.first.state).name %>'s <%= @reps.first.district.to_i.ordinalize %> District");
+  <% end %>
+    
   <% if @letter_start %>
     $j('#formageddon_formageddon_thread_formageddon_letters_attributes_0_message').val("<%= @letter_start %> " + $j('#formageddon_formageddon_thread_formageddon_letters_attributes_0_message').val());
   <% end %>

@@ -256,6 +256,7 @@ padding: 0px;
 -webkit-border-radius: 3px;
 -moz-box-shadow: 0 2px 2px rgba(0,0,0,.5);
 -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.5);
+overflow: hidden;
 }
  
 

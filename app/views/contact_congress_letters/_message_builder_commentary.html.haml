@@ -6,4 +6,4 @@
   = a.source
   \-
   = a.excerpt.html_safe
-  = render 'will_add_text_box', :text => "As noted by #{a.source} on #{a.date.strftime("%B %d, %Y")}, \"#{a.excerpt}\" (#{a.url})"
+  = render 'will_add_text_box', :text => "As noted by #{a.source} on #{a.date.strftime("%B %d, %Y")}, \"#{a.excerpt.chomp}\" (#{a.url})"

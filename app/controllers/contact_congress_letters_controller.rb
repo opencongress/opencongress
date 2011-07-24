@@ -62,14 +62,14 @@ class ContactCongressLettersController < ApplicationController
 
     @sens = [] unless @sens
     
-    # @sens << Person.find(300043)
-    # @sens << Person.find(300011)
+    @sens << Person.find(300043)
+    @sens << Person.find(300011)
     
     if @reps and @reps.size == 1
       @letter_start = "I am writing as your constituent in the #{@reps.first.district.to_i.ordinalize} Congressional district of #{State.for_abbrev(@reps.first.state)}. "
     else
       @reps = []
-      # @reps << Person.find(412404)
+      @reps << Person.find(412404)
     end
   end
   
@@ -187,6 +187,8 @@ class ContactCongressLettersController < ApplicationController
     
     threads = session[:formageddon_unsent_threads].map{ |t| Formageddon::FormageddonThread.find(t) }
     threads.each do |t|
+      t.formageddon_sender = current_user
+      
       ##########t.formageddon_letters.first.update_attribute(:status, 'START')
       t.formageddon_letters.first.update_attribute(:status, 'SENT')
       t.formageddon_letters.first.update_attribute(:direction, 'TO_RECIPIENT')

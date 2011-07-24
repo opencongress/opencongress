@@ -55,8 +55,7 @@ class ContactCongressLettersController < ApplicationController
       unless yg.zip5.nil?
         @sens, @reps = Person.find_current_congresspeople_by_zipcode(yg.zip5, yg.zip4)
         @zip4 = yg.zip4
-      end
-      
+      end      
       
       @sens, @reps = Person.find_current_congresspeople_by_address_and_zipcode(params[:address], params[:zip5])
     end

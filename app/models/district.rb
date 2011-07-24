@@ -53,8 +53,16 @@ class District < ActiveRecord::Base
 
   end
 
-
-
+  def self.find_by_district_tag(tag)  # ie, CA-33
+    abbr, number = tag.split(/-/)
+    state = State.find_by_abbreviation(abbr)
+    if state
+      return self.find_by_state_id_and_district_number(state.id, number.to_i)
+    end
+    
+    return nil
+  end
+  
   def self.csv_of_active_users_count
 
     require 'csv'

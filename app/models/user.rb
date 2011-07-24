@@ -171,12 +171,32 @@ class User < ActiveRecord::Base
     owned_groups + groups.where("group_members.status='MEMBER'")
   end
   
+  def join_default_groups
+    if my_state.size == 1
+      state_group = State.find_by_abbreviation(self.state).group
+      unless state_group.nil? or state_group.users.include?(self)
+        state_group.group_members.create(:user_id => self.id, :status => 'MEMBER')
+      end
+    end
+    
+    if my_district.size == 1
+      district_group = District.find_by_district_tag(self.district).group
+      unless district_group.nil? or district_group.users.include?(self)
+        district_group.group_members.create(:user_id => self.id, :status => 'MEMBER')
+      end 
+    end
+  end
+  
   def total_number_of_actions
     self.comments.count + self.friends.count + self.bill_votes.count + self.person_approvals.count + self.bookmarks.count
   end
 
   def state
     my_state.empty? ? nil : my_state.first
+  end
+  
+  def district
+    my_district.empty? ? nil : my_district.first
   end
   
   def my_state

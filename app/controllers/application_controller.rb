@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   before_filter :store_location
   before_filter :current_tab
   before_filter :has_accepted_tos?
+  before_filter :has_district?
   before_filter :get_site_text_page
   before_filter :is_banned?
   before_filter :set_simple_comments
@@ -113,6 +114,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def has_district?
+    if logged_in?
+      if current_user.state.nil? or current_user.my_district.size != 1
+        redirect_to :controller => 'account', :action => 'determine_district' unless params[:action] == 'determine_district'
+      end
+    end
+  end
+  
   def is_banned?
     if logged_in?
       if current_user.is_banned == true

@@ -104,6 +104,25 @@ class AccountController < ApplicationController
     end
   end
 
+  def determine_district
+    @page_title = "Determine Your Congressional District"
+    
+    if request.post?
+      yg = YahooGeocoder.new("#{params[:address]}, #{current_user.zipcode}")
+      unless yg.zip4.nil?
+        current_user.zip_four = yg.zip4
+        current_user.save
+        
+        current_user.join_default_groups
+        
+        flash[:notice] = "Your Congressional District (#{current_user.district}) has been saved."
+        redirect_to(user_profile_path(:login => current_user.login))
+      else
+        @error_msg = "Sorry, that address in zip code #{current_user.zipcode} was not recognized.  Please try again.  If you keep receiving this error, please send an email to writeus@opencongress.org"
+      end
+    end
+  end
+  
   def facebook_complete
     @page_title = 'Facebook Connect'
     
@@ -214,6 +233,8 @@ class AccountController < ApplicationController
         session[:invite] = nil
       end
 
+      @user.join_default_groups
+      
       redirect_to(:controller => 'account', :action => 'confirm', :login => @user.login)
     else
       render :action => 'signup'

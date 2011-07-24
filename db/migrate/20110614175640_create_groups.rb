@@ -78,9 +78,9 @@ class CreateGroups < ActiveRecord::Migration
       g.state = s
       g.save
       
-      users = User.find_by_sql(['select distinct users.id, users.login from users where state_cache like ?;', "%#{s.abbreviation}%"])
+      users = User.find_by_sql(['select distinct users.id, users.login, users.zipcode, users.zip_four from users where state_cache like ?;', "%#{s.abbreviation}%"])
       users.each do |u|
-        g.group_members.create(:user_id => u.id, :status => 'MEMBER')
+        g.group_members.create(:user_id => u.id, :status => 'MEMBER') if u.my_state.size == 1
       end
       
       g.save
@@ -97,9 +97,9 @@ class CreateGroups < ActiveRecord::Migration
       g.district = d
       g.save
       
-      users = User.find_by_sql(['select distinct users.id, users.login from users where district_cache like ?;', "%#{d.state.abbreviation}-#{d.district_number}%"])
+      users = User.find_by_sql(['select distinct users.id, users.login, users.zipcode, users.zip_four from users where district_cache like ?;', "%#{d.state.abbreviation}-#{d.district_number}%"])
       users.each do |u|
-        g.group_members.create(:user_id => u.id, :status => 'MEMBER')
+        g.group_members.create(:user_id => u.id, :status => 'MEMBER') if u.my_district.size == 1
       end
       
       g.save

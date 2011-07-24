@@ -103,7 +103,7 @@ table.groups td {
 }
 .groups_sidebar{
 width: 300px;
-  margin-top: 40px;
+margin: 40px 0;
 float: left;
 clear:left;
 }
@@ -197,6 +197,10 @@ float: left;
 margin-top: 43px;
 }
 
+.activity_stream.tighter {
+  width: 540px !important;
+  margin: 20px 0 0 15px !important;
+}
 .activity_stream ul{
 margin-left: 50px;
 }

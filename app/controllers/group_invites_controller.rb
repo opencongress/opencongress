@@ -68,8 +68,13 @@ class GroupInvitesController < ApplicationController
   # # POST /group_invites.xml
   def create
     @group = Group.find(params[:group_id])
+    @page_title = "Send Invitations to #{@group.name}"
     
-    ####### SECURITY CHECK!
+    unless @group.can_invite?(current_user)
+      redirect_to group_path(@group), :notice => "You are not allowed to send invitations to this group!"
+      return
+    end
+    
     to_invite = params[:group_invite][:invite_string].split(/,/)
     to_invite.collect!{ |i| i.chomp.strip }
     

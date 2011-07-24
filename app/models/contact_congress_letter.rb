@@ -21,4 +21,8 @@ class ContactCongressLetter < ActiveRecord::Base
   def message
     formageddon_threads.first.formageddon_letters.first.message
   end
+  
+  def privacy
+    formageddon_threads.first.privacy
+  end
 end

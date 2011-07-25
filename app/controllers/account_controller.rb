@@ -116,7 +116,8 @@ class AccountController < ApplicationController
         current_user.join_default_groups
         
         flash[:notice] = "Your Congressional District (#{current_user.district}) has been saved."
-        redirect_to(user_profile_path(:login => current_user.login))
+        
+        activate_redirect(user_profile_path(:login => current_user.login))
       else
         @error_msg = "Sorry, that address in zip code #{current_user.zipcode} was not recognized.  Please try again.  If you keep receiving this error, please send an email to writeus@opencongress.org"
       end
@@ -141,7 +142,7 @@ class AccountController < ApplicationController
         self.current_user = @user
         flash[:notice] = 'You have successfully signed up with your Facebook Account!'
         
-        redirect_to welcome_url
+        activate_redirect
         return
       end
     end
@@ -284,13 +285,7 @@ class AccountController < ApplicationController
     if @user and @user.activate
       self.current_user = @user
       
-      if session[:formageddon_unsent_threads].nil?
-        redirect_to welcome_url
-        return
-      else
-        redirect_to '/contact_congress_letters/delayed_send'
-        return
-      end
+      activate_redirect
     else
       flash[:notice] = "We didn't find that confirmation code; maybe you've already activated your account?"
       redirect_to signup_url
@@ -513,6 +508,17 @@ class AccountController < ApplicationController
     end
 
   private
+    def activate_redirect(url = welcome_url)
+      if session[:formageddon_unsent_threads].nil?
+        redirect_to url
+        return
+      else
+        redirect_to '/contact_congress_letters/delayed_send'
+        return
+      end
+    end
+    
+    
     def root_url
       home_url
     end

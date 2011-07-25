@@ -2,26 +2,29 @@
   %h2 Determine Your Congressional District
   
 .padding
-  %p.behave
-    %strong We do not know your exact Congressional District.
-    This is most likely because your zipcode overlaps multiple Congressional District boundaries.
-  %p.behave
-    Due to recent changes to OpenCongress, we now require all users to link their account to their Congressional District.
-  %p.behave
-    Please enter your street address in field below and we'll determine your district.  We will NOT store this info -- it will only be used now.
+  .registration_complete
+    %p.behave
+      %strong We do not know your exact Congressional District.
+      This is most likely because your zipcode overlaps multiple Congressional District boundaries.
+    %p.behave
+      Due to recent changes to OpenCongress, we now require all users to link their account to their Congressional District.
+    %p.behave
+      Please enter your street address in field below and we'll determine your district.  We will NOT store this info -- it will only be used now.
   
-  - if @error_msg
-    %p.error= @error_msg
+    - if @error_msg
+      .errorExplanation
+        %p= @error_msg
     
-  = form_tag('/account/determine_district') do
-    %p
-      = label_tag 'Zipcode'
-      = current_user.zipcode
+    .margin-top
+      = form_tag '/account/determine_district' do
+        %p
+          = label_tag 'Zipcode'
+          = text_field_tag 'zipcode', current_user.zipcode, :maxlength => 5, :size => 5, :class => 'field'
 
-    %p
-      = label_tag 'Street Address'
-      = text_field_tag 'address', nil, :class => 'field'
+        %p
+          = label_tag 'Street Address'
+          = text_field_tag 'address', nil, :class => 'field'
   
-    %p
-      
-      = submit_tag 'Submit', :class => 'button silver medium'
+        %p
+          = label_tag '&nbsp;'.html_safe
+          = submit_tag 'Submit', :class => 'button silver medium'

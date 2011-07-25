@@ -14,14 +14,6 @@ GIT
       mechanize
 
 GIT
-  remote: git://github.com/vala/facebooker2.git
-  revision: ead97c8ef78db96c462700ef85e991c7a9d5d21d
-  specs:
-    facebooker2 (0.0.11)
-      mogli (>= 0.0.12)
-      ruby-hmac
-
-GIT
   remote: http://github.com/mbleigh/acts-as-taggable-on.git
   revision: 2752cfef4c66318d0925fbe880d5392ad188bb50
   specs:
@@ -119,6 +111,9 @@ GEM
       abstract (>= 1.0.0)
     eventmachine (0.12.10)
     excon (0.6.3)
+    facebooker2 (0.0.11)
+      mogli (>= 0.0.12)
+      ruby-hmac
     fastercsv (1.5.4)
     ffi (1.0.9)
     fog (0.8.2)
@@ -287,7 +282,7 @@ DEPENDENCIES
   closure-compiler
   cucumber (= 0.8.5)
   cucumber-rails
-  facebooker2!
+  facebooker2
   fog
   formageddon!
   govkit

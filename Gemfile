@@ -70,7 +70,7 @@ gem 'newrelic_rpm'
 
 # oauth
 gem 'oauth'
-gem 'facebooker2', :git => 'git://github.com/vala/facebooker2.git'
+gem 'facebooker2'
 
 gem 'will_paginate', '~> 3.0.pre2'
 

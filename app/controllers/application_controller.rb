@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_simple_comments
 
   def facebook_check
+    logger.info "USER: #{current_facebook_user}, CLIENT: #{current_facebook_client}"
     # check to see if the user is logged into and has connected to OC
     if current_facebook_user and current_facebook_client
       logger.info "FACEBOOK LIB"

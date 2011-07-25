@@ -18,6 +18,14 @@ class ApplicationController < ActionController::Base
   before_filter :set_simple_comments
 
   def facebook_check
+    logger.info "@_fb_user_fetched: #{@_fb_user_fetched}"
+    logger.info "@_current_facebook_client: #{@_current_facebook_client}"
+    logger.info "signed_request_from_logged_out_user? #{signed_request_from_logged_out_user?}"
+    logger.info "fb_cookie_hash: #{fb_cookie_hash}"
+    logger.info "Facebooker2.secret: #{Facebooker2.secret}"
+    logger.info "generate sig: #{generate_signature(fb_cookie_hash,Facebooker2.secret)}" if fb_cookie_hash
+    logger.info "hash['sig']: #{fb_cookie_hash['sig']}" if fb_cookie_hash
+    
     logger.info "USER: #{current_facebook_user}, CLIENT: #{current_facebook_client}"
     # check to see if the user is logged into and has connected to OC
     if current_facebook_user and current_facebook_client

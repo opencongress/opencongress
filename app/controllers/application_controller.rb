@@ -18,18 +18,8 @@ class ApplicationController < ActionController::Base
   before_filter :set_simple_comments
 
   def facebook_check
-    logger.info "@_fb_user_fetched: #{@_fb_user_fetched}"
-    logger.info "@_current_facebook_client: #{@_current_facebook_client}"
-    logger.info "signed_request_from_logged_out_user? #{signed_request_from_logged_out_user?}"
-    logger.info "fb_cookie_hash: #{fb_cookie_hash}"
-    logger.info "Facebooker2.secret: #{Facebooker2.secret}"
-    logger.info "generate sig: #{generate_signature(fb_cookie_hash,Facebooker2.secret)}" if fb_cookie_hash
-    logger.info "hash['sig']: #{fb_cookie_hash['sig']}" if fb_cookie_hash
-    
-    logger.info "USER: #{current_facebook_user}, CLIENT: #{current_facebook_client}"
     # check to see if the user is logged into and has connected to OC
     if current_facebook_user and current_facebook_client
-      logger.info "FACEBOOK LIB"
       begin
         @facebook_user = Mogli::User.find(current_facebook_user.id, current_facebook_client)
       rescue Mogli::Client::HTTPException
@@ -37,7 +27,6 @@ class ApplicationController < ActionController::Base
         @facebook_user = nil
       end
     else
-      logger.info "NO FACEBOOK LIB"
       @facebook_user = nil
       force_fb_cookie_delete
     end
@@ -130,6 +119,7 @@ class ApplicationController < ActionController::Base
     if logged_in?
       if current_user.state.nil? or current_user.my_district.size != 1
         redirect_to :controller => 'account', :action => 'determine_district' unless (params[:action] == 'determine_district' or params[:action] == 'accept_tos')
+        
       end
     end
   end

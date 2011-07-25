@@ -108,8 +108,9 @@ class AccountController < ApplicationController
     @page_title = "Determine Your Congressional District"
     
     if request.post?
-      yg = YahooGeocoder.new("#{params[:address]}, #{current_user.zipcode}")
+      yg = YahooGeocoder.new("#{params[:address]}, #{params[:zipcode]}")
       unless yg.zip4.nil?
+        current_user.zipcode = yg.zip5
         current_user.zip_four = yg.zip4
         current_user.save
         
@@ -119,7 +120,7 @@ class AccountController < ApplicationController
         
         activate_redirect(user_profile_path(:login => current_user.login))
       else
-        @error_msg = "Sorry, that address in zip code #{current_user.zipcode} was not recognized.  Please try again.  If you keep receiving this error, please send an email to writeus@opencongress.org"
+        @error_msg = "Sorry, that address in zip code #{params[:zipcode]} was not recognized.  Please try again.  If you keep receiving this error, please send an email to writeus@opencongress.org"
       end
     end
   end

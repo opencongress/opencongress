@@ -1,4 +1,7 @@
 .main-content
+  - if @group.can_moderate?(current_user)
+    = link_to "Remove Bill Position", group_group_bill_position_path(@group, bill_position), :method => :delete, :confirm => "Are you sure?", :class => 'button medium yellow floatright'
+  
   %h2= "#{bill_position.bill.typenumber}: #{bill_position.bill.title_common}"
   %p.behave
     = "#{@group.name} is "

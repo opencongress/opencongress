@@ -13,7 +13,7 @@
   <% end %>
   
   <% unless @reps.empty? %>
-    $j('.desk .the-user').html("A User Out of <%= State.find_by_abbreviation(@reps.first.state).name %>'s <%= @reps.first.district.to_i.ordinalize %> District");
+    $j('.desk .the-user').html("A Constituent Out of <%= State.find_by_abbreviation(@reps.first.state).name %>'s <%= @reps.first.district.to_i.ordinalize %> District");
   <% end %>
     
   <% if @letter_start %>

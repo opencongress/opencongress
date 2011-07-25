@@ -1,4 +1,5 @@
-= link_to "Comments (#{item.comments.size})", '#', :class => 'item_comment_trigger button silver tiny', :id => "item_comment_trigger_#{item.id}"
+%span.floatleft.datetime= item.created_at.strftime("%B %d, %Y %l:%M %p")
+= link_to "Comments (#{item.comments.size})", '#', :class => 'item_comment_trigger button silver tiny floatright', :id => "item_comment_trigger_#{item.id}"
 - if current_user != :false and ((item.group_user == current_user) or item.political_notebook.group.can_moderate?(current_user))
   = link_to "Delete", group_political_notebook_notebook_item_path(item.political_notebook.group, item), :confirm => "Are you sure?", :method => 'delete', :class => 'floatright margin-right button yellow tiny'
 

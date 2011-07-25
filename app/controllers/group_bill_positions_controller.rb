@@ -25,4 +25,17 @@ class GroupBillPositionsController < ApplicationController
       redirect_to group_path(@group), :error => "You don't have permission to post bill positions to the group!"
     end
   end
+  
+  def destroy
+    @group = Group.find(params[:group_id])
+    position = GroupBillPosition.find(params[:id])
+    
+    if @group.can_moderate?(current_user) && position.group == @group
+      position.destroy
+      
+      redirect_to group_path(@group), :notice => 'Bill position has been removed.'
+    else
+      redirect_to group_path(@group), :notice => 'You are not allowed to moderate this group!'      
+    end
+  end
 end

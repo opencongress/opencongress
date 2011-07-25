@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
   def facebook_check
     # check to see if the user is logged into and has connected to OC
     if current_facebook_user and current_facebook_client
+      logger.info "FACEBOOK LIB"
       begin
         @facebook_user = Mogli::User.find(current_facebook_user.id, current_facebook_client)
       rescue Mogli::Client::HTTPException
@@ -27,7 +28,9 @@ class ApplicationController < ActionController::Base
         @facebook_user = nil
       end
     else
+      logger.info "NO FACEBOOK LIB"
       @facebook_user = nil
+      set_fb_cookie(nil,nil,nil,nil)
     end
     
     if @facebook_user

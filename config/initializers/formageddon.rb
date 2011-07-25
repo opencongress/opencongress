@@ -24,5 +24,13 @@ if defined? Formageddon
     
     config.tmp_captcha_dir = '/tmp/'
     
+    config.default_params = {
+      "Re" => "issue",
+      "SubjectOther" => 'Other',
+      "view" => 'N/A',
+      "responsereq" => 'yes'
+    }
+    
+    
   end
 end

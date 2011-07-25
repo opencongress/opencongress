@@ -33,13 +33,13 @@ class ApplicationController < ActionController::Base
       begin
         @facebook_user = Mogli::User.find(current_facebook_user.id, current_facebook_client)
       rescue Mogli::Client::HTTPException
-        set_fb_cookie(nil,nil,nil,nil)
+        force_fb_cookie_delete
         @facebook_user = nil
       end
     else
       logger.info "NO FACEBOOK LIB"
       @facebook_user = nil
-      set_fb_cookie(nil,nil,nil,nil)
+      force_fb_cookie_delete
     end
     
     if @facebook_user
@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
           oc_user = current_user
         else
           flash[:error] = "The email addresses in your Facebook and OpenCongress accounts do not match.  Could not connect."
-          set_fb_cookie(nil,nil,nil,nil)
+          force_fb_cookie_delete
           @facebook_user = nil
           return
         end
@@ -238,6 +238,10 @@ class ApplicationController < ActionController::Base
 
   def random_key
     Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
+  end
+  
+  def force_fb_cookie_delete
+    cookies.delete fb_cookie_name
   end
   
   protected

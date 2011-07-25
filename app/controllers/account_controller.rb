@@ -267,7 +267,7 @@ class AccountController < ApplicationController
     cookies.delete 'wikiUserName', {:domain => '.opencongress.org'}
     
     # force hard delete of the facebook cookie
-    cookies.delete fb_cookie_name
+    force_fb_cookie_delete
     
     reset_session
     session[:return_to] = redirect_loc

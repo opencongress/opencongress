@@ -9,7 +9,7 @@ Rails.application.require_environment!
 ###########################
 
 send = false
-people = Person.senators
+people = Person.representatives
 bill = Bill.find_by_ident('112-h1349')
 sender = User.find_by_login('drm')
 people.each do |p|
@@ -19,6 +19,8 @@ people.each do |p|
     if p.formageddon_contact_steps.empty?
       puts "Skipping #{p.name}.  Not configured."
     else
+      puts "Sending to #{p.name}..."
+      
       thread = Formageddon::FormageddonThread.new
       
       thread.formageddon_recipient = p

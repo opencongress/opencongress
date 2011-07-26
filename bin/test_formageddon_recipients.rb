@@ -9,18 +9,20 @@ Rails.application.require_environment!
 ###########################
 
 send = false
-people = Person.all_sitting
+people = Person.senators
+sender = User.find_by_login('drm')
 people.each do |p|
-  if p.lastname == 'Sablan'
-    send = true
-  end
+  send = true
   
   if send
     if p.formageddon_contact_steps.empty?
       puts "Skipping #{p.name}.  Not configured."
     else
       thread = Formageddon::FormageddonThread.new
+      
       thread.formageddon_recipient = p
+      thread.formageddon_sender = sender
+      
       thread.sender_email = "david@opencongress.org"
       thread.sender_title = "Mr."
       thread.sender_first_name = "David"

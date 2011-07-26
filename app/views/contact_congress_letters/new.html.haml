@@ -51,8 +51,12 @@
     .section      
       %h3 Contribution Data
       #contribution_data_container
-        - unless @sens.empty? and @reps.empty? 
-          = render :partial => 'message_builder_contribution_data'
+        - unless @sens.empty? and @reps.empty?
+          - if @bill.bill_interest_groups.any?
+            = render :partial => 'message_builder_intgroup_contribution_data'
+          - else
+            = render :partial => 'message_builder_industry_contribution_data'
+            
         - else
           .padding
             Enter your street address above, and relevant campaign contribution data for your elected officials will appear here in seconds for you to use in your letter.

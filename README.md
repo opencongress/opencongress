@@ -90,18 +90,7 @@ Now just a `script/server` and you should be running
 
 <p>Copyright (c) 2005-2010 Participatory Politics Foundation</p>
 
-<p>This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-</p>
-<p>This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-</p>
-<p>You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
-</p>
+<p>OpenCongress is licensed, as a whole, under AGPLv3. Components added prior to
+OpenCongress version 3 (July 27, 2011) were and are licensed under GPLv3. All components added for or after
+OpenCongress version 3 are licensed AGPLv3. When you contribute a patch to OpenCongress, it will be licensed under AGPLv3. See LICENSE-AGPLv3 file for details.
 </div>

@@ -1,11 +1,14 @@
 <% var g = group.group; %>
 <div class="oc-widget-container">
-<h1><a href="<%= domain %>">OpenCongress</a>
-<% if (g.thumbnail_path) { %>
+<h1><a href="http://www.opencongress.org/groups">OpenCongress Groups</a>
+
+</h1>
+<h2><% if (g.thumbnail_path) { %>
   <img src="<%= domain + g.thumbnail_path %>" style="float: left; max-width: 40px; max-height: 40px; padding-right: 5px;">
 <% } %>
 <span><a href="<%= domain + g.permalink %>"><%= g.name.truncate(60) %></a></span>
-</h1>
+</h2>
+
 <p>has <%= OC.number_with_delimiter(g.member_count) %> members.</p>
 <ul>
   <li>
@@ -21,5 +24,8 @@
 <a href="<%= domain + g.permalink %>" class="oc-widget-footer">See <%= 'other bill position'.pluralize(g.bill_positions.length - 1) %>  &rarr;</a>
 <% } else { %>
 <a href="<%= domain + g.permalink %>" class="oc-widget-footer">Visit this group on OpenCongress &rarr;</a>
+<a href="http://www.opencongress.org/" class="oc-widget-footer">Visit OpenCongress &rarr;</a>
+
+
 <% } %>
 </div>

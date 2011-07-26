@@ -5530,7 +5530,7 @@ padding: 0;
 }
 
 
-.list {
+div.list {
   background: url(../images/og-widg.jpg) right 65px no-repeat;
   float: left;
   min-height: 500px;
@@ -5540,12 +5540,12 @@ margin-left: 90px;
 }
 
 
-.list h2 {
+div.list h2 {
   margin-left: 20px;
 }
 
 
-.list ul {
+div.list ul {
   padding: 0px;
   border: 1px solid rgba(101, 101, 101, 0.2);
   background: rgba(101, 101, 101, 0.2);
@@ -5558,13 +5558,13 @@ margin-left: 90px;
 }
 
 
-.list ul li {
+div.list ul li {
   padding: 20px 30px 5px;
   border-bottom: 1px solid #aaa;
 }
 
 
-.list ul li:last-child {
+div.list ul li:last-child {
   border-bottom: none;
 }
 
@@ -5596,4 +5596,29 @@ width: 350px;
 margin-top: 63px;
 }
 
+
+.choose-group{
+padding: 20px 20px; 
+float: left;width: 510px;
+background: #fff;
+margin-bottom: 20px;
+
+}
+
+#group-search-results {
+margin-top: 20px;
+}
+
+
+#group-search-results a{
+text-decoration: none;
+padding: 20px;
+display: block;
+border-bottom: 1px solid #ddd;
+
+-moz-border-radius: 0px !important;
+-webkit-border-radius: 0px !important;
+border-radius:0px !important;
+
+}
 

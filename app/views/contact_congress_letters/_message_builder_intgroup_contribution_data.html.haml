@@ -19,7 +19,7 @@
               %td
                 %span.message_builder_clickable
                   = "$#{number_with_delimiter(contribution_amount)}"
-                  = render 'will_add_text_box', :text => "#{p.title} #{p.lastname}, I know that you took $#{number_with_delimiter(contribution_amount)} from #{big.crp_interest_group.name.downcase} interest groups who #{position} #{@bill.typenumber}."
+                  = render 'will_add_text_box', :text => "#{p.title} #{p.lastname}, I know that you took $#{number_with_delimiter(contribution_amount)} in the #{Settings.current_opensecrets_cycle} election cycle from #{big.crp_interest_group.name.downcase} interest groups who #{position} #{@bill.typenumber}."
                 
 :javascript
   $j(".contribution_data .message_builder_clickable").hover(function(){ mbHoverIn(this) }, function(){ mbHoverOut(this) });

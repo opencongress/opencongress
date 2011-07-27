@@ -24,3 +24,6 @@
                       = link_to "Revoke Moderator", group_group_member_path(@group, m, :status => 'MEMBER'), :method => :put, :class => 'button medium silver floatright margin-left margin-bottom'
                     - else
                       = link_to "Make Moderator", group_group_member_path(@group, m, :status => 'MODERATOR'), :method => :put, :class => 'button medium blue floatright margin-left margin-bottom'
+  
+  .padding
+    = will_paginate @group_members

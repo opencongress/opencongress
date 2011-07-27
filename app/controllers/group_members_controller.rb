@@ -13,9 +13,9 @@ class GroupMembersController < ApplicationController
     end
     
     if @group.can_moderate?(current_user)
-      @group_members = @group.group_members.includes(:user).order("users.login")
+      @group_members = @group.group_members.includes(:user).order("users.login").paginate(:per_page => 100, :page => params[:page])
     else
-      @group_members = @group.group_members.where("group_members.status != 'BOOTED'").includes(:user).order("UPPER(users.login)")
+      @group_members = @group.group_members.where("group_members.status != 'BOOTED'").includes(:user).order("UPPER(users.login)").paginate(:per_page => 100, :page => params[:page])
     end
   end
   

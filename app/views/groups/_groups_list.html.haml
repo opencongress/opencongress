@@ -26,6 +26,9 @@
         - if g.join_type == 'ANYONE'
           %span.grid_1.omega= link_to 'Join', group_group_members_path(g, :status => 'MEMBER'), :method => 'post', :class => 'button blue small floatright'
 
+.floatleft.padding
+  = will_paginate @groups
+  
 - unless defined?(no_js)
   :javascript
     var doSearch = function() {

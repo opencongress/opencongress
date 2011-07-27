@@ -66,8 +66,9 @@ class CreateGroups < ActiveRecord::Migration
     add_column :notebook_items, :group_user_id, :integer
     
     ## join all users to two default groups
-    admin_user = User.find_by_login('drm_testing')
-    State.all[0..3].each do |s|
+    admin_user = User.find_by_login('donnyshaw')
+    State.all.each do |s|
+      puts "Building group for #{s.name}"
       g = Group.new
       g.name = "OpenCongress #{s.name} Group"
       g.description = "Default group for users in #{s.name}"
@@ -86,7 +87,9 @@ class CreateGroups < ActiveRecord::Migration
       g.save
     end
     
-    District.all[0..3].each do |d|
+    District.all.each do |d|
+      puts "Building group for #{d.state.abbreviation}-#{d.district_number}"
+      
       g = Group.new
       g.name = "OpenCongress #{d.state.abbreviation}-#{d.district_number} Group"
       g.description = "Default group for users in #{d.state.abbreviation}-#{d.district_number}"
@@ -105,18 +108,18 @@ class CreateGroups < ActiveRecord::Migration
       g.save
     end
     
-    PvsCategory.all.each do |c|
-      g = Group.new
-      g.name = "The #{c.name} Group"
-      g.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vehicula, quam pretium volutpat pharetra, eros tellus scelerisque velit, eget auctor dolor justo ac purus. Vivamus id urna ac enim faucibus vestibulum. Phasellus pharetra adipiscing lobortis. Proin erat lorem, sagittis at lobortis non, interdum ac diam. Morbi eu neque non magna pretium facilisis ut a ligula. Nullam in metus sit amet nisi pharetra ultricies. In dapibus, neque in rhoncus aliquet, elit metus molestie tortor, quis porta enim elit sit amet lacus. Fusce sit amet sollicitudin urna. Maecenas elit nibh, condimentum ac egestas in, tristique at nunc. Sed varius, neque eget convallis dignissim, orci diam tristique sapien, ac rutrum dolor odio non sapien. Etiam auctor posuere dolor, et volutpat justo hendrerit ut."
-      g.join_type = 'ANYONE'
-      g.invite_type = 'ANYONE'
-      g.post_type = 'ANYONE'
-      g.user = admin_user
-      g.pvs_category = c
-      
-      g.save
-    end
+    # PvsCategory.all.each do |c|
+    #   g = Group.new
+    #   g.name = "The #{c.name} Group"
+    #   g.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vehicula, quam pretium volutpat pharetra, eros tellus scelerisque velit, eget auctor dolor justo ac purus. Vivamus id urna ac enim faucibus vestibulum. Phasellus pharetra adipiscing lobortis. Proin erat lorem, sagittis at lobortis non, interdum ac diam. Morbi eu neque non magna pretium facilisis ut a ligula. Nullam in metus sit amet nisi pharetra ultricies. In dapibus, neque in rhoncus aliquet, elit metus molestie tortor, quis porta enim elit sit amet lacus. Fusce sit amet sollicitudin urna. Maecenas elit nibh, condimentum ac egestas in, tristique at nunc. Sed varius, neque eget convallis dignissim, orci diam tristique sapien, ac rutrum dolor odio non sapien. Etiam auctor posuere dolor, et volutpat justo hendrerit ut."
+    #   g.join_type = 'ANYONE'
+    #   g.invite_type = 'ANYONE'
+    #   g.post_type = 'ANYONE'
+    #   g.user = admin_user
+    #   g.pvs_category = c
+    #   
+    #   g.save
+    # end
   end
 
   def self.down

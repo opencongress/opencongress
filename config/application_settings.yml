@@ -34,6 +34,9 @@ defaults: &defaults
   formageddon_reply_domain: formageddon.nindy.com 
   formageddon_server: mail.formageddon.nindy.com
   formageddon_username: formageddon@formageddon.nindy.com
+  
+  group_images_path: <%= Rails.root %>/public/system/group_images
+  notebook_files_path: <%= Rails.root %>/public/system/notebook_files
 
 development:
   <<: *defaults
@@ -58,9 +61,6 @@ drm:
   api_base_url: http://api.dev.opencongress.org/
   wiki_base_url: http://wiki-dev.opencongress.org/wiki 
   
-  group_images_path: <%= Rails.root %>/public/system/group_images
-  notebook_files_path: <%= Rails.root %>/public/system/notebook_files
-
 test:
   <<: *defaults
 
@@ -71,9 +71,6 @@ staging:
   wiki_base_url: http://wiki-dev.opencongress.org/wiki 
   api_host: api.dev.opencongress.org
   api_base_url: http://api.dev.opencongress.org/
-
-  group_images_path: /u/apps/opencongress-dev/shared/system/group_images
-  notebook_files_path: /u/apps/opencongress-dev/shared/system/notebook_files
   
 production:
   <<: *defaults

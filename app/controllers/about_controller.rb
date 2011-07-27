@@ -60,8 +60,8 @@ class AboutController < ApplicationController
      @page_title = "Privacy Policy"
   end
   
-  def version2
-  
+  def version3
+    @page_title = 'Announcing Opencongress v3'
   end
   
 

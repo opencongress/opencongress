@@ -17,6 +17,9 @@ gem "haml-rails"
 # RABL for API / JSON
 gem 'rabl'
 
+# Background tasks
+gem 'delayed_job', '~> 2.1'
+
 # RMagick
 gem 'rmagick', '2.13.1'
 gem 'simple_captcha', :git => 'git://github.com/galetahub/simple-captcha.git'

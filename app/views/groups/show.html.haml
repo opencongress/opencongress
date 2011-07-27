@@ -18,7 +18,11 @@
           %strong Issue Area:
           = @group.pvs_category.name
 
+
   .description
+    .thumb.floatleft.margin-right
+      = group_image(@group)
+
     = @group.description
   
   = render :partial => 'post_modal'

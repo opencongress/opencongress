@@ -18,9 +18,12 @@ class ApplicationController < ActionController::Base
   before_filter :set_simple_comments
 
   def facebook_check
-    if params[:fbcancel]
+    return if session[:nofacebook]
+    
+    if params[:fbcancel] or 
       force_fb_cookie_delete
       @facebook_user = nil
+      session[:nofacebook] = true
       
       flash.now[:notice] = "Facebook Connect has been cancelled."
       return

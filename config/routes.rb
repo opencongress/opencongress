@@ -149,10 +149,11 @@ OpenCongress::Application.routes.draw do
   # map.connect ':controller/:action/:id'
   
 
-  resources :contact_congress_letters, :only => [:index, :show, :new] do
+  resources :contact_congress_letters, :only => [:index, :show, :new, :update] do
     get 'create_from_formageddon', :on => :collection # create uses POST and we'll be redirecting to create
     get 'get_recipients', :on => :collection 
     get 'delayed_send', :on => :collection
+    get 'get_replies', :on => :collection
   end
   
   match 'howtouse' => 'about#howtouse'

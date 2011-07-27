@@ -8,8 +8,7 @@
 
 
       <div class="banner">
-        <!-- <p>The easiest way to email your members of Congress</p> -->
-        <p>Help keep OpenCongress up and running</p>
+        <p>The easiest way to email your members of Congress</p>
         <span class="big_arrow"></span><a class="donate_now" rel="#donate" href="/donate" id="donate_button">Donate Now</a>
         <span class="left_cap"></span>
         <span class="right_cap"></span>
@@ -19,7 +18,7 @@
       <div class="just_for_a_border">
         <% cache("frontpage_rightside", :expires_in => 3.hours) do %>
         <div class="rightside">
-          <a class="og" href="http://www.opengovernment.org">We're going local - Visit OpenGovernment</a>
+          <a class="og" href="/about/version3">See New Features in OpenCongress v3!</a>
 
           <div class="congress_status">
             <h2 class="small_heading">Today in Congress<span><%= Date.today.strftime("%B %d, %Y") %></span></h2>

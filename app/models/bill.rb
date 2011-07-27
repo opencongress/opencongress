@@ -64,6 +64,8 @@ class Bill < ActiveRecord::Base
   
   has_one :wiki_link, :as => "wikiable"
   
+  has_many :contact_congress_letters
+  
   alias :blog :blogs
   
   attr_accessor :search_relevancy

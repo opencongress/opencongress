@@ -189,17 +189,16 @@ class ContactCongressLettersController < ApplicationController
     threads.each do |t|
       t.formageddon_sender = current_user
       
-      ##########t.formageddon_letters.first.update_attribute(:status, 'START')
-      t.formageddon_letters.first.update_attribute(:status, 'SENT')
+      t.formageddon_letters.first.update_attribute(:status, 'START')
       t.formageddon_letters.first.update_attribute(:direction, 'TO_RECIPIENT')
     
       t.save
       
-      #####if defined? Delayed
-      #####  t.formageddon_letters.first.delay.send_letter
-      #####else
+      if defined? Delayed
+        t.formageddon_letters.first.delay.send_letter
+      else
         t.formageddon_letters.first.send_letter
-      ######end
+      end
     end
     
     @letter_ids = threads.collect{|t| t.formageddon_letters.first.id}.join(',')
@@ -207,6 +206,37 @@ class ContactCongressLettersController < ApplicationController
     session[:formageddon_after_send_url] = "#{formageddon_params[:after_send_url]}&letter_ids=#{@letter_ids}" unless formageddon_params[:after_send_url].blank?
     session[:formageddon_params] = nil
     session[:formageddon_unsent_threads] = nil
+  end
+  
+  def update
+    @contact_congress_letter = ContactCongressLetter.find(params[:id])
+    
+    if @contact_congress_letter and @contact_congress_letter.user == current_user
+      @contact_congress_letter.receive_replies = (params[:receive_replies] == 'true')
+      @contact_congress_letter.save
+    end
+    
+    redirect_to @contact_congress_letter, :notice => "Letter setting has been updated."
+  end
+  
+  def get_replies
+    emails_received = 0
+    notifications_sent = 0
+    if params[:formageddon_get_replies_key] and params[:formageddon_get_replies_key] == ApiKeys.formageddon_get_replies_key
+      Formageddon::IncomingEmailFetcher.fetch do |letter|
+        cclft = ContactCongressLettersFormageddonThread.where(["formageddon_thread_id=?", letter.formageddon_thread.id]).first
+
+        emails_received += 1
+        
+        if cclft and cclft.receive_replies?
+          notifications_sent += 1
+          Rails.logger.info "Sending an email notification to: #{cclft.contact_congress_letter.user.email}"
+          ContactCongressMailer.reply_received_email(cclft.contact_congress_letter, letter.formageddon_thread).deliver
+        end
+      end
+    end
+    
+    render :text => "#{emails_received} emails, #{notifications_sent} notifications"
   end
   
   private

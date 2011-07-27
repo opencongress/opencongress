@@ -18,9 +18,9 @@ class ApplicationController < ActionController::Base
   before_filter :set_simple_comments
 
   def facebook_check
-    return if session[:nofacebook]
+    return unless session[:nofacebook].nil?
     
-    if params[:fbcancel] or 
+    unless params[:fbcancel].nil? 
       force_fb_cookie_delete
       @facebook_user = nil
       session[:nofacebook] = true

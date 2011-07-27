@@ -7,6 +7,11 @@
     #bill
       This letter was sent by OpenCongress user
       = link_to @contact_congress_letter.formageddon_threads.first.formageddon_sender.login, user_profile_path(@contact_congress_letter.formageddon_threads.first.formageddon_sender.login)
+      - if logged_in? and current_user == @contact_congress_letter.user
+        (
+        = link_to "Turn Email Alerts #{@contact_congress_letter.receive_replies? ? 'Off' : 'On'}", contact_congress_letter_path(@contact_congress_letter, :receive_replies => !@contact_congress_letter.receive_replies), :method => :put, :class => 'button tiny silver margin-top'
+        )
+        
       on
       = @contact_congress_letter.formageddon_threads.first.created_at.strftime('%B %d, %Y')
       = position_clause(@contact_congress_letter.disposition)
@@ -14,6 +19,7 @@
         = "#{link_to(truncate(@contact_congress_letter.bill.typenumber + ' ' + @contact_congress_letter.bill.title_common, :length => 170), bill_path(@contact_congress_letter.bill))}.".html_safe
       Privacy setting:
       = @contact_congress_letter.formageddon_threads.first.privacy
+      
       
   #recipients{ :class => "num#{@contact_congress_letter.formageddon_threads.size}" }
     .to To:

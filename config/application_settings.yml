@@ -75,5 +75,5 @@ staging:
 production:
   <<: *defaults
   formageddon_reply_domain: opencongress.org 
-  formageddon_server: mail.opencongress.org
+  formageddon_server: pop.gmail.com
   formageddon_username: formageddon@opencongress.org

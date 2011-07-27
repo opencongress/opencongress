@@ -9,18 +9,23 @@ Rails.application.require_environment!
 ###########################
 
 send = false
-people = Person.all_sitting
+people = Person.representatives
+bill = Bill.find_by_ident('112-h1349')
+sender = User.find_by_login('drm')
 people.each do |p|
-  if p.lastname == 'Sablan'
-    send = true
-  end
+  send = true
   
   if send
     if p.formageddon_contact_steps.empty?
       puts "Skipping #{p.name}.  Not configured."
     else
+      puts "Sending to #{p.name}..."
+      
       thread = Formageddon::FormageddonThread.new
+      
       thread.formageddon_recipient = p
+      thread.formageddon_sender = sender
+      
       thread.sender_email = "david@opencongress.org"
       thread.sender_title = "Mr."
       thread.sender_first_name = "David"
@@ -92,6 +97,13 @@ people.each do |p|
         thread.formageddon_letters.create(:subject => "Support the Principles of Open Government Data", :message => message, :issue_area => 'Other', :direction => 'TO_RECIPIENT', :status => 'START')
     
         thread.formageddon_letters.first.send_letter
+        
+        ccl = ContactCongressLetter.new
+        ccl.user = sender
+        ccl.bill = bill
+        ccl.disposition = 'support'
+        ccl.formageddon_threads << thread
+        ccl.save
       end
     end
   end

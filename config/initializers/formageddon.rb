@@ -1,3 +1,5 @@
+require File.dirname(__FILE__) + '/settings'
+
 if defined? Formageddon
   Formageddon.configure do |config|
     config.admin_check_filter = :no_users
@@ -15,14 +17,22 @@ if defined? Formageddon
       ['Private -- You Only', 'PRIVATE']
     ]
     
-    config.reply_domain = 'formageddon.nindy.com'
+    config.reply_domain = Settings.formageddon_reply_domain
     config.incoming_email_config = {
-      'server' => 'mail.formageddon.nindy.com',
-      'username' => 'formageddon@formageddon.nindy.com',
-      'password' => 'f0rmagedd0n'
+      'server' => Settings.formageddon_server,
+      'username' => Settings.formageddon_username,
+      'password' => ApiKeys.formageddon_password
     }
     
     config.tmp_captcha_dir = '/tmp/'
+    
+    config.default_params = {
+      "Re" => "issue",
+      "SubjectOther" => 'Other',
+      "view" => 'N/A',
+      "responsereq" => 'yes'
+    }
+    
     
   end
 end

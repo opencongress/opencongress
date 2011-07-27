@@ -1,0 +1,24 @@
+.contribution_data
+  %p.behave
+    Using all publicly-available data, the campaign contributions shown here are the ones OpenCongress automatically determines most-likely to be relevant to this bill, based on this bill's official issue areas.
+
+  %table
+    %thead
+      %tr
+        %th.topleft
+        - (@sens + @reps).each do |p|
+          %th= p.lastname
+    %tbody
+      - @bill.relevant_industries.each do |ind|
+        %tr
+          %th.group_column= ind.name
+          - (@sens + @reps).each do |p|
+            - contribution_amount = ind.contrib_for_person(p)
+            %td
+              %span.message_builder_clickable
+                = "$#{number_with_delimiter(contribution_amount)}"
+                = render 'will_add_text_box', :text => "#{p.title} #{p.lastname}, campaign contribution data shows that you received $#{number_with_delimiter(contribution_amount)} in the #{Settings.current_opensecrets_cycle} election cycle from the #{ind.name.downcase} industry, which is relevant to this bill and its issue areas."
+              
+:javascript
+  $j(".contribution_data .message_builder_clickable").hover(function(){ mbHoverIn(this) }, function(){ mbHoverOut(this) });
+  $j(".contribution_data .message_builder_clickable").click(function(){ mbAddText(this) });

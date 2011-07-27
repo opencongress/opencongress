@@ -908,6 +908,18 @@ class Bill < ActiveRecord::Base
   def bill_position_organizations_oppose
     bill_position_organizations.where("bill_position_organizations.disposition='oppose'")
   end
+  def relevant_industries
+    unless self.hot_bill_category.nil?
+      return self.hot_bill_category.crp_industries
+    else
+      ind = []
+      self.subjects.each { |s| 
+        ind.concat(s.pvs_categories.collect{ |c| c.crp_industries })
+      }
+      
+      return ind.flatten.uniq
+    end
+  end
   
   class << self
     def client_id_to_url(client_id)

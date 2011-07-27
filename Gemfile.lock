@@ -5,6 +5,12 @@ GIT
     simple_captcha (0.1.1)
 
 GIT
+  remote: git://github.com/mbleigh/acts-as-taggable-on.git
+  revision: 2752cfef4c66318d0925fbe880d5392ad188bb50
+  specs:
+    acts-as-taggable-on (2.0.6)
+
+GIT
   remote: git://github.com/opencongress/formageddon.git
   revision: e38ef1eab81912abf542a0e4f5dc6fd718cac2b3
   specs:
@@ -12,12 +18,6 @@ GIT
       delayed_job (~> 2.1)
       haml
       mechanize
-
-GIT
-  remote: http://github.com/mbleigh/acts-as-taggable-on.git
-  revision: 2752cfef4c66318d0925fbe880d5392ad188bb50
-  specs:
-    acts-as-taggable-on (2.0.6)
 
 GEM
   remote: http://rubygems.org/

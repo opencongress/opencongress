@@ -14,11 +14,8 @@
         = link_to "Join Group", group_group_members_path(@group, :status => 'MEMBER'), :method => 'post', :class => 'button silver large floatright margin-top margin-right'
   - else
     = link_to "Register or Login To Join", login_path, :class => 'button silver large floatright margin-top margin-right'
-    
 
-
-  .thumb
-    = group_image(@group)
-
+  = link_to "View All Groups", login_path, :class => 'button silver large floatright margin-top margin-right' 
+   
   %h2.group_name= subtitle.nil? ? link_to(@group.name, @group).html_safe : "#{link_to(@group.name, @group)} : #{subtitle}".html_safe
   

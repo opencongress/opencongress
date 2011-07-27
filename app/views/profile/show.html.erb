@@ -37,7 +37,21 @@
 			<% end %>
 		</div>
 		
+	<div id="privacy_settings">
+				<% if @user == current_user %>
+					<div id="phide" style="display:none;">
+					<% form_for :privacy_option, @user.privacy_option, :url => {:controller => "/profile", :action => 'update_privacy' } do |f| %>
+						<%= f.select :my_last_login_date, [["Public",2],["Friends", 1], ["Private",0]] %>
+						<%= f.select :my_full_name, [["Public",2],["Friends", 1], ["Private",0]] %>
+						<%= f.select :my_email, [["Public",2],["Friends", 1], ["Private",0]] %> 
+						<%= f.select :my_location, [["Public",2],["Friends", 1], ["Private",0]] %>
+						<%= f.select :my_zip_code, [["Public",2],["Friends", 1], ["Private",0]] %> 
+						<%= f.select :my_congressional_district, [["Public",2],["Friends", 1], ["Private",0]] %>
+						<%= submit_tag "Save changes", :id => "submit", :name => "submit", :class => "form_submit", :disabled => false, :disable_with => "Please wait..." %>
+					<% end %>
+					</div>
 
+			
 
 			
 			<div id="about_me">
@@ -45,6 +59,13 @@
 				<p><label>About <%=h @user == current_user ? "me" : @user.login %></label> <%= draw_edit_in_place("about", 3) %></p>
 				<% end %>
 			</div>
+			
+				<p class="button silver medium" style="margin-bottom: 400px; display: block; width: 180px;"><%= toggler("phide","Change Privacy Settings", "Hide Privacy Settings", "privacy", "privacy").html_safe %></p>				
+				<% end %>
+				
+				
+				</div>
+			
 		<div id="personal_info">			
 			<% if @user.can_view(:my_last_login_date, current_user) %>  
 			<p><label>Last Login</label>
@@ -101,29 +122,7 @@
 				<span><%=h @user.created_at ? time_ago_in_words(@user.created_at) + " ago." : Date.today()  %></span>
 	      </p>
 				</div>   
-				<div id="privacy_settings">
-				<% if @user == current_user %>
-					<div id="phide" style="display:none;">
-					<% form_for :privacy_option, @user.privacy_option, :url => {:controller => "/profile", :action => 'update_privacy' } do |f| %>
-						<%= f.select :my_last_login_date, [["Public",2],["Friends", 1], ["Private",0]] %>
-						<%= f.select :my_full_name, [["Public",2],["Friends", 1], ["Private",0]] %>
-						<%= f.select :my_website, [["Public",2],["Friends", 1], ["Private",0]] %>
-						<%= f.select :my_email, [["Public",2],["Friends", 1], ["Private",0]] %> 
-						<%= f.select :my_location, [["Public",2],["Friends", 1], ["Private",0]] %>
-						<%= f.select :my_zip_code, [["Public",2],["Friends", 1], ["Private",0]] %> 
-						<%= f.select :my_congressional_district, [["Public",2],["Friends", 1], ["Private",0]] %>
-						<%= f.select :my_instant_messanger_names, [["Public",2],["Friends", 1], ["Private",0]] %>
-						<%= submit_tag "Save changes", :id => "submit", :name => "submit", :class => "form_submit", :disabled => false, :disable_with => "Please wait..." %>
-					<% end %>
-					</div>
-
-				<p class="button silver medium" style="width: 180px; margin-bottom: 10px;"><%= toggler("phide","Change Privacy Settings", "Hide Privacy Settings", "privacy", "privacy").html_safe %></p>				
-				<% end %>
-				
-				<br />
-<div class="clear">&nbsp;</div>
-				
-				</div>
+			
 
 				<div class="settings">
 				<% if logged_in? && params[:login] == current_user.login %>

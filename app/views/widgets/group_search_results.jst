@@ -1,8 +1,10 @@
 <% if (group_search_results.length > 0) { %>
-<ul id="searchResults">
+<ul id="group-search-results">
+<div class="space">&nbsp;</div>
+  <h3 class="choose">Choose a Group</h3>
   <% _.each(group_search_results, function(groupContainer) {
       var group = groupContainer.group; %>
-    <li><a class="groupSearchResult" href="#" data-group="<%= group.to_param %>"><strong><%= group.name.substring(0, 120) + (group.name.length > 120 ? "..." : '') %></a></li>
+    <li><a class="groupSearchResult button silver" href="#" data-group="<%= group.to_param %>"><%= group.name.substring(0, 120) + (group.name.length > 120 ? "..." : '') %></a></li>
   <% }); %>
 </div>
 <% } else { %>

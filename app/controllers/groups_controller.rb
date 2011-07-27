@@ -117,7 +117,7 @@ class GroupsController < ApplicationController
       return
     end
     
-    if !@group.publicly_visible? or @group.join_type == 'INVITE_ONLY'
+    if !@group.publicly_visible?
       if current_user == :false
         redirect_to groups_path, :notice => "That group is private!"
         return

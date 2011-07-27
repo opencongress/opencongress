@@ -956,25 +956,4 @@ background: rgba(54,205,143, .2);
 }
 
 
-.banner2 h1{
-position: relative;
-}
-
-.v3{
-background: rgba(0,0,0, .1);
--moz-border-radius: 40px;
--webkit-border-radius: 40px;
-border-radius: 40px;
-width: 60px;
-text-align: center;
-line-height: 60px;
-position: absolute;
-top: 25px;
-font-size: 16px;
-right: 320px;
-display: inline-block;
-font-family
--moz-box-shadow: 0 1px 0 rgba(255,255,255, .3);
-}
-
 

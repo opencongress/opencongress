@@ -29,46 +29,48 @@
       -# Storage for the currently selected bill
       #widgetData
 
-      %label(for="widgetGroup") Choose a popular group:
-      %select(id="widgetGroup")
-        - @hot_groups.each do |group|
-          %option{:'data-group' => group.to_param}= truncate(group.name, :length => 70)
+      .choose-group.rounded
+        %label.bold(for="widgetGroup") Choose a popular group 
+        %select.floatright(id="widgetGroup")
+          - @hot_groups.each do |group|
+            %option{:'data-group' => group.to_param}= truncate(group.name, :length => 70)
+  
+        :javascript
+          // WHen we choose a group from the select list, update #widgetData to reflect
+          $('#widgetGroup').change(function() {
+            var el = $(this).find('option:selected');
+            $('#widgetData').data('group', el.data('group'));
+            $('#widgetData').trigger('refresh');
+          });
 
+    %form.choose-group.rounded
+      %label.bold.floatleft(for="widgetGroupLookup") Or lookup any group by name
+      .floatright
+        %input(type="text" class="field" id="widgetGroupLookup")
+        %input(type="submit" value="Lookup" class="button small silver" id="groupLookupBtn")
+      #groupLookupResults
+  
       :javascript
-        // WHen we choose a group from the select list, update #widgetData to reflect
-        $('#widgetGroup').change(function() {
-          var el = $(this).find('option:selected');
-          $('#widgetData').data('group', el.data('group'));
-          $('#widgetData').trigger('refresh');
+        // Search for a group via jsonp and display the results
+        $('#groupLookupBtn').click(function (e) {
+          e.preventDefault();
+          $.ajax({
+              dataType: "jsonp",
+              url: '#{escape_javascript(Settings.api_base_url)}groups.json?callback=?&name=' + $('#widgetGroupLookup').val(),
+              success: function(response) {
+                $('#groupLookupResults').html(window.JST['group_search_results']({ group_search_results: response.groups }));
+  
+                // Update #widgetData to reflect a group chosen from search results.
+                $('.groupSearchResult').click(function() {
+                  $('#widgetData').data('group', $(this).data('group'));
+                  $('#widgetData').trigger('refresh');
+                  return false;
+                });
+              }
+          });
+  
+          return false;
         });
-
-    %form
-      %label(for="widgetGroupLookup") Or lookup any group by name, eg. 'Alabama':
-      %input(type="text" id="widgetGroupLookup")
-      %input(type="submit" id="groupLookupBtn")
-    #groupLookupResults
-
-    :javascript
-      // Search for a group via jsonp and display the results
-      $('#groupLookupBtn').click(function (e) {
-        e.preventDefault();
-        $.ajax({
-            dataType: "jsonp",
-            url: '#{escape_javascript(Settings.api_base_url)}groups.json?callback=?&name=' + $('#widgetGroupLookup').val(),
-            success: function(response) {
-              $('#groupLookupResults').html(window.JST['group_search_results']({ group_search_results: response.groups }));
-
-              // Update #widgetData to reflect a group chosen from search results.
-              $('.groupSearchResult').click(function() {
-                $('#widgetData').data('group', $(this).data('group'));
-                $('#widgetData').trigger('refresh');
-                return false;
-              });
-            }
-        });
-
-        return false;
-      });
 
     %form
       = render :partial => 'color_choosers'

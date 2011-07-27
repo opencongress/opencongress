@@ -238,6 +238,7 @@ width: 120px;
   clear:left;
   float:left;
   width: 250px;
+  margin-bottom: 40px;
 }
 
 #about_me textarea{
@@ -257,12 +258,17 @@ display: block;}
 #about_me #user_about {
   display:block;
   clear:left;
+height: 250px;
+overflow: hidden;
 }
 
 #personal_info {
 margin: 0px 0 20px;
 width: 260px;
 float:left;
+position: absolute;;
+z-index: 999999999;
+margin-top: 390px;
 clear:left;
 }
 #personal_info p, #privacy_settings p, .settings p {
@@ -640,4 +646,30 @@ div.after {
   border-bottom:1px solid #DDDDDD;
 }
 
+
+#phide{
+position: absolute;
+left: 10px;
+margin-top: 380px;
+background: #fff;
+border: 1px solid #ddd;
+padding: 10px 0 0 290px;
+z-index: 99999999;
+}
+
+#phide select{
+margin-bottom: 19px;
+}
+
+
+#phide #submit{
+margin-bottom: 19px;
+margin-right: 20px;
+}
+
+
+#privacy_option_my_zip_code{
+margin-bottom: 55px !important;
+
+}
 

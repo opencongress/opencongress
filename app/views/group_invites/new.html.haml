@@ -2,7 +2,8 @@
 
 .padding      
   .instructions
-    %strong Now that you've created your group, invite some people to join it!
+    - if params[:new]
+      %strong Now that you've created your group, invite some people to join it!
     %br
     %br
     Enter email addresses or OpenCongress usernames in the box below and click "Invite".

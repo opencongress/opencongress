@@ -5105,7 +5105,9 @@ overflow: hidden;
 padding-top: 80px;
 background: url('../images/sunlight-small.png') 0px 4px no-repeat;
 }
-
+#errors {
+  color: red;
+}
 .errorExplanation {
   color: red;
   margin-bottom: 15px;

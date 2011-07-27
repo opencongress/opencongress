@@ -148,9 +148,19 @@
         %span.the-user a user out of District something or other
       .formageddon_contact_form
         = render 'formageddon/threads/form', :f => f, :thread => @formageddon_thread, :after_send_url => "/contact_congress_letters/create_from_formageddon?bill=#{@bill.ident}&disposition=#{@position}&group_id=#{params[:group_id]}", :action_on_error => '/contact_congress_letters/new', :no_sender_redirect => '/account/contact_congress', :custom_params => { :bill => @bill.ident }
+
+          
+        :javascript
+          $j(document).ready(function() {
+            $j('#formageddon_formageddon_thread_formageddon_letters_attributes_0_message').simplyCountable({
+              maxCount:8000,
+              countDirection:'down'
+            });
+          });
+
+        
     
     %ul.instruction
-      
       %li
         - unless current_user == :false
           Click "Send Message" above to complete delivery of this email to your members of Congress. 

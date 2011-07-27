@@ -2,6 +2,6 @@ I've created an OpenCongress group called #{@group_invite.group.name}!
 
 To join it, just click the link here:
 
-<%= "#{Settings.base_url}#{url_for([@group_invite.group, @group_invite])}?key=#{@group_invite.key}" %>
+<%= "#{Settings.base_url.chop}#{url_for([@group_invite.group, @group_invite])}?key=#{@group_invite.key}" %>
 
 Thanks!

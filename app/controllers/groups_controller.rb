@@ -19,7 +19,7 @@ class GroupsController < ApplicationController
     
     respond_to do |format|
       if @group.save
-        format.html { redirect_to(new_group_group_invite_path(@group), :notice => 'Group was successfully created.') }
+        format.html { redirect_to(new_group_group_invite_path(@group, :new => true), :notice => 'Group was successfully created.') }
         format.xml  { render :xml => @group, :status => :created, :location => @group }
       else
         format.html { render :action => "new" }

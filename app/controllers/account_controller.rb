@@ -510,11 +510,14 @@ class AccountController < ApplicationController
 
   private
     def activate_redirect(url = welcome_url)
-      if session[:formageddon_unsent_threads].nil?
-        redirect_to url
+      if session[:formageddon_unsent_threads]
+        redirect_to '/contact_congress_letters/delayed_send'
+        return
+      elsif session[:group_invite_url]
+        redirect_to session[:group_invite_url]
         return
       else
-        redirect_to '/contact_congress_letters/delayed_send'
+        redirect_to url
         return
       end
     end

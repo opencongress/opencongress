@@ -15,16 +15,26 @@ class GroupInvitesController < ApplicationController
   def show
     @group = Group.find(params[:group_id])
     @group_invite = GroupInvite.find(params[:id])
+    
+    @page_title = "You've been invited!"
+    
     key = params[:key]
     
     redirect_to groups_path and return if (key.blank? or @group_invite.key != key)
   
     invite_user = @group_invite.user || User.find_by_email(@group_invite.email)
     if invite_user
+      if logged_in? && (current_user != invite_user)
+        redirect_to group_path(@group), :notice => "Trying to accept invitation of another user! Log out of account first."
+        return
+      end
+      
       if @group.can_join?(invite_user)
         membership = @group.group_members.find_or_create_by_user_id(invite_user)
         membership.status = 'MEMBER'
         membership.save
+        
+        session[:group_invite_url] = nil
         
         # we could log in the user in (if they're not already) here, but too sketchy from
         # a security standpoint
@@ -34,6 +44,13 @@ class GroupInvitesController < ApplicationController
       end
       return
     else
+      if logged_in?
+        redirect_to group_path(@group), :notice => "Trying to accept invitation of another user! Log out of account first."
+        return
+      end
+      
+      session[:group_invite_url] = group_group_invite_url(@group_invite.group, @group_invite, :key => @group_invite.key)
+      
       # we just have an email so user has to finish registration
       @user = User.new
       @user.email = @group_invite.email
@@ -48,11 +65,16 @@ class GroupInvitesController < ApplicationController
   # GET /group_invites/new
   # GET /group_invites/new.xml
   def new
-    
-    ## SECURITY CHECK!!!!
     @group = Group.find(params[:group_id])
     @group_invite = GroupInvite.new
 
+    @page_title = "Send Invitations to #{@group.name}"
+
+    unless @group.can_invite?(current_user)
+      redirect_to group_path(@group), :notice => "You are not allowed to send invitations to this group!"
+      return
+    end
+    
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @group_invite }

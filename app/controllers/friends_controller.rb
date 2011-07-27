@@ -302,6 +302,8 @@ Personal Note: #{CGI.escapeHTML(params[:message])}"
 		@profile_nav = @user
 		@title_class = "tab-nav"
 
+    flash.now[:notice] = "We're working on this page."
+    
     respond_to do |format|
       format.html # index.rhtml
       format.xml  { render :xml => @friends.to_xml }

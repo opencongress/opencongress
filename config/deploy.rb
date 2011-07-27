@@ -37,8 +37,6 @@ namespace :deploy do
     run "cp #{deploy_to}/#{shared_dir}/newrelic.yml #{current_release}/config/newrelic.yml"
     run "ln -s #{deploy_to}/#{shared_dir}/states #{current_release}/public/images/states"
     run "ln -s #{deploy_to}/#{shared_dir}/user_images #{current_release}/public/images/users"
-#    run "ln -s #{deploy_to}/#{shared_dir}/group_images #{current_release}/public/system/group_images"
-#    run "ln -s #{deploy_to}/#{shared_dir}/notebook_files #{current_release}/public/system/notebook_files"
     run "ln -s #{deploy_to}/#{shared_dir}/blog #{current_release}/public/images/blog"
     run "ln -s /data/govtrack/109/repstats/images/people #{current_release}/public/images/people"
     run "ln -s /data/govtrack/photos #{current_release}/public/images/photos"

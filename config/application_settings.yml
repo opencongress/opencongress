@@ -29,7 +29,12 @@ defaults: &defaults
   wiki_base_url: http://www.opencongress.org/wiki
 
   ban_file: /u/apps/opencongress/shared/files/banned_users.txt
-  
+
+  # Andy's server for formageddon
+  formageddon_reply_domain: formageddon.nindy.com 
+  formageddon_server: mail.formageddon.nindy.com
+  formageddon_username: formageddon@formageddon.nindy.com
+
 development:
   <<: *defaults
 
@@ -72,4 +77,6 @@ staging:
   
 production:
   <<: *defaults
-  
+  formageddon_reply_domain: opencongress.org 
+  formageddon_server: mail.opencongress.org
+  formageddon_username: formageddon@opencongress.org

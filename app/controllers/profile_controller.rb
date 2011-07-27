@@ -190,6 +190,7 @@ class ProfileController < ApplicationController
   
   def groups
     @user = User.find_by_login(params[:login])
+    @groups = @user.active_groups.paginate(:per_page => 20, :page => params[:page])
   end
   
   def my_votes

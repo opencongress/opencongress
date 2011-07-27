@@ -2,4 +2,4 @@
   %h2= "#{@user.login}'s Groups"
 
 .margin-top.margin-bottom
-  = render :partial => 'groups/groups_list', :locals => { :groups => @user.active_groups }
+  = render :partial => 'groups/groups_list', :locals => { :groups => @groups }

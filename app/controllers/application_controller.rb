@@ -18,6 +18,17 @@ class ApplicationController < ActionController::Base
   before_filter :set_simple_comments
 
   def facebook_check
+    return unless session[:nofacebook].nil?
+    
+    unless params[:fbcancel].nil? 
+      force_fb_cookie_delete
+      @facebook_user = nil
+      session[:nofacebook] = true
+      
+      flash.now[:notice] = "Facebook Connect has been cancelled."
+      return
+    end
+    
     # check to see if the user is logged into and has connected to OC
     if current_facebook_user and current_facebook_client
       begin

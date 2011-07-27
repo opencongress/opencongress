@@ -21,6 +21,7 @@
           Also, your letter has been added to the group
           = link_to @group.name, group_path(@group)
           \.
+      %p Recently, due to a high volume of email traffic to members of the U.S. House, reaching official Congressional offices is more difficult than typically the case.
       %p
         - @contact_congress_letter.formageddon_threads.each do |t|
           %strong= t.formageddon_recipient

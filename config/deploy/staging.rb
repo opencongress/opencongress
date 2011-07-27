@@ -2,9 +2,8 @@ set :application, "opencongress-dev"
 set :rails_env, "staging"
 set :deploy_to, "/u/apps/opencongress-dev"
 set :branch, "master"
-role :web, "dev.opencongress.org"
-role :app, "dev.opencongress.org"
-role :db,  "dev.opencongress.org", :primary => true
+
+server "dev.opencongress.org", :web, :app, :db, :primary => true
 
 namespace :deploy do
   desc "Hook up staging symlinks"

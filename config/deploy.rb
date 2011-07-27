@@ -19,6 +19,9 @@ set :application, "opencongress"
 set :deploy_to, "/u/apps/opencongress"
 set :rake, "/opt/rubye/bin/rake"
 
+# force :web role to exist for task :role restrictions below
+roles[:web]
+
 default_run_options[:pty] = true
 set :repository,  "git://github.com/opencongress/opencongress.git"
 set :branch, "master"
@@ -49,7 +52,7 @@ namespace :deploy do
   end
 
   desc "Compile CSS & JS for public/assets/ (see assets.yml)"
-  task :jammit do
+  task :jammit, :roles => :web do
     run "cd #{current_release}; bundle exec jammit"
 
     # For Apache content negotiation with Multiviews, we need to rename .css files to .css.css and .js files to .js.js.
@@ -58,7 +61,7 @@ namespace :deploy do
   end
 
   desc "Restart Passenger"
-  task :restart do
+  task :restart, :roles => :web do
     sudo "touch #{deploy_to}/current/tmp/restart.txt"
   end
 end

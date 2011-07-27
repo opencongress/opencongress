@@ -282,6 +282,7 @@ DEPENDENCIES
   closure-compiler
   cucumber (= 0.8.5)
   cucumber-rails
+  delayed_job (~> 2.1)
   facebooker2
   fog
   formageddon!

@@ -50,7 +50,7 @@ namespace :deploy do
 
   desc "Compile CSS & JS for public/assets/ (see assets.yml)"
   task :jammit do
-    run "cd #{current_release}; /opt/rubye/bin/jammit"
+    run "cd #{current_release}; bundle exec jammit"
 
     # For Apache content negotiation with Multiviews, we need to rename .css files to .css.css and .js files to .js.js.
     # They will live alongside .css.gz and .js.gz files and the appropriate file will be served based on Accept-Encoding header.

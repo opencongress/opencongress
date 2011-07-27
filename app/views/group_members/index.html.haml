@@ -1,6 +1,10 @@
 = render 'groups/heading', :subtitle => "Members"
 
 .padding
+  - if @group.state or @group.district
+    %p.behave
+      This list will only show members that have made their Congressional district publicly viewable.
+  
   %p  
     %strong Owner
     = link_to @group.user.login, user_profile_path(@group.user.login)

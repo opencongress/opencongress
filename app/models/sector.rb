@@ -1,4 +1,5 @@
-class Sector < ViewableObject
+class Sector < ActiveRecord::Base
+  include ViewableObject
   validates_uniqueness_of :name
 
   has_many :person_sectors, :include => :person

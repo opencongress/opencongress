@@ -9,17 +9,18 @@
     %strong Members
     %ul
       - @group_members.each do |m|
-        %li.grid_14
-          %span.grid_5= link_to m.user.login, user_profile_path(m.user.login)
-          %span.grid_2= m.status.downcase.capitalize
-          - if @group.can_moderate?(current_user)
-            %span.grid_4
-              - if m.status == 'BOOTED'
-                = link_to "Re-join", group_group_member_path(@group, m, :status => 'MEMBER'), :method => :put, :class => 'button medium blue floatright margin-left margin-bottom'
-              - else
-                = link_to "Boot", group_group_member_path(@group, m, :status => 'BOOTED'), :method => :put, :class => 'button medium yellow floatright margin-left margin-bottom'
-                - if @group.is_owner?(current_user)
-                  - if @group.can_moderate?(m.user)
-                    = link_to "Revoke Moderator", group_group_member_path(@group, m, :status => 'MEMBER'), :method => :put, :class => 'button medium silver floatright margin-left margin-bottom'
-                  - else
-                    = link_to "Make Moderator", group_group_member_path(@group, m, :status => 'MODERATOR'), :method => :put, :class => 'button medium blue floatright margin-left margin-bottom'
+        - unless (@group.state or @group.district) and !m.user.can_view(:my_congressional_district, current_user)
+          %li.grid_14
+            %span.grid_5= link_to m.user.login, user_profile_path(m.user.login)
+            %span.grid_2= m.status.downcase.capitalize
+            - if @group.can_moderate?(current_user)
+              %span.grid_4
+                - if m.status == 'BOOTED'
+                  = link_to "Re-join", group_group_member_path(@group, m, :status => 'MEMBER'), :method => :put, :class => 'button medium blue floatright margin-left margin-bottom'
+                - else
+                  = link_to "Boot", group_group_member_path(@group, m, :status => 'BOOTED'), :method => :put, :class => 'button medium yellow floatright margin-left margin-bottom'
+                  - if @group.is_owner?(current_user)
+                    - if @group.can_moderate?(m.user)
+                      = link_to "Revoke Moderator", group_group_member_path(@group, m, :status => 'MEMBER'), :method => :put, :class => 'button medium silver floatright margin-left margin-bottom'
+                    - else
+                      = link_to "Make Moderator", group_group_member_path(@group, m, :status => 'MODERATOR'), :method => :put, :class => 'button medium blue floatright margin-left margin-bottom'

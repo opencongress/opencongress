@@ -58,7 +58,7 @@ class GroupsController < ApplicationController
         @sort = "groups.name #{sort_dir}"
       end
     else
-      @sort = 'groups.name ASC'
+      @sort = 'groups.state_id DESC, groups.district_id DESC, groups.name ASC'
     end
     
     if params[:state]

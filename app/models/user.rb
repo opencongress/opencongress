@@ -629,12 +629,12 @@ class User < ActiveRecord::Base
   def can_view(option,viewer)
     res = false
     if viewer.nil? or (viewer == :false)
-      logger.info "tis nil"
+      #logger.info "tis nil"
       if self.privacy_option[option] == 2
-        logger.info "tis allowed"
+        #logger.info "tis allowed"
         res = true
       else
-        logger.info "tis not allowed"
+        #logger.info "tis not allowed"
         res = false
       end
     elsif viewer[:id] == self[:id]

@@ -479,7 +479,6 @@ EOT
         end
       end
     end
-    bill_vote_images = bill_vote_images
     return bill_vote_images.html_safe
   end
   

@@ -48,7 +48,7 @@
 				
 				<%= user_bill_result(@bill) %>
 				<% if logged_in? %>
-				<%= my_congresspeople_votes(@bill) %>
+				<!-- <%= my_congresspeople_votes(@bill) %> -->
 				<% end %>
 			
 			<div class="results" id="vote_results_<%= @bill.id %>">
@@ -87,10 +87,11 @@
       <a href='/contact_congress_letters/new?bill=<%= @bill.ident %>&position=oppose' class='button medium silver'><span>Oppose</span></a>
       <a href='/contact_congress_letters/new?bill=<%= @bill.ident %>&position=tracking' class='button medium silver'><span>Tracking</span></a>
     </div>
-    
-    	<div id="login_vote" class="jqmWindow">
-		</div>    
-	  -->
+    	  -->
+    	 <div id="login_vote" class="jqmWindow"></div>    
+
+	  
+	 
 <% elsif object.class.to_s == "Person" %>
   <div class="rep_info">
     <% unless object.website.blank? %>

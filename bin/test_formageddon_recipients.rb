@@ -32,6 +32,7 @@ people.each do |p|
       thread.sender_last_name = "Moore"
       thread.sender_address1 = "123 Someplace Ln."
       thread.sender_city = "Some City"
+      thread.sender_phone = "555-555-5555"
       thread.sender_state = p.state
 
       if p.title == 'Rep.'

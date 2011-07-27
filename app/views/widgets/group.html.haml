@@ -56,7 +56,7 @@
           e.preventDefault();
           $.ajax({
               dataType: "jsonp",
-              url: '#{escape_javascript(Settings.api_base_url)}groups.json?callback=?&name=' + $('#widgetGroupLookup').val(),
+              url: '#{escape_javascript(Settings.api_base_url)}groups.json?callback=?&q=' + $('#widgetGroupLookup').val(),
               success: function(response) {
                 $('#groupLookupResults').html(window.JST['group_search_results']({ group_search_results: response.groups }));
   

@@ -13,6 +13,7 @@
     %strong Members
     %ul
       - @group_members.each do |m|
+        - next if m.user.nil?
         - unless (@group.state or @group.district) and !m.user.can_view(:my_congressional_district, current_user)
           %li.grid_14
             %span.grid_5= link_to m.user.login, user_profile_path(m.user.login)

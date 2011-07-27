@@ -61,7 +61,7 @@ class AboutController < ApplicationController
   end
   
   def version3
-    @page_title = 'Announcing Opencongress v3'
+    @page_title = 'Announcing OpenCongress v3'
   end
   
 

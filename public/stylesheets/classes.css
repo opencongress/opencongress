@@ -765,6 +765,10 @@ background: #fff;
 display: inline;
 }
 
+.nomargin{
+margin: 0 !important;
+}
+
 .no_underline{ text-decoration: none !important;}
 
 .block{ display: block;}

@@ -144,8 +144,8 @@
         - else
           = render 'contact_recipients', :show_checkboxes => true
       .desk
-        %span.from From the Desk of Username
-        %span.the-user a user out of District something or other
+        %span.from A Letter to Congress
+        %span.the-user from a constituent via OpenCongress.org
       .formageddon_contact_form
         = render 'formageddon/threads/form', :f => f, :thread => @formageddon_thread, :after_send_url => "/contact_congress_letters/create_from_formageddon?bill=#{@bill.ident}&disposition=#{@position}&group_id=#{params[:group_id]}", :action_on_error => '/contact_congress_letters/new', :no_sender_redirect => '/account/contact_congress', :custom_params => { :bill => @bill.ident }
 

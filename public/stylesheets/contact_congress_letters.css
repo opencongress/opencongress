@@ -195,7 +195,7 @@ overflow: auto;
   margin: 0;
 right: 0;
 position: absolute;
-top: 779px;
+top: 799px;
 }
 
 
@@ -518,7 +518,7 @@ height: 705px;
 width: 510px;
 left: 0;
 border-right: 1px solid #777;
-top: 779px;
+top: 799px;
 position: absolute;
 background: #999;
 -moz-box-shadow:inset -2px 1px 46px rgba(0,0,0,.2);
@@ -551,7 +551,7 @@ margin-left: 35px;
 
 .desk{
 position: absolute;
-top: 840px;
+top: 860px;
 width: 374px;
 z-index: 1;
 margin-left: 20px;
@@ -634,7 +634,7 @@ width: 927px;
 margin: 0px 0 0 -35px;
 padding: 20px 40px 20px 35px; 
 font-size: 16px;
-top: 719px;
+top: 739px;
   background: #999; /* for non-css3 browsers */
 
   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd)); /* for webkit browsers */
@@ -674,7 +674,7 @@ padding: 4px;
 .contact_letter .button{
 position: absolute;
 right: 8px;
-top: 714px;
+top: 734px;
 }
 
 
@@ -976,7 +976,7 @@ margin: 0 auto 10px !important;
 
 .second_submit{
 position: absolute;
-top: 1483px;
+top: 1523px;
 left: 0;
 
 position: absolute;

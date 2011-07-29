@@ -168,7 +168,7 @@ class User < ActiveRecord::Base
   end
   
   def active_groups
-    owned_groups + groups.where("group_members.status='MEMBER'")
+    owned_groups + groups.where("group_members.status != 'BOOTED'")
   end
   
   def join_default_groups

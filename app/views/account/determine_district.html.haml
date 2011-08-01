@@ -21,9 +21,17 @@
           = label_tag 'Zipcode'
           = text_field_tag 'zipcode', current_user.zipcode, :maxlength => 5, :size => 5, :class => 'field'
 
-        %p
-          = label_tag 'Street Address'
-          = text_field_tag 'address', nil, :class => 'field'
+        - if @error_msg
+          %p
+            = label_tag 'Zip+4'
+            = text_field_tag 'zip4', nil, :maxlength => 4, :size => 4, :class => 'field'
+            &nbsp;&nbsp;
+            = link_to "USPS Zip Lookup", 'https://tools.usps.com/go/ZipLookupAction!input.action', :target => '_new'
+
+        - unless @error_msg
+          %p
+            = label_tag 'Street Address'
+            = text_field_tag 'address', nil, :class => 'field'
   
         %p
           = label_tag '&nbsp;'.html_safe

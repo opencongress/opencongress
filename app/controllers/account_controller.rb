@@ -108,19 +108,40 @@ class AccountController < ApplicationController
     @page_title = "Determine Your Congressional District"
     
     if request.post?
-      yg = YahooGeocoder.new("#{params[:address]}, #{params[:zipcode]}")
-      unless yg.zip4.nil?
-        current_user.zipcode = yg.zip5
-        current_user.zip_four = yg.zip4
-        current_user.save
-        
-        current_user.join_default_groups
-        
-        flash[:notice] = "Your Congressional District (#{current_user.district}) has been saved."
-        
-        activate_redirect(user_profile_path(:login => current_user.login))
+      if !params[:zip4].blank?
+        zd = ZipcodeDistrict.zip_lookup(params[:zipcode], params[:zip4]).first
+        puts zd.inspect
+        if zd
+          current_user.zipcode = params[:zipcode]
+          current_user.zip_four = params[:zip4]
+          current_user.save
+          
+          current_user.join_default_groups
+
+          flash[:notice] = "Your Congressional District (#{current_user.district}) has been saved."
+
+          activate_redirect(user_profile_path(:login => current_user.login))
+          return
+        else
+          @error_msg = "Well, this is odd, we can't find that zipcode with the +4 extension, either. Please email writeus@opencongress.org with your address and zipcode and we'll get back to you.  We apologize."
+          
+          return          
+        end
       else
-        @error_msg = "Sorry, that address in zip code #{params[:zipcode]} was not recognized.  Please try again.  If you keep receiving this error, please send an email to writeus@opencongress.org"
+        yg = YahooGeocoder.new("#{params[:address]}, #{params[:zipcode]}")
+        unless yg.zip4.nil?
+          current_user.zipcode = yg.zip5
+          current_user.zip_four = yg.zip4
+          current_user.save
+        
+          current_user.join_default_groups
+        
+          flash[:notice] = "Your Congressional District (#{current_user.district}) has been saved."
+        
+          activate_redirect(user_profile_path(:login => current_user.login))
+        else
+          @error_msg = "Sorry, that address in zip code #{params[:zipcode]} was not recognized.  Please try using your Zipcode with the +4 extension (if you don't know it, you can follow the link below and lookup your address on the US Postal Service's website)."
+        end
       end
     end
   end

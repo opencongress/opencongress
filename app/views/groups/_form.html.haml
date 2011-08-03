@@ -52,4 +52,4 @@
     = f.file_field :group_image
     
   %p
-    = f.submit 'Create Group', :class => 'button blue huge'
+    = f.submit @group.new_record? ? 'Create Group' : 'Update Group', :class => 'button blue huge'

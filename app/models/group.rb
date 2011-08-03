@@ -27,7 +27,7 @@ class Group < ActiveRecord::Base
   belongs_to :state
   belongs_to :district
   
-  after_save { |record| record.create_political_notebook }
+  after_save { |record| record.create_political_notebook if record.political_notebook.nil? }
   
   def to_param
     "#{id}_#{name.gsub(/[^A-Za-z]+/i, '_').gsub(/\s/, '_')}"

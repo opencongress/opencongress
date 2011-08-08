@@ -311,8 +311,6 @@ module CommentaryParser
       posts.each do |d|
         title_a = d.at("h3.r a") 
         
-        #OCLogger.log "Related check: #{related_check}"
-        
         unless title_a.inner_html =~ /Related blogs about/
           os = OpenStruct.new
               
@@ -320,24 +318,23 @@ module CommentaryParser
           os.url = title_a.attributes["href"]
           
           
-          date_source = d.at("span.f").inner_html
+          date_source = d.at(".f").inner_html
           if date_source =~ / by /
             os.date, os.source = date_source.split(/ by /)
           else
             os.date = date_source
           end
             
-          os.source = d.at("a.cite").inner_html if os.source.nil?
-          os.source_url = d.at("a.cite").attributes["title"]
+          os.source = d.at("cite a").inner_html if os.source.nil?
+          os.source_url = d.at("cite a").attributes["title"]
           
           excerpt_div = d.at("div.s")
-          excerpt_div.search("span.f").remove
-          excerpt_div.search("a").remove
+          excerpt_div.search("span.f").remove if excerpt_div.search("span.f").any?
+          excerpt_div.search("a").remove if excerpt_div.search("a").any?
+          excerpt_div.search("cite").remove if excerpt_div.search("cite").any?
           
           os.excerpt = excerpt_div.inner_html
         
-          #OCLogger.log os.inspect
-          
           items << os
         end
       end

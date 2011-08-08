@@ -303,6 +303,11 @@ module CommentaryParser
 
     begin
       body = get_body_for_host_and_path(host, path)
+      
+      
+      OCLogger.log "\n\n\n\n\n\n\nGOT BODY: #{body}\n\n\n\n\n\n\n\n\n\n"
+      
+      
       doc = Hpricot(body)
     
       posts = doc/"li.g"

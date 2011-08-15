@@ -8,6 +8,6 @@ class Admin::ContactCongressController < Admin::IndexController
   
   def letters
     @page_title = 'Contact Congress Letters'
-    @letters = ContactCongressLetter.order('created_at DESC').all.paginate(:per_page => 4, :page => params[:page])
+    @letters = ContactCongressLetter.order('created_at DESC').all.paginate(:per_page => 50, :page => params[:page])
   end
 end

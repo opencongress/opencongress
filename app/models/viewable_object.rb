@@ -1,5 +1,4 @@
 module ViewableObject
-#class ViewableObject < ActiveRecord::Base
   def self.included(includer)
     includer.class_eval do
       has_many :object_aggregates, :as => :aggregatable
@@ -20,7 +19,7 @@ module ViewableObject
     return @attributes['view_count'] if @attributes['view_count']
     
     if seconds <= 0
-      page_views_count
+      @attributes['page_views_count'].nil? ? object_aggregates.sum(:page_views_count) : @attributes['page_views_count'].to_i
     else
       object_aggregates.sum(:page_views_count, :conditions => ["date >= ?", seconds.ago])
     end

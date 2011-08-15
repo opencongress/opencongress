@@ -113,6 +113,7 @@ OpenCongress::Application.routes.draw do
      end
      
      match 'contact_congress' => 'contact_congress#index'
+     match 'contact_congress/letters' => 'contact_congress#letters'
   end
   match '/:controller(/:action(/:id))', :controller => /admin\/[^\/]+/
   

@@ -1,0 +1,34 @@
+.padding
+  %h2 Contact Congress Letters
+  
+  %table
+    %tr
+      %th Date
+      %th User
+      %th Privacy
+      %th District
+      %th To/Responses
+      %th Bill/Position
+      %th # comments
+      %th # page views
+    - @letters.each do |l|
+      %tr
+        %td= link_to l.created_at.strftime("%b %d, %Y"), contact_congress_letter_path(l)
+        %td= l.user.nil? ? 'No User' : link_to(l.user.login, user_profile_path(l.user.login))
+        %td= l.privacy
+        %td= l.user.nil? ? "?" : l.user.my_district
+        %td
+          - l.formageddon_threads.each do |t|
+            = t.formageddon_recipient.name
+            (
+            = (t.formageddon_letters.size - 1)
+            )
+            %br
+        %td
+          = link_to l.bill.typenumber, bill_path(l.bill)
+          \:
+          = l.disposition
+        %td= l.comments.size
+        %td= l.views
+  
+  = will_paginate @letters

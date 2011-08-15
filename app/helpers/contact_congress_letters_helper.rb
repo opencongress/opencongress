@@ -31,7 +31,7 @@ module ContactCongressLettersHelper
   end
   
   def letter_info(letter)
-    if letter.direction == 'TO_RECIPIENT'
+    if letter.direction == 'TO_SENDER'
       "This letter was a reply from the office of #{letter.formageddon_thread.formageddon_recipient} on #{letter.created_at.strftime('%B %d, %Y')}."
     else
       "This letter was sent from #{letter.formageddon_thread.formageddon_sender.login} to #{letter.formageddon_thread.formageddon_recipient} on #{letter.created_at.strftime('%B %d, %Y')}."

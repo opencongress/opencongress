@@ -7,6 +7,8 @@
     <tr>
       <th>Name</th>
       <th>Email Address</th>
+      <th>Zip</th>
+      <th>Zip+4</th>
       <th>Registration Date</th>
     </tr>
 
@@ -14,6 +16,8 @@
       <tr>
         <td><%= u.full_name %></td>
         <td><%= u.email %></td>
+        <td><%= u.zipcode %></td>
+        <td><%= u.zip_four %></td>
         <td><%= u.created_at %></td>
       </tr>
     <% end %>

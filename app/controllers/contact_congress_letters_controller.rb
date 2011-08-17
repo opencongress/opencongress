@@ -212,7 +212,14 @@ class ContactCongressLettersController < ApplicationController
     @contact_congress_letter = ContactCongressLetter.find(params[:id])
     
     if @contact_congress_letter and @contact_congress_letter.user == current_user
-      @contact_congress_letter.receive_replies = (params[:receive_replies] == 'true')
+      @contact_congress_letter.receive_replies = (params[:receive_replies] == 'true') if params[:receive_replies]
+      if params[:privacy]
+        @contact_congress_letter.formageddon_threads.each do |t|
+          t.privacy = (params[:privacy] == 'PUBLIC') ? 'PUBLIC' : 'PRIVATE'
+          t.save
+        end
+      end
+      
       @contact_congress_letter.save
     end
     

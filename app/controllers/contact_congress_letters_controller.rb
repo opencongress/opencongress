@@ -216,6 +216,10 @@ class ContactCongressLettersController < ApplicationController
       if params[:privacy]
         @contact_congress_letter.formageddon_threads.each do |t|
           t.privacy = (params[:privacy] == 'PUBLIC') ? 'PUBLIC' : 'PRIVATE'
+          
+          # the following is for any letters that were saved before phone number became required
+          t.sender_phone = 'None' if t.sender_phone.blank?
+          
           t.save
         end
       end

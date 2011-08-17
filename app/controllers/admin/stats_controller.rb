@@ -310,6 +310,22 @@ class Admin::StatsController < Admin::IndexController
     end                                      
   end
   
+  def formageddon
+    @people = Person.all_sitting
+    
+    @stats = {}
+    @people.each do |p|
+      letters = p.formageddon_threads.collect{ |t| t.formageddon_letters.first }
+      
+      @stats[p.id] = {
+        :total_letters => letters.size,
+        :successes => letters.select{ |l| l.status =~ /SENT/ }.size.to_i,
+        :warnings => letters.select{ |l| l.status =~ /WARNING/ }.size.to_i,
+        :errors => letters.select{ |l| l.status =~ /ERROR/ }.size.to_i
+      }
+    end
+  end
+  
   def mypn
     @users = PoliticalNotebook.find_by_sql(["SELECT count(political_notebooks.user_id) FROM political_notebooks 
                               INNER JOIN notebook_items ON political_notebooks.id=notebook_items.political_notebook_id 

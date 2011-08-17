@@ -1,0 +1,21 @@
+.padding
+  %h2 Formageddon Delivery Stats
+  
+  %table
+    %tr
+      %th Recipient
+      %th Total Attempts
+      %th Success
+      %th Warnings
+      %th Errors
+      %th Unknown
+    - @people.each do |p|
+      %tr
+        %td= p.name
+        %td= "#{@stats[p.id][:total_letters]}"
+        - if @stats[p.id][:total_letters] > 0        
+          %td= "#{@stats[p.id][:successes]} (#{number_with_precision((@stats[p.id][:successes].to_f/@stats[p.id][:total_letters].to_f)*100, :precision => 1)}%)"
+          %td= "#{@stats[p.id][:warnings]} (#{number_with_precision((@stats[p.id][:warnings].to_f/@stats[p.id][:total_letters].to_f)*100, :precision => 1)}%)"
+          %td= "#{@stats[p.id][:errors]} (#{number_with_precision((@stats[p.id][:errors].to_f/@stats[p.id][:total_letters].to_f)*100, :precision => 1)}%)"
+          - unknown = @stats[p.id][:total_letters] - (@stats[p.id][:successes] + @stats[p.id][:warnings] + @stats[p.id][:errors])
+          %td= "#{unknown} (#{number_with_precision((unknown.to_f/@stats[p.id][:total_letters].to_f)*100, :precision => 1)}%)"

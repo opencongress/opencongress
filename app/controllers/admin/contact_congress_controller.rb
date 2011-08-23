@@ -3,7 +3,7 @@ class Admin::ContactCongressController < Admin::IndexController
 
   def index
     @page_title = 'Contact Congress Configuration'
-    @people = Person.where("title IS NOT NULL").order("title ASC, page_views_count DESC").all
+    @people = Person.all_sitting
   end
   
   def letters

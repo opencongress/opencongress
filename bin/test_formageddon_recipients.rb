@@ -10,7 +10,7 @@ Rails.application.require_environment!
 
 send = false
 #people = Person.representatives
-people = Person.where("id IN (400034, 300005, 300026, 400408, 400412, 412321, 412249)")
+people = Person.where("id IN (300005)")
 bill = Bill.find_by_ident('112-h1349')
 sender = User.find_by_login('drm')
 people.each do |p|

@@ -12,7 +12,7 @@ GIT
 
 GIT
   remote: git://github.com/opencongress/formageddon.git
-  revision: cbe25619e10f452ae8e9b25c21b66902191b9750
+  revision: 249ec3a7616d988bbbf3ba9eea811b37a714c222
   specs:
     formageddon (0.0.0)
       delayed_job (~> 2.1)
@@ -165,8 +165,11 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mechanize (1.0.0)
-      nokogiri (>= 1.2.1)
+    mechanize (2.0.1)
+      net-http-digest_auth (~> 1.1, >= 1.1.1)
+      net-http-persistent (~> 1.8)
+      nokogiri (~> 1.4)
+      webrobots (~> 0.0, >= 0.0.9)
     mediacloth (0.0.3)
     memcache (1.2.13)
     memcache-client (1.8.5)
@@ -174,6 +177,8 @@ GEM
     mogli (0.0.28)
       httparty (>= 0.4.3)
     mysql (2.8.1)
+    net-http-digest_auth (1.1.1)
+    net-http-persistent (1.8.1)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
@@ -182,7 +187,7 @@ GEM
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
     newrelic_rpm (3.0.1)
-    nokogiri (1.4.4)
+    nokogiri (1.5.0)
     oauth (0.4.4)
     okkez-open_id_authentication (1.0.1)
       ruby-openid (>= 2.0.4)
@@ -259,6 +264,8 @@ GEM
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
       rack-test (>= 0.5.3)
+    webrobots (0.0.11)
+      nokogiri (>= 1.4.4)
     will_paginate (3.0.pre2)
     xpath (0.1.4)
       nokogiri (~> 1.3)

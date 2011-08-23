@@ -30,7 +30,8 @@ if defined? Formageddon
       "Re" => "issue",
       "SubjectOther" => 'Other',
       "view" => 'N/A',
-      "responsereq" => 'yes'
+      "responsereq" => 'yes',
+      "newsletter_action" => 'unsubscribe'
     }
     
     

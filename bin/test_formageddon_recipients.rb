@@ -9,7 +9,8 @@ Rails.application.require_environment!
 ###########################
 
 send = false
-people = Person.all_sitting
+#people = Person.all_sitting
+people = Person.where("id IN (300002)")
 bill = Bill.find_by_ident('112-h1349')
 sender = User.find_by_login('drm')
 people.each do |p|

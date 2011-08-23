@@ -32,8 +32,8 @@ defaults: &defaults
 
   # Andy's server for formageddon
   formageddon_reply_domain: formageddon.nindy.com 
-  formageddon_server: mail.formageddon.nindy.com
-  formageddon_username: formageddon@formageddon.nindy.com
+  formageddon_server: pop.gmail.com
+  formageddon_username: formageddon@nindy.com
   
   group_images_path: <%= Rails.root %>/public/system/group_images
   notebook_files_path: <%= Rails.root %>/public/system/notebook_files

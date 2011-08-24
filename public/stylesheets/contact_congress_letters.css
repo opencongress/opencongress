@@ -729,6 +729,7 @@ width: 60px !important;
 
 .sender_state label {
   width: 40px;
+  margin-bottom: 2px;
 }
 .sender_state select{
   margin-top: 3px;

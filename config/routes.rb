@@ -35,7 +35,9 @@ OpenCongress::Application.routes.draw do
       resources :notebook_files    
     end
   end
-
+  
+  resources :simple_captcha, :only => :show
+  
   match '/' => 'index#index', :as => :home
 
   # Allow downloading Web Service WSDL as a file with an extension

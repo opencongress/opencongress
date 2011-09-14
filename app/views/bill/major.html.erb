@@ -1,5 +1,6 @@
 <% @content_for_sortby = render :partial => 'sort_bills', :locals => { :sort => 'hot'} %>
 
+
 <div id="the-bills">
-<%= render :partial => 'hot_bills', :locals => { :hot_bill_categories =>  @hot_bill_categories } %>
+  <%= render :partial => 'hot_bills', :locals => { :hot_bill_categories =>  @hot_bill_categories } %>
 </div>

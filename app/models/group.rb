@@ -1,6 +1,8 @@
 class Group < ActiveRecord::Base
   has_attached_file :group_image, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :path => "#{Settings.group_images_path}/:id/:style/:filename"
   
+  apply_simple_captcha
+  
   validates_presence_of :name
   validates_uniqueness_of :name
   validates_presence_of :user_id

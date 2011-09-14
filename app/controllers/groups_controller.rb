@@ -18,7 +18,7 @@ class GroupsController < ApplicationController
     @group.user = current_user
     
     respond_to do |format|
-      if @group.save
+      if @group.save_with_captcha
         format.html { redirect_to(new_group_group_invite_path(@group, :new => true), :notice => 'Group was successfully created.') }
         format.xml  { render :xml => @group, :status => :created, :location => @group }
       else

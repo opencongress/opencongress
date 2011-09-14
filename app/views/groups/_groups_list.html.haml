@@ -41,7 +41,7 @@
     $j('#group_search_field').change(doSearch);
     $j('#group_issue').change(doSearch);
 
-    $j('.table_header a').click(function() {
+    $j('.table_header a').live("click", function(e) {
       if (($j(this).attr('class') == '') || ($j(this).attr('class') == 'down')) {
         $j('.table_header a').attr('class', '');
         $j(this).attr('class', 'up');

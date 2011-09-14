@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   include AuthenticatedSystem
-#  include SimpleCaptcha::ControllerHelpers
+  include SimpleCaptcha::ControllerHelpers
   include Facebooker2::Rails::Controller
   include UrlHelper
 

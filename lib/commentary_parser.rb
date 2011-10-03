@@ -14,6 +14,7 @@ require 'o_c_logger'
 module CommentaryParser
   USERAGENT = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.1) Gecko/20060111 Firefox/1.5.0.1'
   STOP_REFERRERS = [ "google\.com" ]
+  @@proxies = []
   
   def CommentaryParser.save_items(items, lookup_object, type, scraped_from)
     n = items ? items.size : 0
@@ -305,7 +306,7 @@ module CommentaryParser
       body = get_body_for_host_and_path(host, path)
       
       
-      OCLogger.log "\n\n\n\n\n\n\nGOT BODY: #{body}\n\n\n\n\n\n\n\n\n\n"
+      #OCLogger.log "\n\n\n\n\n\n\nGOT BODY: #{body}\n\n\n\n\n\n\n\n\n\n"
       
       
       doc = Hpricot(body)
@@ -352,15 +353,38 @@ module CommentaryParser
 
   def CommentaryParser.get_body_for_host_and_path(host, path)
     begin
-      response = nil;
-      http = Net::HTTP.new(host)
-      http.start do |http|
-        request = Net::HTTP::Get.new(path, {"User-Agent" => USERAGENT})
-        response = http.request(request)
+      if @@proxies.empty?
+        m = Mechanize.new
+        m.user_agent_alias = "Windows IE 7"
+
+        m.get("http://hidemyass.com/proxy-list/search-225371")
+
+        p = m.page.parser
+        p.css('#listtable tr').each_with_index do |row, i|
+          unless i == 0
+            ip = row.css('td')[1].css('span').first
+
+            unless ip.attributes['title'] == 'Planet Lab proxy'
+              @@proxies << [ip.text,row.css('td')[2].text.strip]
+            end
+          end
+        end
       end
+      
+      begin
+        proxy_num = rand(@@proxies.size)
+        #puts "Trying proxy: #{proxies[proxy_num][0]}:#{proxies[proxy_num][1]}..." and STDOUT.flush
+        
+        response = nil;
+        Net::HTTP::Proxy(@@proxies[proxy_num][0], @@proxies[proxy_num][1]).start(host) do |http|
+          request = Net::HTTP::Get.new(path, {"User-Agent" => USERAGENT})
+          response = http.request(request)
+        end
+      end while !response.kind_of? Net::HTTPSuccess
+      
       return response.body
     rescue
-      OCLogger.log "Error or timeout retrieving url: #{host}#{path}. Skipping."
+      OCLogger.log "Error or timeout retrieving url: #{host}#{path}. #{$!}.  Skipping."
       return "<html></html>"
     end
   end

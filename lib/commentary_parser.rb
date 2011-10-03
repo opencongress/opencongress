@@ -306,7 +306,7 @@ module CommentaryParser
       body = get_body_for_host_and_path(host, path)
       
       
-      #OCLogger.log "\n\n\n\n\n\n\nGOT BODY: #{body}\n\n\n\n\n\n\n\n\n\n"
+      OCLogger.log "\n\n\n\n\n\n\nGOT BODY: #{body}\n\n\n\n\n\n\n\n\n\n"
       
       
       doc = Hpricot(body)
@@ -324,11 +324,13 @@ module CommentaryParser
           os.url = title_a.attributes["href"]
           
           
-          date_source = d.at(".f").inner_html
-          if date_source =~ / by /
-            os.date, os.source = date_source.split(/ by /)
-          else
-            os.date = date_source
+          date_source = d.at(".f")
+          if date_source
+            if date_source.inner_html =~ / by /
+              os.date, os.source = date_source.inner_html.split(/ by /)
+            else
+              os.date = date_source.inner_html
+            end
           end
             
           os.source = d.at("cite a").inner_html if os.source.nil?

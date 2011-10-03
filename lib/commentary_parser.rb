@@ -303,11 +303,7 @@ module CommentaryParser
     path = "/search?hl=en&ie=UTF-8&q=#{query}&tbm=blg"
 
     begin
-      body = get_body_for_host_and_path(host, path)
-      
-      
-      OCLogger.log "\n\n\n\n\n\n\nGOT BODY: #{body}\n\n\n\n\n\n\n\n\n\n"
-      
+      body = get_body_for_host_and_path(host, path)      
       
       doc = Hpricot(body)
     
@@ -315,9 +311,11 @@ module CommentaryParser
 
       place = 0
       posts.each do |d|
+        #OCLogger.log "\n\n\n\n\n\n\nGOT SNIP: #{d}\n\n\n\n\n\n\n\n\n\n"
         title_a = d.at("h3.r a") 
         
-        unless title_a.inner_html =~ /Related blogs about/
+        unless (title_a.inner_html =~ /Related blogs about/ or
+                title_a.inner_html =~ /Blog homepages for/)
           os = OpenStruct.new
               
           os.title = (title_a.inner_html)

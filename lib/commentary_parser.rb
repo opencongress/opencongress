@@ -15,6 +15,7 @@ module CommentaryParser
   USERAGENT = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.1) Gecko/20060111 Firefox/1.5.0.1'
   STOP_REFERRERS = [ "google\.com" ]
   @@proxies = []
+  @@proxy = nil
   
   def CommentaryParser.save_items(items, lookup_object, type, scraped_from)
     n = items ? items.size : 0
@@ -352,12 +353,14 @@ module CommentaryParser
   end
 
   def CommentaryParser.get_body_for_host_and_path(host, path)
+    $DEBUG = false
+    
     begin
       if @@proxies.empty?
         m = Mechanize.new
         m.user_agent_alias = "Windows IE 7"
 
-        m.get("http://hidemyass.com/proxy-list/search-225371")
+        m.get("http://hidemyass.com/proxy-list/search-235102")
 
         p = m.page.parser
         p.css('#listtable tr').each_with_index do |row, i|
@@ -372,15 +375,21 @@ module CommentaryParser
       end
       
       begin
-        proxy_num = rand(@@proxies.size)
-        #puts "Trying proxy: #{proxies[proxy_num][0]}:#{proxies[proxy_num][1]}..." and STDOUT.flush
+        if @@proxy.nil?
+          use_proxy = @@proxies[rand(@@proxies.size)]
+        else
+          use_proxy = @@proxy
+        end
+        
+        puts "Trying proxy: #{use_proxy[0]}:#{use_proxy[1]}..."
         
         response = nil;
-        Net::HTTP::Proxy(@@proxies[proxy_num][0], @@proxies[proxy_num][1]).start(host) do |http|
+        Net::HTTP::Proxy(use_proxy[0], use_proxy[1]).start(host) do |http|
           request = Net::HTTP::Get.new(path, {"User-Agent" => USERAGENT})
-          response = http.request(request)
+          response = http.request(request) rescue nil
         end
       end while !response.kind_of? Net::HTTPSuccess
+      @@proxy = use_proxy if @@proxy.nil?
       
       return response.body
     rescue

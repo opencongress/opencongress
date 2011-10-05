@@ -386,7 +386,11 @@ module CommentaryParser
         response = nil;
         Net::HTTP::Proxy(use_proxy[0], use_proxy[1]).start(host) do |http|
           request = Net::HTTP::Get.new(path, {"User-Agent" => USERAGENT})
-          response = http.request(request) rescue nil
+          begin
+            response = http.request(request)
+          rescue Timeout::Error
+            response = nil
+          end
         end
       end while !response.kind_of? Net::HTTPSuccess
       @@proxy = use_proxy if @@proxy.nil?

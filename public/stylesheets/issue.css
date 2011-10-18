@@ -127,3 +127,90 @@ a#widgets_trigger {
   padding: 35px;
   margin-top: 45px;
 }
+
+
+
+#issue ul.rolls_list{
+width: 100%;
+float: left;
+margin: 0 0 15px 0;
+paddding: 0;
+overflow: auto;
+}
+
+
+#issue ul.rolls_list li{
+clear: both;
+padding: 0;
+}
+
+
+
+#issue ul.rolls_list li:first-child {
+display:none;
+}
+
+#issue ul.rolls_list li a {
+display: block;
+padding: 17px 0;
+cursor:pointer;
+margin: 0 0px 0 2px;
+border-bottom: 1px solid #e8def8;
+min-height: 74px;
+text-decoration:none;
+}
+
+
+#issue .rolls_list li:hover{
+background-color: #f8f3ff;
+}
+
+#issue .rolls_list a{
+font-weight: bold;
+color: #6e6083;
+}
+
+#issue .rolls_list .date{
+float: right;
+color: #c7bed6;
+padding-right:20px;
+}
+
+#issue .rolls_list .type{
+display: block;
+font-style: italic;
+font-size: 11px;
+padding: 2px 0 0 0;
+color: #9280ad;
+}
+
+#issue .rolls_list .aye{
+color: #569a31;
+font-weight: bold;
+padding-right: 3px;
+}
+
+#issue .rolls_list .nay{
+color: #d05829;
+padding-right: 3px;
+font-weight: bold;
+}
+
+#issue .rolls_list .pvs_category{
+color: #6e6083;
+padding: 0 0 0 20px;
+margin-top: 2px;
+font-weight: normal;
+display:block;
+height: 20px;
+background:url(../images/star.gif) no-repeat 0 -32px
+}
+
+table.money {
+  width: 670px;
+}
+
+table.money th, table.money td {
+  border: 1px solid #eee;
+  padding: 5px 0 0 5px;
+}

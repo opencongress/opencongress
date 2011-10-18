@@ -106,11 +106,24 @@ class IssueController < ApplicationController
     @page_title = @subject.term
     @meta_description = "#{@subject.term}-related bills and votes in the U.S. Congress."
     @comments = @subject
-    if params[:filter] == 'enacted'
-      @bills = @subject.passed_bills(10, params[:page].blank? ? 1 : params[:page])
-    else
-      @bills = @subject.latest_bills(10, params[:page].blank? ? 1 : params[:page])
-    end
+    
+    
+    @latest_bills = @subject.latest_bills(3, 1)
+    @hot_bills = @subject.pvs_categories.collect{|c| c.hot_bills.where(["bills.session=?", Settings.default_congress]) }.flatten
+    @key_votes = @subject.pvs_categories.collect{|c| c.key_votes }.flatten
+    @groups = @subject.pvs_categories.collect{|c| c.group }.paginate(:page => 1)
+    @passed_bills = @subject.passed_bills(3, 1, Settings.available_congresses)
+    
+    # the following lines could be a little more, eh, efficient
+    @related_industries = @subject.pvs_categories.collect{|c| c.crp_sectors }.flatten.collect{ |i| i.crp_industries }.flatten
+    @related_industries.concat(@subject.pvs_categories.collect{|c| c.crp_industries }.flatten).flatten
+    
+    # if params[:filter] == 'enacted'
+    #   @bills = @subject.passed_bills(10, params[:page].blank? ? 1 : params[:page])
+    # else
+    #   @bills = @subject.latest_bills(10, params[:page].blank? ? 1 : params[:page])
+    # end
+    
     @top_comments = @subject.comments.find(:all,:include => [:comment_scores, :user], :order => "comments.average_rating DESC", :limit => 2)
     @atom = {'link' => url_for(:only_path => false, :controller => 'issue', :id => @subject, :action => 'atom'), 'title' => "Major Bill Actions in #{@subject.term}"}
 		@hide_atom = true

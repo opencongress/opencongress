@@ -271,12 +271,15 @@ class Subject < ActiveRecord::Base
   end
 
   def latest_bills(num, page = 1, congress = Settings.default_congress)
-    bills.find(:all, :conditions => ['bills.session = ?', congress], 
+    bills.find(:all, :conditions => ["bills.session = ?", congress],
                :order => 'bills.lastaction DESC').paginate(:per_page => num, :page => page)
   end
 
   def passed_bills(num, page = 1, congress = Settings.default_congress)
-    bills.find(:all, :include => :actions, :conditions => ["bills.session=? AND actions.action_type='enacted'", congress], 
+    conditions = congress.kind_of?(Array) ? ["bills.session IN (?) AND actions.action_type='enacted'", congress] :
+                                 ["bills.session = ? AND actions.action_type='enacted'", congress]
+
+    bills.find(:all, :include => :actions, :conditions => conditions, 
                :order => 'actions.datetime DESC').paginate(:per_page => num, :page => page)
   end
 

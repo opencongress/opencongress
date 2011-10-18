@@ -17,17 +17,20 @@ class YahooGeocoder
     require 'hpricot'
     require 'open-uri'
     begin
-      doc = Hpricot.XML(open("http://local.yahooapis.com/MapsService/V1/geocode?appid=#{@key}&location=#{CGI::escape(@address)}"))
+      doc = Hpricot.XML(open("http://where.yahooapis.com/geocode?q=#{CGI::escape(@address)}&appid=#{@key}"))
 
+
+      #puts "\n\n\nHERE's the DOC: #{doc}\n\n\n"
       if doc
-        zip = (doc/:Result/:Zip).inner_html
+        zip = (doc/:Result/:postal).inner_html
         @zip5,@zip4 = zip.split('-')
-        @city = (doc/:Result/:City).inner_html
+        @city = (doc/:Result/:city).inner_html
         return true
       else
         return false
       end
     rescue
+      logger.warn "Error with Yahoo API: #{$!}"
       return false
     end
   end

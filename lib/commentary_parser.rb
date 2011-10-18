@@ -14,6 +14,8 @@ require 'o_c_logger'
 module CommentaryParser
   USERAGENT = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.1) Gecko/20060111 Firefox/1.5.0.1'
   STOP_REFERRERS = [ "google\.com" ]
+  @@proxies = []
+  @@proxy = nil
   
   def CommentaryParser.save_items(items, lookup_object, type, scraped_from)
     n = items ? items.size : 0
@@ -302,11 +304,7 @@ module CommentaryParser
     path = "/search?hl=en&ie=UTF-8&q=#{query}&tbm=blg"
 
     begin
-      body = get_body_for_host_and_path(host, path)
-      
-      
-      OCLogger.log "\n\n\n\n\n\n\nGOT BODY: #{body}\n\n\n\n\n\n\n\n\n\n"
-      
+      body = get_body_for_host_and_path(host, path)      
       
       doc = Hpricot(body)
     
@@ -314,20 +312,24 @@ module CommentaryParser
 
       place = 0
       posts.each do |d|
+        #OCLogger.log "\n\n\n\n\n\n\nGOT SNIP: #{d}\n\n\n\n\n\n\n\n\n\n"
         title_a = d.at("h3.r a") 
         
-        unless title_a.inner_html =~ /Related blogs about/
+        unless (title_a.inner_html =~ /Related blogs about/ or
+                title_a.inner_html =~ /Blog homepages for/)
           os = OpenStruct.new
               
           os.title = (title_a.inner_html)
           os.url = title_a.attributes["href"]
           
           
-          date_source = d.at(".f").inner_html
-          if date_source =~ / by /
-            os.date, os.source = date_source.split(/ by /)
-          else
-            os.date = date_source
+          date_source = d.at(".f")
+          if date_source
+            if date_source.inner_html =~ / by /
+              os.date, os.source = date_source.inner_html.split(/ by /)
+            else
+              os.date = date_source.inner_html
+            end
           end
             
           os.source = d.at("cite a").inner_html if os.source.nil?
@@ -351,16 +353,51 @@ module CommentaryParser
   end
 
   def CommentaryParser.get_body_for_host_and_path(host, path)
+    $DEBUG = false
+    
     begin
-      response = nil;
-      http = Net::HTTP.new(host)
-      http.start do |http|
-        request = Net::HTTP::Get.new(path, {"User-Agent" => USERAGENT})
-        response = http.request(request)
+      if @@proxies.empty?
+        m = Mechanize.new
+        m.user_agent_alias = "Windows IE 7"
+
+        m.get("http://hidemyass.com/proxy-list/search-235102")
+
+        p = m.page.parser
+        p.css('#listtable tr').each_with_index do |row, i|
+          unless i == 0
+            ip = row.css('td')[1].css('span').first
+
+            unless ip.attributes['title'] == 'Planet Lab proxy'
+              @@proxies << [ip.text,row.css('td')[2].text.strip]
+            end
+          end
+        end
       end
+      
+      begin
+        if @@proxy.nil?
+          use_proxy = @@proxies[rand(@@proxies.size)]
+        else
+          use_proxy = @@proxy
+        end
+        
+        puts "Trying proxy: #{use_proxy[0]}:#{use_proxy[1]}..."
+        
+        response = nil;
+        Net::HTTP::Proxy(use_proxy[0], use_proxy[1]).start(host) do |http|
+          request = Net::HTTP::Get.new(path, {"User-Agent" => USERAGENT})
+          begin
+            response = http.request(request)
+          rescue Timeout::Error
+            response = nil
+          end
+        end
+      end while !response.kind_of? Net::HTTPSuccess
+      @@proxy = use_proxy if @@proxy.nil?
+      
       return response.body
     rescue
-      OCLogger.log "Error or timeout retrieving url: #{host}#{path}. Skipping."
+      OCLogger.log "Error or timeout retrieving url: #{host}#{path}. #{$!}.  Skipping."
       return "<html></html>"
     end
   end

@@ -661,3 +661,12 @@ background: url(/images/issue-bg.png) 0 0 no-repeat;
 .dummy_div, .dummy_li {
   display: none;
 }
+
+.captcha_img {
+  float: left;
+  margin-bottom: 30px;
+}
+input#group_captcha {
+  float: left;
+  width: 100px;
+}

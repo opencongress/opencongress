@@ -120,9 +120,9 @@ class BillController < ApplicationController
     @sort = 'major'
     @title_desc = SiteText.find_title_desc('bill_hot')
     @types = 'all'
-    @hot_bill_categories = PvsCategory.find(:all, :order => :name)
     @atom = {'link' => "/bill/major.rss", 'title' => "Major Bills"}
     @congress = params[:congress].blank? ? Settings.default_congress : params[:congress]
+    @hot_bill_categories = PvsCategory.includes(:hot_bills).where(["bills.session = ?", @congress]).order("pvs_categories.name")
     
     respond_to do |format|
       format.html {}

@@ -2467,7 +2467,9 @@ color: #888;
 font-size: 11px;
 }
 
-
+#major_category_links {
+  margin-top: 20px;
+}
 
 
 

@@ -50,6 +50,15 @@
       = image_tag(@group.group_image.url(:thumb))
     = f.label :group_image, 'Group image'
     = f.file_field :group_image
+  - if @group.new_record?
+    %p
+      = f.simple_captcha :label => "Spam check"
+
+    .clear
     
+    :javascript
+      $j(document).ready(function() {
+        $j('input#group_captcha').addClass("field");
+      });
   %p
     = f.submit @group.new_record? ? 'Create Group' : 'Update Group', :class => 'button blue huge'

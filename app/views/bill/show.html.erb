@@ -215,20 +215,9 @@
   
   <% if @latest_letters.any? %>
     <h3 class="margin-left push-left margin-top push-top">Latest Letters to Congress</h3>
-      <ul class='most_viewed_letters'>
-
-        <% @latest_letters.each do |l| %>
-        <li class='<%= l.disposition %>'>
-          <a href="<%= contact_congress_letter_path(l) %>">
-            <span class='subject'><%= l.subject %></span>
-            <span class='user'><%= l.user.login %></span>
-            <span class='date'><%= l.created_at.strftime('%B %d, %Y')%></span>
-          
-            <p><%= truncate(l.message, :length => 500).gsub(/\n/, "<br />").html_safe %></p>
-          </a>
-        </li>
-        <% end %>
-      </ul>
+    <%= render 'letters', :letters => @latest_letters %>
+    <a href="<%= url_for :controller => 'bill', :action => 'letters', :id => @bill.ident %>" class="button silver small floatleft margin-left push-left">See All Letters (<%= @bill.contact_congress_letters.size %>)</a>
+    <div class="clear">&nbsp;</div>
   <% end %>
 
 

@@ -1,0 +1,15 @@
+<ul class='most_viewed_letters'>
+  <% letters.each do |l| %>
+  <li class='<%= l.disposition %>'>
+    <a href="<%= contact_congress_letter_path(l) %>">
+      <span class='subject'><%= l.subject %></span>
+      <% if l.user %>
+        <span class='user'><%= l.user.login %></span>
+      <% end %>
+      <span class='date'><%= l.created_at.strftime('%B %d, %Y')%></span>
+    
+      <p><%= truncate(l.message, :length => 500).gsub(/\n/, "<br />").html_safe %></p>
+    </a>
+  </li>
+  <% end %>
+</ul>

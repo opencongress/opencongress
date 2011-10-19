@@ -1251,7 +1251,7 @@ div.single {
 padding: 0 35px;
 }
 
-#bill.show .inner, #bill.actions_votes .inner, #bill.comments .inner, #bill.text .inner, #bill.news_blogs .inner,  #bill.blogs .inner, #bill.news .inner,  #bill.videos .inner, #bill.money .inner, #bill.votes .inner, #bill.actions .inner, #bill.amendments .inner {
+#bill.show .inner, #bill.actions_votes .inner, #bill.comments .inner, #bill.text .inner,  #bill.letters .inner, #bill.news_blogs .inner,  #bill.blogs .inner, #bill.news .inner,  #bill.videos .inner, #bill.money .inner, #bill.votes .inner, #bill.actions .inner, #bill.amendments .inner {
 float: left;
 width: 100%;
 padding-bottom: 10px;

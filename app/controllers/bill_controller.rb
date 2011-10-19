@@ -4,7 +4,7 @@ class BillController < ApplicationController
   helper :roll_call
 	before_filter :page_view, :only => [:show, :text]
   before_filter :get_params, :only => [:index, :all, :popular, :pending, :hot, :most_commentary, :readthebill]
-  before_filter :bill_profile_shared, :only => [:show, :comments, :money, :votes, :actions, :amendments, :text, :actions_votes, :news_blogs, :videos, :news, :blogs, :news_blogs, :topnews, :topblogs]
+  before_filter :bill_profile_shared, :only => [:show, :comments, :money, :votes, :actions, :amendments, :text, :actions_votes, :news_blogs, :videos, :news, :blogs, :news_blogs, :topnews, :topblogs, :letters]
   before_filter :aavtabs, :only => [:actions, :amendments, :votes, :actions_votes]
   before_filter :get_range, :only => [:hot]
   skip_before_filter :store_location, :only => [:bill_vote, :status_text, :user_stats_ajax, :atom, :atom_blogs, :atom_news, :atom_top20, :atom_top_commentary, :atom_topblogs, :atom_topnews]
@@ -423,6 +423,15 @@ class BillController < ApplicationController
     @supporting_suggestions = @bill.support_suggestions
     @opposing_suggestions = @bill.oppose_suggestions
     render :action => 'user_stats_ajax', :layout => false 
+  end
+  
+  def letters
+    @topic = nil
+    @meta_description = "Letters to Congress regarding #{@bill.title_full_common} on OpenCongress.org"
+
+    @page_title = "Letters to Congress: #{@bill.typenumber}"
+
+    @letters = @bill.contact_congress_letters.paginate(:page => params[:page], :per_page => 10)
   end
   
   def text

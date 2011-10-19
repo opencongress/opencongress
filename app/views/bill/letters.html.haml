@@ -11,6 +11,7 @@
 
 #padding.clear
   %p.padding The following letters were written by OpenCongress.org users and sent to their elected representatives. You can start a letter of your own by clicking the links to right.
-  = will_paginate @letters
+  
   = render 'letters', :letters => @letters
-  = will_paginate @letters
+  .margin-left.push-left
+    = will_paginate @letters

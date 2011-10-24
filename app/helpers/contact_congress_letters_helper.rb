@@ -14,9 +14,9 @@ module ContactCongressLettersHelper
     if bill.sponsor == person
       return "(Sponsor)"
     elsif bill.co_sponsors.include?(person)
-      return "(Co-Sponsor)"
+      return "(Co-Sponsor: Yes)"
     else
-      return ""
+      return "(Co-sponsor: No)"
     end
   end
   

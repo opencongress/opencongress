@@ -40,10 +40,10 @@
     .section
       %h3 Bill Statistics on OpenCongress
       %ul
-      - unless @position == 'tracking' or @bill.users_percentage_at_position(@position).nil?
+      - unless @bill.users_percentage_at_position(@position).nil?
         %li.users_position.message_builder_clickable          
-          = "#{@bill.users_percentage_at_position(@position)}% of users #{@position} #{@bill.typenumber}"
-          = render 'will_add_text_box', :text => "#{@bill.users_percentage_at_position(@position)}% of users on OpenCongress.org, a free, non-partisan resource, #{@position} #{@bill.typenumber}."
+          = "#{@bill.users_percentage_at_position(@position == 'tracking' ? 'support' : @position)}% of users #{@position == 'tracking' ? 'support' : @position} #{@bill.typenumber}"
+          = render 'will_add_text_box', :text => "#{@bill.users_percentage_at_position(@position == 'tracking' ? 'support' : @position)}% of users on OpenCongress.org, a free, non-partisan resource, #{@position == 'tracking' ? 'support' : @position} #{@bill.typenumber}."
       %li.page_views.message_builder_clickable
         = "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times"      
         = render 'will_add_text_box', :text => "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times on OpenCongress.org, a free, non-partisan resource."

@@ -417,7 +417,7 @@ module CommentaryParser
         end while (!response.kind_of? Net::HTTPSuccess and tries < 3)
       end
       
-      return response.body
+      return response.nil? ? "<html></html>" : response.body
     rescue
       OCLogger.log "Error or timeout retrieving url: #{host}#{path}. #{$!}.  Skipping."
       return "<html></html>"

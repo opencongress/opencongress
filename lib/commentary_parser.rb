@@ -16,6 +16,7 @@ module CommentaryParser
   STOP_REFERRERS = [ "google\.com" ]
   @@proxies = []
   @@proxy = nil
+  @@use_proxy = (ENV['USE_PROXY'] == 'true')
   
   def CommentaryParser.save_items(items, lookup_object, type, scraped_from)
     n = items ? items.size : 0
@@ -354,46 +355,67 @@ module CommentaryParser
 
   def CommentaryParser.get_body_for_host_and_path(host, path)
     $DEBUG = false
+    tries = 0
     
     begin
-      if @@proxies.empty?
-        m = Mechanize.new
-        m.user_agent_alias = "Windows IE 7"
+      if @@use_proxy
+        if @@proxies.empty?
+          OCLogger.log "Getting proxy list..."
+          
+          m = Mechanize.new
+          m.user_agent_alias = "Windows IE 7"
 
-        m.get("http://hidemyass.com/proxy-list/search-235102")
+          m.get("http://hidemyass.com/proxy-list/search-235102")
 
-        p = m.page.parser
-        p.css('#listtable tr').each_with_index do |row, i|
-          unless i == 0
-            ip = row.css('td')[1].css('span').first
+          p = m.page.parser
+          p.css('#listtable tr').each_with_index do |row, i|
+            unless i == 0
+              ip = row.css('td')[1].css('span').first
 
-            unless ip.attributes['title'] == 'Planet Lab proxy'
-              @@proxies << [ip.text,row.css('td')[2].text.strip]
+              unless ip.attributes['title'] == 'Planet Lab proxy'
+                @@proxies << [ip.text,row.css('td')[2].text.strip]
+              end
             end
           end
         end
-      end
       
-      begin
-        if @@proxy.nil?
-          use_proxy = @@proxies[rand(@@proxies.size)]
-        else
-          use_proxy = @@proxy
-        end
-        
-        puts "Trying proxy: #{use_proxy[0]}:#{use_proxy[1]}..."
-        
-        response = nil;
-        Net::HTTP::Proxy(use_proxy[0], use_proxy[1]).start(host) do |http|
-          request = Net::HTTP::Get.new(path, {"User-Agent" => USERAGENT})
-          begin
-            response = http.request(request)
-          rescue Timeout::Error
-            response = nil
+        begin
+          if @@proxy.nil?
+            the_proxy = @@proxies[rand(@@proxies.size)]
+          else
+            the_proxy = @@proxy
           end
-        end
-      end while !response.kind_of? Net::HTTPSuccess
-      @@proxy = use_proxy if @@proxy.nil?
+        
+          OCLogger.log "Trying proxy: #{the_proxy[0]}:#{the_proxy[1]}..."
+        
+          response = nil;
+          Net::HTTP::Proxy(the_proxy[0], the_proxy[1]).start(host) do |http|
+            request = Net::HTTP::Get.new(path, {"User-Agent" => USERAGENT})
+            begin
+              response = http.request(request)
+            rescue Timeout::Error
+              response = nil
+              tries += 1
+            end
+          end
+        end while (!response.kind_of? Net::HTTPSuccess and tries < 3)
+        @@proxy = the_proxy if @@proxy.nil?
+      else
+        begin
+          response = nil;
+          http = Net::HTTP.new(host)
+          http.start do |http|
+            request = Net::HTTP::Get.new(path, {"User-Agent" => USERAGENT})
+          
+            begin
+              response = http.request(request)
+            rescue Timeout::Error
+              response = nil
+              tries += 1
+            end
+          end
+        end while (!response.kind_of? Net::HTTPSuccess and tries < 3)
+      end
       
       return response.body
     rescue

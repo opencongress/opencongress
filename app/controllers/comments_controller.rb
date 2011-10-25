@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  require 'apache_ban'
+  
   skip_before_filter :store_location
   before_filter :login_required, :only => [:flag, :censor, :ban_ip, :add_comment]
   before_filter :admin_login_required, :only => [:censor, :ban_ip]

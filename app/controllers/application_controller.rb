@@ -178,6 +178,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def admin_logged_in?
+    return (logged_in? && current_user.user_role.can_administer_users)
+  end
+  
   def prepare_tsearch_query(text)
     text = text.strip
     

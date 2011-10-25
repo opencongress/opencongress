@@ -670,3 +670,8 @@ input#group_captcha {
   float: left;
   width: 100px;
 }
+
+.deletegroup {
+  float: left;
+  margin: 20px 0 50px 210px;
+}

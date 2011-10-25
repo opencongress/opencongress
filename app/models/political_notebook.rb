@@ -2,7 +2,7 @@ class PoliticalNotebook < ActiveRecord::Base
   belongs_to :user  
   belongs_to :group
   
-  has_many :notebook_items, :order => 'created_at DESC' #sti, all
+  has_many :notebook_items, :order => 'created_at DESC', :dependent => :destroy #sti, all
 
   has_many :notebook_links
   has_many :notebook_videos    

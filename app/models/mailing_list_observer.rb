@@ -35,8 +35,8 @@ class MailingListObserver < ActiveRecord::Observer
     if user.activated_at && user.enabled && user.mailing
       UserAudit.create(
         :user_id => user.id,
-        :action => "unsubscribe",
-
+        :mailing => 0,
+        :processed => false,
         :email => user.email
       )
     end

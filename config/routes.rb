@@ -227,7 +227,7 @@ OpenCongress::Application.routes.draw do
     match 'vote/:year/:chamber/:number(/:state)', :action => 'by_number', :year => /\d{4}/, :chamber => /[hs]/, :number => /\d+/, :state => /\w{2}/
   end
 
-  match 'tools(/:action/:id)', :controller => 'resources', :as => 'tools'
+  match 'tools(/:action(/:id))', :controller => 'resources', :as => 'tools'
 
   match '/widgets' => 'widgets#index', :as => 'widgets'
   match '/widgets/deprecated' => 'widgets#deprecated', :as => 'deprecated_widgets'

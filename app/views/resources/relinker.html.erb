@@ -1,16 +1,18 @@
-<% unless params[:text].blank? %>
-  <p>Here is the converted text:</p>
-  <% unless @warnings.blank? %>
-    <div style="color: red; margin: 10px;">
-      There were some warnings:
-      <div style="margin-left: 10px;"><%= @warnings %></div>
-    </div>
+<div class="padding">
+  <% unless params[:text].blank? %>
+    <p class="behave">Here is the converted text:</p>
+    <% unless @warnings.blank? %>
+      <div style="color: red; margin: 10px;">
+        There were some warnings:
+        <div style="margin-left: 10px;"><%= @warnings %></div>
+      </div>
+    <% end %>
+    <div style="border: 1px solid #aaa; padding: 10px; margin-bottom: 25px;"><pre style="white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;"><%= CGI.escapeHTML(@text) %></pre></div>
   <% end %>
-  <div style="border: 1px solid #aaa; padding: 10px; margin-bottom: 25px;"><pre style="white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;"><%= CGI.escapeHTML(@text) %></pre></div>
-<% end %>
 
-<p>Enter your HTML in the box below and any links to THOMAS bill pages will be replaced with links to the same bill on OpenCongress.</p>
-<form method="post">
-  <%= text_area_tag 'text', params[:text], :rows => 10, :cols => 25 %>
-  <%= submit_tag 'Relink' %>
-</form>  
+  <p class='behave'>Enter your HTML in the box below and any links to THOMAS bill pages will be replaced with links to the same bill on OpenCongress.</p>
+  <form method="post">
+    <%= text_area_tag 'text', params[:text], {:rows => 20, :cols => 80, :class => 'field'} %><br /><br />
+    <%= submit_tag 'Relink' %>
+  </form>
+</div>

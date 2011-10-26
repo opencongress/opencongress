@@ -16,7 +16,7 @@
   - else
     = link_to "Register or Login To Join", login_path, :class => 'button silver large floatright margin-top margin-right'
 
-  = link_to "View All Groups", login_path, :class => 'button silver large floatright margin-top margin-right' 
+  = link_to "View All Groups", groups_path, :class => 'button silver large floatright margin-top margin-right' 
    
   %h2.group_name= subtitle.nil? ? link_to(@group.name, @group).html_safe : "#{link_to(@group.name, @group)} : #{subtitle}".html_safe
   

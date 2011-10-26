@@ -1553,9 +1553,9 @@ _background: url('../images/large_buttons.gif') left -376px no-repeat;
 #sponsors {
 min-height: 105px;
 float: left;
-width: 165px;
+width: 170px;
 margin: 10px 0;
-padding: 10px 25px 5px 45px;
+padding: 10px 20px 5px 45px;
 font-size: 12px;
 }
       

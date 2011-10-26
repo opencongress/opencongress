@@ -14,33 +14,20 @@
   <div id="bill-text" class="un">
     <%= link_to "Official Bill Text <span>Comment on about #{number_with_delimiter(@bill.current_bill_text_version.pages)} Pages</span>".html_safe, :action => 'text' %>
   </div>
+<% else %>
+  <%= render :partial => 'sponsor' %>
 <% end %>
 
 
 <div class="sponsorship_data">
-	<div id="sponsors">
-		<h2 class="gray">Sponsor</h2>
-		<div class="details">
-			<% unless @bill.sponsor.nil? %>
-			  <%= link_to(("<img src='/images/photos/thumbs_42/" + @bill.sponsor.id.to_s + ".png'>").html_safe, person_url(@bill.sponsor)) %>
-			  <p><%= @bill.sponsor.title_long %></p>
-			  <%= link_to(@bill.sponsor.full_name, person_url(@bill.sponsor)) %>
-			  <p><%= @bill.sponsor.party_and_state %></p>
-			<% else %>
-			  <p>No sponsor found for this Bill</p>
-			<% end %>
-		</div>
-		<% if @bill.co_sponsors.empty? %>
-		  <span class="small">No Co-Sponsors</span>
-		<% else %>
-  		<%= toggler("bill_cosponsors_more", "View Co-Sponsors (#{@bill.current_cosponsor_count})", "Hide Co-Sponsors", "toggle", "toggle").html_safe %>
-  		<ul id="bill_cosponsors_more" style="display:none;">
-  			<%= co_sponsor_list.html_safe %>		
-  		</ul>
-    <% end %>
-	</div>
-
-	<div id="committees">
+  <% unless @bill.current_bill_text_version.nil? %>
+	  <%= render :partial => 'sponsor' %>
+    
+    <div id="committees">
+  <% else %>
+    <div id="committees" class="morepadding">
+  <% end %>
+    
 		<h2 class="gray">Committees</h2>
 		<% unless @bill.committees.empty? %>	
 		  <div class="details">              
@@ -107,12 +94,13 @@
 	
 	
 	<% unless @bill.plain_language_summary.blank? %>
-	<div id="oc_summary">
-		<div class='explain_box bill'>
+  	<div id="oc_summary">
 			<h4>OpenCongress Summary</h4>
-			 <%= @bill.plain_language_summary.html_safe %>
-		</div>
-	</div>
+			<%= @bill.plain_language_summary.html_safe %>
+  		<div class="disclaimer">
+  		  OpenCongress bill summaries are written by OpenCongress editors and are entirely independent of Congress and the federal government. For the summary provided by Congress itself, via the Congressional Research Service, see the "Official Summary" below.
+  		</div>
+  	</div>
 	<% end %>
 
 

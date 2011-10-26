@@ -1568,7 +1568,9 @@ margin: 10px 0;
 padding: 10px 14px 5px 25px;
 font-size: 12px;
 }
-      
+#committees.morepadding {
+  padding-left: 45px !important;
+}
 
       
 #issue_list {

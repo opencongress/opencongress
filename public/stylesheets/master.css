@@ -5664,3 +5664,10 @@ border-radius:0px !important;
 .field_with_errors {
   display: inline;
 }
+
+.disclaimer {
+  margin-top: 11px;
+  color: #888;
+  font-size: 10px;
+  line-height: 1.3em;
+}

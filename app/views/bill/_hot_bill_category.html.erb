@@ -1,7 +1,7 @@
 <% bills = hot_bill_category.hot_bills.find(:all, :conditions => ["session=?", @congress]) %>
 <% if bills.size > 0 %>
   <div class="hot_category">
-  	<a name="<%= hot_bill_category.name %>"></a>
+  	<a name="<%= CGI.escape(hot_bill_category.name) %>"></a>
   	<h3><%= hot_bill_category.name %></h3>
   	<ul class="bills_list">  
   		<% bills.each do |b| %>

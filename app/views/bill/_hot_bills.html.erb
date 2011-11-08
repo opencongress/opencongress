@@ -7,7 +7,7 @@ This page of "Hot Bills" lists 46 issue areas, created and maintained by the non
     <strong>Jump to:</strong>
     <% @hot_bill_categories.each do |c| %>
       <% if c.hot_bills.any? %>
-        <%= link_to c.name, "##{c.name}" %>
+        <%= link_to c.name, "##{CGI.escape(c.name)}" %>
         <%= "&bull;".html_safe unless c == @hot_bill_categories.last %>
       <% end %>
     <% end %>

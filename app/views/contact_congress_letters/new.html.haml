@@ -70,8 +70,16 @@
       .section
         %h3 Opposing Organizations
         = render 'message_builder_organizations', :disposition => 'oppose', :orgs => @bill.bill_position_organizations_oppose
-      
 
+    - unless @bill.talking_points.empty?
+      .section
+        %h3 PPF Talking Points
+        %ul
+          - @bill.talking_points.each do |tp|
+            %li.message_builder_clickable
+              = tp.talking_point
+              = render 'will_add_text_box', :text => tp.talking_point
+              
     .section      
       %h3 Most-commented sections of the bill text
       %ul
@@ -93,6 +101,14 @@
           %li.message_builder_clickable
             = strip_tags(@bill.plain_language_summary)
             = render 'will_add_text_box', :text => "Here's a summary from OpenCongress.org:\n\n#{strip_tags(@bill.plain_language_summary)}"
+   
+    - if current_facebook_user
+      .section
+        %h3 Facebook Info
+        %ul
+          %li.message_builder_clickable
+            = "You have #{current_facebook_user.friends.size} friends on Facebook"
+            = render 'will_add_text_box', :text => "I have #{current_facebook_user.friends.size} friends on Facebook and will share this letter with them."
           
     .section
       %h3 Highest Rated User Comments

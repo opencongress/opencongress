@@ -1,3 +1,5 @@
+- trigger_js ||= false
+
 - ['support', 'oppose'].each do |position|
   .contribution_data
     The following table shows contributions to each candidate by interest groups that
@@ -21,6 +23,9 @@
                   = "$#{number_with_delimiter(contribution_amount)}"
                   = render 'will_add_text_box', :text => "#{p.title} #{p.lastname}, I know that you took $#{number_with_delimiter(contribution_amount)} in the #{Settings.current_opensecrets_cycle} election cycle from #{big.crp_interest_group.name.downcase} interest groups who #{position} #{@bill.typenumber}."
                 
-:javascript
-  $j(".contribution_data .message_builder_clickable").hover(function(){ mbHoverIn(this) }, function(){ mbHoverOut(this) });
-  $j(".contribution_data .message_builder_clickable").click(function(){ mbAddText(this) });
+                
+- if trigger_js
+  :javascript
+    $j(".contribution_data .message_builder_clickable").hover(function(){ mbHoverIn(this) }, function(){ mbHoverOut(this) });
+    $j(".contribution_data .message_builder_clickable").click(function(){ mbAddText(this) });
+                

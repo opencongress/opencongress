@@ -98,7 +98,7 @@ OpenCongress::Application.routes.draw do
   match 'person/*path' => redirect("/people/%{path}")
 
   namespace :admin do
-     resources :wiki_links, :pvs_category_mappings
+     resources :wiki_links, :pvs_category_mappings, :talking_points
      resources :articles do
        collection do
          get :list

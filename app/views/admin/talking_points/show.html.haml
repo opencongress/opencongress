@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Talking pointable:
+  = @talking_point.talking_pointable_id
+%p
+  %b Talking pointable type:
+  = @talking_point.talking_pointable_type
+%p
+  %b Talking point:
+  = @talking_point.talking_point
+
+= link_to 'Edit', edit_talking_point_path(@talking_point)
+\|
+= link_to 'Back', talking_points_path

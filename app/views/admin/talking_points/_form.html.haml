@@ -1,0 +1,17 @@
+= form_for([:admin, @talking_point]) do |f|
+  -if @talking_point.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@talking_point.errors.count, "error")} prohibited this talking_point from being saved:"
+      %ul
+        - @talking_point.errors.full_messages.each do |msg|
+          %li= msg
+
+  %p
+    = f.label :talking_point
+    = f.text_field :talking_point
+  
+  = f.hidden_field :talking_pointable_id
+  = f.hidden_field :talking_pointable_type
+
+  %p
+    = f.submit 'Save'

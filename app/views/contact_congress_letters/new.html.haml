@@ -18,7 +18,7 @@
     %h2 OpenCongress Message Builder
     
     .instructions.margin-bottom
-      Use the tools in this column to help craft your letter.  Any time your mouse highlights a section, you can click on it to add prepared text to your message.
+      Use the tools in this column to help craft your letter. Anytime your mouse highlights a section, click on it to add prepared text. You can edit any part of the message at left, and if you like, add your own stories and text to personalize your letter.
 
     .section
       %h3 Official Bill Info
@@ -48,6 +48,16 @@
         = "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times"      
         = render 'will_add_text_box', :text => "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times on OpenCongress.org, a free, non-partisan resource."
 
+    - unless @bill.talking_points.empty?
+      .section
+        %h3 PPF Talking Points
+        %ul
+          - @bill.talking_points.each do |tp|
+            %li.message_builder_clickable
+              = tp.talking_point
+              = render 'will_add_text_box', :text => tp.talking_point
+
+
     .section      
       %h3 Contribution Data
       #contribution_data_container
@@ -60,6 +70,15 @@
         - else
           .padding
             Enter your street address above, and relevant campaign contribution data for your elected officials will appear here in seconds for you to use in your letter.
+            
+    - unless @bill.plain_language_summary.blank?
+      .section
+        %h3 OpenCongress Bill Summary
+        %ul
+          %li.message_builder_clickable
+            = strip_tags(@bill.plain_language_summary)
+            = render 'will_add_text_box', :text => "Here's a summary from OpenCongress.org:\n\n#{strip_tags(@bill.plain_language_summary)}"
+
 
     - unless @bill.bill_position_organizations_support.empty?
       .section
@@ -71,15 +90,6 @@
         %h3 Opposing Organizations
         = render 'message_builder_organizations', :disposition => 'oppose', :orgs => @bill.bill_position_organizations_oppose
 
-    - unless @bill.talking_points.empty?
-      .section
-        %h3 PPF Talking Points
-        %ul
-          - @bill.talking_points.each do |tp|
-            %li.message_builder_clickable
-              = tp.talking_point
-              = render 'will_add_text_box', :text => tp.talking_point
-              
     .section      
       %h3 Most-commented sections of the bill text
       %ul
@@ -92,23 +102,6 @@
               = ")"
             
               = render 'will_add_text_box', :text => "specifically, this section of the legislation: \"#{n.bill_text}\","
-
-          
-    - unless @bill.plain_language_summary.blank?
-      .section
-        %h3 OpenCongress Bill Summary
-        %ul
-          %li.message_builder_clickable
-            = strip_tags(@bill.plain_language_summary)
-            = render 'will_add_text_box', :text => "Here's a summary from OpenCongress.org:\n\n#{strip_tags(@bill.plain_language_summary)}"
-   
-    - if current_facebook_user
-      .section
-        %h3 Facebook Info
-        %ul
-          %li.message_builder_clickable
-            = "You have #{current_facebook_user.friends.size} friends on Facebook"
-            = render 'will_add_text_box', :text => "I have #{current_facebook_user.friends.size} friends on Facebook and will share this letter with them."
           
     .section
       %h3 Highest Rated User Comments
@@ -135,6 +128,13 @@
         - @bill.news.order('commentaries.average_rating IS NOT NULL DESC').limit(3).each do |a|
           = render 'message_builder_commentary', :a => a
 
+    - if current_facebook_user
+      .section
+        %h3 Facebook Info
+        %ul
+          %li.message_builder_clickable
+            = "You have #{current_facebook_user.friends.size} friends on Facebook (You'll be able to post your letter on Facebook from the next page with one click.)"
+            = render 'will_add_text_box', :text => "I currently have #{current_facebook_user.friends.size} friends on Facebook and will post a link to this letter on my Facebook profile to share it with them."
 
   #formageddon_modal.jqmWindow{ :style => "display:none;" }   
     = render :partial => 'sending_spinner'

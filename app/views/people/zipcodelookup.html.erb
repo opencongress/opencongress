@@ -21,7 +21,7 @@
   <% if @senators%>
   	<div class="clearfix">
     <h3 class="foo">Senators Representing Your State</h3>
-    <%= render :partial => 'people_list', :locals => { :people => @senators, :hide_help => true }%>
+    <%= render :partial => 'people_list', :locals => { :people => @senators, :hide_help => true, :show_phone => true }%>
   	</div>
   <% end %>
 
@@ -32,7 +32,7 @@
       <p>We found multiple Representatives serving your zipcode. You can narrow your search by entering your street address into the form below.  Your street address will not be stored in our database.</p>
     <% end %>
   
-  	<%= render :partial => 'people_list', :locals => { :people => @reps, :hide_help => true }%>
+  	<%= render :partial => 'people_list', :locals => { :people => @reps, :hide_help => true, :show_phone => true }%>
   	</div>
   <% end %>
 </div>

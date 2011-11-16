@@ -356,6 +356,7 @@ module CommentaryParser
   def CommentaryParser.get_body_for_host_and_path(host, path)
     $DEBUG = false
     tries = 0
+    got_doc = false
     
     begin
       if @@use_proxy
@@ -411,10 +412,24 @@ module CommentaryParser
               response = http.request(request)
             rescue Timeout::Error
               response = nil
-              tries += 1
             end
+
+            if response and response.kind_of?(Net::HTTPSuccess)
+              got_doc = true
+            else
+              if (response.header['location'] != nil)
+                newurl = URI.parse(response.header['location'])
+                if(newurl.relative?)
+                  path = response.header['location']
+                else
+                  host = newurl.host
+                  path = newurl.path
+                end
+              end 
+            end
+            tries += 1
           end
-        end while (!response.kind_of? Net::HTTPSuccess and tries < 3)
+        end while (!got_doc and (tries < 3))
       end
       
       return response.nil? ? "<html></html>" : response.body

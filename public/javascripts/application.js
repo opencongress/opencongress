@@ -420,12 +420,16 @@ BillText = {
     Element.removeClassName('bill_text_section_' + nid, 'selected');
   },
   
+  toggleComments: function(version, nid) {
+    ($j('#bill_text_section_' + nid).hasClass('selected') ? closeComments : showComments)(version, nid);
+  },
+  
   highlightNode: function(nid) {
     setStyleById('bill_text_section_' + nid, 'background', '#D9D9F3');
     Effect.ScrollTo('bill_text_section_' + nid, {offset: -50});
   },
 
   setCommentsForNode: function(version, nid, num) {
-    $('bill_text_section_' + nid).insert({top: "<div class='bill_text_section_num_comments'><span><a href='#' onClick=\"BillText.showComments(" + version + ", '" + nid + "'); return false;\">" + num + "</a></span></div>"});
+    $('bill_text_section_' + nid).insert({top: "<div class='bill_text_section_num_comments'><span><a href='#' onClick=\"BillText.toggleComments(" + version + ", '" + nid + "'); return false;\">" + num + "</a></span></div>"});
   }
 }

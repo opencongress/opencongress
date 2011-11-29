@@ -48,7 +48,6 @@ module CommentaryParser
   end
     
   def CommentaryParser.save_item(i, lookup_object, type, scraped_from)
-        
     saved = false
     commentary_type = i.commentary_type.nil? ? type : i.commentary_type
     
@@ -95,6 +94,8 @@ module CommentaryParser
               c.date = Date.strptime(i.date, "%b %d, %Y")
             elsif scraped_from == 'daylife'
               c.date = Date.strptime(i.date, "%Y-%m-%d %H:%M:%S")
+            elsif scraped_from == 'bing'
+              c.date = DateTime.parse(i.date)
             else
               c.date = Date.strptime(i.date, "%b %d, %Y")
             end
@@ -117,7 +118,10 @@ module CommentaryParser
       unless ((lookup_object.kind_of? Bill) && 
               (c.date < (Time.at(lookup_object.introduced) - 2.days).to_date))
         begin
-          if c.commentariable_type == 'Bill' && c.commentariable.bill_type == 's' && ((status = c.senate_bill_strict_validity) != 'OK')
+          # Bing is excluded from strict checks because their search results don't always
+          # include the search term
+          if c.commentariable_type == 'Bill' && c.commentariable.bill_type == 's' && 
+             ((status = c.senate_bill_strict_validity) != 'OK') && scraped_from != 'bing'
             c.status = status
             OCLogger.log "Article failed strict check because it is a senate bill. #{c.status}"
           else
@@ -180,6 +184,15 @@ module CommentaryParser
     get_technorati_items_for_host_and_path(host, path)
   end
   
+  def CommentaryParser.get_bing_news_items_for_query(query)
+    OCLogger.log "Looking for Bing news items matching '#{query}'"
+
+    host = "api.bing.net"
+    path = "/xml.aspx?AppId=#{ApiKeys.bing}&Version=2.2&Market=en-US&Query=#{query}&Sources=news&News.Count=15"
+    
+    get_bing_items_for_host_and_path(host, path)
+  end
+  
   def CommentaryParser.get_daylife_items_for_query(query)
     OCLogger.log "Looking for daylife search items matching '#{URI.unescape(query)}'"
 
@@ -215,6 +228,34 @@ module CommentaryParser
       end
     rescue 
       OCLogger.log "Error scraping Technorati! #{$!.backtrace}"
+      return []
+    end
+  
+    items
+  end
+  
+  def CommentaryParser.get_bing_items_for_host_and_path(host, path)
+    #OCLogger.log "URL: #{url}"
+    res = nil
+    begin
+      body = get_body_for_host_and_path(host, path)
+
+      rex_doc = REXML::Document.new body
+  
+      items = []
+      rex_doc.elements.each("SearchResponse/news:News/news:Results/news:NewsResult") do |i|
+        temp_item = OpenStruct.new
+    
+        temp_item.url = i.text("news:Url")
+        temp_item.title = i.text("news:Title")
+        temp_item.excerpt = i.text("news:Snippet")
+        temp_item.date = i.text("news:Date")
+        temp_item.source = i.text("news:Source")
+    
+        items << temp_item
+      end
+    rescue 
+      OCLogger.log "Error scraping Bing! #{$!.backtrace}"
       return []
     end
   
@@ -446,6 +487,9 @@ module CommentaryParser
     items = get_technorati_search_items_for_query(query)
     save_items(items, lookup_object, 'blog', 'technorati')
   
+    items = get_bing_news_items_for_query(query)
+    save_items(items, lookup_object, 'news', 'bing')
+    
     items = get_google_items_for_query(query)
     save_items(items, lookup_object, 'news', 'google news')
     

@@ -55,6 +55,7 @@ module IndexHelper
 			"Cloture Motion Rejected" => "Failed_big.gif",
 			"Cloture on the Motion to Proceed Rejected" => "Failed_big.gif",
 			"Concurrent Resolution Agreed to" => "passed_big.png",
+			"Concurrent Resolution Rejected" => "Failed_big.gif",
 			"Conference Report Agreed to" => "passed_big.png",
 			"Decision of Chair Sustained" => "passed_big.png",
 			"Failed" => "Failed_big.gif",
@@ -75,9 +76,13 @@ module IndexHelper
 			"Veto Overridden" => "passed_big.png"
 			}
 		if rcall.has_key?(result)
-			image_tag rcall.fetch(result), :alt => result, :title => result 
+			image_tag rcall.fetch(result), :alt => result, :title => result
+		elsif result =~ /rejected/i or result =~ /defeated/i or result =~ /failed/i
+		  image_tag "Failed_big.gif", :alt => result, :title => result
+		elsif result =~ /passed/i or result =~ /agreed to/i
+		  image_tag "passed_big.png", :alt => result, :title => result
 		else
-			"<span class='result'>#{result}</span>"
+			"<span class='result'>#{result}</span>".html_safe
 		end
 	end
 

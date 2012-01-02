@@ -111,7 +111,7 @@
             On
             = "#{c.created_at.strftime("%B %d, %Y")},"
             by
-            = link_to c.user.login, user_profile_path(c.user.login)
+            = c.user.nil? ? "Anonymous" : link_to(c.user.login, user_profile_path(c.user.login))
             \-
             = c.comment
             = render 'will_add_text_box', :text => "As noted by #{c.user.login}, a user on OpenCongress.org, on #{c.created_at.strftime("%B %d, %Y")}, \"#{c.comment}\""

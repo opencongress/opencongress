@@ -216,7 +216,7 @@ class ApiController < ApplicationController
   
   def bill_roll_calls
     bills = Bill.find_all_by_id(params[:bill_id])
-    do_render(bills, :except => [:current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, :support_count_2, :vote_count_2], :include => [:roll_calls])    
+    do_render(bills, :except => [:current_support_pb, :support_count_1, :rolls, :hot_bill_category_id, :support_count_2, :vote_count_2], :include => {:roll_calls => {:include => :roll_call_votes}})    
   end
   
   def issues

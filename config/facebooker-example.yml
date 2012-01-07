@@ -11,3 +11,11 @@ staging:
   secret: xxx
   api_key: xxx
   callback_url: xxx
+
+oc_wiki:
+  adapter: mysql
+  database: ocwiki
+  username: 
+  password: 
+  host: localhost
+

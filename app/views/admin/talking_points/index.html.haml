@@ -1,0 +1,21 @@
+.padding
+  %h1 PPF Talking Points for #{@bill.typenumber}
+
+  %table
+    %tr
+      %th Talking point
+      %th
+      %th
+
+    - @talking_points.each do |talking_point|
+      %tr
+        %td= talking_point.talking_point
+        %td= link_to 'Edit', edit_admin_talking_point_path(talking_point)
+        %td= link_to 'Destroy', admin_talking_point_path(talking_point), :confirm => 'Are you sure?', :method => :delete
+
+  %br
+
+  = link_to 'New Talking Point', {:action => 'new', :bill_id => @bill.ident }, :class => "silver button small"
+  %br
+  %br
+  = link_to "Return to #{@bill.typenumber}", bill_path(@bill)

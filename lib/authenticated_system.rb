@@ -48,7 +48,6 @@ module AuthenticatedSystem
     #   skip_before_filter :login_required
     #
     def login_required
-      logger.info "IN LOGIN REQUIRED: #{current_user.inspect}"
       username, passwd = get_auth_data
       self.current_user ||= User.authenticate(username, passwd) || :false if username && passwd
       logged_in? && authorized? ? true : access_denied

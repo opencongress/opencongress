@@ -8,18 +8,18 @@ class Group < ActiveRecord::Base
   validates_presence_of :user_id
   
   belongs_to :user
-  has_many :group_invites
+  has_many :group_invites, :dependent => :destroy
   belongs_to :pvs_category
   
-  has_many :group_members
+  has_many :group_members, :dependent => :destroy
   has_many :users, :through => :group_members, :order => "users.login ASC"
   
-  has_many :group_bill_positions, :order => 'group_bill_positions.created_at desc'
+  has_many :group_bill_positions, :order => 'group_bill_positions.created_at desc', :dependent => :destroy
   has_many :bills, :through => :group_bill_positions
   
-  has_many :comments, :as => :commentable
+  has_many :comments, :as => :commentable, :dependent => :destroy
   
-  has_one :political_notebook
+  has_one :political_notebook, :dependent => :destroy
   
   scope :visible, where(:publicly_visible=>true)
   scope :with_name_or_description_containing, lambda { |q| where(["groups.name ILIKE ? OR groups.description ILIKE ?", "%#{q}%", "%#{q}%"]) }

@@ -16,6 +16,8 @@ class Subject < ActiveRecord::Base
   has_many :pvs_category_mappings, :as => :pvs_category_mappable
   has_many :pvs_categories, :through => :pvs_category_mappings
 
+  before_save :count_bills
+  
   acts_as_bookmarkable  
  
   @@DISPLAY_OBJECT_NAME = 'Issue'
@@ -270,16 +272,13 @@ class Subject < ActiveRecord::Base
     SubjectRelation.all_related(self)
   end
 
-  def latest_bills(num, page = 1, congress = Settings.default_congress)
-    bills.find(:all, :conditions => ["bills.session = ?", congress],
+  def latest_bills(num, page = 1, congress = [ Settings.default_congress ])
+    bills.find(:all, :conditions => ['bills.session IN (?)', congress], 
                :order => 'bills.lastaction DESC').paginate(:per_page => num, :page => page)
   end
 
-  def passed_bills(num, page = 1, congress = Settings.default_congress)
-    conditions = congress.kind_of?(Array) ? ["bills.session IN (?) AND actions.action_type='enacted'", congress] :
-                                 ["bills.session = ? AND actions.action_type='enacted'", congress]
-
-    bills.find(:all, :include => :actions, :conditions => conditions, 
+  def passed_bills(num, page = 1, congress = [ Settings.default_congress ])
+    bills.find(:all, :include => :actions, :conditions => ["bills.session IN (?) AND actions.action_type='enacted'", congress], 
                :order => 'actions.datetime DESC').paginate(:per_page => num, :page => page)
   end
 
@@ -337,7 +336,7 @@ class Subject < ActiveRecord::Base
     #actions.collect { |a| a.bill }
   end
   
-  def before_save
+  def count_bills
     self.bill_count = id ? BillSubject.count_by_sql("SELECT COUNT(*) FROM bill_subjects INNER JOIN bills ON bills.id=bill_subjects.bill_id WHERE bill_subjects.subject_id=#{id} AND bills.session=#{Settings.default_congress}") : 0
   end
 

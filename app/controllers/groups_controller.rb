@@ -86,7 +86,7 @@ class GroupsController < ApplicationController
     @page_title = "Edit Group Settings"
     @group = Group.find(params[:id])
     
-    unless @group.user == current_user
+    unless ((@group.user == current_user) or admin_logged_in?)
       redirect_to groups_path, :notice => "You are not that group's owner, so you can't edit settings!"
       return
     end
@@ -106,6 +106,21 @@ class GroupsController < ApplicationController
     end
   end
 
+  def destroy
+    @group = Group.find(params[:id])
+    
+    unless @group.is_owner?(current_user) or admin_logged_in?
+      redirect_to groups_path, :notice => "You don't have permission to do that!"
+      return
+    end
+    
+    @group.destroy
+    
+    respond_to do |format|
+      format.html { redirect_to(groups_path, :notice => 'Group successfully deleted!') }
+    end
+  end
+  
   private
   
   def check_membership

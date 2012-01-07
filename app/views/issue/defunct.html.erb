@@ -1,0 +1,47 @@
+<div id="heading"> 
+  <h2>Issue: <%= @subject.term %></h2>
+</div>
+
+
+<%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
+
+<div class="issue_wrapper">
+  
+<div class="floatright clearnone">
+  <form id="timeframe_select" action="" method="get">
+  <select name="filter" onchange="submit();">
+  <%= options_for_select([['Most Recent','recent'], ['Has Become Law','enacted']], params[:filter]) %>
+  </select>
+  </form>
+</div>
+<a href="/issues" class="silver button small floatleft clearnone margin-right margin-bottom">
+  <span>Back to All Issues</span>
+</a>
+<a href="/bill/hot" class="silver button small floatleft clearnone margin-right"><span>View Hot Bills By Issues Area</span></a>
+<a href="<%= url_for :controller => 'issue', :action => 'show', :id => @subject %>" class="silver button small floatleft clearnone margin-right"><span>See Bills for Current Session</span></a>
+
+<div id="issue_summary_text">
+<%= @subject.summary %>
+</div>
+
+<% unless @bills.empty? %>
+  <div class="clear"><%= will_paginate @bills %></div>
+  <%= render :partial => "bill/related_bills_list", :locals => {:related_bills_list => @bills, :subject => @subject } -%>
+  <%= will_paginate @bills %>
+<% else %>
+  <div class="padding clear">
+    No bills in previous sessions of Congress.
+  </div>
+<% end %>
+  <% unless @tracking_suggestions[0] == 0 %>
+    <%= render :partial => "shared/tracking_suggestions_table", 
+               :locals => {:object => @subject, 
+                           :title => @subject.term, 
+                           :action => 'tracking_issue', 
+                           :tracking_suggestions => @tracking_suggestions} %>
+
+  <% end %>
+<br /><br />
+
+</div>
+

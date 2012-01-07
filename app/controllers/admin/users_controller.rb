@@ -82,6 +82,8 @@ class Admin::UsersController < Admin::IndexController
 
   def destroy
     User.find(params[:id]).destroy
+    flash[:notice] = 'User deleted!'
+    
     redirect_to :action => 'list'
   end
 end

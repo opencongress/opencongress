@@ -26,6 +26,7 @@ class Bill < ActiveRecord::Base
   has_many :bill_votes
   has_one  :last_action, :class_name => "Action", :order => "actions.date DESC"
   has_many :most_recent_actions, :class_name => "Action", :order => "actions.date DESC", :limit => 5
+  has_many :talking_points, :as => :talking_pointable
   
   has_many :bill_text_versions
   

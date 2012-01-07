@@ -33,3 +33,10 @@ production:
   username: root
   password: 
   host: localhost
+
+oc_wiki:
+  adapter: mysql
+  database: ocwiki
+  username: 
+  password: 
+  host: localhost

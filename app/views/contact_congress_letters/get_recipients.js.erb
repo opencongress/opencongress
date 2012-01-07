@@ -3,9 +3,9 @@
 <% else %>
   $j('#contact_recipients_container').html("<%= escape_javascript(render :partial => 'contact_congress_letters/contact_recipients', :locals => { :show_checkboxes => true }) %>");
   <% if @bill.bill_interest_groups.any? %>
-    $j('#contribution_data_container').html("<%= escape_javascript(render :partial => 'contact_congress_letters/message_builder_intgroup_contribution_data') %>");
+    $j('#contribution_data_container').html("<%= escape_javascript(render :partial => 'contact_congress_letters/message_builder_intgroup_contribution_data', :locals => { :trigger_js => true}) %>");
   <% else %>
-    $j('#contribution_data_container').html("<%= escape_javascript(render :partial => 'contact_congress_letters/message_builder_industry_contribution_data') %>");
+    $j('#contribution_data_container').html("<%= escape_javascript(render :partial => 'contact_congress_letters/message_builder_industry_contribution_data', :locals => { :trigger_js => true}) %>");
   <% end %>
   
   <% unless @bill.roll_calls.first.nil? %>

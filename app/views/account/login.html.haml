@@ -8,7 +8,7 @@
     %div
       %h3 Login with Facebook
       = fb_connect_async_js
-      = fb_login_and_redirect(request.url, :perms => 'email')
+      = fb_login_and_redirect(request.url, :scope => 'email')
 
     #loginform.floatleft.form.clear{ :title => "Account login" }
       %h3 Login with Your OpenCongress Account

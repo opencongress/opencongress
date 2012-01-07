@@ -16,6 +16,7 @@ module CommentaryParser
   STOP_REFERRERS = [ "google\.com" ]
   @@proxies = []
   @@proxy = nil
+  @@use_proxy = (ENV['USE_PROXY'] == 'true')
   
   def CommentaryParser.save_items(items, lookup_object, type, scraped_from)
     n = items ? items.size : 0
@@ -47,7 +48,6 @@ module CommentaryParser
   end
     
   def CommentaryParser.save_item(i, lookup_object, type, scraped_from)
-        
     saved = false
     commentary_type = i.commentary_type.nil? ? type : i.commentary_type
     
@@ -94,6 +94,8 @@ module CommentaryParser
               c.date = Date.strptime(i.date, "%b %d, %Y")
             elsif scraped_from == 'daylife'
               c.date = Date.strptime(i.date, "%Y-%m-%d %H:%M:%S")
+            elsif scraped_from == 'bing'
+              c.date = DateTime.parse(i.date)
             else
               c.date = Date.strptime(i.date, "%b %d, %Y")
             end
@@ -116,7 +118,10 @@ module CommentaryParser
       unless ((lookup_object.kind_of? Bill) && 
               (c.date < (Time.at(lookup_object.introduced) - 2.days).to_date))
         begin
-          if c.commentariable_type == 'Bill' && c.commentariable.bill_type == 's' && ((status = c.senate_bill_strict_validity) != 'OK')
+          # Bing is excluded from strict checks because their search results don't always
+          # include the search term
+          if c.commentariable_type == 'Bill' && c.commentariable.bill_type == 's' && 
+             ((status = c.senate_bill_strict_validity) != 'OK') && scraped_from != 'bing'
             c.status = status
             OCLogger.log "Article failed strict check because it is a senate bill. #{c.status}"
           else
@@ -179,6 +184,15 @@ module CommentaryParser
     get_technorati_items_for_host_and_path(host, path)
   end
   
+  def CommentaryParser.get_bing_news_items_for_query(query)
+    OCLogger.log "Looking for Bing news items matching '#{query}'"
+
+    host = "api.bing.net"
+    path = "/xml.aspx?AppId=#{ApiKeys.bing}&Version=2.2&Market=en-US&Query=#{query}&Sources=news&News.Count=15"
+    
+    get_bing_items_for_host_and_path(host, path)
+  end
+  
   def CommentaryParser.get_daylife_items_for_query(query)
     OCLogger.log "Looking for daylife search items matching '#{URI.unescape(query)}'"
 
@@ -214,6 +228,34 @@ module CommentaryParser
       end
     rescue 
       OCLogger.log "Error scraping Technorati! #{$!.backtrace}"
+      return []
+    end
+  
+    items
+  end
+  
+  def CommentaryParser.get_bing_items_for_host_and_path(host, path)
+    #OCLogger.log "URL: #{url}"
+    res = nil
+    begin
+      body = get_body_for_host_and_path(host, path)
+
+      rex_doc = REXML::Document.new body
+  
+      items = []
+      rex_doc.elements.each("SearchResponse/news:News/news:Results/news:NewsResult") do |i|
+        temp_item = OpenStruct.new
+    
+        temp_item.url = i.text("news:Url")
+        temp_item.title = i.text("news:Title")
+        temp_item.excerpt = i.text("news:Snippet")
+        temp_item.date = i.text("news:Date")
+        temp_item.source = i.text("news:Source")
+    
+        items << temp_item
+      end
+    rescue 
+      OCLogger.log "Error scraping Bing! #{$!.backtrace}"
       return []
     end
   
@@ -354,48 +396,84 @@ module CommentaryParser
 
   def CommentaryParser.get_body_for_host_and_path(host, path)
     $DEBUG = false
+    tries = 0
+    got_doc = false
     
     begin
-      if @@proxies.empty?
-        m = Mechanize.new
-        m.user_agent_alias = "Windows IE 7"
+      if @@use_proxy
+        if @@proxies.empty?
+          OCLogger.log "Getting proxy list..."
+          
+          m = Mechanize.new
+          m.user_agent_alias = "Windows IE 7"
 
-        m.get("http://hidemyass.com/proxy-list/search-235102")
+          m.get("http://hidemyass.com/proxy-list/search-235102")
 
-        p = m.page.parser
-        p.css('#listtable tr').each_with_index do |row, i|
-          unless i == 0
-            ip = row.css('td')[1].css('span').first
+          p = m.page.parser
+          p.css('#listtable tr').each_with_index do |row, i|
+            unless i == 0
+              ip = row.css('td')[1].css('span').first
 
-            unless ip.attributes['title'] == 'Planet Lab proxy'
-              @@proxies << [ip.text,row.css('td')[2].text.strip]
+              unless ip.attributes['title'] == 'Planet Lab proxy'
+                @@proxies << [ip.text,row.css('td')[2].text.strip]
+              end
             end
           end
         end
+      
+        begin
+          if @@proxy.nil?
+            the_proxy = @@proxies[rand(@@proxies.size)]
+          else
+            the_proxy = @@proxy
+          end
+        
+          OCLogger.log "Trying proxy: #{the_proxy[0]}:#{the_proxy[1]}..."
+        
+          response = nil;
+          Net::HTTP::Proxy(the_proxy[0], the_proxy[1]).start(host) do |http|
+            request = Net::HTTP::Get.new(path, {"User-Agent" => USERAGENT})
+            begin
+              response = http.request(request)
+            rescue Timeout::Error
+              response = nil
+              tries += 1
+            end
+          end
+        end while (!response.kind_of? Net::HTTPSuccess and tries < 3)
+        @@proxy = the_proxy if @@proxy.nil?
+      else
+        begin
+          response = nil;
+          http = Net::HTTP.new(host)
+          http.start do |http|
+            request = Net::HTTP::Get.new(path, {"User-Agent" => USERAGENT})
+          
+            begin
+              response = http.request(request)
+            rescue Timeout::Error
+              response = nil
+            end
+
+            if response and response.kind_of?(Net::HTTPSuccess)
+              got_doc = true
+            else
+              if (response.header['location'] != nil)
+                newurl = URI.parse(response.header['location'])
+                if(newurl.relative?)
+                  path = response.header['location']
+                else
+                  host = newurl.host
+                  path = newurl.path
+                end
+              end 
+            end
+            tries += 1
+          end
+        end while (!got_doc and (tries < 3))
       end
       
-      begin
-        if @@proxy.nil?
-          use_proxy = @@proxies[rand(@@proxies.size)]
-        else
-          use_proxy = @@proxy
-        end
-        
-        puts "Trying proxy: #{use_proxy[0]}:#{use_proxy[1]}..."
-        
-        response = nil;
-        Net::HTTP::Proxy(use_proxy[0], use_proxy[1]).start(host) do |http|
-          request = Net::HTTP::Get.new(path, {"User-Agent" => USERAGENT})
-          begin
-            response = http.request(request)
-          rescue Timeout::Error
-            response = nil
-          end
-        end
-      end while !response.kind_of? Net::HTTPSuccess
-      @@proxy = use_proxy if @@proxy.nil?
-      
-      return response.body
+      return response.nil? ? "<html></html>" : response.body
     rescue
       OCLogger.log "Error or timeout retrieving url: #{host}#{path}. #{$!}.  Skipping."
       return "<html></html>"
@@ -409,6 +487,9 @@ module CommentaryParser
     items = get_technorati_search_items_for_query(query)
     save_items(items, lookup_object, 'blog', 'technorati')
   
+    items = get_bing_news_items_for_query(query)
+    save_items(items, lookup_object, 'news', 'bing')
+    
     items = get_google_items_for_query(query)
     save_items(items, lookup_object, 'news', 'google news')
     

@@ -249,7 +249,7 @@ class AccountController < ApplicationController
       @user.representative_id = @reps.first.id if (@reps && @reps.length == 1)
     end  
 
-    if @user.save
+    if @user.save_with_captcha
       # check for an invitation
       if session[:invite]
         Friend.create_confirmed_friendship(@user, session[:invite].inviter)

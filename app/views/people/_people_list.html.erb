@@ -1,6 +1,7 @@
 <div id="the-people">
 <% @show_article_count ||= false %>
 <% hide_help ||= false %>
+<% show_phone ||= false %>
 <ul id="people_list" class="listed">
 	<% unless hide_help %>
 	<a id="top" style="visibility:hidden;"></a>
@@ -28,7 +29,13 @@
 			<%= link_to(image_tag(person.photo_path(:medium)), {:controller => 'people', :action => 'show', :id => person.to_param}) %>
       
 			<div class="left details">
-				<a class="name" href="/people/show/<%= person.to_param %>"><%= person.name %> <span><%= person.party %></span></a>
+				<a class="name" href="/people/show/<%= person.to_param %>">
+				  <%= person.name %> 
+				  <span><%= person.party %></span>
+				  <% if show_phone %>
+				    <span>Phone: <%= person.phone %></span>
+				  <% end %>
+				</a>
       
 			<% if @show_tracked_list %>
          <%= render :partial => "shared/track_link", :locals => {:object => person, :title => person.title_long} %>

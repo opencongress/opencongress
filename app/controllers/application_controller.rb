@@ -30,16 +30,21 @@ class ApplicationController < ActionController::Base
     end
     
     # check to see if the user is logged into and has connected to OC
-    if current_facebook_user and current_facebook_client
-      begin
-        @facebook_user = Mogli::User.find(current_facebook_user.id, current_facebook_client)
-      rescue Mogli::Client::HTTPException
-        force_fb_cookie_delete
+    begin
+      if current_facebook_user and current_facebook_client
+        begin
+          @facebook_user = Mogli::User.find(current_facebook_user.id, current_facebook_client)
+        rescue Mogli::Client::HTTPException
+          force_fb_cookie_delete
+          @facebook_user = nil
+        end
+      else
         @facebook_user = nil
+        force_fb_cookie_delete
       end
-    else
-      @facebook_user = nil
+    rescue Mogli::Client::OAuthException
       force_fb_cookie_delete
+      @facebook_user = nil
     end
     
     if @facebook_user
@@ -178,6 +183,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def admin_logged_in?
+    return (logged_in? && current_user.user_role.can_administer_users)
+  end
+  
   def prepare_tsearch_query(text)
     text = text.strip
     

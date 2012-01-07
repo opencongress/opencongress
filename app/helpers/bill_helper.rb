@@ -52,11 +52,14 @@ module BillHelper
   end
 
   def bill_titles_html
+    out = ""
     @bill.bill_titles.map do |bt|
 
-      "<li><em>#{bt.title_type.capitalize}:</em> ".html_safe +
-      " #{bt.title}" + (bt.as != '' ? "<em> as #{bt.as}.</em>".html_safe : ".") + "</li>".html_safe
+      out += "<li><strong>#{bt.title_type.capitalize}:</strong> " +
+             " #{bt.title}" + (bt.as != '' ? "<em> as #{bt.as}.</em>" : ".") + "</li>"
     end
+    
+    out.html_safe
   end
 
   def display_bill_titles

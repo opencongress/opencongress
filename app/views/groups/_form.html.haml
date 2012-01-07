@@ -61,4 +61,11 @@
         $j('input#group_captcha').addClass("field");
       });
   %p
-    = f.submit @group.new_record? ? 'Create Group' : 'Update Group', :class => 'button blue huge'
+    - if @group.new_record?
+      = f.submit 'Create Group', :class => 'button blue huge'
+    - else
+      = f.submit 'Update Group', :class => 'button blue huge'
+
+- unless @group.new_record?
+  = link_to 'Delete Group', group_path(@group), :method => 'delete', :class => 'button yellow huge deletegroup', :confirm => "Are you sure? This will delete all posts associated with this group!"
+    

@@ -18,8 +18,15 @@
 		
   		<label>Zip Code</label>
   		<%= f.text_field :zipcode, :class => 'field', :size => 5, :maxlength => 5 %>
-  		
   		<p class="zip_tell">(required, to find your Members of Congress)</p>
+  		
+  		<%= f.simple_captcha :label => "Spam check" %>
+  		<p class="zip_tell">(enter the text on the right in the field above)</p>
+  		<script>
+    		$j(document).ready(function() {
+          $j('#user_captcha').addClass("field");
+        });
+      </script>
   		
   		<div class="clear margintop floatleft behave">	<br/>
 			<%= f.check_box :mailing, :style => "margin-top:-6px;", :class => "tick" %>

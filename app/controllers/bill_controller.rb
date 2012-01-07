@@ -431,7 +431,7 @@ class BillController < ApplicationController
 
     @page_title = "Letters to Congress: #{@bill.typenumber}"
 
-    @letters = @bill.contact_congress_letters.paginate(:page => params[:page], :per_page => 10)
+    @letters = @bill.contact_congress_letters.includes(:formageddon_threads).where("formageddon_threads.privacy='PUBLIC'").order("contact_congress_letters.created_at DESC").paginate(:page => params[:page], :per_page => 10)
   end
   
   def text

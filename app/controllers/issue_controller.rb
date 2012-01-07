@@ -1,5 +1,5 @@
 class IssueController < ApplicationController
-  before_filter :issue_profile_shared, :only => [:show, :comments]
+  before_filter :issue_profile_shared, :only => [:show, :comments, :defunct]
   before_filter :page_view, :only => :show
   skip_before_filter :store_location, :except => [:index, :alphabetical, :by_most_viewed, :by_bill_count, :top_twenty_bills, :show, :top_viewed_bills]
 
@@ -124,6 +124,30 @@ class IssueController < ApplicationController
     #   @bills = @subject.latest_bills(10, params[:page].blank? ? 1 : params[:page])
     # end
     
+    @top_comments = @subject.comments.find(:all,:include => [:comment_scores, :user], :order => "comments.average_rating DESC", :limit => 2)
+    @atom = {'link' => url_for(:only_path => false, :controller => 'issue', :id => @subject, :action => 'atom'), 'title' => "Major Bill Actions in #{@subject.term}"}
+		@hide_atom = true
+		@tracking_suggestions = @subject.tracking_suggestions
+  end
+  
+  def defunct
+    unless @subject
+       render_404 and return 
+    end
+
+    @sidebar_stats_object = @subject
+    @user_object = @subject
+    @page_title_prefix = "U.S. Congress"
+    @page_title = "#{@subject.term}"
+    @meta_description = "#{@subject.term}-related bills and votes in previous sessions of the U.S. Congress."
+    @comments = @subject
+    if params[:filter] == 'enacted'
+      @bills = @subject.passed_bills(10, params[:page].blank? ? 1 : params[:page], 
+                                     Settings.available_congresses - [Settings.default_congress])
+    else
+      @bills = @subject.latest_bills(10, params[:page].blank? ? 1 : params[:page],
+                                    Settings.available_congresses - [Settings.default_congress])
+    end
     @top_comments = @subject.comments.find(:all,:include => [:comment_scores, :user], :order => "comments.average_rating DESC", :limit => 2)
     @atom = {'link' => url_for(:only_path => false, :controller => 'issue', :id => @subject, :action => 'atom'), 'title' => "Major Bill Actions in #{@subject.term}"}
 		@hide_atom = true

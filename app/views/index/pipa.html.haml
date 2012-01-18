@@ -1,0 +1,182 @@
+:javascript
+  $j().ready(function() {
+    $j('#sopapipa_protest').jqm({modal:true}).jqmShow();
+  });
+
+#sopapipa_protest.jqmWindow
+  #oclogo 
+  
+  %div.clear
+  
+  %p Today, OpenCongress is proud to join the global online action to protest the PIPA net censorship bill. We're on strike by voluntarily limiting access to our site -- except for pages about how the systemically-corrupt U.S. Congress is ramming through PIPA, the worst Internet legislation in history.
+
+  %p 
+    If you appreciate all the information on OpenCongress, call the D.C. offices of your U.S. senators now and speak out strongly against PIPA -- phone numbers and talking points are available on our 
+    = succeed '.' do
+      = link_to 'whip-count page', 'http://www.opencongress.org/wiki/Protect_IP_Act_Senate_whip_count'
+
+  %p Since 2007, the Participatory Politics Foundation has operated OpenCongress as a free, open-source, non-partisan Web resource for watchdogging the U.S. Congress. PIPA poses an existential threat to our public-education mission. By establishing a dangerous legal framework for net censorship in the U.S., it endangers free political speech online and the existence of sites like OpenCongress that aggregate data & links from a variety of sources. 
+
+  / Legislation as preposterously terrible -- even un-Constitutional -- as SOPA and PIPA should have been non-starters. A diverse coalition of opponents -- from tech entrepreneurs to non-profit organizations -- have argued correctly that the bill will negatively affect economic development, the free flow of information, and net neutrality. Clearly, the only reason that the Senate is rushing to hold a vote on PIPA as soon as it returns on January 24th is that they don't want any more public scrutiny or protests of its many fundamental flaws -- and that supporters of the bill have given more than four times as much in campaign contributions as have opponents. PIPA is a perfectly egregious example of systemic corruption in the U.S. Congress and the reasons why our representative democracy badly needs comprehensive electoral reforms, including full public financing of federal elections, to mitigate the corrosive influence of corporate money in the political process. 
+
+  %p 
+    For more information and to joint today's protest, please see:
+    = link_to 'http://sopastrike.com', 'http://sopastrike.com'
+
+  %p 
+    The Participatory Politics Foundation is a founding member of the American Censorship coalition to keep the Web open and fight SOPA / PIPA: 
+    = link_to 'http://americancensorship.org', 'http://americancensorship.org' 
+
+  %p 
+    %strong
+      The most important thing you can do today is to 
+      = succeed '.' do
+        = link_to 'call your two U.S. Senators and protest PIPA', 'http://www.opencongress.org/wiki/Protect_IP_Act_Senate_whip_count'
+    
+  %p
+    %em Additional resources
+
+  / SOPA and PIPA are together the least-popular bills among the OpenCongress community in the past year: http://www.opencongress.org/bill/hot?order=desc&page=1&sort=support_count_1&timeframe=1year
+
+  %ul
+    %li
+      %p 
+        Protect IP Act (S. 968): 
+        = link_to 'Main Bill Page', :controller => 'bill', :action => 'show', :id => '112-s968'
+        |
+        = link_to 'Money Trail', :controller => 'bill', :action => 'money', :id => '112-s968'
+        |
+        = link_to 'Full Bill Text', :controller => 'bill', :action => 'text', :id => '112-s968'
+        |
+        = link_to 'Comments', :controller => 'bill', :action => 'comments', :id => '112-s968', :comment_sort => 'rating'
+        |
+        = link_to 'Contact Congress', :controller => 'contact_congress_letters', :action => 'new', :bill => '112-s968', :position => 'oppose'
+
+      /
+        With Contact-Congress on OpenCongress, over 
+        = link_to '6,100 emails', 'http://www.opencongress.org/bill/112-s968/letters'
+        have been sent by constituents to their three members of Congress, overwhelmingly in opposition to PIPA.
+        
+    %li
+      %p 
+        Stop Online Piracy Act (H.R. 3261): 
+        = link_to 'Main Bill Page', :controller => 'bill', :action => 'show', :id => '112-h3261'
+        |
+        = link_to 'Money Trail', :controller => 'bill', :action => 'money', :id => '112-h3261'
+        |
+        = link_to 'Full Bill Text', :controller => 'bill', :action => 'text', :id => '112-h3261'
+        |
+        = link_to 'Comments', :controller => 'bill', :action => 'comments', :id => '112-h3261', :comment_sort => 'rating'
+        |
+        = link_to 'Contact Congress', :controller => 'contact_congress_letters', :action => 'new', :bill => '112-h3261', :position => 'oppose'
+
+      %p 
+        %em While PIPA is the Senate version, SOPA is the U.S. House version.
+        
+      / 
+        With Contact-Congress on OpenCongress, over 
+        = link_to '28,000 emails', 'http://www.opencongress.org/bill/112-h3261/letters'
+        have been sent by constituents to their three members of Congress, overwhelmingly in opposition to SOPA.
+
+
+ 
+
+  / %p ... in total, over 35,687 emails have been sent via OpenCongress since SOPA & PIPA were introduced, overwhelmingly in opposition. 
+
+  / Stop SOPA / PIPA wiki community project :: http://www.opencongress.org/wiki/Project:Stop_SOPA_and_PIPA
+
+  / Stop PIPA - Senate whip count - find and call your senators :: 
+  %p
+    OpenCongress will return in full later this evening (Wednesday, January 18th). Until then, if you support OpenCongress and our work in fighting PIPA,
+    = link_to 'please make a tax-exempt donation', 'http://opencongress.org/donate'
+    to keep us up and running.
+
+  %p Questions? Feedback? Press? Email: drm at ppolitics d0t org, donny at opencongress d0t org
+
+
+#regular_div.padding
+  %h2 Stop PIPA
+  %p.behave Today, OpenCongress is proud to join the global online action to protest the PIPA net censorship bill. We're on strike by voluntarily limiting access to our site -- except for pages about how the systemically-corrupt U.S. Congress is ramming through PIPA, the worst Internet legislation in history.
+
+  %p.behave 
+    If you appreciate all the information on OpenCongress, call the D.C. offices of your U.S. senators now and speak out strongly against PIPA -- phone numbers and talking points are available on our 
+    = succeed '.' do
+      = link_to 'whip-count page', 'http://www.opencongress.org/wiki/Protect_IP_Act_Senate_whip_count'
+
+  %p.behave Since 2007, the Participatory Politics Foundation has operated OpenCongress as a free, open-source, non-partisan Web resource for watchdogging the U.S. Congress. PIPA poses an existential threat to our public-education mission. By establishing a dangerous legal framework for net censorship in the U.S., it endangers free political speech online and the existence of sites like OpenCongress that aggregate data & links from a variety of sources. 
+
+  / Legislation as preposterously terrible -- even un-Constitutional -- as SOPA and PIPA should have been non-starters. A diverse coalition of opponents -- from tech entrepreneurs to non-profit organizations -- have argued correctly that the bill will negatively affect economic development, the free flow of information, and net neutrality. Clearly, the only reason that the Senate is rushing to hold a vote on PIPA as soon as it returns on January 24th is that they don't want any more public scrutiny or protests of its many fundamental flaws -- and that supporters of the bill have given more than four times as much in campaign contributions as have opponents. PIPA is a perfectly egregious example of systemic corruption in the U.S. Congress and the reasons why our representative democracy badly needs comprehensive electoral reforms, including full public financing of federal elections, to mitigate the corrosive influence of corporate money in the political process. 
+
+  %p.behave 
+    For more information and to joint today's protest, please see:
+    = link_to 'http://sopastrike.com', 'http://sopastrike.com'
+
+  %p.behave 
+    The Participatory Politics Foundation is a founding member of the American Censorship coalition to keep the Web open and fight SOPA / PIPA: 
+    = link_to 'http://americancensorship.org', 'http://americancensorship.org' 
+
+  %p.behave 
+    %strong
+      The most important thing you can do today is to 
+      = succeed '.' do
+        = link_to 'call your two U.S. Senators and protest PIPA', 'http://www.opencongress.org/wiki/Protect_IP_Act_Senate_whip_count'
+    
+  %p.behave
+    %em Additional resources
+
+  / SOPA and PIPA are together the least-popular bills among the OpenCongress community in the past year: http://www.opencongress.org/bill/hot?order=desc&page=1&sort=support_count_1&timeframe=1year
+
+  %ul
+    %li
+      %p.behave 
+        Protect IP Act (S. 968): 
+        = link_to 'Main Bill Page', :controller => 'bill', :action => 'show', :id => '112-s968'
+        |
+        = link_to 'Money Trail', :controller => 'bill', :action => 'money', :id => '112-s968'
+        |
+        = link_to 'Full Bill Text', :controller => 'bill', :action => 'text', :id => '112-s968'
+        |
+        = link_to 'Comments', :controller => 'bill', :action => 'comments', :id => '112-s968', :comment_sort => 'rating'
+        |
+        = link_to 'Contact Congress', :controller => 'contact_congress_letters', :action => 'new', :bill => '112-s968', :position => 'oppose'
+
+      /
+        With Contact-Congress on OpenCongress, over 
+        = link_to '6,100 emails', 'http://www.opencongress.org/bill/112-s968/letters'
+        have been sent by constituents to their three members of Congress, overwhelmingly in opposition to PIPA.
+        
+    %li
+      %p.behave 
+        Stop Online Piracy Act (H.R. 3261): 
+        = link_to 'Main Bill Page', :controller => 'bill', :action => 'show', :id => '112-h3261'
+        |
+        = link_to 'Money Trail', :controller => 'bill', :action => 'money', :id => '112-h3261'
+        |
+        = link_to 'Full Bill Text', :controller => 'bill', :action => 'text', :id => '112-h3261'
+        |
+        = link_to 'Comments', :controller => 'bill', :action => 'comments', :id => '112-h3261', :comment_sort => 'rating'
+        |
+        = link_to 'Contact Congress', :controller => 'contact_congress_letters', :action => 'new', :bill => '112-h3261', :position => 'oppose'
+
+      %p.behave 
+        %em While PIPA is the Senate version, SOPA is the U.S. House version.
+        
+      / 
+        With Contact-Congress on OpenCongress, over 
+        = link_to '28,000 emails', 'http://www.opencongress.org/bill/112-h3261/letters'
+        have been sent by constituents to their three members of Congress, overwhelmingly in opposition to SOPA.
+
+
+ 
+
+  / %p.behave ... in total, over 35,687 emails have been sent via OpenCongress since SOPA & PIPA were introduced, overwhelmingly in opposition. 
+
+  / Stop SOPA / PIPA wiki community project :: http://www.opencongress.org/wiki/Project:Stop_SOPA_and_PIPA
+
+  / Stop PIPA - Senate whip count - find and call your senators :: 
+  %p.behave
+    OpenCongress will return in full later this evening (Wednesday, January 18th). Until then, if you support OpenCongress and our work in fighting PIPA,
+    = link_to 'please make a tax-exempt donation', 'http://opencongress.org/donate'
+    to keep us up and running.
+
+  %p.behave Questions? Feedback? Press? Email: drm at ppolitics d0t org, donny at opencongress d0t org

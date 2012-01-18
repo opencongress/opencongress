@@ -22,7 +22,7 @@
     <%= include_javascripts :frontpage  %>
     <%= csrf_meta_tag %>
     <%= remote_forgery_protection %>
-          
+      
     <%= include_stylesheets :frontpage, :media => 'all' %>
 
     <!--[if lt IE 7]><style type="text/css">@import url("/stylesheets/ie6.css");</style><![endif]-->
@@ -41,6 +41,8 @@
   </head>
 
   <body id="home">
+    <%= render :partial => 'index/sopapipa_protest' %>
+
     <div style="display:none;" id="loading">
       <div><%= image_tag 'throbber.gif', :border=> '0', :alt => 'Loading' %></div>
     </div>

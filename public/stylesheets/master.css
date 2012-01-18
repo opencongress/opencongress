@@ -5671,3 +5671,42 @@ border-radius:0px !important;
   font-size: 10px;
   line-height: 1.3em;
 }
+
+#sopapipa_protest {
+  width: 700px;
+}
+
+#sopapipa_protest img.stop {
+  display: block;
+  float: right;
+  margin-bottom: 20px;
+  margin-left:auto;
+  margin-right:auto;
+  height: 90px;
+}
+#sopapipa_protest p {
+  margin-bottom: 10px;
+}
+
+#sopapipa_protest ul {
+  list-style: square;
+  list-style-position: inside;
+}
+
+#sopapipa_protest ul li {
+}
+#sopapipa_protest #oclogo {
+	float:left;
+  margin: 0px 180px 10px 0;
+	display:block;
+	width: 257px;
+	padding-top:78px;
+	overflow: hidden;
+	background: url('../images/oc-logo.png') no-repeat 17px 6px;
+	}
+	
+	
+	
+
+
+

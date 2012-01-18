@@ -1,4 +1,4 @@
-- if (@bill.nil? or (@bill.ident != '112-s968' and @bill.ident != '112-h3261')) and (Time.now.month == 1 and Time.now.day == 18 and Time.now.hour >= 7 and Time.now.hour < 20)
+- if (@bill.nil? or (@bill.ident != '112-s968' and @bill.ident != '112-h3261')) and (Time.now.month == 1 and Time.now.day == 18 and Time.now.hour >= 7 and Time.now.hour < 20) and (params[:controller] != 'contact_congress_letters') and (params[:controller] != 'account') and !(params[:controller] =~ /admin/)
   :javascript
     $j().ready(function() {
       $j('#sopapipa_protest').jqm({modal:true}).jqmShow();

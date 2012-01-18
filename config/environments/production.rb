@@ -12,7 +12,10 @@ OpenCongress::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Use the git revision of this release
-  RELEASE_NUMBER = %x{cat REVISION | cut -c -7}.rstrip
+  
+  # adding full path for now (stopped working on app1)
+  #RELEASE_NUMBER = %x{cat REVISION | cut -c -7}.rstrip
+  RELEASE_NUMBER = %x{cat /u/apps/opencongress/current/REVISION | cut -c -7}.rstrip
 
   # Enable serving of images, stylesheets, and javascripts from CloudFront
   config.action_controller.asset_host = Proc.new {

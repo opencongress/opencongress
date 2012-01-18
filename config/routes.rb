@@ -246,6 +246,7 @@ OpenCongress::Application.routes.draw do
   match 'presidents_health_care_proposal' => 'index#presidents_health_care_proposal'
   match 'senate_health_care_bill' => 'bill#text', :id => '111-h3590', :version => 'ocas'
   match 'house_reconciliation' => 'index#house_reconciliation'
+  match 'pipa' => 'index#pipa'
 
   match ':controller(/:action(/:id))'
   #match '*path' => 'index#notfound' #unless Rails.application.config.consider_all_requests_local

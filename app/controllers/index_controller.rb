@@ -1,5 +1,7 @@
 class IndexController < ApplicationController
   layout "frontpage"
+
+  caches_page :pipa
   
   def index
     unless read_fragment("frontpage_rightside")
@@ -62,6 +64,9 @@ class IndexController < ApplicationController
 
     @sessions = CongressSession.sessions
 
+  end
+  
+  def pipa
   end
   
   def about

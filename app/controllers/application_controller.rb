@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
   include Facebooker2::Rails::Controller
   include UrlHelper
 
-  before_filter :pipa_protest
   before_filter :facebook_check
   before_filter :store_location
   before_filter :current_tab
@@ -17,18 +16,6 @@ class ApplicationController < ActionController::Base
   before_filter :get_site_text_page
   before_filter :is_banned?
   before_filter :set_simple_comments
-
-  
-  def pipa_protest
-    if (params[:id] != '112-s968' and params[:id] != '112-h3261') and 
-       (Time.now.month == 1 and Time.now.day == 18 and Time.now.hour >= 7 and Time.now.hour < 20) and 
-       (params[:controller] != 'contact_congress_letters') and 
-       (params[:controller] != 'account') and 
-       !(params[:controller] =~ /admin/) and params[:action] != 'pipa'
-      redirect_to '/pipa'
-      return
-    end
-  end
   
   def facebook_check
     return unless session[:nofacebook].nil?

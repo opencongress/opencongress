@@ -1,0 +1,22 @@
+%ul.container_16
+  - groups.each do |g| 
+    %li.grid_11.lined 
+      %span.grid_1.alpha 
+        .thumb.smaller= group_image(g)
+      %span.grid_4
+        %a{ :href => url_for(g) }
+          %strong= g.name          
+      %span.grid_3
+        = group_members_num_with_delimiter(g)
+        Members
+      - if logged_in?
+        - if g.is_member?(current_user)
+          %span.grid_1.omega= link_to 'Leave', group_group_member_path(g, g.group_members.find_by_user_id(current_user.id)), :method => 'delete', :class => 'button yellow small floatright'
+          
+        - else
+          - if g.can_join?(current_user)
+            %span.grid_1.omega= link_to 'Join', group_group_members_path(g, :status => 'MEMBER'), :method => 'post', :class => 'button blue small floatright'
+      - else
+        - if g.join_type == 'ANYONE'
+          %span.grid_1.omega= link_to 'Join', group_group_members_path(g, :status => 'MEMBER'), :method => 'post', :class => 'button blue small floatright'
+          

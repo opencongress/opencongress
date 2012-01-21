@@ -34,6 +34,8 @@ namespace :deploy do
   desc "Link the images"
   task :link_images do
     run "rm #{current_release}/config/database.yml"
+    run "rm #{current_release}/config/api_keys.yml"
+    run "rm #{current_release}/config/facebooker.yml"
     run "cp #{deploy_to}/#{shared_dir}/database.yml #{current_release}/config/database.yml"
     run "cp #{deploy_to}/#{shared_dir}/api_keys.yml #{current_release}/config/api_keys.yml"
     run "cp #{deploy_to}/#{shared_dir}/newrelic.yml #{current_release}/config/newrelic.yml"

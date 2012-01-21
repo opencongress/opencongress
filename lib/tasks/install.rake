@@ -1,24 +1,67 @@
 namespace :db do
-  namespace :structure do
-    desc "Install db/development_structure.sql items - in leiu of db:migrate"
-    task :load => :environment do
-      seeds_fn = File.join(Rails.root,'db','development_structure.sql')
-      if File.exists?(seeds_fn)
-        load_pgsql_files(seeds_fn)
-      end
+  def setup_env(config = ActiveRecord::Base.configurations)
+    ENV['PGHOST']     = config[Rails.env]["host"] if config[Rails.env]["host"]
+    ENV['PGUSER']     = config[Rails.env]["username"] if config[Rails.env]["username"]
+    ENV['PGPORT']     = config[Rails.env]["port"].to_s if config[Rails.env]["port"]
+    ENV['PGPASSWORD'] = config[Rails.env]["password"].to_s if config[Rails.env]["password"]
+  end
+
+  def execute_commands( cmds = [] )
+    cmds.each do |cmd|
+      puts "+ #{cmd}"
+      system(cmd)
+    end
+  end
+
+  desc "Configure a fresh postgres cluster for use"
+  task :init => [ :environment ] do
+    config = ActiveRecord::Base.configurations
+    ActiveRecord::Base.clear_all_connections!
+    setup_env
+    users = []
+    existing_dbs = {}
+
+    config.each do |env, settings|
+      users << settings['username'] if settings['username']
+      db = settings['database']
+      next unless db
+
+      existing_dbs[ db ] ||= []
+      existing_dbs[ db ] <<  env
     end
 
-    def load_pgsql_files(*fns)
-      abcs = ActiveRecord::Base.configurations
-      ENV['PGHOST']     = abcs[Rails.env]["host"] if abcs[Rails.env]["host"]
-      ENV['PGPORT']     = abcs[Rails.env]["port"].to_s if abcs[Rails.env]["port"]
-      ENV['PGPASSWORD'] = abcs[Rails.env]["password"].to_s if abcs[Rails.env]["password"]
+    puts # blank line
+    puts "=" * 72
+    puts "WARNING!"
+    puts "=" * 72
+    puts # blank line
 
-      `createlang plpgsql -U "#{abcs[Rails.env]["username"]}" #{abcs[Rails.env]["database"]}`
+    puts "This task will drop the following databases:"
+    puts # blank line
 
-      fns.each do |fn|
-        `psql -U "#{abcs[Rails.env]["username"]}" -f #{fn} #{abcs[Rails.env]["database"]}`
-      end
+    existing_dbs.sort_by {|db,_| db }.each do |db, envs|
+      puts "  - #{db} (#{envs.sort.join(', ')})"
     end
+
+    puts # blank line
+    puts "If you have any reservations, now is the time to press Ctrl-C to cancel."
+    puts "Otherwise, hit enter to continue."
+    $stdout.flush ; $stdin.gets
+
+    puts # blank line
+    puts "Fantastic. Off we go..."
+
+    cmds = []
+    pp users.uniq
+    users.uniq.each do |user|
+      cmds << "createuser -s #{user}"
+    end
+
+    existing_dbs.keys.each do |db|
+      cmds << "dropdb #{db}"
+      cmds << "createdb #{db}"
+      cmds << "createlang -d #{db} plpgsql"
+    end
+    execute_commands cmds
   end
 end

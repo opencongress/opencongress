@@ -56,20 +56,6 @@ Import the tsearch2 backwards compatibility lib from wherever your postgres cont
 
 ### C. App Setup
 
-Copy over example yml files in /config
-
-	cd config; for file in `ls *example*`; do cp $file `expr "$file" : '\([^-\.]*\)'`.yml; done
-
-Edit database.yml:
-	
-<pre><code>development:<br/>
-adapter: postgresql<br/>
-database: opencongress_development<br/>
-username: opencongress<br/>
-password: (password from step B)<br/>
-host: localhost<br/>
-</code></pre>
-
 Now you can start the solr server and run the database migrations
 	
 	cd ..;rake solr:start

@@ -30,23 +30,18 @@ Follow the instructions from the port install for initializing your database
 Then grab the gems you need:
 
 <pre>
-
 <code>
-sudo gem install rails bluecloth mediacloth hpricot htree jammit json pg RedCloth ruby-openid simple-rss rmagick htmlentities oauth</code>
+[sudo] gem install bundler
+bundle install
+</code>
 </pre>
 
 __Note for OS X:__ *You may need to specify additional compile options for the pg gem. Make sure pg_config is in PATH and run* `sudo env ARCHFLAGS="-arch x86_64" gem install pg`
 
 ### B. Database setup
 
-Switch to the postgres user and setup a db user following prompts for password and superuser.
-
-	sudo su postgres
-	createuser opencongress -P
-
-Create your database
-	
-	createdb opencongress_development -O opencongress
+Create a postgresql install, based on the database.yml file:
+rake db:init
 
 Import the tsearch2 backwards compatibility lib from wherever your postgres contribs got installed.
 	

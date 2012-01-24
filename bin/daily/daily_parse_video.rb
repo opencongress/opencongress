@@ -164,17 +164,18 @@ people.each_with_index do |p, i|
 end
 
 # now check for bills (metavid only, for now)
-url = "http://metavid.org/wiki/Special:MvExportAsk?q=[[Bill%3A%3A%3Cq%3E[[Category%3ABill]]%3C%2Fq%3E]]&po=&sc=0&eq=yes&limit=1000&offset=0"
-begin
-  OCLogger.log "Checking metavid bills page..."
-  doc = REXML::Document.new(open(url))
-  
-  doc.elements.each("rss/channel/item") do |item|
-    metavid_item_to_video(item)
-  end
-    
-rescue Exception => e
-  OCLogger.log "Error parsing metavid #{e}"
-  raise e
-end
+# bill scraping removed for now.  no updated bill videos since 2009.-- Jan 23, 2011, aross
+# url = "http://metavid.org/wiki/Special:MvExportAsk?q=[[Bill%3A%3A%3Cq%3E[[Category%3ABill]]%3C%2Fq%3E]]&po=&sc=0&eq=yes&limit=1000&offset=0"
+# begin
+#   OCLogger.log "Checking metavid bills page..."
+#   doc = REXML::Document.new(open(url))
+#   
+#   doc.elements.each("rss/channel/item") do |item|
+#     metavid_item_to_video(item)
+#   end
+#     
+# rescue Exception => e
+#   OCLogger.log "Error parsing metavid #{e}"
+#   raise e
+# end
 

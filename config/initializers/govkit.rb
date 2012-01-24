@@ -10,10 +10,6 @@ if defined? GovKit
 
     # API key for NIMSP. Request one here:
     # http://www.followthemoney.org/membership/settings.phtml
-    config.ftm_apikey = 'YOUR_FTM_API_KEY'
-
-    # Api key for OpenCongress
-    # http://www.opencongress.org/api
-    config.opencongress_apikey = 'YOUR_OPENCONGRESS_API_KEY'
+    # config.ftm_apikey = 'YOUR_FTM_API_KEY'
   end
 end

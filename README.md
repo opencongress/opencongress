@@ -30,23 +30,18 @@ Follow the instructions from the port install for initializing your database
 Then grab the gems you need:
 
 <pre>
-
 <code>
-sudo gem install rails bluecloth mediacloth hpricot htree jammit json pg RedCloth ruby-openid simple-rss rmagick htmlentities oauth</code>
+[sudo] gem install bundler
+bundle install
+</code>
 </pre>
 
 __Note for OS X:__ *You may need to specify additional compile options for the pg gem. Make sure pg_config is in PATH and run* `sudo env ARCHFLAGS="-arch x86_64" gem install pg`
 
 ### B. Database setup
 
-Switch to the postgres user and setup a db user following prompts for password and superuser.
-
-	sudo su postgres
-	createuser opencongress -P
-
-Create your database
-	
-	createdb opencongress_development -O opencongress
+Create a postgresql install, based on the database.yml file:
+rake db:init
 
 Import the tsearch2 backwards compatibility lib from wherever your postgres contribs got installed.
 	
@@ -55,20 +50,6 @@ Import the tsearch2 backwards compatibility lib from wherever your postgres cont
 `exit` postgres user
 
 ### C. App Setup
-
-Copy over example yml files in /config
-
-	cd config; for file in `ls *example*`; do cp $file `expr "$file" : '\([^-\.]*\)'`.yml; done
-
-Edit database.yml:
-	
-<pre><code>development:<br/>
-adapter: postgresql<br/>
-database: opencongress_development<br/>
-username: opencongress<br/>
-password: (password from step B)<br/>
-host: localhost<br/>
-</code></pre>
 
 Now you can start the solr server and run the database migrations
 	

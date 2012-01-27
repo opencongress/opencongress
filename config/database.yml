@@ -1,0 +1,30 @@
+###
+# OpenCongress development database configuration
+#
+# You can override  this file. To do so, create
+# a .opencongress directory in your homedir:
+#
+#   $ mkdir -p ~/.opencongress
+#
+# Then, to override a given section, copy it in its entirety to
+# ~/.opencongress/dbconfig.yml and make any changes you want.
+#
+
+common: &common
+  adapter: postgresql
+  username: opencongress
+  host: localhost
+
+development: &dev
+  <<: *common
+  database: opencongress_development
+
+test:
+  <<: *common
+  database: opencongress_test
+
+production:
+  <<: *dev
+  database: opencongress_production
+
+<%= File.read( File.expand_path("~/.opencongress/dbconfig.yml") ) rescue nil %>

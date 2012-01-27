@@ -5,7 +5,7 @@ class InitialSchema < ActiveRecord::Migration
     ENV['PGPORT']     = abcs[Rails.env]["port"].to_s if abcs[Rails.env]["port"]
     ENV['PGPASSWORD'] = abcs[Rails.env]["password"].to_s if abcs[Rails.env]["password"]
     db = ActiveRecord::Base.configurations[Rails.env]['database']
-    system("psql -d #{db} -f #{Rails.root + 'db/migrate/oc_schema.sql'}")
+    system("psql -d #{db} -f #{Rails.root + 'db/migrate/initial_schema.sql'}")
   end
 
   def self.down

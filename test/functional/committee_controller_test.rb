@@ -5,8 +5,6 @@ require 'committee_controller'
 class CommitteeController; def rescue_action(e) raise e end; end
 
 class CommitteeControllerTest < Test::Unit::TestCase
-  self.use_instantiated_fixtures  = true
-  
   def setup
     @controller = CommitteeController.new
     @request, @response = ActionController::TestRequest.new, ActionController::TestResponse.new

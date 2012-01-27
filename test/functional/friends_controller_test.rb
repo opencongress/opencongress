@@ -5,8 +5,6 @@ require 'friends_controller'
 class FriendsController; def rescue_action(e) raise e end; end
 
 class FriendsControllerTest < Test::Unit::TestCase
-  fixtures :friends
-
   def setup
     @controller = FriendsController.new
     @request    = ActionController::TestRequest.new

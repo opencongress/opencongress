@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class BillTest < Test::Unit::TestCase
-#  fixtures :bills
 
   ALL_NAMES = %w(h s hj sj hc sc hr sr)
 

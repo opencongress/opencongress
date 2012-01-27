@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class ActionTest < Test::Unit::TestCase
-#  fixtures :actions
 
   # Replace this with your real tests.
   def test_amendment_action

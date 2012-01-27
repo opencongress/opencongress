@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GossipTest < Test::Unit::TestCase
-  fixtures :gossip #actually uses a fixture!
-
   def test_post_gossip
     g = Gossip.create :name => "Ben", :email => "ben@matasar.org", :link => "http://www.govtrack.us", :tip => "Great website!"
     assert !g.new_record?

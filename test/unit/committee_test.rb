@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class CommitteeTest < Test::Unit::TestCase
-#  fixtures :committees
-
   def setup
     @first = Committee.find :first
     @standards = Committee.find(:first, :conditions => ["lower(name) = 'house standards of official conduct'"])

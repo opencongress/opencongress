@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class BillRelationTest < Test::Unit::TestCase
-#  fixtures :bill_relations
 
   # Replace this with your real tests.
   def test_related_bills_field

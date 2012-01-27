@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class AmendmentTest < Test::Unit::TestCase
-  #fixtures :amendments
   def setup
     @first = Amendment.find :first
   end

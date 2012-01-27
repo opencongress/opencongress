@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class SubjectRelationTest < Test::Unit::TestCase
-#  fixtures :subject_relations
-  
   def setup
     @armed = Subject.find_by_term "Armed forces"
   end

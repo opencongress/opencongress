@@ -1,10 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class UserTest < Test::Unit::TestCase
-  self.use_instantiated_fixtures  = true
-  
-  fixtures :users
-    
   def test_auth  
     assert_equal  @bob, User.authenticate("bob", "test")    
     assert_nil    User.authenticate("nonbob", "test")

@@ -13,92 +13,73 @@ SET escape_string_warning = off;
 -- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: -
 --
 
-CREATE PROCEDURAL LANGUAGE plpgsql;
+CREATE OR REPLACE PROCEDURAL LANGUAGE plpgsql;
 
 
 SET search_path = public, pg_catalog;
 
 --
--- Name: gtsq; Type: DOMAIN; Schema: public; Owner: -
+-- Name: aggregate_increment(); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE DOMAIN gtsq AS text;
+CREATE FUNCTION aggregate_increment() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+                DECLARE
+                    object_type varchar;
+                    object_id integer;
+                    column_name varchar;
+                    agg_date date;
+                    
+                    entry object_aggregates%ROWTYPE;
 
-
---
--- Name: gtsvector; Type: DOMAIN; Schema: public; Owner: -
---
-
-CREATE DOMAIN gtsvector AS pg_catalog.gtsvector;
-
-
---
--- Name: statinfo; Type: TYPE; Schema: public; Owner: -
---
-
-CREATE TYPE statinfo AS (
-	word text,
-	ndoc integer,
-	nentry integer
-);
-
-
---
--- Name: tokenout; Type: TYPE; Schema: public; Owner: -
---
-
-CREATE TYPE tokenout AS (
-	tokid integer,
-	token text
-);
-
-
---
--- Name: tokentype; Type: TYPE; Schema: public; Owner: -
---
-
-CREATE TYPE tokentype AS (
-	tokid integer,
-	alias text,
-	descr text
-);
-
-
---
--- Name: tsdebug; Type: TYPE; Schema: public; Owner: -
---
-
-CREATE TYPE tsdebug AS (
-	ts_name text,
-	tok_type text,
-	description text,
-	token text,
-	dict_name text[],
-	tsvector pg_catalog.tsvector
-);
-
-
---
--- Name: tsquery; Type: DOMAIN; Schema: public; Owner: -
---
-
-CREATE DOMAIN tsquery AS pg_catalog.tsquery;
-
-
---
--- Name: tsvector; Type: DOMAIN; Schema: public; Owner: -
---
-
-CREATE DOMAIN tsvector AS pg_catalog.tsvector;
-
-
---
--- Name: _get_parser_from_curcfg(); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION _get_parser_from_curcfg() RETURNS text
-    LANGUAGE sql IMMUTABLE STRICT
-    AS $$select prsname::text from pg_catalog.pg_ts_parser p join pg_ts_config c on cfgparser = p.oid where c.oid = show_curcfg();$$;
+                BEGIN
+                  IF (TG_TABLE_NAME = 'comments') THEN
+                    object_type := NEW.commentable_type;
+                    object_id := NEW.commentable_id;
+                    column_name := 'comments_count';
+                    agg_date := NEW.created_at;
+                  ELSIF (TG_TABLE_NAME = 'bookmarks') THEN
+                      object_type := NEW.bookmarkable_type;
+                      object_id := NEW.bookmarkable_id;
+                      column_name := 'bookmarks_count';
+                      agg_date := NEW.created_at;
+                  ELSIF (TG_TABLE_NAME = 'bill_votes') THEN
+                      object_type := 'Bill';
+                      object_id := NEW.bill_id;
+                      IF (NEW.support = 0) THEN
+                        column_name := 'votes_support';
+                      ELSE 
+                        column_name := 'votes_oppose';
+                      END IF;
+                      agg_date := NEW.updated_at;
+                  ELSIF (TG_TABLE_NAME = 'commentaries') THEN
+                      IF (NEW.is_ok = 't') THEN
+                        object_type := NEW.commentariable_type;
+                        object_id := NEW.commentariable_id;
+                        IF (NEW.is_news = 't') THEN
+                          column_name := 'news_articles_count';
+                        ELSE 
+                          column_name := 'blog_articles_count';
+                        END IF;
+                        agg_date := NEW.date;
+                      ELSE
+                        RETURN NULL;
+                      END IF;
+                  END IF;
+              
+                
+                  SELECT * INTO entry FROM object_aggregates WHERE aggregatable_type = object_type AND aggregatable_id = object_id AND date = agg_date::date;
+     
+                  IF FOUND THEN
+                    EXECUTE 'UPDATE object_aggregates SET ' || column_name || ' = ' || column_name || ' + 1 WHERE aggregatable_type = ''' || object_type || ''' AND aggregatable_id = ' || object_id || ' AND date = ''' || agg_date || '''';
+                  ELSE
+                    EXECUTE 'INSERT INTO object_aggregates (aggregatable_type, aggregatable_id, date, ' || column_name || ') VALUES (''' || object_type || ''', ' ||  object_id || ', ''' || agg_date || ''', 1)';
+                  END IF;
+                  
+                  RETURN NULL;
+                END;
+            $$;
 
 
 --
@@ -132,156 +113,6 @@ CREATE FUNCTION comment_page(comment_id integer, c_id integer, c_type character 
        end if;
     end;
     $$;
-
-
---
--- Name: concat(pg_catalog.tsvector, pg_catalog.tsvector); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION concat(pg_catalog.tsvector, pg_catalog.tsvector) RETURNS pg_catalog.tsvector
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$tsvector_concat$$;
-
-
---
--- Name: dex_init(internal); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION dex_init(internal) RETURNS internal
-    LANGUAGE c
-    AS '$libdir/tsearch2', 'tsa_dex_init';
-
-
---
--- Name: dex_lexize(internal, internal, integer); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION dex_lexize(internal, internal, integer) RETURNS internal
-    LANGUAGE c STRICT
-    AS '$libdir/tsearch2', 'tsa_dex_lexize';
-
-
---
--- Name: get_covers(pg_catalog.tsvector, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION get_covers(pg_catalog.tsvector, pg_catalog.tsquery) RETURNS text
-    LANGUAGE c STRICT
-    AS '$libdir/tsearch2', 'tsa_get_covers';
-
-
---
--- Name: headline(oid, text, pg_catalog.tsquery, text); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION headline(oid, text, pg_catalog.tsquery, text) RETURNS text
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$ts_headline_byid_opt$$;
-
-
---
--- Name: headline(oid, text, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION headline(oid, text, pg_catalog.tsquery) RETURNS text
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$ts_headline_byid$$;
-
-
---
--- Name: headline(text, text, pg_catalog.tsquery, text); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION headline(text, text, pg_catalog.tsquery, text) RETURNS text
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/tsearch2', 'tsa_headline_byname';
-
-
---
--- Name: headline(text, text, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION headline(text, text, pg_catalog.tsquery) RETURNS text
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/tsearch2', 'tsa_headline_byname';
-
-
---
--- Name: headline(text, pg_catalog.tsquery, text); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION headline(text, pg_catalog.tsquery, text) RETURNS text
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$ts_headline_opt$$;
-
-
---
--- Name: headline(text, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION headline(text, pg_catalog.tsquery) RETURNS text
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$ts_headline$$;
-
-
---
--- Name: length(pg_catalog.tsvector); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION length(pg_catalog.tsvector) RETURNS integer
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$tsvector_length$$;
-
-
---
--- Name: lexize(oid, text); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION lexize(oid, text) RETURNS text[]
-    LANGUAGE internal STRICT
-    AS $$ts_lexize$$;
-
-
---
--- Name: lexize(text, text); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION lexize(text, text) RETURNS text[]
-    LANGUAGE c STRICT
-    AS '$libdir/tsearch2', 'tsa_lexize_byname';
-
-
---
--- Name: lexize(text); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION lexize(text) RETURNS text[]
-    LANGUAGE c STRICT
-    AS '$libdir/tsearch2', 'tsa_lexize_bycurrent';
-
-
---
--- Name: longtxs(double precision, text, text); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION longtxs(v_time double precision, v_status text, v_schema text) RETURNS SETOF pg_stat_activity
-    LANGUAGE sql
-    AS $_$
-
-SELECT * from pg_stat_activity
-WHERE extract(minute from current_timestamp-query_start) > $1
-AND current_query = $2 ;
-
-$_$;
-
-
---
--- Name: numnode(pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION numnode(pg_catalog.tsquery) RETURNS integer
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$tsquery_numnode$$;
 
 
 --
@@ -345,183 +176,75 @@ CREATE FUNCTION oc_votes_together(pid integer, after timestamp without time zone
 
 
 --
--- Name: parse(oid, text); Type: FUNCTION; Schema: public; Owner: -
+-- Name: rank(tsvector, tsquery); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION parse(oid, text) RETURNS SETOF tokenout
-    LANGUAGE internal STRICT
-    AS $$ts_parse_byid$$;
-
-
---
--- Name: parse(text, text); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION parse(text, text) RETURNS SETOF tokenout
-    LANGUAGE internal STRICT
-    AS $$ts_parse_byname$$;
-
-
---
--- Name: parse(text); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION parse(text) RETURNS SETOF tokenout
-    LANGUAGE c STRICT
-    AS '$libdir/tsearch2', 'tsa_parse_current';
-
-
---
--- Name: plainto_tsquery(oid, text); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION plainto_tsquery(oid, text) RETURNS pg_catalog.tsquery
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$plainto_tsquery_byid$$;
-
-
---
--- Name: plainto_tsquery(text, text); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION plainto_tsquery(text, text) RETURNS pg_catalog.tsquery
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/tsearch2', 'tsa_plainto_tsquery_name';
-
-
---
--- Name: plainto_tsquery(text); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION plainto_tsquery(text) RETURNS pg_catalog.tsquery
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$plainto_tsquery$$;
-
-
---
--- Name: prsd_end(internal); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION prsd_end(internal) RETURNS void
-    LANGUAGE c
-    AS '$libdir/tsearch2', 'tsa_prsd_end';
-
-
---
--- Name: prsd_getlexeme(internal, internal, internal); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION prsd_getlexeme(internal, internal, internal) RETURNS integer
-    LANGUAGE c
-    AS '$libdir/tsearch2', 'tsa_prsd_getlexeme';
-
-
---
--- Name: prsd_headline(internal, internal, internal); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION prsd_headline(internal, internal, internal) RETURNS internal
-    LANGUAGE c
-    AS '$libdir/tsearch2', 'tsa_prsd_headline';
-
-
---
--- Name: prsd_lextype(internal); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION prsd_lextype(internal) RETURNS internal
-    LANGUAGE c
-    AS '$libdir/tsearch2', 'tsa_prsd_lextype';
-
-
---
--- Name: prsd_start(internal, integer); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION prsd_start(internal, integer) RETURNS internal
-    LANGUAGE c
-    AS '$libdir/tsearch2', 'tsa_prsd_start';
-
-
---
--- Name: querytree(pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION querytree(pg_catalog.tsquery) RETURNS text
-    LANGUAGE internal STRICT
-    AS $$tsquerytree$$;
-
-
---
--- Name: rank(real[], pg_catalog.tsvector, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION rank(real[], pg_catalog.tsvector, pg_catalog.tsquery) RETURNS real
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$ts_rank_wtt$$;
-
-
---
--- Name: rank(real[], pg_catalog.tsvector, pg_catalog.tsquery, integer); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION rank(real[], pg_catalog.tsvector, pg_catalog.tsquery, integer) RETURNS real
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$ts_rank_wttf$$;
-
-
---
--- Name: rank(pg_catalog.tsvector, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION rank(pg_catalog.tsvector, pg_catalog.tsquery) RETURNS real
+CREATE FUNCTION rank(tsvector, tsquery) RETURNS real
     LANGUAGE internal IMMUTABLE STRICT
     AS $$ts_rank_tt$$;
 
 
 --
--- Name: rank(pg_catalog.tsvector, pg_catalog.tsquery, integer); Type: FUNCTION; Schema: public; Owner: -
+-- Name: rank(real[], tsvector, tsquery); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION rank(pg_catalog.tsvector, pg_catalog.tsquery, integer) RETURNS real
+CREATE FUNCTION rank(real[], tsvector, tsquery) RETURNS real
+    LANGUAGE internal IMMUTABLE STRICT
+    AS $$ts_rank_wtt$$;
+
+
+--
+-- Name: rank(tsvector, tsquery, integer); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION rank(tsvector, tsquery, integer) RETURNS real
     LANGUAGE internal IMMUTABLE STRICT
     AS $$ts_rank_ttf$$;
 
 
 --
--- Name: rank_cd(real[], pg_catalog.tsvector, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: -
+-- Name: rank(real[], tsvector, tsquery, integer); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION rank_cd(real[], pg_catalog.tsvector, pg_catalog.tsquery) RETURNS real
+CREATE FUNCTION rank(real[], tsvector, tsquery, integer) RETURNS real
     LANGUAGE internal IMMUTABLE STRICT
-    AS $$ts_rankcd_wtt$$;
+    AS $$ts_rank_wttf$$;
 
 
 --
--- Name: rank_cd(real[], pg_catalog.tsvector, pg_catalog.tsquery, integer); Type: FUNCTION; Schema: public; Owner: -
+-- Name: rank_cd(tsvector, tsquery); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION rank_cd(real[], pg_catalog.tsvector, pg_catalog.tsquery, integer) RETURNS real
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$ts_rankcd_wttf$$;
-
-
---
--- Name: rank_cd(pg_catalog.tsvector, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION rank_cd(pg_catalog.tsvector, pg_catalog.tsquery) RETURNS real
+CREATE FUNCTION rank_cd(tsvector, tsquery) RETURNS real
     LANGUAGE internal IMMUTABLE STRICT
     AS $$ts_rankcd_tt$$;
 
 
 --
--- Name: rank_cd(pg_catalog.tsvector, pg_catalog.tsquery, integer); Type: FUNCTION; Schema: public; Owner: -
+-- Name: rank_cd(real[], tsvector, tsquery); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION rank_cd(pg_catalog.tsvector, pg_catalog.tsquery, integer) RETURNS real
+CREATE FUNCTION rank_cd(real[], tsvector, tsquery) RETURNS real
+    LANGUAGE internal IMMUTABLE STRICT
+    AS $$ts_rankcd_wtt$$;
+
+
+--
+-- Name: rank_cd(tsvector, tsquery, integer); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION rank_cd(tsvector, tsquery, integer) RETURNS real
     LANGUAGE internal IMMUTABLE STRICT
     AS $$ts_rankcd_ttf$$;
+
+
+--
+-- Name: rank_cd(real[], tsvector, tsquery, integer); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION rank_cd(real[], tsvector, tsquery, integer) RETURNS real
+    LANGUAGE internal IMMUTABLE STRICT
+    AS $$ts_rankcd_wttf$$;
 
 
 --
@@ -534,37 +257,37 @@ CREATE FUNCTION reset_tsearch() RETURNS void
 
 
 --
--- Name: rewrite(pg_catalog.tsquery, text); Type: FUNCTION; Schema: public; Owner: -
+-- Name: rewrite(tsquery, text); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION rewrite(pg_catalog.tsquery, text) RETURNS pg_catalog.tsquery
+CREATE FUNCTION rewrite(tsquery, text) RETURNS tsquery
     LANGUAGE internal IMMUTABLE STRICT
     AS $$tsquery_rewrite_query$$;
 
 
 --
--- Name: rewrite(pg_catalog.tsquery, pg_catalog.tsquery, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: -
+-- Name: rewrite(tsquery, tsquery, tsquery); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION rewrite(pg_catalog.tsquery, pg_catalog.tsquery, pg_catalog.tsquery) RETURNS pg_catalog.tsquery
+CREATE FUNCTION rewrite(tsquery, tsquery, tsquery) RETURNS tsquery
     LANGUAGE internal IMMUTABLE STRICT
     AS $$tsquery_rewrite$$;
 
 
 --
--- Name: rewrite_accum(pg_catalog.tsquery, pg_catalog.tsquery[]); Type: FUNCTION; Schema: public; Owner: -
+-- Name: rewrite_accum(tsquery, tsquery[]); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION rewrite_accum(pg_catalog.tsquery, pg_catalog.tsquery[]) RETURNS pg_catalog.tsquery
+CREATE FUNCTION rewrite_accum(tsquery, tsquery[]) RETURNS tsquery
     LANGUAGE c
     AS '$libdir/tsearch2', 'tsa_rewrite_accum';
 
 
 --
--- Name: rewrite_finish(pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: -
+-- Name: rewrite_finish(tsquery); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION rewrite_finish(pg_catalog.tsquery) RETURNS pg_catalog.tsquery
+CREATE FUNCTION rewrite_finish(tsquery) RETURNS tsquery
     LANGUAGE c
     AS '$libdir/tsearch2', 'tsa_rewrite_finish';
 
@@ -624,10 +347,10 @@ CREATE FUNCTION set_curprs(text) RETURNS void
 
 
 --
--- Name: setweight(pg_catalog.tsvector, "char"); Type: FUNCTION; Schema: public; Owner: -
+-- Name: setweight(tsvector, "char"); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION setweight(pg_catalog.tsvector, "char") RETURNS pg_catalog.tsvector
+CREATE FUNCTION setweight(tsvector, "char") RETURNS tsvector
     LANGUAGE internal IMMUTABLE STRICT
     AS $$tsvector_setweight$$;
 
@@ -723,10 +446,10 @@ CREATE FUNCTION stat(text, text) RETURNS SETOF statinfo
 
 
 --
--- Name: strip(pg_catalog.tsvector); Type: FUNCTION; Schema: public; Owner: -
+-- Name: strip(tsvector); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION strip(pg_catalog.tsvector) RETURNS pg_catalog.tsvector
+CREATE FUNCTION strip(tsvector) RETURNS tsvector
     LANGUAGE internal IMMUTABLE STRICT
     AS $$tsvector_strip$$;
 
@@ -768,10 +491,19 @@ CREATE FUNCTION thesaurus_lexize(internal, internal, integer, internal) RETURNS 
 
 
 --
+-- Name: to_tsquery(text); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION to_tsquery(text) RETURNS tsquery
+    LANGUAGE internal IMMUTABLE STRICT
+    AS $$to_tsquery$$;
+
+
+--
 -- Name: to_tsquery(oid, text); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION to_tsquery(oid, text) RETURNS pg_catalog.tsquery
+CREATE FUNCTION to_tsquery(oid, text) RETURNS tsquery
     LANGUAGE internal IMMUTABLE STRICT
     AS $$to_tsquery_byid$$;
 
@@ -780,25 +512,25 @@ CREATE FUNCTION to_tsquery(oid, text) RETURNS pg_catalog.tsquery
 -- Name: to_tsquery(text, text); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION to_tsquery(text, text) RETURNS pg_catalog.tsquery
+CREATE FUNCTION to_tsquery(text, text) RETURNS tsquery
     LANGUAGE c IMMUTABLE STRICT
     AS '$libdir/tsearch2', 'tsa_to_tsquery_name';
 
 
 --
--- Name: to_tsquery(text); Type: FUNCTION; Schema: public; Owner: -
+-- Name: to_tsvector(text); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION to_tsquery(text) RETURNS pg_catalog.tsquery
+CREATE FUNCTION to_tsvector(text) RETURNS tsvector
     LANGUAGE internal IMMUTABLE STRICT
-    AS $$to_tsquery$$;
+    AS $$to_tsvector$$;
 
 
 --
 -- Name: to_tsvector(oid, text); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION to_tsvector(oid, text) RETURNS pg_catalog.tsvector
+CREATE FUNCTION to_tsvector(oid, text) RETURNS tsvector
     LANGUAGE internal IMMUTABLE STRICT
     AS $$to_tsvector_byid$$;
 
@@ -807,18 +539,18 @@ CREATE FUNCTION to_tsvector(oid, text) RETURNS pg_catalog.tsvector
 -- Name: to_tsvector(text, text); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION to_tsvector(text, text) RETURNS pg_catalog.tsvector
+CREATE FUNCTION to_tsvector(text, text) RETURNS tsvector
     LANGUAGE c IMMUTABLE STRICT
     AS '$libdir/tsearch2', 'tsa_to_tsvector_name';
 
 
 --
--- Name: to_tsvector(text); Type: FUNCTION; Schema: public; Owner: -
+-- Name: token_type(); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION to_tsvector(text) RETURNS pg_catalog.tsvector
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$to_tsvector$$;
+CREATE FUNCTION token_type() RETURNS SETOF tokentype
+    LANGUAGE c STRICT ROWS 16
+    AS '$libdir/tsearch2', 'tsa_token_type_current';
 
 
 --
@@ -840,42 +572,6 @@ CREATE FUNCTION token_type(text) RETURNS SETOF tokentype
 
 
 --
--- Name: token_type(); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION token_type() RETURNS SETOF tokentype
-    LANGUAGE c STRICT ROWS 16
-    AS '$libdir/tsearch2', 'tsa_token_type_current';
-
-
---
--- Name: ts_debug(text); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION ts_debug(text) RETURNS SETOF tsdebug
-    LANGUAGE sql STRICT
-    AS $_$
-select
-        (select c.cfgname::text from pg_catalog.pg_ts_config as c
-         where c.oid = show_curcfg()),
-        t.alias as tok_type,
-        t.descr as description,
-        p.token,
-        ARRAY ( SELECT m.mapdict::pg_catalog.regdictionary::pg_catalog.text
-                FROM pg_catalog.pg_ts_config_map AS m
-                WHERE m.mapcfg = show_curcfg() AND m.maptokentype = p.tokid
-                ORDER BY m.mapseqno )
-        AS dict_name,
-        strip(to_tsvector(p.token)) as tsvector
-from
-        parse( _get_parser_from_curcfg(), $1 ) as p,
-        token_type() as t
-where
-        t.tokid = p.tokid
-$_$;
-
-
---
 -- Name: tsearch2(); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -885,59 +581,66 @@ CREATE FUNCTION tsearch2() RETURNS trigger
 
 
 --
--- Name: tsq_mcontained(pg_catalog.tsquery, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: -
+-- Name: tsq_mcontained(tsquery, tsquery); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION tsq_mcontained(pg_catalog.tsquery, pg_catalog.tsquery) RETURNS boolean
+CREATE FUNCTION tsq_mcontained(tsquery, tsquery) RETURNS boolean
     LANGUAGE internal IMMUTABLE STRICT
     AS $$tsq_mcontained$$;
 
 
 --
--- Name: tsq_mcontains(pg_catalog.tsquery, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: -
+-- Name: tsq_mcontains(tsquery, tsquery); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION tsq_mcontains(pg_catalog.tsquery, pg_catalog.tsquery) RETURNS boolean
+CREATE FUNCTION tsq_mcontains(tsquery, tsquery) RETURNS boolean
     LANGUAGE internal IMMUTABLE STRICT
     AS $$tsq_mcontains$$;
 
 
 --
--- Name: tsquery_and(pg_catalog.tsquery, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: -
+-- Name: tsquery_and(tsquery, tsquery); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION tsquery_and(pg_catalog.tsquery, pg_catalog.tsquery) RETURNS pg_catalog.tsquery
+CREATE FUNCTION tsquery_and(tsquery, tsquery) RETURNS tsquery
     LANGUAGE internal IMMUTABLE STRICT
     AS $$tsquery_and$$;
 
 
 --
--- Name: tsquery_not(pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: -
+-- Name: tsquery_not(tsquery); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION tsquery_not(pg_catalog.tsquery) RETURNS pg_catalog.tsquery
+CREATE FUNCTION tsquery_not(tsquery) RETURNS tsquery
     LANGUAGE internal IMMUTABLE STRICT
     AS $$tsquery_not$$;
 
 
 --
--- Name: tsquery_or(pg_catalog.tsquery, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: -
+-- Name: tsquery_or(tsquery, tsquery); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION tsquery_or(pg_catalog.tsquery, pg_catalog.tsquery) RETURNS pg_catalog.tsquery
+CREATE FUNCTION tsquery_or(tsquery, tsquery) RETURNS tsquery
     LANGUAGE internal IMMUTABLE STRICT
     AS $$tsquery_or$$;
 
 
 --
--- Name: rewrite(pg_catalog.tsquery[]); Type: AGGREGATE; Schema: public; Owner: -
+-- Name: rewrite(tsquery[]); Type: AGGREGATE; Schema: public; Owner: -
 --
 
-CREATE AGGREGATE rewrite(pg_catalog.tsquery[]) (
+CREATE AGGREGATE rewrite(tsquery[]) (
     SFUNC = rewrite_accum,
-    STYPE = pg_catalog.tsquery,
+    STYPE = tsquery,
     FINALFUNC = rewrite_finish
 );
+
+
+--
+-- Name: tsquery_ops; Type: OPERATOR FAMILY; Schema: public; Owner: -
+--
+
+CREATE OPERATOR FAMILY tsquery_ops USING btree;
 
 
 --
@@ -945,13 +648,20 @@ CREATE AGGREGATE rewrite(pg_catalog.tsquery[]) (
 --
 
 CREATE OPERATOR CLASS tsquery_ops
-    FOR TYPE pg_catalog.tsquery USING btree AS
-    OPERATOR 1 <(pg_catalog.tsquery,pg_catalog.tsquery) ,
-    OPERATOR 2 <=(pg_catalog.tsquery,pg_catalog.tsquery) ,
-    OPERATOR 3 =(pg_catalog.tsquery,pg_catalog.tsquery) ,
-    OPERATOR 4 >=(pg_catalog.tsquery,pg_catalog.tsquery) ,
-    OPERATOR 5 >(pg_catalog.tsquery,pg_catalog.tsquery) ,
-    FUNCTION 1 tsquery_cmp(pg_catalog.tsquery,pg_catalog.tsquery);
+    FOR TYPE tsquery USING btree AS
+    OPERATOR 1 <(tsquery,tsquery) ,
+    OPERATOR 2 <=(tsquery,tsquery) ,
+    OPERATOR 3 =(tsquery,tsquery) ,
+    OPERATOR 4 >=(tsquery,tsquery) ,
+    OPERATOR 5 >(tsquery,tsquery) ,
+    FUNCTION 1 tsquery_cmp(tsquery,tsquery);
+
+
+--
+-- Name: tsvector_ops; Type: OPERATOR FAMILY; Schema: public; Owner: -
+--
+
+CREATE OPERATOR FAMILY tsvector_ops USING btree;
 
 
 --
@@ -959,13 +669,13 @@ CREATE OPERATOR CLASS tsquery_ops
 --
 
 CREATE OPERATOR CLASS tsvector_ops
-    FOR TYPE pg_catalog.tsvector USING btree AS
-    OPERATOR 1 <(pg_catalog.tsvector,pg_catalog.tsvector) ,
-    OPERATOR 2 <=(pg_catalog.tsvector,pg_catalog.tsvector) ,
-    OPERATOR 3 =(pg_catalog.tsvector,pg_catalog.tsvector) ,
-    OPERATOR 4 >=(pg_catalog.tsvector,pg_catalog.tsvector) ,
-    OPERATOR 5 >(pg_catalog.tsvector,pg_catalog.tsvector) ,
-    FUNCTION 1 tsvector_cmp(pg_catalog.tsvector,pg_catalog.tsvector);
+    FOR TYPE tsvector USING btree AS
+    OPERATOR 1 <(tsvector,tsvector) ,
+    OPERATOR 2 <=(tsvector,tsvector) ,
+    OPERATOR 3 =(tsvector,tsvector) ,
+    OPERATOR 4 >=(tsvector,tsvector) ,
+    OPERATOR 5 >(tsvector,tsvector) ,
+    FUNCTION 1 tsvector_cmp(tsvector,tsvector);
 
 
 SET default_tablespace = '';
@@ -991,8 +701,8 @@ CREATE TABLE action_references (
 CREATE SEQUENCE action_references_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1022,7 +732,8 @@ CREATE TABLE actions (
     text text,
     roll_call_id integer,
     roll_call_number integer,
-    created_at timestamp without time zone
+    created_at timestamp without time zone,
+    govtrack_order integer
 );
 
 
@@ -1033,8 +744,8 @@ CREATE TABLE actions (
 CREATE SEQUENCE actions_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1061,7 +772,8 @@ CREATE TABLE amendments (
     bill_id integer,
     purpose text,
     description text,
-    updated timestamp without time zone
+    updated timestamp without time zone,
+    key_vote_category_id integer
 );
 
 
@@ -1072,8 +784,8 @@ CREATE TABLE amendments (
 CREATE SEQUENCE amendments_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1093,7 +805,8 @@ CREATE TABLE api_hits (
     action character varying(255),
     user_id integer,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    ip character varying(50)
 );
 
 
@@ -1104,8 +817,8 @@ CREATE TABLE api_hits (
 CREATE SEQUENCE api_hits_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1114,6 +827,36 @@ CREATE SEQUENCE api_hits_id_seq
 --
 
 ALTER SEQUENCE api_hits_id_seq OWNED BY api_hits.id;
+
+
+--
+-- Name: article_images; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE article_images (
+    id integer NOT NULL,
+    article_id integer,
+    image character varying(255)
+);
+
+
+--
+-- Name: article_images_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE article_images_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: article_images_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE article_images_id_seq OWNED BY article_images.id;
 
 
 --
@@ -1143,8 +886,8 @@ CREATE TABLE articles (
 CREATE SEQUENCE articles_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1175,8 +918,8 @@ CREATE TABLE bad_commentaries (
 CREATE SEQUENCE bad_commentaries_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1212,8 +955,8 @@ CREATE TABLE bill_battles (
 CREATE SEQUENCE bill_battles_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1254,8 +997,8 @@ CREATE TABLE bill_interest_groups (
 CREATE SEQUENCE bill_interest_groups_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1287,8 +1030,8 @@ CREATE TABLE bill_position_organizations (
 CREATE SEQUENCE bill_position_organizations_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1297,6 +1040,37 @@ CREATE SEQUENCE bill_position_organizations_id_seq
 --
 
 ALTER SEQUENCE bill_position_organizations_id_seq OWNED BY bill_position_organizations.id;
+
+
+--
+-- Name: bill_referrers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE bill_referrers (
+    id integer NOT NULL,
+    bill_id integer,
+    url character varying(255),
+    created_at timestamp without time zone
+);
+
+
+--
+-- Name: bill_referrers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE bill_referrers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bill_referrers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE bill_referrers_id_seq OWNED BY bill_referrers.id;
 
 
 --
@@ -1329,8 +1103,8 @@ CREATE TABLE bill_subjects (
 CREATE SEQUENCE bill_subjects_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1359,8 +1133,8 @@ CREATE TABLE bill_text_nodes (
 CREATE SEQUENCE bill_text_nodes_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1395,8 +1169,8 @@ CREATE TABLE bill_text_versions (
 CREATE SEQUENCE bill_text_versions_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1429,8 +1203,8 @@ CREATE TABLE bill_titles (
 CREATE SEQUENCE bill_titles_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1462,8 +1236,8 @@ CREATE TABLE bill_votes (
 CREATE SEQUENCE bill_votes_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1502,7 +1276,8 @@ CREATE TABLE bills (
     is_frontpage_hot boolean,
     news_article_count integer DEFAULT 0,
     blog_article_count integer DEFAULT 0,
-    caption text
+    caption text,
+    key_vote_category_id integer
 );
 
 
@@ -1525,8 +1300,8 @@ CREATE TABLE bills_committees (
 CREATE SEQUENCE bills_committees_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1544,7 +1319,9 @@ ALTER SEQUENCE bills_committees_id_seq OWNED BY bills_committees.id;
 CREATE TABLE bills_cosponsors (
     id integer NOT NULL,
     person_id integer,
-    bill_id integer
+    bill_id integer,
+    date_added date,
+    date_withdrawn date
 );
 
 
@@ -1555,8 +1332,8 @@ CREATE TABLE bills_cosponsors (
 CREATE SEQUENCE bills_cosponsors_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1574,8 +1351,8 @@ ALTER SEQUENCE bills_cosponsors_id_seq OWNED BY bills_cosponsors.id;
 CREATE SEQUENCE bills_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1605,8 +1382,8 @@ CREATE TABLE bills_relations (
 CREATE SEQUENCE bills_relations_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1637,8 +1414,8 @@ CREATE TABLE bookmarks (
 CREATE SEQUENCE bookmarks_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1658,7 +1435,8 @@ CREATE TABLE comment_scores (
     user_id integer,
     comment_id integer,
     score integer,
-    created_at timestamp without time zone
+    created_at timestamp without time zone,
+    ip_address character varying(255)
 );
 
 
@@ -1669,8 +1447,8 @@ CREATE TABLE comment_scores (
 CREATE SEQUENCE comment_scores_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1714,8 +1492,8 @@ CREATE TABLE commentaries (
 CREATE SEQUENCE commentaries_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1747,8 +1525,8 @@ CREATE TABLE commentary_ratings (
 CREATE SEQUENCE commentary_ratings_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1797,8 +1575,8 @@ CREATE TABLE comments (
 CREATE SEQUENCE comments_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1840,8 +1618,8 @@ CREATE TABLE committee_meetings_bills (
 CREATE SEQUENCE committee_meetings_bills_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1859,8 +1637,8 @@ ALTER SEQUENCE committee_meetings_bills_id_seq OWNED BY committee_meetings_bills
 CREATE SEQUENCE committee_meetings_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1898,8 +1676,8 @@ CREATE TABLE committee_reports (
 CREATE SEQUENCE committee_reports_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1942,8 +1720,8 @@ CREATE TABLE committees (
 CREATE SEQUENCE committees_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1974,8 +1752,8 @@ CREATE TABLE committees_people (
 CREATE SEQUENCE committees_people_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2007,8 +1785,8 @@ CREATE TABLE comparison_data_points (
 CREATE SEQUENCE comparison_data_points_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2041,8 +1819,8 @@ CREATE TABLE comparisons (
 CREATE SEQUENCE comparisons_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2072,8 +1850,8 @@ CREATE TABLE congress_sessions (
 CREATE SEQUENCE congress_sessions_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2082,6 +1860,50 @@ CREATE SEQUENCE congress_sessions_id_seq
 --
 
 ALTER SEQUENCE congress_sessions_id_seq OWNED BY congress_sessions.id;
+
+
+--
+-- Name: contact_congress_letters; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE contact_congress_letters (
+    id integer NOT NULL,
+    user_id integer,
+    bill_id integer,
+    disposition character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    receive_replies boolean DEFAULT true
+);
+
+
+--
+-- Name: contact_congress_letters_formageddon_threads; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE contact_congress_letters_formageddon_threads (
+    contact_congress_letter_id integer,
+    formageddon_thread_id integer
+);
+
+
+--
+-- Name: contact_congress_letters_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE contact_congress_letters_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: contact_congress_letters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE contact_congress_letters_id_seq OWNED BY contact_congress_letters.id;
 
 
 --
@@ -2184,8 +2006,8 @@ CREATE TABLE crp_industries (
 CREATE SEQUENCE crp_industries_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2216,8 +2038,8 @@ CREATE TABLE crp_interest_groups (
 CREATE SEQUENCE crp_interest_groups_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2257,8 +2079,8 @@ CREATE TABLE crp_pacs (
 CREATE SEQUENCE crp_pacs_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2287,8 +2109,8 @@ CREATE TABLE crp_sectors (
 CREATE SEQUENCE crp_sectors_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2297,6 +2119,44 @@ CREATE SEQUENCE crp_sectors_id_seq
 --
 
 ALTER SEQUENCE crp_sectors_id_seq OWNED BY crp_sectors.id;
+
+
+--
+-- Name: delayed_jobs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE delayed_jobs (
+    id integer NOT NULL,
+    priority integer DEFAULT 0,
+    attempts integer DEFAULT 0,
+    handler text,
+    last_error text,
+    run_at timestamp without time zone,
+    locked_at timestamp without time zone,
+    failed_at timestamp without time zone,
+    locked_by character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: delayed_jobs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE delayed_jobs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: delayed_jobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE delayed_jobs_id_seq OWNED BY delayed_jobs.id;
 
 
 --
@@ -2321,8 +2181,8 @@ CREATE TABLE districts (
 CREATE SEQUENCE districts_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2352,8 +2212,8 @@ CREATE TABLE facebook_templates (
 CREATE SEQUENCE facebook_templates_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2386,8 +2246,8 @@ CREATE TABLE facebook_user_bills (
 CREATE SEQUENCE facebook_user_bills_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2418,8 +2278,8 @@ CREATE TABLE facebook_users (
 CREATE SEQUENCE facebook_users_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2450,8 +2310,8 @@ CREATE TABLE featured_people (
 CREATE SEQUENCE featured_people_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2460,6 +2320,284 @@ CREATE SEQUENCE featured_people_id_seq
 --
 
 ALTER SEQUENCE featured_people_id_seq OWNED BY featured_people.id;
+
+
+--
+-- Name: formageddon_browser_states; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE formageddon_browser_states (
+    id integer NOT NULL,
+    uri text,
+    cookie_jar text,
+    raw_html text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: formageddon_browser_states_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE formageddon_browser_states_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: formageddon_browser_states_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE formageddon_browser_states_id_seq OWNED BY formageddon_browser_states.id;
+
+
+--
+-- Name: formageddon_contact_steps; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE formageddon_contact_steps (
+    id integer NOT NULL,
+    formageddon_recipient_id integer,
+    formageddon_recipient_type character varying(255),
+    step_number integer,
+    command character varying(255)
+);
+
+
+--
+-- Name: formageddon_contact_steps_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE formageddon_contact_steps_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: formageddon_contact_steps_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE formageddon_contact_steps_id_seq OWNED BY formageddon_contact_steps.id;
+
+
+--
+-- Name: formageddon_delivery_attempts; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE formageddon_delivery_attempts (
+    id integer NOT NULL,
+    formageddon_letter_id integer,
+    result character varying(255),
+    letter_contact_step integer,
+    before_browser_state_id text,
+    after_browser_state_id text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: formageddon_delivery_attempts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE formageddon_delivery_attempts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: formageddon_delivery_attempts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE formageddon_delivery_attempts_id_seq OWNED BY formageddon_delivery_attempts.id;
+
+
+--
+-- Name: formageddon_form_captcha_images; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE formageddon_form_captcha_images (
+    id integer NOT NULL,
+    formageddon_form_id integer,
+    image_number integer,
+    css_selector character varying(255)
+);
+
+
+--
+-- Name: formageddon_form_captcha_images_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE formageddon_form_captcha_images_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: formageddon_form_captcha_images_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE formageddon_form_captcha_images_id_seq OWNED BY formageddon_form_captcha_images.id;
+
+
+--
+-- Name: formageddon_form_fields; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE formageddon_form_fields (
+    id integer NOT NULL,
+    formageddon_form_id integer,
+    field_number integer,
+    name character varying(255),
+    value character varying(255)
+);
+
+
+--
+-- Name: formageddon_form_fields_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE formageddon_form_fields_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: formageddon_form_fields_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE formageddon_form_fields_id_seq OWNED BY formageddon_form_fields.id;
+
+
+--
+-- Name: formageddon_forms; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE formageddon_forms (
+    id integer NOT NULL,
+    formageddon_contact_step_id integer,
+    form_number integer,
+    use_field_names boolean,
+    success_string character varying(255),
+    use_real_email_address boolean DEFAULT false
+);
+
+
+--
+-- Name: formageddon_forms_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE formageddon_forms_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: formageddon_forms_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE formageddon_forms_id_seq OWNED BY formageddon_forms.id;
+
+
+--
+-- Name: formageddon_letters; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE formageddon_letters (
+    id integer NOT NULL,
+    formageddon_thread_id integer,
+    direction character varying(255),
+    status character varying(255),
+    issue_area character varying(255),
+    subject character varying(255),
+    message text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: formageddon_letters_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE formageddon_letters_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: formageddon_letters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE formageddon_letters_id_seq OWNED BY formageddon_letters.id;
+
+
+--
+-- Name: formageddon_threads; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE formageddon_threads (
+    id integer NOT NULL,
+    formageddon_recipient_id integer,
+    formageddon_recipient_type character varying(255),
+    sender_title character varying(255),
+    sender_first_name character varying(255),
+    sender_last_name character varying(255),
+    sender_address1 character varying(255),
+    sender_address2 character varying(255),
+    sender_city character varying(255),
+    sender_state character varying(255),
+    sender_zip5 character varying(255),
+    sender_zip4 character varying(255),
+    sender_phone character varying(255),
+    sender_email character varying(255),
+    privacy character varying(255),
+    formageddon_sender_id integer,
+    formageddon_sender_type character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: formageddon_threads_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE formageddon_threads_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: formageddon_threads_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE formageddon_threads_id_seq OWNED BY formageddon_threads.id;
 
 
 --
@@ -2482,8 +2620,8 @@ CREATE TABLE friend_emails (
 CREATE SEQUENCE friend_emails_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2514,8 +2652,8 @@ CREATE TABLE friend_invites (
 CREATE SEQUENCE friend_invites_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2548,8 +2686,8 @@ CREATE TABLE friends (
 CREATE SEQUENCE friends_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2597,8 +2735,8 @@ CREATE TABLE fundraisers (
 CREATE SEQUENCE fundraisers_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2607,15 +2745,6 @@ CREATE SEQUENCE fundraisers_id_seq
 --
 
 ALTER SEQUENCE fundraisers_id_seq OWNED BY fundraisers.id;
-
-
---
--- Name: geometry_columns; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE geometry_columns (
-    id integer NOT NULL
-);
 
 
 --
@@ -2643,8 +2772,8 @@ CREATE TABLE gossip (
 CREATE SEQUENCE gossip_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2676,8 +2805,8 @@ CREATE TABLE gpo_billtext_timestamps (
 CREATE SEQUENCE gpo_billtext_timestamps_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2686,6 +2815,155 @@ CREATE SEQUENCE gpo_billtext_timestamps_id_seq
 --
 
 ALTER SEQUENCE gpo_billtext_timestamps_id_seq OWNED BY gpo_billtext_timestamps.id;
+
+
+--
+-- Name: group_bill_positions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE group_bill_positions (
+    id integer NOT NULL,
+    group_id integer,
+    bill_id integer,
+    "position" character varying(255),
+    comment character varying(255),
+    permalink character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: group_bill_positions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE group_bill_positions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: group_bill_positions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE group_bill_positions_id_seq OWNED BY group_bill_positions.id;
+
+
+--
+-- Name: group_invites; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE group_invites (
+    id integer NOT NULL,
+    group_id integer,
+    user_id integer,
+    email character varying(255),
+    key character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: group_invites_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE group_invites_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: group_invites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE group_invites_id_seq OWNED BY group_invites.id;
+
+
+--
+-- Name: group_members; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE group_members (
+    id integer NOT NULL,
+    group_id integer,
+    user_id integer,
+    status character varying(255),
+    receive_owner_emails boolean DEFAULT true,
+    last_view timestamp without time zone,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: group_members_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE group_members_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: group_members_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE group_members_id_seq OWNED BY group_members.id;
+
+
+--
+-- Name: groups; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE groups (
+    id integer NOT NULL,
+    user_id integer,
+    name character varying(255),
+    description text,
+    join_type character varying(255),
+    invite_type character varying(255),
+    post_type character varying(255),
+    publicly_visible boolean DEFAULT true,
+    website character varying(255),
+    pvs_category_id integer,
+    group_image_file_name character varying(255),
+    group_image_content_type character varying(255),
+    group_image_file_size integer,
+    group_image_updated_at timestamp without time zone,
+    state_id integer,
+    district_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE groups_id_seq OWNED BY groups.id;
 
 
 --
@@ -2705,8 +2983,8 @@ CREATE TABLE hot_bill_categories (
 CREATE SEQUENCE hot_bill_categories_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -2738,17 +3016,225 @@ CREATE TABLE issue_stats (
 
 
 --
--- Name: page_views; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: mailing_list_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE TABLE page_views (
+CREATE TABLE mailing_list_items (
     id integer NOT NULL,
+    mailable_type character varying(255),
+    mailable_id integer,
+    user_mailing_list_id integer,
     created_at timestamp without time zone,
-    ip_address character varying(255),
-    referrer text,
-    viewable_id integer,
-    viewable_type character varying(255)
+    updated_at timestamp without time zone
 );
+
+
+--
+-- Name: mailing_list_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE mailing_list_items_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: mailing_list_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE mailing_list_items_id_seq OWNED BY mailing_list_items.id;
+
+
+--
+-- Name: notebook_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE notebook_items (
+    id integer NOT NULL,
+    political_notebook_id integer,
+    type character varying(255),
+    url character varying(255),
+    title character varying(255),
+    date character varying(255),
+    source character varying(255),
+    description text,
+    is_internal boolean,
+    embed text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    parent_id integer,
+    size integer,
+    width integer,
+    height integer,
+    filename character varying(255),
+    content_type character varying(255),
+    thumbnail character varying(255),
+    notebookable_type character varying(255),
+    notebookable_id integer,
+    hot_bill_category_id integer,
+    file_file_name character varying(255),
+    file_content_type character varying(255),
+    file_file_size integer,
+    file_updated_at timestamp without time zone,
+    group_user_id integer
+);
+
+
+--
+-- Name: notebook_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE notebook_items_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: notebook_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE notebook_items_id_seq OWNED BY notebook_items.id;
+
+
+--
+-- Name: object_aggregates; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE object_aggregates (
+    id integer NOT NULL,
+    aggregatable_type character varying(255),
+    aggregatable_id integer,
+    date date,
+    page_views_count integer DEFAULT 0,
+    comments_count integer DEFAULT 0,
+    blog_articles_count integer DEFAULT 0,
+    news_articles_count integer DEFAULT 0,
+    bookmarks_count integer DEFAULT 0,
+    votes_support integer DEFAULT 0,
+    votes_oppose integer DEFAULT 0
+);
+
+
+--
+-- Name: object_aggregates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE object_aggregates_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: object_aggregates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE object_aggregates_id_seq OWNED BY object_aggregates.id;
+
+
+--
+-- Name: open_id_authentication_associations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE open_id_authentication_associations (
+    id integer NOT NULL,
+    issued integer,
+    lifetime integer,
+    handle character varying(255),
+    assoc_type character varying(255),
+    server_url bytea,
+    secret bytea
+);
+
+
+--
+-- Name: open_id_authentication_associations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE open_id_authentication_associations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: open_id_authentication_associations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE open_id_authentication_associations_id_seq OWNED BY open_id_authentication_associations.id;
+
+
+--
+-- Name: open_id_authentication_nonces; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE open_id_authentication_nonces (
+    id integer NOT NULL,
+    "timestamp" integer NOT NULL,
+    server_url character varying(255),
+    salt character varying(255) NOT NULL
+);
+
+
+--
+-- Name: open_id_authentication_nonces_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE open_id_authentication_nonces_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: open_id_authentication_nonces_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE open_id_authentication_nonces_id_seq OWNED BY open_id_authentication_nonces.id;
+
+
+--
+-- Name: panel_referrers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE panel_referrers (
+    id integer NOT NULL,
+    referrer_url text NOT NULL,
+    panel_type character varying(255),
+    views integer DEFAULT 0,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: panel_referrers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE panel_referrers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: panel_referrers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE panel_referrers_id_seq OWNED BY panel_referrers.id;
 
 
 --
@@ -2788,278 +3274,11 @@ CREATE TABLE people (
     watchdog_id character varying(255),
     page_views_count integer,
     news_article_count integer DEFAULT 0,
-    blog_article_count integer DEFAULT 0
+    blog_article_count integer DEFAULT 0,
+    total_session_votes integer,
+    votes_democratic_position integer,
+    votes_republican_position integer
 );
-
-
---
--- Name: person_approvals; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE person_approvals (
-    id integer NOT NULL,
-    user_id integer,
-    rating integer,
-    person_id integer,
-    created_at timestamp without time zone,
-    update_at timestamp without time zone
-);
-
-
---
--- Name: roll_call_votes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE roll_call_votes (
-    id integer NOT NULL,
-    vote character varying(255),
-    roll_call_id integer,
-    person_id integer
-);
-
-
---
--- Name: roll_calls; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE roll_calls (
-    id integer NOT NULL,
-    number integer,
-    "where" character varying(255),
-    date timestamp without time zone,
-    updated timestamp without time zone,
-    roll_type character varying(255),
-    question text,
-    required character varying(255),
-    result character varying(255),
-    bill_id integer,
-    amendment_id integer,
-    filename character varying(255),
-    ayes integer DEFAULT 0,
-    nays integer DEFAULT 0,
-    abstains integer DEFAULT 0,
-    presents integer DEFAULT 0,
-    democratic_position boolean,
-    republican_position boolean,
-    is_hot boolean DEFAULT false,
-    title character varying(255),
-    hot_date timestamp without time zone,
-    page_views_count integer
-);
-
-
---
--- Name: list_representatives; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW list_representatives AS
-    SELECT people.id, people.firstname, people.middlename, people.lastname, people.nickname, people.birthday, people.gender, people.religion, people.url, people.party, people.osid, people.bioguideid, people.title, people.state, people.district, people.name, people.email, people.fti_names, people.user_approval, people.biography, people.unaccented_name, people.metavid_id, people.youtube_id, people.website, people.congress_office, people.phone, people.fax, people.contact_webform, people.sunlight_nickname, people.watchdog_id, COALESCE(person_approvals.person_approval_avg, (0)::numeric) AS person_approval_average, COALESCE(bills_sponsored.sponsored_bills_count, (0)::bigint) AS sponsored_bills_count, COALESCE(total_rolls.tcalls, (0)::bigint) AS total_roll_call_votes, CASE WHEN ((people.party)::text = 'Democrat'::text) THEN COALESCE(party_votes_democrat.pcount, (0)::bigint) WHEN ((people.party)::text = 'Republican'::text) THEN COALESCE(party_votes_republican.pcount, (0)::bigint) ELSE (0)::bigint END AS party_roll_call_votes, COALESCE(most_viewed.view_count, (0)::bigint) AS view_count, COALESCE(blogs.blog_count, (0)::bigint) AS blog_count, COALESCE(news.news_count, (0)::bigint) AS news_count FROM ((((((((people LEFT JOIN (SELECT person_approvals.person_id AS person_approval_id, count(person_approvals.id) AS person_approval_count, avg(person_approvals.rating) AS person_approval_avg FROM person_approvals GROUP BY person_approvals.person_id) person_approvals ON ((person_approvals.person_approval_id = people.id))) LEFT JOIN (SELECT bills.sponsor_id, count(bills.id) AS sponsored_bills_count FROM bills WHERE (bills.session = 111) GROUP BY bills.sponsor_id) bills_sponsored ON ((bills_sponsored.sponsor_id = people.id))) LEFT JOIN (SELECT DISTINCT roll_call_votes.person_id, count(DISTINCT roll_calls.id) AS tcalls FROM ((roll_calls LEFT JOIN bills ON ((bills.id = roll_calls.bill_id))) JOIN roll_call_votes ON ((roll_calls.id = roll_call_votes.roll_call_id))) WHERE (((roll_call_votes.vote)::text <> '0'::text) AND (bills.session = 111)) GROUP BY roll_call_votes.person_id ORDER BY roll_call_votes.person_id, count(DISTINCT roll_calls.id)) total_rolls ON ((total_rolls.person_id = people.id))) LEFT JOIN (SELECT DISTINCT roll_call_votes.person_id, count(DISTINCT roll_calls.id) AS pcount FROM ((roll_calls LEFT JOIN bills ON ((bills.id = roll_calls.bill_id))) JOIN roll_call_votes ON ((roll_calls.id = roll_call_votes.roll_call_id))) WHERE ((((roll_calls.democratic_position = true) AND ((roll_call_votes.vote)::text = '+'::text)) OR ((roll_calls.democratic_position = false) AND ((roll_call_votes.vote)::text = '-'::text))) AND (bills.session = 111)) GROUP BY roll_call_votes.person_id ORDER BY roll_call_votes.person_id, count(DISTINCT roll_calls.id)) party_votes_democrat ON ((party_votes_democrat.person_id = people.id))) LEFT JOIN (SELECT DISTINCT roll_call_votes.person_id, count(DISTINCT roll_calls.id) AS pcount FROM ((roll_calls LEFT JOIN bills ON ((bills.id = roll_calls.bill_id))) JOIN roll_call_votes ON ((roll_calls.id = roll_call_votes.roll_call_id))) WHERE ((((roll_calls.republican_position = true) AND ((roll_call_votes.vote)::text = '+'::text)) OR ((roll_calls.republican_position = false) AND ((roll_call_votes.vote)::text = '-'::text))) AND (bills.session = 111)) GROUP BY roll_call_votes.person_id ORDER BY roll_call_votes.person_id, count(DISTINCT roll_calls.id)) party_votes_republican ON ((party_votes_republican.person_id = people.id))) LEFT JOIN (SELECT page_views.viewable_id, count(page_views.viewable_id) AS view_count FROM page_views WHERE ((page_views.created_at > (now() - '7 days'::interval)) AND ((page_views.viewable_type)::text = 'Person'::text)) GROUP BY page_views.viewable_id ORDER BY count(page_views.viewable_id) DESC) most_viewed ON ((people.id = most_viewed.viewable_id))) LEFT JOIN (SELECT count(commentaries.id) AS blog_count, commentaries.commentariable_id FROM commentaries WHERE (((commentaries.date > (now() - '7 days'::interval)) AND (commentaries.is_news = false)) AND ((commentaries.commentariable_type)::text = 'Person'::text)) GROUP BY commentaries.commentariable_id ORDER BY count(commentaries.id) DESC) blogs ON ((people.id = blogs.commentariable_id))) LEFT JOIN (SELECT count(commentaries.id) AS news_count, commentaries.commentariable_id FROM commentaries WHERE (((commentaries.date > (now() - '7 days'::interval)) AND ((commentaries.commentariable_type)::text = 'Person'::text)) AND (commentaries.is_news = true)) GROUP BY commentaries.commentariable_id ORDER BY count(commentaries.id) DESC) news ON ((people.id = news.commentariable_id))) WHERE ((people.title)::text = 'Rep.'::text);
-
-
---
--- Name: list_senators; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW list_senators AS
-    SELECT people.id, people.firstname, people.middlename, people.lastname, people.nickname, people.birthday, people.gender, people.religion, people.url, people.party, people.osid, people.bioguideid, people.title, people.state, people.district, people.name, people.email, people.fti_names, people.user_approval, people.biography, people.unaccented_name, people.metavid_id, people.youtube_id, people.website, people.congress_office, people.phone, people.fax, people.contact_webform, people.sunlight_nickname, people.watchdog_id, COALESCE(person_approvals.person_approval_avg, (0)::numeric) AS person_approval_average, COALESCE(bills_sponsored.sponsored_bills_count, (0)::bigint) AS sponsored_bills_count, COALESCE(total_rolls.tcalls, (0)::bigint) AS total_roll_call_votes, CASE WHEN ((people.party)::text = 'Democrat'::text) THEN COALESCE(party_votes_democrat.pcount, (0)::bigint) WHEN ((people.party)::text = 'Republican'::text) THEN COALESCE(party_votes_republican.pcount, (0)::bigint) ELSE (0)::bigint END AS party_roll_call_votes, COALESCE(most_viewed.view_count, (0)::bigint) AS view_count, COALESCE(blogs.blog_count, (0)::bigint) AS blog_count, COALESCE(news.news_count, (0)::bigint) AS news_count FROM ((((((((people LEFT JOIN (SELECT person_approvals.person_id AS person_approval_id, count(person_approvals.id) AS person_approval_count, avg(person_approvals.rating) AS person_approval_avg FROM person_approvals GROUP BY person_approvals.person_id) person_approvals ON ((person_approvals.person_approval_id = people.id))) LEFT JOIN (SELECT bills.sponsor_id, count(bills.id) AS sponsored_bills_count FROM bills WHERE (bills.session = 111) GROUP BY bills.sponsor_id) bills_sponsored ON ((bills_sponsored.sponsor_id = people.id))) LEFT JOIN (SELECT DISTINCT roll_call_votes.person_id, count(DISTINCT roll_calls.id) AS tcalls FROM ((roll_calls LEFT JOIN bills ON ((bills.id = roll_calls.bill_id))) JOIN roll_call_votes ON ((roll_calls.id = roll_call_votes.roll_call_id))) WHERE (((roll_call_votes.vote)::text <> '0'::text) AND (bills.session = 111)) GROUP BY roll_call_votes.person_id ORDER BY roll_call_votes.person_id, count(DISTINCT roll_calls.id)) total_rolls ON ((total_rolls.person_id = people.id))) LEFT JOIN (SELECT DISTINCT roll_call_votes.person_id, count(DISTINCT roll_calls.id) AS pcount FROM ((roll_calls LEFT JOIN bills ON ((bills.id = roll_calls.bill_id))) JOIN roll_call_votes ON ((roll_calls.id = roll_call_votes.roll_call_id))) WHERE ((((roll_calls.democratic_position = true) AND ((roll_call_votes.vote)::text = '+'::text)) OR ((roll_calls.democratic_position = false) AND ((roll_call_votes.vote)::text = '-'::text))) AND (bills.session = 111)) GROUP BY roll_call_votes.person_id ORDER BY roll_call_votes.person_id, count(DISTINCT roll_calls.id)) party_votes_democrat ON ((party_votes_democrat.person_id = people.id))) LEFT JOIN (SELECT DISTINCT roll_call_votes.person_id, count(DISTINCT roll_calls.id) AS pcount FROM ((roll_calls LEFT JOIN bills ON ((bills.id = roll_calls.bill_id))) JOIN roll_call_votes ON ((roll_calls.id = roll_call_votes.roll_call_id))) WHERE ((((roll_calls.republican_position = true) AND ((roll_call_votes.vote)::text = '+'::text)) OR ((roll_calls.republican_position = false) AND ((roll_call_votes.vote)::text = '-'::text))) AND (bills.session = 111)) GROUP BY roll_call_votes.person_id ORDER BY roll_call_votes.person_id, count(DISTINCT roll_calls.id)) party_votes_republican ON ((party_votes_republican.person_id = people.id))) LEFT JOIN (SELECT page_views.viewable_id, count(page_views.viewable_id) AS view_count FROM page_views WHERE ((page_views.created_at > (now() - '7 days'::interval)) AND ((page_views.viewable_type)::text = 'Person'::text)) GROUP BY page_views.viewable_id ORDER BY count(page_views.viewable_id) DESC) most_viewed ON ((people.id = most_viewed.viewable_id))) LEFT JOIN (SELECT count(commentaries.id) AS blog_count, commentaries.commentariable_id FROM commentaries WHERE (((commentaries.date > (now() - '7 days'::interval)) AND (commentaries.is_news = false)) AND ((commentaries.commentariable_type)::text = 'Person'::text)) GROUP BY commentaries.commentariable_id ORDER BY count(commentaries.id) DESC) blogs ON ((people.id = blogs.commentariable_id))) LEFT JOIN (SELECT count(commentaries.id) AS news_count, commentaries.commentariable_id FROM commentaries WHERE (((commentaries.date > (now() - '7 days'::interval)) AND ((commentaries.commentariable_type)::text = 'Person'::text)) AND (commentaries.is_news = true)) GROUP BY commentaries.commentariable_id ORDER BY count(commentaries.id) DESC) news ON ((people.id = news.commentariable_id))) WHERE ((people.title)::text = 'Sen.'::text);
-
-
---
--- Name: mailing_list_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE mailing_list_items (
-    id integer NOT NULL,
-    mailable_type character varying(255),
-    mailable_id integer,
-    user_mailing_list_id integer,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
---
--- Name: mailing_list_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE mailing_list_items_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
---
--- Name: mailing_list_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE mailing_list_items_id_seq OWNED BY mailing_list_items.id;
-
-
---
--- Name: notebook_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE notebook_items (
-    id integer NOT NULL,
-    political_notebook_id integer,
-    type character varying(255),
-    url character varying(255),
-    title character varying(255),
-    date character varying(255),
-    source character varying(255),
-    description text,
-    is_internal boolean,
-    embed text,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    parent_id integer,
-    size integer,
-    width integer,
-    height integer,
-    filename character varying(255),
-    content_type character varying(255),
-    thumbnail character varying(255),
-    notebookable_type character varying(255),
-    notebookable_id integer,
-    hot_bill_category_id integer
-);
-
-
---
--- Name: notebook_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE notebook_items_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
---
--- Name: notebook_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE notebook_items_id_seq OWNED BY notebook_items.id;
-
-
---
--- Name: open_id_authentication_associations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE open_id_authentication_associations (
-    id integer NOT NULL,
-    issued integer,
-    lifetime integer,
-    handle character varying(255),
-    assoc_type character varying(255),
-    server_url bytea,
-    secret bytea
-);
-
-
---
--- Name: open_id_authentication_associations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE open_id_authentication_associations_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
---
--- Name: open_id_authentication_associations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE open_id_authentication_associations_id_seq OWNED BY open_id_authentication_associations.id;
-
-
---
--- Name: open_id_authentication_nonces; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE open_id_authentication_nonces (
-    id integer NOT NULL,
-    "timestamp" integer NOT NULL,
-    server_url character varying(255),
-    salt character varying(255) NOT NULL
-);
-
-
---
--- Name: open_id_authentication_nonces_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE open_id_authentication_nonces_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
---
--- Name: open_id_authentication_nonces_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE open_id_authentication_nonces_id_seq OWNED BY open_id_authentication_nonces.id;
-
-
---
--- Name: page_views_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE page_views_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
---
--- Name: page_views_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE page_views_id_seq OWNED BY page_views.id;
-
-
---
--- Name: panel_referrers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE panel_referrers (
-    id integer NOT NULL,
-    referrer_url text NOT NULL,
-    panel_type character varying(255),
-    views integer DEFAULT 0,
-    updated_at timestamp without time zone
-);
-
-
---
--- Name: panel_referrers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE panel_referrers_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
---
--- Name: panel_referrers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE panel_referrers_id_seq OWNED BY panel_referrers.id;
 
 
 --
@@ -3084,8 +3303,8 @@ CREATE TABLE people_cycle_contributions (
 CREATE SEQUENCE people_cycle_contributions_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3103,8 +3322,8 @@ ALTER SEQUENCE people_cycle_contributions_id_seq OWNED BY people_cycle_contribut
 CREATE SEQUENCE people_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3116,14 +3335,28 @@ ALTER SEQUENCE people_id_seq OWNED BY people.id;
 
 
 --
+-- Name: person_approvals; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE person_approvals (
+    id integer NOT NULL,
+    user_id integer,
+    rating integer,
+    person_id integer,
+    created_at timestamp without time zone,
+    update_at timestamp without time zone
+);
+
+
+--
 -- Name: person_approvals_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE person_approvals_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3163,60 +3396,6 @@ CREATE TABLE person_stats (
 );
 
 
-SET default_with_oids = true;
-
---
--- Name: pg_ts_cfg; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE pg_ts_cfg (
-    ts_name text NOT NULL,
-    prs_name text NOT NULL,
-    locale text
-);
-
-
---
--- Name: pg_ts_cfgmap; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE pg_ts_cfgmap (
-    ts_name text NOT NULL,
-    tok_alias text NOT NULL,
-    dict_name text[]
-);
-
-
---
--- Name: pg_ts_dict; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE pg_ts_dict (
-    dict_name text NOT NULL,
-    dict_init regprocedure,
-    dict_initoption text,
-    dict_lexize regprocedure NOT NULL,
-    dict_comment text
-);
-
-
---
--- Name: pg_ts_parser; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE pg_ts_parser (
-    prs_name text NOT NULL,
-    prs_start regprocedure NOT NULL,
-    prs_nexttoken regprocedure NOT NULL,
-    prs_end regprocedure NOT NULL,
-    prs_headline regprocedure NOT NULL,
-    prs_lextype regprocedure NOT NULL,
-    prs_comment text
-);
-
-
-SET default_with_oids = false;
-
 --
 -- Name: political_notebooks; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
@@ -3225,7 +3404,8 @@ CREATE TABLE political_notebooks (
     id integer NOT NULL,
     user_id integer,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    group_id integer
 );
 
 
@@ -3236,8 +3416,8 @@ CREATE TABLE political_notebooks (
 CREATE SEQUENCE political_notebooks_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3281,8 +3461,8 @@ CREATE TABLE privacy_options (
 CREATE SEQUENCE privacy_options_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3291,6 +3471,67 @@ CREATE SEQUENCE privacy_options_id_seq
 --
 
 ALTER SEQUENCE privacy_options_id_seq OWNED BY privacy_options.id;
+
+
+--
+-- Name: pvs_categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE pvs_categories (
+    id integer NOT NULL,
+    name character varying(255),
+    pvs_id integer
+);
+
+
+--
+-- Name: pvs_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE pvs_categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: pvs_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE pvs_categories_id_seq OWNED BY pvs_categories.id;
+
+
+--
+-- Name: pvs_category_mappings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE pvs_category_mappings (
+    id integer NOT NULL,
+    pvs_category_id integer,
+    pvs_category_mappable_id integer,
+    pvs_category_mappable_type character varying(255)
+);
+
+
+--
+-- Name: pvs_category_mappings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE pvs_category_mappings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: pvs_category_mappings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE pvs_category_mappings_id_seq OWNED BY pvs_category_mappings.id;
 
 
 --
@@ -3312,8 +3553,8 @@ CREATE TABLE refers (
 CREATE SEQUENCE refers_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3351,8 +3592,8 @@ CREATE TABLE roles (
 CREATE SEQUENCE roles_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3364,14 +3605,26 @@ ALTER SEQUENCE roles_id_seq OWNED BY roles.id;
 
 
 --
+-- Name: roll_call_votes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE roll_call_votes (
+    id integer NOT NULL,
+    vote character varying(255),
+    roll_call_id integer,
+    person_id integer
+);
+
+
+--
 -- Name: roll_call_votes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE roll_call_votes_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3383,14 +3636,44 @@ ALTER SEQUENCE roll_call_votes_id_seq OWNED BY roll_call_votes.id;
 
 
 --
+-- Name: roll_calls; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE roll_calls (
+    id integer NOT NULL,
+    number integer,
+    "where" character varying(255),
+    date timestamp without time zone,
+    updated timestamp without time zone,
+    roll_type character varying(255),
+    question text,
+    required character varying(255),
+    result character varying(255),
+    bill_id integer,
+    amendment_id integer,
+    filename character varying(255),
+    ayes integer DEFAULT 0,
+    nays integer DEFAULT 0,
+    abstains integer DEFAULT 0,
+    presents integer DEFAULT 0,
+    democratic_position boolean,
+    republican_position boolean,
+    is_hot boolean DEFAULT false,
+    title character varying(255),
+    hot_date timestamp without time zone,
+    page_views_count integer
+);
+
+
+--
 -- Name: roll_calls_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE roll_calls_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3428,8 +3711,8 @@ CREATE TABLE searches (
 CREATE SEQUENCE searches_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3441,73 +3724,35 @@ ALTER SEQUENCE searches_id_seq OWNED BY searches.id;
 
 
 --
--- Name: sidebar_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sidebar_boxes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE TABLE sidebar_items (
+CREATE TABLE sidebar_boxes (
     id integer NOT NULL,
-    sidebar_id integer,
-    bill_id integer,
-    person_id integer,
-    committee_id integer,
-    subject_id integer,
-    description text,
-    rank integer,
-    updated_at timestamp without time zone
+    image_url character varying(255),
+    box_html text,
+    sidebarable_id integer,
+    sidebarable_type character varying(255)
 );
 
 
 --
--- Name: sidebar_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: sidebar_boxes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE sidebar_items_id_seq
+CREATE SEQUENCE sidebar_boxes_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
 --
--- Name: sidebar_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: sidebar_boxes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE sidebar_items_id_seq OWNED BY sidebar_items.id;
-
-
---
--- Name: sidebars; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE sidebars (
-    id integer NOT NULL,
-    page character varying(255),
-    class_type character varying(255),
-    title character varying(255),
-    description text,
-    updated_at timestamp without time zone,
-    enabled boolean DEFAULT false
-);
-
-
---
--- Name: sidebars_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE sidebars_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
---
--- Name: sidebars_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE sidebars_id_seq OWNED BY sidebars.id;
+ALTER SEQUENCE sidebar_boxes_id_seq OWNED BY sidebar_boxes.id;
 
 
 --
@@ -3530,8 +3775,8 @@ CREATE TABLE simple_captcha_data (
 CREATE SEQUENCE simple_captcha_data_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3565,8 +3810,8 @@ CREATE TABLE site_text_pages (
 CREATE SEQUENCE site_text_pages_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3596,8 +3841,8 @@ CREATE TABLE site_texts (
 CREATE SEQUENCE site_texts_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3628,8 +3873,8 @@ CREATE TABLE states (
 CREATE SEQUENCE states_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3659,8 +3904,8 @@ CREATE TABLE subject_relations (
 CREATE SEQUENCE subject_relations_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3691,8 +3936,8 @@ CREATE TABLE subjects (
 CREATE SEQUENCE subjects_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3726,8 +3971,8 @@ CREATE TABLE taggings (
 CREATE SEQUENCE taggings_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3755,8 +4000,8 @@ CREATE TABLE tags (
 CREATE SEQUENCE tags_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3765,6 +4010,39 @@ CREATE SEQUENCE tags_id_seq
 --
 
 ALTER SEQUENCE tags_id_seq OWNED BY tags.id;
+
+
+--
+-- Name: talking_points; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE talking_points (
+    id integer NOT NULL,
+    talking_pointable_id integer,
+    talking_pointable_type character varying(255),
+    talking_point character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: talking_points_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE talking_points_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: talking_points_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE talking_points_id_seq OWNED BY talking_points.id;
 
 
 --
@@ -3793,8 +4071,8 @@ CREATE TABLE twitter_configs (
 CREATE SEQUENCE twitter_configs_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3826,8 +4104,8 @@ CREATE TABLE upcoming_bills (
 CREATE SEQUENCE upcoming_bills_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3864,8 +4142,8 @@ CREATE TABLE user_audits (
 CREATE SEQUENCE user_audits_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3896,8 +4174,8 @@ CREATE TABLE user_ip_addresses (
 CREATE SEQUENCE user_ip_addresses_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3929,8 +4207,8 @@ CREATE TABLE user_mailing_lists (
 CREATE SEQUENCE user_mailing_lists_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3964,8 +4242,8 @@ CREATE TABLE user_roles (
 CREATE SEQUENCE user_roles_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -3997,8 +4275,8 @@ CREATE TABLE user_warnings (
 CREATE SEQUENCE user_warnings_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -4026,7 +4304,7 @@ CREATE TABLE users (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     remember_token character varying(255),
-    remember_token_expires_at timestamp without time zone,
+    remember_created_at timestamp without time zone,
     status integer,
     last_login timestamp without time zone,
     location character varying(255),
@@ -4064,7 +4342,8 @@ CREATE TABLE users (
     accepted_tos boolean DEFAULT false,
     accepted_tos_at timestamp without time zone,
     partner_mailing boolean DEFAULT false,
-    sso_key character varying(255)
+    authentication_token character varying(255),
+    facebook_uid character varying(255)
 );
 
 
@@ -4075,8 +4354,8 @@ CREATE TABLE users (
 CREATE SEQUENCE users_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -4085,6 +4364,14 @@ CREATE SEQUENCE users_id_seq
 --
 
 ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: v_current_roles; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW v_current_roles AS
+    SELECT states.id AS state_id, roles.id AS role_id, people.id AS person_id, roles.role_type FROM ((people JOIN roles ON ((roles.person_id = people.id))) JOIN states ON (((people.state)::text = (states.abbreviation)::text))) WHERE (roles.enddate > now());
 
 
 --
@@ -4114,8 +4401,8 @@ CREATE TABLE videos (
 CREATE SEQUENCE videos_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -4147,8 +4434,8 @@ CREATE TABLE watch_dogs (
 CREATE SEQUENCE watch_dogs_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -4181,8 +4468,8 @@ CREATE TABLE wiki_links (
 CREATE SEQUENCE wiki_links_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -4215,8 +4502,8 @@ CREATE TABLE write_rep_email_msgids (
 CREATE SEQUENCE write_rep_email_msgids_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -4262,8 +4549,8 @@ CREATE TABLE write_rep_emails (
 CREATE SEQUENCE write_rep_emails_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -4318,6 +4605,13 @@ ALTER TABLE api_hits ALTER COLUMN id SET DEFAULT nextval('api_hits_id_seq'::regc
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE article_images ALTER COLUMN id SET DEFAULT nextval('article_images_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE articles ALTER COLUMN id SET DEFAULT nextval('articles_id_seq'::regclass);
 
 
@@ -4347,6 +4641,13 @@ ALTER TABLE bill_interest_groups ALTER COLUMN id SET DEFAULT nextval('bill_inter
 --
 
 ALTER TABLE bill_position_organizations ALTER COLUMN id SET DEFAULT nextval('bill_position_organizations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE bill_referrers ALTER COLUMN id SET DEFAULT nextval('bill_referrers_id_seq'::regclass);
 
 
 --
@@ -4507,6 +4808,13 @@ ALTER TABLE congress_sessions ALTER COLUMN id SET DEFAULT nextval('congress_sess
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE contact_congress_letters ALTER COLUMN id SET DEFAULT nextval('contact_congress_letters_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE crp_industries ALTER COLUMN id SET DEFAULT nextval('crp_industries_id_seq'::regclass);
 
 
@@ -4529,6 +4837,13 @@ ALTER TABLE crp_pacs ALTER COLUMN id SET DEFAULT nextval('crp_pacs_id_seq'::regc
 --
 
 ALTER TABLE crp_sectors ALTER COLUMN id SET DEFAULT nextval('crp_sectors_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE delayed_jobs ALTER COLUMN id SET DEFAULT nextval('delayed_jobs_id_seq'::regclass);
 
 
 --
@@ -4564,6 +4879,62 @@ ALTER TABLE facebook_users ALTER COLUMN id SET DEFAULT nextval('facebook_users_i
 --
 
 ALTER TABLE featured_people ALTER COLUMN id SET DEFAULT nextval('featured_people_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE formageddon_browser_states ALTER COLUMN id SET DEFAULT nextval('formageddon_browser_states_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE formageddon_contact_steps ALTER COLUMN id SET DEFAULT nextval('formageddon_contact_steps_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE formageddon_delivery_attempts ALTER COLUMN id SET DEFAULT nextval('formageddon_delivery_attempts_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE formageddon_form_captcha_images ALTER COLUMN id SET DEFAULT nextval('formageddon_form_captcha_images_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE formageddon_form_fields ALTER COLUMN id SET DEFAULT nextval('formageddon_form_fields_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE formageddon_forms ALTER COLUMN id SET DEFAULT nextval('formageddon_forms_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE formageddon_letters ALTER COLUMN id SET DEFAULT nextval('formageddon_letters_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE formageddon_threads ALTER COLUMN id SET DEFAULT nextval('formageddon_threads_id_seq'::regclass);
 
 
 --
@@ -4612,6 +4983,34 @@ ALTER TABLE gpo_billtext_timestamps ALTER COLUMN id SET DEFAULT nextval('gpo_bil
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE group_bill_positions ALTER COLUMN id SET DEFAULT nextval('group_bill_positions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE group_invites ALTER COLUMN id SET DEFAULT nextval('group_invites_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE group_members ALTER COLUMN id SET DEFAULT nextval('group_members_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE groups ALTER COLUMN id SET DEFAULT nextval('groups_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE hot_bill_categories ALTER COLUMN id SET DEFAULT nextval('hot_bill_categories_id_seq'::regclass);
 
 
@@ -4633,6 +5032,13 @@ ALTER TABLE notebook_items ALTER COLUMN id SET DEFAULT nextval('notebook_items_i
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE object_aggregates ALTER COLUMN id SET DEFAULT nextval('object_aggregates_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE open_id_authentication_associations ALTER COLUMN id SET DEFAULT nextval('open_id_authentication_associations_id_seq'::regclass);
 
 
@@ -4641,13 +5047,6 @@ ALTER TABLE open_id_authentication_associations ALTER COLUMN id SET DEFAULT next
 --
 
 ALTER TABLE open_id_authentication_nonces ALTER COLUMN id SET DEFAULT nextval('open_id_authentication_nonces_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE page_views ALTER COLUMN id SET DEFAULT nextval('page_views_id_seq'::regclass);
 
 
 --
@@ -4696,6 +5095,20 @@ ALTER TABLE privacy_options ALTER COLUMN id SET DEFAULT nextval('privacy_options
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE pvs_categories ALTER COLUMN id SET DEFAULT nextval('pvs_categories_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE pvs_category_mappings ALTER COLUMN id SET DEFAULT nextval('pvs_category_mappings_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE refers ALTER COLUMN id SET DEFAULT nextval('refers_id_seq'::regclass);
 
 
@@ -4731,14 +5144,7 @@ ALTER TABLE searches ALTER COLUMN id SET DEFAULT nextval('searches_id_seq'::regc
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE sidebar_items ALTER COLUMN id SET DEFAULT nextval('sidebar_items_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE sidebars ALTER COLUMN id SET DEFAULT nextval('sidebars_id_seq'::regclass);
+ALTER TABLE sidebar_boxes ALTER COLUMN id SET DEFAULT nextval('sidebar_boxes_id_seq'::regclass);
 
 
 --
@@ -4795,6 +5201,13 @@ ALTER TABLE taggings ALTER COLUMN id SET DEFAULT nextval('taggings_id_seq'::regc
 --
 
 ALTER TABLE tags ALTER COLUMN id SET DEFAULT nextval('tags_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE talking_points ALTER COLUMN id SET DEFAULT nextval('talking_points_id_seq'::regclass);
 
 
 --
@@ -4921,6 +5334,14 @@ ALTER TABLE ONLY api_hits
 
 
 --
+-- Name: article_images_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY article_images
+    ADD CONSTRAINT article_images_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: articles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -4950,6 +5371,14 @@ ALTER TABLE ONLY bill_interest_groups
 
 ALTER TABLE ONLY bill_position_organizations
     ADD CONSTRAINT bill_position_organizations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bill_referrers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY bill_referrers
+    ADD CONSTRAINT bill_referrers_pkey PRIMARY KEY (id);
 
 
 --
@@ -5129,6 +5558,14 @@ ALTER TABLE ONLY congress_sessions
 
 
 --
+-- Name: contact_congress_letters_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY contact_congress_letters
+    ADD CONSTRAINT contact_congress_letters_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: crp_industries_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -5158,6 +5595,14 @@ ALTER TABLE ONLY crp_pacs
 
 ALTER TABLE ONLY crp_sectors
     ADD CONSTRAINT crp_sectors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: delayed_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY delayed_jobs
+    ADD CONSTRAINT delayed_jobs_pkey PRIMARY KEY (id);
 
 
 --
@@ -5201,6 +5646,70 @@ ALTER TABLE ONLY featured_people
 
 
 --
+-- Name: formageddon_browser_states_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY formageddon_browser_states
+    ADD CONSTRAINT formageddon_browser_states_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: formageddon_contact_steps_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY formageddon_contact_steps
+    ADD CONSTRAINT formageddon_contact_steps_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: formageddon_delivery_attempts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY formageddon_delivery_attempts
+    ADD CONSTRAINT formageddon_delivery_attempts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: formageddon_form_captcha_images_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY formageddon_form_captcha_images
+    ADD CONSTRAINT formageddon_form_captcha_images_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: formageddon_form_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY formageddon_form_fields
+    ADD CONSTRAINT formageddon_form_fields_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: formageddon_forms_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY formageddon_forms
+    ADD CONSTRAINT formageddon_forms_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: formageddon_letters_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY formageddon_letters
+    ADD CONSTRAINT formageddon_letters_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: formageddon_threads_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY formageddon_threads
+    ADD CONSTRAINT formageddon_threads_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: friend_emails_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -5233,14 +5742,6 @@ ALTER TABLE ONLY fundraisers
 
 
 --
--- Name: geometry_columns_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY geometry_columns
-    ADD CONSTRAINT geometry_columns_pkey PRIMARY KEY (id);
-
-
---
 -- Name: gossip_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -5254,6 +5755,38 @@ ALTER TABLE ONLY gossip
 
 ALTER TABLE ONLY gpo_billtext_timestamps
     ADD CONSTRAINT gpo_billtext_timestamps_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: group_bill_positions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY group_bill_positions
+    ADD CONSTRAINT group_bill_positions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: group_invites_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY group_invites
+    ADD CONSTRAINT group_invites_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: group_members_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY group_members
+    ADD CONSTRAINT group_members_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY groups
+    ADD CONSTRAINT groups_pkey PRIMARY KEY (id);
 
 
 --
@@ -5281,6 +5814,14 @@ ALTER TABLE ONLY notebook_items
 
 
 --
+-- Name: object_aggregates_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY object_aggregates
+    ADD CONSTRAINT object_aggregates_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: open_id_authentication_associations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -5294,14 +5835,6 @@ ALTER TABLE ONLY open_id_authentication_associations
 
 ALTER TABLE ONLY open_id_authentication_nonces
     ADD CONSTRAINT open_id_authentication_nonces_pkey PRIMARY KEY (id);
-
-
---
--- Name: page_views_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY page_views
-    ADD CONSTRAINT page_views_pkey PRIMARY KEY (id);
 
 
 --
@@ -5337,38 +5870,6 @@ ALTER TABLE ONLY person_approvals
 
 
 --
--- Name: pg_ts_cfg_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY pg_ts_cfg
-    ADD CONSTRAINT pg_ts_cfg_pkey PRIMARY KEY (ts_name);
-
-
---
--- Name: pg_ts_cfgmap_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY pg_ts_cfgmap
-    ADD CONSTRAINT pg_ts_cfgmap_pkey PRIMARY KEY (ts_name, tok_alias);
-
-
---
--- Name: pg_ts_dict_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY pg_ts_dict
-    ADD CONSTRAINT pg_ts_dict_pkey PRIMARY KEY (dict_name);
-
-
---
--- Name: pg_ts_parser_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY pg_ts_parser
-    ADD CONSTRAINT pg_ts_parser_pkey PRIMARY KEY (prs_name);
-
-
---
 -- Name: political_notebooks_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -5382,6 +5883,22 @@ ALTER TABLE ONLY political_notebooks
 
 ALTER TABLE ONLY privacy_options
     ADD CONSTRAINT privacy_options_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: pvs_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY pvs_categories
+    ADD CONSTRAINT pvs_categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: pvs_category_mappings_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY pvs_category_mappings
+    ADD CONSTRAINT pvs_category_mappings_pkey PRIMARY KEY (id);
 
 
 --
@@ -5425,19 +5942,11 @@ ALTER TABLE ONLY searches
 
 
 --
--- Name: sidebar_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sidebar_boxes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
-ALTER TABLE ONLY sidebar_items
-    ADD CONSTRAINT sidebar_items_pkey PRIMARY KEY (id);
-
-
---
--- Name: sidebars_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY sidebars
-    ADD CONSTRAINT sidebars_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY sidebar_boxes
+    ADD CONSTRAINT sidebar_boxes_pkey PRIMARY KEY (id);
 
 
 --
@@ -5502,6 +6011,14 @@ ALTER TABLE ONLY taggings
 
 ALTER TABLE ONLY tags
     ADD CONSTRAINT tags_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: talking_points_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY talking_points
+    ADD CONSTRAINT talking_points_pkey PRIMARY KEY (id);
 
 
 --
@@ -5621,6 +6138,20 @@ ALTER TABLE ONLY zipcode_districts
 --
 
 CREATE INDEX actions_bill_id_index ON actions USING btree (bill_id);
+
+
+--
+-- Name: aggregatable_date_type_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX aggregatable_date_type_idx ON object_aggregates USING btree (date, aggregatable_type);
+
+
+--
+-- Name: aggregatable_poly_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX aggregatable_poly_idx ON object_aggregates USING btree (aggregatable_type, aggregatable_id);
 
 
 --
@@ -5764,6 +6295,13 @@ CREATE INDEX committees_fti_names_index ON committees USING gist (fti_names);
 
 
 --
+-- Name: delayed_jobs_priority; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX delayed_jobs_priority ON delayed_jobs USING btree (priority, run_at);
+
+
+--
 -- Name: friend_emails_created_at_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -5789,6 +6327,20 @@ CREATE INDEX index_bad_commentaries_on_cid_and_ctype ON bad_commentaries USING b
 --
 
 CREATE INDEX index_bad_commentaries_on_url ON bad_commentaries USING btree (url);
+
+
+--
+-- Name: index_bill_referrers_on_bill_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_bill_referrers_on_bill_id ON bill_referrers USING btree (bill_id);
+
+
+--
+-- Name: index_bill_referrers_on_url; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_bill_referrers_on_url ON bill_referrers USING btree (url);
 
 
 --
@@ -5869,6 +6421,13 @@ CREATE INDEX index_bookmarks_on_user_id ON bookmarks USING btree (user_id);
 
 
 --
+-- Name: index_comment_scores_on_comment_id_and_ip_address; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_comment_scores_on_comment_id_and_ip_address ON comment_scores USING btree (comment_id, ip_address);
+
+
+--
 -- Name: index_commentaries_on_commentariable_id_and_commentariable_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -5922,6 +6481,20 @@ CREATE INDEX index_comments_on_ok ON comments USING btree (ok);
 --
 
 CREATE INDEX index_comments_on_parent_id ON comments USING btree (parent_id);
+
+
+--
+-- Name: index_comments_on_root_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_comments_on_root_id ON comments USING btree (root_id);
+
+
+--
+-- Name: index_comments_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_comments_on_user_id ON comments USING btree (user_id);
 
 
 --
@@ -5995,24 +6568,24 @@ CREATE INDEX index_fundraisers_on_person_id ON fundraisers USING btree (person_i
 
 
 --
--- Name: index_page_views_on_ip_address; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_group_members_on_group_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_page_views_on_ip_address ON page_views USING btree (ip_address);
-
-
---
--- Name: index_page_views_on_viewable_id_and_viewable_type_and_created_a; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_page_views_on_viewable_id_and_viewable_type_and_created_a ON page_views USING btree (viewable_id, viewable_type, created_at);
+CREATE INDEX index_group_members_on_group_id ON group_members USING btree (group_id);
 
 
 --
--- Name: index_page_views_on_viewable_type_and_created_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_group_members_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_page_views_on_viewable_type_and_created_at ON page_views USING btree (viewable_type, created_at);
+CREATE INDEX index_group_members_on_user_id ON group_members USING btree (user_id);
+
+
+--
+-- Name: index_political_notebooks_on_group_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_political_notebooks_on_group_id ON political_notebooks USING btree (group_id);
 
 
 --
@@ -6048,6 +6621,13 @@ CREATE INDEX index_taggings_on_tag_id ON taggings USING btree (tag_id);
 --
 
 CREATE INDEX index_taggings_on_taggable_id_and_taggable_type_and_context ON taggings USING btree (taggable_id, taggable_type, context);
+
+
+--
+-- Name: index_users_on_facebook_uid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_users_on_facebook_uid ON users USING btree (facebook_uid);
 
 
 --
@@ -6156,6 +6736,13 @@ CREATE INDEX roll_call_votes_roll_call_id_index ON roll_call_votes USING btree (
 
 
 --
+-- Name: sidebarable_poly_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX sidebarable_poly_idx ON sidebar_boxes USING btree (sidebarable_id, sidebarable_type);
+
+
+--
 -- Name: site_texts_text_type_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -6212,491 +6799,112 @@ CREATE INDEX upcoming_bill_fti_names_index ON upcoming_bills USING gist (fti_nam
 
 
 --
+-- Name: users_lower_email_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX users_lower_email_index ON users USING btree (lower((email)::text));
+
+
+--
+-- Name: users_lower_login_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX users_lower_login_index ON users USING btree (lower((login)::text));
+
+
+--
+-- Name: aggregate_bill_votes_trigger; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER aggregate_bill_votes_trigger AFTER INSERT ON bill_votes FOR EACH ROW EXECUTE PROCEDURE aggregate_increment();
+
+
+--
+-- Name: aggregate_bookmark_trigger; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER aggregate_bookmark_trigger AFTER INSERT ON bookmarks FOR EACH ROW EXECUTE PROCEDURE aggregate_increment();
+
+
+--
+-- Name: aggregate_comment_trigger; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER aggregate_comment_trigger AFTER INSERT ON comments FOR EACH ROW EXECUTE PROCEDURE aggregate_increment();
+
+
+--
+-- Name: aggregate_commentaries_trigger; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER aggregate_commentaries_trigger AFTER INSERT ON commentaries FOR EACH ROW EXECUTE PROCEDURE aggregate_increment();
+
+
+--
 -- Name: article_tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER article_tsvectorupdate
-    BEFORE INSERT OR UPDATE ON articles
-    FOR EACH ROW
-    EXECUTE PROCEDURE tsearch2('fti_names', 'article');
+CREATE TRIGGER article_tsvectorupdate BEFORE INSERT OR UPDATE ON articles FOR EACH ROW EXECUTE PROCEDURE tsearch2('fti_names', 'article');
 
 
 --
 -- Name: bill_titles_tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER bill_titles_tsvectorupdate
-    BEFORE INSERT OR UPDATE ON bill_titles
-    FOR EACH ROW
-    EXECUTE PROCEDURE tsearch2('fti_titles', 'title');
+CREATE TRIGGER bill_titles_tsvectorupdate BEFORE INSERT OR UPDATE ON bill_titles FOR EACH ROW EXECUTE PROCEDURE tsearch2('fti_titles', 'title');
 
 
 --
 -- Name: bill_tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER bill_tsvectorupdate
-    BEFORE INSERT OR UPDATE ON bill_fulltext
-    FOR EACH ROW
-    EXECUTE PROCEDURE tsearch2('fti_names', 'fulltext');
+CREATE TRIGGER bill_tsvectorupdate BEFORE INSERT OR UPDATE ON bill_fulltext FOR EACH ROW EXECUTE PROCEDURE tsearch2('fti_names', 'fulltext');
 
 
 --
 -- Name: commentary_tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER commentary_tsvectorupdate
-    BEFORE INSERT OR UPDATE ON commentaries
-    FOR EACH ROW
-    EXECUTE PROCEDURE tsearch2('fti_names', 'title', 'excerpt', 'source');
+CREATE TRIGGER commentary_tsvectorupdate BEFORE INSERT OR UPDATE ON commentaries FOR EACH ROW EXECUTE PROCEDURE tsearch2('fti_names', 'title', 'excerpt', 'source');
 
 
 --
 -- Name: comments_tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER comments_tsvectorupdate
-    BEFORE INSERT OR UPDATE ON comments
-    FOR EACH ROW
-    EXECUTE PROCEDURE tsearch2('fti_names', 'comment');
+CREATE TRIGGER comments_tsvectorupdate BEFORE INSERT ON comments FOR EACH ROW EXECUTE PROCEDURE tsearch2('fti_names', 'comment');
 
 
 --
 -- Name: committee_tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER committee_tsvectorupdate
-    BEFORE INSERT OR UPDATE ON committees
-    FOR EACH ROW
-    EXECUTE PROCEDURE tsearch2('fti_names', 'name', 'subcommittee_name');
+CREATE TRIGGER committee_tsvectorupdate BEFORE INSERT OR UPDATE ON committees FOR EACH ROW EXECUTE PROCEDURE tsearch2('fti_names', 'name', 'subcommittee_name');
 
 
 --
 -- Name: people_tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER people_tsvectorupdate
-    BEFORE INSERT OR UPDATE ON people
-    FOR EACH ROW
-    EXECUTE PROCEDURE tsearch2('fti_names', 'name', 'firstname', 'lastname', 'nickname', 'unaccented_name');
+CREATE TRIGGER people_tsvectorupdate BEFORE INSERT OR UPDATE ON people FOR EACH ROW EXECUTE PROCEDURE tsearch2('fti_names', 'name', 'firstname', 'lastname', 'nickname', 'unaccented_name');
 
 
 --
 -- Name: subject_tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER subject_tsvectorupdate
-    BEFORE INSERT OR UPDATE ON subjects
-    FOR EACH ROW
-    EXECUTE PROCEDURE tsearch2('fti_names', 'term');
+CREATE TRIGGER subject_tsvectorupdate BEFORE INSERT OR UPDATE ON subjects FOR EACH ROW EXECUTE PROCEDURE tsearch2('fti_names', 'term');
 
 
 --
 -- Name: upcoming_bill_tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER upcoming_bill_tsvectorupdate
-    BEFORE INSERT OR UPDATE ON upcoming_bills
-    FOR EACH ROW
-    EXECUTE PROCEDURE tsearch2('fti_names', 'title', 'summary');
+CREATE TRIGGER upcoming_bill_tsvectorupdate BEFORE INSERT OR UPDATE ON upcoming_bills FOR EACH ROW EXECUTE PROCEDURE tsearch2('fti_names', 'title', 'summary');
 
 
 --
 -- PostgreSQL database dump complete
 --
 
-INSERT INTO schema_migrations (version) VALUES ('147');
-
-INSERT INTO schema_migrations (version) VALUES ('43');
-
-INSERT INTO schema_migrations (version) VALUES ('32');
-
-INSERT INTO schema_migrations (version) VALUES ('106');
-
-INSERT INTO schema_migrations (version) VALUES ('124');
-
-INSERT INTO schema_migrations (version) VALUES ('60');
-
-INSERT INTO schema_migrations (version) VALUES ('56');
-
-INSERT INTO schema_migrations (version) VALUES ('52');
-
-INSERT INTO schema_migrations (version) VALUES ('23');
-
-INSERT INTO schema_migrations (version) VALUES ('30');
-
-INSERT INTO schema_migrations (version) VALUES ('64');
-
-INSERT INTO schema_migrations (version) VALUES ('116');
-
-INSERT INTO schema_migrations (version) VALUES ('39');
-
-INSERT INTO schema_migrations (version) VALUES ('68');
-
-INSERT INTO schema_migrations (version) VALUES ('105');
-
-INSERT INTO schema_migrations (version) VALUES ('35');
-
-INSERT INTO schema_migrations (version) VALUES ('20');
-
-INSERT INTO schema_migrations (version) VALUES ('44');
-
-INSERT INTO schema_migrations (version) VALUES ('102');
-
-INSERT INTO schema_migrations (version) VALUES ('133');
-
-INSERT INTO schema_migrations (version) VALUES ('13');
-
-INSERT INTO schema_migrations (version) VALUES ('36');
-
-INSERT INTO schema_migrations (version) VALUES ('122');
-
-INSERT INTO schema_migrations (version) VALUES ('144');
-
-INSERT INTO schema_migrations (version) VALUES ('140');
-
-INSERT INTO schema_migrations (version) VALUES ('61');
-
-INSERT INTO schema_migrations (version) VALUES ('109');
-
-INSERT INTO schema_migrations (version) VALUES ('8');
-
-INSERT INTO schema_migrations (version) VALUES ('65');
-
-INSERT INTO schema_migrations (version) VALUES ('18');
-
-INSERT INTO schema_migrations (version) VALUES ('70');
-
-INSERT INTO schema_migrations (version) VALUES ('42');
-
-INSERT INTO schema_migrations (version) VALUES ('46');
-
-INSERT INTO schema_migrations (version) VALUES ('31');
-
-INSERT INTO schema_migrations (version) VALUES ('145');
-
-INSERT INTO schema_migrations (version) VALUES ('22');
-
-INSERT INTO schema_migrations (version) VALUES ('108');
-
-INSERT INTO schema_migrations (version) VALUES ('76');
-
-INSERT INTO schema_migrations (version) VALUES ('7');
-
-INSERT INTO schema_migrations (version) VALUES ('111');
-
-INSERT INTO schema_migrations (version) VALUES ('10');
-
-INSERT INTO schema_migrations (version) VALUES ('53');
-
-INSERT INTO schema_migrations (version) VALUES ('29');
-
-INSERT INTO schema_migrations (version) VALUES ('119');
-
-INSERT INTO schema_migrations (version) VALUES ('51');
-
-INSERT INTO schema_migrations (version) VALUES ('5');
-
-INSERT INTO schema_migrations (version) VALUES ('101');
-
-INSERT INTO schema_migrations (version) VALUES ('104');
-
-INSERT INTO schema_migrations (version) VALUES ('66');
-
-INSERT INTO schema_migrations (version) VALUES ('47');
-
-INSERT INTO schema_migrations (version) VALUES ('49');
-
-INSERT INTO schema_migrations (version) VALUES ('78');
-
-INSERT INTO schema_migrations (version) VALUES ('15');
-
-INSERT INTO schema_migrations (version) VALUES ('26');
-
-INSERT INTO schema_migrations (version) VALUES ('107');
-
-INSERT INTO schema_migrations (version) VALUES ('57');
-
-INSERT INTO schema_migrations (version) VALUES ('117');
-
-INSERT INTO schema_migrations (version) VALUES ('55');
-
-INSERT INTO schema_migrations (version) VALUES ('115');
-
-INSERT INTO schema_migrations (version) VALUES ('142');
-
-INSERT INTO schema_migrations (version) VALUES ('137');
-
-INSERT INTO schema_migrations (version) VALUES ('72');
-
-INSERT INTO schema_migrations (version) VALUES ('132');
-
-INSERT INTO schema_migrations (version) VALUES ('75');
-
-INSERT INTO schema_migrations (version) VALUES ('17');
-
-INSERT INTO schema_migrations (version) VALUES ('2');
-
-INSERT INTO schema_migrations (version) VALUES ('118');
-
-INSERT INTO schema_migrations (version) VALUES ('113');
-
-INSERT INTO schema_migrations (version) VALUES ('79');
-
-INSERT INTO schema_migrations (version) VALUES ('48');
-
-INSERT INTO schema_migrations (version) VALUES ('41');
-
-INSERT INTO schema_migrations (version) VALUES ('58');
-
-INSERT INTO schema_migrations (version) VALUES ('54');
-
-INSERT INTO schema_migrations (version) VALUES ('73');
-
-INSERT INTO schema_migrations (version) VALUES ('50');
-
-INSERT INTO schema_migrations (version) VALUES ('27');
-
-INSERT INTO schema_migrations (version) VALUES ('62');
-
-INSERT INTO schema_migrations (version) VALUES ('33');
-
-INSERT INTO schema_migrations (version) VALUES ('38');
-
-INSERT INTO schema_migrations (version) VALUES ('123');
-
-INSERT INTO schema_migrations (version) VALUES ('103');
-
-INSERT INTO schema_migrations (version) VALUES ('77');
-
-INSERT INTO schema_migrations (version) VALUES ('45');
-
-INSERT INTO schema_migrations (version) VALUES ('71');
-
-INSERT INTO schema_migrations (version) VALUES ('63');
-
-INSERT INTO schema_migrations (version) VALUES ('59');
-
-INSERT INTO schema_migrations (version) VALUES ('121');
-
-INSERT INTO schema_migrations (version) VALUES ('112');
-
-INSERT INTO schema_migrations (version) VALUES ('19');
-
-INSERT INTO schema_migrations (version) VALUES ('69');
-
-INSERT INTO schema_migrations (version) VALUES ('28');
-
-INSERT INTO schema_migrations (version) VALUES ('134');
-
-INSERT INTO schema_migrations (version) VALUES ('3');
-
-INSERT INTO schema_migrations (version) VALUES ('16');
-
-INSERT INTO schema_migrations (version) VALUES ('6');
-
-INSERT INTO schema_migrations (version) VALUES ('67');
-
-INSERT INTO schema_migrations (version) VALUES ('126');
-
-INSERT INTO schema_migrations (version) VALUES ('1');
-
-INSERT INTO schema_migrations (version) VALUES ('114');
-
-INSERT INTO schema_migrations (version) VALUES ('100');
-
-INSERT INTO schema_migrations (version) VALUES ('110');
-
-INSERT INTO schema_migrations (version) VALUES ('9');
-
-INSERT INTO schema_migrations (version) VALUES ('11');
-
-INSERT INTO schema_migrations (version) VALUES ('21');
-
-INSERT INTO schema_migrations (version) VALUES ('139');
-
-INSERT INTO schema_migrations (version) VALUES ('146');
-
-INSERT INTO schema_migrations (version) VALUES ('120');
-
-INSERT INTO schema_migrations (version) VALUES ('143');
-
-INSERT INTO schema_migrations (version) VALUES ('25');
-
-INSERT INTO schema_migrations (version) VALUES ('125');
-
-INSERT INTO schema_migrations (version) VALUES ('4');
-
-INSERT INTO schema_migrations (version) VALUES ('136');
-
-INSERT INTO schema_migrations (version) VALUES ('127');
-
-INSERT INTO schema_migrations (version) VALUES ('40');
-
-INSERT INTO schema_migrations (version) VALUES ('135');
-
-INSERT INTO schema_migrations (version) VALUES ('74');
-
-INSERT INTO schema_migrations (version) VALUES ('12');
-
-INSERT INTO schema_migrations (version) VALUES ('14');
-
-INSERT INTO schema_migrations (version) VALUES ('34');
-
-INSERT INTO schema_migrations (version) VALUES ('24');
-
-INSERT INTO schema_migrations (version) VALUES ('37');
-
-INSERT INTO schema_migrations (version) VALUES ('141');
-
-INSERT INTO schema_migrations (version) VALUES ('20080715215558');
-
-INSERT INTO schema_migrations (version) VALUES ('148');
-
-INSERT INTO schema_migrations (version) VALUES ('20080827015858');
-
-INSERT INTO schema_migrations (version) VALUES ('20080903003226');
-
-INSERT INTO schema_migrations (version) VALUES ('20080907060146');
-
-INSERT INTO schema_migrations (version) VALUES ('20080909001523');
-
-INSERT INTO schema_migrations (version) VALUES ('20080911013335');
-
-INSERT INTO schema_migrations (version) VALUES ('20080920112404');
-
-INSERT INTO schema_migrations (version) VALUES ('20080925163620');
-
-INSERT INTO schema_migrations (version) VALUES ('20081006011103');
-
-INSERT INTO schema_migrations (version) VALUES ('20081009022845');
-
-INSERT INTO schema_migrations (version) VALUES ('20081009022933');
-
-INSERT INTO schema_migrations (version) VALUES ('20081014232042');
-
-INSERT INTO schema_migrations (version) VALUES ('20081111025433');
-
-INSERT INTO schema_migrations (version) VALUES ('20081113024227');
-
-INSERT INTO schema_migrations (version) VALUES ('20081117030534');
-
-INSERT INTO schema_migrations (version) VALUES ('20081117235038');
-
-INSERT INTO schema_migrations (version) VALUES ('20081120012826');
-
-INSERT INTO schema_migrations (version) VALUES ('20081120013057');
-
-INSERT INTO schema_migrations (version) VALUES ('20081205060112');
-
-INSERT INTO schema_migrations (version) VALUES ('20081229015856');
-
-INSERT INTO schema_migrations (version) VALUES ('20081231021047');
-
-INSERT INTO schema_migrations (version) VALUES ('20090101045551');
-
-INSERT INTO schema_migrations (version) VALUES ('20090107164906');
-
-INSERT INTO schema_migrations (version) VALUES ('20090107194724');
-
-INSERT INTO schema_migrations (version) VALUES ('20090114032254');
-
-INSERT INTO schema_migrations (version) VALUES ('20090116012326');
-
-INSERT INTO schema_migrations (version) VALUES ('20090117175416');
-
-INSERT INTO schema_migrations (version) VALUES ('20090121035742');
-
-INSERT INTO schema_migrations (version) VALUES ('20090127025149');
-
-INSERT INTO schema_migrations (version) VALUES ('20090131202631');
-
-INSERT INTO schema_migrations (version) VALUES ('20090211014032');
-
-INSERT INTO schema_migrations (version) VALUES ('20090216070042');
-
-INSERT INTO schema_migrations (version) VALUES ('20090218020012');
-
-INSERT INTO schema_migrations (version) VALUES ('20090224013934');
-
-INSERT INTO schema_migrations (version) VALUES ('20090227040428');
-
-INSERT INTO schema_migrations (version) VALUES ('20090304022259');
-
-INSERT INTO schema_migrations (version) VALUES ('20090307153137');
-
-INSERT INTO schema_migrations (version) VALUES ('20090417195827');
-
-INSERT INTO schema_migrations (version) VALUES ('20090407234228');
-
-INSERT INTO schema_migrations (version) VALUES ('20090503234738');
-
-INSERT INTO schema_migrations (version) VALUES ('20090512214848');
-
-INSERT INTO schema_migrations (version) VALUES ('20090325033857');
-
-INSERT INTO schema_migrations (version) VALUES ('20090527004131');
-
-INSERT INTO schema_migrations (version) VALUES ('20090527004445');
-
-INSERT INTO schema_migrations (version) VALUES ('20090527014302');
-
-INSERT INTO schema_migrations (version) VALUES ('20090602062417');
-
-INSERT INTO schema_migrations (version) VALUES ('20090604142844');
-
-INSERT INTO schema_migrations (version) VALUES ('20090604201433');
-
-INSERT INTO schema_migrations (version) VALUES ('20090622211253');
-
-INSERT INTO schema_migrations (version) VALUES ('20090626002723');
-
-INSERT INTO schema_migrations (version) VALUES ('20090706235137');
-
-INSERT INTO schema_migrations (version) VALUES ('20090722010931');
-
-INSERT INTO schema_migrations (version) VALUES ('20090724212938');
-
-INSERT INTO schema_migrations (version) VALUES ('20090725235957');
-
-INSERT INTO schema_migrations (version) VALUES ('20090727163317');
-
-INSERT INTO schema_migrations (version) VALUES ('20090730113924');
-
-INSERT INTO schema_migrations (version) VALUES ('20090804203516');
-
-INSERT INTO schema_migrations (version) VALUES ('20090804203939');
-
-INSERT INTO schema_migrations (version) VALUES ('20090807221541');
-
-INSERT INTO schema_migrations (version) VALUES ('20090908235658');
-
-INSERT INTO schema_migrations (version) VALUES ('20090909000743');
-
-INSERT INTO schema_migrations (version) VALUES ('20091109001926');
-
-INSERT INTO schema_migrations (version) VALUES ('20091201223051');
-
-INSERT INTO schema_migrations (version) VALUES ('20091204191227');
-
-INSERT INTO schema_migrations (version) VALUES ('20091207182604');
-
-INSERT INTO schema_migrations (version) VALUES ('20100122185532');
-
-INSERT INTO schema_migrations (version) VALUES ('20100225005011');
-
-INSERT INTO schema_migrations (version) VALUES ('20100228211106');
-
-INSERT INTO schema_migrations (version) VALUES ('20100227110831');
-
-INSERT INTO schema_migrations (version) VALUES ('20100401235324');
-
-INSERT INTO schema_migrations (version) VALUES ('20100515215737');
-
-INSERT INTO schema_migrations (version) VALUES ('20100630211146');
-
-INSERT INTO schema_migrations (version) VALUES ('20100707180635');
-
-INSERT INTO schema_migrations (version) VALUES ('20100707183122');
-
-INSERT INTO schema_migrations (version) VALUES ('20100710230738');
+INSERT INTO schema_migrations (version) VALUES ('20111108013246');

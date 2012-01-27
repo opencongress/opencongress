@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class PersonTest < Test::Unit::TestCase
-#  fixtures :people
-
   def setup
     #Earl is my representative - Ben(jamin).
     @earl = Person.find_by_firstname_and_lastname("Earl", "Blumenauer")

@@ -9,14 +9,6 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET escape_string_warning = off;
 
---
--- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: postgres
---
-
-CREATE PROCEDURAL LANGUAGE plpgsql;
-
-
-ALTER PROCEDURAL LANGUAGE plpgsql OWNER TO postgres;
 
 SET search_path = public, pg_catalog;
 
@@ -665,35 +657,6 @@ CREATE FUNCTION token_type() RETURNS SETOF tokentype
 
 
 ALTER FUNCTION public.token_type() OWNER TO postgres;
-
---
--- Name: ts_debug(text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION ts_debug(text) RETURNS SETOF tsdebug
-    LANGUAGE sql STRICT
-    AS $_$
-select
-        (select c.cfgname::text from pg_catalog.pg_ts_config as c
-         where c.oid = show_curcfg()),
-        t.alias as tok_type,
-        t.descr as description,
-        p.token,
-        ARRAY ( SELECT m.mapdict::pg_catalog.regdictionary::pg_catalog.text
-                FROM pg_catalog.pg_ts_config_map AS m
-                WHERE m.mapcfg = show_curcfg() AND m.maptokentype = p.tokid
-                ORDER BY m.mapseqno )
-        AS dict_name,
-        strip(to_tsvector(p.token)) as tsvector
-from
-        parse( _get_parser_from_curcfg(), $1 ) as p,
-        token_type() as t
-where
-        t.tokid = p.tokid
-$_$;
-
-
-ALTER FUNCTION public.ts_debug(text) OWNER TO postgres;
 
 --
 -- Name: tsearch2(); Type: FUNCTION; Schema: public; Owner: postgres
@@ -4153,17 +4116,6 @@ ALTER SEQUENCE roll_calls_id_seq OWNED BY roll_calls.id;
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
---
-
-CREATE TABLE schema_migrations (
-    version character varying(255) NOT NULL
-);
-
-
-ALTER TABLE public.schema_migrations OWNER TO opencongress;
-
---
 -- Name: searches; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
 --
 
@@ -6440,38 +6392,6 @@ ALTER TABLE ONLY person_approvals
 
 
 --
--- Name: pg_ts_cfg_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY pg_ts_cfg
-    ADD CONSTRAINT pg_ts_cfg_pkey PRIMARY KEY (ts_name);
-
-
---
--- Name: pg_ts_cfgmap_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY pg_ts_cfgmap
-    ADD CONSTRAINT pg_ts_cfgmap_pkey PRIMARY KEY (ts_name, tok_alias);
-
-
---
--- Name: pg_ts_dict_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY pg_ts_dict
-    ADD CONSTRAINT pg_ts_dict_pkey PRIMARY KEY (dict_name);
-
-
---
--- Name: pg_ts_parser_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY pg_ts_parser
-    ADD CONSTRAINT pg_ts_parser_pkey PRIMARY KEY (prs_name);
-
-
---
 -- Name: political_notebooks_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
 --
 
@@ -7387,13 +7307,6 @@ CREATE UNIQUE INDEX u_users ON users USING btree (login);
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
---
-
-CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
-
-
---
 -- Name: upcoming_bill_fti_names_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
 --
 
@@ -7552,46 +7465,6 @@ REVOKE ALL ON SCHEMA public FROM PUBLIC;
 REVOKE ALL ON SCHEMA public FROM postgres;
 GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
-
-
---
--- Name: pg_ts_cfg; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE pg_ts_cfg FROM PUBLIC;
-REVOKE ALL ON TABLE pg_ts_cfg FROM postgres;
-GRANT ALL ON TABLE pg_ts_cfg TO postgres;
-GRANT SELECT ON TABLE pg_ts_cfg TO opencongress;
-
-
---
--- Name: pg_ts_cfgmap; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE pg_ts_cfgmap FROM PUBLIC;
-REVOKE ALL ON TABLE pg_ts_cfgmap FROM postgres;
-GRANT ALL ON TABLE pg_ts_cfgmap TO postgres;
-GRANT SELECT ON TABLE pg_ts_cfgmap TO opencongress;
-
-
---
--- Name: pg_ts_dict; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE pg_ts_dict FROM PUBLIC;
-REVOKE ALL ON TABLE pg_ts_dict FROM postgres;
-GRANT ALL ON TABLE pg_ts_dict TO postgres;
-GRANT SELECT ON TABLE pg_ts_dict TO opencongress;
-
-
---
--- Name: pg_ts_parser; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE pg_ts_parser FROM PUBLIC;
-REVOKE ALL ON TABLE pg_ts_parser FROM postgres;
-GRANT ALL ON TABLE pg_ts_parser TO postgres;
-GRANT SELECT ON TABLE pg_ts_parser TO opencongress;
 
 
 --

@@ -88,9 +88,6 @@ gem 'formageddon', :git => 'git://github.com/opencongress/formageddon.git'
 
 gem 'autotest'
 
-gem 'rspec-rails', '~> 2.4'
-gem 'cucumber', '0.8.5'
-
 # Testing
 group :test, :development do
   gem 'silent-postgres'	# Quieter postgres log messages

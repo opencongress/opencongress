@@ -1,5 +1,3 @@
-source 'http://rubygems.org'
-
 gem 'rails', '3.0.7'
 gem 'rake', '0.8.7'
 
@@ -86,10 +84,9 @@ gem 'mechanize'
 #gem 'formageddon', '0.0.0', :require => 'formageddon', :path => '/Users/aross/pcf-work/gitbranches/formageddon'
 gem 'formageddon', :git => 'git://github.com/opencongress/formageddon.git'
 
-gem 'autotest'
 
-# Testing
 group :test, :development do
+  gem 'autotest'
   gem 'silent-postgres'	# Quieter postgres log messages
 
   gem 'rspec-rails', '~> 2.4'

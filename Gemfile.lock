@@ -20,7 +20,6 @@ GIT
       mechanize
 
 GEM
-  remote: http://rubygems.org/
   specs:
     POpen4 (0.1.4)
       Platform (>= 0.4.0)

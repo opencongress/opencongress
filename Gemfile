@@ -62,9 +62,10 @@ gem 'htmlentities'
 gem "json"
 gem "nokogiri"
 
-# Deployment
-gem 'capistrano'
-gem 'capistrano-ext'
+group :deployment do
+  gem 'capistrano'
+  gem 'capistrano-ext'
+end
 
 # new relic RPM
 gem 'newrelic_rpm'

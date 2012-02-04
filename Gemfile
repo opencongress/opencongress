@@ -98,9 +98,8 @@ group :test, :development do
   gem 'webrat'
   gem 'selenium-client'
   gem 'sqlite3'
-  
+
   gem 'capybara'
-  gem 'capybara-envjs'
 
   gem 'autotest'
 

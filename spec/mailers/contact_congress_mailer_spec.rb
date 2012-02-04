@@ -8,8 +8,9 @@ describe ContactCongressMailer do
 
   describe 'reply_received_email' do
     it "sends an email" do
-      contact_congress_letter = stub('ccl',
-        :user => stub(:email => 'user@example.com'),
+      contact_congress_letter = stub_model(ContactCongressLetter,
+        :to_param => '1',
+        :user => stub_model(User, :email => 'user@example.com'),
         :subject => 'letter subject'
       )
       thread = stub('thread',

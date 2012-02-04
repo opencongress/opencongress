@@ -22,6 +22,7 @@ development: &dev
 test:
   <<: *common
   database: opencongress_test
+<% '  username: postgres' if ENV.key?('TRAVIS') %>
 
 production:
   <<: *dev

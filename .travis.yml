@@ -5,3 +5,6 @@ before_script:
   - "psql -c 'create database opencongress_test;' -U postgres"
   - "bundle exec rake db:migrate db:test:prepare"
 script: "bundle exec rake spec"
+notifications:
+  email:
+    - dougcole@gmail.com

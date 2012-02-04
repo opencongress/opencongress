@@ -3,5 +3,5 @@ rvm:
   - 1.8.7
 before_script:
   - "psql -c 'create database opencongress_test;' -U postgres"
-  - "bundle exec rake db:test:prepare db:migrate" 
+  - "bundle exec rake db:migrate db:test:prepare"
 script: "rake rspec"

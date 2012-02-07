@@ -453,21 +453,41 @@ class AccountController < ApplicationController
         require 'net/http'
         require 'uri'
         require 'cgi'
+        require 'json'
 
         cookie_domain = '.opencongress.org'
 
-        data = "wpName=#{CGI::escape(current_user.login)}&wpPassword=#{ApiKeys.wiki_pass}&wpLoginattempt=Log%20in&#{ApiKeys.wiki_key}=true"
-
+        # first we need to get the token
+        data = "action=login&lgname=#{CGI::escape(current_user.login)}&lgpassword=#{ApiKeys.wiki_pass}&#{ApiKeys.wiki_key}=1&format=json"
         headers = {
           'Content-Type' => 'application/x-www-form-urlencoded'
         }
-
         http = Net::HTTP.new(Rails.env.production? ? 'wiki-internal' : WIKI_HOST, 80)
-
-        path = "/w/index.php?title=Special:UserLogin&returnto=Main_Page"
+        path = "/api.php"
         resp, data = http.post(path,data,headers)
 
+        # the only cookie returned should be the wiki_session cookie.  set it in the user's browser.
         returned_cookies = resp['set-cookie'].split(',')
+        returned_cookies.each do |b|
+          b.strip!
+          if b =~ /^([A-Za-z0-9_]+)\=([A-Za-z0-9_]+)/
+            cookie_name, cookie_value = [$1, $2]
+            logger.info cookie_name
+            cookies[cookie_name] = {:value => cookie_value, :expires => 30.days.from_now, :domain => cookie_domain, :path => '/'}
+          end
+        end
+        
+        # now we need to validate the token
+        j = JSON.parse(resp.body)
+        data = "action=login&lgname=#{CGI::escape(current_user.login)}&lgpassword=#{ApiKeys.wiki_pass}&#{ApiKeys.wiki_key}=1&lgtoken=#{j['login']['token']}&format=json"
+        headers = {
+          'Content-Type' => 'application/x-www-form-urlencoded',
+          'Cookie' => resp['set-cookie']
+        }
+        resp, data = http.post(path,data,headers)
+        returned_cookies = resp['set-cookie'].split(',')
+        
+        # now set the wiki user and token cookies
         returned_cookies.each do |b|
           b.strip!
           if b =~ /^([A-Za-z0-9_]+)\=([A-Za-z0-9_]+)/

@@ -64,9 +64,10 @@ gem 'htmlentities'
 gem "json"
 gem "nokogiri"
 
-# Deployment
-gem 'capistrano'
-gem 'capistrano-ext'
+group :deployment do
+  gem 'capistrano'
+  gem 'capistrano-ext'
+end
 
 # new relic RPM
 gem 'newrelic_rpm'
@@ -86,13 +87,9 @@ gem 'mechanize'
 #gem 'formageddon', '0.0.0', :require => 'formageddon', :path => '/Users/aross/pcf-work/gitbranches/formageddon'
 gem 'formageddon', :git => 'git://github.com/opencongress/formageddon.git'
 
-gem 'autotest'
 
-gem 'rspec-rails', '~> 2.4'
-gem 'cucumber', '0.8.5'
-
-# Testing
 group :test, :development do
+  gem 'autotest'
   gem 'silent-postgres'	# Quieter postgres log messages
 
   gem 'rspec-rails', '~> 2.4'
@@ -101,9 +98,8 @@ group :test, :development do
   gem 'webrat'
   gem 'selenium-client'
   gem 'sqlite3'
-  
+
   gem 'capybara'
-  gem 'capybara-envjs'
 
   gem 'autotest'
 

@@ -9,120 +9,12 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET escape_string_warning = off;
 
---
--- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: postgres
---
-
-CREATE PROCEDURAL LANGUAGE plpgsql;
-
-
-ALTER PROCEDURAL LANGUAGE plpgsql OWNER TO postgres;
 
 SET search_path = public, pg_catalog;
 
---
--- Name: gtsq; Type: DOMAIN; Schema: public; Owner: postgres
---
-
-CREATE DOMAIN gtsq AS text;
-
-
-ALTER DOMAIN public.gtsq OWNER TO postgres;
 
 --
--- Name: gtsvector; Type: DOMAIN; Schema: public; Owner: postgres
---
-
-CREATE DOMAIN gtsvector AS pg_catalog.gtsvector;
-
-
-ALTER DOMAIN public.gtsvector OWNER TO postgres;
-
---
--- Name: statinfo; Type: TYPE; Schema: public; Owner: postgres
---
-
-CREATE TYPE statinfo AS (
-	word text,
-	ndoc integer,
-	nentry integer
-);
-
-
-ALTER TYPE public.statinfo OWNER TO postgres;
-
---
--- Name: tokenout; Type: TYPE; Schema: public; Owner: postgres
---
-
-CREATE TYPE tokenout AS (
-	tokid integer,
-	token text
-);
-
-
-ALTER TYPE public.tokenout OWNER TO postgres;
-
---
--- Name: tokentype; Type: TYPE; Schema: public; Owner: postgres
---
-
-CREATE TYPE tokentype AS (
-	tokid integer,
-	alias text,
-	descr text
-);
-
-
-ALTER TYPE public.tokentype OWNER TO postgres;
-
---
--- Name: tsdebug; Type: TYPE; Schema: public; Owner: postgres
---
-
-CREATE TYPE tsdebug AS (
-	ts_name text,
-	tok_type text,
-	description text,
-	token text,
-	dict_name text[],
-	tsvector pg_catalog.tsvector
-);
-
-
-ALTER TYPE public.tsdebug OWNER TO postgres;
-
---
--- Name: tsquery; Type: DOMAIN; Schema: public; Owner: postgres
---
-
-CREATE DOMAIN tsquery AS pg_catalog.tsquery;
-
-
-ALTER DOMAIN public.tsquery OWNER TO postgres;
-
---
--- Name: tsvector; Type: DOMAIN; Schema: public; Owner: postgres
---
-
-CREATE DOMAIN tsvector AS pg_catalog.tsvector;
-
-
-ALTER DOMAIN public.tsvector OWNER TO postgres;
-
---
--- Name: _get_parser_from_curcfg(); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION _get_parser_from_curcfg() RETURNS text
-    LANGUAGE sql IMMUTABLE STRICT
-    AS $$select prsname::text from pg_catalog.pg_ts_parser p join pg_ts_config c on cfgparser = p.oid where c.oid = show_curcfg();$$;
-
-
-ALTER FUNCTION public._get_parser_from_curcfg() OWNER TO postgres;
-
---
--- Name: aggregate_increment(); Type: FUNCTION; Schema: public; Owner: opencongress
+-- Name: aggregate_increment(); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION aggregate_increment() RETURNS trigger
@@ -185,10 +77,8 @@ CREATE FUNCTION aggregate_increment() RETURNS trigger
             $$;
 
 
-ALTER FUNCTION public.aggregate_increment() OWNER TO opencongress;
-
 --
--- Name: comment_page(integer, integer, character varying, integer); Type: FUNCTION; Schema: public; Owner: opencongress
+-- Name: comment_page(integer, integer, character varying, integer); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION comment_page(comment_id integer, c_id integer, c_type character varying, comments_per_page integer) RETURNS integer
@@ -220,192 +110,8 @@ CREATE FUNCTION comment_page(comment_id integer, c_id integer, c_type character 
     $$;
 
 
-ALTER FUNCTION public.comment_page(comment_id integer, c_id integer, c_type character varying, comments_per_page integer) OWNER TO opencongress;
-
 --
--- Name: concat(pg_catalog.tsvector, pg_catalog.tsvector); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION concat(pg_catalog.tsvector, pg_catalog.tsvector) RETURNS pg_catalog.tsvector
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$tsvector_concat$$;
-
-
-ALTER FUNCTION public.concat(pg_catalog.tsvector, pg_catalog.tsvector) OWNER TO postgres;
-
---
--- Name: dex_init(internal); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION dex_init(internal) RETURNS internal
-    LANGUAGE c
-    AS '$libdir/tsearch2', 'tsa_dex_init';
-
-
-ALTER FUNCTION public.dex_init(internal) OWNER TO postgres;
-
---
--- Name: dex_lexize(internal, internal, integer); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION dex_lexize(internal, internal, integer) RETURNS internal
-    LANGUAGE c STRICT
-    AS '$libdir/tsearch2', 'tsa_dex_lexize';
-
-
-ALTER FUNCTION public.dex_lexize(internal, internal, integer) OWNER TO postgres;
-
---
--- Name: get_covers(pg_catalog.tsvector, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION get_covers(pg_catalog.tsvector, pg_catalog.tsquery) RETURNS text
-    LANGUAGE c STRICT
-    AS '$libdir/tsearch2', 'tsa_get_covers';
-
-
-ALTER FUNCTION public.get_covers(pg_catalog.tsvector, pg_catalog.tsquery) OWNER TO postgres;
-
---
--- Name: headline(oid, text, pg_catalog.tsquery, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION headline(oid, text, pg_catalog.tsquery, text) RETURNS text
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$ts_headline_byid_opt$$;
-
-
-ALTER FUNCTION public.headline(oid, text, pg_catalog.tsquery, text) OWNER TO postgres;
-
---
--- Name: headline(oid, text, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION headline(oid, text, pg_catalog.tsquery) RETURNS text
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$ts_headline_byid$$;
-
-
-ALTER FUNCTION public.headline(oid, text, pg_catalog.tsquery) OWNER TO postgres;
-
---
--- Name: headline(text, text, pg_catalog.tsquery, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION headline(text, text, pg_catalog.tsquery, text) RETURNS text
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/tsearch2', 'tsa_headline_byname';
-
-
-ALTER FUNCTION public.headline(text, text, pg_catalog.tsquery, text) OWNER TO postgres;
-
---
--- Name: headline(text, text, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION headline(text, text, pg_catalog.tsquery) RETURNS text
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/tsearch2', 'tsa_headline_byname';
-
-
-ALTER FUNCTION public.headline(text, text, pg_catalog.tsquery) OWNER TO postgres;
-
---
--- Name: headline(text, pg_catalog.tsquery, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION headline(text, pg_catalog.tsquery, text) RETURNS text
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$ts_headline_opt$$;
-
-
-ALTER FUNCTION public.headline(text, pg_catalog.tsquery, text) OWNER TO postgres;
-
---
--- Name: headline(text, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION headline(text, pg_catalog.tsquery) RETURNS text
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$ts_headline$$;
-
-
-ALTER FUNCTION public.headline(text, pg_catalog.tsquery) OWNER TO postgres;
-
---
--- Name: length(pg_catalog.tsvector); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION length(pg_catalog.tsvector) RETURNS integer
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$tsvector_length$$;
-
-
-ALTER FUNCTION public.length(pg_catalog.tsvector) OWNER TO postgres;
-
---
--- Name: lexize(oid, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION lexize(oid, text) RETURNS text[]
-    LANGUAGE internal STRICT
-    AS $$ts_lexize$$;
-
-
-ALTER FUNCTION public.lexize(oid, text) OWNER TO postgres;
-
---
--- Name: lexize(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION lexize(text, text) RETURNS text[]
-    LANGUAGE c STRICT
-    AS '$libdir/tsearch2', 'tsa_lexize_byname';
-
-
-ALTER FUNCTION public.lexize(text, text) OWNER TO postgres;
-
---
--- Name: lexize(text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION lexize(text) RETURNS text[]
-    LANGUAGE c STRICT
-    AS '$libdir/tsearch2', 'tsa_lexize_bycurrent';
-
-
-ALTER FUNCTION public.lexize(text) OWNER TO postgres;
-
---
--- Name: longtxs(double precision, text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION longtxs(v_time double precision, v_status text, v_schema text) RETURNS SETOF pg_stat_activity
-    LANGUAGE sql
-    AS $_$
-
-SELECT * from pg_stat_activity
-WHERE extract(minute from current_timestamp-query_start) > $1
-AND current_query = $2 ;
-
-$_$;
-
-
-ALTER FUNCTION public.longtxs(v_time double precision, v_status text, v_schema text) OWNER TO postgres;
-
---
--- Name: numnode(pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION numnode(pg_catalog.tsquery) RETURNS integer
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$tsquery_numnode$$;
-
-
-ALTER FUNCTION public.numnode(pg_catalog.tsquery) OWNER TO postgres;
-
---
--- Name: oc_votes_apart(integer, timestamp without time zone); Type: FUNCTION; Schema: public; Owner: opencongress
+-- Name: oc_votes_apart(integer, timestamp without time zone); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION oc_votes_apart(pid integer, after timestamp without time zone) RETURNS SETOF record
@@ -434,10 +140,8 @@ CREATE FUNCTION oc_votes_apart(pid integer, after timestamp without time zone) R
               $$;
 
 
-ALTER FUNCTION public.oc_votes_apart(pid integer, after timestamp without time zone) OWNER TO opencongress;
-
 --
--- Name: oc_votes_together(integer, timestamp without time zone); Type: FUNCTION; Schema: public; Owner: opencongress
+-- Name: oc_votes_together(integer, timestamp without time zone); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION oc_votes_together(pid integer, after timestamp without time zone) RETURNS SETOF record
@@ -466,153 +170,13 @@ CREATE FUNCTION oc_votes_together(pid integer, after timestamp without time zone
             $$;
 
 
-ALTER FUNCTION public.oc_votes_together(pid integer, after timestamp without time zone) OWNER TO opencongress;
-
---
--- Name: parse(oid, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION parse(oid, text) RETURNS SETOF tokenout
-    LANGUAGE internal STRICT
-    AS $$ts_parse_byid$$;
-
-
-ALTER FUNCTION public.parse(oid, text) OWNER TO postgres;
-
---
--- Name: parse(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION parse(text, text) RETURNS SETOF tokenout
-    LANGUAGE internal STRICT
-    AS $$ts_parse_byname$$;
-
-
-ALTER FUNCTION public.parse(text, text) OWNER TO postgres;
-
---
--- Name: parse(text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION parse(text) RETURNS SETOF tokenout
-    LANGUAGE c STRICT
-    AS '$libdir/tsearch2', 'tsa_parse_current';
-
-
-ALTER FUNCTION public.parse(text) OWNER TO postgres;
-
---
--- Name: plainto_tsquery(oid, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION plainto_tsquery(oid, text) RETURNS pg_catalog.tsquery
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$plainto_tsquery_byid$$;
-
-
-ALTER FUNCTION public.plainto_tsquery(oid, text) OWNER TO postgres;
-
---
--- Name: plainto_tsquery(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION plainto_tsquery(text, text) RETURNS pg_catalog.tsquery
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/tsearch2', 'tsa_plainto_tsquery_name';
-
-
-ALTER FUNCTION public.plainto_tsquery(text, text) OWNER TO postgres;
-
---
--- Name: plainto_tsquery(text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION plainto_tsquery(text) RETURNS pg_catalog.tsquery
-    LANGUAGE internal IMMUTABLE STRICT
-    AS $$plainto_tsquery$$;
-
-
-ALTER FUNCTION public.plainto_tsquery(text) OWNER TO postgres;
-
---
--- Name: prsd_end(internal); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION prsd_end(internal) RETURNS void
-    LANGUAGE c
-    AS '$libdir/tsearch2', 'tsa_prsd_end';
-
-
-ALTER FUNCTION public.prsd_end(internal) OWNER TO postgres;
-
---
--- Name: prsd_getlexeme(internal, internal, internal); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION prsd_getlexeme(internal, internal, internal) RETURNS integer
-    LANGUAGE c
-    AS '$libdir/tsearch2', 'tsa_prsd_getlexeme';
-
-
-ALTER FUNCTION public.prsd_getlexeme(internal, internal, internal) OWNER TO postgres;
-
---
--- Name: prsd_headline(internal, internal, internal); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION prsd_headline(internal, internal, internal) RETURNS internal
-    LANGUAGE c
-    AS '$libdir/tsearch2', 'tsa_prsd_headline';
-
-
-ALTER FUNCTION public.prsd_headline(internal, internal, internal) OWNER TO postgres;
-
---
--- Name: prsd_lextype(internal); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION prsd_lextype(internal) RETURNS internal
-    LANGUAGE c
-    AS '$libdir/tsearch2', 'tsa_prsd_lextype';
-
-
-ALTER FUNCTION public.prsd_lextype(internal) OWNER TO postgres;
-
---
--- Name: prsd_start(internal, integer); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION prsd_start(internal, integer) RETURNS internal
-    LANGUAGE c
-    AS '$libdir/tsearch2', 'tsa_prsd_start';
-
-
-ALTER FUNCTION public.prsd_start(internal, integer) OWNER TO postgres;
-
---
--- Name: querytree(pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION querytree(pg_catalog.tsquery) RETURNS text
-    LANGUAGE internal STRICT
-    AS $$tsquerytree$$;
-
-
-ALTER FUNCTION public.querytree(pg_catalog.tsquery) OWNER TO postgres;
-
---
--- Name: rank(real[], pg_catalog.tsvector, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: postgres
---
-
 CREATE FUNCTION rank(real[], pg_catalog.tsvector, pg_catalog.tsquery) RETURNS real
     LANGUAGE internal IMMUTABLE STRICT
     AS $$ts_rank_wtt$$;
 
 
-ALTER FUNCTION public.rank(real[], pg_catalog.tsvector, pg_catalog.tsquery) OWNER TO postgres;
-
 --
--- Name: rank(real[], pg_catalog.tsvector, pg_catalog.tsquery, integer); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: rank(real[], pg_catalog.tsvector, pg_catalog.tsquery, integer); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION rank(real[], pg_catalog.tsvector, pg_catalog.tsquery, integer) RETURNS real
@@ -620,10 +184,8 @@ CREATE FUNCTION rank(real[], pg_catalog.tsvector, pg_catalog.tsquery, integer) R
     AS $$ts_rank_wttf$$;
 
 
-ALTER FUNCTION public.rank(real[], pg_catalog.tsvector, pg_catalog.tsquery, integer) OWNER TO postgres;
-
 --
--- Name: rank(pg_catalog.tsvector, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: rank(pg_catalog.tsvector, pg_catalog.tsquery); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION rank(pg_catalog.tsvector, pg_catalog.tsquery) RETURNS real
@@ -631,10 +193,8 @@ CREATE FUNCTION rank(pg_catalog.tsvector, pg_catalog.tsquery) RETURNS real
     AS $$ts_rank_tt$$;
 
 
-ALTER FUNCTION public.rank(pg_catalog.tsvector, pg_catalog.tsquery) OWNER TO postgres;
-
 --
--- Name: rank(pg_catalog.tsvector, pg_catalog.tsquery, integer); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: rank(pg_catalog.tsvector, pg_catalog.tsquery, integer); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION rank(pg_catalog.tsvector, pg_catalog.tsquery, integer) RETURNS real
@@ -642,10 +202,8 @@ CREATE FUNCTION rank(pg_catalog.tsvector, pg_catalog.tsquery, integer) RETURNS r
     AS $$ts_rank_ttf$$;
 
 
-ALTER FUNCTION public.rank(pg_catalog.tsvector, pg_catalog.tsquery, integer) OWNER TO postgres;
-
 --
--- Name: rank_cd(real[], pg_catalog.tsvector, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: rank_cd(real[], pg_catalog.tsvector, pg_catalog.tsquery); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION rank_cd(real[], pg_catalog.tsvector, pg_catalog.tsquery) RETURNS real
@@ -653,10 +211,8 @@ CREATE FUNCTION rank_cd(real[], pg_catalog.tsvector, pg_catalog.tsquery) RETURNS
     AS $$ts_rankcd_wtt$$;
 
 
-ALTER FUNCTION public.rank_cd(real[], pg_catalog.tsvector, pg_catalog.tsquery) OWNER TO postgres;
-
 --
--- Name: rank_cd(real[], pg_catalog.tsvector, pg_catalog.tsquery, integer); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: rank_cd(real[], pg_catalog.tsvector, pg_catalog.tsquery, integer); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION rank_cd(real[], pg_catalog.tsvector, pg_catalog.tsquery, integer) RETURNS real
@@ -664,10 +220,8 @@ CREATE FUNCTION rank_cd(real[], pg_catalog.tsvector, pg_catalog.tsquery, integer
     AS $$ts_rankcd_wttf$$;
 
 
-ALTER FUNCTION public.rank_cd(real[], pg_catalog.tsvector, pg_catalog.tsquery, integer) OWNER TO postgres;
-
 --
--- Name: rank_cd(pg_catalog.tsvector, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: rank_cd(pg_catalog.tsvector, pg_catalog.tsquery); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION rank_cd(pg_catalog.tsvector, pg_catalog.tsquery) RETURNS real
@@ -675,10 +229,8 @@ CREATE FUNCTION rank_cd(pg_catalog.tsvector, pg_catalog.tsquery) RETURNS real
     AS $$ts_rankcd_tt$$;
 
 
-ALTER FUNCTION public.rank_cd(pg_catalog.tsvector, pg_catalog.tsquery) OWNER TO postgres;
-
 --
--- Name: rank_cd(pg_catalog.tsvector, pg_catalog.tsquery, integer); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: rank_cd(pg_catalog.tsvector, pg_catalog.tsquery, integer); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION rank_cd(pg_catalog.tsvector, pg_catalog.tsquery, integer) RETURNS real
@@ -686,10 +238,8 @@ CREATE FUNCTION rank_cd(pg_catalog.tsvector, pg_catalog.tsquery, integer) RETURN
     AS $$ts_rankcd_ttf$$;
 
 
-ALTER FUNCTION public.rank_cd(pg_catalog.tsvector, pg_catalog.tsquery, integer) OWNER TO postgres;
-
 --
--- Name: reset_tsearch(); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: reset_tsearch(); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION reset_tsearch() RETURNS void
@@ -697,10 +247,8 @@ CREATE FUNCTION reset_tsearch() RETURNS void
     AS '$libdir/tsearch2', 'tsa_reset_tsearch';
 
 
-ALTER FUNCTION public.reset_tsearch() OWNER TO postgres;
-
 --
--- Name: rewrite(pg_catalog.tsquery, text); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: rewrite(pg_catalog.tsquery, text); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION rewrite(pg_catalog.tsquery, text) RETURNS pg_catalog.tsquery
@@ -708,10 +256,8 @@ CREATE FUNCTION rewrite(pg_catalog.tsquery, text) RETURNS pg_catalog.tsquery
     AS $$tsquery_rewrite_query$$;
 
 
-ALTER FUNCTION public.rewrite(pg_catalog.tsquery, text) OWNER TO postgres;
-
 --
--- Name: rewrite(pg_catalog.tsquery, pg_catalog.tsquery, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: rewrite(pg_catalog.tsquery, pg_catalog.tsquery, pg_catalog.tsquery); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION rewrite(pg_catalog.tsquery, pg_catalog.tsquery, pg_catalog.tsquery) RETURNS pg_catalog.tsquery
@@ -719,10 +265,8 @@ CREATE FUNCTION rewrite(pg_catalog.tsquery, pg_catalog.tsquery, pg_catalog.tsque
     AS $$tsquery_rewrite$$;
 
 
-ALTER FUNCTION public.rewrite(pg_catalog.tsquery, pg_catalog.tsquery, pg_catalog.tsquery) OWNER TO postgres;
-
 --
--- Name: rewrite_accum(pg_catalog.tsquery, pg_catalog.tsquery[]); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: rewrite_accum(pg_catalog.tsquery, pg_catalog.tsquery[]); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION rewrite_accum(pg_catalog.tsquery, pg_catalog.tsquery[]) RETURNS pg_catalog.tsquery
@@ -730,10 +274,8 @@ CREATE FUNCTION rewrite_accum(pg_catalog.tsquery, pg_catalog.tsquery[]) RETURNS 
     AS '$libdir/tsearch2', 'tsa_rewrite_accum';
 
 
-ALTER FUNCTION public.rewrite_accum(pg_catalog.tsquery, pg_catalog.tsquery[]) OWNER TO postgres;
-
 --
--- Name: rewrite_finish(pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: rewrite_finish(pg_catalog.tsquery); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION rewrite_finish(pg_catalog.tsquery) RETURNS pg_catalog.tsquery
@@ -741,10 +283,8 @@ CREATE FUNCTION rewrite_finish(pg_catalog.tsquery) RETURNS pg_catalog.tsquery
     AS '$libdir/tsearch2', 'tsa_rewrite_finish';
 
 
-ALTER FUNCTION public.rewrite_finish(pg_catalog.tsquery) OWNER TO postgres;
-
 --
--- Name: set_curcfg(integer); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: set_curcfg(integer); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION set_curcfg(integer) RETURNS void
@@ -752,10 +292,8 @@ CREATE FUNCTION set_curcfg(integer) RETURNS void
     AS '$libdir/tsearch2', 'tsa_set_curcfg';
 
 
-ALTER FUNCTION public.set_curcfg(integer) OWNER TO postgres;
-
 --
--- Name: set_curcfg(text); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: set_curcfg(text); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION set_curcfg(text) RETURNS void
@@ -763,10 +301,8 @@ CREATE FUNCTION set_curcfg(text) RETURNS void
     AS '$libdir/tsearch2', 'tsa_set_curcfg_byname';
 
 
-ALTER FUNCTION public.set_curcfg(text) OWNER TO postgres;
-
 --
--- Name: set_curdict(integer); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: set_curdict(integer); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION set_curdict(integer) RETURNS void
@@ -774,10 +310,8 @@ CREATE FUNCTION set_curdict(integer) RETURNS void
     AS '$libdir/tsearch2', 'tsa_set_curdict';
 
 
-ALTER FUNCTION public.set_curdict(integer) OWNER TO postgres;
-
 --
--- Name: set_curdict(text); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: set_curdict(text); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION set_curdict(text) RETURNS void
@@ -785,10 +319,8 @@ CREATE FUNCTION set_curdict(text) RETURNS void
     AS '$libdir/tsearch2', 'tsa_set_curdict_byname';
 
 
-ALTER FUNCTION public.set_curdict(text) OWNER TO postgres;
-
 --
--- Name: set_curprs(integer); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: set_curprs(integer); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION set_curprs(integer) RETURNS void
@@ -796,10 +328,8 @@ CREATE FUNCTION set_curprs(integer) RETURNS void
     AS '$libdir/tsearch2', 'tsa_set_curprs';
 
 
-ALTER FUNCTION public.set_curprs(integer) OWNER TO postgres;
-
 --
--- Name: set_curprs(text); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: set_curprs(text); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION set_curprs(text) RETURNS void
@@ -807,10 +337,8 @@ CREATE FUNCTION set_curprs(text) RETURNS void
     AS '$libdir/tsearch2', 'tsa_set_curprs_byname';
 
 
-ALTER FUNCTION public.set_curprs(text) OWNER TO postgres;
-
 --
--- Name: setweight(pg_catalog.tsvector, "char"); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: setweight(pg_catalog.tsvector, "char"); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION setweight(pg_catalog.tsvector, "char") RETURNS pg_catalog.tsvector
@@ -818,10 +346,8 @@ CREATE FUNCTION setweight(pg_catalog.tsvector, "char") RETURNS pg_catalog.tsvect
     AS $$tsvector_setweight$$;
 
 
-ALTER FUNCTION public.setweight(pg_catalog.tsvector, "char") OWNER TO postgres;
-
 --
--- Name: show_curcfg(); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: show_curcfg(); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION show_curcfg() RETURNS oid
@@ -829,10 +355,8 @@ CREATE FUNCTION show_curcfg() RETURNS oid
     AS $$get_current_ts_config$$;
 
 
-ALTER FUNCTION public.show_curcfg() OWNER TO postgres;
-
 --
--- Name: snb_en_init(internal); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: snb_en_init(internal); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION snb_en_init(internal) RETURNS internal
@@ -840,10 +364,8 @@ CREATE FUNCTION snb_en_init(internal) RETURNS internal
     AS '$libdir/tsearch2', 'tsa_snb_en_init';
 
 
-ALTER FUNCTION public.snb_en_init(internal) OWNER TO postgres;
-
 --
--- Name: snb_lexize(internal, internal, integer); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: snb_lexize(internal, internal, integer); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION snb_lexize(internal, internal, integer) RETURNS internal
@@ -851,10 +373,8 @@ CREATE FUNCTION snb_lexize(internal, internal, integer) RETURNS internal
     AS '$libdir/tsearch2', 'tsa_snb_lexize';
 
 
-ALTER FUNCTION public.snb_lexize(internal, internal, integer) OWNER TO postgres;
-
 --
--- Name: snb_ru_init(internal); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: snb_ru_init(internal); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION snb_ru_init(internal) RETURNS internal
@@ -862,10 +382,8 @@ CREATE FUNCTION snb_ru_init(internal) RETURNS internal
     AS '$libdir/tsearch2', 'tsa_snb_ru_init';
 
 
-ALTER FUNCTION public.snb_ru_init(internal) OWNER TO postgres;
-
 --
--- Name: snb_ru_init_koi8(internal); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: snb_ru_init_koi8(internal); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION snb_ru_init_koi8(internal) RETURNS internal
@@ -873,10 +391,8 @@ CREATE FUNCTION snb_ru_init_koi8(internal) RETURNS internal
     AS '$libdir/tsearch2', 'tsa_snb_ru_init_koi8';
 
 
-ALTER FUNCTION public.snb_ru_init_koi8(internal) OWNER TO postgres;
-
 --
--- Name: snb_ru_init_utf8(internal); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: snb_ru_init_utf8(internal); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION snb_ru_init_utf8(internal) RETURNS internal
@@ -884,10 +400,8 @@ CREATE FUNCTION snb_ru_init_utf8(internal) RETURNS internal
     AS '$libdir/tsearch2', 'tsa_snb_ru_init_utf8';
 
 
-ALTER FUNCTION public.snb_ru_init_utf8(internal) OWNER TO postgres;
-
 --
--- Name: spell_init(internal); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: spell_init(internal); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION spell_init(internal) RETURNS internal
@@ -895,10 +409,8 @@ CREATE FUNCTION spell_init(internal) RETURNS internal
     AS '$libdir/tsearch2', 'tsa_spell_init';
 
 
-ALTER FUNCTION public.spell_init(internal) OWNER TO postgres;
-
 --
--- Name: spell_lexize(internal, internal, integer); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: spell_lexize(internal, internal, integer); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION spell_lexize(internal, internal, integer) RETURNS internal
@@ -906,10 +418,8 @@ CREATE FUNCTION spell_lexize(internal, internal, integer) RETURNS internal
     AS '$libdir/tsearch2', 'tsa_spell_lexize';
 
 
-ALTER FUNCTION public.spell_lexize(internal, internal, integer) OWNER TO postgres;
-
 --
--- Name: stat(text); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: stat(text); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION stat(text) RETURNS SETOF statinfo
@@ -917,10 +427,8 @@ CREATE FUNCTION stat(text) RETURNS SETOF statinfo
     AS $$ts_stat1$$;
 
 
-ALTER FUNCTION public.stat(text) OWNER TO postgres;
-
 --
--- Name: stat(text, text); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: stat(text, text); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION stat(text, text) RETURNS SETOF statinfo
@@ -928,10 +436,8 @@ CREATE FUNCTION stat(text, text) RETURNS SETOF statinfo
     AS $$ts_stat2$$;
 
 
-ALTER FUNCTION public.stat(text, text) OWNER TO postgres;
-
 --
--- Name: strip(pg_catalog.tsvector); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: strip(pg_catalog.tsvector); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION strip(pg_catalog.tsvector) RETURNS pg_catalog.tsvector
@@ -939,10 +445,8 @@ CREATE FUNCTION strip(pg_catalog.tsvector) RETURNS pg_catalog.tsvector
     AS $$tsvector_strip$$;
 
 
-ALTER FUNCTION public.strip(pg_catalog.tsvector) OWNER TO postgres;
-
 --
--- Name: syn_init(internal); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: syn_init(internal); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION syn_init(internal) RETURNS internal
@@ -950,10 +454,8 @@ CREATE FUNCTION syn_init(internal) RETURNS internal
     AS '$libdir/tsearch2', 'tsa_syn_init';
 
 
-ALTER FUNCTION public.syn_init(internal) OWNER TO postgres;
-
 --
--- Name: syn_lexize(internal, internal, integer); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: syn_lexize(internal, internal, integer); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION syn_lexize(internal, internal, integer) RETURNS internal
@@ -961,10 +463,8 @@ CREATE FUNCTION syn_lexize(internal, internal, integer) RETURNS internal
     AS '$libdir/tsearch2', 'tsa_syn_lexize';
 
 
-ALTER FUNCTION public.syn_lexize(internal, internal, integer) OWNER TO postgres;
-
 --
--- Name: thesaurus_init(internal); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: thesaurus_init(internal); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION thesaurus_init(internal) RETURNS internal
@@ -972,10 +472,8 @@ CREATE FUNCTION thesaurus_init(internal) RETURNS internal
     AS '$libdir/tsearch2', 'tsa_thesaurus_init';
 
 
-ALTER FUNCTION public.thesaurus_init(internal) OWNER TO postgres;
-
 --
--- Name: thesaurus_lexize(internal, internal, integer, internal); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: thesaurus_lexize(internal, internal, integer, internal); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION thesaurus_lexize(internal, internal, integer, internal) RETURNS internal
@@ -983,10 +481,8 @@ CREATE FUNCTION thesaurus_lexize(internal, internal, integer, internal) RETURNS 
     AS '$libdir/tsearch2', 'tsa_thesaurus_lexize';
 
 
-ALTER FUNCTION public.thesaurus_lexize(internal, internal, integer, internal) OWNER TO postgres;
-
 --
--- Name: to_tsquery(oid, text); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: to_tsquery(oid, text); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION to_tsquery(oid, text) RETURNS pg_catalog.tsquery
@@ -994,10 +490,8 @@ CREATE FUNCTION to_tsquery(oid, text) RETURNS pg_catalog.tsquery
     AS $$to_tsquery_byid$$;
 
 
-ALTER FUNCTION public.to_tsquery(oid, text) OWNER TO postgres;
-
 --
--- Name: to_tsquery(text, text); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: to_tsquery(text, text); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION to_tsquery(text, text) RETURNS pg_catalog.tsquery
@@ -1005,10 +499,8 @@ CREATE FUNCTION to_tsquery(text, text) RETURNS pg_catalog.tsquery
     AS '$libdir/tsearch2', 'tsa_to_tsquery_name';
 
 
-ALTER FUNCTION public.to_tsquery(text, text) OWNER TO postgres;
-
 --
--- Name: to_tsquery(text); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: to_tsquery(text); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION to_tsquery(text) RETURNS pg_catalog.tsquery
@@ -1016,10 +508,8 @@ CREATE FUNCTION to_tsquery(text) RETURNS pg_catalog.tsquery
     AS $$to_tsquery$$;
 
 
-ALTER FUNCTION public.to_tsquery(text) OWNER TO postgres;
-
 --
--- Name: to_tsvector(oid, text); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: to_tsvector(oid, text); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION to_tsvector(oid, text) RETURNS pg_catalog.tsvector
@@ -1027,10 +517,8 @@ CREATE FUNCTION to_tsvector(oid, text) RETURNS pg_catalog.tsvector
     AS $$to_tsvector_byid$$;
 
 
-ALTER FUNCTION public.to_tsvector(oid, text) OWNER TO postgres;
-
 --
--- Name: to_tsvector(text, text); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: to_tsvector(text, text); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION to_tsvector(text, text) RETURNS pg_catalog.tsvector
@@ -1038,10 +526,8 @@ CREATE FUNCTION to_tsvector(text, text) RETURNS pg_catalog.tsvector
     AS '$libdir/tsearch2', 'tsa_to_tsvector_name';
 
 
-ALTER FUNCTION public.to_tsvector(text, text) OWNER TO postgres;
-
 --
--- Name: to_tsvector(text); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: to_tsvector(text); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION to_tsvector(text) RETURNS pg_catalog.tsvector
@@ -1049,10 +535,8 @@ CREATE FUNCTION to_tsvector(text) RETURNS pg_catalog.tsvector
     AS $$to_tsvector$$;
 
 
-ALTER FUNCTION public.to_tsvector(text) OWNER TO postgres;
-
 --
--- Name: token_type(integer); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: token_type(integer); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION token_type(integer) RETURNS SETOF tokentype
@@ -1060,10 +544,8 @@ CREATE FUNCTION token_type(integer) RETURNS SETOF tokentype
     AS $$ts_token_type_byid$$;
 
 
-ALTER FUNCTION public.token_type(integer) OWNER TO postgres;
-
 --
--- Name: token_type(text); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: token_type(text); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION token_type(text) RETURNS SETOF tokentype
@@ -1071,10 +553,8 @@ CREATE FUNCTION token_type(text) RETURNS SETOF tokentype
     AS $$ts_token_type_byname$$;
 
 
-ALTER FUNCTION public.token_type(text) OWNER TO postgres;
-
 --
--- Name: token_type(); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: token_type(); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION token_type() RETURNS SETOF tokentype
@@ -1082,39 +562,8 @@ CREATE FUNCTION token_type() RETURNS SETOF tokentype
     AS '$libdir/tsearch2', 'tsa_token_type_current';
 
 
-ALTER FUNCTION public.token_type() OWNER TO postgres;
-
 --
--- Name: ts_debug(text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION ts_debug(text) RETURNS SETOF tsdebug
-    LANGUAGE sql STRICT
-    AS $_$
-select
-        (select c.cfgname::text from pg_catalog.pg_ts_config as c
-         where c.oid = show_curcfg()),
-        t.alias as tok_type,
-        t.descr as description,
-        p.token,
-        ARRAY ( SELECT m.mapdict::pg_catalog.regdictionary::pg_catalog.text
-                FROM pg_catalog.pg_ts_config_map AS m
-                WHERE m.mapcfg = show_curcfg() AND m.maptokentype = p.tokid
-                ORDER BY m.mapseqno )
-        AS dict_name,
-        strip(to_tsvector(p.token)) as tsvector
-from
-        parse( _get_parser_from_curcfg(), $1 ) as p,
-        token_type() as t
-where
-        t.tokid = p.tokid
-$_$;
-
-
-ALTER FUNCTION public.ts_debug(text) OWNER TO postgres;
-
---
--- Name: tsearch2(); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: tsearch2(); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION tsearch2() RETURNS trigger
@@ -1122,10 +571,8 @@ CREATE FUNCTION tsearch2() RETURNS trigger
     AS '$libdir/tsearch2', 'tsa_tsearch2';
 
 
-ALTER FUNCTION public.tsearch2() OWNER TO postgres;
-
 --
--- Name: tsq_mcontained(pg_catalog.tsquery, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: tsq_mcontained(pg_catalog.tsquery, pg_catalog.tsquery); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION tsq_mcontained(pg_catalog.tsquery, pg_catalog.tsquery) RETURNS boolean
@@ -1133,10 +580,8 @@ CREATE FUNCTION tsq_mcontained(pg_catalog.tsquery, pg_catalog.tsquery) RETURNS b
     AS $$tsq_mcontained$$;
 
 
-ALTER FUNCTION public.tsq_mcontained(pg_catalog.tsquery, pg_catalog.tsquery) OWNER TO postgres;
-
 --
--- Name: tsq_mcontains(pg_catalog.tsquery, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: tsq_mcontains(pg_catalog.tsquery, pg_catalog.tsquery); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION tsq_mcontains(pg_catalog.tsquery, pg_catalog.tsquery) RETURNS boolean
@@ -1144,10 +589,8 @@ CREATE FUNCTION tsq_mcontains(pg_catalog.tsquery, pg_catalog.tsquery) RETURNS bo
     AS $$tsq_mcontains$$;
 
 
-ALTER FUNCTION public.tsq_mcontains(pg_catalog.tsquery, pg_catalog.tsquery) OWNER TO postgres;
-
 --
--- Name: tsquery_and(pg_catalog.tsquery, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: tsquery_and(pg_catalog.tsquery, pg_catalog.tsquery); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION tsquery_and(pg_catalog.tsquery, pg_catalog.tsquery) RETURNS pg_catalog.tsquery
@@ -1155,10 +598,8 @@ CREATE FUNCTION tsquery_and(pg_catalog.tsquery, pg_catalog.tsquery) RETURNS pg_c
     AS $$tsquery_and$$;
 
 
-ALTER FUNCTION public.tsquery_and(pg_catalog.tsquery, pg_catalog.tsquery) OWNER TO postgres;
-
 --
--- Name: tsquery_not(pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: tsquery_not(pg_catalog.tsquery); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION tsquery_not(pg_catalog.tsquery) RETURNS pg_catalog.tsquery
@@ -1166,10 +607,8 @@ CREATE FUNCTION tsquery_not(pg_catalog.tsquery) RETURNS pg_catalog.tsquery
     AS $$tsquery_not$$;
 
 
-ALTER FUNCTION public.tsquery_not(pg_catalog.tsquery) OWNER TO postgres;
-
 --
--- Name: tsquery_or(pg_catalog.tsquery, pg_catalog.tsquery); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: tsquery_or(pg_catalog.tsquery, pg_catalog.tsquery); Type: FUNCTION; Schema: public;
 --
 
 CREATE FUNCTION tsquery_or(pg_catalog.tsquery, pg_catalog.tsquery) RETURNS pg_catalog.tsquery
@@ -1177,10 +616,8 @@ CREATE FUNCTION tsquery_or(pg_catalog.tsquery, pg_catalog.tsquery) RETURNS pg_ca
     AS $$tsquery_or$$;
 
 
-ALTER FUNCTION public.tsquery_or(pg_catalog.tsquery, pg_catalog.tsquery) OWNER TO postgres;
-
 --
--- Name: rewrite(pg_catalog.tsquery[]); Type: AGGREGATE; Schema: public; Owner: postgres
+-- Name: rewrite(pg_catalog.tsquery[]); Type: AGGREGATE; Schema: public;
 --
 
 CREATE AGGREGATE rewrite(pg_catalog.tsquery[]) (
@@ -1190,10 +627,8 @@ CREATE AGGREGATE rewrite(pg_catalog.tsquery[]) (
 );
 
 
-ALTER AGGREGATE public.rewrite(pg_catalog.tsquery[]) OWNER TO postgres;
-
 --
--- Name: tsquery_ops; Type: OPERATOR CLASS; Schema: public; Owner: postgres
+-- Name: tsquery_ops; Type: OPERATOR CLASS; Schema: public;
 --
 
 CREATE OPERATOR CLASS tsquery_ops
@@ -1206,10 +641,8 @@ CREATE OPERATOR CLASS tsquery_ops
     FUNCTION 1 tsquery_cmp(pg_catalog.tsquery,pg_catalog.tsquery);
 
 
-ALTER OPERATOR CLASS public.tsquery_ops USING btree OWNER TO postgres;
-
 --
--- Name: tsvector_ops; Type: OPERATOR CLASS; Schema: public; Owner: postgres
+-- Name: tsvector_ops; Type: OPERATOR CLASS; Schema: public;
 --
 
 CREATE OPERATOR CLASS tsvector_ops
@@ -1222,14 +655,12 @@ CREATE OPERATOR CLASS tsvector_ops
     FUNCTION 1 tsvector_cmp(pg_catalog.tsvector,pg_catalog.tsvector);
 
 
-ALTER OPERATOR CLASS public.tsvector_ops USING btree OWNER TO postgres;
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
 
 --
--- Name: action_references; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: action_references; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE action_references (
@@ -1240,10 +671,8 @@ CREATE TABLE action_references (
 );
 
 
-ALTER TABLE public.action_references OWNER TO opencongress;
-
 --
--- Name: action_references_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: action_references_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE action_references_id_seq
@@ -1254,17 +683,15 @@ CREATE SEQUENCE action_references_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.action_references_id_seq OWNER TO opencongress;
-
 --
--- Name: action_references_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: action_references_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE action_references_id_seq OWNED BY action_references.id;
 
 
 --
--- Name: actions; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: actions; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE actions (
@@ -1287,10 +714,8 @@ CREATE TABLE actions (
 );
 
 
-ALTER TABLE public.actions OWNER TO opencongress;
-
 --
--- Name: actions_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: actions_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE actions_id_seq
@@ -1301,17 +726,15 @@ CREATE SEQUENCE actions_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.actions_id_seq OWNER TO opencongress;
-
 --
--- Name: actions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: actions_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE actions_id_seq OWNED BY actions.id;
 
 
 --
--- Name: amendments; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: amendments; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE amendments (
@@ -1331,10 +754,8 @@ CREATE TABLE amendments (
 );
 
 
-ALTER TABLE public.amendments OWNER TO opencongress;
-
 --
--- Name: amendments_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: amendments_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE amendments_id_seq
@@ -1345,17 +766,15 @@ CREATE SEQUENCE amendments_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.amendments_id_seq OWNER TO opencongress;
-
 --
--- Name: amendments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: amendments_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE amendments_id_seq OWNED BY amendments.id;
 
 
 --
--- Name: api_hits; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: api_hits; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE api_hits (
@@ -1368,10 +787,8 @@ CREATE TABLE api_hits (
 );
 
 
-ALTER TABLE public.api_hits OWNER TO opencongress;
-
 --
--- Name: api_hits_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: api_hits_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE api_hits_id_seq
@@ -1382,17 +799,15 @@ CREATE SEQUENCE api_hits_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.api_hits_id_seq OWNER TO opencongress;
-
 --
--- Name: api_hits_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: api_hits_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE api_hits_id_seq OWNED BY api_hits.id;
 
 
 --
--- Name: article_images; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: article_images; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE article_images (
@@ -1402,10 +817,8 @@ CREATE TABLE article_images (
 );
 
 
-ALTER TABLE public.article_images OWNER TO opencongress;
-
 --
--- Name: article_images_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: article_images_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE article_images_id_seq
@@ -1416,17 +829,15 @@ CREATE SEQUENCE article_images_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.article_images_id_seq OWNER TO opencongress;
-
 --
--- Name: article_images_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: article_images_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE article_images_id_seq OWNED BY article_images.id;
 
 
 --
--- Name: articles; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: articles; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE articles (
@@ -1445,10 +856,8 @@ CREATE TABLE articles (
 );
 
 
-ALTER TABLE public.articles OWNER TO opencongress;
-
 --
--- Name: articles_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: articles_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE articles_id_seq
@@ -1459,17 +868,15 @@ CREATE SEQUENCE articles_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.articles_id_seq OWNER TO opencongress;
-
 --
--- Name: articles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: articles_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE articles_id_seq OWNED BY articles.id;
 
 
 --
--- Name: bad_commentaries; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bad_commentaries; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE bad_commentaries (
@@ -1481,10 +888,8 @@ CREATE TABLE bad_commentaries (
 );
 
 
-ALTER TABLE public.bad_commentaries OWNER TO opencongress;
-
 --
--- Name: bad_commentaries_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: bad_commentaries_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE bad_commentaries_id_seq
@@ -1495,17 +900,15 @@ CREATE SEQUENCE bad_commentaries_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.bad_commentaries_id_seq OWNER TO opencongress;
-
 --
--- Name: bad_commentaries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: bad_commentaries_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE bad_commentaries_id_seq OWNED BY bad_commentaries.id;
 
 
 --
--- Name: bill_battles; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_battles; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE bill_battles (
@@ -1522,10 +925,8 @@ CREATE TABLE bill_battles (
 );
 
 
-ALTER TABLE public.bill_battles OWNER TO opencongress;
-
 --
--- Name: bill_battles_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: bill_battles_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE bill_battles_id_seq
@@ -1536,17 +937,15 @@ CREATE SEQUENCE bill_battles_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.bill_battles_id_seq OWNER TO opencongress;
-
 --
--- Name: bill_battles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: bill_battles_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE bill_battles_id_seq OWNED BY bill_battles.id;
 
 
 --
--- Name: bill_fulltext; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_fulltext; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE bill_fulltext (
@@ -1556,10 +955,8 @@ CREATE TABLE bill_fulltext (
 );
 
 
-ALTER TABLE public.bill_fulltext OWNER TO opencongress;
-
 --
--- Name: bill_interest_groups; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_interest_groups; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE bill_interest_groups (
@@ -1570,10 +967,8 @@ CREATE TABLE bill_interest_groups (
 );
 
 
-ALTER TABLE public.bill_interest_groups OWNER TO opencongress;
-
 --
--- Name: bill_interest_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: bill_interest_groups_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE bill_interest_groups_id_seq
@@ -1584,17 +979,15 @@ CREATE SEQUENCE bill_interest_groups_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.bill_interest_groups_id_seq OWNER TO opencongress;
-
 --
--- Name: bill_interest_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: bill_interest_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE bill_interest_groups_id_seq OWNED BY bill_interest_groups.id;
 
 
 --
--- Name: bill_position_organizations; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_position_organizations; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE bill_position_organizations (
@@ -1607,10 +1000,8 @@ CREATE TABLE bill_position_organizations (
 );
 
 
-ALTER TABLE public.bill_position_organizations OWNER TO opencongress;
-
 --
--- Name: bill_position_organizations_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: bill_position_organizations_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE bill_position_organizations_id_seq
@@ -1621,17 +1012,15 @@ CREATE SEQUENCE bill_position_organizations_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.bill_position_organizations_id_seq OWNER TO opencongress;
-
 --
--- Name: bill_position_organizations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: bill_position_organizations_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE bill_position_organizations_id_seq OWNED BY bill_position_organizations.id;
 
 
 --
--- Name: bill_referrers; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_referrers; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE bill_referrers (
@@ -1642,10 +1031,8 @@ CREATE TABLE bill_referrers (
 );
 
 
-ALTER TABLE public.bill_referrers OWNER TO opencongress;
-
 --
--- Name: bill_referrers_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: bill_referrers_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE bill_referrers_id_seq
@@ -1656,17 +1043,15 @@ CREATE SEQUENCE bill_referrers_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.bill_referrers_id_seq OWNER TO opencongress;
-
 --
--- Name: bill_referrers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: bill_referrers_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE bill_referrers_id_seq OWNED BY bill_referrers.id;
 
 
 --
--- Name: bill_stats; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_stats; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE bill_stats (
@@ -1677,10 +1062,8 @@ CREATE TABLE bill_stats (
 );
 
 
-ALTER TABLE public.bill_stats OWNER TO opencongress;
-
 --
--- Name: bill_subjects; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_subjects; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE bill_subjects (
@@ -1690,10 +1073,8 @@ CREATE TABLE bill_subjects (
 );
 
 
-ALTER TABLE public.bill_subjects OWNER TO opencongress;
-
 --
--- Name: bill_subjects_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: bill_subjects_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE bill_subjects_id_seq
@@ -1704,17 +1085,15 @@ CREATE SEQUENCE bill_subjects_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.bill_subjects_id_seq OWNER TO opencongress;
-
 --
--- Name: bill_subjects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: bill_subjects_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE bill_subjects_id_seq OWNED BY bill_subjects.id;
 
 
 --
--- Name: bill_text_nodes; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_text_nodes; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE bill_text_nodes (
@@ -1724,10 +1103,8 @@ CREATE TABLE bill_text_nodes (
 );
 
 
-ALTER TABLE public.bill_text_nodes OWNER TO opencongress;
-
 --
--- Name: bill_text_nodes_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: bill_text_nodes_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE bill_text_nodes_id_seq
@@ -1738,17 +1115,15 @@ CREATE SEQUENCE bill_text_nodes_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.bill_text_nodes_id_seq OWNER TO opencongress;
-
 --
--- Name: bill_text_nodes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: bill_text_nodes_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE bill_text_nodes_id_seq OWNED BY bill_text_nodes.id;
 
 
 --
--- Name: bill_text_versions; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_text_versions; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE bill_text_versions (
@@ -1764,10 +1139,8 @@ CREATE TABLE bill_text_versions (
 );
 
 
-ALTER TABLE public.bill_text_versions OWNER TO opencongress;
-
 --
--- Name: bill_text_versions_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: bill_text_versions_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE bill_text_versions_id_seq
@@ -1778,17 +1151,15 @@ CREATE SEQUENCE bill_text_versions_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.bill_text_versions_id_seq OWNER TO opencongress;
-
 --
--- Name: bill_text_versions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: bill_text_versions_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE bill_text_versions_id_seq OWNED BY bill_text_versions.id;
 
 
 --
--- Name: bill_titles; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_titles; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE bill_titles (
@@ -1802,10 +1173,8 @@ CREATE TABLE bill_titles (
 );
 
 
-ALTER TABLE public.bill_titles OWNER TO opencongress;
-
 --
--- Name: bill_titles_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: bill_titles_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE bill_titles_id_seq
@@ -1816,17 +1185,15 @@ CREATE SEQUENCE bill_titles_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.bill_titles_id_seq OWNER TO opencongress;
-
 --
--- Name: bill_titles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: bill_titles_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE bill_titles_id_seq OWNED BY bill_titles.id;
 
 
 --
--- Name: bill_votes; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_votes; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE bill_votes (
@@ -1839,10 +1206,8 @@ CREATE TABLE bill_votes (
 );
 
 
-ALTER TABLE public.bill_votes OWNER TO opencongress;
-
 --
--- Name: bill_votes_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: bill_votes_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE bill_votes_id_seq
@@ -1853,17 +1218,15 @@ CREATE SEQUENCE bill_votes_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.bill_votes_id_seq OWNER TO opencongress;
-
 --
--- Name: bill_votes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: bill_votes_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE bill_votes_id_seq OWNED BY bill_votes.id;
 
 
 --
--- Name: bills; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bills; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE bills (
@@ -1895,10 +1258,8 @@ CREATE TABLE bills (
 );
 
 
-ALTER TABLE public.bills OWNER TO opencongress;
-
 --
--- Name: bills_committees; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bills_committees; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE bills_committees (
@@ -1909,10 +1270,8 @@ CREATE TABLE bills_committees (
 );
 
 
-ALTER TABLE public.bills_committees OWNER TO opencongress;
-
 --
--- Name: bills_committees_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: bills_committees_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE bills_committees_id_seq
@@ -1923,17 +1282,15 @@ CREATE SEQUENCE bills_committees_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.bills_committees_id_seq OWNER TO opencongress;
-
 --
--- Name: bills_committees_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: bills_committees_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE bills_committees_id_seq OWNED BY bills_committees.id;
 
 
 --
--- Name: bills_cosponsors; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bills_cosponsors; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE bills_cosponsors (
@@ -1945,10 +1302,8 @@ CREATE TABLE bills_cosponsors (
 );
 
 
-ALTER TABLE public.bills_cosponsors OWNER TO opencongress;
-
 --
--- Name: bills_cosponsors_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: bills_cosponsors_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE bills_cosponsors_id_seq
@@ -1959,17 +1314,15 @@ CREATE SEQUENCE bills_cosponsors_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.bills_cosponsors_id_seq OWNER TO opencongress;
-
 --
--- Name: bills_cosponsors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: bills_cosponsors_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE bills_cosponsors_id_seq OWNED BY bills_cosponsors.id;
 
 
 --
--- Name: bills_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: bills_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE bills_id_seq
@@ -1980,17 +1333,15 @@ CREATE SEQUENCE bills_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.bills_id_seq OWNER TO opencongress;
-
 --
--- Name: bills_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: bills_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE bills_id_seq OWNED BY bills.id;
 
 
 --
--- Name: bills_relations; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bills_relations; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE bills_relations (
@@ -2001,10 +1352,8 @@ CREATE TABLE bills_relations (
 );
 
 
-ALTER TABLE public.bills_relations OWNER TO opencongress;
-
 --
--- Name: bills_relations_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: bills_relations_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE bills_relations_id_seq
@@ -2015,17 +1364,15 @@ CREATE SEQUENCE bills_relations_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.bills_relations_id_seq OWNER TO opencongress;
-
 --
--- Name: bills_relations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: bills_relations_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE bills_relations_id_seq OWNED BY bills_relations.id;
 
 
 --
--- Name: bookmarks; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bookmarks; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE bookmarks (
@@ -2037,10 +1384,8 @@ CREATE TABLE bookmarks (
 );
 
 
-ALTER TABLE public.bookmarks OWNER TO opencongress;
-
 --
--- Name: bookmarks_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: bookmarks_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE bookmarks_id_seq
@@ -2051,17 +1396,15 @@ CREATE SEQUENCE bookmarks_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.bookmarks_id_seq OWNER TO opencongress;
-
 --
--- Name: bookmarks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: bookmarks_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE bookmarks_id_seq OWNED BY bookmarks.id;
 
 
 --
--- Name: comment_scores; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: comment_scores; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE comment_scores (
@@ -2074,10 +1417,8 @@ CREATE TABLE comment_scores (
 );
 
 
-ALTER TABLE public.comment_scores OWNER TO opencongress;
-
 --
--- Name: comment_scores_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: comment_scores_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE comment_scores_id_seq
@@ -2088,17 +1429,15 @@ CREATE SEQUENCE comment_scores_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.comment_scores_id_seq OWNER TO opencongress;
-
 --
--- Name: comment_scores_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: comment_scores_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE comment_scores_id_seq OWNED BY comment_scores.id;
 
 
 --
--- Name: commentaries; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: commentaries; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE commentaries (
@@ -2123,10 +1462,8 @@ CREATE TABLE commentaries (
 );
 
 
-ALTER TABLE public.commentaries OWNER TO opencongress;
-
 --
--- Name: commentaries_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: commentaries_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE commentaries_id_seq
@@ -2137,17 +1474,15 @@ CREATE SEQUENCE commentaries_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.commentaries_id_seq OWNER TO opencongress;
-
 --
--- Name: commentaries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: commentaries_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE commentaries_id_seq OWNED BY commentaries.id;
 
 
 --
--- Name: commentary_ratings; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: commentary_ratings; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE commentary_ratings (
@@ -2160,10 +1495,8 @@ CREATE TABLE commentary_ratings (
 );
 
 
-ALTER TABLE public.commentary_ratings OWNER TO opencongress;
-
 --
--- Name: commentary_ratings_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: commentary_ratings_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE commentary_ratings_id_seq
@@ -2174,17 +1507,15 @@ CREATE SEQUENCE commentary_ratings_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.commentary_ratings_id_seq OWNER TO opencongress;
-
 --
--- Name: commentary_ratings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: commentary_ratings_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE commentary_ratings_id_seq OWNED BY commentary_ratings.id;
 
 
 --
--- Name: comments; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: comments; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE comments (
@@ -2214,10 +1545,8 @@ CREATE TABLE comments (
 );
 
 
-ALTER TABLE public.comments OWNER TO opencongress;
-
 --
--- Name: comments_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: comments_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE comments_id_seq
@@ -2228,17 +1557,15 @@ CREATE SEQUENCE comments_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.comments_id_seq OWNER TO opencongress;
-
 --
--- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE comments_id_seq OWNED BY comments.id;
 
 
 --
--- Name: committee_meetings; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: committee_meetings; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE committee_meetings (
@@ -2250,10 +1577,8 @@ CREATE TABLE committee_meetings (
 );
 
 
-ALTER TABLE public.committee_meetings OWNER TO opencongress;
-
 --
--- Name: committee_meetings_bills; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: committee_meetings_bills; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE committee_meetings_bills (
@@ -2263,10 +1588,8 @@ CREATE TABLE committee_meetings_bills (
 );
 
 
-ALTER TABLE public.committee_meetings_bills OWNER TO opencongress;
-
 --
--- Name: committee_meetings_bills_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: committee_meetings_bills_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE committee_meetings_bills_id_seq
@@ -2277,17 +1600,15 @@ CREATE SEQUENCE committee_meetings_bills_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.committee_meetings_bills_id_seq OWNER TO opencongress;
-
 --
--- Name: committee_meetings_bills_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: committee_meetings_bills_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE committee_meetings_bills_id_seq OWNED BY committee_meetings_bills.id;
 
 
 --
--- Name: committee_meetings_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: committee_meetings_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE committee_meetings_id_seq
@@ -2298,17 +1619,15 @@ CREATE SEQUENCE committee_meetings_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.committee_meetings_id_seq OWNER TO opencongress;
-
 --
--- Name: committee_meetings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: committee_meetings_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE committee_meetings_id_seq OWNED BY committee_meetings.id;
 
 
 --
--- Name: committee_reports; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: committee_reports; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE committee_reports (
@@ -2327,10 +1646,8 @@ CREATE TABLE committee_reports (
 );
 
 
-ALTER TABLE public.committee_reports OWNER TO opencongress;
-
 --
--- Name: committee_reports_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: committee_reports_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE committee_reports_id_seq
@@ -2341,17 +1658,15 @@ CREATE SEQUENCE committee_reports_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.committee_reports_id_seq OWNER TO opencongress;
-
 --
--- Name: committee_reports_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: committee_reports_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE committee_reports_id_seq OWNED BY committee_reports.id;
 
 
 --
--- Name: committee_stats; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: committee_stats; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE committee_stats (
@@ -2360,10 +1675,8 @@ CREATE TABLE committee_stats (
 );
 
 
-ALTER TABLE public.committee_stats OWNER TO opencongress;
-
 --
--- Name: committees; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: committees; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE committees (
@@ -2377,10 +1690,8 @@ CREATE TABLE committees (
 );
 
 
-ALTER TABLE public.committees OWNER TO opencongress;
-
 --
--- Name: committees_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: committees_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE committees_id_seq
@@ -2391,17 +1702,15 @@ CREATE SEQUENCE committees_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.committees_id_seq OWNER TO opencongress;
-
 --
--- Name: committees_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: committees_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE committees_id_seq OWNED BY committees.id;
 
 
 --
--- Name: committees_people; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: committees_people; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE committees_people (
@@ -2413,10 +1722,8 @@ CREATE TABLE committees_people (
 );
 
 
-ALTER TABLE public.committees_people OWNER TO opencongress;
-
 --
--- Name: committees_people_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: committees_people_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE committees_people_id_seq
@@ -2427,17 +1734,15 @@ CREATE SEQUENCE committees_people_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.committees_people_id_seq OWNER TO opencongress;
-
 --
--- Name: committees_people_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: committees_people_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE committees_people_id_seq OWNED BY committees_people.id;
 
 
 --
--- Name: comparison_data_points; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: comparison_data_points; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE comparison_data_points (
@@ -2450,10 +1755,8 @@ CREATE TABLE comparison_data_points (
 );
 
 
-ALTER TABLE public.comparison_data_points OWNER TO opencongress;
-
 --
--- Name: comparison_data_points_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: comparison_data_points_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE comparison_data_points_id_seq
@@ -2464,17 +1767,15 @@ CREATE SEQUENCE comparison_data_points_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.comparison_data_points_id_seq OWNER TO opencongress;
-
 --
--- Name: comparison_data_points_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: comparison_data_points_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE comparison_data_points_id_seq OWNED BY comparison_data_points.id;
 
 
 --
--- Name: comparisons; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: comparisons; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE comparisons (
@@ -2488,10 +1789,8 @@ CREATE TABLE comparisons (
 );
 
 
-ALTER TABLE public.comparisons OWNER TO opencongress;
-
 --
--- Name: comparisons_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: comparisons_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE comparisons_id_seq
@@ -2502,17 +1801,15 @@ CREATE SEQUENCE comparisons_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.comparisons_id_seq OWNER TO opencongress;
-
 --
--- Name: comparisons_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: comparisons_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE comparisons_id_seq OWNED BY comparisons.id;
 
 
 --
--- Name: congress_sessions; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: congress_sessions; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE congress_sessions (
@@ -2523,10 +1820,8 @@ CREATE TABLE congress_sessions (
 );
 
 
-ALTER TABLE public.congress_sessions OWNER TO opencongress;
-
 --
--- Name: congress_sessions_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: congress_sessions_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE congress_sessions_id_seq
@@ -2537,17 +1832,15 @@ CREATE SEQUENCE congress_sessions_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.congress_sessions_id_seq OWNER TO opencongress;
-
 --
--- Name: congress_sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: congress_sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE congress_sessions_id_seq OWNED BY congress_sessions.id;
 
 
 --
--- Name: contact_congress_letters; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: contact_congress_letters; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE contact_congress_letters (
@@ -2561,10 +1854,8 @@ CREATE TABLE contact_congress_letters (
 );
 
 
-ALTER TABLE public.contact_congress_letters OWNER TO opencongress;
-
 --
--- Name: contact_congress_letters_formageddon_threads; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: contact_congress_letters_formageddon_threads; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE contact_congress_letters_formageddon_threads (
@@ -2573,10 +1864,8 @@ CREATE TABLE contact_congress_letters_formageddon_threads (
 );
 
 
-ALTER TABLE public.contact_congress_letters_formageddon_threads OWNER TO opencongress;
-
 --
--- Name: contact_congress_letters_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: contact_congress_letters_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE contact_congress_letters_id_seq
@@ -2587,17 +1876,15 @@ CREATE SEQUENCE contact_congress_letters_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.contact_congress_letters_id_seq OWNER TO opencongress;
-
 --
--- Name: contact_congress_letters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: contact_congress_letters_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE contact_congress_letters_id_seq OWNED BY contact_congress_letters.id;
 
 
 --
--- Name: crp_contrib_individual_to_candidate; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: crp_contrib_individual_to_candidate; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE crp_contrib_individual_to_candidate (
@@ -2628,10 +1915,8 @@ CREATE TABLE crp_contrib_individual_to_candidate (
 );
 
 
-ALTER TABLE public.crp_contrib_individual_to_candidate OWNER TO opencongress;
-
 --
--- Name: crp_contrib_pac_to_candidate; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: crp_contrib_pac_to_candidate; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE crp_contrib_pac_to_candidate (
@@ -2648,10 +1933,8 @@ CREATE TABLE crp_contrib_pac_to_candidate (
 );
 
 
-ALTER TABLE public.crp_contrib_pac_to_candidate OWNER TO opencongress;
-
 --
--- Name: crp_contrib_pac_to_pac; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: crp_contrib_pac_to_pac; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE crp_contrib_pac_to_pac (
@@ -2682,10 +1965,8 @@ CREATE TABLE crp_contrib_pac_to_pac (
 );
 
 
-ALTER TABLE public.crp_contrib_pac_to_pac OWNER TO opencongress;
-
 --
--- Name: crp_industries; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: crp_industries; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE crp_industries (
@@ -2695,10 +1976,8 @@ CREATE TABLE crp_industries (
 );
 
 
-ALTER TABLE public.crp_industries OWNER TO opencongress;
-
 --
--- Name: crp_industries_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: crp_industries_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE crp_industries_id_seq
@@ -2709,17 +1988,15 @@ CREATE SEQUENCE crp_industries_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.crp_industries_id_seq OWNER TO opencongress;
-
 --
--- Name: crp_industries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: crp_industries_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE crp_industries_id_seq OWNED BY crp_industries.id;
 
 
 --
--- Name: crp_interest_groups; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: crp_interest_groups; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE crp_interest_groups (
@@ -2731,10 +2008,8 @@ CREATE TABLE crp_interest_groups (
 );
 
 
-ALTER TABLE public.crp_interest_groups OWNER TO opencongress;
-
 --
--- Name: crp_interest_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: crp_interest_groups_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE crp_interest_groups_id_seq
@@ -2745,17 +2020,15 @@ CREATE SEQUENCE crp_interest_groups_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.crp_interest_groups_id_seq OWNER TO opencongress;
-
 --
--- Name: crp_interest_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: crp_interest_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE crp_interest_groups_id_seq OWNED BY crp_interest_groups.id;
 
 
 --
--- Name: crp_pacs; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: crp_pacs; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE crp_pacs (
@@ -2776,10 +2049,8 @@ CREATE TABLE crp_pacs (
 );
 
 
-ALTER TABLE public.crp_pacs OWNER TO opencongress;
-
 --
--- Name: crp_pacs_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: crp_pacs_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE crp_pacs_id_seq
@@ -2790,17 +2061,15 @@ CREATE SEQUENCE crp_pacs_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.crp_pacs_id_seq OWNER TO opencongress;
-
 --
--- Name: crp_pacs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: crp_pacs_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE crp_pacs_id_seq OWNED BY crp_pacs.id;
 
 
 --
--- Name: crp_sectors; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: crp_sectors; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE crp_sectors (
@@ -2810,10 +2079,8 @@ CREATE TABLE crp_sectors (
 );
 
 
-ALTER TABLE public.crp_sectors OWNER TO opencongress;
-
 --
--- Name: crp_sectors_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: crp_sectors_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE crp_sectors_id_seq
@@ -2824,17 +2091,15 @@ CREATE SEQUENCE crp_sectors_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.crp_sectors_id_seq OWNER TO opencongress;
-
 --
--- Name: crp_sectors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: crp_sectors_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE crp_sectors_id_seq OWNED BY crp_sectors.id;
 
 
 --
--- Name: delayed_jobs; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: delayed_jobs; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE delayed_jobs (
@@ -2852,10 +2117,8 @@ CREATE TABLE delayed_jobs (
 );
 
 
-ALTER TABLE public.delayed_jobs OWNER TO opencongress;
-
 --
--- Name: delayed_jobs_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: delayed_jobs_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE delayed_jobs_id_seq
@@ -2866,17 +2129,15 @@ CREATE SEQUENCE delayed_jobs_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.delayed_jobs_id_seq OWNER TO opencongress;
-
 --
--- Name: delayed_jobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: delayed_jobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE delayed_jobs_id_seq OWNED BY delayed_jobs.id;
 
 
 --
--- Name: districts; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: districts; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE districts (
@@ -2890,10 +2151,8 @@ CREATE TABLE districts (
 );
 
 
-ALTER TABLE public.districts OWNER TO opencongress;
-
 --
--- Name: districts_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: districts_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE districts_id_seq
@@ -2904,17 +2163,15 @@ CREATE SEQUENCE districts_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.districts_id_seq OWNER TO opencongress;
-
 --
--- Name: districts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: districts_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE districts_id_seq OWNED BY districts.id;
 
 
 --
--- Name: facebook_templates; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: facebook_templates; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE facebook_templates (
@@ -2925,10 +2182,8 @@ CREATE TABLE facebook_templates (
 );
 
 
-ALTER TABLE public.facebook_templates OWNER TO opencongress;
-
 --
--- Name: facebook_templates_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: facebook_templates_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE facebook_templates_id_seq
@@ -2939,17 +2194,15 @@ CREATE SEQUENCE facebook_templates_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.facebook_templates_id_seq OWNER TO opencongress;
-
 --
--- Name: facebook_templates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: facebook_templates_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE facebook_templates_id_seq OWNED BY facebook_templates.id;
 
 
 --
--- Name: facebook_user_bills; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: facebook_user_bills; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE facebook_user_bills (
@@ -2963,10 +2216,8 @@ CREATE TABLE facebook_user_bills (
 );
 
 
-ALTER TABLE public.facebook_user_bills OWNER TO opencongress;
-
 --
--- Name: facebook_user_bills_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: facebook_user_bills_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE facebook_user_bills_id_seq
@@ -2977,17 +2228,15 @@ CREATE SEQUENCE facebook_user_bills_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.facebook_user_bills_id_seq OWNER TO opencongress;
-
 --
--- Name: facebook_user_bills_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: facebook_user_bills_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE facebook_user_bills_id_seq OWNED BY facebook_user_bills.id;
 
 
 --
--- Name: facebook_users; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: facebook_users; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE facebook_users (
@@ -2999,10 +2248,8 @@ CREATE TABLE facebook_users (
 );
 
 
-ALTER TABLE public.facebook_users OWNER TO opencongress;
-
 --
--- Name: facebook_users_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: facebook_users_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE facebook_users_id_seq
@@ -3013,17 +2260,15 @@ CREATE SEQUENCE facebook_users_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.facebook_users_id_seq OWNER TO opencongress;
-
 --
--- Name: facebook_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: facebook_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE facebook_users_id_seq OWNED BY facebook_users.id;
 
 
 --
--- Name: featured_people; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: featured_people; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE featured_people (
@@ -3035,10 +2280,8 @@ CREATE TABLE featured_people (
 );
 
 
-ALTER TABLE public.featured_people OWNER TO opencongress;
-
 --
--- Name: featured_people_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: featured_people_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE featured_people_id_seq
@@ -3049,17 +2292,15 @@ CREATE SEQUENCE featured_people_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.featured_people_id_seq OWNER TO opencongress;
-
 --
--- Name: featured_people_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: featured_people_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE featured_people_id_seq OWNED BY featured_people.id;
 
 
 --
--- Name: formageddon_browser_states; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: formageddon_browser_states; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE formageddon_browser_states (
@@ -3072,10 +2313,8 @@ CREATE TABLE formageddon_browser_states (
 );
 
 
-ALTER TABLE public.formageddon_browser_states OWNER TO opencongress;
-
 --
--- Name: formageddon_browser_states_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: formageddon_browser_states_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE formageddon_browser_states_id_seq
@@ -3086,17 +2325,15 @@ CREATE SEQUENCE formageddon_browser_states_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.formageddon_browser_states_id_seq OWNER TO opencongress;
-
 --
--- Name: formageddon_browser_states_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: formageddon_browser_states_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE formageddon_browser_states_id_seq OWNED BY formageddon_browser_states.id;
 
 
 --
--- Name: formageddon_contact_steps; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: formageddon_contact_steps; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE formageddon_contact_steps (
@@ -3108,10 +2345,8 @@ CREATE TABLE formageddon_contact_steps (
 );
 
 
-ALTER TABLE public.formageddon_contact_steps OWNER TO opencongress;
-
 --
--- Name: formageddon_contact_steps_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: formageddon_contact_steps_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE formageddon_contact_steps_id_seq
@@ -3122,17 +2357,15 @@ CREATE SEQUENCE formageddon_contact_steps_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.formageddon_contact_steps_id_seq OWNER TO opencongress;
-
 --
--- Name: formageddon_contact_steps_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: formageddon_contact_steps_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE formageddon_contact_steps_id_seq OWNED BY formageddon_contact_steps.id;
 
 
 --
--- Name: formageddon_delivery_attempts; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: formageddon_delivery_attempts; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE formageddon_delivery_attempts (
@@ -3147,10 +2380,8 @@ CREATE TABLE formageddon_delivery_attempts (
 );
 
 
-ALTER TABLE public.formageddon_delivery_attempts OWNER TO opencongress;
-
 --
--- Name: formageddon_delivery_attempts_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: formageddon_delivery_attempts_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE formageddon_delivery_attempts_id_seq
@@ -3161,17 +2392,15 @@ CREATE SEQUENCE formageddon_delivery_attempts_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.formageddon_delivery_attempts_id_seq OWNER TO opencongress;
-
 --
--- Name: formageddon_delivery_attempts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: formageddon_delivery_attempts_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE formageddon_delivery_attempts_id_seq OWNED BY formageddon_delivery_attempts.id;
 
 
 --
--- Name: formageddon_form_captcha_images; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: formageddon_form_captcha_images; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE formageddon_form_captcha_images (
@@ -3182,10 +2411,8 @@ CREATE TABLE formageddon_form_captcha_images (
 );
 
 
-ALTER TABLE public.formageddon_form_captcha_images OWNER TO opencongress;
-
 --
--- Name: formageddon_form_captcha_images_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: formageddon_form_captcha_images_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE formageddon_form_captcha_images_id_seq
@@ -3196,17 +2423,15 @@ CREATE SEQUENCE formageddon_form_captcha_images_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.formageddon_form_captcha_images_id_seq OWNER TO opencongress;
-
 --
--- Name: formageddon_form_captcha_images_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: formageddon_form_captcha_images_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE formageddon_form_captcha_images_id_seq OWNED BY formageddon_form_captcha_images.id;
 
 
 --
--- Name: formageddon_form_fields; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: formageddon_form_fields; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE formageddon_form_fields (
@@ -3218,10 +2443,8 @@ CREATE TABLE formageddon_form_fields (
 );
 
 
-ALTER TABLE public.formageddon_form_fields OWNER TO opencongress;
-
 --
--- Name: formageddon_form_fields_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: formageddon_form_fields_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE formageddon_form_fields_id_seq
@@ -3232,17 +2455,15 @@ CREATE SEQUENCE formageddon_form_fields_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.formageddon_form_fields_id_seq OWNER TO opencongress;
-
 --
--- Name: formageddon_form_fields_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: formageddon_form_fields_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE formageddon_form_fields_id_seq OWNED BY formageddon_form_fields.id;
 
 
 --
--- Name: formageddon_forms; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: formageddon_forms; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE formageddon_forms (
@@ -3255,10 +2476,8 @@ CREATE TABLE formageddon_forms (
 );
 
 
-ALTER TABLE public.formageddon_forms OWNER TO opencongress;
-
 --
--- Name: formageddon_forms_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: formageddon_forms_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE formageddon_forms_id_seq
@@ -3269,17 +2488,15 @@ CREATE SEQUENCE formageddon_forms_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.formageddon_forms_id_seq OWNER TO opencongress;
-
 --
--- Name: formageddon_forms_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: formageddon_forms_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE formageddon_forms_id_seq OWNED BY formageddon_forms.id;
 
 
 --
--- Name: formageddon_letters; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: formageddon_letters; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE formageddon_letters (
@@ -3295,10 +2512,8 @@ CREATE TABLE formageddon_letters (
 );
 
 
-ALTER TABLE public.formageddon_letters OWNER TO opencongress;
-
 --
--- Name: formageddon_letters_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: formageddon_letters_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE formageddon_letters_id_seq
@@ -3309,17 +2524,15 @@ CREATE SEQUENCE formageddon_letters_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.formageddon_letters_id_seq OWNER TO opencongress;
-
 --
--- Name: formageddon_letters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: formageddon_letters_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE formageddon_letters_id_seq OWNED BY formageddon_letters.id;
 
 
 --
--- Name: formageddon_threads; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: formageddon_threads; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE formageddon_threads (
@@ -3345,10 +2558,8 @@ CREATE TABLE formageddon_threads (
 );
 
 
-ALTER TABLE public.formageddon_threads OWNER TO opencongress;
-
 --
--- Name: formageddon_threads_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: formageddon_threads_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE formageddon_threads_id_seq
@@ -3359,17 +2570,15 @@ CREATE SEQUENCE formageddon_threads_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.formageddon_threads_id_seq OWNER TO opencongress;
-
 --
--- Name: formageddon_threads_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: formageddon_threads_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE formageddon_threads_id_seq OWNED BY formageddon_threads.id;
 
 
 --
--- Name: friend_emails; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: friend_emails; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE friend_emails (
@@ -3381,10 +2590,8 @@ CREATE TABLE friend_emails (
 );
 
 
-ALTER TABLE public.friend_emails OWNER TO opencongress;
-
 --
--- Name: friend_emails_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: friend_emails_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE friend_emails_id_seq
@@ -3395,17 +2602,15 @@ CREATE SEQUENCE friend_emails_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.friend_emails_id_seq OWNER TO opencongress;
-
 --
--- Name: friend_emails_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: friend_emails_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE friend_emails_id_seq OWNED BY friend_emails.id;
 
 
 --
--- Name: friend_invites; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: friend_invites; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE friend_invites (
@@ -3417,10 +2622,8 @@ CREATE TABLE friend_invites (
 );
 
 
-ALTER TABLE public.friend_invites OWNER TO opencongress;
-
 --
--- Name: friend_invites_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: friend_invites_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE friend_invites_id_seq
@@ -3431,17 +2634,15 @@ CREATE SEQUENCE friend_invites_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.friend_invites_id_seq OWNER TO opencongress;
-
 --
--- Name: friend_invites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: friend_invites_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE friend_invites_id_seq OWNED BY friend_invites.id;
 
 
 --
--- Name: friends; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: friends; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE friends (
@@ -3455,10 +2656,8 @@ CREATE TABLE friends (
 );
 
 
-ALTER TABLE public.friends OWNER TO opencongress;
-
 --
--- Name: friends_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: friends_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE friends_id_seq
@@ -3469,17 +2668,15 @@ CREATE SEQUENCE friends_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.friends_id_seq OWNER TO opencongress;
-
 --
--- Name: friends_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: friends_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE friends_id_seq OWNED BY friends.id;
 
 
 --
--- Name: fundraisers; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: fundraisers; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE fundraisers (
@@ -3508,10 +2705,8 @@ CREATE TABLE fundraisers (
 );
 
 
-ALTER TABLE public.fundraisers OWNER TO opencongress;
-
 --
--- Name: fundraisers_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: fundraisers_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE fundraisers_id_seq
@@ -3522,17 +2717,15 @@ CREATE SEQUENCE fundraisers_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.fundraisers_id_seq OWNER TO opencongress;
-
 --
--- Name: fundraisers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: fundraisers_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE fundraisers_id_seq OWNED BY fundraisers.id;
 
 
 --
--- Name: gossip; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: gossip; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE gossip (
@@ -3549,10 +2742,8 @@ CREATE TABLE gossip (
 );
 
 
-ALTER TABLE public.gossip OWNER TO opencongress;
-
 --
--- Name: gossip_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: gossip_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE gossip_id_seq
@@ -3563,17 +2754,15 @@ CREATE SEQUENCE gossip_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.gossip_id_seq OWNER TO opencongress;
-
 --
--- Name: gossip_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: gossip_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE gossip_id_seq OWNED BY gossip.id;
 
 
 --
--- Name: gpo_billtext_timestamps; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: gpo_billtext_timestamps; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE gpo_billtext_timestamps (
@@ -3586,10 +2775,8 @@ CREATE TABLE gpo_billtext_timestamps (
 );
 
 
-ALTER TABLE public.gpo_billtext_timestamps OWNER TO opencongress;
-
 --
--- Name: gpo_billtext_timestamps_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: gpo_billtext_timestamps_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE gpo_billtext_timestamps_id_seq
@@ -3600,17 +2787,15 @@ CREATE SEQUENCE gpo_billtext_timestamps_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.gpo_billtext_timestamps_id_seq OWNER TO opencongress;
-
 --
--- Name: gpo_billtext_timestamps_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: gpo_billtext_timestamps_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE gpo_billtext_timestamps_id_seq OWNED BY gpo_billtext_timestamps.id;
 
 
 --
--- Name: group_bill_positions; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: group_bill_positions; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE group_bill_positions (
@@ -3625,10 +2810,8 @@ CREATE TABLE group_bill_positions (
 );
 
 
-ALTER TABLE public.group_bill_positions OWNER TO opencongress;
-
 --
--- Name: group_bill_positions_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: group_bill_positions_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE group_bill_positions_id_seq
@@ -3639,17 +2822,15 @@ CREATE SEQUENCE group_bill_positions_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.group_bill_positions_id_seq OWNER TO opencongress;
-
 --
--- Name: group_bill_positions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: group_bill_positions_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE group_bill_positions_id_seq OWNED BY group_bill_positions.id;
 
 
 --
--- Name: group_invites; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: group_invites; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE group_invites (
@@ -3663,10 +2844,8 @@ CREATE TABLE group_invites (
 );
 
 
-ALTER TABLE public.group_invites OWNER TO opencongress;
-
 --
--- Name: group_invites_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: group_invites_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE group_invites_id_seq
@@ -3677,17 +2856,15 @@ CREATE SEQUENCE group_invites_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.group_invites_id_seq OWNER TO opencongress;
-
 --
--- Name: group_invites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: group_invites_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE group_invites_id_seq OWNED BY group_invites.id;
 
 
 --
--- Name: group_members; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: group_members; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE group_members (
@@ -3702,10 +2879,8 @@ CREATE TABLE group_members (
 );
 
 
-ALTER TABLE public.group_members OWNER TO opencongress;
-
 --
--- Name: group_members_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: group_members_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE group_members_id_seq
@@ -3716,17 +2891,15 @@ CREATE SEQUENCE group_members_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.group_members_id_seq OWNER TO opencongress;
-
 --
--- Name: group_members_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: group_members_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE group_members_id_seq OWNED BY group_members.id;
 
 
 --
--- Name: groups; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: groups; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE groups (
@@ -3751,10 +2924,8 @@ CREATE TABLE groups (
 );
 
 
-ALTER TABLE public.groups OWNER TO opencongress;
-
 --
--- Name: groups_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: groups_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE groups_id_seq
@@ -3765,17 +2936,15 @@ CREATE SEQUENCE groups_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.groups_id_seq OWNER TO opencongress;
-
 --
--- Name: groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE groups_id_seq OWNED BY groups.id;
 
 
 --
--- Name: hot_bill_categories; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: hot_bill_categories; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE hot_bill_categories (
@@ -3784,10 +2953,8 @@ CREATE TABLE hot_bill_categories (
 );
 
 
-ALTER TABLE public.hot_bill_categories OWNER TO opencongress;
-
 --
--- Name: hot_bill_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: hot_bill_categories_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE hot_bill_categories_id_seq
@@ -3798,17 +2965,15 @@ CREATE SEQUENCE hot_bill_categories_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.hot_bill_categories_id_seq OWNER TO opencongress;
-
 --
--- Name: hot_bill_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: hot_bill_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE hot_bill_categories_id_seq OWNED BY hot_bill_categories.id;
 
 
 --
--- Name: industry_stats; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: industry_stats; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE industry_stats (
@@ -3817,10 +2982,8 @@ CREATE TABLE industry_stats (
 );
 
 
-ALTER TABLE public.industry_stats OWNER TO opencongress;
-
 --
--- Name: issue_stats; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: issue_stats; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE issue_stats (
@@ -3829,10 +2992,8 @@ CREATE TABLE issue_stats (
 );
 
 
-ALTER TABLE public.issue_stats OWNER TO opencongress;
-
 --
--- Name: mailing_list_items; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: mailing_list_items; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE mailing_list_items (
@@ -3845,10 +3006,8 @@ CREATE TABLE mailing_list_items (
 );
 
 
-ALTER TABLE public.mailing_list_items OWNER TO opencongress;
-
 --
--- Name: mailing_list_items_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: mailing_list_items_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE mailing_list_items_id_seq
@@ -3859,17 +3018,15 @@ CREATE SEQUENCE mailing_list_items_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.mailing_list_items_id_seq OWNER TO opencongress;
-
 --
--- Name: mailing_list_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: mailing_list_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE mailing_list_items_id_seq OWNED BY mailing_list_items.id;
 
 
 --
--- Name: notebook_items; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: notebook_items; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE notebook_items (
@@ -3903,10 +3060,8 @@ CREATE TABLE notebook_items (
 );
 
 
-ALTER TABLE public.notebook_items OWNER TO opencongress;
-
 --
--- Name: notebook_items_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: notebook_items_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE notebook_items_id_seq
@@ -3917,17 +3072,15 @@ CREATE SEQUENCE notebook_items_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.notebook_items_id_seq OWNER TO opencongress;
-
 --
--- Name: notebook_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: notebook_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE notebook_items_id_seq OWNED BY notebook_items.id;
 
 
 --
--- Name: object_aggregates; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: object_aggregates; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE object_aggregates (
@@ -3945,10 +3098,8 @@ CREATE TABLE object_aggregates (
 );
 
 
-ALTER TABLE public.object_aggregates OWNER TO opencongress;
-
 --
--- Name: object_aggregates_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: object_aggregates_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE object_aggregates_id_seq
@@ -3959,17 +3110,15 @@ CREATE SEQUENCE object_aggregates_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.object_aggregates_id_seq OWNER TO opencongress;
-
 --
--- Name: object_aggregates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: object_aggregates_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE object_aggregates_id_seq OWNED BY object_aggregates.id;
 
 
 --
--- Name: open_id_authentication_associations; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: open_id_authentication_associations; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE open_id_authentication_associations (
@@ -3983,10 +3132,8 @@ CREATE TABLE open_id_authentication_associations (
 );
 
 
-ALTER TABLE public.open_id_authentication_associations OWNER TO opencongress;
-
 --
--- Name: open_id_authentication_associations_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: open_id_authentication_associations_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE open_id_authentication_associations_id_seq
@@ -3997,17 +3144,15 @@ CREATE SEQUENCE open_id_authentication_associations_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.open_id_authentication_associations_id_seq OWNER TO opencongress;
-
 --
--- Name: open_id_authentication_associations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: open_id_authentication_associations_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE open_id_authentication_associations_id_seq OWNED BY open_id_authentication_associations.id;
 
 
 --
--- Name: open_id_authentication_nonces; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: open_id_authentication_nonces; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE open_id_authentication_nonces (
@@ -4018,10 +3163,8 @@ CREATE TABLE open_id_authentication_nonces (
 );
 
 
-ALTER TABLE public.open_id_authentication_nonces OWNER TO opencongress;
-
 --
--- Name: open_id_authentication_nonces_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: open_id_authentication_nonces_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE open_id_authentication_nonces_id_seq
@@ -4032,17 +3175,15 @@ CREATE SEQUENCE open_id_authentication_nonces_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.open_id_authentication_nonces_id_seq OWNER TO opencongress;
-
 --
--- Name: open_id_authentication_nonces_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: open_id_authentication_nonces_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE open_id_authentication_nonces_id_seq OWNED BY open_id_authentication_nonces.id;
 
 
 --
--- Name: panel_referrers; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: panel_referrers; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE panel_referrers (
@@ -4054,10 +3195,8 @@ CREATE TABLE panel_referrers (
 );
 
 
-ALTER TABLE public.panel_referrers OWNER TO opencongress;
-
 --
--- Name: panel_referrers_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: panel_referrers_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE panel_referrers_id_seq
@@ -4068,17 +3207,15 @@ CREATE SEQUENCE panel_referrers_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.panel_referrers_id_seq OWNER TO opencongress;
-
 --
--- Name: panel_referrers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: panel_referrers_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE panel_referrers_id_seq OWNED BY panel_referrers.id;
 
 
 --
--- Name: people; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: people; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE people (
@@ -4121,10 +3258,8 @@ CREATE TABLE people (
 );
 
 
-ALTER TABLE public.people OWNER TO opencongress;
-
 --
--- Name: people_cycle_contributions; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: people_cycle_contributions; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE people_cycle_contributions (
@@ -4138,10 +3273,8 @@ CREATE TABLE people_cycle_contributions (
 );
 
 
-ALTER TABLE public.people_cycle_contributions OWNER TO opencongress;
-
 --
--- Name: people_cycle_contributions_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: people_cycle_contributions_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE people_cycle_contributions_id_seq
@@ -4152,17 +3285,15 @@ CREATE SEQUENCE people_cycle_contributions_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.people_cycle_contributions_id_seq OWNER TO opencongress;
-
 --
--- Name: people_cycle_contributions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: people_cycle_contributions_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE people_cycle_contributions_id_seq OWNED BY people_cycle_contributions.id;
 
 
 --
--- Name: people_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: people_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE people_id_seq
@@ -4173,17 +3304,15 @@ CREATE SEQUENCE people_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.people_id_seq OWNER TO opencongress;
-
 --
--- Name: people_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: people_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE people_id_seq OWNED BY people.id;
 
 
 --
--- Name: person_approvals; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: person_approvals; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE person_approvals (
@@ -4196,10 +3325,8 @@ CREATE TABLE person_approvals (
 );
 
 
-ALTER TABLE public.person_approvals OWNER TO opencongress;
-
 --
--- Name: person_approvals_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: person_approvals_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE person_approvals_id_seq
@@ -4210,17 +3337,15 @@ CREATE SEQUENCE person_approvals_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.person_approvals_id_seq OWNER TO opencongress;
-
 --
--- Name: person_approvals_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: person_approvals_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE person_approvals_id_seq OWNED BY person_approvals.id;
 
 
 --
--- Name: person_stats; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: person_stats; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE person_stats (
@@ -4248,72 +3373,8 @@ CREATE TABLE person_stats (
 );
 
 
-ALTER TABLE public.person_stats OWNER TO opencongress;
-
-SET default_with_oids = true;
-
 --
--- Name: pg_ts_cfg; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE pg_ts_cfg (
-    ts_name text NOT NULL,
-    prs_name text NOT NULL,
-    locale text
-);
-
-
-ALTER TABLE public.pg_ts_cfg OWNER TO postgres;
-
---
--- Name: pg_ts_cfgmap; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE pg_ts_cfgmap (
-    ts_name text NOT NULL,
-    tok_alias text NOT NULL,
-    dict_name text[]
-);
-
-
-ALTER TABLE public.pg_ts_cfgmap OWNER TO postgres;
-
---
--- Name: pg_ts_dict; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE pg_ts_dict (
-    dict_name text NOT NULL,
-    dict_init regprocedure,
-    dict_initoption text,
-    dict_lexize regprocedure NOT NULL,
-    dict_comment text
-);
-
-
-ALTER TABLE public.pg_ts_dict OWNER TO postgres;
-
---
--- Name: pg_ts_parser; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE pg_ts_parser (
-    prs_name text NOT NULL,
-    prs_start regprocedure NOT NULL,
-    prs_nexttoken regprocedure NOT NULL,
-    prs_end regprocedure NOT NULL,
-    prs_headline regprocedure NOT NULL,
-    prs_lextype regprocedure NOT NULL,
-    prs_comment text
-);
-
-
-ALTER TABLE public.pg_ts_parser OWNER TO postgres;
-
-SET default_with_oids = false;
-
---
--- Name: political_notebooks; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: political_notebooks; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE political_notebooks (
@@ -4325,10 +3386,8 @@ CREATE TABLE political_notebooks (
 );
 
 
-ALTER TABLE public.political_notebooks OWNER TO opencongress;
-
 --
--- Name: political_notebooks_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: political_notebooks_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE political_notebooks_id_seq
@@ -4339,17 +3398,15 @@ CREATE SEQUENCE political_notebooks_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.political_notebooks_id_seq OWNER TO opencongress;
-
 --
--- Name: political_notebooks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: political_notebooks_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE political_notebooks_id_seq OWNED BY political_notebooks.id;
 
 
 --
--- Name: privacy_options; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: privacy_options; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE privacy_options (
@@ -4374,10 +3431,8 @@ CREATE TABLE privacy_options (
 );
 
 
-ALTER TABLE public.privacy_options OWNER TO opencongress;
-
 --
--- Name: privacy_options_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: privacy_options_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE privacy_options_id_seq
@@ -4388,17 +3443,15 @@ CREATE SEQUENCE privacy_options_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.privacy_options_id_seq OWNER TO opencongress;
-
 --
--- Name: privacy_options_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: privacy_options_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE privacy_options_id_seq OWNED BY privacy_options.id;
 
 
 --
--- Name: pvs_categories; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: pvs_categories; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE pvs_categories (
@@ -4408,10 +3461,8 @@ CREATE TABLE pvs_categories (
 );
 
 
-ALTER TABLE public.pvs_categories OWNER TO opencongress;
-
 --
--- Name: pvs_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: pvs_categories_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE pvs_categories_id_seq
@@ -4422,17 +3473,15 @@ CREATE SEQUENCE pvs_categories_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.pvs_categories_id_seq OWNER TO opencongress;
-
 --
--- Name: pvs_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: pvs_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE pvs_categories_id_seq OWNED BY pvs_categories.id;
 
 
 --
--- Name: pvs_category_mappings; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: pvs_category_mappings; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE pvs_category_mappings (
@@ -4443,10 +3492,8 @@ CREATE TABLE pvs_category_mappings (
 );
 
 
-ALTER TABLE public.pvs_category_mappings OWNER TO opencongress;
-
 --
--- Name: pvs_category_mappings_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: pvs_category_mappings_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE pvs_category_mappings_id_seq
@@ -4457,17 +3504,15 @@ CREATE SEQUENCE pvs_category_mappings_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.pvs_category_mappings_id_seq OWNER TO opencongress;
-
 --
--- Name: pvs_category_mappings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: pvs_category_mappings_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE pvs_category_mappings_id_seq OWNED BY pvs_category_mappings.id;
 
 
 --
--- Name: refers; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: refers; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE refers (
@@ -4478,10 +3523,8 @@ CREATE TABLE refers (
 );
 
 
-ALTER TABLE public.refers OWNER TO opencongress;
-
 --
--- Name: refers_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: refers_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE refers_id_seq
@@ -4492,17 +3535,15 @@ CREATE SEQUENCE refers_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.refers_id_seq OWNER TO opencongress;
-
 --
--- Name: refers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: refers_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE refers_id_seq OWNED BY refers.id;
 
 
 --
--- Name: roles; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: roles; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE roles (
@@ -4521,10 +3562,8 @@ CREATE TABLE roles (
 );
 
 
-ALTER TABLE public.roles OWNER TO opencongress;
-
 --
--- Name: roles_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: roles_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE roles_id_seq
@@ -4535,17 +3574,15 @@ CREATE SEQUENCE roles_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.roles_id_seq OWNER TO opencongress;
-
 --
--- Name: roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE roles_id_seq OWNED BY roles.id;
 
 
 --
--- Name: roll_call_votes; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: roll_call_votes; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE roll_call_votes (
@@ -4556,10 +3593,8 @@ CREATE TABLE roll_call_votes (
 );
 
 
-ALTER TABLE public.roll_call_votes OWNER TO opencongress;
-
 --
--- Name: roll_call_votes_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: roll_call_votes_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE roll_call_votes_id_seq
@@ -4570,17 +3605,15 @@ CREATE SEQUENCE roll_call_votes_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.roll_call_votes_id_seq OWNER TO opencongress;
-
 --
--- Name: roll_call_votes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: roll_call_votes_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE roll_call_votes_id_seq OWNED BY roll_call_votes.id;
 
 
 --
--- Name: roll_calls; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: roll_calls; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE roll_calls (
@@ -4609,10 +3642,8 @@ CREATE TABLE roll_calls (
 );
 
 
-ALTER TABLE public.roll_calls OWNER TO opencongress;
-
 --
--- Name: roll_calls_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: roll_calls_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE roll_calls_id_seq
@@ -4623,28 +3654,15 @@ CREATE SEQUENCE roll_calls_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.roll_calls_id_seq OWNER TO opencongress;
-
 --
--- Name: roll_calls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: roll_calls_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE roll_calls_id_seq OWNED BY roll_calls.id;
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
---
-
-CREATE TABLE schema_migrations (
-    version character varying(255) NOT NULL
-);
-
-
-ALTER TABLE public.schema_migrations OWNER TO opencongress;
-
---
--- Name: searches; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: searches; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE searches (
@@ -4654,10 +3672,8 @@ CREATE TABLE searches (
 );
 
 
-ALTER TABLE public.searches OWNER TO opencongress;
-
 --
--- Name: searches_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: searches_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE searches_id_seq
@@ -4668,17 +3684,15 @@ CREATE SEQUENCE searches_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.searches_id_seq OWNER TO opencongress;
-
 --
--- Name: searches_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: searches_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE searches_id_seq OWNED BY searches.id;
 
 
 --
--- Name: sidebar_boxes; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: sidebar_boxes; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE sidebar_boxes (
@@ -4690,10 +3704,8 @@ CREATE TABLE sidebar_boxes (
 );
 
 
-ALTER TABLE public.sidebar_boxes OWNER TO opencongress;
-
 --
--- Name: sidebar_boxes_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: sidebar_boxes_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE sidebar_boxes_id_seq
@@ -4704,17 +3716,15 @@ CREATE SEQUENCE sidebar_boxes_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.sidebar_boxes_id_seq OWNER TO opencongress;
-
 --
--- Name: sidebar_boxes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: sidebar_boxes_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE sidebar_boxes_id_seq OWNED BY sidebar_boxes.id;
 
 
 --
--- Name: simple_captcha_data; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: simple_captcha_data; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE simple_captcha_data (
@@ -4726,10 +3736,8 @@ CREATE TABLE simple_captcha_data (
 );
 
 
-ALTER TABLE public.simple_captcha_data OWNER TO opencongress;
-
 --
--- Name: simple_captcha_data_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: simple_captcha_data_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE simple_captcha_data_id_seq
@@ -4740,17 +3748,15 @@ CREATE SEQUENCE simple_captcha_data_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.simple_captcha_data_id_seq OWNER TO opencongress;
-
 --
--- Name: simple_captcha_data_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: simple_captcha_data_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE simple_captcha_data_id_seq OWNED BY simple_captcha_data.id;
 
 
 --
--- Name: site_text_pages; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: site_text_pages; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE site_text_pages (
@@ -4765,10 +3771,8 @@ CREATE TABLE site_text_pages (
 );
 
 
-ALTER TABLE public.site_text_pages OWNER TO opencongress;
-
 --
--- Name: site_text_pages_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: site_text_pages_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE site_text_pages_id_seq
@@ -4779,17 +3783,15 @@ CREATE SEQUENCE site_text_pages_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.site_text_pages_id_seq OWNER TO opencongress;
-
 --
--- Name: site_text_pages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: site_text_pages_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE site_text_pages_id_seq OWNED BY site_text_pages.id;
 
 
 --
--- Name: site_texts; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: site_texts; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE site_texts (
@@ -4800,10 +3802,8 @@ CREATE TABLE site_texts (
 );
 
 
-ALTER TABLE public.site_texts OWNER TO opencongress;
-
 --
--- Name: site_texts_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: site_texts_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE site_texts_id_seq
@@ -4814,17 +3814,15 @@ CREATE SEQUENCE site_texts_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.site_texts_id_seq OWNER TO opencongress;
-
 --
--- Name: site_texts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: site_texts_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE site_texts_id_seq OWNED BY site_texts.id;
 
 
 --
--- Name: states; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: states; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE states (
@@ -4836,10 +3834,8 @@ CREATE TABLE states (
 );
 
 
-ALTER TABLE public.states OWNER TO opencongress;
-
 --
--- Name: states_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: states_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE states_id_seq
@@ -4850,17 +3846,15 @@ CREATE SEQUENCE states_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.states_id_seq OWNER TO opencongress;
-
 --
--- Name: states_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: states_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE states_id_seq OWNED BY states.id;
 
 
 --
--- Name: subject_relations; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: subject_relations; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE subject_relations (
@@ -4871,10 +3865,8 @@ CREATE TABLE subject_relations (
 );
 
 
-ALTER TABLE public.subject_relations OWNER TO opencongress;
-
 --
--- Name: subject_relations_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: subject_relations_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE subject_relations_id_seq
@@ -4885,17 +3877,15 @@ CREATE SEQUENCE subject_relations_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.subject_relations_id_seq OWNER TO opencongress;
-
 --
--- Name: subject_relations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: subject_relations_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE subject_relations_id_seq OWNED BY subject_relations.id;
 
 
 --
--- Name: subjects; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: subjects; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE subjects (
@@ -4907,10 +3897,8 @@ CREATE TABLE subjects (
 );
 
 
-ALTER TABLE public.subjects OWNER TO opencongress;
-
 --
--- Name: subjects_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: subjects_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE subjects_id_seq
@@ -4921,17 +3909,15 @@ CREATE SEQUENCE subjects_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.subjects_id_seq OWNER TO opencongress;
-
 --
--- Name: subjects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: subjects_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE subjects_id_seq OWNED BY subjects.id;
 
 
 --
--- Name: taggings; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: taggings; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE taggings (
@@ -4946,10 +3932,8 @@ CREATE TABLE taggings (
 );
 
 
-ALTER TABLE public.taggings OWNER TO opencongress;
-
 --
--- Name: taggings_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: taggings_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE taggings_id_seq
@@ -4960,17 +3944,15 @@ CREATE SEQUENCE taggings_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.taggings_id_seq OWNER TO opencongress;
-
 --
--- Name: taggings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: taggings_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE taggings_id_seq OWNED BY taggings.id;
 
 
 --
--- Name: tags; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: tags; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE tags (
@@ -4979,10 +3961,8 @@ CREATE TABLE tags (
 );
 
 
-ALTER TABLE public.tags OWNER TO opencongress;
-
 --
--- Name: tags_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: tags_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE tags_id_seq
@@ -4993,17 +3973,15 @@ CREATE SEQUENCE tags_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tags_id_seq OWNER TO opencongress;
-
 --
--- Name: tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE tags_id_seq OWNED BY tags.id;
 
 
 --
--- Name: talking_points; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: talking_points; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE talking_points (
@@ -5016,10 +3994,8 @@ CREATE TABLE talking_points (
 );
 
 
-ALTER TABLE public.talking_points OWNER TO opencongress;
-
 --
--- Name: talking_points_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: talking_points_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE talking_points_id_seq
@@ -5030,17 +4006,15 @@ CREATE SEQUENCE talking_points_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.talking_points_id_seq OWNER TO opencongress;
-
 --
--- Name: talking_points_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: talking_points_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE talking_points_id_seq OWNED BY talking_points.id;
 
 
 --
--- Name: twitter_configs; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: twitter_configs; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE twitter_configs (
@@ -5058,10 +4032,8 @@ CREATE TABLE twitter_configs (
 );
 
 
-ALTER TABLE public.twitter_configs OWNER TO opencongress;
-
 --
--- Name: twitter_configs_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: twitter_configs_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE twitter_configs_id_seq
@@ -5072,17 +4044,15 @@ CREATE SEQUENCE twitter_configs_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.twitter_configs_id_seq OWNER TO opencongress;
-
 --
--- Name: twitter_configs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: twitter_configs_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE twitter_configs_id_seq OWNED BY twitter_configs.id;
 
 
 --
--- Name: upcoming_bills; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: upcoming_bills; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE upcoming_bills (
@@ -5095,10 +4065,8 @@ CREATE TABLE upcoming_bills (
 );
 
 
-ALTER TABLE public.upcoming_bills OWNER TO opencongress;
-
 --
--- Name: upcoming_bills_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: upcoming_bills_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE upcoming_bills_id_seq
@@ -5109,17 +4077,15 @@ CREATE SEQUENCE upcoming_bills_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.upcoming_bills_id_seq OWNER TO opencongress;
-
 --
--- Name: upcoming_bills_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: upcoming_bills_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE upcoming_bills_id_seq OWNED BY upcoming_bills.id;
 
 
 --
--- Name: user_audits; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: user_audits; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE user_audits (
@@ -5137,10 +4103,8 @@ CREATE TABLE user_audits (
 );
 
 
-ALTER TABLE public.user_audits OWNER TO opencongress;
-
 --
--- Name: user_audits_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: user_audits_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE user_audits_id_seq
@@ -5151,17 +4115,15 @@ CREATE SEQUENCE user_audits_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.user_audits_id_seq OWNER TO opencongress;
-
 --
--- Name: user_audits_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: user_audits_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE user_audits_id_seq OWNED BY user_audits.id;
 
 
 --
--- Name: user_ip_addresses; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: user_ip_addresses; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE user_ip_addresses (
@@ -5173,10 +4135,8 @@ CREATE TABLE user_ip_addresses (
 );
 
 
-ALTER TABLE public.user_ip_addresses OWNER TO opencongress;
-
 --
--- Name: user_ip_addresses_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: user_ip_addresses_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE user_ip_addresses_id_seq
@@ -5187,17 +4147,15 @@ CREATE SEQUENCE user_ip_addresses_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.user_ip_addresses_id_seq OWNER TO opencongress;
-
 --
--- Name: user_ip_addresses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: user_ip_addresses_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE user_ip_addresses_id_seq OWNED BY user_ip_addresses.id;
 
 
 --
--- Name: user_mailing_lists; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: user_mailing_lists; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE user_mailing_lists (
@@ -5210,10 +4168,8 @@ CREATE TABLE user_mailing_lists (
 );
 
 
-ALTER TABLE public.user_mailing_lists OWNER TO opencongress;
-
 --
--- Name: user_mailing_lists_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: user_mailing_lists_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE user_mailing_lists_id_seq
@@ -5224,17 +4180,15 @@ CREATE SEQUENCE user_mailing_lists_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.user_mailing_lists_id_seq OWNER TO opencongress;
-
 --
--- Name: user_mailing_lists_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: user_mailing_lists_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE user_mailing_lists_id_seq OWNED BY user_mailing_lists.id;
 
 
 --
--- Name: user_roles; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: user_roles; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE user_roles (
@@ -5249,10 +4203,8 @@ CREATE TABLE user_roles (
 );
 
 
-ALTER TABLE public.user_roles OWNER TO opencongress;
-
 --
--- Name: user_roles_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: user_roles_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE user_roles_id_seq
@@ -5263,17 +4215,15 @@ CREATE SEQUENCE user_roles_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.user_roles_id_seq OWNER TO opencongress;
-
 --
--- Name: user_roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: user_roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE user_roles_id_seq OWNED BY user_roles.id;
 
 
 --
--- Name: user_warnings; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: user_warnings; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE user_warnings (
@@ -5286,10 +4236,8 @@ CREATE TABLE user_warnings (
 );
 
 
-ALTER TABLE public.user_warnings OWNER TO opencongress;
-
 --
--- Name: user_warnings_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: user_warnings_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE user_warnings_id_seq
@@ -5300,17 +4248,15 @@ CREATE SEQUENCE user_warnings_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.user_warnings_id_seq OWNER TO opencongress;
-
 --
--- Name: user_warnings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: user_warnings_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE user_warnings_id_seq OWNED BY user_warnings.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: users; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE users (
@@ -5369,10 +4315,8 @@ CREATE TABLE users (
 );
 
 
-ALTER TABLE public.users OWNER TO opencongress;
-
 --
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE users_id_seq
@@ -5383,27 +4327,23 @@ CREATE SEQUENCE users_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.users_id_seq OWNER TO opencongress;
-
 --
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
--- Name: v_current_roles; Type: VIEW; Schema: public; Owner: opencongress
+-- Name: v_current_roles; Type: VIEW; Schema: public;
 --
 
 CREATE VIEW v_current_roles AS
     SELECT states.id AS state_id, roles.id AS role_id, people.id AS person_id, roles.role_type FROM ((people JOIN roles ON ((roles.person_id = people.id))) JOIN states ON (((people.state)::text = (states.abbreviation)::text))) WHERE (roles.enddate > now());
 
 
-ALTER TABLE public.v_current_roles OWNER TO opencongress;
-
 --
--- Name: videos; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: videos; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE videos (
@@ -5422,10 +4362,8 @@ CREATE TABLE videos (
 );
 
 
-ALTER TABLE public.videos OWNER TO opencongress;
-
 --
--- Name: videos_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: videos_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE videos_id_seq
@@ -5436,17 +4374,15 @@ CREATE SEQUENCE videos_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.videos_id_seq OWNER TO opencongress;
-
 --
--- Name: videos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: videos_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE videos_id_seq OWNED BY videos.id;
 
 
 --
--- Name: watch_dogs; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: watch_dogs; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE watch_dogs (
@@ -5459,10 +4395,8 @@ CREATE TABLE watch_dogs (
 );
 
 
-ALTER TABLE public.watch_dogs OWNER TO opencongress;
-
 --
--- Name: watch_dogs_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: watch_dogs_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE watch_dogs_id_seq
@@ -5473,17 +4407,15 @@ CREATE SEQUENCE watch_dogs_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.watch_dogs_id_seq OWNER TO opencongress;
-
 --
--- Name: watch_dogs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: watch_dogs_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE watch_dogs_id_seq OWNED BY watch_dogs.id;
 
 
 --
--- Name: wiki_links; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: wiki_links; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE wiki_links (
@@ -5497,10 +4429,8 @@ CREATE TABLE wiki_links (
 );
 
 
-ALTER TABLE public.wiki_links OWNER TO opencongress;
-
 --
--- Name: wiki_links_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: wiki_links_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE wiki_links_id_seq
@@ -5511,17 +4441,15 @@ CREATE SEQUENCE wiki_links_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.wiki_links_id_seq OWNER TO opencongress;
-
 --
--- Name: wiki_links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: wiki_links_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE wiki_links_id_seq OWNED BY wiki_links.id;
 
 
 --
--- Name: write_rep_email_msgids; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: write_rep_email_msgids; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE write_rep_email_msgids (
@@ -5535,10 +4463,8 @@ CREATE TABLE write_rep_email_msgids (
 );
 
 
-ALTER TABLE public.write_rep_email_msgids OWNER TO opencongress;
-
 --
--- Name: write_rep_email_msgids_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: write_rep_email_msgids_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE write_rep_email_msgids_id_seq
@@ -5549,17 +4475,15 @@ CREATE SEQUENCE write_rep_email_msgids_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.write_rep_email_msgids_id_seq OWNER TO opencongress;
-
 --
--- Name: write_rep_email_msgids_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: write_rep_email_msgids_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE write_rep_email_msgids_id_seq OWNED BY write_rep_email_msgids.id;
 
 
 --
--- Name: write_rep_emails; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: write_rep_emails; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE write_rep_emails (
@@ -5586,10 +4510,8 @@ CREATE TABLE write_rep_emails (
 );
 
 
-ALTER TABLE public.write_rep_emails OWNER TO opencongress;
-
 --
--- Name: write_rep_emails_id_seq; Type: SEQUENCE; Schema: public; Owner: opencongress
+-- Name: write_rep_emails_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE write_rep_emails_id_seq
@@ -5600,17 +4522,15 @@ CREATE SEQUENCE write_rep_emails_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.write_rep_emails_id_seq OWNER TO opencongress;
-
 --
--- Name: write_rep_emails_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: opencongress
+-- Name: write_rep_emails_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE write_rep_emails_id_seq OWNED BY write_rep_emails.id;
 
 
 --
--- Name: zipcode_districts; Type: TABLE; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: zipcode_districts; Type: TABLE; Schema: public;; Tablespace: 
 --
 
 CREATE TABLE zipcode_districts (
@@ -5621,738 +4541,736 @@ CREATE TABLE zipcode_districts (
 );
 
 
-ALTER TABLE public.zipcode_districts OWNER TO opencongress;
-
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE action_references ALTER COLUMN id SET DEFAULT nextval('action_references_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE actions ALTER COLUMN id SET DEFAULT nextval('actions_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE amendments ALTER COLUMN id SET DEFAULT nextval('amendments_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE api_hits ALTER COLUMN id SET DEFAULT nextval('api_hits_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE article_images ALTER COLUMN id SET DEFAULT nextval('article_images_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE articles ALTER COLUMN id SET DEFAULT nextval('articles_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE bad_commentaries ALTER COLUMN id SET DEFAULT nextval('bad_commentaries_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE bill_battles ALTER COLUMN id SET DEFAULT nextval('bill_battles_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE bill_interest_groups ALTER COLUMN id SET DEFAULT nextval('bill_interest_groups_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE bill_position_organizations ALTER COLUMN id SET DEFAULT nextval('bill_position_organizations_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE bill_referrers ALTER COLUMN id SET DEFAULT nextval('bill_referrers_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE bill_subjects ALTER COLUMN id SET DEFAULT nextval('bill_subjects_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE bill_text_nodes ALTER COLUMN id SET DEFAULT nextval('bill_text_nodes_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE bill_text_versions ALTER COLUMN id SET DEFAULT nextval('bill_text_versions_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE bill_titles ALTER COLUMN id SET DEFAULT nextval('bill_titles_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE bill_votes ALTER COLUMN id SET DEFAULT nextval('bill_votes_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE bills ALTER COLUMN id SET DEFAULT nextval('bills_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE bills_committees ALTER COLUMN id SET DEFAULT nextval('bills_committees_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE bills_cosponsors ALTER COLUMN id SET DEFAULT nextval('bills_cosponsors_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE bills_relations ALTER COLUMN id SET DEFAULT nextval('bills_relations_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE bookmarks ALTER COLUMN id SET DEFAULT nextval('bookmarks_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE comment_scores ALTER COLUMN id SET DEFAULT nextval('comment_scores_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE commentaries ALTER COLUMN id SET DEFAULT nextval('commentaries_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE commentary_ratings ALTER COLUMN id SET DEFAULT nextval('commentary_ratings_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE comments ALTER COLUMN id SET DEFAULT nextval('comments_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE committee_meetings ALTER COLUMN id SET DEFAULT nextval('committee_meetings_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE committee_meetings_bills ALTER COLUMN id SET DEFAULT nextval('committee_meetings_bills_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE committee_reports ALTER COLUMN id SET DEFAULT nextval('committee_reports_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE committees ALTER COLUMN id SET DEFAULT nextval('committees_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE committees_people ALTER COLUMN id SET DEFAULT nextval('committees_people_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE comparison_data_points ALTER COLUMN id SET DEFAULT nextval('comparison_data_points_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE comparisons ALTER COLUMN id SET DEFAULT nextval('comparisons_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE congress_sessions ALTER COLUMN id SET DEFAULT nextval('congress_sessions_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE contact_congress_letters ALTER COLUMN id SET DEFAULT nextval('contact_congress_letters_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE crp_industries ALTER COLUMN id SET DEFAULT nextval('crp_industries_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE crp_interest_groups ALTER COLUMN id SET DEFAULT nextval('crp_interest_groups_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE crp_pacs ALTER COLUMN id SET DEFAULT nextval('crp_pacs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE crp_sectors ALTER COLUMN id SET DEFAULT nextval('crp_sectors_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE delayed_jobs ALTER COLUMN id SET DEFAULT nextval('delayed_jobs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE districts ALTER COLUMN id SET DEFAULT nextval('districts_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE facebook_templates ALTER COLUMN id SET DEFAULT nextval('facebook_templates_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE facebook_user_bills ALTER COLUMN id SET DEFAULT nextval('facebook_user_bills_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE facebook_users ALTER COLUMN id SET DEFAULT nextval('facebook_users_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE featured_people ALTER COLUMN id SET DEFAULT nextval('featured_people_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE formageddon_browser_states ALTER COLUMN id SET DEFAULT nextval('formageddon_browser_states_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE formageddon_contact_steps ALTER COLUMN id SET DEFAULT nextval('formageddon_contact_steps_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE formageddon_delivery_attempts ALTER COLUMN id SET DEFAULT nextval('formageddon_delivery_attempts_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE formageddon_form_captcha_images ALTER COLUMN id SET DEFAULT nextval('formageddon_form_captcha_images_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE formageddon_form_fields ALTER COLUMN id SET DEFAULT nextval('formageddon_form_fields_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE formageddon_forms ALTER COLUMN id SET DEFAULT nextval('formageddon_forms_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE formageddon_letters ALTER COLUMN id SET DEFAULT nextval('formageddon_letters_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE formageddon_threads ALTER COLUMN id SET DEFAULT nextval('formageddon_threads_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE friend_emails ALTER COLUMN id SET DEFAULT nextval('friend_emails_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE friend_invites ALTER COLUMN id SET DEFAULT nextval('friend_invites_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE friends ALTER COLUMN id SET DEFAULT nextval('friends_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE fundraisers ALTER COLUMN id SET DEFAULT nextval('fundraisers_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE gossip ALTER COLUMN id SET DEFAULT nextval('gossip_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE gpo_billtext_timestamps ALTER COLUMN id SET DEFAULT nextval('gpo_billtext_timestamps_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE group_bill_positions ALTER COLUMN id SET DEFAULT nextval('group_bill_positions_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE group_invites ALTER COLUMN id SET DEFAULT nextval('group_invites_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE group_members ALTER COLUMN id SET DEFAULT nextval('group_members_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE groups ALTER COLUMN id SET DEFAULT nextval('groups_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE hot_bill_categories ALTER COLUMN id SET DEFAULT nextval('hot_bill_categories_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE mailing_list_items ALTER COLUMN id SET DEFAULT nextval('mailing_list_items_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE notebook_items ALTER COLUMN id SET DEFAULT nextval('notebook_items_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE object_aggregates ALTER COLUMN id SET DEFAULT nextval('object_aggregates_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE open_id_authentication_associations ALTER COLUMN id SET DEFAULT nextval('open_id_authentication_associations_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE open_id_authentication_nonces ALTER COLUMN id SET DEFAULT nextval('open_id_authentication_nonces_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE panel_referrers ALTER COLUMN id SET DEFAULT nextval('panel_referrers_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE people ALTER COLUMN id SET DEFAULT nextval('people_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE people_cycle_contributions ALTER COLUMN id SET DEFAULT nextval('people_cycle_contributions_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE person_approvals ALTER COLUMN id SET DEFAULT nextval('person_approvals_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE political_notebooks ALTER COLUMN id SET DEFAULT nextval('political_notebooks_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE privacy_options ALTER COLUMN id SET DEFAULT nextval('privacy_options_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE pvs_categories ALTER COLUMN id SET DEFAULT nextval('pvs_categories_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE pvs_category_mappings ALTER COLUMN id SET DEFAULT nextval('pvs_category_mappings_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE refers ALTER COLUMN id SET DEFAULT nextval('refers_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE roles ALTER COLUMN id SET DEFAULT nextval('roles_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE roll_call_votes ALTER COLUMN id SET DEFAULT nextval('roll_call_votes_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE roll_calls ALTER COLUMN id SET DEFAULT nextval('roll_calls_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE searches ALTER COLUMN id SET DEFAULT nextval('searches_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE sidebar_boxes ALTER COLUMN id SET DEFAULT nextval('sidebar_boxes_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE simple_captcha_data ALTER COLUMN id SET DEFAULT nextval('simple_captcha_data_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE site_text_pages ALTER COLUMN id SET DEFAULT nextval('site_text_pages_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE site_texts ALTER COLUMN id SET DEFAULT nextval('site_texts_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE states ALTER COLUMN id SET DEFAULT nextval('states_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE subject_relations ALTER COLUMN id SET DEFAULT nextval('subject_relations_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE subjects ALTER COLUMN id SET DEFAULT nextval('subjects_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE taggings ALTER COLUMN id SET DEFAULT nextval('taggings_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE tags ALTER COLUMN id SET DEFAULT nextval('tags_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE talking_points ALTER COLUMN id SET DEFAULT nextval('talking_points_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE twitter_configs ALTER COLUMN id SET DEFAULT nextval('twitter_configs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE upcoming_bills ALTER COLUMN id SET DEFAULT nextval('upcoming_bills_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE user_audits ALTER COLUMN id SET DEFAULT nextval('user_audits_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE user_ip_addresses ALTER COLUMN id SET DEFAULT nextval('user_ip_addresses_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE user_mailing_lists ALTER COLUMN id SET DEFAULT nextval('user_mailing_lists_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE user_roles ALTER COLUMN id SET DEFAULT nextval('user_roles_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE user_warnings ALTER COLUMN id SET DEFAULT nextval('user_warnings_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE videos ALTER COLUMN id SET DEFAULT nextval('videos_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE watch_dogs ALTER COLUMN id SET DEFAULT nextval('watch_dogs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE wiki_links ALTER COLUMN id SET DEFAULT nextval('wiki_links_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE write_rep_email_msgids ALTER COLUMN id SET DEFAULT nextval('write_rep_email_msgids_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: opencongress
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE write_rep_emails ALTER COLUMN id SET DEFAULT nextval('write_rep_emails_id_seq'::regclass);
 
 
 --
--- Name: action_references_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: action_references_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY action_references
@@ -6360,7 +5278,7 @@ ALTER TABLE ONLY action_references
 
 
 --
--- Name: actions_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: actions_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY actions
@@ -6368,7 +5286,7 @@ ALTER TABLE ONLY actions
 
 
 --
--- Name: amendments_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: amendments_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY amendments
@@ -6376,7 +5294,7 @@ ALTER TABLE ONLY amendments
 
 
 --
--- Name: api_hits_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: api_hits_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY api_hits
@@ -6384,7 +5302,7 @@ ALTER TABLE ONLY api_hits
 
 
 --
--- Name: article_images_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: article_images_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY article_images
@@ -6392,7 +5310,7 @@ ALTER TABLE ONLY article_images
 
 
 --
--- Name: articles_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: articles_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY articles
@@ -6400,7 +5318,7 @@ ALTER TABLE ONLY articles
 
 
 --
--- Name: bill_battles_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_battles_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY bill_battles
@@ -6408,7 +5326,7 @@ ALTER TABLE ONLY bill_battles
 
 
 --
--- Name: bill_interest_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_interest_groups_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY bill_interest_groups
@@ -6416,7 +5334,7 @@ ALTER TABLE ONLY bill_interest_groups
 
 
 --
--- Name: bill_position_organizations_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_position_organizations_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY bill_position_organizations
@@ -6424,7 +5342,7 @@ ALTER TABLE ONLY bill_position_organizations
 
 
 --
--- Name: bill_referrers_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_referrers_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY bill_referrers
@@ -6432,7 +5350,7 @@ ALTER TABLE ONLY bill_referrers
 
 
 --
--- Name: bill_subjects_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_subjects_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY bill_subjects
@@ -6440,7 +5358,7 @@ ALTER TABLE ONLY bill_subjects
 
 
 --
--- Name: bill_text_nodes_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_text_nodes_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY bill_text_nodes
@@ -6448,7 +5366,7 @@ ALTER TABLE ONLY bill_text_nodes
 
 
 --
--- Name: bill_text_versions_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_text_versions_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY bill_text_versions
@@ -6456,7 +5374,7 @@ ALTER TABLE ONLY bill_text_versions
 
 
 --
--- Name: bill_titles_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_titles_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY bill_titles
@@ -6464,7 +5382,7 @@ ALTER TABLE ONLY bill_titles
 
 
 --
--- Name: bill_votes_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_votes_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY bill_votes
@@ -6472,7 +5390,7 @@ ALTER TABLE ONLY bill_votes
 
 
 --
--- Name: bills_committees_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bills_committees_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY bills_committees
@@ -6480,7 +5398,7 @@ ALTER TABLE ONLY bills_committees
 
 
 --
--- Name: bills_cosponsors_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bills_cosponsors_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY bills_cosponsors
@@ -6488,7 +5406,7 @@ ALTER TABLE ONLY bills_cosponsors
 
 
 --
--- Name: bills_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bills_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY bills
@@ -6496,7 +5414,7 @@ ALTER TABLE ONLY bills
 
 
 --
--- Name: bills_relations_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bills_relations_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY bills_relations
@@ -6504,7 +5422,7 @@ ALTER TABLE ONLY bills_relations
 
 
 --
--- Name: bookmarks_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bookmarks_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY bookmarks
@@ -6512,7 +5430,7 @@ ALTER TABLE ONLY bookmarks
 
 
 --
--- Name: comment_scores_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: comment_scores_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY comment_scores
@@ -6520,7 +5438,7 @@ ALTER TABLE ONLY comment_scores
 
 
 --
--- Name: commentaries_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: commentaries_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY commentaries
@@ -6528,7 +5446,7 @@ ALTER TABLE ONLY commentaries
 
 
 --
--- Name: commentary_ratings_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: commentary_ratings_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY commentary_ratings
@@ -6536,7 +5454,7 @@ ALTER TABLE ONLY commentary_ratings
 
 
 --
--- Name: comments_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: comments_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY comments
@@ -6544,7 +5462,7 @@ ALTER TABLE ONLY comments
 
 
 --
--- Name: commitees_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: commitees_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY committees
@@ -6552,7 +5470,7 @@ ALTER TABLE ONLY committees
 
 
 --
--- Name: committee_meetings_bills_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: committee_meetings_bills_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY committee_meetings_bills
@@ -6560,7 +5478,7 @@ ALTER TABLE ONLY committee_meetings_bills
 
 
 --
--- Name: committee_meetings_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: committee_meetings_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY committee_meetings
@@ -6568,7 +5486,7 @@ ALTER TABLE ONLY committee_meetings
 
 
 --
--- Name: committee_reports_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: committee_reports_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY committee_reports
@@ -6576,7 +5494,7 @@ ALTER TABLE ONLY committee_reports
 
 
 --
--- Name: committees_people_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: committees_people_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY committees_people
@@ -6584,7 +5502,7 @@ ALTER TABLE ONLY committees_people
 
 
 --
--- Name: comparison_data_points_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: comparison_data_points_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY comparison_data_points
@@ -6592,7 +5510,7 @@ ALTER TABLE ONLY comparison_data_points
 
 
 --
--- Name: comparisons_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: comparisons_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY comparisons
@@ -6600,7 +5518,7 @@ ALTER TABLE ONLY comparisons
 
 
 --
--- Name: congress_sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: congress_sessions_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY congress_sessions
@@ -6608,7 +5526,7 @@ ALTER TABLE ONLY congress_sessions
 
 
 --
--- Name: contact_congress_letters_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: contact_congress_letters_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY contact_congress_letters
@@ -6616,7 +5534,7 @@ ALTER TABLE ONLY contact_congress_letters
 
 
 --
--- Name: crp_industries_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: crp_industries_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY crp_industries
@@ -6624,7 +5542,7 @@ ALTER TABLE ONLY crp_industries
 
 
 --
--- Name: crp_interest_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: crp_interest_groups_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY crp_interest_groups
@@ -6632,7 +5550,7 @@ ALTER TABLE ONLY crp_interest_groups
 
 
 --
--- Name: crp_pacs_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: crp_pacs_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY crp_pacs
@@ -6640,7 +5558,7 @@ ALTER TABLE ONLY crp_pacs
 
 
 --
--- Name: crp_sectors_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: crp_sectors_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY crp_sectors
@@ -6648,7 +5566,7 @@ ALTER TABLE ONLY crp_sectors
 
 
 --
--- Name: delayed_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: delayed_jobs_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY delayed_jobs
@@ -6656,7 +5574,7 @@ ALTER TABLE ONLY delayed_jobs
 
 
 --
--- Name: districts_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: districts_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY districts
@@ -6664,7 +5582,7 @@ ALTER TABLE ONLY districts
 
 
 --
--- Name: facebook_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: facebook_templates_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY facebook_templates
@@ -6672,7 +5590,7 @@ ALTER TABLE ONLY facebook_templates
 
 
 --
--- Name: facebook_user_bills_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: facebook_user_bills_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY facebook_user_bills
@@ -6680,7 +5598,7 @@ ALTER TABLE ONLY facebook_user_bills
 
 
 --
--- Name: facebook_users_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: facebook_users_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY facebook_users
@@ -6688,7 +5606,7 @@ ALTER TABLE ONLY facebook_users
 
 
 --
--- Name: featured_people_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: featured_people_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY featured_people
@@ -6696,7 +5614,7 @@ ALTER TABLE ONLY featured_people
 
 
 --
--- Name: formageddon_browser_states_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: formageddon_browser_states_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY formageddon_browser_states
@@ -6704,7 +5622,7 @@ ALTER TABLE ONLY formageddon_browser_states
 
 
 --
--- Name: formageddon_contact_steps_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: formageddon_contact_steps_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY formageddon_contact_steps
@@ -6712,7 +5630,7 @@ ALTER TABLE ONLY formageddon_contact_steps
 
 
 --
--- Name: formageddon_delivery_attempts_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: formageddon_delivery_attempts_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY formageddon_delivery_attempts
@@ -6720,7 +5638,7 @@ ALTER TABLE ONLY formageddon_delivery_attempts
 
 
 --
--- Name: formageddon_form_captcha_images_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: formageddon_form_captcha_images_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY formageddon_form_captcha_images
@@ -6728,7 +5646,7 @@ ALTER TABLE ONLY formageddon_form_captcha_images
 
 
 --
--- Name: formageddon_form_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: formageddon_form_fields_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY formageddon_form_fields
@@ -6736,7 +5654,7 @@ ALTER TABLE ONLY formageddon_form_fields
 
 
 --
--- Name: formageddon_forms_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: formageddon_forms_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY formageddon_forms
@@ -6744,7 +5662,7 @@ ALTER TABLE ONLY formageddon_forms
 
 
 --
--- Name: formageddon_letters_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: formageddon_letters_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY formageddon_letters
@@ -6752,7 +5670,7 @@ ALTER TABLE ONLY formageddon_letters
 
 
 --
--- Name: formageddon_threads_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: formageddon_threads_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY formageddon_threads
@@ -6760,7 +5678,7 @@ ALTER TABLE ONLY formageddon_threads
 
 
 --
--- Name: friend_emails_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: friend_emails_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY friend_emails
@@ -6768,7 +5686,7 @@ ALTER TABLE ONLY friend_emails
 
 
 --
--- Name: friend_invites_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: friend_invites_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY friend_invites
@@ -6776,7 +5694,7 @@ ALTER TABLE ONLY friend_invites
 
 
 --
--- Name: friends_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: friends_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY friends
@@ -6784,7 +5702,7 @@ ALTER TABLE ONLY friends
 
 
 --
--- Name: fundraisers_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: fundraisers_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY fundraisers
@@ -6792,7 +5710,7 @@ ALTER TABLE ONLY fundraisers
 
 
 --
--- Name: gossip_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: gossip_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY gossip
@@ -6800,7 +5718,7 @@ ALTER TABLE ONLY gossip
 
 
 --
--- Name: gpo_billtext_timestamps_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: gpo_billtext_timestamps_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY gpo_billtext_timestamps
@@ -6808,7 +5726,7 @@ ALTER TABLE ONLY gpo_billtext_timestamps
 
 
 --
--- Name: group_bill_positions_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: group_bill_positions_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY group_bill_positions
@@ -6816,7 +5734,7 @@ ALTER TABLE ONLY group_bill_positions
 
 
 --
--- Name: group_invites_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: group_invites_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY group_invites
@@ -6824,7 +5742,7 @@ ALTER TABLE ONLY group_invites
 
 
 --
--- Name: group_members_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: group_members_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY group_members
@@ -6832,7 +5750,7 @@ ALTER TABLE ONLY group_members
 
 
 --
--- Name: groups_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: groups_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY groups
@@ -6840,7 +5758,7 @@ ALTER TABLE ONLY groups
 
 
 --
--- Name: hot_bill_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: hot_bill_categories_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY hot_bill_categories
@@ -6848,7 +5766,7 @@ ALTER TABLE ONLY hot_bill_categories
 
 
 --
--- Name: mailing_list_items_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: mailing_list_items_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY mailing_list_items
@@ -6856,7 +5774,7 @@ ALTER TABLE ONLY mailing_list_items
 
 
 --
--- Name: notebook_items_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: notebook_items_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY notebook_items
@@ -6864,7 +5782,7 @@ ALTER TABLE ONLY notebook_items
 
 
 --
--- Name: object_aggregates_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: object_aggregates_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY object_aggregates
@@ -6872,7 +5790,7 @@ ALTER TABLE ONLY object_aggregates
 
 
 --
--- Name: open_id_authentication_associations_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: open_id_authentication_associations_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY open_id_authentication_associations
@@ -6880,7 +5798,7 @@ ALTER TABLE ONLY open_id_authentication_associations
 
 
 --
--- Name: open_id_authentication_nonces_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: open_id_authentication_nonces_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY open_id_authentication_nonces
@@ -6888,7 +5806,7 @@ ALTER TABLE ONLY open_id_authentication_nonces
 
 
 --
--- Name: panel_referrers_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: panel_referrers_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY panel_referrers
@@ -6896,7 +5814,7 @@ ALTER TABLE ONLY panel_referrers
 
 
 --
--- Name: people_cycle_contributions_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: people_cycle_contributions_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY people_cycle_contributions
@@ -6904,7 +5822,7 @@ ALTER TABLE ONLY people_cycle_contributions
 
 
 --
--- Name: people_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: people_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY people
@@ -6912,7 +5830,7 @@ ALTER TABLE ONLY people
 
 
 --
--- Name: person_approvals_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: person_approvals_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY person_approvals
@@ -6920,39 +5838,7 @@ ALTER TABLE ONLY person_approvals
 
 
 --
--- Name: pg_ts_cfg_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY pg_ts_cfg
-    ADD CONSTRAINT pg_ts_cfg_pkey PRIMARY KEY (ts_name);
-
-
---
--- Name: pg_ts_cfgmap_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY pg_ts_cfgmap
-    ADD CONSTRAINT pg_ts_cfgmap_pkey PRIMARY KEY (ts_name, tok_alias);
-
-
---
--- Name: pg_ts_dict_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY pg_ts_dict
-    ADD CONSTRAINT pg_ts_dict_pkey PRIMARY KEY (dict_name);
-
-
---
--- Name: pg_ts_parser_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY pg_ts_parser
-    ADD CONSTRAINT pg_ts_parser_pkey PRIMARY KEY (prs_name);
-
-
---
--- Name: political_notebooks_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: political_notebooks_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY political_notebooks
@@ -6960,7 +5846,7 @@ ALTER TABLE ONLY political_notebooks
 
 
 --
--- Name: privacy_options_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: privacy_options_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY privacy_options
@@ -6968,7 +5854,7 @@ ALTER TABLE ONLY privacy_options
 
 
 --
--- Name: pvs_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: pvs_categories_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY pvs_categories
@@ -6976,7 +5862,7 @@ ALTER TABLE ONLY pvs_categories
 
 
 --
--- Name: pvs_category_mappings_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: pvs_category_mappings_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY pvs_category_mappings
@@ -6984,7 +5870,7 @@ ALTER TABLE ONLY pvs_category_mappings
 
 
 --
--- Name: refers_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: refers_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY refers
@@ -6992,7 +5878,7 @@ ALTER TABLE ONLY refers
 
 
 --
--- Name: roles_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: roles_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY roles
@@ -7000,7 +5886,7 @@ ALTER TABLE ONLY roles
 
 
 --
--- Name: roll_call_votes_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: roll_call_votes_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY roll_call_votes
@@ -7008,7 +5894,7 @@ ALTER TABLE ONLY roll_call_votes
 
 
 --
--- Name: roll_calls_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: roll_calls_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY roll_calls
@@ -7016,7 +5902,7 @@ ALTER TABLE ONLY roll_calls
 
 
 --
--- Name: searches_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: searches_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY searches
@@ -7024,7 +5910,7 @@ ALTER TABLE ONLY searches
 
 
 --
--- Name: sidebar_boxes_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: sidebar_boxes_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY sidebar_boxes
@@ -7032,7 +5918,7 @@ ALTER TABLE ONLY sidebar_boxes
 
 
 --
--- Name: simple_captcha_data_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: simple_captcha_data_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY simple_captcha_data
@@ -7040,7 +5926,7 @@ ALTER TABLE ONLY simple_captcha_data
 
 
 --
--- Name: site_text_pages_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: site_text_pages_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY site_text_pages
@@ -7048,7 +5934,7 @@ ALTER TABLE ONLY site_text_pages
 
 
 --
--- Name: site_texts_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: site_texts_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY site_texts
@@ -7056,7 +5942,7 @@ ALTER TABLE ONLY site_texts
 
 
 --
--- Name: states_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: states_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY states
@@ -7064,7 +5950,7 @@ ALTER TABLE ONLY states
 
 
 --
--- Name: subject_relations_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: subject_relations_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY subject_relations
@@ -7072,7 +5958,7 @@ ALTER TABLE ONLY subject_relations
 
 
 --
--- Name: subjects_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: subjects_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY subjects
@@ -7080,7 +5966,7 @@ ALTER TABLE ONLY subjects
 
 
 --
--- Name: taggings_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: taggings_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY taggings
@@ -7088,7 +5974,7 @@ ALTER TABLE ONLY taggings
 
 
 --
--- Name: tags_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: tags_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY tags
@@ -7096,7 +5982,7 @@ ALTER TABLE ONLY tags
 
 
 --
--- Name: talking_points_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: talking_points_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY talking_points
@@ -7104,7 +5990,7 @@ ALTER TABLE ONLY talking_points
 
 
 --
--- Name: twitter_configs_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: twitter_configs_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY twitter_configs
@@ -7112,7 +5998,7 @@ ALTER TABLE ONLY twitter_configs
 
 
 --
--- Name: upcoming_bills_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: upcoming_bills_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY upcoming_bills
@@ -7120,7 +6006,7 @@ ALTER TABLE ONLY upcoming_bills
 
 
 --
--- Name: user_audits_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: user_audits_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY user_audits
@@ -7128,7 +6014,7 @@ ALTER TABLE ONLY user_audits
 
 
 --
--- Name: user_ip_addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: user_ip_addresses_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY user_ip_addresses
@@ -7136,7 +6022,7 @@ ALTER TABLE ONLY user_ip_addresses
 
 
 --
--- Name: user_mailing_lists_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: user_mailing_lists_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY user_mailing_lists
@@ -7144,7 +6030,7 @@ ALTER TABLE ONLY user_mailing_lists
 
 
 --
--- Name: user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: user_roles_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY user_roles
@@ -7152,7 +6038,7 @@ ALTER TABLE ONLY user_roles
 
 
 --
--- Name: user_warnings_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: user_warnings_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY user_warnings
@@ -7160,7 +6046,7 @@ ALTER TABLE ONLY user_warnings
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY users
@@ -7168,7 +6054,7 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: videos_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: videos_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY videos
@@ -7176,7 +6062,7 @@ ALTER TABLE ONLY videos
 
 
 --
--- Name: watch_dogs_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: watch_dogs_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY watch_dogs
@@ -7184,7 +6070,7 @@ ALTER TABLE ONLY watch_dogs
 
 
 --
--- Name: wiki_links_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: wiki_links_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY wiki_links
@@ -7192,7 +6078,7 @@ ALTER TABLE ONLY wiki_links
 
 
 --
--- Name: write_rep_email_msgids_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: write_rep_email_msgids_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY write_rep_email_msgids
@@ -7200,7 +6086,7 @@ ALTER TABLE ONLY write_rep_email_msgids
 
 
 --
--- Name: write_rep_emails_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: write_rep_emails_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY write_rep_emails
@@ -7208,7 +6094,7 @@ ALTER TABLE ONLY write_rep_emails
 
 
 --
--- Name: zipcode_districts_pkey; Type: CONSTRAINT; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: zipcode_districts_pkey; Type: CONSTRAINT; Schema: public;; Tablespace: 
 --
 
 ALTER TABLE ONLY zipcode_districts
@@ -7216,686 +6102,679 @@ ALTER TABLE ONLY zipcode_districts
 
 
 --
--- Name: actions_bill_id_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: actions_bill_id_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX actions_bill_id_index ON actions USING btree (bill_id);
 
 
 --
--- Name: aggregatable_date_type_idx; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: aggregatable_date_type_idx; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX aggregatable_date_type_idx ON object_aggregates USING btree (date, aggregatable_type);
 
 
 --
--- Name: aggregatable_poly_idx; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: aggregatable_poly_idx; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX aggregatable_poly_idx ON object_aggregates USING btree (aggregatable_type, aggregatable_id);
 
 
 --
--- Name: amendments_bill_id_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: amendments_bill_id_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX amendments_bill_id_index ON amendments USING btree (bill_id, number);
 
 
 --
--- Name: articles_created_at_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: articles_created_at_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX articles_created_at_index ON articles USING btree (created_at);
 
 
 --
--- Name: articles_fti_names_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: articles_fti_names_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX articles_fti_names_index ON articles USING gist (fti_names);
 
 
 --
--- Name: bill_fti_names_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_fti_names_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX bill_fti_names_index ON bill_fulltext USING gist (fti_names);
 
 
 --
--- Name: bill_fulltext_bill_id_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_fulltext_bill_id_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX bill_fulltext_bill_id_index ON bill_fulltext USING btree (bill_id);
 
 
 --
--- Name: bill_subjects_subject_id_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_subjects_subject_id_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX bill_subjects_subject_id_index ON bill_subjects USING btree (subject_id);
 
 
 --
--- Name: bill_titles_bill_id_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_titles_bill_id_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX bill_titles_bill_id_index ON bill_titles USING btree (bill_id);
 
 
 --
--- Name: bill_titles_fti_titles_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_titles_fti_titles_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX bill_titles_fti_titles_index ON bill_titles USING gist (fti_titles);
 
 
 --
--- Name: bill_titles_title_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_titles_title_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX bill_titles_title_index ON bill_titles USING btree (title);
 
 
 --
--- Name: bill_titles_upper_title_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bill_titles_upper_title_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX bill_titles_upper_title_index ON bill_titles USING btree (upper(title));
 
 
 --
--- Name: bills_committees_bill_id_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bills_committees_bill_id_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX bills_committees_bill_id_index ON bills_committees USING btree (bill_id, committee_id);
 
 
 --
--- Name: bills_cosponsors_person_id_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bills_cosponsors_person_id_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX bills_cosponsors_person_id_index ON bills_cosponsors USING btree (person_id, bill_id);
 
 
 --
--- Name: bills_number_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bills_number_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX bills_number_index ON bills USING btree (number, session, bill_type);
 
 
 --
--- Name: bills_relations_bill_id_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bills_relations_bill_id_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX bills_relations_bill_id_index ON bills_relations USING btree (bill_id, related_bill_id);
 
 
 --
--- Name: bills_sponsor_id_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: bills_sponsor_id_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX bills_sponsor_id_index ON bills USING btree (sponsor_id);
 
 
 --
--- Name: commentaries_url_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: commentaries_url_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX commentaries_url_index ON commentaries USING btree (url);
 
 
 --
--- Name: commentary_fti_names_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: commentary_fti_names_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX commentary_fti_names_index ON commentaries USING gist (fti_names);
 
 
 --
--- Name: comments_fti_names_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: comments_fti_names_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX comments_fti_names_index ON comments USING gist (fti_names);
 
 
 --
--- Name: committee_reports_name_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: committee_reports_name_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX committee_reports_name_index ON committee_reports USING btree (name);
 
 
 --
--- Name: committees_fti_names_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: committees_fti_names_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX committees_fti_names_index ON committees USING gist (fti_names);
 
 
 --
--- Name: delayed_jobs_priority; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: delayed_jobs_priority; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX delayed_jobs_priority ON delayed_jobs USING btree (priority, run_at);
 
 
 --
--- Name: friend_emails_created_at_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: friend_emails_created_at_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX friend_emails_created_at_index ON friend_emails USING btree (created_at);
 
 
 --
--- Name: friend_emails_ip_address_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: friend_emails_ip_address_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX friend_emails_ip_address_index ON friend_emails USING btree (ip_address);
 
 
 --
--- Name: index_bad_commentaries_on_cid_and_ctype; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_bad_commentaries_on_cid_and_ctype; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_bad_commentaries_on_cid_and_ctype ON bad_commentaries USING btree (commentariable_id, commentariable_type);
 
 
 --
--- Name: index_bad_commentaries_on_url; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_bad_commentaries_on_url; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_bad_commentaries_on_url ON bad_commentaries USING btree (url);
 
 
 --
--- Name: index_bill_referrers_on_bill_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_bill_referrers_on_bill_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_bill_referrers_on_bill_id ON bill_referrers USING btree (bill_id);
 
 
 --
--- Name: index_bill_referrers_on_url; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_bill_referrers_on_url; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_bill_referrers_on_url ON bill_referrers USING btree (url);
 
 
 --
--- Name: index_bill_subjects_on_bill_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_bill_subjects_on_bill_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_bill_subjects_on_bill_id ON bill_subjects USING btree (bill_id);
 
 
 --
--- Name: index_bill_text_nodes_on_bill_text_version_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_bill_text_nodes_on_bill_text_version_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_bill_text_nodes_on_bill_text_version_id ON bill_text_nodes USING btree (bill_text_version_id);
 
 
 --
--- Name: index_bill_text_nodes_on_nid; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_bill_text_nodes_on_nid; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_bill_text_nodes_on_nid ON bill_text_nodes USING btree (nid);
 
 
 --
--- Name: index_bill_text_versions_on_bill_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_bill_text_versions_on_bill_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_bill_text_versions_on_bill_id ON bill_text_versions USING btree (bill_id);
 
 
 --
--- Name: index_bill_votes_on_bill_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_bill_votes_on_bill_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_bill_votes_on_bill_id ON bill_votes USING btree (bill_id);
 
 
 --
--- Name: index_bill_votes_on_created_at; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_bill_votes_on_created_at; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_bill_votes_on_created_at ON bill_votes USING btree (created_at);
 
 
 --
--- Name: index_bill_votes_on_user_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_bill_votes_on_user_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_bill_votes_on_user_id ON bill_votes USING btree (user_id);
 
 
 --
--- Name: index_bills_on_hot_bill_category_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_bills_on_hot_bill_category_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_bills_on_hot_bill_category_id ON bills USING btree (hot_bill_category_id);
 
 
 --
--- Name: index_bookmarks_on_bookmarkable_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_bookmarks_on_bookmarkable_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_bookmarks_on_bookmarkable_id ON bookmarks USING btree (bookmarkable_id);
 
 
 --
--- Name: index_bookmarks_on_bookmarkable_type; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_bookmarks_on_bookmarkable_type; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_bookmarks_on_bookmarkable_type ON bookmarks USING btree (bookmarkable_type);
 
 
 --
--- Name: index_bookmarks_on_user_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_bookmarks_on_user_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_bookmarks_on_user_id ON bookmarks USING btree (user_id);
 
 
 --
--- Name: index_comment_scores_on_comment_id_and_ip_address; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_comment_scores_on_comment_id_and_ip_address; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_comment_scores_on_comment_id_and_ip_address ON comment_scores USING btree (comment_id, ip_address);
 
 
 --
--- Name: index_commentaries_on_commentariable_id_and_commentariable_type; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_commentaries_on_commentariable_id_and_commentariable_type; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_commentaries_on_commentariable_id_and_commentariable_type ON commentaries USING btree (commentariable_id, commentariable_type, is_ok, is_news);
 
 
 --
--- Name: index_commentaries_on_commentariable_type_and_date_and_is_ok_an; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_commentaries_on_commentariable_type_and_date_and_is_ok_an; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_commentaries_on_commentariable_type_and_date_and_is_ok_an ON commentaries USING btree (commentariable_type, date, is_ok, is_news);
 
 
 --
--- Name: index_commentaries_on_status; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_commentaries_on_status; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_commentaries_on_status ON commentaries USING btree (status);
 
 
 --
--- Name: index_comments_on_commentable_id_and_commentable_type; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_comments_on_commentable_id_and_commentable_type; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_comments_on_commentable_id_and_commentable_type ON comments USING btree (commentable_id, commentable_type);
 
 
 --
--- Name: index_comments_on_commentable_type; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_comments_on_commentable_type; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_comments_on_commentable_type ON comments USING btree (commentable_type);
 
 
 --
--- Name: index_comments_on_created_at_and_commentable_type; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_comments_on_created_at_and_commentable_type; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_comments_on_created_at_and_commentable_type ON comments USING btree (created_at, commentable_type);
 
 
 --
--- Name: index_comments_on_ok; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_comments_on_ok; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_comments_on_ok ON comments USING btree (ok);
 
 
 --
--- Name: index_comments_on_parent_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_comments_on_parent_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_comments_on_parent_id ON comments USING btree (parent_id);
 
 
 --
--- Name: index_comments_on_root_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_comments_on_root_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_comments_on_root_id ON comments USING btree (root_id);
 
 
 --
--- Name: index_comments_on_user_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_comments_on_user_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_comments_on_user_id ON comments USING btree (user_id);
 
 
 --
--- Name: index_congress_sessions_on_date; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_congress_sessions_on_date; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_congress_sessions_on_date ON congress_sessions USING btree (date);
 
 
 --
--- Name: index_crp_contrib_individual_to_candidate_on_crp_interest_group; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_crp_contrib_individual_to_candidate_on_crp_interest_group; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_crp_contrib_individual_to_candidate_on_crp_interest_group ON crp_contrib_individual_to_candidate USING btree (crp_interest_group_osid);
 
 
 --
--- Name: index_crp_contrib_individual_to_candidate_on_recipient_osid; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_crp_contrib_individual_to_candidate_on_recipient_osid; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_crp_contrib_individual_to_candidate_on_recipient_osid ON crp_contrib_individual_to_candidate USING btree (recipient_osid);
 
 
 --
--- Name: index_crp_contrib_pac_to_candidate_on_crp_interest_group_osid; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_crp_contrib_pac_to_candidate_on_crp_interest_group_osid; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_crp_contrib_pac_to_candidate_on_crp_interest_group_osid ON crp_contrib_pac_to_candidate USING btree (crp_interest_group_osid);
 
 
 --
--- Name: index_crp_contrib_pac_to_candidate_on_recipient_osid; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_crp_contrib_pac_to_candidate_on_recipient_osid; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_crp_contrib_pac_to_candidate_on_recipient_osid ON crp_contrib_pac_to_candidate USING btree (recipient_osid);
 
 
 --
--- Name: index_crp_contrib_pac_to_pac_on_filer_osid; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_crp_contrib_pac_to_pac_on_filer_osid; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_crp_contrib_pac_to_pac_on_filer_osid ON crp_contrib_pac_to_pac USING btree (filer_osid);
 
 
 --
--- Name: index_crp_contrib_pac_to_pac_on_recipient_crp_interest_group_os; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_crp_contrib_pac_to_pac_on_recipient_crp_interest_group_os; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_crp_contrib_pac_to_pac_on_recipient_crp_interest_group_os ON crp_contrib_pac_to_pac USING btree (recipient_crp_interest_group_osid);
 
 
 --
--- Name: index_crp_interest_groups_on_osid; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_crp_interest_groups_on_osid; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_crp_interest_groups_on_osid ON crp_interest_groups USING btree (osid);
 
 
 --
--- Name: index_facebook_templates_on_template_name; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_facebook_templates_on_template_name; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_facebook_templates_on_template_name ON facebook_templates USING btree (template_name);
 
 
 --
--- Name: index_fundraisers_on_person_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_fundraisers_on_person_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_fundraisers_on_person_id ON fundraisers USING btree (person_id);
 
 
 --
--- Name: index_group_members_on_group_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_group_members_on_group_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_group_members_on_group_id ON group_members USING btree (group_id);
 
 
 --
--- Name: index_group_members_on_user_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_group_members_on_user_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_group_members_on_user_id ON group_members USING btree (user_id);
 
 
 --
--- Name: index_political_notebooks_on_group_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_political_notebooks_on_group_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_political_notebooks_on_group_id ON political_notebooks USING btree (group_id);
 
 
 --
--- Name: index_privacy_options_on_user_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_privacy_options_on_user_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_privacy_options_on_user_id ON privacy_options USING btree (user_id);
 
 
 --
--- Name: index_roles_on_person_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_roles_on_person_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_roles_on_person_id ON roles USING btree (person_id);
 
 
 --
--- Name: index_roll_calls_on_where_and_number_and_date; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_roll_calls_on_where_and_number_and_date; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_roll_calls_on_where_and_number_and_date ON roll_calls USING btree ("where", number, date);
 
 
 --
--- Name: index_taggings_on_tag_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_taggings_on_tag_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_taggings_on_tag_id ON taggings USING btree (tag_id);
 
 
 --
--- Name: index_taggings_on_taggable_id_and_taggable_type_and_context; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_taggings_on_taggable_id_and_taggable_type_and_context; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_taggings_on_taggable_id_and_taggable_type_and_context ON taggings USING btree (taggable_id, taggable_type, context);
 
 
 --
--- Name: index_users_on_facebook_uid; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_users_on_facebook_uid; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_users_on_facebook_uid ON users USING btree (facebook_uid);
 
 
 --
--- Name: index_users_on_login; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_users_on_login; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_users_on_login ON users USING btree (login);
 
 
 --
--- Name: index_users_on_zip_four; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_users_on_zip_four; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_users_on_zip_four ON users USING btree (zip_four);
 
 
 --
--- Name: index_users_on_zipcode; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_users_on_zipcode; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_users_on_zipcode ON users USING btree (zipcode);
 
 
 --
--- Name: index_videos_on_bill_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_videos_on_bill_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_videos_on_bill_id ON videos USING btree (bill_id);
 
 
 --
--- Name: index_videos_on_embed; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_videos_on_embed; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_videos_on_embed ON videos USING btree (embed);
 
 
 --
--- Name: index_videos_on_person_id; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_videos_on_person_id; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_videos_on_person_id ON videos USING btree (person_id);
 
 
 --
--- Name: index_videos_on_url; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_videos_on_url; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_videos_on_url ON videos USING btree (url);
 
 
 --
--- Name: index_zipcode_districts_on_state; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: index_zipcode_districts_on_state; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX index_zipcode_districts_on_state ON zipcode_districts USING btree (state);
 
 
 --
--- Name: panel_referrers_panel_type_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: panel_referrers_panel_type_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX panel_referrers_panel_type_index ON panel_referrers USING btree (panel_type);
 
 
 --
--- Name: panel_referrers_referrer_url_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: panel_referrers_referrer_url_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX panel_referrers_referrer_url_index ON panel_referrers USING btree (referrer_url);
 
 
 --
--- Name: people_cycle_contributions_person_id_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: people_cycle_contributions_person_id_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX people_cycle_contributions_person_id_index ON people_cycle_contributions USING btree (person_id);
 
 
 --
--- Name: people_firstname_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: people_firstname_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX people_firstname_index ON people USING btree (firstname, lastname);
 
 
 --
--- Name: people_fti_names_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: people_fti_names_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX people_fti_names_index ON people USING gist (fti_names);
 
 
 --
--- Name: roll_call_votes_person_id_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: roll_call_votes_person_id_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX roll_call_votes_person_id_index ON roll_call_votes USING btree (person_id);
 
 
 --
--- Name: roll_call_votes_roll_call_id_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: roll_call_votes_roll_call_id_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX roll_call_votes_roll_call_id_index ON roll_call_votes USING btree (roll_call_id);
 
 
 --
--- Name: sidebarable_poly_idx; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: sidebarable_poly_idx; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX sidebarable_poly_idx ON sidebar_boxes USING btree (sidebarable_id, sidebarable_type);
 
 
 --
--- Name: site_texts_text_type_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: site_texts_text_type_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX site_texts_text_type_index ON site_texts USING btree (text_type);
 
 
 --
--- Name: subject_fti_names_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: subject_fti_names_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX subject_fti_names_index ON subjects USING gist (fti_names);
 
 
 --
--- Name: subject_relations_subject_id_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: subject_relations_subject_id_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX subject_relations_subject_id_index ON subject_relations USING btree (subject_id, related_subject_id, relation_count);
 
 
 --
--- Name: subjects_term_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: subjects_term_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX subjects_term_index ON subjects USING btree (term);
 
 
 --
--- Name: u_email; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: u_email; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE UNIQUE INDEX u_email ON users USING btree (email);
 
 
 --
--- Name: u_users; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: u_users; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE UNIQUE INDEX u_users ON users USING btree (login);
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
---
-
-CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
-
-
---
--- Name: upcoming_bill_fti_names_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: upcoming_bill_fti_names_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX upcoming_bill_fti_names_index ON upcoming_bills USING gist (fti_names);
 
 
 --
--- Name: users_lower_email_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: users_lower_email_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX users_lower_email_index ON users USING btree (lower((email)::text));
 
 
 --
--- Name: users_lower_login_index; Type: INDEX; Schema: public; Owner: opencongress; Tablespace: 
+-- Name: users_lower_login_index; Type: INDEX; Schema: public;; Tablespace: 
 --
 
 CREATE INDEX users_lower_login_index ON users USING btree (lower((login)::text));
 
 
 --
--- Name: aggregate_bill_votes_trigger; Type: TRIGGER; Schema: public; Owner: opencongress
+-- Name: aggregate_bill_votes_trigger; Type: TRIGGER; Schema: public;
 --
 
 CREATE TRIGGER aggregate_bill_votes_trigger
@@ -7905,7 +6784,7 @@ CREATE TRIGGER aggregate_bill_votes_trigger
 
 
 --
--- Name: aggregate_bookmark_trigger; Type: TRIGGER; Schema: public; Owner: opencongress
+-- Name: aggregate_bookmark_trigger; Type: TRIGGER; Schema: public;
 --
 
 CREATE TRIGGER aggregate_bookmark_trigger
@@ -7915,7 +6794,7 @@ CREATE TRIGGER aggregate_bookmark_trigger
 
 
 --
--- Name: aggregate_comment_trigger; Type: TRIGGER; Schema: public; Owner: opencongress
+-- Name: aggregate_comment_trigger; Type: TRIGGER; Schema: public;
 --
 
 CREATE TRIGGER aggregate_comment_trigger
@@ -7925,7 +6804,7 @@ CREATE TRIGGER aggregate_comment_trigger
 
 
 --
--- Name: aggregate_commentaries_trigger; Type: TRIGGER; Schema: public; Owner: opencongress
+-- Name: aggregate_commentaries_trigger; Type: TRIGGER; Schema: public;
 --
 
 CREATE TRIGGER aggregate_commentaries_trigger
@@ -7935,7 +6814,7 @@ CREATE TRIGGER aggregate_commentaries_trigger
 
 
 --
--- Name: article_tsvectorupdate; Type: TRIGGER; Schema: public; Owner: opencongress
+-- Name: article_tsvectorupdate; Type: TRIGGER; Schema: public;
 --
 
 CREATE TRIGGER article_tsvectorupdate
@@ -7945,7 +6824,7 @@ CREATE TRIGGER article_tsvectorupdate
 
 
 --
--- Name: bill_titles_tsvectorupdate; Type: TRIGGER; Schema: public; Owner: opencongress
+-- Name: bill_titles_tsvectorupdate; Type: TRIGGER; Schema: public;
 --
 
 CREATE TRIGGER bill_titles_tsvectorupdate
@@ -7955,7 +6834,7 @@ CREATE TRIGGER bill_titles_tsvectorupdate
 
 
 --
--- Name: bill_tsvectorupdate; Type: TRIGGER; Schema: public; Owner: opencongress
+-- Name: bill_tsvectorupdate; Type: TRIGGER; Schema: public;
 --
 
 CREATE TRIGGER bill_tsvectorupdate
@@ -7965,7 +6844,7 @@ CREATE TRIGGER bill_tsvectorupdate
 
 
 --
--- Name: commentary_tsvectorupdate; Type: TRIGGER; Schema: public; Owner: opencongress
+-- Name: commentary_tsvectorupdate; Type: TRIGGER; Schema: public;
 --
 
 CREATE TRIGGER commentary_tsvectorupdate
@@ -7975,7 +6854,7 @@ CREATE TRIGGER commentary_tsvectorupdate
 
 
 --
--- Name: comments_tsvectorupdate; Type: TRIGGER; Schema: public; Owner: opencongress
+-- Name: comments_tsvectorupdate; Type: TRIGGER; Schema: public;
 --
 
 CREATE TRIGGER comments_tsvectorupdate
@@ -7985,7 +6864,7 @@ CREATE TRIGGER comments_tsvectorupdate
 
 
 --
--- Name: committee_tsvectorupdate; Type: TRIGGER; Schema: public; Owner: opencongress
+-- Name: committee_tsvectorupdate; Type: TRIGGER; Schema: public;
 --
 
 CREATE TRIGGER committee_tsvectorupdate
@@ -7995,7 +6874,7 @@ CREATE TRIGGER committee_tsvectorupdate
 
 
 --
--- Name: people_tsvectorupdate; Type: TRIGGER; Schema: public; Owner: opencongress
+-- Name: people_tsvectorupdate; Type: TRIGGER; Schema: public;
 --
 
 CREATE TRIGGER people_tsvectorupdate
@@ -8005,7 +6884,7 @@ CREATE TRIGGER people_tsvectorupdate
 
 
 --
--- Name: subject_tsvectorupdate; Type: TRIGGER; Schema: public; Owner: opencongress
+-- Name: subject_tsvectorupdate; Type: TRIGGER; Schema: public;
 --
 
 CREATE TRIGGER subject_tsvectorupdate
@@ -8015,7 +6894,7 @@ CREATE TRIGGER subject_tsvectorupdate
 
 
 --
--- Name: upcoming_bill_tsvectorupdate; Type: TRIGGER; Schema: public; Owner: opencongress
+-- Name: upcoming_bill_tsvectorupdate; Type: TRIGGER; Schema: public;
 --
 
 CREATE TRIGGER upcoming_bill_tsvectorupdate
@@ -8025,53 +6904,13 @@ CREATE TRIGGER upcoming_bill_tsvectorupdate
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: postgres
+-- Name: public; Type: ACL; Schema: -;
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
 REVOKE ALL ON SCHEMA public FROM postgres;
 GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
-
-
---
--- Name: pg_ts_cfg; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE pg_ts_cfg FROM PUBLIC;
-REVOKE ALL ON TABLE pg_ts_cfg FROM postgres;
-GRANT ALL ON TABLE pg_ts_cfg TO postgres;
-GRANT SELECT ON TABLE pg_ts_cfg TO opencongress;
-
-
---
--- Name: pg_ts_cfgmap; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE pg_ts_cfgmap FROM PUBLIC;
-REVOKE ALL ON TABLE pg_ts_cfgmap FROM postgres;
-GRANT ALL ON TABLE pg_ts_cfgmap TO postgres;
-GRANT SELECT ON TABLE pg_ts_cfgmap TO opencongress;
-
-
---
--- Name: pg_ts_dict; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE pg_ts_dict FROM PUBLIC;
-REVOKE ALL ON TABLE pg_ts_dict FROM postgres;
-GRANT ALL ON TABLE pg_ts_dict TO postgres;
-GRANT SELECT ON TABLE pg_ts_dict TO opencongress;
-
-
---
--- Name: pg_ts_parser; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE pg_ts_parser FROM PUBLIC;
-REVOKE ALL ON TABLE pg_ts_parser FROM postgres;
-GRANT ALL ON TABLE pg_ts_parser TO postgres;
-GRANT SELECT ON TABLE pg_ts_parser TO opencongress;
 
 
 --

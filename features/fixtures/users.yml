@@ -10,13 +10,11 @@ users_001:
   default_filter: "5"
   mailing: f
   last_login: 2010-04-02 08:49:05.425035
-  remember_token_expires_at: 
   crypted_password: e9df7394fdecfe1d3c354ef7818ba93ba9c67578
   chat_msn: ""
   zipcode: 01084
   password_reset_code: 
   updated_at: 2010-04-02 08:49:05.426847
-  sso_key: 
   zip_four: "9605"
   activation_code: 
   admin: f
@@ -68,13 +66,11 @@ users_002:
   default_filter: "5"
   mailing: t
   last_login: 2010-04-06 14:26:56.149317
-  remember_token_expires_at: 
   crypted_password: 0789967153cdd211bc1d07852a4eb26c0530c0d4
   chat_msn: 
   zipcode: "20002"
   password_reset_code: 
   updated_at: 2010-04-06 14:26:56.151032
-  sso_key: 
   zip_four: 
   activation_code: 
   admin: f

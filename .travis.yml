@@ -8,3 +8,4 @@ script: "bundle exec rake spec"
 notifications:
   email:
     - dougcole@gmail.com
+    - aross@opencongress.org

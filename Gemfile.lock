@@ -12,7 +12,7 @@ GIT
 
 GIT
   remote: git://github.com/opencongress/formageddon.git
-  revision: ddc6fdcb79ae0e085663eba16ddb417e68286f12
+  revision: 753b862a593b472f47b00af2eef13e460a7eb4c8
   specs:
     formageddon (0.0.0)
       delayed_job (~> 2.1)

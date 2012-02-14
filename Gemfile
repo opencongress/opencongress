@@ -84,7 +84,7 @@ gem "okkez-open_id_authentication"
 gem "acts-as-taggable-on", :git => 'git://github.com/mbleigh/acts-as-taggable-on.git'
 
 gem 'mechanize'
-#gem 'formageddon', '0.0.0', :require => 'formageddon', :path => '/Users/aross/pcf-work/gitbranches/formageddon'
+#gem 'formageddon', '0.0.0', :require => 'formageddon', :path => '/Users/aross/Sites/formageddon'
 gem 'formageddon', :git => 'git://github.com/opencongress/formageddon.git'
 
 

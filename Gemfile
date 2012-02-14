@@ -97,7 +97,6 @@ group :test, :development do
   gem 'cucumber-rails'
   gem 'webrat'
   gem 'selenium-client'
-  gem 'sqlite3'
 
   gem 'capybara'
 

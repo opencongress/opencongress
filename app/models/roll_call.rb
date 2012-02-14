@@ -34,6 +34,10 @@ class RollCall < ActiveRecord::Base
     'On Agreeing to the Amendment'
   ]
 
+  def self.passage_types
+    (@@BILL_PASSAGE_TYPES + @@AMDT_PASSAGE_TYPES).flatten
+  end
+  
   #  before_save :set_party_lines
   def set_party_lines
     if self.republican_nay_votes.count >= self.republican_aye_votes.count

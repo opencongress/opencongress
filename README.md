@@ -10,7 +10,7 @@
 
 ### A. Dependencies
 
-Start by installing all the packages required by OpenCongress.
+Start by installing all the packages required by OpenCongress.  The main dependencies are postgres and ImageMagick; OpenCongress will not run on mysql or sqlite.  The following commands are suggestions, but ultimately you'll need to get postgres running to be able to run the app.  We are currently running version of postgres 8.4.4 in production.
 
 For Ubuntu:
 
@@ -18,77 +18,76 @@ For Ubuntu:
 
 ---
 
-or Mac OS X, start by installing [MacPorts](http://www.macports.org/), then run:
+For Mac OS X, start by installing [MacPorts](http://www.macports.org/), then run:
 
 	sudo port install postgresql84 postgresql84-doc postgresql84-server ImageMagick md5sha1sum wget
 
-Follow the instructions from the port install for initializing your database
+or, if you want to use [Homebrew](http://mxcl.github.com/homebrew/) (this will install version Postgres 8.4.4):
+	
+	brew install imagemagick
+	brew install https://github.com/adamv/homebrew-alt/raw/master/versions/postgresql8.rb
+ 
+Follow the instructions after the packages install for initializing your database
 
 ---
 
 
-Then grab the gems you need:
-
-<pre>
+Install the bundle:
 
 <code>
-sudo gem install rails bluecloth mediacloth hpricot htree jammit json pg RedCloth ruby-openid simple-rss rmagick htmlentities oauth</code>
-</pre>
+[sudo] gem install bundler
+bundle install
+</code>
 
-__Note for OS X:__ *You may need to specify additional compile options for the pg gem. Make sure pg_config is in PATH and run* `sudo env ARCHFLAGS="-arch x86_64" gem install pg`
+__Note for OS X:__ *You may need to specify additional compile options for your gems. Try: `ARCHFLAGS="-arch x86_64" bundle install`
 
 ### B. Database setup
 
-Switch to the postgres user and setup a db user following prompts for password and superuser.
+Running the following commands will create an 'opencongress' user and empty databases for the three environments (test, development, production).  The migration command will populate the development database with an empty schema.
 
-	sudo su postgres
-	createuser opencongress -P
+<code>
+rake db:init
+rake db:migrate
+</code>
 
-Create your database
+### C. Solr (optional, recommended)
+
+OpenCongress uses Solr to store some data.  Running Solr is not required to run the web server, but some pages will break if Solr is not running.  If you are going to import data, running solr is required or you will encounter errors.
+
+You can run Solr with the following command (usually in the background and/or in a separate window):
+
+	rake solr:start
 	
-	createdb opencongress_development -O opencongress
-
-Import the tsearch2 backwards compatibility lib from wherever your postgres contribs got installed.
 	
-	psql opencongress_development < /your/install/share/postgresql/contrib/8.4/tsearch2.sql
+### D. Legislative Data (optional)
 
-`exit` postgres user
+See note above about running Solr: it is required for importing data.
 
-### C. App Setup
-
-Copy over example yml files in /config
-
-	cd config; for file in `ls *example*`; do cp $file `expr "$file" : '\([^-\.]*\)'`.yml; done
-
-Edit database.yml:
+To import legislative data into your database, run the following command:
 	
-<pre><code>development:<br/>
-adapter: postgresql<br/>
-database: opencongress_development<br/>
-username: opencongress<br/>
-password: (password from step B)<br/>
-host: localhost<br/>
-</code></pre>
+	rake update:govtrack
 
-Now you can start the solr server and run the database migrations
+This will download data files from [Govtrack](http://govtrack.us) and import them into your database.  The default location for storage of the data files is `/tmp/opencongress_data` but you can change this by editing `config/application_settings.yml`.  This task will import ALL of the data for the current session of Congress: it will take a long time and occupy a LOT of space on your filesystem!  Keep this in mind before importing the data! 
 	
-	cd ..;rake solr:start
-	rake db:structure:load
-	rake db:seed
-
-### D. Data
+### E. Starting the server
    
-create some dirs for data
+See note above about running Solr: it is not required, but recommended.
 
-Make sure all your data paths are set and exist in your environment file then run `rake update:all` to fetch and parse all available data sources. This process will take a very long time. Take a look at /lib/tasks/daily.rake for all the rake tasks if you want to run them individually.
+To start the webserver:
 
-Now just a `script/server` and you should be running
- 
+	rails s
+	
+---
+
+We are actively working to make the install process easier for new volunteers.  Special thanks to Doug Cole for moving us along in this regard.
+
+---
+
 <div class="hideme"> 
 
 <hr />
 
-<p>Copyright (c) 2005-2010 Participatory Politics Foundation</p>
+<p>Copyright (c) 2005-2012 Participatory Politics Foundation</p>
 
 <p>OpenCongress is licensed, as a whole, under AGPLv3. Components added prior to
 OpenCongress version 3 (July 27, 2011) were and are licensed under GPLv3. All components added for or after

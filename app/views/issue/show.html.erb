@@ -6,7 +6,7 @@
 <%= render :partial => 'shared/stats_box', :object => @sidebar_stats_object if @sidebar_stats_object %>
 
 <div class="issue_wrapper">
-  
+ 
 <div class="floatright clearnone">
   <form id="timeframe_select" action="" method="get">
   <select name="filter" onchange="submit();">
@@ -20,6 +20,7 @@
 <a href="/bill/hot" class="silver button small floatleft clearnone margin-right"><span>View Hot Bills By Issues Area</span></a>
 <a href="<%= url_for :controller => 'issue', :action => 'defunct', :id => @subject %>" class="silver button small floatleft clearnone margin-right"><span>See Bills for Previous Sessions</span></a>
 
+
 <div id="issue_summary_text">
 <%= @subject.summary %>
 </div>
@@ -30,10 +31,13 @@
 <%= link_to_subjects @related_subjects %>
 <% end %>
 
-<% unless @bills.empty? %>
-  <div class="clear"><%= will_paginate @bills %></div>
-  <%= render :partial => "bill/related_bills_list", :locals => {:related_bills_list => @bills, :subject => @subject } -%>
-  <%= will_paginate @bills %>
+<% unless @latest_bills.empty? %>
+  <h3>Latest Bills</h3>
+  <%= render :partial => "bill/related_bills_list", :locals => {:related_bills_list => @latest_bills, :subject => @subject } -%>
+  <a href="<%= url_for :controller => 'issue', :action => 'show', :id => @subject %>" class="silver button small floatleft clearnone margin-right margin-bottom">
+    <span>See All Bills</span>
+  </a>
+  <div class="clear">&nbsp;</div>
 <% else %>
   <div class="padding clear">
   
@@ -60,14 +64,76 @@
     topic and others on your free "My OpenCongress" profile.</p>
   </div>
 <% end %>
-  <% unless @tracking_suggestions[0] == 0 %>
-    <%= render :partial => "shared/tracking_suggestions_table", 
-               :locals => {:object => @subject, 
-                           :title => @subject.term, 
-                           :action => 'tracking_issue', 
-                           :tracking_suggestions => @tracking_suggestions} %>
 
-  <% end %>
+
+<% unless @hot_bills.empty? %>
+  <h3>Hot Bills</h3>
+  <%= render :partial => "bill/related_bills_list", :locals => {:related_bills_list => @hot_bills, :subject => @subject } -%>
+  <a href="/bill/hot" class="silver button small floatleft clearnone margin-right margin-bottom">
+    <span>See Hot Bills in All Issue Areas</span>
+  </a>
+  <div class="clear">&nbsp;</div>
+<% end %>
+
+
+<% unless @hot_bills.empty? %>
+  <h3>Key Votes</h3>
+  <%= render :partial => 'roll_call/roll_calls_list', :locals => {:rolls => @key_votes}%>
+  <a href="/roll_call/all?sort=keyvotes" class="silver button small floatleft clearnone margin-right margin-bottom">
+    <span>See All Key Votes</span>
+  </a>
+  <div class="clear">&nbsp;</div>
+<% end %>
+
+<% unless @passed_bills.empty? %>
+  <h3>Enacted Bills</h3>
+  <%= render :partial => "bill/related_bills_list", :locals => {:related_bills_list => @passed_bills, :subject => @subject } -%>
+  <a href="/roll_call/all?sort=keyvotes" class="silver button small floatleft clearnone margin-right margin-bottom">
+    <span>See All Enacted Bills</span>
+  </a>
+  <div class="clear">&nbsp;</div>
+<% end %>
+
+<% unless @groups.empty? %>
+  <h3>Related OpenCongress Groups</h3>
+  <%= render 'groups/groups_list_small', :groups => @groups %>
+  <div class="clear">&nbsp;</div>
+
+<% end %>
+
+
+<% unless @related_industries.empty? %>
+  <h3>Top Recipients From Related Industries</h3>
+  <table class="money">
+    <tr><th>Industry</th><th>House</th><th>Senate</th></tr>
+    <% @related_industries.each do |i| %>
+      <tr>
+        <td><%= i.name %></td>
+        <td>
+          <% p = i.top_recipients(chamber = 'house', num = 1).first %>
+          <%= link_to_person(p) %><br />
+          $<%= number_with_delimiter(p.contrib_total) %>
+        </td>
+        <td>
+          <% p = i.top_recipients(chamber = 'senate', num = 1).first %>
+          <%= link_to_person(p) %><br />
+          $<%= number_with_delimiter(p.contrib_total) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  
+  <div class="clear">&nbsp;</div>
+<% end %>
+ 
+<% unless @tracking_suggestions[0] == 0 %>
+  <%= render :partial => "shared/tracking_suggestions_table", 
+             :locals => {:object => @subject, 
+                         :title => @subject.term, 
+                         :action => 'tracking_issue', 
+                         :tracking_suggestions => @tracking_suggestions} %>
+
+<% end %>
 <br /><br />
 
   <div class="huge">

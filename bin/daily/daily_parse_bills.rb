@@ -1,9 +1,11 @@
 #!/usr/bin/env ruby
 
+require 'o_c_logger'
+
 if __FILE__ == $0
   require File.dirname(__FILE__) + '/../../config/environment'
 else
-  puts "Running from #{$0}"
+  OCLogger.log "Running from #{$0}"
 end
 
 require File.dirname(__FILE__) + '/../../app/models/action'
@@ -15,7 +17,6 @@ require 'rexml/document'
 require 'ostruct'
 require 'date'
 require 'yaml'
-
 
 PATH = Settings.govtrack_data_path + "/#{Settings.default_congress}/bills"
 
@@ -46,7 +47,7 @@ bill_files.each do |f|
     file = File.open(filename)
     doc = REXML::Document.new file
     es = doc.elements
-    puts "Parsing file: #{filename} (#{i} of #{bill_files.size})"
+    OCLogger.log "Parsing file: #{filename} (#{i} of #{bill_files.size})"
 
     bill = nil
   
@@ -244,12 +245,12 @@ bill_files.each do |f|
       bill.save 
       file.close
     rescue NoUpdateException => nue
-      puts nue
+      OCLogger.log nue
       file.close
     rescue Exception => e
-      puts e
-      puts $!.backtrace
-      puts "error in #{filename}"
+      OCLogger.log e
+      OCLogger.log $!.backtrace
+      OCLogger.log "error in #{filename}"
     end
   }
 end
@@ -257,20 +258,20 @@ end
 # save all of the subjects to force their bill counts to be accurate
 subjects = Subject.find(:all)
 subjects.each_with_index do |s, i|  
-  puts "Saving subjects: #{i+1}/#{subjects.size}" if i % 100 == 0
+  OCLogger.log "Saving subjects (to update bill counts): #{i+1}/#{subjects.size}" if i % 100 == 0
   s.save 
 end
 
 
 # save any related bills that were not recognized during the parse
-puts "Saving Related Bills"
+OCLogger.log "Saving Related Bills"
 count = 0
 related_bills.keys.each do |rb|
   bill = related_bills[rb]
   
   related_bill = Bill.find_by_bill_type_and_number_and_session(rb[0], rb[1], Settings.default_congress)
   if related_bill.nil?
-    puts "Error! Unknown related bill: #{rb.inspect}"
+    OCLogger.log "Error! Unknown related bill: #{rb.inspect}"
   else
     br = BillRelation.find_or_initialize_by_bill_id_and_related_bill_id(bill.id, related_bill.id)
     br.relation = rb[2]

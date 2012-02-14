@@ -1,9 +1,13 @@
+require 'o_c_logger'
+
 namespace :update do
   desc "controls the running of parsing scripts that are intended to be run daily"
 
   task :rsync => :environment do
     begin
+      OCLogger.log "rsync with govtrack beginning...\n\n"
       system "sh #{Rails.root}/bin/daily/govtrack-rsync.sh #{Settings.data_path}"
+      OCLogger.log "rsync with govtrack finished.\n\n"
     rescue Exception => e
       if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error rsyncing govtrack data!")
@@ -62,9 +66,13 @@ namespace :update do
 
   task :people => :environment do
     begin
-      data = IO.popen("sha1sum -c /tmp/people.sha1").read
+      begin
+        data = IO.popen("sha1sum -c /tmp/people.sha1").read
+      rescue
+        data = "XXX"
+      end
+      
       unless data.match(/OK\n$/)
-        system "sha1sum #{Settings.data_path}/govtrack/people.xml >/tmp/people.sha1"
         Person.transaction {
           load 'bin/daily/daily_parse_people.rb'
         }

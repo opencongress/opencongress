@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'o_c_logger'
+
 if __FILE__ == $0
   require File.dirname(__FILE__) + '/../../config/environment'
 end
@@ -53,6 +55,8 @@ class PeopleListener
   end
 
   def make_person(attrs)
+    
+    
     id = attrs['id'].to_i
     arr = @people[id]
     @person = arr[0] unless arr.nil?
@@ -92,6 +96,8 @@ class PeopleListener
     @person.district = attrs['district']
     @person.state = attrs['state']
     @person.email = attrs['email']
+    
+    OCLogger.log "Legislator: #{@person.name}, birthday: #{@person.birthday}"
   end
 
   def make_role(as)
@@ -149,12 +155,12 @@ class PeopleListener
   end
 
   def method_missing(*args)
-    puts args.inspect
+    OCLogger.log args.inspect
     raise "ack"
   end
 end
 
-puts "people parsed"
+OCLogger.log "Parsing All Legislators from govtrack file..."
 
 Person.transaction {
   source = File.open(Settings.govtrack_data_path + "/#{Settings.default_congress}/../people.xml")

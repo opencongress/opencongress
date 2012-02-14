@@ -40,7 +40,7 @@ gem 'paperclip'
 
 
 # notifier for production errors
-gem "hoptoad_notifier"
+gem "airbrake"
 gem "xray", :require => "xray/thread_dump_signal_handler"
 
 # OpenID 
@@ -64,9 +64,10 @@ gem 'htmlentities'
 gem "json"
 gem "nokogiri"
 
-# Deployment
-gem 'capistrano'
-gem 'capistrano-ext'
+group :deployment do
+  gem 'capistrano'
+  gem 'capistrano-ext'
+end
 
 # new relic RPM
 gem 'newrelic_rpm'
@@ -83,16 +84,12 @@ gem "okkez-open_id_authentication"
 gem "acts-as-taggable-on", :git => 'git://github.com/mbleigh/acts-as-taggable-on.git'
 
 gem 'mechanize'
-#gem 'formageddon', '0.0.0', :require => 'formageddon', :path => '/Users/aross/pcf-work/gitbranches/formageddon'
+#gem 'formageddon', '0.0.0', :require => 'formageddon', :path => '/Users/aross/Sites/formageddon'
 gem 'formageddon', :git => 'git://github.com/opencongress/formageddon.git'
 
-gem 'autotest'
 
-gem 'rspec-rails', '~> 2.4'
-gem 'cucumber', '0.8.5'
-
-# Testing
 group :test, :development do
+  gem 'autotest'
   gem 'silent-postgres'	# Quieter postgres log messages
 
   gem 'rspec-rails', '~> 2.4'
@@ -100,10 +97,8 @@ group :test, :development do
   gem 'cucumber-rails'
   gem 'webrat'
   gem 'selenium-client'
-  gem 'sqlite3'
-  
+
   gem 'capybara'
-  gem 'capybara-envjs'
 
   gem 'autotest'
 

@@ -3,6 +3,8 @@ log/*.log
 tmp/**/*
 tmp/*
 data/*
+db/cucumber_structure.sql
+db/development_structure.sql
 db/schema.rb
 public/assets/*
 public/system/*

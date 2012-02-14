@@ -1,9 +1,11 @@
 #!/usr/bin/env ruby
 
+require 'o_c_logger'
+
 if __FILE__ == $0
   require File.dirname(__FILE__) + '/../../config/environment'
 else
-  puts "Running from #{$0}"
+  OCLogger.log "Running from #{$0}"
 end
 
 require File.dirname(__FILE__) + '/../../app/models/action'
@@ -18,7 +20,7 @@ a_num = 0
 amendments.each do |amdt|
   a_num += 1
   filename = "#{PATH}/#{amdt.number}.xml"
-  puts "Parsing #{filename} (#{a_num} of #{amendments.size})"
+  OCLogger.log "Parsing #{filename} (#{a_num} of #{amendments.size})"
   
   file = File.open(filename)
   doc = REXML::Document.new file
@@ -68,7 +70,7 @@ amendments.each do |amdt|
     
     amdt.save
   else
-    puts "Skipping...no new info."
+    OCLogger.log "Skipping...no new info."
   end
 
   file.close

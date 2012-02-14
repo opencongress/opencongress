@@ -5,7 +5,11 @@ class Wiki < ActiveRecord::Base
   require 'mediacloth'
   require 'hpricot'
   
-  establish_connection :oc_wiki
+  begin
+    establish_connection :oc_wiki
+  rescue ActiveRecord::AdapterNotSpecified
+    logger.warn "WARNING: oc_wiki configuration is not specified in database.yml"
+  end
 
   set_table_name 'text'
 
@@ -54,7 +58,7 @@ class Wiki < ActiveRecord::Base
                               (SELECT s_id FROM smw_rels2 INNER JOIN smw_ids AS p ON p_id=p.smw_id INNER JOIN smw_ids AS o ON o_id=o.smw_id 
                                WHERE p.smw_title='Billnumber' AND o.smw_title=?)
                               AS bill_q ON bill_q.s_id=sids.smw_id", session, typenum])
-      link.empty? ? nil : link.first.wiki_title
+      (link.nil? || link.empty?) ? nil : link.first.wiki_title
     rescue
       return nil
     end

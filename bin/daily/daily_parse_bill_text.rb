@@ -1,9 +1,11 @@
 #!/usr/bin/env ruby
 
+require 'o_c_logger'
+
 if __FILE__ == $0
   require File.dirname(__FILE__) + '/../../config/environment'
 else
-  puts "Running from #{$0}"
+  OCLogger.log "Running from #{$0}"
 end
 
 require 'rexml/document'
@@ -175,7 +177,7 @@ def parse_from_file(bill, text_version, filename)
 
   version = bill.bill_text_versions.find_or_create_by_version(text_version)
   if true #version.file_timestamp.nil? or (file_timestamp > version.file_timestamp)        
-    puts "Parsing bill text: #{filename}"
+    OCLogger.log "Parsing bill text: #{filename}"
     
     version.word_count = get_text_word_count(bill.bill_type, bill.number, text_version)
     
@@ -196,7 +198,7 @@ def parse_from_file(bill, text_version, filename)
     outfile = File.new("#{Settings.oc_billtext_path}/#{Settings.default_congress}/#{bill.bill_type}#{bill.number}#{text_version}.gen.html-oc", "w+")
     doc.write outfile
   else
-    puts "Bill text not updated for #{filename}; skipping."
+    OCLogger.log "Bill text not updated for #{filename}; skipping."
   end
 end
 
@@ -204,18 +206,18 @@ end
 begin
   if ENV['PARSE_ONLY'].blank?
     Bill.all_types_ordered.each do |bill_type|
-      puts "Parsing bill text of type: #{bill_type}"
+      OCLogger.log "Parsing bill text of type: #{bill_type}"
       
       type_bills = Bill.find(:all, :conditions => ["bill_type = ? AND session = ?", bill_type, Settings.default_congress])
       type_bills.each_with_index do |bill, i|
         begin
-          puts "Parsing bill text: #{bill.typenumber} (#{i+1} of #{type_bills.size})"
+          OCLogger.log "Parsing bill text: #{bill.typenumber} (#{i+1} of #{type_bills.size})"
     
           # first see if there are multiple versions of the bill
           bill_version_files = Dir.new("#{Settings.govtrack_billtext_diff_path}/#{Settings.default_congress}/#{bill_type}").entries.select { |f| f.match(/#{bill_type}#{bill.number}_(.*)\.xml$/) }
     
           if bill_version_files.size > 0
-            puts "Multiple versions exist for #{bill_type}#{bill.number}."
+            OCLogger.log "Multiple versions exist for #{bill_type}#{bill.number}."
       
             version_hash = {}
             bill_version_files.each do |f| 
@@ -256,7 +258,7 @@ begin
             end
           end
         rescue
-          puts "Couldn't parse bill text for #{bill.typenumber}.  Skipping. The error: #{$!}"
+          OCLogger.log "Couldn't parse bill text for #{bill.typenumber}.  Skipping. The error: #{$!}"
         end
       end
     end
@@ -266,6 +268,6 @@ begin
     parse_from_file(bill, ENV['BILL_TEXT_VERSION'], ENV['PARSE_ONLY'])
   end
 rescue
-  puts "ERROR! Couldn't parse bill text.  Skipping. The error: #{$!}"
+  OCLogger.log "ERROR! Couldn't parse bill text.  Skipping. The error: #{$!}"
 end
 

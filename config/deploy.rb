@@ -54,7 +54,7 @@ namespace :deploy do
     #    sudo "chown -R mongrel:admins #{current_release}"
     
     # setting the global RELEASE_NUMBER was not working on app1 so we're going to replace the value here
-    run "perl -pi -e 's/RELEASE_NUMBER/#{current_revision[0..7]}/g' #{current_release}/config/environments/production.rb"
+    run "perl -pi -e 's/RELEASE_NUMBER/#{current_revision[0..6]}/g' #{current_release}/config/environments/production.rb"
   end
 
   desc "Compile CSS & JS for public/assets/ (see assets.yml)"

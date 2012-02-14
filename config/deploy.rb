@@ -52,6 +52,9 @@ namespace :deploy do
     run "ln -s #{deploy_to}/#{shared_dir}/files/screencast.mp4 #{current_release}/public/screencast.mp4"
     run "ln -s #{deploy_to}/#{shared_dir}/files/facebook.yml #{current_release}/config/"
     #    sudo "chown -R mongrel:admins #{current_release}"
+    
+    # setting the global RELEASE_NUMBER was not working on app1 so we're going to replace the value here
+    run "perl -pi -e 's/RELEASE_NUMBER/#{current_revision[0..7]}/g' #{current_release}/config/environments/production.rb"
   end
 
   desc "Compile CSS & JS for public/assets/ (see assets.yml)"

@@ -12,11 +12,11 @@ OpenCongress::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Use the git revision of this release
-  ENV['RELEASE_NUMBER'] = %x{cat REVISION | cut -c -7}.rstrip
+  # RELEASE_NUMBER = %x{cat REVISION | cut -c -7}.rstrip
   
   # Enable serving of images, stylesheets, and javascripts from CloudFront
   config.action_controller.asset_host = Proc.new {
-     |source, request| "#{request.ssl? ? 'https' : 'http'}://d1f0ywl7f2vxwh.cloudfront.net/r-#{ENV['RELEASE_NUMBER']}"
+     |source, request| "#{request.ssl? ? 'https' : 'http'}://d1f0ywl7f2vxwh.cloudfront.net/r-RELEASE_NUMBER"
   }
   
   # Disable delivery errors, bad email addresses will be ignored

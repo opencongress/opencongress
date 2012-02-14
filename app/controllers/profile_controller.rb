@@ -89,7 +89,7 @@ class ProfileController < ApplicationController
 		
 		@title_class = "tab-nav"
 
-    @atom = {'link' => url_for(:only_path => false, :controller => 'user_feeds', :login => @user.login, :action => 'actions', :key => current_user.feed_key), 'title' => "#{@user.login}'s Actions"}  
+    @atom = {'link' => url_for(:only_path => false, :controller => 'user_feeds', :login => @user.login, :action => 'actions', :key => logged_in? ? current_user.feed_key : nil), 'title' => "#{@user.login}'s Actions"}  
     
     
 	  @my_comments = Comment.paginate(:all, :conditions => ["user_id = ?", @user.id], :order => "created_at DESC", :page => params[:page])

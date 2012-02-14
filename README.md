@@ -33,23 +33,23 @@ Follow the instructions after the packages install for initializing your databas
 
 
 Install the bundle:
-
+<pre>
 <code>
 [sudo] gem install bundler
 bundle install
 </code>
-
+</pre>
 __Note for OS X:__ *You may need to specify additional compile options for your gems. Try: `ARCHFLAGS="-arch x86_64" bundle install`
 
 ### B. Database setup
 
 Running the following commands will create an 'opencongress' user and empty databases for the three environments (test, development, production).  The migration command will populate the development database with an empty schema.
-
+<pre>
 <code>
 rake db:init
 rake db:migrate
 </code>
-
+</pre>
 ### C. Solr (optional, recommended)
 
 OpenCongress uses Solr to store some data.  Running Solr is not required to run the web server, but some pages will break if Solr is not running.  If you are going to import data, running solr is required or you will encounter errors.

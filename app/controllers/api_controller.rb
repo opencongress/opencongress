@@ -324,7 +324,7 @@ class ApiController < ApplicationController
   end
 
   def do_render_paginated(relation, parameters = {})
-    do_render(relation.offset((@page-1) * @per_page).limit(@per_page), parameters)
+    do_render(relation.offset((@page.to_i-1) * @per_page).limit(@per_page), parameters)
   end
 
   def do_render(object, parameters = {})

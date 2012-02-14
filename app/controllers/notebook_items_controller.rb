@@ -84,6 +84,12 @@ class NotebookItemsController < ApplicationController
 protected
   def notebook_env
     get_user_or_group
+    
+    unless (@user || @group)
+      redirect_to "/"
+      return false
+    end
+    
     get_notebook
     set_title
     set_profile_nav_location

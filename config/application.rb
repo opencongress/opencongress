@@ -60,6 +60,9 @@ module OpenCongress
 
     ENV['FACEBOOKER_CALLBACK_PATH'] = '/facebook'
   
+    # we'll use this just to help debug live servers
+    ENV['APP_SERVER'] = %x{hostname}.rstrip
+    
     # following should go in application_settings.yml, but it appears settingslogic
     # does not support hashes
     CONGRESS_START_DATES = {

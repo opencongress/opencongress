@@ -77,7 +77,7 @@ namespace :update do
           load 'bin/daily/daily_parse_people.rb'
         }
       else
-        puts "nothing to update"
+        OCLogger.log "Legislator data file people.xml has not been updated since last parse. Skipping."
       end
     rescue Exception => e
       if (['production', 'staging'].include?(Rails.env))

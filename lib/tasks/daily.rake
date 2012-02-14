@@ -1,9 +1,13 @@
+require 'o_c_logger'
+
 namespace :update do
   desc "controls the running of parsing scripts that are intended to be run daily"
 
   task :rsync => :environment do
     begin
+      OCLogger.log "rsync with govtrack beginning...\n\n"
       system "sh #{Rails.root}/bin/daily/govtrack-rsync.sh #{Settings.data_path}"
+      OCLogger.log "rsync with govtrack finished.\n\n"
     rescue Exception => e
       if (['production', 'staging'].include?(Rails.env))
         Emailer.deliver_rake_error(e, "Error rsyncing govtrack data!")

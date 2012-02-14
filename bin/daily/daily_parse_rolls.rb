@@ -1,9 +1,11 @@
 #!/usr/bin/env ruby
 
+require 'o_c_logger'
+
 if __FILE__ == $0
   require File.dirname(__FILE__) + '/../../config/environment'
 else
-  puts "Running from #{$0}"
+  OCLogger.log "Running from #{$0}"
 end
 
 class NoUpdateException < StandardError
@@ -18,7 +20,7 @@ i = 0
 curr_bill = 0
 roll_files.each do |f| 
   curr_bill += 1
-  puts "Parsing roll call file: #{PATH}/#{f} (Bill #{curr_bill} of #{roll_files.size})"
+  OCLogger.log "Parsing roll call file: #{PATH}/#{f} (Bill #{curr_bill} of #{roll_files.size})"
 
   rollFile = File.open("#{PATH}/#{f}", "r")
   
@@ -34,7 +36,7 @@ roll_files.each do |f|
         updated = Time.parse(os.updated)
       
         roll = RollCall.find_or_initialize_by_date_and_number(os.date, os.roll.to_i)
-        #puts "O: #{roll.updated}; N: #{updated}"
+        #OCLogger.log "O: #{roll.updated}; N: #{updated}"
         if (roll.updated && roll.updated == updated && !force_parse) 
           raise NoUpdateException, "Skipping roll call...already parsed, no new info."
         end
@@ -114,7 +116,7 @@ roll_files.each do |f|
         action.save
       end
     rescue NoUpdateException
-      puts "No update: #{$!}"      
+      OCLogger.log "No update: #{$!}"      
     end
   }
 end

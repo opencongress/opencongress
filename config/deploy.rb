@@ -51,7 +51,7 @@ namespace :deploy do
     run "ln -s #{deploy_to}/#{shared_dir}/files/oc_whats.flv #{current_release}/public/oc_whats.flv"
     run "ln -s #{deploy_to}/#{shared_dir}/files/screencast.mp4 #{current_release}/public/screencast.mp4"
     run "ln -s #{deploy_to}/#{shared_dir}/files/facebook.yml #{current_release}/config/"
-#    sudo "chown -R mongrel:admins #{current_release}"
+    #    sudo "chown -R mongrel:admins #{current_release}"
   end
 
   desc "Compile CSS & JS for public/assets/ (see assets.yml)"
@@ -80,9 +80,6 @@ after "deploy:update_code", "deploy:link_images"
 after "deploy:update_code", "deploy:jammit"
 
 
-# HopToad notification.
-Dir[File.join(File.dirname(__FILE__), '..', 'vendor', 'gems', 'hoptoad_notifier-*')].each do |vendored_notifier|
-  $: << File.join(vendored_notifier, 'lib')
-end
-
-require 'hoptoad_notifier/capistrano'
+# Airbrake put the following in; necessary?
+#require './config/boot'
+require 'airbrake/capistrano'

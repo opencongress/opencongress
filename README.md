@@ -34,34 +34,44 @@ Follow the instructions after the packages install for initializing your databas
 
 Install the bundle:
 
-<pre>
 <code>
 [sudo] gem install bundler
 bundle install
 </code>
-</pre>
 
 __Note for OS X:__ *You may need to specify additional compile options for your gems. Try: `ARCHFLAGS="-arch x86_64" bundle install`
 
 ### B. Database setup
 
 Running the following commands will create an 'opencongress' user and empty databases for the three environments (test, development, production).  The migration command will populate the development database with an empty schema.
-<pre>
+
 <code>
 rake db:init
 rake db:migrate
 </code>
-</pre>
 
-### C. Data (optional)
+### C. Solr (optional, recommended)
 
-We are developing a process to quickly import some real legislative data.  Coming soon.
-	
-### D. Starting the server
-   
-OpenCongress uses Solr to store some data.  The following command is not required, but some pages will break if Solr is not running:
+OpenCongress uses Solr to store some data.  Running Solr is not required to run the web server, but some pages will break if Solr is not running.  If you are going to import data, running solr is required or you will encounter errors.
+
+You can run Solr with the following command (usually in the background and/or in a separate window):
 
 	rake solr:start
+	
+	
+### D. Legislative Data (optional)
+
+See note above about running Solr: it is required for importing data.
+
+To import legislative data into your database, run the following command:
+	
+	rake update:govtrack
+
+This will download data files from [Govtrack](http://govtrack.us) and import them into your database.  The default location for storage of the data files is `/tmp/opencongress_data` but you can change this by editing `config/application_settings.yml`.  This task will import ALL of the data for the current session of Congress: it will take a long time and occupy a LOT of space on your filesystem!  Keep this in mind before importing the data! 
+	
+### E. Starting the server
+   
+See note above about running Solr: it is not required, but recommended.
 
 To start the webserver:
 

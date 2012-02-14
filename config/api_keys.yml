@@ -15,7 +15,7 @@ defaults: &defaults
   civicrm_user_key: xxx
   project_vote_smart: xxx
   google_maps: xxx
-  hoptoad: xxx
+  airbrake: xxx
   bitly: xxx
   aws_access_key_id: xxx
   aws_secret_access_key: xxx

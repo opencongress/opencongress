@@ -3,24 +3,37 @@ if [ -d "$1" ]
   then
   data=$1
 else
-  echo 'data dir not found! fix DATA_PATH in your environment file'
-  exit
+  echo 'data dir not found! trying to create file...'
+  mkdir -p $1
+
+  if [ ! -d "$1" ]
+  then
+    echo 'could not create $1!'
+    exit
+  fi
+
+  data=$1
 fi
 
-if [ ! -d "$data/govtrack/log" ]
+if [ ! -d "$data/govtrack" ]
 then
-  mkdir -p $data/govtrack/log
+  mkdir -p $data/govtrack
 fi
 
-if [ ! -e "$data/govtrack/log/govtrack-rsync.log" ]
+if [ ! -d "$data/govtrack/bills.text" ]
 then
-  touch $data/govtrack/log/govtrack-rsync.log
+  mkdir -p $data/govtrack/bills.text
 fi
 
-cd $data/govtrack
+if [ ! -d "$data/govtrack/bills.text.cmp" ]
+then
+  mkdir -p $data/govtrack/bills.text.cmp
+fi
 
-echo "\n\nrsyncing govtrack at `date`" >> log/govtrack-rsync.log
-rsync -avz govtrack.us::govtrackdata/us/people.xml . >> log/govtrack-rsync.log
-rsync -avz --exclude '*.pdf' --exclude '*.png' govtrack.us::govtrackdata/us/112 . >> log/govtrack-rsync.log
-rsync -avz --exclude '*.pdf' govtrack.us::govtrackdata/us/bills.text/112 ./bills.text/ >> log/govtrack-rsync.log
-rsync -avz govtrack.us::govtrackdata/us/bills.text.cmp/112 ./bills.text.cmp/ >> log/govtrack-rsync.log
+cd $data
+
+echo "\n\nrsyncing govtrack at `date`"
+rsync -avz govtrack.us::govtrackdata/us/people.xml ./govtrack/
+rsync -avz --exclude '*.pdf' --exclude '*.png' govtrack.us::govtrackdata/us/112 ./govtrack/
+rsync -avz --exclude '*.pdf' govtrack.us::govtrackdata/us/bills.text/112 ./govtrack/bills.text/ 
+rsync -avz govtrack.us::govtrackdata/us/bills.text.cmp/112 ./govtrack/bills.text.cmp/

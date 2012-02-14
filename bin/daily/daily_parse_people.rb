@@ -53,6 +53,8 @@ class PeopleListener
   end
 
   def make_person(attrs)
+    
+    
     id = attrs['id'].to_i
     arr = @people[id]
     @person = arr[0] unless arr.nil?
@@ -92,6 +94,8 @@ class PeopleListener
     @person.district = attrs['district']
     @person.state = attrs['state']
     @person.email = attrs['email']
+    
+    puts "Legislator: #{@person.name}, birthday: #{@person.birthday}"
   end
 
   def make_role(as)
@@ -154,7 +158,7 @@ class PeopleListener
   end
 end
 
-puts "people parsed"
+puts "Parsing All Legislators from govtrack file..."
 
 Person.transaction {
   source = File.open(Settings.govtrack_data_path + "/#{Settings.default_congress}/../people.xml")

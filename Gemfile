@@ -40,7 +40,7 @@ gem 'paperclip'
 
 
 # notifier for production errors
-gem "hoptoad_notifier"
+gem "airbrake"
 gem "xray", :require => "xray/thread_dump_signal_handler"
 
 # OpenID 

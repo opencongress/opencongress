@@ -41,11 +41,12 @@ defaults: &defaults
 development:
   <<: *defaults
 
-  govtrack_data_path: /Users/aross/pcf-work/govtrack_data/us
-  govtrack_billtext_path: /Users/aross/pcf-work/govtrack_data/us/bills.text
-  govtrack_billtext_diff_path: /Users/aross/pcf-work/govtrack_data/us/bills.text.cmp
-  oc_billtext_path: /Users/aross/pcf-work/oc_billtext
-  committee_reports_path: /Users/aross/pcf-work/committee_reports
+  data_path: /tmp/opencongress_data
+  govtrack_data_path: /tmp/opencongress_data/govtrack
+  govtrack_billtext_path: /tmp/opencongress_data/govtrack/bills.text
+  govtrack_billtext_diff_path: /tmp/opencongress_data/govtrack/bills.text.cmp
+  oc_billtext_path: /tmp/opencongress_data/opencongress/bills.text
+  committee_reports_path: /tmp/opencongress_data/committee_reports
   
   group_images_path: <%= Rails.root %>/public/system/group_images
   notebook_files_path: <%= Rails.root %>/public/system/notebook_files

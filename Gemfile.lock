@@ -56,6 +56,9 @@ GEM
       activesupport (= 3.0.7)
     activesupport (3.0.7)
     addressable (2.2.6)
+    airbrake (3.0.9)
+      activesupport
+      builder
     arel (2.0.10)
     autotest (4.4.6)
       ZenTest (>= 4.4.1)
@@ -141,9 +144,6 @@ GEM
       railties (~> 3.0)
     hashie (1.1.0)
     highline (1.6.2)
-    hoptoad_notifier (2.4.11)
-      activesupport
-      builder
     hpricot (0.8.4)
     htmlentities (4.3.0)
     httmultiparty (0.3.6)
@@ -281,6 +281,7 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   acts-as-taggable-on!
+  airbrake
   autotest
   bluecloth
   capistrano
@@ -299,7 +300,6 @@ DEPENDENCIES
   guard-livereload
   haml
   haml-rails
-  hoptoad_notifier
   hpricot
   htmlentities
   jammit

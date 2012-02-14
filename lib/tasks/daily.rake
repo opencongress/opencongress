@@ -62,9 +62,13 @@ namespace :update do
 
   task :people => :environment do
     begin
-      data = IO.popen("sha1sum -c /tmp/people.sha1").read
+      begin
+        data = IO.popen("sha1sum -c /tmp/people.sha1").read
+      rescue
+        data = "XXX"
+      end
+      
       unless data.match(/OK\n$/)
-        system "sha1sum #{Settings.data_path}/govtrack/people.xml >/tmp/people.sha1"
         Person.transaction {
           load 'bin/daily/daily_parse_people.rb'
         }

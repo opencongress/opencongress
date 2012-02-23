@@ -757,7 +757,13 @@ class Bill < ActiveRecord::Base
     ref_views.collect { |v| v.referrer }
   end
   
+  def related_articles
+    Article.tagged_with(subject_terms, { :order => 'created_at DESC', :limit => 5 })
+  end
 
+  def subject_terms
+    subjects.collect{|s| s.term}.join(',')
+  end
   
   def subject
     #most popular subject that is not in the top X

@@ -1,4 +1,4 @@
-<% articles = Article.tagged_with("#{@bill.subjects.collect{|s| s.term}.join(',')}", { :order => 'created_at DESC', :limit => 5 })%>
+<% articles = @bill.related_articles %>
 
 <% unless articles.empty? %>
   <div class="sidebar_recent_articles">

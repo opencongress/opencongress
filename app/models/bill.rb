@@ -758,7 +758,7 @@ class Bill < ActiveRecord::Base
   end
   
   def related_articles
-    Article.tagged_with(subject_terms, { :order => 'created_at DESC', :limit => 5 })
+    Article.tagged_with(subject_terms, :order => 'created_at DESC', :limit => 5)
   end
 
   def subject_terms

@@ -18,7 +18,7 @@
     <% end %>
     <td><%= c.user ? c.user.login : "Anonymous" %></td>
     <td><%= Object.const_get(c.commentable_type).find_by_id(c.commentable_id).ident %></td>
-    <td><%= link_to c.created_at.to_s(:short), url_for(c.page_link_admin).gsub('admin/', '') %></td>
+    <td><%= link_to c.created_at, url_for(c.page_link_admin).gsub('admin/', '') %></td>
     <td>
       <%= check_box_tag "ban_ip[]", c.id %> Ban IP <br/>
        <% if c.user %>

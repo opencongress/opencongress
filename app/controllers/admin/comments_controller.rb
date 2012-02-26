@@ -5,11 +5,14 @@ class Admin::CommentsController < Admin::IndexController
 
   def index
     if params[:flagged_only]
-      @teh_comments = Comment.paginate_by_flagged_and_censored(true,false, :order => "created_at ASC", :page => params[:page], :per_page => 100)
+      @teh_comments = Comment.where("flagged=? AND censored=?", true, false).order("created_at ASC").paginate(:page => params[:page], :per_page => 100)
       @page_title = "Flagged Comments"
+    elsif params[:spam]
+      @page_title = "Spam Comments"
+      @teh_comments = Comment.spam.paginate(:page => params[:page], :per_page => 100)
     else
       @page_title = "Comment Moderation"
-      @teh_comments = Comment.paginate_by_ok_and_censored(nil,false, :order => "created_at ASC", :page => params[:page], :per_page => 100)
+      @teh_comments = Comment.where("censored=?", false).order("created_at ASC").paginate(:page => params[:page], :per_page => 100)
     end
   end
   
@@ -62,6 +65,7 @@ class Admin::CommentsController < Admin::IndexController
     unless params[:ok].nil? || params[:ok].empty?
       Comment.update_all("ok = true", ["id in (?)", params[:ok]])
       Comment.update_all("flagged = false", ["id in (?)", params[:ok]])
+      Comment.update_all("spam = false", ["id in (?)", params[:ok]])
     end
     
 

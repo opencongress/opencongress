@@ -22,6 +22,7 @@ defaults: &defaults
   formageddon_password: xxx
   formageddon_get_replies_key: xxx
   bing: xxx
+  defensio: xxx
   
 development:
   <<: *defaults

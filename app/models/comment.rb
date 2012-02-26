@@ -1,4 +1,6 @@
 class Comment < ActiveRecord::Base
+  include Defender::Spammable
+  
   belongs_to :user
   belongs_to :commentable, :polymorphic => true
   
@@ -22,12 +24,33 @@ class Comment < ActiveRecord::Base
   scope :useless, :conditions => ["comments.plus_score_count - comments.minus_score_count DESC < 0"]
   scope :most_useful, :order => ["comments.plus_score_count - comments.minus_score_count DESC"], :limit => 3  
   scope :uncensored, :conditions => ["censored != ?", true]
+  scope :spam, where("comments.spam = ? AND comments.defensio_sig <> ''", true).order("comments.created_at ASC")
   
   apply_simple_captcha
   validates_presence_of :comment, :message => " : You must enter a comment."
   validates_length_of :comment, :in => 1..1000, :too_short => " : Your comment is not verbose enough, write more.", :too_long => " : Your comment is too verbose, keep it under 1000 characters."
 
   acts_as_nested_set :scope => :root
+  
+  configure_defender :keys => { 
+    'content' => :comment, 
+    'author-ip' => :ip_address, 
+    'author-name' => :author_name, 
+    'author-email' => :author_email 
+  }
+  
+  # these methods are for defender to help with spam detection
+  def author_name
+    user.nil? ? nil : user.login
+  end
+  
+  def author_email
+    user.nil? ? nil : user.email
+  end
+  
+  def is_spam?
+    spam? and !defensio_sig.blank?
+  end
   
   def score_count_sum
     plus_score_count.to_i - minus_score_count.to_i

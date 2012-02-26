@@ -97,6 +97,11 @@ GEM
       cucumber (>= 0.8.0)
     culerity (0.2.15)
     daemons (1.1.4)
+    defender (2.0.2)
+      activemodel (>= 3.0.0)
+      defensio (~> 0.9.1)
+    defensio (0.9.1)
+      httparty (>= 0.5.0)
     delayed_job (2.1.4)
       activesupport (~> 3.0)
       daemons
@@ -295,6 +300,7 @@ DEPENDENCIES
   closure-compiler
   cucumber (= 0.8.5)
   cucumber-rails
+  defender
   delayed_job (~> 2.1)
   facebooker2
   fog

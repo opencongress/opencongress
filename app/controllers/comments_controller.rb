@@ -178,17 +178,30 @@ class CommentsController < ApplicationController
   def censor
     comment = Comment.find_by_id(params[:id])
 
-    if params[:commit] == "Censor+BanIP"
+    if params[:commit] == "BanIP+Destroy User"
+      flash[:notice] = ""
       if comment && !comment.ip_address.blank? && comment.ip_address !=~ /^127./
         noob = ApacheBan.create_by_ip(comment.ip_address)
-        flash[:notice] = "IP #{comment.ip_address} banned"
-    
-      else
-        flash[:notice] = "No IP associated with that comment."
+        flash[:notice] = "IP #{comment.ip_address} banned, "
       end
+      userlogin = comment.user.login
+      comment.user.destroy
+      
+      flash[:notice] += "#{userlogin} and comments destroyed"
+    else
+      if params[:commit] == "Censor+BanIP"
+        if comment && !comment.ip_address.blank? && comment.ip_address !=~ /^127./
+          noob = ApacheBan.create_by_ip(comment.ip_address)
+          flash[:notice] = "IP #{comment.ip_address} banned"
+    
+        else
+          flash[:notice] = "No IP associated with that comment."
+        end
+      end
+    
+      comment.update_attribute(:censored, true)
     end
     
-    comment.update_attribute(:censored, true)
     redirect_back_or_default('/')
   end
   

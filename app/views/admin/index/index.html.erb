@@ -36,6 +36,7 @@
     <li><%= link_to 'Approve/Reject Questionable Blog/News Articles', :controller => 'commentary', :action => 'pending' %></li>
     <li><%= link_to 'Approve/Reject User Comments', :controller => 'admin/comments', :action => 'index' %></li>
     <li><%= link_to 'Moderate Flagged Comments', :controller => 'admin/comments', :action => 'index', :flagged_only => true %></li>
+    <li><%= link_to 'Moderate Spam Comments', :controller => 'admin/comments', :action => 'index', :spam => true %></li>
     <li><%= link_to 'Clear Cache', :controller => 'admin/commentary', :action => 'clear_cache' %></li>
   <% end %>
   <% if current_user.user_role.can_see_stats %>

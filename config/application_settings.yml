@@ -54,6 +54,9 @@ development:
   base_url: http://localhost:3000/
   api_host: api.127localhost.com:3000
   api_base_url: http://api.127localhost.com:3000/
+  
+  ban_file: /tmp/banned_users.txt
+  
 
 drm:
   <<: *defaults

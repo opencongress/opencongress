@@ -3,7 +3,9 @@
 - if comment.censored
   .commentfl{ :style => "clear:both;float:none;border-top:1px solid #D0D6E2;" }
     %p Moderated Comment
-
+- elsif comment.is_spam?
+  .commentfl{ :style => "clear:both;float:none;border-top:1px solid #D0D6E2;" }
+    %p Spam Comment
 - else
   - if comment.parent_id && !flat
     .replytri= image_tag 'comm_reply.png'
@@ -130,3 +132,5 @@
         %form.button-to{ :action => "/comments/censor/#{h comment.id }",  :method => "get"}
           = submit_tag "Censor", :value => "Censor"
           = submit_tag "Censor+BanIP", :value => "Censor+BanIP"
+          = submit_tag "BanIP+Destroy User", :value => "BanIP+Destroy User"
+          

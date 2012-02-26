@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
   has_many :groups, :through => :group_members
   
   has_many :api_hits
-  has_many :comments
+  has_many :comments, :dependent => :destroy
   has_one  :privacy_option
   has_one :user_mailing_list
   has_one :twitter_config

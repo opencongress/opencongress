@@ -64,6 +64,9 @@ gem 'htmlentities'
 gem "json"
 gem "nokogiri"
 
+# spam protection
+gem "defender"
+
 group :deployment do
   gem 'capistrano'
   gem 'capistrano-ext'

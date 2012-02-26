@@ -33,4 +33,6 @@ OpenCongress::Application.configure do
   config.active_support.deprecation = :notify
   
   Paperclip.options[:command_path] = "/usr/local/bin"
+  
+  GC.enable_stats if defined?(GC) && GC.respond_to?(:enable_stats)
 end

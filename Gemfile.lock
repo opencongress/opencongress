@@ -1,14 +1,16 @@
 GIT
+  remote: git://github.com/dougcole/acts-as-taggable-on.git
+  revision: cf52b870c07e8d6825a478a9669c9e384f580a32
+  branch: use_equality_where_possible
+  specs:
+    acts-as-taggable-on (2.2.2)
+      rails (~> 3.0)
+
+GIT
   remote: git://github.com/galetahub/simple-captcha.git
   revision: b8493942e9a9bb58c58712fa21d41963330da6aa
   specs:
     simple_captcha (0.1.1)
-
-GIT
-  remote: git://github.com/mbleigh/acts-as-taggable-on.git
-  revision: 2752cfef4c66318d0925fbe880d5392ad188bb50
-  specs:
-    acts-as-taggable-on (2.0.6)
 
 GIT
   remote: git://github.com/opencongress/formageddon.git

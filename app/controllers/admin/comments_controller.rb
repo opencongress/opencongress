@@ -63,9 +63,14 @@ class Admin::CommentsController < Admin::IndexController
     end
 
     unless params[:ok].nil? || params[:ok].empty?
+      # mark the spam as false positives
+      comments = Comment.find_all_by_id(params[:ok])
+      comments.each do |c|
+        c.false_positive! if c.is_spam?
+      end
+      
       Comment.update_all("ok = true", ["id in (?)", params[:ok]])
       Comment.update_all("flagged = false", ["id in (?)", params[:ok]])
-      Comment.update_all("spam = false", ["id in (?)", params[:ok]])
     end
     
 

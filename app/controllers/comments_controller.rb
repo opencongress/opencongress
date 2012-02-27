@@ -201,6 +201,8 @@ class CommentsController < ApplicationController
 
       elsif params[:commit] == "Spam"
         comment.false_negative!
+        
+        flash[:notice] = "Comment marked as spam; Defensio notified about false negative."
       end
     end
     

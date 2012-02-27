@@ -131,6 +131,8 @@
       %div{ :style => "clear:left;" }
         %form.button-to{ :action => "/comments/censor/#{h comment.id }",  :method => "get"}
           = submit_tag "Censor", :value => "Censor"
+          - if !comment.defensio_sig.blank? and comment.created_at > 30.days.ago
+            = submit_tag "Spam", :value => "Spam"
           = submit_tag "Censor+BanIP", :value => "Censor+BanIP"
           = submit_tag "BanIP+Destroy User", :value => "BanIP+Destroy User"
           

@@ -197,9 +197,11 @@ class CommentsController < ApplicationController
         else
           flash[:notice] = "No IP associated with that comment."
         end
+        comment.update_attribute(:censored, true)
+
+      elsif params[:commit] == "Spam"
+        comment.false_negative!
       end
-    
-      comment.update_attribute(:censored, true)
     end
     
     redirect_back_or_default('/')

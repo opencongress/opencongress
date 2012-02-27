@@ -28,11 +28,12 @@ describe Comment do
       comment.user = @user
 
       # this api key is not the same as the one used in production
+      Comment.test_mode = true
       Defender.api_key = '7381e638d4d9163d409266b313dee312'
     end
     
     it "does not identify good comments as spam" do      
-      comment.comment = "But behind the public pronouncements, American officials described a growing concern, even at the highest levels of the Obama administration and Pentagon, about the challenges of pulling off a troop withdrawal in Afghanistan that hinges on the close mentoring and training of army and police forces."
+      comment.comment = "[innocent,0.25] But behind the public pronouncements, American officials described a growing concern, even at the highest levels of the Obama administration and Pentagon, about the challenges of pulling off a troop withdrawal in Afghanistan that hinges on the close mentoring and training of army and police forces."
       comment.save
       
       comment.is_spam?.should == false
@@ -40,7 +41,7 @@ describe Comment do
     end
     
     it "does identify spammy comments as spam" do
-      comment.comment = '<a href="http://www.kigtropin-shop.com/Wholesale-hgh_c6">HGH</a> <a href="http://www.kigtropin-shop.com/Wholesale-jintropin_c1">Jintropin</a> <a href="http://www.kigtropin-shop.com/Wholesale-hygetropin_c3">Hygetropin</a> <a href="http://www.kigtropin-shop.com/Wholesale-kigtropin_c4">Kigtropin</a> <a href="http://www.kigtropin-shop.com/Wholesale-jintropin-aq_c2">Jintropin AQ</a> <a href="http://www.kigtropin-shop.com/Wholesale-hcg_c7">HCG</a>'
+      comment.comment = '[spam,0.85] <a href="http://www.kigtropin-shop.com/Wholesale-hgh_c6">HGH</a> <a href="http://www.kigtropin-shop.com/Wholesale-jintropin_c1">Jintropin</a> <a href="http://www.kigtropin-shop.com/Wholesale-hygetropin_c3">Hygetropin</a> <a href="http://www.kigtropin-shop.com/Wholesale-kigtropin_c4">Kigtropin</a> <a href="http://www.kigtropin-shop.com/Wholesale-jintropin-aq_c2">Jintropin AQ</a> <a href="http://www.kigtropin-shop.com/Wholesale-hcg_c7">HCG</a>'
       comment.save
       
       comment.is_spam?.should == true

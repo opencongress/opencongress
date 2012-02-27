@@ -13,6 +13,14 @@ GIT
     simple_captcha (0.1.1)
 
 GIT
+  remote: git://github.com/kennethlmartin/defender.git
+  revision: 795923014e4853b41ffbe72933388644e31de60f
+  specs:
+    defender (2.0.2)
+      activemodel (>= 3.0.0)
+      defensio (~> 0.9.1)
+
+GIT
   remote: git://github.com/opencongress/formageddon.git
   revision: 753b862a593b472f47b00af2eef13e460a7eb4c8
   specs:
@@ -99,9 +107,6 @@ GEM
       cucumber (>= 0.8.0)
     culerity (0.2.15)
     daemons (1.1.4)
-    defender (2.0.2)
-      activemodel (>= 3.0.0)
-      defensio (~> 0.9.1)
     defensio (0.9.1)
       httparty (>= 0.5.0)
     delayed_job (2.1.4)
@@ -302,7 +307,7 @@ DEPENDENCIES
   closure-compiler
   cucumber (= 0.8.5)
   cucumber-rails
-  defender
+  defender!
   delayed_job (~> 2.1)
   facebooker2
   fog

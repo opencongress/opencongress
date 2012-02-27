@@ -65,7 +65,7 @@ gem "json"
 gem "nokogiri"
 
 # spam protection
-gem "defender"
+gem "defender", :git => 'git://github.com/kennethlmartin/defender.git'
 
 group :deployment do
   gem 'capistrano'

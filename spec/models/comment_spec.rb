@@ -28,8 +28,8 @@ describe Comment do
       comment.user = @user
 
       # this api key is not the same as the one used in production
-      Comment.test_mode = true
       Defender.api_key = '7381e638d4d9163d409266b313dee312'
+      Defender.test_mode = true
     end
     
     it "does not identify good comments as spam" do      

@@ -49,7 +49,7 @@ class Comment < ActiveRecord::Base
   end
   
   def is_spam?
-    self.spam? and !defensio_sig.blank?
+    (spam == true) and !defensio_sig.blank?
   end
   
   def score_count_sum

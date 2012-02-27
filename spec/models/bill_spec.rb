@@ -30,9 +30,9 @@ describe Bill do
       bill.related_articles.should == [@article]
     end
 
-    it "must match all of a bill's subjects" do
-      bill.stub(:subject_terms).and_return("foo,bar,other")
-      bill.related_articles.should be_empty
+    it "can match any of a bill's subjects" do
+      bill.stub(:subject_terms).and_return("foo,bar,other,another,yet another")
+      bill.related_articles.should == [@article]
     end
 
     it "won't match if there are no matching tags" do

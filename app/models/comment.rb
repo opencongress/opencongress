@@ -24,7 +24,7 @@ class Comment < ActiveRecord::Base
   scope :useless, :conditions => ["comments.plus_score_count - comments.minus_score_count DESC < 0"]
   scope :most_useful, :order => ["comments.plus_score_count - comments.minus_score_count DESC"], :limit => 3  
   scope :uncensored, :conditions => ["censored != ?", true]
-  scope :spam, where("comments.spam = ? AND comments.defensio_sig <> ''", true).order("comments.created_at ASC")
+  scope :spamy, where("comments.spam = ? AND comments.defensio_sig <> ''", true).order("comments.created_at ASC")
   
   apply_simple_captcha
   validates_presence_of :comment, :message => " : You must enter a comment."
@@ -49,7 +49,7 @@ class Comment < ActiveRecord::Base
   end
   
   def is_spam?
-    spam? and !defensio_sig.blank?
+    self.spam? and !defensio_sig.blank?
   end
   
   def score_count_sum

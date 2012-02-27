@@ -9,7 +9,7 @@ class Admin::CommentsController < Admin::IndexController
       @page_title = "Flagged Comments"
     elsif params[:spam]
       @page_title = "Spam Comments"
-      @teh_comments = Comment.spam.paginate(:page => params[:page], :per_page => 100)
+      @teh_comments = Comment.spamy.paginate(:page => params[:page], :per_page => 100)
     else
       @page_title = "Comment Moderation"
       @teh_comments = Comment.where("censored=?", false).order("created_at ASC").paginate(:page => params[:page], :per_page => 100)

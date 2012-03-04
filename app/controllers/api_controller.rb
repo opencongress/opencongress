@@ -52,7 +52,7 @@ class ApiController < ApplicationController
       conditions[:user_approval] = params[:user_approval_from].to_f..params[:user_approval_to].to_f
     end
     
-    @people = Person.paginate(:conditions => conditions, :per_page => @per_page, :page => params[:page])
+    @people = Person.where(conditions).paginate(:per_page => @per_page, :page => params[:page])
   end
   
   def most_blogged_representatives_this_week

@@ -19,6 +19,10 @@ development: &dev
   <<: *common
   database: opencongress_development
 
+drm: &drm
+  <<: *common
+  database: opencongress_development
+
 test:
   <<: *common
   database: opencongress_test

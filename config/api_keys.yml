@@ -35,3 +35,6 @@ staging:
   
 production:
   <<: *defaults
+
+drm:
+  <<: *defaults

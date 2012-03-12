@@ -1,889 +1,214 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font,img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, input, legend, table, caption, tbody, tfoot, thead, tr, th, td { font-family:arial,sans-serif;margin: 0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent;}body {line-height:1;}ol, ul {list-style:none;}blockquote, q {quotes:none;}/* remember to define focus styles! */:focus {outline:0;}/* remember to highlight inserts somehow! */ins {text-decoration:none;}del {text-decoration:line-through;}/* tables still need 'cellspacing="0"' in the markup */table {border-collapse:collapse;border-spacing:0;}
+header,nav,aside,section,footer{display:block;}
+a{text-decoration:none;font-family:Tahoma,Geneva,helvetica,arial,sans-serif;color:#333;}
+::-moz-selection{ background:#3297FD; color:#fff; text-shadow: none; }
+::selection { background:#3297FD; color:#fff; text-shadow: none; } 
+h1,h2,h3,h4,p{font-family:Tahoma,Geneva,helvetica,arial,sans-serif;}
+html,body{-webkit-font-smoothing: antialiased;}
 
-body{
-margin: 0;
-padding: 0 0 0px;
-font-family: Helvetica, Arial, sans-serif;
-background: url(../images/donate/bg.gif);
-position: relative;
-}
-
-a{
-outline: none;
-}
-
-
-.wrapper{
-margin: 0 auto;
-padding: 50px 70px 40px;
-width: 782px;
-background: url(../images/donate/top.png) center top no-repeat;
-position: relative;
-}
-
-.logo{
-padding: 0;
-background: url(../images/donate/logo.gif) no-repeat;
-padding-top: 60px;
-width: 240px;
-height: 0;
-overflow: hidden;
-margin: 0px auto 60px;
-}
-
-
-.loading{
-background: #fff url(../images/donate/loading.gif) center no-repeat;
-position: absolute;
-height: 200px;
-width: 600px;
-top: 10px;
-left: 10px;
-
-}
-
-
-.subject{
-background: #efefef;
-margin: 0 0 0;
-padding: 20px 30px;
-}
-
-
-.left.thanks h3{
-text-align: center;
-margin: 20px auto;
-width: 500px;
-}
-
-.left.thanks .share{
-
-margin: 20px auto 50px;
-width: 420px;
-}
-
-
-
-.email{
-background: #fff;
-border: 1px solid #dedede;
-margin: 0 auto;
-width: 400px;
-}
-
-
-.email div{
-padding: 10px 30px;
-}
-
-
-h1{
-margin: 0 0 89px;
-padding: 20px 0;
-color: #365c93;
-text-align: center;
-font-size: 28px;
-font-weight: normal;
-}
-
-
-h1 strong{
-font-weight: bold;
-
-}
-
-#content{
-margin-left: -1px;
-float: left;
-width: 782px;
-clear: both;
-left: 69px;
-top: 340px;
-padding: 0px 0px 11px;
-background: url(../images/donate/bottom.png) bottom left no-repeat;
-}
-
-.content_inner{
-background: url(../images/donate/content_bg.png) ;
-float: left;
-padding-bottom: 40px;
-width: 782px;
-}
-
-
-.left{
-float: left;
-width: 380px;
-padding: 20px 40px;
-border-right: 1px solid #fff;
-line-height: 1.7em;
-font-size: 14px;
-color: #555;
-}
-
-
-.left.thanks{
-float: left;
-background: url(../images/donate/big_heart.gif) center no-repeat;
-width: 701px;
-padding: 20px 40px;
-border: 0;
-line-height: 1.7em;
-font-size: 14px;
-color: #555;
-}
-
-
-.right{
-float: right;
-width: 320px;
-}
-
-div.principles{
-padding-top: 30px;
-clear: both;
-}
-
-.principles h2{
-font-size: 18px;
-margin: 0px 0 5px 40px;
-color: #365c93;
-}
-
-.principles ul {
-margin: 1px 0 0 23px;
-}
-
-.principles ul li{
-color: #365c93;
-margin-right: 40px;
-font-size: 16px;
-float: left;
-list-style-image:url(../images/donate/blue_star.gif); 
-line-height: 1.5em;
-}
-
-
-.banner{
-position: absolute;
-left: 69px;
-height: 83px;
-width: 782px;
-background: url(../images/donate/banner_bg.gif) repeat-x;
-top: 257px;
-}
-
-
-.banner .left_cap{
-position: absolute;
-left: -28px;
-height: 83px;
-width: 28px;
-background: url(../images/donate/banner_caps.gif) repeat-x;
-}
-
-
-.banner .right_cap{
-position: absolute;
-right: -28px;
-height: 83px;
-width: 28px;
-background: url(../images/donate/banner_caps.gif) top right repeat-x;
-}
-
-
-.banner p{
-float: left;
-color: #fff;
-font-size: 18px;
-margin: 33px 38px !important;
-text-shadow: #a11513 0px -1px 0px;
-padding-left: 45px;
-background: url(../images/donate/heart.gif) 0 1px no-repeat;
-}
-
-.banner.thanks p{
-margin: 33px 38px 0 105px !important;
-}
-
-
-.banner span.big_arrow{
-margin-top: 0px;
-padding-left: 80px;
-float: left;
-margin-left: 20px;
-margin-top: 26px;
-height: 30px;
-background: url(../images/donate/big_arrow.gif) 0 1px repeat;
-}
-
-
-
-.donate_now{
-float: right;
-padding-top: 49px;
-width: 227px;
-height: 0;
-overflow: hidden;
-margin: 19px 45px 0 0;
-background: url(../images/donate/donate.png) repeat-x;
-}
-
-
-.left .donate_now{
-float: left;
-
-}
-
-.donate_now:hover{
-background: url(../images/donate/donate.png) 0 -50px repeat-x;
-}
-
-.donate_now:active{
-background: url(../images/donate/donate.png) 0 -100px repeat-x;
-}
-
-.venn{
-height: 395px;
-width: 287px;
-margin-left: 33px;
-background: url(../images/donate-new.png) -2px 9px no-repeat;
-margin-top: 30px;
-}
-
-
-.ppf{
-width: 100%;;
-height: 667px;
-bottom: 30px;
-float: left;
-clear: both;
-background: url(../images/donate/ppf.png) center no-repeat;
-}
-
-.classy{
-font-weight: bold;
-font-size: 19px;
-color: #365c93;
-}
-
-
-.classy span{
-color: #993739;
-}
-
-
-blockquote{
-font-size: 14px;
-line-height: 1.5em;
-text-align: center;
-margin: 0 !important;
-padding: 0 10px;
-}
-
-.att{
-font-size: 14px;
-font-weight: bold;
-display: block;
-text-align: center;
-margin-top: 20px;
-}
-
-/*------------------------------------------------------------------------
---------------------------------------------------------------------------v
---------------------------------------------------------------------------
-
-~ Scrollable
-
---------------------------------------------------------------------------
---------------------------------------------------------------------------
-------------------------------------------------------------------------*/
-
-.scrollable img {
-	margin:30px;	
-}
-
-.scrollable img.hover {
-	background-color:#123;	
-}
-
-
-
-.user img{
-margin: 15px 15px 0;
-float: left;
-overflow: hidden;
-display: block;
-}
-
-
-
-.user blockquote{
-padding-top: 13px;
-font-size: 12px;
-}
-
-
-
-  
-/*
-	root element for the scrollable.
-	when scrolling occurs this element stays still.
-*/
-.scrollable {
-
-	/* required settings */
-	position:relative;
-	overflow:hidden;
-	width: 230px;
-	height:280px !important;
-margin: 10px 0 0 12px;
-	/* custom decorations */
-	border-top:1px solid #fff;
-	background:url(/img/global/gradient/h300.png) repeat-x;
-}
-
-/*
-	root element for scrollable items. Must be absolutely positioned
-	and it should have a extremely large width to accomodate scrollable items.
-	it's enough that you set the width and height for the root element and
-	not for this element.
-*/
-.scrollable .items {
-	/* this cannot be too large */
-	width:20000em;
-	position:absolute;
-	clear:both;
-}
-
-.items div {
-	float:left;
-	width:228px !important;
-
-}
-
-/* single scrollable item */
-.scrollable img {
-
-}
-
-/* active item */
-.scrollable .active {
-	border:2px solid #000;
-	position:relative;
-	cursor:default;
-}
-
-
+/* @fontface */ 
+@font-face { font-family:"museo3"; src:url('../fonts/museo300-regular-webfont.eot'), url('../fonts/museo300-regular-webfont.ttf'), url('../fonts/museo300-regular-webfont.woff'), url('../fonts/museo300-regular-webfont.svg'); }
 
+@font-face { font-family:"museo5"; src:url('../fonts/museo500-regular-webfont.eot'), url('../fonts/museo500-regular-webfont.ttf'), url('../fonts/museo500-regular-webfont.woff'), url('../fonts/museo500-regular-webfont.svg'); }
 
+@font-face { font-family:"museo7"; src:url('../fonts/museo700-regular-webfont.eot'), url('../fonts/museo700-regular-webfont.ttf'), url('../fonts/museo700-regular-webfont.woff'), url('../fonts/museo700-regular-webfont.svg'); }
+/* END fonts */ 
 
-.scrollable a{
-text-decoration: none;
-color: #333;
-display: block;
-height: 260px;
--moz-border-radius: 6px;
--webkit-border-radius: 6px;
-border-radius: 10px;
-text-align: center;
-margin: 0px 0
 
-}
-
-
-.scrollable a:hover{
-background: #eee;
-}
-
-
-
-.scrollable a img{
-border: 0;
-}
-
-
-
-.scrollable .pc a img{
-display: block;
-margin: 100px 55px;
-float: left;
-}
-
-
-
-
-.scrollable .meta a img{
-display: block;
-margin: 80px 44px 20px;
-float: left;
-}
-
-
-
-
-
-
-
-
-/* this makes it possible to add next button beside scrollable */
-.scrollable {
-	float:left;	
-}
-
-/* prev, next, prevPage and nextPage buttons */
-a.browse {
-	background: #fae8e8;
-	display:block;
-	width:20px;
-	height:20px;
-	float:left;
-	margin: 0px 0px 0px !important;
-	cursor:pointer;
-	font-size:1px;
-padding: 0 !important;
--moz-border-radius: 10px;
--webkit-border-radius: 10px;
-border-radius: 10px;
-border: 0;
-}
-
-a.browse:hover {
-	background-color: #fff;
-}
-
-/* right */
-a.right 	{float: right; background: #fae8e8 url(../images/donate/arrows.gif) -24px 6px no-repeat;
- margin-right: 0px;}
-
-
-
-/* left */
-a.left		{ background: #fae8e8 url(../images/donate/arrows.gif) 6px 6px no-repeat;} 
-
-
-/* up and down */
-a.up, a.down		{ 
-	background:url(../img/scrollable/arrow/vert_large.png) no-repeat; 
-	float: none;
-	margin: 10px 50px;
-}
-
-/* up */
-a.up:hover  		{ background-position:-30px 0; }
-a.up:active  		{ background-position:-60px 0; }
-
-/* down */
-a.down 				{ background-position: 0 -30px; }
-a.down:hover  		{ background-position:-30px -30px; }
-a.down:active  	{ background-position:-60px -30px; } 
-
-
-/* disabled navigational button */
-a.disabled {
-	visibility:hidden !important;		
-} 	
-
-
-
-
-
-
-.scrolling{
-	background: #fff !important;
-margin: 30px 34px 0;
--moz-border-radius: 20px;
--webkit-border-radius: 20px;
-border-radius: 20px;
--moz-border-radius-topright: 13px;
--moz-border-radius-topleft: 13px;
--webkit-border-radius-top-left: 13px;
--webkit-border-radius-top-right: 13px;
-border-radius: 20px;
-
-padding-bottom: 5px;
-}
-
-
-
-
-/* position and dimensions of the navigator */
-.navi {
-	width:200px;
-padding-top: 5px;
-margin-left: 40px;
-
-}
-
-
-/* items inside navigator */
-.navi a {
-	width:5px !important;
-	height:5px !important;
-	float:left;
-	margin:3px;
-	background: #9b2222 !important;
-	display:block;
--moz-border-radius: 10px;
--webkit-border-radius: 10px;
-border-radius: 10px;
-	font-size:1px;
-}
-
-/* mouseover state */
-.navi a:hover {
-	background: #fff !important;
-}
-
-/* active state (current page state) */
-.navi a.active {
-	background: #fae8e8 !important;
-	width:8px !important;
-	height:8px !important;
-margin-top: 1px;
-}
-
-
-.nov{
-	background: #d84343;
-	display:block;
--moz-border-radius: 20px;
--webkit-border-radius: 20px;
-border-radius: 20px;
-margin: 0px 5px 0px;
-padding: 5px;
-height: 20px;
-}
+body{background:#fff url(/images/bg.png) repeat-x;font-family:'Amaranth',Tahoma,Geneva,Helvetica,Arial,Sans-serif;}
+.wrap{margin:18px auto 18px auto;width:646px;position:relative;
 
-.new a img{
-margin-top: 130px;
-margin-left: 14px;
 }
+.clear{clear:both;}
+h1,h2,h3,h4,p,span,a,input{font-family:Arial,Tahoma,Geneva,Helvetica,Sans-serif;}
 
-/* the overlayed element */
-.simple_overlay {
-		background: url(../images/donate/top_logo.gif) center 40px no-repeat;
-	/* must be initially hidden */
-	display:none;
-	-moz-border-radius: 5px;
--webkit-border-radius: 5px;
-border-radius: 5px;
-
-padding-top: 110px;
-
-	/* place overlay on top of other elements */
-	z-index:10000;
-
-	/* styling */
-	background-color:#fff;
-  margin-left: -20px;
-	width:620px;	
-	height:120px;
-	
-	/* CSS3 styling for latest browsers */
-	-moz-box-shadow:0 0 90px 5px #000;
-	-webkit-box-shadow: 0 0 90px #000;	
+@-webkit-keyframes scale {
+from {-webkit-transform: scale(0.4);opacity:0.6;}
+to {-webkit-transform: scale(1);opacity:1;}
 }
 
-/* close button positioned on upper right corner */
-.simple_overlay .close {
-	background: url(../images/donate/close.png) no-repeat;
-	position:absolute;
-	right:-15px;
-	top:-15px;
-	cursor:pointer;
-	height:27px;
-
-	width:27px;
+@-moz-keyframes scale {
+from {-moz-transform: scale(0.4);-moz-opacity:0.6;}
+to {-moz-transform: scale(1);-moz-opacity:1;}
 }
 
-.simple_overlay form{
-float: left;
-border: 1px solid #000;
-float: left;
-font-size: 13px;
-font-weight: bold;
-margin-top: -1px !important;
-margin-right: 0px;
-padding: 6px 20px 6px;
-text-decoration: none;
-color: #fff;
--moz-border-radius: 3px;
--webkit-border-radius: 3px;
-border-radius: 3px;
-background: url(../images/donate/button_bg.gif) 0 0px repeat-x;
-}
-
-.simple_overlay h2{
-margin: 0 !important;
-font-size: 16px;
-}
-
-.simple_overlay form {
-margin: 3px 0 20px;
-font-size: 11px;
-}
-
-.simple_overlay form input{
-background: 0;
-padding: 0 0 0 14px;
-color: #fff;
-font-weight: bold;
-cursor: pointer;
-border: 0;
-}
-
-
-.simple_overlay label{
-font-size: 13px;
-font-weight: bold;
-margin-bottom: 7px;
-padding-right: 10px;
-}
-
-
-.simple_overlay form input#donate_amount{
-width: 70px;
-border: 1px solid #333;
--moz-border-radius: 3px;
--webkit-border-radius: 3px;
-border-radius: 3px;
-cursor: text;
-color: #333;
-padding: 4px;
-background: #fff;
-}
-
-
-
-.amount-section{
-float: left;
-margin-right: 0px;
-font-size: 13px !important;
-font-weight: bold;
-}
-
-
-.amount-section .form-text{
-float: left;
-margin-right: 20px;
-width: 70px;
-font-family: Helvetica, Arial, sans-serif;
-clear: none;
-}
-
-
-
-.amount-section input{
-float: left;
-clear: both;
-margin: 10px 10px 0 0;
-padding: 4px !important;
-font-size: 13px !important;
-}
-
-
-.amount-section label{
-float: left;
-margin: 7px 10px 5px 0;
-padding-top: 1px;
-}
-
-
-.amount{
-float: left;
-}
-
-.amount_radio{
-margin-top: 16px !important;
-}
-
+header{}
+header img{text-align:center;position:relative;display:block;margin:0 auto;width:auto;height:139px;
+-webkit-animation: pulse 800ms infinite ease-in-out;}
 
-
-.amount input{
-float: right !important;
-}
-
-
-
-.amount span{
-float: left !important;
-padding-top: 14px;
-padding-right: 4px;
-}
-
-
-.form-text.big.required{
-margin-bottom: 20px;
-}
-
-
-
-
-div.messages{
-font-size: 11px;
-padding-top: 39px;
-width: 190px;
-padding-left: 140px;
-float: left;
-text-align: right;
-
-}
-button::-moz-focus-inner { border: 0; }
-
-
-div.messages p strong{
-margin-bottom: 5px;
-display: block;
+@-webkit-keyframes pulse {
+from {-webkit-transform:scale(0.94);}
+50% {-webkit-transform:scale(1);}
+to {-webkit-transform:scale(0.94);}
 }
 
+header h1{font-family:"museo3",Tahoma,Geneva,Helvetica,Sans-serif;font-size:56px;color:#BD0015;text-transform:uppercase;text-align:center;margin:14px 0 10px 0;text-shadow:0 -1px 2px #FFF;line-height:72px;}
 
+header p{color:#1E67BF;font-family:"museo3",Tahoma,Geneva,Helvetica,Sans-serif;font-size:30px;margin:0 0 30px 0;display:block;text-align:center;}
 
-.form-submit{
-float: right !important;
-margin-top: 35px;
-background: 0;
-border: 0;
-outline: 0 !important;
--moz-outline: 0 !important;
-cursor: pointer;
-}
+section .vid{width:734px;height:auto;display:block;background:#FCF9D9;margin:4px 0 32px 0;
+-webkit-animation: scale 620ms 1 ease-in-out;position:relative;
+-moz-animation: scale 620ms 1 ease-in-out;}
 
+section .vid section{background:#FCF9D9;position:relative;left:-86px;top:0px;display:block;width:820px;height:auto;padding:6px 0 15px 0;
+-webkit-border-radius:4px;
+-moz-border-radius:4px;
+-o-border-radius:4px;
+-ms-border-radius:4px;
+border-radius:4px;
 
-.larger{
--moz-border-radius: 3px;
--webkit-border-radius: 3px;
-border-radius: 3px;
-background: #fff;
-padding: 17px 20px;
-font-size: 12px;
-line-height: 1.5em;
-margin-top: 20px;
-}
+-webkit-box-shadow:0 1px 2px 0 rgba(0,0,0,0.1);
+-moz-box-shadow:0 1px 2px 0 rgba(0,0,0,0.1);
+-o-box-shadow:0 1px 2px 0 rgba(0,0,0,0.1);
+-ms-box-shadow:0 1px 2px 0 rgba(0,0,0,0.1);
+box-shadow:0 1px 2px 0 rgba(0,0,0,0.1);}
+section .vid section h2{color:#FFF;font-size:22px;font-weight:bold;font-family:"museo5",Helvetica,Tahoma,Arial,Sans-serif;display:block;margin:18px auto 26px auto;text-align:center;text-shadow:0 -1px 0 #7A1F1F;background:#A22929;padding:18px 0;border-bottom:1px solid #FFF;border-top:1px solid #511515;}
+section .vid section div{display:block;position:relative;}
 
+/* Image caption */
+section .vid section div div{display:block;position:relative;}
+section .vid section div div div{display:block;position:relative;position:absolute;top:184px;left:34px;width:260px;background:#FFF;padding:8px 0;}
+section .vid section div div div p{display:block;color:#333;font-size:12px;line-height:20px;margin:0 0;text-align:left;}
+/* Image caption */
 
+section .vid section div .member {float: left; width: 276px;margin:0 26px 0 26px}
+section .vid section div .member p {font-size: 11px; font-style: italic; margin: 5px 0 0;}
+section .vid section div .member img{width:260px;height:auto;background:#FFF;;padding:8px;display:inline-block;
+-webkit-border-radius:2px;
+-moz-border-radius:2px;
+-o-border-radius:2px;
+-ms-border-radius:2px;
+border-radius:2px;
 
-.larger a{ 
-display: block;
-color: #333;
-padding-top: 4px;
+-webkit-box-shadow:0 1px 2px 0 rgba(0,0,0,0.1);
+-moz-box-shadow:0 1px 2px 0 rgba(0,0,0,0.1);
+-o-box-shadow:0 1px 2px 0 rgba(0,0,0,0.1);
+-ms-box-shadow:0 1px 2px 0 rgba(0,0,0,0.1);
+box-shadow:0 1px 2px 0 rgba(0,0,0,0.1);
 }
 
+section .vid section div aside{float:left;display:inline-block;width:466px;margin:0 26px 0 0;}
+section .vid section div aside p{display:block;color:#A22929;font-size:16px;font-family:Helvetica,Tahoma,Arial,Sans-serif;text-align:left;line-height:23px;margin:0 0 16px 0;text-shadow:0 1px 0 #FFF;}
 
 
-.form-submit span{
-height: 0;
-display: block;
-overflow: hidden;
-padding-top: 40px;
-width: 208px;
-background: url(../images/donate/continue.png) no-repeat;
-}
 
+section h2{color:#1A6DD2;font-family:"museo3",Tahoma,Geneva,Helvetica,Sans-serif;font-size:50px;margin:0 0 14px 0;display:block;text-align:center;text-transform:uppercase;}
 
-.form-submit:hover span{
-background: url(../images/donate/continue.png) 0 -43px no-repeat;
-}
+section h2.s{font-size:20px;}
+section h2.b{font-size:37px;line-height:50px;}
+section p{color:#666;font-family:Tahoma,Geneva,Helvetica,Sans-serif;font-size:18px;margin:0 0 24px 0;display:block;text-align:center;}
 
+section p.red_b{color:#A22929;font-family:Helvetica,Tahoma,Geneva,Sans-serif;font-size:16px;margin:0 0 24px 0;display:block;text-align:center;line-height:28px;color:;text-transform:uppercase;font-weight:bold;}
 
-.form-submit:active span{
-background: url(../images/donate/continue.png) 0 -86px no-repeat;
-}
+span.arrow{width:34px;height:16px;background:url(/images/sprite.png) no-repeat -42px 0px;display:block;margin:0 auto 40px auto;}
 
 
-.amount-section .label label{
-padding: 0 !important;
-margin: 0 0 5px;
-}
+/* FORM */
+form{display:block;position:relative;}
+form fieldset{width:260px;margin:0 auto 40px auto;position:relative;}
+form fieldset p{width:145px;height:32px;position:absolute;right:-56px;bottom:-7px;
+padding-left:24px;
+background:url(/images/sprite.png) no-repeat 0px -102px;
+color:#989898;font-family:Tahoma,Geneva,Helvetica,Sans-serif;font-size:12px;display:block;text-align:left;line-height:18px;
 
+-webkit-animation: move 600ms infinite ease-in-out;
+-moz-animation: move 600ms infinite ease-in-out;
 
-.share{
--moz-border-radius: 3px;
--webkit-border-radius: 3px;
-border-radius: 3px;
-background: #f6faff;
-padding: 17px 20px 12px;
-font-size: 12px;
-line-height: 1.5em;
-margin-top: 20px;
-position: relative !important; 
 }
 
 
-.share iframe{
-margin-right: 10px;
-}
+form label{display:block;position:relative;padding:10px 0;font-size:18px;color:#575757;font-weight:bold;font-family:Tahoma,Geneva,Helvetica,Sans-serif;text-transform:capitalize;}
+form label input{display:inline-block;margin:1px 10px 0 1px;float:left;}
 
+.a{color:#4487DA;}
 
-.db-wrapper{
+form ul{display:block;margin:20px 0;width:100%;padding:12px 0;background:#77AAF4;}
+form ul .wrap{margin:0px auto;width:668px;}
+form ul li{display:inline-block;float:left;border:1px solid #5E81B5;height:34px;padding:0 17px;
+background:#F9F9F9 url(/images/sprite.png) repeat-x 0px -59px;line-height:34px;
+margin:0 10px 0 0;
+-webkit-border-radius:20px;
+-moz-border-radius:20px;
+-ms-border-radius:20px;
+-o-border-radius:20px;
+border-radius:20px;}
 
-position: absolute !important; 
-top: 18px;
-left: 200px;
-}
+form ul li:active{background:#E1E1E1;}
+form ul li.a{background:#E1E1E1;}
+form ul li.l{margin-right:0px;}
+form ul li.l:active{background:#F9F9F9 url(/images/sprite.png) repeat-x 0px -59px;}
+form ul li a span{font-weight:bold;}
+form ul li a{display:inline-block;font-size:15px;color:#292929;}
 
-.digg img{
-margin: 25px 0 20px 0;
-}
+form ul li input[type="text"]{display:inline-block;border:1px solid #7F8CA0;height:10px;padding:4px 4px;background:#FFF;width:71px;margin:7px 4px 0 -10px;font-size:12px;color:#666;float:left;
+-webkit-transition:all 500ms ease-in-out;
+-moz-transition:all 500ms ease-in-out;
 
-.digg blockquote{
-font-size: 11px;
-margin: 0;
+-webkit-border-radius:20px;
+-moz-border-radius:20px;
+-ms-border-radius:20px;
+-o-border-radius:20px;
+border-radius:20px;}
+form ul li input[type="text"]:focus{border-color:#80B2FD;
+-webkit-transition:all 500ms ease-in-out;
+-moz-transition:all 500ms ease-in-out;
 }
 
+form ul li input[type="submit"]{display:inline-block;font-size:15px;color:#292929;line-height:32px;margin-right:-9px;cursor:pointer;}
 
-
-.digg .att{
-font-size: 11px;
-margin: 0;
-}
+#typem{display:none;}
+.btn{display:block;border:1px solid #CCC;height:34px;padding:0 20px;
+background:#F9F9F9 url(/images/sprite.png) repeat-x 0px -59px;line-height:34px;
+margin:60px auto 0 auto;font-size:15px;color:#1E67BF;width:440px;
+text-shadow:0 1px #FFF;
+-webkit-border-radius:20px;
+-moz-border-radius:20px;
+-ms-border-radius:20px;
+-o-border-radius:20px;
+border-radius:20px;}
 
+.btn:hover{border-color:#80B2FD;
+-webkit-transition:all 250ms ease-in-out;
+-moz-transition:all 250ms ease-in-out;}
+.btn:active{background:#6FA0D8;text-shadow:0 -1px 0 #1E67BF;color:#FFF;}
 
 
+.bbox{display:block;margin:20px 0;width:100%;padding:30px 0;background:#77AAF4;}
+.bbox p{color:#FFF;font-size:19px;text-shadow:0 -1px #1A6DD2;}
 
-.bitly{
-width: 80px;
-height: 0px;
-padding-top: 20px;
-overflow: hidden;
-float: right;
-margin: 0 -35px 0 0;
-background: url(../images/donate/bit.gif) 0 0px no-repeat;
-}
+.bbox ul{display:block;position:relative;}
+.bbox ul li{display:inline-block;position:relative;margin:10px 0 0 0;float:left;}
+.bbox ul li.t{margin-left:130px;}
+.bbox ul li.f{color:#FFF !important;width:110px;margin-top:8px;}
 
-p.error {
 
+/*  FOOTER  */
+footer{display:block;padding:18px 0 100px 0;position:relative;}
 
-}
+footer aside.left{float:left;width:323px;margin:0 30px 0 0px;}
+footer aside div.pay_logo{display:block;width:307px;height:36px;margin:0 0 14px 0;background:url(/images/pay_logo.png);}
+footer aside p{color:#666;font-family:Tahoma,Geneva,Helvetica,Sans-serif;font-size:13px;margin:0 0 8px 0;display:block;text-align:left;}
+footer aside p a{color:#216CD9;text-decoration:underline;}
 
-.select_amount{
-padding: 0 40px;
-margin-top: 20px;
-}
+footer aside p a.one{display:inline-block;}
+footer aside p a.rec{display:none;}
 
-.select_amount a{
-border: 1px solid #000;
-float: left;
-font-size: 13px;
-font-weight: bold;
-margin-right: 16px;
-padding: 10px 20px;
-text-decoration: none;
-color: #fff;
--moz-border-radius: 3px;
--webkit-border-radius: 3px;
-border-radius: 3px;
-background: url(../images/donate/button_bg.gif) 0 0px repeat-x;
-}
+footer p.a{color:#666;font-family:Tahoma,Geneva,Helvetica,Sans-serif;font-size:16px;margin:0 0 20px 0;display:block;text-align:center;}
+footer p.r{color:#9D3100;font-family:Tahoma,Geneva,Helvetica,Sans-serif;font-size:12px;margin:20px 0 40px 0;display:block;text-align:center;line-height:22px;border-top:1px solid #E6E6E6;padding:40px 0 0 0;}
+footer p.r a{color:#1A6DD2;}
 
+footer aside.right{float:left;width:280px;}
+footer aside h3{color:#575757;font-size:12px;font-weight:bold;font-family:Tahoma,Geneva,Helvetica,Sans-serif;margin:0 0 10px 0;display:block;}
 
+footer aside.right p{margin-bottom:30px;line-height:22px;}
 
+button.back{text-align:center;width:160px;height:28px;position:absolute;right:10px;top:10px;margin-left:0px;}
 
+a.back{text-align:center;width:160px;height:28px;position:absolute;right:10px;top:10px;margin-left:0px;font-size:13px;line-height:28px;
+-webkit-appearance: button;}
 
 
 
-.read img{
-width: 160px;
-}
 
 
 

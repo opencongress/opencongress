@@ -52,6 +52,7 @@ stylesheets:
     application:
         - public/stylesheets/960.css
         - public/stylesheets/classes.css
+        - public/stylesheets/modal.css
         - public/stylesheets/reset.css
         - public/stylesheets/typo.css
         - public/stylesheets/master.css
@@ -60,6 +61,7 @@ stylesheets:
     frontpage:
         - public/stylesheets/960.css
         - public/stylesheets/classes.css
+        - public/stylesheets/modal.css
         - public/stylesheets/reset.css
         - public/stylesheets/typo.css
         - public/stylesheets/master.css

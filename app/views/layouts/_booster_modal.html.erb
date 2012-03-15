@@ -1,0 +1,43 @@
+<% team_member ||= :david %>
+
+<script>
+  $j().ready(function() {
+    $j('#booster-modal').jqm({modal:true}).jqmShow();
+  });
+</script>
+
+<div class="booster-modal jqmWindow" id="booster-modal">
+  <a href="#" class="jqmClose">
+    <span>Close</span>
+  </a>
+  
+	<div class="left">
+		<div class="staff">
+			<div class="staff-photo <%= team_member %>"></div>
+			<% if team_member == :andy %>
+			  <p>Andy Ross, OpenCongress Lead Programmer and OK Go Guitarist</p>
+			<% elsif team_member == :donny %>
+			  <p>Donny, OpenCongress Blogger</p>
+			<% else %>
+			  <p>David Moore, Founder of OpenCongress</p>
+			<% end %>
+		</div>
+		<div class="oc-logo"></div>
+	</div>
+	<div class="right">
+	  <% if logged_in? %><p class='username'>Hey <%= current_user.login %>,</p><% end %>
+	  
+		<% if team_member == :andy %>
+		  <h1>We Build Free Tools to Email Congress...</h1>
+		<% elsif team_member == :donny %>
+		  <h1>Congress is Corrupt. Help Us Open It For You.</h1>
+		<% else %>
+		  <h1>We Need Your Help... To Keep OC Alive</h1>
+		<% end %>
+		
+		<p>OC Boosters give $10 per month, tax-exempt, to support our work:</p>
+		<a href="/booster" class="booster-sign-up">Sign Me Up!</a>
+		<p>Or, make a one-time donation to keep OpenCongress alive:</p>
+		<a href="/donate" class="booster-donate">Donate</a>
+	</div>
+</div>

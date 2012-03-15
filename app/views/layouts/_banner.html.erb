@@ -1,0 +1,16 @@
+<% member = rand(3) %>
+<% member_photos = [ 'member-andy', 'member-david', 'member-donny' ] %>
+<% member_desc = [ 'Andy Ross, OC Programmer', 'David Moore, OC Manager', 'Donny Shaw, OC Blogger' ] %>
+
+<div class="banner">
+  <div class="team-member">
+    <div class="<%= member_photos[member] %>"><span><%= member_desc[member] %></span></div>
+    <p class='keep'>Keep OpenCongress Alive - Become an OC Booster</p><br/>
+  </div>
+  
+  
+  <a class="donate_now" rel="#donate" href="/donate" id="donate_button">Donate Now</a>
+  <span class="left_cap"></span>
+  <span class="right_cap"></span>
+  <div style="clear: both;"></div>
+</div>

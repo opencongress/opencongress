@@ -1,104 +1,102 @@
-* {
-			margin: 0;
-			padding: 0;
-		}
+.booster-modal {
+	font-family: Helvetica, arial, sans-serif;
+	font-size: 12px;
+	width: 540px;
+	height: 340px;
+	padding: 20px;
+	margin: 50px auto 0;
+	overflow: hidden;
+	zoom: 1;
+	background: #f7f7ee url(/images/modal/modal_bg.png) repeat-x;
+}
 
-		body {
-			font-family: Helvetica, arial, sans-serif;
-			font-size: 12px;
-		}
+.booster-modal .left {
+	width: 280px;
+	float: left;
+}
 
-		.booster-modal {
-			width: 540px;
-			height: 380px;
-			padding: 20px;
-			margin: 50px auto 0;
-			overflow: hidden;
-			zoom: 1;
-			background: #f7f7ee url(../images/modal/modal_bg.png) repeat-x;
-		}
+.booster-modal .staff {
+	margin-bottom: 15px;
+	width: 256px;
+}
 
-		.left {
-			width: 280px;
-			float: left;
-		}
+.booster-modal .staff .staff-photo {
+	width: 240px;
+	height: 180px;
+	border: 8px solid #fff;
+}
 
-			.booster-modal .staff {
-				margin-bottom: 15px;
-				width: 256px;
-			}
+.booster-modal .staff-photo.andy {background: url(/images/staff/andy.jpg);}
+.booster-modal .staff-photo.donny {background: url(/images/staff/donny.jpg);}
+.booster-modal .staff-photo.david {background: url(/images/staff/david.jpg);}
 
-				.booster-modal .staff .staff-photo {
-					width: 240px;
-					height: 180px;
-					border: 8px solid #fff;
-				}
+.booster-modal .staff p {
+	text-align: center;
+	font-size: 11px;
+	font-style: italic;
+	color: #4E6426;
+	padding: 5px 0;
+}
 
-				.staff-photo.andy {background: url(../images/staff/andy.jpg);}
-				.staff-photo.donny {background: url(../images/staff/donny.jpg);}
-				.staff-photo.david {background: url(../images/staff/david.jpg);}
+.booster-modal .oc-logo {
+	width: 250px;
+	height: 27px;
+	background: url(/images/donate/booster_logo.png) no-repeat;
+	margin: 25px 0 0 5px;
+}
 
-				.booster-modal .staff p {
-					text-align: center;
-					font-size: 11px;
-					font-style: italic;
-					color: #4E6426;
-					padding: 5px 0;
-				}
+.booster-modal .right {
+	float: left;
+	width: 230px;
+	background-color: #fff;
+	border-radius: 5px;
+	padding: 5px 15px 15px 15px;
+}
 
-			.oc-logo {
-				width: 250px;
-				height: 27px;
-				background: url(../images/donate/booster_logo.png) no-repeat;
-				margin: 25px 0 0 5px;
-			}
+.booster-modal .right h1 {
+	font-size: 18px;
+}
 
-		.right {
-			float: left;
-			width: 230px;
-			background-color: #fff;
-			border-radius: 5px;
-			padding: 15px;
-		}
+.booster-modal .right h1 span {
+	display: block;
+	margin-top: 5px;
+}
 
-			.right h1 {
-				font-size: 22px;
-			}
+.booster-modal .right p {
+	line-height: 16px;
+	margin: 15px 0;
+	color: #666;
+}
 
-				.right h1 span {
-					display: block;
-					margin-top: 5px;
-				}
+.booster-modal .right p.username {
+	padding: 0;
+	margin-top: 0;
+	font-size: 18px;
+}
 
-			.right p {
-				line-height: 16px;
-				margin: 15px 0;
-				color: #666;
-			}
-
-			.booster-sign-up, .booster-donate {
-				display: block;
-				width: 100%;
-				height: 35px;
-				text-align: center;
-				background: #f2dc64; /* Old browsers */
-				background: -moz-linear-gradient(top,  #f2dc64 0%, #efd650 100%); /* FF3.6+ */
-				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2dc64), color-stop(100%,#efd650)); /* Chrome,Safari4+ */
-				background: -webkit-linear-gradient(top,  #f2dc64 0%,#efd650 100%); /* Chrome10+,Safari5.1+ */
-				background: -o-linear-gradient(top,  #f2dc64 0%,#efd650 100%); /* Opera 11.10+ */
-				background: -ms-linear-gradient(top,  #f2dc64 0%,#efd650 100%); /* IE10+ */
-				background: linear-gradient(top,  #f2dc64 0%,#efd650 100%); /* W3C */
-				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2dc64', endColorstr='#efd650',GradientType=0 ); /* IE6-9 */
-				-webkit-border-radius: 5px;
-				-moz-border-radius: 5px;
-				border-radius: 5px;
-				text-transform: uppercase;
-				line-height: 35px;
-				color: #48411b;
-				text-decoration: none;
-				font-weight: bold;
-				font-size: 16px;
-				-webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, .75);
-				-moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, .75);
-				box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, .75);
-			}
+.booster-modal .booster-sign-up, .booster-modal .booster-donate {
+	display: block;
+	width: 100%;
+	height: 35px;
+	text-align: center;
+	background: #f2dc64; /* Old browsers */
+	background: -moz-linear-gradient(top,  #f2dc64 0%, #efd650 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2dc64), color-stop(100%,#efd650)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #f2dc64 0%,#efd650 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #f2dc64 0%,#efd650 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #f2dc64 0%,#efd650 100%); /* IE10+ */
+	background: linear-gradient(top,  #f2dc64 0%,#efd650 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2dc64', endColorstr='#efd650',GradientType=0 ); /* IE6-9 */
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	text-transform: uppercase;
+	line-height: 35px;
+	color: #48411b;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 16px;
+	-webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, .75);
+	-moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, .75);
+	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, .75);
+}

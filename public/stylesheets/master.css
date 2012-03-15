@@ -4457,108 +4457,102 @@ padding: 0 30px 5px 0 !important;
 }
 
 
-.banner{
-left: 69px;
-height: 99px;
-width: 1002px;
-background: url(../images/donate/banner_bg.gif) repeat-x;
-top: 257px;
+.banner {
+    left: 69px;
+    height: 150px;
+    width: 1002px;
+    background: url(../images/donate/banner_bg.gif?1279301544) repeat-x;
+    top: 257px;
+    overflow: hidden;
+}
+.banner .left_cap {
+    position: absolute;
+    left: -42px;
+    height: 150px;
+    width: 42px;
+    background: url(../images/donate/banner_caps.png?1279301544) repeat-x;
+}
+.banner .right_cap {
+    position: absolute;
+    right: -42px;
+    height: 150px;
+    width: 42px;
+    background: url(../images/donate/banner_caps.png?1279301544) top right repeat-x;
+}
+.banner .team-member {
+    float: left;
+    color: #fff;
+    font-size: 18px;
+    margin: 20px 38px 0!important;
+    /*text-shadow: #a11513 0 -1px 0;
+    padding-top: 3px;*/
+    
+}
+.banner .team-member .member-david, .banner .team-member .member-donny, .banner .team-member .member-andy {
+    background: url(../images/staff/david_banner.jpg) no-repeat;
+    width: 150px;
+    height: 112px;
+    float: left;
+}
+.banner .team-member .member-donny {background: url(../images/staff/donny_banner.jpg) no-repeat;}
+.banner .team-member .member-andy {background: url(../images/staff/andy_banner.jpg) no-repeat;}
+.banner .team-member p {
+    float: left;
+    margin: 0 0 0 20px;
+    line-height: 112px;
+     padding-left: 45px;
+    background: url(../images/donate/heart.gif?1279753347) 0 50% no-repeat;
+}
+.banner .team-member span {
+	font-size: 10px;
+	margin-left: 10px;
 }
 
-
-.banner .left_cap{
-position: absolute;
-left: -28px;
-height: 83px;
-width: 28px;
-background: url(../images/donate/banner_caps.gif) repeat-x;
+.banner.thanks p {
+    margin: 33px 38px 0 105px!important;
 }
-
-
-.banner .right_cap{
-position: absolute;
-right: -28px;
-height: 83px;
-width: 28px;
-background: url(../images/donate/banner_caps.gif) top right repeat-x;
+.banner span.big_arrow {
+    padding-left: 80px;
+    float: left;
+    margin-left: 20px;
+    margin-top: 61px;
+    height: 30px;
+    background: url(../images/donate/big_arrow.gif?1279753347) 0 1px repeat;
 }
-
-
-.banner p{
-float: left;
-color: #fff;
-font-size: 18px;
-margin: 33px 38px 0 !important;
-text-shadow: #a11513 0px -1px 0px;
-padding-left: 45px;
-padding-top: 3px;
-background: url(../images/donate/heart.gif) 0 1px no-repeat;
+.banner2 h1 {
+    position: relative;
 }
-
-.banner.thanks p{
-margin: 33px 38px 0 105px !important;
+.banner2 {
+    height: 151px;
+    top: 0;
+    width: 1002px;
+    background: #e9e8f3;
+    background: url(../images/banner2.png?1311345882) 0 -1px;
+    position: relative;
+    text-align: center;
 }
-
-
-.banner span.big_arrow{
-margin-top: 0px;
-padding-left: 80px;
-float: left;
-margin-left: 20px;
-margin-top: 26px;
-height: 30px;
-background: url(../images/donate/big_arrow.gif) 0 1px repeat;
+.banner2 .left_cap {
+    position: absolute;
+    left: -19px;
+    height: 153px;
+    width: 28px;
+    top: -1px;
+    background: url(../images/banner2-left.png?1311345882) no-repeat;
 }
-
-
-
-
-.banner2 h1{
-position: relative;
+.banner2 .right_cap {
+    position: absolute;
+    right: -19px;
+    height: 153px;
+    width: 28px;
+    top: -1px;
+    background: url(../images/banner2-right.png?1311345882) top right no-repeat;
 }
-
-
-.banner2{
-height: 151px;
-top: 0;
-width: 1002px;
-background:#e9e8f3;
-background: url(../images/banner2.png) 0 -1px;
-position: relative;
-text-align: center;
+.banner2 h1 {
+    font-size: 30px;
+    padding: 5px 0 10px;
 }
-
-
-.banner2 .left_cap{
-position: absolute;
-left: -19px;
-height: 153px;
-width: 28px;
-top: -1px;
-
-background: url(../images/banner2-left.png) no-repeat;
-}
-
-
-.banner2 .right_cap{
-position: absolute;
-right: -19px;
-height: 153px;
-width: 28px;
-top: -1px;
-background: url(../images/banner2-right.png) top right no-repeat;
-}
-
-
-.banner2 h1{
-font-size: 30px;
-padding: 5px 0 10px;
-}
-
-
-
-.banner2 h2{
-padding-top: 45px;
+.banner2 h2 {
+    padding-top: 45px;
 }
 
 
@@ -4591,23 +4585,20 @@ margin-top: 30px;
 }
 
 
-.donate_now{
-float: right;
-padding-top: 49px;
-width: 227px;
-height: 0;
-overflow: hidden;
-margin: 19px 10px 0 0;
-background: url(../images/donate/donate.png) repeat-x;
+.donate_now {
+    float: right;
+    padding-top: 49px;
+    width: 227px;
+    height: 0;
+    overflow: hidden;
+    margin: 53px 20px 0 0;
+    background: url(../images/donate/donate.png?1279301544) repeat-x;
 }
-
-
-.donate_now:hover{
-background: url(../images/donate/donate.png) 0 -50px repeat-x;
+.donate_now:hover {
+    background: url(../images/donate/donate.png?1279301544) 0 -50px repeat-x;
 }
-
-.donate_now:active{
-background: url(../images/donate/donate.png) 0 -100px repeat-x;
+.donate_now:active {
+    background: url(../images/donate/donate.png?1279301544) 0 -100px repeat-x;
 }
 
 

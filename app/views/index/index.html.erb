@@ -1,20 +1,11 @@
 <div id="content" class="clearfix">       
 
   <%= render :partial => 'shared/notices' %>
+  <%= render :partial => 'layouts/banner' %>
   <%= render :partial => 'layouts/user_nav' %>
 
   <div class="inner">
-    <div class="top_area">
-
-
-      <div class="banner">
-        <p>The easiest way to email your members of Congress</p>
-        <span class="big_arrow"></span><a class="donate_now" rel="#donate" href="/donate" id="donate_button">Donate Now</a>
-        <span class="left_cap"></span>
-        <span class="right_cap"></span>
-      </div>        
-
-
+    <div class="top_area">          
       <div class="just_for_a_border">
         <% cache("frontpage_rightside", :expires_in => 3.hours) do %>
         <div class="rightside">

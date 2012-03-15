@@ -11,103 +11,222 @@ body {
 	padding: 50px 0 40px;
 	width: 700px;
 	margin: 0 auto;
+	font-size: 12px;
 }
 
 .top {
-	overflow: hidden
+	overflow: hidden;
+	height: 82px;
+}
+
+.thank-you .top {
+	height: 135px;
 }
 
 	.logo {
 		width: 300px;
-		height: 112px;
+		height: 33px;
 		overflow: hidden;
 		float: left;
+		margin-top: 25px;
 	}
 
-	.quote {
+	.thank-you .logo {
+		margin-top: 43px;
+		width: 370px;
+		height: 40px;
+	}
+
+	.quote-area {
 		float: right;
-		color: #666;
-		font-size: 12px;
-		padding-top: 40px;
-		width: 340px;
-		line-height: 16px;
-		font-style: italic;
+		width: 370px;
+		overflow: hidden;
 	}
 
-.message {
-	background: #FCF9D9;
-	width: 700px;
-	padding: 20px 0 15px 0;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	-o-border-radius: 4px;
-	-ms-border-radius: 4px;
-	border-radius: 4px;
-	-webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);
-	-moz-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);
-	-o-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);
-	-ms-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);
-	box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);
-	text-align: center;
+		.chris-headshot {
+			background: url(../images/donate/chris_headshot.jpg) no-repeat;
+			width: 80px;
+			height: 82px;
+			float: left;
+		}
+
+		.quote {
+			float: left;
+			color: #666;
+			font-size: 12px;
+			width: 260px;
+			margin-left: 10px;
+			line-height: 15px;
+			font-style: italic;
+			padding: 10px;
+			position: relative;
+			background: #f1f1f1;
+			-webkit-border-radius: 5px;
+			-moz-border-radius: 5px;
+			border-radius: 5px;
+		}
+
+		.quote:after {
+			content: "";
+			position: absolute;
+			bottom: -20px;
+			left: 50px;
+			border-width: 20px 0 0 20px;
+			border-style: solid;
+			border-color: #f1f1f1 transparent;
+			display: block;
+			width: 0;
+		}
+
+		.quote-author {
+			display: block;
+			margin: 2px 0 0 165px;
+		}
+
+.video-info {
+	overflow: hidden;
+	margin: 20px 0;
 }
-	
-	.message strong {
-		color: #A22929;
+
+.left {
+	width: 400px;
+	float: left;
+	color: #666;
+}
+
+.right {
+	width: 255px;
+	float: left;
+	padding: 15px;
+	background-color: #d23b3b;
+	margin-left: 15px;
+	color: #fff;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	height: 195px;
+}
+
+	.left p, .right p {
+		margin: 10px 0 0;
 	}
 
-	.message-cta {
-		display: block;
-		color: white;
-		font-size: 22px;
+	.right p:first-child {
+		margin: 0;
+		font-size: 16px;
 		font-weight: bold;
-		font-family: "museo5",Helvetica,Tahoma,Arial,Sans-serif;
+	}
+
+	.booster-sign-up {
 		display: block;
-		margin: 20px auto 0 auto;
+		width: 100%;
+		height: 35px;
 		text-align: center;
-		text-shadow: 0 -1px 0 #7A1F1F;
-		background: #A22929;
-		padding: 18px 0;
-		border-bottom: 1px solid white;
-		border-top: 1px solid #511515;
-		text-decoration: none;
+		background: #f2dc64; /* Old browsers */
+		background: -moz-linear-gradient(top,  #f2dc64 0%, #efd650 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2dc64), color-stop(100%,#efd650)); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top,  #f2dc64 0%,#efd650 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top,  #f2dc64 0%,#efd650 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top,  #f2dc64 0%,#efd650 100%); /* IE10+ */
+		background: linear-gradient(top,  #f2dc64 0%,#efd650 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2dc64', endColorstr='#efd650',GradientType=0 ); /* IE6-9 */
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
 		text-transform: uppercase;
+		line-height: 35px;
+		color: #48411b;
+		text-decoration: none;
+		font-weight: bold;
+		font-size: 16px;
+		-webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, .75);
+		-moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, .75);
+		box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, .75);
+		margin: 20px 0;
 	}
 
-	.message-cta:hover {
-		text-decoration: underline;
+.thank-you-gifts {
+	width: 700px;
+	overflow: hidden;
+}
+
+	.thank-you-gifts h2 {
+		font-size: 16px;
+		margin-bottom: 10px;
 	}
 
-	.message p {
-		padding: 20px 20px 0;
-		color: #666;
+	.gift {
+		float: left;
+		width: 223px;
+		margin-left: 15px;
 	}
 
-		.message p a {
+	.gift.first {
+		margin: 0;
+	}
+
+		.gift span {
+			display: block;
+			margin-top: 5px;
+			text-align: center;
+			width: 100%;
 			color: #666;
 		}
 
-.booster-vimeo {
-	margin: 20px 0 0;
+	.view-all {
+		text-align: right;
+		padding-top: 10px;
+		clear: both;
+	}
+
+		.view-all a {
+			color: #666;
+		}
+
+.donate-now {
+	float: right;
+	width: 270px;
+	padding: 15px;
 }
 
-.gifts {
+	.donate-now .booster-sign-up {
+		margin: 5px 0;
+	}
+
+	.donate-now p {
+		color: #666;
+		margin-top: 10px;
+	}
+
+	.donate-now p:first-child {
+		margin: 0;
+	}
+
+.people {
 	overflow: hidden;
-	margin: 30px 0;
-	padding: 0 20px;
-}	
+	background-color: #efefef;
+	margin: 20px 0 0;
+	padding: 0 0 20px;
+}
 
-	.badge h1, .friends h1 {
-		color: #1A6DD2;
-		font-size: 16px;
-	}
-
-	.badge {
+	.person {
 		float: left;
-		width: 150px;
-		margin-right: 30px;
+		width: 340px;
+		margin: 20px 20px 0 0;
+		text-align: center;
 	}
 
-	.friends {
-		float: left;
-		width: 480px;
+	.person.end-row {
+		margin: 20px 0 0;
 	}
+
+		.person img {
+			display: inline;
+		}
+
+		.person span {
+			display: block;
+			margin-top: 3px;
+			font-style: italic;
+			text-align: center;
+		}

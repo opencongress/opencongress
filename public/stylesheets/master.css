@@ -4499,9 +4499,17 @@ padding: 0 30px 5px 0 !important;
 .banner .team-member p {
     float: left;
     margin: 0 0 0 20px;
-    line-height: 112px;
-     padding-left: 45px;
+    height: 65px;
+    position: relative;
+    padding: 47px 0 0 45px;
     background: url(../images/donate/heart.gif?1279753347) 0 50% no-repeat;
+}
+.banner .team-member p span {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	margin: 0;
+	color: #f69f9f;
 }
 .banner .team-member span {
 	font-size: 10px;

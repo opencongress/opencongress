@@ -7,12 +7,13 @@
 	margin: 50px auto 0;
 	overflow: hidden;
 	zoom: 1;
-	background: #f7f7ee url(/images/modal/modal_bg.png) repeat-x;
+	background-color: #f7f7ed !important;
 }
 
 .booster-modal .left {
 	width: 280px;
 	float: left;
+	margin-bottom: 20px;
 }
 
 .booster-modal .staff {
@@ -24,6 +25,11 @@
 	width: 240px;
 	height: 180px;
 	border: 8px solid #fff;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-o-border-radius: 5px;
+	-ms-border-radius: 5px;
 }
 
 .booster-modal .staff-photo.andy {background: url(/images/staff/andy.jpg);}
@@ -39,10 +45,11 @@
 }
 
 .booster-modal .oc-logo {
-	width: 250px;
-	height: 27px;
-	background: url(/images/donate/booster_logo.png) no-repeat;
+	width: 370px;
+	height: 40px;
+	background: url(/images/donate/booster_logo3.png) no-repeat;
 	margin: 25px 0 0 5px;
+	clear: both;
 }
 
 .booster-modal .right {
@@ -50,7 +57,12 @@
 	width: 230px;
 	background-color: #fff;
 	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-o-border-radius: 5px;
+	-ms-border-radius: 5px;
 	padding: 5px 15px 15px 15px;
+	margin-bottom: 20px;
 }
 
 .booster-modal .right h1 {

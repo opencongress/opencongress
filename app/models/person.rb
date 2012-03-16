@@ -1561,7 +1561,7 @@ class Person < ActiveRecord::Base
     addr += "#{congress_office}\n" unless congress_office.blank?
     addr += "Washington, DC #{office_zip}\n"
   end
-
+  
   SERIALIZATION_OPS = {:methods => [:oc_user_comments, :oc_users_tracking], :include => [:recent_news, :recent_blogs]}.freeze
 
   def as_json(ops = {})

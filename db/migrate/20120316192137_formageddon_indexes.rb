@@ -7,6 +7,7 @@ class FormageddonIndexes < ActiveRecord::Migration
     add_index :formageddon_form_fields, :formageddon_form_id
     add_index :formageddon_form_captcha_images, :formageddon_form_id
     add_index :formageddon_delivery_attempts, :formageddon_letter_id
+    add_index :formageddon_letters, :status
   end
 
   def self.down
@@ -17,5 +18,6 @@ class FormageddonIndexes < ActiveRecord::Migration
     remove_index :formageddon_form_fields, :formageddon_form_id
     remove_index :formageddon_form_captcha_images, :formageddon_form_id
     remove_index :formageddon_delivery_attempts, :formageddon_letter_id
+    remove_index :formageddon_letters, :status
   end
 end

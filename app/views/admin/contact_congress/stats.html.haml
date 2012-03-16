@@ -1,0 +1,26 @@
+.padding
+  %table.contact_steps_list
+    %tr
+      %th Recipient
+      %th # of Letters
+      %th Successful deliveries
+      %th Warnings
+      %th Errors
+      %th Replies
+    %tr
+      %th Congress
+      %th= Formageddon::FormageddonThread.count
+      %th= Formageddon::FormageddonLetter.where("formageddon_letters.status = 'SENT'").size
+      %th= Formageddon::FormageddonLetter.where("formageddon_letters.status like 'WARNING%'").size
+      %th= Formageddon::FormageddonLetter.where("formageddon_letters.status like 'ERROR%'").size
+      %th= Formageddon::FormageddonLetter.where("formageddon_letters.status = 'RECEIVED'").size
+        
+    - @people.each do |p|
+      %tr
+        %td= p.name
+        %td= p.formageddon_threads.size
+        %td= p.formageddon_threads.includes(:formageddon_letters).where("formageddon_letters.status = 'SENT'").size
+        %td= p.formageddon_threads.includes(:formageddon_letters).where("formageddon_letters.status like 'WARNING%'").size
+        %td= p.formageddon_threads.includes(:formageddon_letters).where("formageddon_letters.status like 'ERROR%'").size
+        %td= p.formageddon_threads.includes(:formageddon_letters).where("formageddon_letters.status = 'RECEIVED'").size
+        

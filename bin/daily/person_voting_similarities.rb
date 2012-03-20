@@ -29,12 +29,12 @@ people.each do |p|
   
     if top_votes_with && top_votes_with[0]
       p.person_stats.votes_most_often_with = top_votes_with[0]
-      #puts "#{p.name} votes most often with #{top_votes_with[0].name}"
+      puts "#{p.name} votes most often with #{top_votes_with[0].name}"
     end
   
     if top_votes_apart && top_votes_apart[0]
       p.person_stats.votes_least_often_with = top_votes_apart[0]
-      #puts "#{p.name} votes least often with #{top_votes_apart[0].name}"
+      puts "#{p.name} votes least often with #{top_votes_apart[0].name}"
     end
   
     if p.belongs_to_major_party?
@@ -43,12 +43,12 @@ people.each do |p|
 
       if top_other_with
         p.person_stats.opposing_party_votes_most_often_with = top_other_with
-        #puts "#{p.name} opposite votes most often with #{top_other_with.name}"
+        puts "#{p.name} opposite votes most often with #{top_other_with.name}"
       end
     
       if top_same_apart
         p.person_stats.same_party_votes_least_often_with = top_same_apart
-        #puts "#{p.name} same votes least often with #{top_same_apart.name}"
+        puts "#{p.name} same votes least often with #{top_same_apart.name}"
       end
     end
   

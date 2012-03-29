@@ -13,6 +13,10 @@
   <%= options_for_select([['Most Recent','recent'], ['Has Become Law','enacted']], params[:filter]) %>
   </select>
   </form>
+  
+  <% if can_blog? %>
+    <%= link_to "Manage Talking Points", { :controller => 'admin/talking_points', :action => 'index', :talking_pointable_type => 'Subject', :talking_pointable_id => @subject.id } %>
+  <% end %>
 </div>
 <a href="/issues" class="silver button small floatleft clearnone margin-right margin-bottom">
   <span>Back to All Issues</span>

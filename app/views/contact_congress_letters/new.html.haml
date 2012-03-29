@@ -1,9 +1,14 @@
 %span.regarding You are writing regarding
 %h1.regarding
-  = truncate("#{@bill.typenumber} #{@bill.title_common}", :length => 170) + ", #{@bill.session.ordinalize} Congress"
-%span.sponsor
-  Sponsor:
-  = @bill.sponsor.name
+  - if @bill
+    = truncate("#{@bill.typenumber} #{@bill.title_common}", :length => 170) + ", #{@bill.session.ordinalize} Congress"
+  - elsif @issue
+    = truncate(@issue.term, :length => 170)
+
+- if @bill
+  %span.sponsor
+    Sponsor:
+    = @bill.sponsor.name
   
 
 #heading
@@ -20,113 +25,135 @@
     .instructions.margin-bottom
       Use the tools in this column to help craft your letter. Anytime your mouse highlights a section, click on it to add prepared text. You can edit any part of the message at left, and if you like, add your own stories and text to personalize your letter.
 
-    .section
-      %h3 Official Bill Info
-      %ul
-        %li.message_builder_clickable
-          %strong= "Latest Action: #{@bill.last_action.formatted_date}"
-          = @bill.last_action
-          = render 'will_add_text_box', :text => "I know the most recent action for this bill is as follows: \"#{@bill.last_action}\" on #{@bill.last_action.formatted_date}"
-        - @bill.committees.each do |c|
+    - if @bill
+      .section
+        %h3 Official Bill Info
+        %ul
           %li.message_builder_clickable
-            %strong Committee Assignment:
-            = c.proper_name
-            = render 'will_add_text_box', :text => "This bill has been assigned to  the #{c.proper_name} committee."
-        - unless @bill.roll_calls.empty?
-          #roll_call_container
-            = render 'message_builder_roll_call', :roll_call => @bill.roll_calls.first
+            %strong= "Latest Action: #{@bill.last_action.formatted_date}"
+            = @bill.last_action
+            = render 'will_add_text_box', :text => "I know the most recent action for this bill is as follows: \"#{@bill.last_action}\" on #{@bill.last_action.formatted_date}"
+          - @bill.committees.each do |c|
+            %li.message_builder_clickable
+              %strong Committee Assignment:
+              = c.proper_name
+              = render 'will_add_text_box', :text => "This bill has been assigned to  the #{c.proper_name} committee."
+          - unless @bill.roll_calls.empty?
+            #roll_call_container
+              = render 'message_builder_roll_call', :roll_call => @bill.roll_calls.first
         
             
-    .section
-      %h3 Bill Statistics on OpenCongress
-      %ul
-      - unless @bill.users_percentage_at_position(@position).nil?
-        %li.users_position.message_builder_clickable          
-          = "#{@bill.users_percentage_at_position(@position == 'tracking' ? 'support' : @position)}% of users #{@position == 'tracking' ? 'support' : @position} #{@bill.typenumber}"
-          = render 'will_add_text_box', :text => "#{@bill.users_percentage_at_position(@position == 'tracking' ? 'support' : @position)}% of users on OpenCongress.org, a free, non-partisan resource, #{@position == 'tracking' ? 'support' : @position} #{@bill.typenumber}."
-      %li.page_views.message_builder_clickable
-        = "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times"      
-        = render 'will_add_text_box', :text => "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times on OpenCongress.org, a free, non-partisan resource."
-
-    - unless @bill.talking_points.empty?
       .section
-        %h3 PPF Talking Points
+        %h3 Bill Statistics on OpenCongress
         %ul
-          - @bill.talking_points.each do |tp|
-            %li.message_builder_clickable
-              = tp.talking_point
-              = render 'will_add_text_box', :text => tp.talking_point
+        - unless @bill.users_percentage_at_position(@position).nil?
+          %li.users_position.message_builder_clickable          
+            = "#{@bill.users_percentage_at_position(@position == 'tracking' ? 'support' : @position)}% of users #{@position == 'tracking' ? 'support' : @position} #{@bill.typenumber}"
+            = render 'will_add_text_box', :text => "#{@bill.users_percentage_at_position(@position == 'tracking' ? 'support' : @position)}% of users on OpenCongress.org, a free, non-partisan resource, #{@position == 'tracking' ? 'support' : @position} #{@bill.typenumber}."
+        %li.page_views.message_builder_clickable
+          = "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times"      
+          = render 'will_add_text_box', :text => "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times on OpenCongress.org, a free, non-partisan resource."
+
+      - unless @bill.talking_points.empty?
+        .section
+          %h3 PPF Talking Points
+          %ul
+            - @bill.talking_points.each do |tp|
+              %li.message_builder_clickable
+                = tp.talking_point
+                = render 'will_add_text_box', :text => tp.talking_point
 
 
-    .section      
-      %h3 Contribution Data
-      #contribution_data_container
-        - unless @sens.empty? and @reps.empty?
-          - if @bill.bill_interest_groups.any?
-            = render :partial => 'message_builder_intgroup_contribution_data'
+      .section      
+        %h3 Contribution Data
+        #contribution_data_container
+          - unless @sens.empty? and @reps.empty?
+            - if @bill.bill_interest_groups.any?
+              = render :partial => 'message_builder_intgroup_contribution_data'
+            - else
+              = render :partial => 'message_builder_industry_contribution_data'
+            
           - else
-            = render :partial => 'message_builder_industry_contribution_data'
+            .padding
+              Enter your street address above, and relevant campaign contribution data for your elected officials will appear here in seconds for you to use in your letter.
             
-        - else
-          .padding
-            Enter your street address above, and relevant campaign contribution data for your elected officials will appear here in seconds for you to use in your letter.
-            
-    - unless @bill.plain_language_summary.blank?
-      .section
-        %h3 OpenCongress Bill Summary
-        %ul
-          %li.message_builder_clickable
-            = strip_tags(@bill.plain_language_summary)
-            = render 'will_add_text_box', :text => "Here's a summary from OpenCongress.org:\n\n#{strip_tags(@bill.plain_language_summary)}"
-
-
-    - unless @bill.bill_position_organizations_support.empty?
-      .section
-        %h3 Supporting Organizations
-        = render 'message_builder_organizations', :disposition => 'support', :orgs => @bill.bill_position_organizations_support
-        
-    - unless @bill.bill_position_organizations_oppose.empty?
-      .section
-        %h3 Opposing Organizations
-        = render 'message_builder_organizations', :disposition => 'oppose', :orgs => @bill.bill_position_organizations_oppose
-
-    .section      
-      %h3 Most-commented sections of the bill text
-      %ul
-        - unless @bill.bill_text_versions.empty?
-          - @bill.bill_text_versions.last.top_comment_nodes(5).each do |n|
+      - unless @bill.plain_language_summary.blank?
+        .section
+          %h3 OpenCongress Bill Summary
+          %ul
             %li.message_builder_clickable
-              = n.bill_text
-              = " (#{n.comments.count} comments, "
-              = link_to 'Link', bill_text_path(:id => n.bill_text_version.bill, :nid => n.nid, :version => n.bill_text_version.version)
-              = ")"
+              = strip_tags(@bill.plain_language_summary)
+              = render 'will_add_text_box', :text => "Here's a summary from OpenCongress.org:\n\n#{strip_tags(@bill.plain_language_summary)}"
+
+
+      - unless @bill.bill_position_organizations_support.empty?
+        .section
+          %h3 Supporting Organizations
+          = render 'message_builder_organizations', :disposition => 'support', :orgs => @bill.bill_position_organizations_support
+        
+      - unless @bill.bill_position_organizations_oppose.empty?
+        .section
+          %h3 Opposing Organizations
+          = render 'message_builder_organizations', :disposition => 'oppose', :orgs => @bill.bill_position_organizations_oppose
+
+      .section      
+        %h3 Most-commented sections of the bill text
+        %ul
+          - unless @bill.bill_text_versions.empty?
+            - @bill.bill_text_versions.last.top_comment_nodes(5).each do |n|
+              %li.message_builder_clickable
+                = n.bill_text
+                = " (#{n.comments.count} comments, "
+                = link_to 'Link', bill_text_path(:id => n.bill_text_version.bill, :nid => n.nid, :version => n.bill_text_version.version)
+                = ")"
             
-              = render 'will_add_text_box', :text => "specifically, this section of the legislation: \"#{n.bill_text}\","
+                = render 'will_add_text_box', :text => "specifically, this section of the legislation: \"#{n.bill_text}\","
           
-    .section
-      %h3 Highest Rated User Comments
-      %ul
-        - @bill.comments.order("comments.plus_score_count - comments.minus_score_count DESC").limit(3).each do |c|
-          %li.message_builder_clickable
-            On
-            = "#{c.created_at.strftime("%B %d, %Y")},"
-            by
-            = c.user.nil? ? "Anonymous" : link_to(c.user.login, user_profile_path(c.user.login))
-            \-
-            = c.comment
-            = render 'will_add_text_box', :text => "As noted by #{c.user.nil? ? 'Anonymous' : c.user.login}, a user on OpenCongress.org, on #{c.created_at.strftime("%B %d, %Y")}, \"#{c.comment}\""
+      .section
+        %h3 Highest Rated User Comments
+        %ul
+          - @bill.comments.order("comments.plus_score_count - comments.minus_score_count DESC").limit(3).each do |c|
+            %li.message_builder_clickable
+              On
+              = "#{c.created_at.strftime("%B %d, %Y")},"
+              by
+              = c.user.nil? ? "Anonymous" : link_to(c.user.login, user_profile_path(c.user.login))
+              \-
+              = c.comment
+              = render 'will_add_text_box', :text => "As noted by #{c.user.nil? ? 'Anonymous' : c.user.login}, a user on OpenCongress.org, on #{c.created_at.strftime("%B %d, %Y")}, \"#{c.comment}\""
 
-    .section
-      %h3 Highly Rated Blog Articles
-      %ul
-        - @bill.blogs.order('commentaries.average_rating IS NOT NULL DESC').limit(3).each do |a|
-          = render 'message_builder_commentary', :a => a
+      .section
+        %h3 Highly Rated Blog Articles
+        %ul
+          - @bill.blogs.order('commentaries.average_rating IS NOT NULL DESC').limit(3).each do |a|
+            = render 'message_builder_commentary', :a => a
 
-    .section
-      %h3 Highly Rated News Articles
-      %ul
-        - @bill.news.order('commentaries.average_rating IS NOT NULL DESC').limit(3).each do |a|
-          = render 'message_builder_commentary', :a => a
+      .section
+        %h3 Highly Rated News Articles
+        %ul
+          - @bill.news.order('commentaries.average_rating IS NOT NULL DESC').limit(3).each do |a|
+            = render 'message_builder_commentary', :a => a
+            
+            
+    - elsif @issue
+      - unless @issue.talking_points.empty?
+        .section
+          %h3 PPF Talking Points
+          %ul
+            - @issue.talking_points.each do |tp|
+              %li.message_builder_clickable
+                = tp.talking_point
+                = render 'will_add_text_box', :text => tp.talking_point
+      
+        .section      
+          %h3 Contribution Data
+          #contribution_data_container
+            - unless @sens.empty? and @reps.empty?
+              = render :partial => 'message_builder_issue_contribution_data'
+            - else
+              .padding
+                Enter your street address above, and relevant campaign contribution data for your elected officials will appear here in seconds for you to use in your letter.
+
 
     - if current_facebook_user
       .section
@@ -163,7 +190,7 @@
         %span.from A Letter to Congress
         %span.the-user from a constituent via OpenCongress.org
       .formageddon_contact_form
-        = render 'formageddon/threads/form', :f => f, :thread => @formageddon_thread, :after_send_url => "/contact_congress_letters/create_from_formageddon?bill=#{@bill.ident}&disposition=#{@position}&group_id=#{params[:group_id]}", :action_on_error => '/contact_congress_letters/new', :no_sender_redirect => '/account/contact_congress', :custom_params => { :bill => @bill.ident }
+        = render 'formageddon/threads/form', :f => f, :thread => @formageddon_thread, :after_send_url => "/contact_congress_letters/create_from_formageddon?#{@contactable_query}&disposition=#{@position}&group_id=#{params[:group_id]}", :action_on_error => '/contact_congress_letters/new', :no_sender_redirect => '/account/contact_congress', :custom_params => { :contactable => @contactable_query }
 
           
         :javascript
@@ -234,7 +261,7 @@
     if ($j(this).val().length == 5) {
       $j("#none").html("<img src='/images/spinner-ovals.gif' />");
       $j.ajax({
-        url: '/contact_congress_letters/get_recipients?bill=#{@bill.ident}' + '&address=' + escape($j("#formageddon_formageddon_thread_sender_address1").val()) + '&zip5=' + $j(this).val()
+        url: '/contact_congress_letters/get_recipients?bill=#{@bill.nil? ? '' : @bill.ident}&issue=#{@issue.nil? ? '' : @issue.id}&address=' + escape($j("#formageddon_formageddon_thread_sender_address1").val()) + '&zip5=' + $j(this).val()
       });
     }
   });
@@ -244,7 +271,7 @@
       $j("#rep").html("<img class='spin' src='/images/spinner-ovals.gif' />");
 
       $j.ajax({
-        url: '/contact_congress_letters/get_recipients?bill=#{@bill.ident}' + '&rep_only=true&address=' + escape($j(this).val()) + '&zip5=' + $j("#formageddon_formageddon_thread_sender_zip5").val() + '&zip4=' + $j("#formageddon_formageddon_thread_sender_zip4").val()
+        url: '/contact_congress_letters/get_recipients?bill=#{@bill.nil? ? '' : @bill.ident}&issue=#{@issue.nil? ? '' : @issue.id}' + '&rep_only=true&address=' + escape($j(this).val()) + '&zip5=' + $j("#formageddon_formageddon_thread_sender_zip5").val() + '&zip4=' + $j("#formageddon_formageddon_thread_sender_zip4").val()
       });
     }
   });
@@ -253,7 +280,7 @@
     $j("#rep").html("<img class='spin' src='/images/spinner-ovals.gif' />");
 
     $j.ajax({
-      url: '/contact_congress_letters/get_recipients?bill=#{@bill.ident}' + '&rep_only=true&address=' + escape($j(this).val()) + '&zip5=' + $j("#formageddon_formageddon_thread_sender_zip5").val() + '&zip4=' + $j("#formageddon_formageddon_thread_sender_zip4").val()
+      url: '/contact_congress_letters/get_recipients?bill=#{@bill.nil? ? '' : @bill.ident}&issue=#{@issue.nil? ? '' : @issue.id}' + '&rep_only=true&address=' + escape($j(this).val()) + '&zip5=' + $j("#formageddon_formageddon_thread_sender_zip5").val() + '&zip4=' + $j("#formageddon_formageddon_thread_sender_zip4").val()
     });
   });
   

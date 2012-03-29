@@ -9,8 +9,8 @@
           = check_box_tag "formageddon[formageddon_multi_recipients[#{s.id}]]", 'Person', true
           = image_tag(s.photo_path(:thumb), :class =>"photo", :alt => 'photo')
         = link_to s.name, person_path(s)
-        = sponsor_tag(@bill, s)
         - if @bill
+          = sponsor_tag(@bill, s)
           %span
             = "Vote on Passage of #{@bill.typenumber}: " 
             %strong= "#{@bill.vote_on_passage(s)}"
@@ -21,8 +21,8 @@
           = check_box_tag "formageddon[formageddon_multi_recipients[#{@reps.first.id}]]", 'Person', true
           = image_tag(@reps.first.photo_path(:thumb), :class =>"photo", :alt => 'photo')
         = link_to @reps.first.name, person_path(@reps.first)
-        = sponsor_tag(@bill, p)
         - if @bill
+          = sponsor_tag(@bill, p)
           %span
             = "Vote on Passage of #{@bill.typenumber}: " 
             %strong= "#{@bill.vote_on_passage(@reps.first)}"

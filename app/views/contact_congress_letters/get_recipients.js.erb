@@ -2,13 +2,19 @@
   $j('#contact_recipients_container').html("<div class='none'>We could not find your representatives with the info you provided.  Please try again.");
 <% else %>
   $j('#contact_recipients_container').html("<%= escape_javascript(render :partial => 'contact_congress_letters/contact_recipients', :locals => { :show_checkboxes => true }) %>");
-  <% if @bill.bill_interest_groups.any? %>
-    $j('#contribution_data_container').html("<%= escape_javascript(render :partial => 'contact_congress_letters/message_builder_intgroup_contribution_data', :locals => { :trigger_js => true}) %>");
-  <% else %>
-    $j('#contribution_data_container').html("<%= escape_javascript(render :partial => 'contact_congress_letters/message_builder_industry_contribution_data', :locals => { :trigger_js => true}) %>");
+  <% unless @bill.nil? %>
+ 		<% if @bill.bill_interest_groups.any? %>
+    	$j('#contribution_data_container').html("<%= escape_javascript(render :partial => 'contact_congress_letters/message_builder_intgroup_contribution_data', :locals => { :trigger_js => true}) %>");
+  	<% else %>
+    	$j('#contribution_data_container').html("<%= escape_javascript(render :partial => 'contact_congress_letters/message_builder_industry_contribution_data', :locals => { :trigger_js => true}) %>");
+  	<% end %>
   <% end %>
-  
-  <% unless @bill.roll_calls.first.nil? %>
+	
+	<% unless @issue.nil? %>
+		$j('#contribution_data_container').html("<%= escape_javascript(render :partial => 'contact_congress_letters/message_builder_issue_contribution_data', :locals => { :trigger_js => true}) %>");
+	<% end %>
+	
+  <% unless @bill.nil? or @bill.roll_calls.first.nil? %>
     $j('#roll_call_container').html("<%= escape_javascript(render :partial => 'contact_congress_letters/message_builder_roll_call', :locals => { :roll_call => @bill.roll_calls.first }) %>");
   <% end %>
   $j('.contact_recipients').css('background', 'rgba(101,101,101, .2)');

@@ -3,7 +3,7 @@
 
 
 .contact_congress_letter
-  - if @contact_congress_letter.bill
+  - if @contact_congress_letter.contactable_type == 'Bill'
     #bill
       This letter was sent by OpenCongress user
       = link_to @contact_congress_letter.formageddon_threads.first.formageddon_sender.login, user_profile_path(@contact_congress_letter.formageddon_threads.first.formageddon_sender.login)
@@ -16,7 +16,7 @@
       = @contact_congress_letter.formageddon_threads.first.created_at.strftime('%B %d, %Y')
       = position_clause(@contact_congress_letter.disposition)
       %strong
-        = "#{link_to(truncate(@contact_congress_letter.bill.typenumber + ' ' + @contact_congress_letter.bill.title_common, :length => 170), bill_path(@contact_congress_letter.bill))}.".html_safe
+        = "#{link_to(truncate(@contact_congress_letter.contactable.typenumber + ' ' + @contact_congress_letter.contactable.title_common, :length => 170), bill_path(@contact_congress_letter.contactable))}.".html_safe
       Privacy setting:
       = @contact_congress_letter.formageddon_threads.first.privacy
       - if logged_in? and current_user == @contact_congress_letter.user
@@ -32,10 +32,10 @@
 
           .recipient_info
             = link_to t.formageddon_recipient.name, person_path(t.formageddon_recipient)
-            - if @contact_congress_letter.bill
+            - if @contact_congress_letter.contactable_type == 'Bill'
               %span
-                = "Vote on Passage of #{@contact_congress_letter.bill.typenumber}: " 
-                %strong= "#{@contact_congress_letter.bill.vote_on_passage(t.formageddon_recipient)}"
+                = "Vote on Passage of #{@contact_congress_letter.contactable.typenumber}: " 
+                %strong= "#{@contact_congress_letter.contactable.vote_on_passage(t.formageddon_recipient)}"
 
 
          

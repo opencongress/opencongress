@@ -146,7 +146,7 @@
                 = tp.talking_point
                 = render 'will_add_text_box', :text => tp.talking_point
         
-      - if @issue.pvs_categories.any?
+      - if @issue.pvs_categories.collect{|pvs| pvs.crp_industries}.flatten.any?
         .section      
           %h3 Contribution Data
           #contribution_data_container

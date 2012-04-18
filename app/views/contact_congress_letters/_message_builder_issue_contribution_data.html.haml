@@ -4,7 +4,7 @@
   %p.behave
     Using all publicly-available data, the campaign contributions shown here are the ones OpenCongress automatically determines most-likely to be relevant to this issue.
 
-  - if @issue.pvs_categories.any?
+  - if @issue.pvs_categories.collect{|pvs| pvs.crp_industries}.flatten.any?
     %table
       %thead
         %tr

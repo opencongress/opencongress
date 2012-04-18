@@ -1,5 +1,5 @@
 .padding
-  %h1 PPF Talking Points for #{@talking_pointable}
+  %h1 PPF Talking Points for #{@talking_pointable.class.name == 'Bill' ? @talking_pointable.typenumber : @talking_pointable.term}
 
   %table
     %tr

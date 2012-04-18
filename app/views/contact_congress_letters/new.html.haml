@@ -54,11 +54,11 @@
           = "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times"      
           = render 'will_add_text_box', :text => "#{@bill.typenumber} has been viewed #{number_with_delimiter(@bill.page_views_count)} times on OpenCongress.org, a free, non-partisan resource."
 
-      - unless @bill.talking_points.empty?
+      - unless @bill.talking_points.where("talking_points.include_in_message_body='f'").empty?
         .section
           %h3 PPF Talking Points
           %ul
-            - @bill.talking_points.each do |tp|
+            - @bill.talking_points.where("talking_points.include_in_message_body='f'").each do |tp|
               %li.message_builder_clickable
                 = tp.talking_point
                 = render 'will_add_text_box', :text => tp.talking_point

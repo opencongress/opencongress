@@ -49,7 +49,14 @@ class ContactCongressLettersController < ApplicationController
       @subject = "#{@bill.typenumber} #{@bill.title_common}"
       @contactable_query = "contactable_type=Bill&contactable_id=#{@bill.id}"
     elsif @issue
-      message_start = "I am tracking legislation in the issue area of #{@issue.term} using OpenCongress.org, the free public resource website for government transparency and accountability."
+      if @issue.talking_points.where("talking_points.include_in_message_body='t'").any?
+        message_start = ""
+        @issue.talking_points.where("talking_points.include_in_message_body='t'").order("talking_points.created_at ASC").each do |tp|
+          message_start += "#{tp.talking_point}\n\n"
+        end
+      else
+        message_start = "I am tracking legislation in the issue area of #{@issue.term} using OpenCongress.org, the free public resource website for government transparency and accountability."
+      end
       @subject = @issue.term
       @contactable_query = "contactable_type=Subject&contactable_id=#{@issue.id}"
     end

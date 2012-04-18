@@ -136,15 +136,17 @@
             
             
     - elsif @issue
-      - unless @issue.talking_points.empty?
+
+      - unless @issue.talking_points.where("talking_points.include_in_message_body='f'").empty?
         .section
           %h3 PPF Talking Points
           %ul
-            - @issue.talking_points.each do |tp|
+            - @issue.talking_points.where("talking_points.include_in_message_body='f'").each do |tp|
               %li.message_builder_clickable
                 = tp.talking_point
                 = render 'will_add_text_box', :text => tp.talking_point
-      
+        
+      - if @issue.pvs_categories.any?
         .section      
           %h3 Contribution Data
           #contribution_data_container

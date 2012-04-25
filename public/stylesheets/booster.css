@@ -8,6 +8,7 @@ body {
 	padding: 0 0 0px;
 	font-family: Helvetica, Arial, sans-serif;
 	background: url(/images/donate/bg.png) repeat-x;
+        background-color: #F7F7EE;
 	padding: 50px 0 40px;
 	width: 700px;
 	margin: 0 auto;
@@ -145,6 +146,19 @@ body {
 		margin: 20px 0;
 	}
 
+.one-time {
+	padding-bottom: 20px;
+}
+.one-time p {
+	color: #666;
+}
+.share-buttons {
+        float: left;
+	margin-top: 20px;
+}
+.share-buttons .tweet {
+	margin-top: 10px;
+}
 .thank-you-gifts {
 	width: 700px;
 	overflow: hidden;
@@ -230,3 +244,8 @@ body {
 			font-style: italic;
 			text-align: center;
 		}
+.footer {
+margin-top: 20px;
+float: right;
+}
+

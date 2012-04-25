@@ -17,9 +17,9 @@
 			<% if team_member == :andy %>
 			  <p>Andy Ross, OpenCongress Lead Programmer and OK Go Guitarist</p>
 			<% elsif team_member == :donny %>
-			  <p>Donny, OpenCongress Blogger</p>
+			  <p>Donny Shaw, OpenCongress Blogger (Since 2007!)</p>
 			<% else %>
-			  <p>David Moore, Founder of OpenCongress</p>
+			  <p>David Moore, OpenCongress Co-Founder</p>
 			<% end %>
 		</div>
 	</div>
@@ -27,11 +27,11 @@
 	  <% if logged_in? %><p class='username'>Hey <%= current_user.login %>,</p><% end %>
 	  
 		<% if team_member == :andy %>
-		  <h1>We Build Free Tools to Email Congress...</h1>
+		  <h1>We Build Free Tools to Email Congress</h1>
 		<% elsif team_member == :donny %>
-		  <h1>Congress is Corrupt. Help Us Open It For You.</h1>
+		  <h1>Congress Is Broken. Help Us Open It Up.</h1>
 		<% else %>
-		  <h1>We Need Your Help... To Keep OC Alive</h1>
+		  <h1>We Need Your Help To Keep OpenCongress Alive</h1>
 		<% end %>
 		
 		<p>OC Boosters give $10 per month, tax-exempt, to support our work:</p>

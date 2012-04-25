@@ -8,6 +8,7 @@ class Subject < ActiveRecord::Base
   has_many :recently_introduced_bills, :class_name => "Bill", :through => :bill_subjects, :source => "bill", :order => "bills.introduced DESC", :limit => 20
 
   has_many :comments, :as => :commentable
+  has_many :talking_points, :as => :talking_pointable
 
   has_one :issue_stats
   

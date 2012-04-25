@@ -1,13 +1,21 @@
 module ContactCongressLettersHelper
   def personal_share_message_for_letter(letter, url)
-    u("Wrote my members of #Congress on @opencongress to let them know " +
-      "#{letter.disposition == 'tracking' ? "I'm tracking" : "I " + letter.disposition} #USbill #" +
-      letter.bill.typenumber.downcase.gsub(/\./, '') + " " + url) 
+    if letter.contactable_type == 'Bill'
+      u("Wrote my members of #Congress on @opencongress to let them know " +
+        "#{letter.disposition == 'tracking' ? "I'm tracking" : "I " + letter.disposition} #USbill #" +
+        letter.contactable.typenumber.downcase.gsub(/\./, '') + " " + url) 
+    elsif letter.contactable_type == 'Subject'
+      u("Wrote my members of #Congress on @opencongress about #{letter.contactable.term}" + url) 
+    end
   end
   
   def generic_share_message_for_letter(letter, url)
-    u("A letter to #Congress on @opencongress #{position_clause(letter.disposition)} #USbill #" +
-      letter.bill.typenumber.downcase.gsub(/\./, '') + " " + url)
+    if letter.contactable_type == 'Bill'
+      u("A letter to #Congress on @opencongress #{position_clause(letter.disposition)} #USbill #" +
+        letter.contactable.typenumber.downcase.gsub(/\./, '') + " " + url)
+    elsif letter.contactable_type == 'Subject'
+      u("A letter to #Congress on @opencongress regarding #{letter.contactable.term}" + url)
+    end
   end
   
   def sponsor_tag(bill, person)

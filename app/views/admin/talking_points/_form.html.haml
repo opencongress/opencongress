@@ -8,7 +8,11 @@
 
   %p
     = f.label :talking_point
-    = f.text_field :talking_point
+    = f.text_area :talking_point
+    
+  %p
+    = f.label :include_in_message_body
+    = f.check_box :include_in_message_body
   
   = f.hidden_field :talking_pointable_id
   = f.hidden_field :talking_pointable_type

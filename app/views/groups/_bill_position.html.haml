@@ -22,7 +22,7 @@
       = link_to (url_for bill_url(bill_position.bill)), bill_path(bill_position.bill)
       
   %h3 Letters to Congress
-  - letters = @group.political_notebook.notebook_items.joins("JOIN contact_congress_letters ON notebook_items.notebookable_id=contact_congress_letters.id").where(["notebook_items.notebookable_type='ContactCongressLetter' AND contact_congress_letters.bill_id=?", bill_position.bill.id])
+  - letters = @group.political_notebook.notebook_items.joins("JOIN contact_congress_letters ON notebook_items.notebookable_id=contact_congress_letters.id").where(["notebook_items.notebookable_type='ContactCongressLetter' AND contact_congress_letters.contactable_type='Bill' AND contact_congress_letters.contactable_id=?", bill_position.bill.id])
   - if letters.empty?
     %p.behave No one from the group has written a letter #{position_clause(bill_position.position)} this bill to their elected representatives
   - else

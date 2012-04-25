@@ -1,5 +1,5 @@
 .padding
-  %h1 PPF Talking Points for #{@bill.typenumber}
+  %h1 PPF Talking Points for #{@talking_pointable.class.name == 'Bill' ? @talking_pointable.typenumber : @talking_pointable.term}
 
   %table
     %tr
@@ -15,7 +15,10 @@
 
   %br
 
-  = link_to 'New Talking Point', {:action => 'new', :bill_id => @bill.ident }, :class => "silver button small"
+  = link_to 'New Talking Point', {:action => 'new', :talking_pointable_type => @talking_pointable.class.name, :talking_pointable_id => @talking_pointable.id }, :class => "silver button small"
   %br
   %br
-  = link_to "Return to #{@bill.typenumber}", bill_path(@bill)
+    - if @talking_pointable.class.name == 'Bill'
+      = link_to "Return to #{@talking_pointable.typenumber}", bill_path(@talking_pointable)
+    - elsif  @talking_pointable.class.name == 'Subject'
+      = link_to "Return to #{@talking_pointable.term}", :controller => "/issue", :action => 'show', :id => @talking_pointable

@@ -10,4 +10,9 @@ class Admin::ContactCongressController < Admin::IndexController
     @page_title = 'Contact Congress Letters'
     @letters = ContactCongressLetter.order('created_at DESC').all.paginate(:per_page => 50, :page => params[:page])
   end
+  
+  def stats
+    @page_title = 'Contact Congress Stats'
+    @people = Person.all_sitting
+  end
 end

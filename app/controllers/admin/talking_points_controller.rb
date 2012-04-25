@@ -2,9 +2,9 @@ class Admin::TalkingPointsController < Admin::IndexController
   # GET /talking_points
   # GET /talking_points.xml
   def index
-    @bill = Bill.find_by_ident(params[:bill_id])
+    @talking_pointable = Object.const_get(params[:talking_pointable_type]).find_by_id(params[:talking_pointable_id])
 
-    @talking_points = @bill.talking_points
+    @talking_points = @talking_pointable.talking_points
 
     respond_to do |format|
       format.html # index.html.erb
@@ -28,8 +28,8 @@ class Admin::TalkingPointsController < Admin::IndexController
   def new
     @talking_point = TalkingPoint.new
 
-    @bill = Bill.find_by_ident(params[:bill_id])
-    @talking_point.talking_pointable = @bill
+    @talking_pointable = Object.const_get(params[:talking_pointable_type]).find_by_id(params[:talking_pointable_id])
+    @talking_point.talking_pointable = @talking_pointable
     
     respond_to do |format|
       format.html # new.html.erb
@@ -49,7 +49,7 @@ class Admin::TalkingPointsController < Admin::IndexController
 
     respond_to do |format|
       if @talking_point.save
-        format.html { redirect_to(:action => 'index', :bill_id => @talking_point.talking_pointable.ident, :notice => 'Talking point was successfully created.') }
+        format.html { redirect_to(:action => 'index', :talking_pointable_type => @talking_point.talking_pointable.class.name, :talking_pointable_id => @talking_point.talking_pointable.id, :notice => 'Talking point was successfully created.') }
         format.xml  { render :xml => @talking_point, :status => :created, :location => @talking_point }
       else
         format.html { render :action => "new" }
@@ -65,7 +65,7 @@ class Admin::TalkingPointsController < Admin::IndexController
 
     respond_to do |format|
       if @talking_point.update_attributes(params[:talking_point])
-        format.html { redirect_to(:action => 'index', :bill_id => @talking_point.talking_pointable.ident, :notice => 'Talking point was successfully updated.') }
+        format.html { redirect_to(:action => 'index', :talking_pointable_type => @talking_point.talking_pointable.class.name, :talking_pointable_id => @talking_point.talking_pointable.id, :notice => 'Talking point was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -79,12 +79,12 @@ class Admin::TalkingPointsController < Admin::IndexController
   def destroy
     @talking_point = TalkingPoint.find(params[:id])
     
-    @bill = @talking_point.talking_pointable
+    @talking_pointable = @talking_point.talking_pointable
     
     @talking_point.destroy
 
     respond_to do |format|
-      format.html { redirect_to(:action => 'index', :bill_id => @bill.ident) }
+      format.html { redirect_to(:action => 'index', :talking_pointable_type => @talking_pointable.class.name, :talking_pointable_id => @talking_pointable.id) }
       format.xml  { head :ok }
     end
   end

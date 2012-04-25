@@ -150,7 +150,7 @@ require 'htmlentities'
       return 'FALSE POSITIVE'
     else
       # at least make sure we match 'S.123' or 'S. 123'
-      if (/S\.( )?#{self.commentariable.number}/.match("#{self.excerpt} #{self.title}"))
+      if (/\s?S\.( )?#{self.commentariable.number}[:\s]/.match("#{self.excerpt} #{self.title}"))
         #puts "SEEMS GOOD! (#{b.typenumber}) #{c.excerpt} TITLE: #{c.title}"
         return 'OK'
       # make things that match 'S 123' pending

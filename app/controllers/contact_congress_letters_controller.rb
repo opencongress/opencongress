@@ -5,9 +5,14 @@ class ContactCongressLettersController < ApplicationController
   
   def new
     @page_title = "Contact Congress"
-    @bill = Bill.find_by_ident(params[:bill])
-  
-
+    
+    if !params[:bill].blank?
+      @bill = Bill.find_by_ident(params[:bill])
+    elsif !params[:issue].blank?
+      @issue = Subject.find_by_id(params[:issue])
+    end
+    
+    
     if logged_in?
       @sens = current_user.my_sens
       @reps = current_user.my_reps
@@ -20,7 +25,7 @@ class ContactCongressLettersController < ApplicationController
       @sens = @reps = []
     end
   
-    if params[:position].nil?
+    if @bill and params[:position].nil?
       render 'select_position'
       return
     end
@@ -29,25 +34,47 @@ class ContactCongressLettersController < ApplicationController
     ### loop through recipients and see if formageddon is configured
     
     
-    @position = params[:position]
+    if @bill
+      @position = params[:position]
   
-    case @position
-    when 'support'
-      message_start = "I support #{@bill.typenumber} - #{@bill.title_common}, and am tracking it using OpenCongress.org, the free public resource website for government transparency and accountability."      
-    when 'oppose'
-      message_start = "I oppose #{@bill.typenumber} - #{@bill.title_common}, and am tracking it using OpenCongress.org, the free public resource website for government transparency and accountability."      
-    else
-      message_start = "I'm tracking #{@bill.typenumber} - #{@bill.title_common} using OpenCongress.org, the free public resource website for government transparency and accountability."
+      case @position
+      when 'support'
+        message_start = "I support #{@bill.typenumber} - #{@bill.title_common}, and am tracking it using OpenCongress.org, the free public resource website for government transparency and accountability."      
+      when 'oppose'
+        message_start = "I oppose #{@bill.typenumber} - #{@bill.title_common}, and am tracking it using OpenCongress.org, the free public resource website for government transparency and accountability."      
+      else
+        message_start = "I'm tracking #{@bill.typenumber} - #{@bill.title_common} using OpenCongress.org, the free public resource website for government transparency and accountability."
+      end
+      
+      @subject = "#{@bill.typenumber} #{@bill.title_common}"
+      @contactable_query = "contactable_type=Bill&contactable_id=#{@bill.id}"
+    elsif @issue
+      if @issue.talking_points.where("talking_points.include_in_message_body='t'").any?
+        message_start = ""
+        @issue.talking_points.where("talking_points.include_in_message_body='t'").order("talking_points.created_at ASC").each do |tp|
+          message_start += "#{tp.talking_point}\n\n"
+        end
+      else
+        message_start = "I am tracking legislation in the issue area of #{@issue.term} using OpenCongress.org, the free public resource website for government transparency and accountability."
+      end
+      @subject = @issue.term
+      @contactable_query = "contactable_type=Subject&contactable_id=#{@issue.id}"
     end
+    
   
     @formageddon_thread = Formageddon::FormageddonThread.new
-    @formageddon_thread.prepare(:user => current_user, :subject => "#{@bill.typenumber} #{@bill.title_common}", :message => message_start)
+    @formageddon_thread.prepare(:user => current_user, :subject => @subject, :message => message_start)
   end
 
   
   def get_recipients
-    @bill = Bill.find_by_ident(params[:bill])
+    if !params[:bill].blank?
+      @bill = Bill.find_by_ident(params[:bill])
+    elsif !params[:issue].blank?
+      @issue = Subject.find_by_id(params[:issue])
+    end
     
+        
     unless params[:zip4].blank?
       @sens, @reps = Person.find_current_congresspeople_by_zipcode(params[:zip5], params[:zip4])
     else
@@ -92,7 +119,14 @@ class ContactCongressLettersController < ApplicationController
     @additional_letters.flatten!.sort!{|a,b| a.created_at <=> b.created_at } unless @additional_letters.empty?
     
     @page_title = "My Letter to Congress: #{@contact_congress_letter.formageddon_threads.first.formageddon_letters.first.subject}"
-    @meta_description = "This is a letter to Congress sent using OpenCongress.org by user #{@contact_congress_letter.user.login} regarding #{@contact_congress_letter.bill.typenumber} #{@contact_congress_letter.bill.title_common}. OpenCongress is a free and open-source public resource website for tracking and contacting the U.S. Congress."
+    
+    if @contact_congress_letter.contactable_type == 'Bill'
+      regarding = "#{@contact_congress_letter.contactable.typenumber} #{@contact_congress_letter.contactable.title_common}"
+    elsif @contact_congress_letter.contactable_type == 'Subject'
+      regarding = @contact_congress_letter.contactable.term
+    end
+    
+    @meta_description = "This is a letter to Congress sent using OpenCongress.org by user #{@contact_congress_letter.user.login} regarding #{regarding}. OpenCongress is a free and open-source public resource website for tracking and contacting the U.S. Congress."
 
     if params[:print_version] == 'true'
       render :partial => 'contact_congress_letters/print', 
@@ -111,8 +145,7 @@ class ContactCongressLettersController < ApplicationController
       @letters = Formageddon::FormageddonLetter.find(letter_ids)
     end
     
-    
-    bill = Bill.find_by_ident(params[:bill])
+    contactable = Object.const_get(params[:contactable_type]).find_by_id(params[:contactable_id])
 
     @letters.each do |l|  
       cclft = ContactCongressLettersFormageddonThread.find_by_formageddon_thread_id(l.formageddon_thread.id)
@@ -120,7 +153,7 @@ class ContactCongressLettersController < ApplicationController
         if @contact_congress_letter.nil?
           @contact_congress_letter = ContactCongressLetter.new
           @contact_congress_letter.disposition = params[:disposition]
-          @contact_congress_letter.bill = bill unless bill.nil?
+          @contact_congress_letter.contactable = contactable unless contactable.nil?
           @contact_congress_letter.save
         end
         
@@ -156,7 +189,7 @@ class ContactCongressLettersController < ApplicationController
             @group = Group.find_by_id(params[:group_id])
             if @group
               # make sure this group is tracking this bill and user is a member
-              if @group.bills.include?(@contact_congress_letter.bill) and 
+              if @group.bills.include?(@contact_congress_letter.contactable) and 
                  (@group.is_member?(@contact_congress_letter.user) or @group.is_owner?(@contact_congress_letter.user))
                  
                 notebook = PoliticalNotebook.find_or_create_from_group(@group)  

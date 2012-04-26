@@ -1,24 +1,8 @@
 GIT
-  remote: git://github.com/dougcole/acts-as-taggable-on.git
-  revision: cf52b870c07e8d6825a478a9669c9e384f580a32
-  branch: use_equality_where_possible
-  specs:
-    acts-as-taggable-on (2.2.2)
-      rails (~> 3.0)
-
-GIT
   remote: git://github.com/galetahub/simple-captcha.git
   revision: b8493942e9a9bb58c58712fa21d41963330da6aa
   specs:
     simple_captcha (0.1.1)
-
-GIT
-  remote: git://github.com/kennethlmartin/defender.git
-  revision: 795923014e4853b41ffbe72933388644e31de60f
-  specs:
-    defender (2.0.2)
-      activemodel (>= 3.0.0)
-      defensio (~> 0.9.1)
 
 GIT
   remote: git://github.com/opencongress/formageddon.git
@@ -28,6 +12,13 @@ GIT
       delayed_job (~> 2.1)
       haml
       mechanize
+
+GIT
+  remote: https://github.com/mbleigh/acts-as-taggable-on.git
+  revision: 4690e041e59114ad1d42efaa463462140a703dba
+  specs:
+    acts-as-taggable-on (2.2.2)
+      rails (~> 3.0)
 
 GEM
   remote: http://rubygems.org/
@@ -107,6 +98,9 @@ GEM
       cucumber (>= 0.8.0)
     culerity (0.2.15)
     daemons (1.1.4)
+    defender (2.0.3)
+      activemodel (>= 3.0.0)
+      defensio (~> 0.9.1)
     defensio (0.9.1)
       httparty (>= 0.5.0)
     delayed_job (2.1.4)
@@ -307,7 +301,7 @@ DEPENDENCIES
   closure-compiler
   cucumber (= 0.8.5)
   cucumber-rails
-  defender!
+  defender
   delayed_job (~> 2.1)
   facebooker2
   fog

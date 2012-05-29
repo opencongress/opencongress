@@ -100,6 +100,9 @@ begin
     else
       puts "WARNING: unknown bill: #{bill_e.elements["session"].text}-#{bill_e.elements["prefix"].text}#{bill_e.elements["number"].text}"
     end
+    
+    # adding sleep to try to decrease load on CPU
+    sleep(3.seconds)
   end
 rescue 
   puts "Error scraping! #{$!.backtrace.join("\n")}"

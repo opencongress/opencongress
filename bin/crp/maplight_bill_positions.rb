@@ -102,7 +102,7 @@ begin
     end
     
     # adding sleep to try to decrease load on CPU
-    sleep(3.seconds)
+    sleep(3)
   end
 rescue 
   puts "Error scraping! #{$!.backtrace.join("\n")}"

@@ -1377,6 +1377,8 @@ class Person < ActiveRecord::Base
   end
   
   def average_approval_from_state(state)
+    return nil
+    
     begin
       ids = User.find_id_by_solr("my_state:\"#{state}\"", :facets => {:browse => ["my_state_f:\"#{state}\"", "my_people_tracked:#{self.id}"]}, :limit => 5000)
     rescue

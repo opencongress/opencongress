@@ -6,27 +6,38 @@ class District < ActiveRecord::Base
   has_one :current_watch_dog, :class_name => "WatchDog", :conditions => ["is_active = ?", true], :order => "created_at desc"
   has_one :group
   
+  
   def user_count
-    User.count_by_solr("my_district:#{self.state.abbreviation}-#{district_number}")    
+    User.count_by_sql(['select count(distinct users.id) from users where district_cache like ?;', "%#{state.abbreviation}-#{district_number}%"])
+
+    # User.count_by_solr("my_state:\"#{abbreviation}\"")    
   end
 
+  
   def users
-    User.find_by_solr("my_district:#{self.state.abbreviation}-#{district_number}", :facets => {:fields => [:public_actions, :public_tracking, :my_bills_supported, :my_bills_opposed, 
-                           :my_committees_tracked, :my_bills_tracked, :my_people_tracked, :my_issues_tracked,
-                           :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens], :limit => 10, :sort => true, :browse => ["public_tracking:true", "public_actions:true"]}, :order => "last_login desc")
+    User.find_by_sql(['select distinct users.id, users.login from users where district_cache like ?;', "%#{state.abbreviation}-#{district_number}%"])
+
+    
+    # User.find_by_solr("my_district:#{self.state.abbreviation}-#{district_number}", :facets => {:fields => [:public_actions, :public_tracking, :my_bills_supported, :my_bills_opposed, 
+    #                        :my_committees_tracked, :my_bills_tracked, :my_people_tracked, :my_issues_tracked,
+    #                        :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens], :limit => 10, :sort => true, :browse => ["public_tracking:true", "public_actions:true"]}, :order => "last_login desc")
   end
   
   def all_users
-    User.find_by_solr("my_district:#{self.state.abbreviation}-#{district_number}", :facets => {:fields => [:public_actions, :public_tracking, :my_bills_supported, :my_bills_opposed, 
-                           :my_committees_tracked, :my_bills_tracked, :my_people_tracked, :my_issues_tracked,
-                           :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens], :limit => 500, :sort => true}, :order => "last_login desc")
+    User.find_by_sql(['select distinct users.id, users.login from users where district_cache like ?;', "%#{state.abbreviation}-#{district_number}%"])
+
+    # User.find_by_solr("my_district:#{self.state.abbreviation}-#{district_number}", :facets => {:fields => [:public_actions, :public_tracking, :my_bills_supported, :my_bills_opposed, 
+    #                        :my_committees_tracked, :my_bills_tracked, :my_people_tracked, :my_issues_tracked,
+    #                        :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens], :limit => 500, :sort => true}, :order => "last_login desc")
     
   end
   
   def all_active_users
+    User.find_by_sql(['select distinct users.id, users.login from users where district_cache like ? AND previous_login_date >= ;', 
+                      "%#{state.abbreviation}-#{district_number}%", 2.months.ago])
 
-    query = "my_district:#{self.state.abbreviation}-#{district_number} AND last_login:[#{(Time.now - 2.months).iso8601[0,19] + 'Z'} TO *] AND total_number_of_actions:[5 TO *]"
-    User.find_by_solr(query, :limit => 500, :order => "last_login desc")
+    # query = "my_district:#{self.state.abbreviation}-#{district_number} AND last_login:[#{(Time.now - 2.months).iso8601[0,19] + 'Z'} TO *] AND total_number_of_actions:[5 TO *]"
+    # User.find_by_solr(query, :limit => 500, :order => "last_login desc")
         
   end
 
@@ -79,6 +90,9 @@ class District < ActiveRecord::Base
   end
 
   def tracking_suggestions
+    # temporarily removing solr for now - June 2012
+    return [0, {}]
+    
     facets = self.users.facets
     my_trackers = 0
     facet_results_hsh = {:my_bills_supported_facet => [], 

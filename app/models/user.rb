@@ -2,16 +2,16 @@ require 'digest/sha1'
 
 # this model expects a certain database layout and its based on the name/login pattern. 
 class User < ActiveRecord::Base
-  acts_as_solr :fields => [:placeholder, {:definitive_district => :integer},:public_actions,:my_committees_tracked, :my_bills_supported, 
-                           :my_people_tracked, :my_bills_opposed, :login, :username, :full_name, :email,
-                           :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens,
-                           {:my_state => :string}, {:my_district => :string}, 
-                           {:total_number_of_actions => :range_integer}, :my_bills_tracked, :public_tracking, 
-                           :my_issues_tracked, :my_state_f, :my_district_f, {:last_login => :date}], 
-               :facets => [:public_actions, :public_tracking, :my_bills_supported, :my_bills_opposed, 
-                           :my_committees_tracked, :my_bills_tracked, :my_people_tracked, :my_issues_tracked,
-                           :my_approved_reps, :my_approved_sens, :my_disapproved_reps, 
-                           :my_disapproved_sens, :my_state_f, :my_district_f], :auto_commit => false
+  # acts_as_solr :fields => [:placeholder, {:definitive_district => :integer},:public_actions,:my_committees_tracked, :my_bills_supported, 
+  #                          :my_people_tracked, :my_bills_opposed, :login, :username, :full_name, :email,
+  #                          :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens,
+  #                          {:my_state => :string}, {:my_district => :string}, 
+  #                          {:total_number_of_actions => :range_integer}, :my_bills_tracked, :public_tracking, 
+  #                          :my_issues_tracked, :my_state_f, :my_district_f, {:last_login => :date}], 
+  #              :facets => [:public_actions, :public_tracking, :my_bills_supported, :my_bills_opposed, 
+  #                          :my_committees_tracked, :my_bills_tracked, :my_people_tracked, :my_issues_tracked,
+  #                          :my_approved_reps, :my_approved_sens, :my_disapproved_reps, 
+  #                          :my_disapproved_sens, :my_state_f, :my_district_f], :auto_commit => false
 
   apply_simple_captcha
   

@@ -918,6 +918,9 @@ class Person < ActiveRecord::Base
   # Returns the number of people tracking this bill, as well as suggestions of what other people
   # tracking this bill are also tracking.
   def tracking_suggestions
+    # temporarily removing solr for now - June 2012
+    return [0, {}]
+    
     facet_results_hsh = {:my_people_tracked_facet => [], :my_issues_tracked_facet => [], :my_bills_tracked_facet => []}
     my_trackers = 0
 
@@ -969,6 +972,9 @@ class Person < ActiveRecord::Base
   end
 
   def support_suggestions
+    # temporarily removing solr for now - June 2012
+    return [0, {}]
+    
     primary = "my_approved_reps_facet" if self.title == "Rep."
     primary = "my_approved_sens_facet" if self.title == "Sen."
         
@@ -989,6 +995,9 @@ class Person < ActiveRecord::Base
   end
   
   def oppose_suggestions
+    # temporarily removing solr for now - June 2012
+    return [0, {}]
+    
     primary = "my_disapproved_reps_facet" if self.roles.first.role_type == "rep"
     primary = "my_disapproved_sens_facet" if self.roles.first.role_type == "sen"
  
@@ -1363,6 +1372,7 @@ class Person < ActiveRecord::Base
   end
 
   def users_tracking_from_state_count(state)
+    return 0;
     User.count_by_solr("my_state:\"#{state}\"", :facets => {:browse => ["public_tracking:true", "my_state_f:\"#{state}\"", "my_people_tracked:#{self.id}"]})
   end
   

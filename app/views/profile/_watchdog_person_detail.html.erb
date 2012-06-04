@@ -11,9 +11,10 @@
   	  </div>
 
   <h3><%= link_to s.title_full_name_party_state, :controller => 'people', :action => :show, :id => s %></h3>
-  There <%= pluralize_nn(s.users_tracking_from_state_count(@my_state.abbreviation), "is", "are") %> 
-  <%= pluralize(s.users_tracking_from_state_count(@my_state.abbreviation), "OpenCongress user", "OpenCongress users") %> in 
-  <%= @my_state.abbreviation %> tracking <%= s.full_name %>.<br/>
+  <% users_in_state = User.count_by_sql(['select count(distinct users.id) from users where state_cache like ?;', "%#{@my_state.abbreviation}%"]) %>
+  There <%= pluralize_nn(users_in_state, "is", "are") %> 
+  <%= pluralize(users_in_state, "OpenCongress user", "OpenCongress users") %> in 
+  <%= @my_state.abbreviation %> on OpenCongress.<br/>
   <% unless s.average_approval_from_state(@my_state.abbreviation).nil? %>
   The average approval rating by OpenCongress users in <%= @my_state.abbreviation %> of <%= s.short_name %> is approximately <%= s.average_approval_from_state(@my_state.abbreviation) %>%
 	<% else %>
@@ -26,7 +27,7 @@
     <% if @user.friends.count > 0 %>
       My Friends: <%= s.comments.uncensored.find_all_by_user_id(@user.friends.collect{|p| p.friend_id}).length %> <%= toggler("#{s.id}-my_friends", "(show)", "(hide)") unless s.comments.uncensored.find_all_by_user_id(@user.friends.collect{|p| p.friend_id}).length == 0 %> |
     <% end %>
-    OC Users' in <%= @my_state.abbreviation %>:  <%= s.comments_from_state_count(@my_state.abbreviation) %> |
+    <!-- OC Users' in <%= @my_state.abbreviation %>:  <%# s.comments_from_state_count(@my_state.abbreviation) %> | -->
     <%= toggler("#{s.id}-most_useful", "Show Most Useful", "Hide Most Useful") %>
 
     <br/>

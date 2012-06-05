@@ -84,7 +84,7 @@ gem 'will_paginate', '~> 3.0.pre2'
 gem "validates_captcha"
 gem "okkez-open_id_authentication"
 
-gem "acts-as-taggable-on", :git => 'https://github.com/mbleigh/acts-as-taggable-on.git'
+gem "acts-as-taggable-on", :git => 'git://github.com/mbleigh/acts-as-taggable-on.git'
 
 gem 'mechanize'
 #gem 'formageddon', '0.0.0', :require => 'formageddon', :path => '/Users/aross/Sites/formageddon'

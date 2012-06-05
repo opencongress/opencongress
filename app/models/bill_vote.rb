@@ -7,6 +7,7 @@ class BillVote < ActiveRecord::Base
   
   private
   def save_associated_user
-    self.user.solr_save
+    # removed solr stuff for now -- June 2012
+    #self.user.solr_save
   end
 end

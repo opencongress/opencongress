@@ -129,7 +129,7 @@ GEM
       nokogiri (>= 1.4.4)
       ruby-hmac
     formatador (0.1.4)
-    gherkin (2.1.5)
+    gherkin (2.1.4)
       trollop (~> 1.16.2)
     govkit (0.7.2)
       activesupport

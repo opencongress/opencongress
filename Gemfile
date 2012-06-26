@@ -96,7 +96,7 @@ group :test, :development do
   gem 'silent-postgres'	# Quieter postgres log messages
 
   gem 'rspec-rails', '~> 2.4'
-  gem 'cucumber', '0.8.5'
+  gem 'cucumber'
   gem 'cucumber-rails'
   gem 'webrat'
   gem 'selenium-client'

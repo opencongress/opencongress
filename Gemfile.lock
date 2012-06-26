@@ -27,7 +27,7 @@ GEM
       Platform (>= 0.4.0)
       open4
     Platform (0.4.0)
-    RedCloth (4.2.7)
+    RedCloth (4.2.9)
     ZenTest (4.5.0)
     abstract (1.0.0)
     actionmailer (3.0.7)

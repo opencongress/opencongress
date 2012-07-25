@@ -151,7 +151,7 @@ class User < ActiveRecord::Base
   has_one :watch_dog
   has_many :user_warnings
   
-  has_one :political_notebook
+  has_one :political_notebook, :dependent => :destroy
   has_many :notebook_items, :through => :political_notebook
 
   has_many :contact_congress_letters

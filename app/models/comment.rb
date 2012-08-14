@@ -53,7 +53,11 @@ class Comment < ActiveRecord::Base
   end
   
   def force_spam_detection!
-    self._defender_before_create
+    _defender_before_create
+    
+    # if the sig is blank, an error occurred
+    return if self.defensio_sig.blank?
+    
     self.save
   end
   

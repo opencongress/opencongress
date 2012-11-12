@@ -35,6 +35,8 @@ class Admin::ArticlesController < Admin::IndexController
         expire_page :controller => 'index'
         expire_page :controller => 'articles', :action => 'view', :id => @article
         
+        expire_fragment 'recent_oc_blog_articles'
+        
         flash[:notice] = 'Article was successfully created.'
         redirect_to :action => 'list'
       else
@@ -65,6 +67,7 @@ class Admin::ArticlesController < Admin::IndexController
         expire_page :controller => 'articles'
         expire_page :controller => 'index'
         expire_page :controller => 'articles', :action => 'view', :id => @article
+        expire_fragment 'recent_oc_blog_articles'
         
         flash[:notice] = 'Article was successfully updated.'
         redirect_to :action => 'show', :id => @article

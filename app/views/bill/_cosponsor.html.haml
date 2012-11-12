@@ -1,0 +1,9 @@
+%li
+  = link_to "<span class='small#{' withdrawn' unless cosponsor.date_withdrawn.blank?}'>#{cosponsor.person.name}</span>".html_safe, :controller => 'people', :action => 'show', :id => cosponsor.person
+  
+  - unless cosponsor.date_added.blank?
+    %br
+    %span.small= "Added #{cosponsor.date_added.strftime('%B %d, %Y')}"
+  - unless cosponsor.date_withdrawn.blank?
+    %br
+    %span.small= "Withdrawn #{cosponsor.date_withdrawn.strftime('%B %d, %Y')}" 

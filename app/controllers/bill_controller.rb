@@ -400,13 +400,15 @@ class BillController < ApplicationController
       format.html {
         comment_redirect(params[:goto_comment]) and return if params[:goto_comment]
 
+        @related_articles = @bill.related_articles
+        
         @include_vids_styles = true
         
         @tracking_suggestions = @bill.tracking_suggestions
         @supporting_suggestions = @bill.support_suggestions
         @opposing_suggestions = @bill.oppose_suggestions
         
-        @latest_letters = @bill.contact_congress_letters.includes(:formageddon_threads).where("formageddon_threads.privacy='PUBLIC'").order("contact_congress_letters.created_at DESC").limit(3)
+        @latest_letters = @bill.contact_congress_letters.where("contact_congress_letters.is_public='t'").order("contact_congress_letters.created_at DESC").limit(3)
  
         # create roll call variable to include chart JS
         @roll_call = @bill.roll_calls.empty? ? nil : @bill.roll_calls.first

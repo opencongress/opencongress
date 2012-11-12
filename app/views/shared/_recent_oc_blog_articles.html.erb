@@ -1,15 +1,16 @@
 <div class="sidebar_recent_articles">
   <h4>Recent OC Blog Articles</h4>
   <ul>
-    <% Article.find(:all, :conditions => 'published_flag = true', 
-                    :include => :user, :order => 'created_at DESC', :limit => 5).each do |article| %>
-      <li>
-        <a href="<%= url_for :controller => 'articles', :action => 'view', :id => article %>">
-          <span class='title'><%= article.title %></span>
-          <span class='date'><%= article.created_at.strftime("%b %d, %Y") %></span>
-        </a>
+    <% cache("recent_oc_blog_articles") do %>
+      <% Article.where('published_flag = true').order('created_at DESC').limit(5).each do |article| %>
+        <li>
+          <a href="<%= url_for :controller => 'articles', :action => 'view', :id => article %>">
+            <span class='title'><%= article.title %></span>
+            <span class='date'><%= article.created_at.strftime("%b %d, %Y") %></span>
+          </a>
 
-      </li>
+        </li>
+      <% end %>
     <% end %>
   </ul>
 </div>

@@ -1,12 +1,11 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.7'
+gem 'rails', '3.0.17'
 gem 'rake', '0.8.7'
 
 # database gems -- need both pg and mysql for app and wiki
 gem 'pg'
 gem 'mysql'
-gem 'system_timer'
 
 gem "settingslogic"
 
@@ -51,7 +50,6 @@ gem 'rack-openid'
 gem 'rack-contrib'
 
 # memcache
-gem 'memcache'
 gem 'memcache-client'
 
 # markup tools and parsers

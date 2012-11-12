@@ -1,10 +1,8 @@
-<% articles = @bill.related_articles %>
-
-<% unless articles.empty? %>
+<% unless @related_articles.empty? %>
   <div class="sidebar_recent_articles">
     <h4>OC Blog Articles Related To This Bill</h4>
     <ul>
-      <% articles.each do |article| %>
+      <% @related_articles.each do |article| %>
         <li>
           <a href="<%= url_for :controller => 'articles', :action => 'view', :id => article %>">
             <span class='title'><%= article.title %></span>

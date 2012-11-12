@@ -1764,18 +1764,19 @@ display: block;
 
 #bill.show .related_bills_list {
 margin: 20px 0 0 35px;
-width: 380px;
+width: 520px !important;
 clear: both;
 }
 
 #bill.show .related_bills_list li {
 margin: 0;
-width: 300px !important;
+width: 520px !important;
+float: left;
 }
 
 #bill.show .related_bills_list li a {
 margin: 0;
-width: 300px !important;
+width: 480px !important;
 }
 
 #bill.show .related_issues_list {

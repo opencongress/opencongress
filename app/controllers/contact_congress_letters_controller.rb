@@ -213,6 +213,7 @@ class ContactCongressLettersController < ApplicationController
             end
           end
         end
+        @contact_congress_letter.is_public = (@contact_congress_letter.formageddon_threads.first.privacy == 'PUBLIC')
         @contact_congress_letter.save
       else
         @new_user_notice = false
@@ -262,6 +263,7 @@ class ContactCongressLettersController < ApplicationController
           
           t.save
         end
+        @contact_congress_letter.is_public = (params[:privacy] == 'PUBLIC')
       end
       
       @contact_congress_letter.save

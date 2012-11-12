@@ -158,11 +158,11 @@
       
 		<br />                      
 
-
+  <% if false %>
 	<div class="news_blogs">
 		<div class="col1">      
 
-			<% cache ("#{@bill.fragment_cache_key}_news_preview") do %>
+			<% cache("#{@bill.fragment_cache_key}_news_preview") do %>
 			  <!-- cached: <%= "#{@bill.fragment_cache_key}_news_preview" %> // <%= Time.now %> -->
 			  <a class="feed" href="<%= url_for :action => 'atom_news', :id => @bill.ident %>">FEED</a>
 			  <h2 class="short">Recent News Coverage</h2>
@@ -180,7 +180,7 @@
 		</div> <!-- // col1 -->
 
 		<div class="col2">
-			<% cache ("#{@bill.fragment_cache_key}_blog_preview") do %>
+			<% cache("#{@bill.fragment_cache_key}_blog_preview") do %>
 			  <!-- cached: <%= "#{@bill.fragment_cache_key}_blog_preview" %> // <%= Time.now %> -->
 			  <a class="feed" href="<%= url_for :action => 'atom_blogs', :id => @bill.ident %>">FEED</a>
 			  <h2 class="short">Recent Blog Coverage</h2>
@@ -197,13 +197,16 @@
 			<% end %>
 
 		</div>  <!-- // col2 -->
-	</div>            
+	</div>       
+	<% end %>     
 
   <br class="clear" />
   
   <% if @latest_letters.any? %>
     <h3 class="margin-left push-left margin-top push-top">Latest Letters to Congress</h3>
-    <%= render 'letters', :letters => @latest_letters %>
+    <ul class='most_viewed_letters'>
+      <%= render :partial => 'letter', :collection => @latest_letters %>
+    </ul>
     <a href="<%= url_for :controller => 'bill', :action => 'letters', :id => @bill.ident %>" class="button silver small floatleft margin-left push-left">See All Letters (<%= @bill.contact_congress_letters.size %>)</a>
     <div class="clear">&nbsp;</div>
   <% end %>
@@ -211,49 +214,51 @@
 
 
 
+  <!-- users also tracking has been removed
+    <div class="users_also" id="users_tracking">
+    <br/>
+    <br/>
 
-<div class="users_also" id="users_tracking">
-  		  <br/>
-		  <br/>
 
-
-<% unless @tracking_suggestions[0] == 0 %>
+    <% unless @tracking_suggestions[0] == 0 %>
     <%= render :partial => "shared/tracking_suggestions_table",
-               :locals => {:object => @bill,
-                           :title => @bill.typenumber,
-                           :action => 'tracking_bill',
-                           :tracking_suggestions => @tracking_suggestions} %>
+    :locals => {:object => @bill,
+      :title => @bill.typenumber,
+      :action => 'tracking_bill',
+      :tracking_suggestions => @tracking_suggestions} %>
 
-  <% end %>
+    <% end %>
 
-		  <br/>
-
-
-			<% unless @supporting_suggestions[0] == 0 %>
-		    <%= render :partial => "shared/support_oppose_tables",
-		              :locals => {:object => @bill,
-		                          :title => @bill.typenumber,
-		                          :action => 'supporting_bill',
-		                          :stance => "supporting",
-		                          :tracking_suggestions => @supporting_suggestions} %>
-		  <% end %>
-		  <br/>		  <br/>		  <br/>
+    <br/>
 
 
-		  <% unless @opposing_suggestions[0] == 0 %>
-		    <%= render :partial => "shared/support_oppose_tables",
-		              :locals => {:object => @bill,
-		                          :title => @bill.typenumber,
-		                          :action => 'opposing_bill',
-		                          :stance => "opposing",
-		                          :tracking_suggestions => @opposing_suggestions} %>
+    <% unless @supporting_suggestions[0] == 0 %>
+    <%= render :partial => "shared/support_oppose_tables",
+    :locals => {:object => @bill,
+      :title => @bill.typenumber,
+      :action => 'supporting_bill',
+      :stance => "supporting",
+      :tracking_suggestions => @supporting_suggestions} %>
+      <% end %>
+      <br/>		  <br/>		  <br/>
 
-		  <% end %>			
 
-			
-</div>
-		  <br/>
-		  <br/>
+    <% unless @opposing_suggestions[0] == 0 %>
+    <%= render :partial => "shared/support_oppose_tables",
+    :locals => {:object => @bill,
+      :title => @bill.typenumber,
+      :action => 'opposing_bill',
+      :stance => "opposing",
+      :tracking_suggestions => @opposing_suggestions} %>
+
+    <% end %>			
+
+
+    </div>
+  -->
+  
+  <br/>
+  <br/>
 
 
 	<% unless @bill.related_bills.empty? %>

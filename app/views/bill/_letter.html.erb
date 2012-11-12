@@ -1,0 +1,11 @@
+<li class='<%= letter.disposition %>'>
+  <a href="<%= contact_congress_letter_path(letter) %>">
+    <span class='subject'><%= letter.subject %></span>
+    <% if letter.user %>
+      <span class='user'><%= letter.user.login %></span>
+    <% end %>
+    <span class='date'><%= letter.created_at.strftime('%B %d, %Y')%></span>
+  
+    <p><%= truncate(letter.message, :length => 500).gsub(/\n/, "<br />").html_safe %></p>
+  </a>
+</li>

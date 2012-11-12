@@ -36,17 +36,17 @@
       
       
       <div class="pies clear">
-        <%= roll_call_sublists_by_vote_type('+', vote).html_safe %>
+        <%#= roll_call_sublists_by_vote_type('+', vote).html_safe %>
         <div class="pie-chart" id='roll_call_Aye_chart_<%= vote.id %>'>
           <%= ofc2(165,120, "roll_call/partyvote_piechart_data/#{vote.id}?breakdown_type=#{CGI.escape("+")}&disclaimer_off=true&radius=40").html_safe %>
         </div>
         
-        <% roll_call_sublists_by_vote_type('-', vote).html_safe %>
+        <%# roll_call_sublists_by_vote_type('-', vote).html_safe %>
         <div class="pie-chart" id='roll_call_Nay_chart_<%= vote.id %>'>
           <%= ofc2(165,120, "roll_call/partyvote_piechart_data/#{vote.id}?breakdown_type=-&disclaimer_off=true&radius=40").html_safe %>
         </div>
         
-        <%= roll_call_sublists_by_vote_type('0', vote).html_safe %>
+        <%#= roll_call_sublists_by_vote_type('0', vote).html_safe %>
         <div class="pie-chart last" id='roll_call_Abstain_chart_<%= vote.id %>'>
           <%= ofc2(165,120, "roll_call/partyvote_piechart_data/#{vote.id}?breakdown_type=0&disclaimer_off=true&radius=40").html_safe %>
         </div>

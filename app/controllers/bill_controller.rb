@@ -4,7 +4,8 @@ class BillController < ApplicationController
   helper :roll_call
 	before_filter :page_view, :only => [:show, :text]
   before_filter :get_params, :only => [:index, :all, :popular, :pending, :hot, :most_commentary, :readthebill]
-  before_filter :bill_profile_shared, :only => [:show, :comments, :money, :votes, :actions, :amendments, :text, :actions_votes, :news_blogs, :videos, :news, :blogs, :news_blogs, :topnews, :topblogs, :letters]
+  #before_filter :bill_profile_shared, :only => [:show, :comments, :money, :votes, :actions, :amendments, :text, :actions_votes, :news_blogs, :videos, :news, :blogs, :news_blogs, :topnews, :topblogs, :letters]
+  before_filter :bill_profile_shared, :only => [:show, :comments, :money, :votes, :actions, :amendments, :text, :actions_votes, :videos, :topnews, :topblogs, :letters]
   before_filter :aavtabs, :only => [:actions, :amendments, :votes, :actions_votes]
   before_filter :get_range, :only => [:hot]
   skip_before_filter :store_location, :only => [:bill_vote, :status_text, :user_stats_ajax, :atom, :atom_blogs, :atom_news, :atom_top20, :atom_top_commentary, :atom_topblogs, :atom_topnews]
@@ -544,6 +545,10 @@ class BillController < ApplicationController
   end
   
   def news_blogs
+    flash[:notice] = "News and blog archives have been temporarily disabled."
+    redirect_to :action => 'show', :id => params[:id]
+    return
+    
     if params[:sort] == 'toprated'
       @sort = 'toprated'
     elsif params[:sort] == 'oldest'
@@ -567,6 +572,10 @@ class BillController < ApplicationController
   end
 
   def blogs
+    flash[:notice] = "News and blog archives have been temporarily disabled."
+    redirect_to :action => 'show', :id => params[:id]
+    return
+    
     if params[:sort] == 'toprated'
       @sort = 'toprated'
     elsif params[:sort] == 'oldest'
@@ -612,6 +621,10 @@ class BillController < ApplicationController
   end
 
   def news
+    flash[:notice] = "News and blog archives have been temporarily disabled."
+    redirect_to :action => 'show', :id => params[:id]
+    return
+    
     if params[:sort] == 'toprated'
       @sort = 'toprated'
     elsif params[:sort] == 'oldest'

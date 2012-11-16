@@ -3,7 +3,8 @@ class PeopleController < ApplicationController
   
   verify :method => :post, :only => [:most_viewed_text_update]
   before_filter :page_view, :only => :show
-  before_filter :person_profile_shared, :only => [:show, :comments, :bills, :voting_history, :money, :news_blogs, :videos, :news, :blogs]
+  #before_filter :person_profile_shared, :only => [:show, :comments, :bills, :voting_history, :money, :news_blogs, :videos, :news, :blogs]
+  before_filter :person_profile_shared, :only => [:show, :comments, :bills, :voting_history, :money, :videos]
   skip_before_filter :store_location, :only => [:rate,:atom_top_commentary,:atom_news,:atom_blogs,:atom_topnews,:atom_topblogs,:atom_featured,:atom,:atom_top20]
 
   
@@ -316,6 +317,10 @@ class PeopleController < ApplicationController
   end
  
   def news
+    flash[:notice] = "News and blog archives have been temporarily disabled."
+    redirect_to :action => 'show', :id => params[:id]
+    return
+    
     @person = Person.find(params[:id])
     @page = params[:page]
     @page = "1" unless @page
@@ -350,6 +355,10 @@ class PeopleController < ApplicationController
   end
 
   def blogs
+    flash[:notice] = "News and blog archives have been temporarily disabled."
+    redirect_to :action => 'show', :id => params[:id]
+    return
+    
     @person = Person.find(params[:id])
     @page = params[:page]
     @page = "1" unless @page
@@ -385,6 +394,10 @@ class PeopleController < ApplicationController
 
 
   def news_blogs
+    flash[:notice] = "News and blog archives have been temporarily disabled."
+    redirect_to :action => 'show', :id => params[:id]
+    return
+    
     if params[:sort] == 'toprated'
       @sort = 'toprated'
     elsif params[:sort] == 'oldest'

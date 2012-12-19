@@ -19,8 +19,12 @@
             = link_to_person(t.formageddon_recipient)
 
         .grid_6
-          = l.bill.typenumber
-          = l.bill.title_common
+          - if l.contactable_type == 'Bill'
+            = l.contactable.typenumber
+            = l.contactable.title_common
+          - elsif l.contactable_type == 'Subject'
+            = l.contactable.term
+  
         .grid_2= l.formageddon_threads.first.privacy
         - if l.privacy == "PUBLIC" or (current_user != :false and current_user == l.user)
           .grid_1= link_to "View", contact_congress_letter_path(l), :class => 'button silver small'

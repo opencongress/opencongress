@@ -11,7 +11,8 @@ class RollCallController < ApplicationController
   @@PIE_OPTIONS = {
     :start_angle => 270,
     :no_labels => true,
-    :tip => "#label#\n(Click for Details)",
+    # :tip => "#label#\n(Click for Details)",
+    :tip => "#label#",
     :gradient_fill => false
   }
 
@@ -77,17 +78,18 @@ class RollCallController < ApplicationController
     colors = []
 
     if republican_votes.size > 0
-      vals << OFC2::PieValue.new(:value => republican_votes.size, :label => "Republican (#{republican_votes.size})", :on_click => "openRollCallOverlay('Republican_#{@@VOTE_TYPES[params[:breakdown_type]]}')")
+#      vals << OFC2::PieValue.new(:value => republican_votes.size, :label => "Republican (#{republican_votes.size})", :on_click => "openRollCallOverlay('Republican_#{@@VOTE_TYPES[params[:breakdown_type]]}')")
+      vals << OFC2::PieValue.new(:value => republican_votes.size, :label => "Republican (#{republican_votes.size})", :on_click => "alert('boom!');")
       colors << "#F84835"
     end
 
     if democrat_votes.size > 0
-      vals << OFC2::PieValue.new(:value => democrat_votes.size, :label => "Democrat (#{democrat_votes.size})", :on_click => "openRollCallOverlay('Democrat_#{@@VOTE_TYPES[params[:breakdown_type]]}')")
+      vals << OFC2::PieValue.new(:value => democrat_votes.size, :label => "Democrat (#{democrat_votes.size})", :on_click => "window.location.href='/roll_call/sublist/#{@roll_call.id}?party=Democrat&vote=#{@@VOTE_TYPES[params[:breakdown_type]]}'")
       colors << "#5D77DA"
     end
 
     if other_votes_size > 0
-      vals << OFC2::PieValue.new(:value => other_votes_size, :label =>"Other (#{other_votes_size})", :on_click => "openRollCallOverlay('Other_#{@@VOTE_TYPES[params[:breakdown_type]]}')")
+      vals << OFC2::PieValue.new(:value => other_votes_size, :label =>"Other (#{other_votes_size})", :on_click => "window.location.href='/roll_call/sublist/#{@roll_call.id}?party=Other&vote=#{@@VOTE_TYPES[params[:breakdown_type]]}'")
       colors << "#DDDDDD"
     end
 
@@ -170,7 +172,7 @@ class RollCallController < ApplicationController
 
   def all
     @page = params[:page].blank? ? 1 : params[:page]
-    #logger.debug "IIIIIIIIII #{Settings.inspect}"
+
     if params[:sort] == 'hotbills'
       @sort = 'hotbills'
       @rolls = RollCall.find(:all, :include => [:bill, :amendment], :order => 'roll_calls.date DESC',

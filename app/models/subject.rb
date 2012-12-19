@@ -213,7 +213,9 @@ class Subject < ActiveRecord::Base
   # Returns the number of people tracking this bill, as well as suggestions of what other people
   # tracking this bill are also tracking.
   def tracking_suggestions
-
+    # temporarily removing solr for now - June 2012
+    return [0, {}]
+    
     facet_results_hsh = {:my_people_tracked_facet => [], :my_issues_tracked_facet => [], :my_bills_tracked_facet => []}
     my_trackers = 0
     

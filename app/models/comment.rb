@@ -52,6 +52,15 @@ class Comment < ActiveRecord::Base
     (spam == true) and !defensio_sig.blank?
   end
   
+  def force_spam_detection!
+    _defender_before_create
+    
+    # if the sig is blank, an error occurred
+    return if self.defensio_sig.blank?
+    
+    self.save
+  end
+  
   def score_count_sum
     plus_score_count.to_i - minus_score_count.to_i
   end

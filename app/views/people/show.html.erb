@@ -19,7 +19,7 @@
   <% end %>
 
 	<div id="bill_and_status_list">
-		<% sponsored_bills = @person.bills.find(:all, :limit => 3) %>
+		<% sponsored_bills = @person.bills.limit(3) %>
 		<% if sponsored_bills.any? %>
 			<h2>Most Recent Sponsored Bills</h2>
 			<%= render(:partial => 'bill/related_bills_list', :locals => { :related_bills_list => sponsored_bills })%>
@@ -29,7 +29,7 @@
 				<div class="clear">&nbsp;</div>
 		<% end %>
 		
-		<% cosponsored_bills = @person.bills_cosponsored.find(:all, :limit => 3) %>
+		<% cosponsored_bills = @person.bills_cosponsored.limit(3) %>
 		<% if cosponsored_bills.any? %>
 			<h2>Most Recent Co-Sponsored Bills</h2>
 			<%= render(:partial => 'bill/related_bills_list', :locals => { :related_bills_list => cosponsored_bills })%>
@@ -62,22 +62,22 @@
 </div>
 <% end %>
 
-  <div class="news_blogs">
-    <div class="col1">      
+  <% if false %>
+    <div class="news_blogs">
+      <div class="col1">      
+        <% cache("#{@person.fragment_cache_key}_news_preview") do %>
+        <!-- cached: <%= "#{@person.fragment_cache_key}_news_preview" %> // <%= Time.now %> -->
+        <a class="feed" href="<%= url_for :action => 'atom_news', :id => @person %>">FEED</a>
+        <h2 class="short">Recent News Coverage</h5>
+        <div id="news_list">
+          <a name="news"></a>
 
-      <% cache("#{@person.fragment_cache_key}_news_preview") do %>
-      <!-- cached: <%= "#{@person.fragment_cache_key}_news_preview" %> // <%= Time.now %> -->
-      <a class="feed" href="<%= url_for :action => 'atom_news', :id => @person %>">FEED</a>
-      <h2 class="short">Recent News Coverage</h5>
-      <div id="news_list">
-        <a name="news"></a>
-
-        <%=
-        render :partial => 'shared/news', :object => @person.news.find(:all, :limit => 3),
-        :locals => { :limit => 3, :all_size => @person.news_article_count, :default_title => @person.popular_name,
-          :more_url => { :controller => 'people', :action => 'news', :id => @person },
-          :top_url => { :controller => 'people', :action => 'news', :id => @person, :sort => 'toprated' } }
-          %>
+          <%=
+          render :partial => 'shared/news', :object => @person.news.find(:all, :limit => 3),
+          :locals => { :limit => 3, :all_size => @person.news_article_count, :default_title => @person.popular_name,
+            :more_url => { :controller => 'people', :action => 'news', :id => @person },
+            :top_url => { :controller => 'people', :action => 'news', :id => @person, :sort => 'toprated' } }
+            %>
 
         </div>
         <% end %>
@@ -103,41 +103,46 @@
 
         </div>  <!-- // col2 -->
       </div>
+    <% end %>
+      
+      
+  <!-- removed tracking suggestions
+    <div class="user_stats_div">
 
-<div class="user_stats_div">
+      <% unless @person_tracking_suggestions[0] == 0 %>
+        <%= render :partial => "shared/tracking_suggestions_table", 
+                   :locals => {:object => @person, 
+                               :title => @person.full_name, 
+                               :action => 'tracking_person', 
+                               :tracking_suggestions => @person_tracking_suggestions} %>
 
-  <% unless @person_tracking_suggestions[0] == 0 %>
-    <%= render :partial => "shared/tracking_suggestions_table", 
-               :locals => {:object => @person, 
-                           :title => @person.full_name, 
-                           :action => 'tracking_person', 
-                           :tracking_suggestions => @person_tracking_suggestions} %>
-
-  <% end %>
+      <% end %>
   
-	<% unless @supporting_suggestions[0] == 0 %>
-    <%= render :partial => "shared/support_oppose_tables",
-              :locals => {:object => @person,
-                          :title => @person.full_name,
-                          :action => 'supporting_person',
-                          :stance => "supporting",
-                          :tracking_suggestions => @supporting_suggestions} %>
-  <% end %>
+    	<% unless @supporting_suggestions[0] == 0 %>
+        <%= render :partial => "shared/support_oppose_tables",
+                  :locals => {:object => @person,
+                              :title => @person.full_name,
+                              :action => 'supporting_person',
+                              :stance => "supporting",
+                              :tracking_suggestions => @supporting_suggestions} %>
+      <% end %>
 
-  <% unless @opposing_suggestions[0] == 0 %>
-    <%= render :partial => "shared/support_oppose_tables",
-              :locals => {:object => @person,
-                          :title => @person.full_name,
-                          :action => 'opposing_person',
-                          :stance => "opposing",
-                          :tracking_suggestions => @opposing_suggestions} %>
+      <% unless @opposing_suggestions[0] == 0 %>
+        <%= render :partial => "shared/support_oppose_tables",
+                  :locals => {:object => @person,
+                              :title => @person.full_name,
+                              :action => 'opposing_person',
+                              :stance => "opposing",
+                              :tracking_suggestions => @opposing_suggestions} %>
   
-  <% end %>
+      <% end %>
 
-<% end %>
+    <% end %>
 
-</div>
-
+    </div>
+  removed tracking suggestions -->
+  
+  
 <% unless @person.videos.empty? %>  
   <div id="person_video" class="cols-box clearfix">
     <h2 class="darkline clear">Videos of <%= @person.popular_name %></h2>

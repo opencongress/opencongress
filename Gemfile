@@ -1,12 +1,11 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.7'
+gem 'rails', '3.0.17'
 gem 'rake', '0.8.7'
 
 # database gems -- need both pg and mysql for app and wiki
 gem 'pg'
 gem 'mysql'
-gem 'system_timer'
 
 gem "settingslogic"
 
@@ -22,7 +21,7 @@ gem 'delayed_job', '~> 2.1'
 
 # RMagick
 gem 'rmagick', '2.13.1'
-gem 'simple_captcha', :git => 'git://github.com/galetahub/simple-captcha.git'
+gem 'galetahub-simple_captcha' #, :git => 'https://github.com/galetahub/simple-captcha.git'
 
 # Image uploads
 gem 'carrierwave'
@@ -51,7 +50,6 @@ gem 'rack-openid'
 gem 'rack-contrib'
 
 # memcache
-gem 'memcache'
 gem 'memcache-client'
 
 # markup tools and parsers
@@ -84,11 +82,11 @@ gem 'will_paginate', '~> 3.0.pre2'
 gem "validates_captcha"
 gem "okkez-open_id_authentication"
 
-gem "acts-as-taggable-on", :git => 'https://github.com/mbleigh/acts-as-taggable-on.git'
+gem "acts-as-taggable-on", :git => 'http://github.com/mbleigh/acts-as-taggable-on.git'
 
 gem 'mechanize'
 #gem 'formageddon', '0.0.0', :require => 'formageddon', :path => '/Users/aross/Sites/formageddon'
-gem 'formageddon', :git => 'git://github.com/opencongress/formageddon.git'
+gem 'formageddon', :git => 'http://github.com/opencongress/formageddon.git'
 
 
 group :test, :development do
@@ -96,7 +94,7 @@ group :test, :development do
   gem 'silent-postgres'	# Quieter postgres log messages
 
   gem 'rspec-rails', '~> 2.4'
-  gem 'cucumber', '0.8.5'
+  gem 'cucumber'
   gem 'cucumber-rails'
   gem 'webrat'
   gem 'selenium-client'

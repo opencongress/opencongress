@@ -4,6 +4,6 @@ class PrivacyOption < ActiveRecord::Base
   
   private
   def save_associated_user
-    self.user.solr_save
+    #self.user.solr_save
   end
 end

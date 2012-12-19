@@ -11,17 +11,11 @@ class Admin::UsersController < Admin::IndexController
          :redirect_to => { :action => :list }
 
   def list
-     offset = params[:page] ? (params[:page].to_i - 1) * 30 : 0
     @query = params[:q]
     unless params[:q].blank?
-      @solr_results = User.find_by_solr("#{@query} OR #{@query}~0.5", :limit => 30, :offset => offset)
+      @users = User.where(["users.login ILIKE ?", "%#{params[:q]}%"]).order('users.login ASC').paginate(:page => params[:page])
     else
-      @solr_results = User.find_by_solr("[* TO *]",  :limit => 30, :offset => offset)
-    end
-    @users = WillPaginate::Collection.create((params[:page] && params[:page].to_i > 0 ? params[:page] : 1), 30) do |pager|
-       result = @solr_results.docs #results_2
-       pager.replace(result)
-       pager.total_entries = @solr_results.total_hits
+      @users = User.order('users.login ASC').paginate(:page => params[:page])
     end
 	end
 

@@ -35,15 +35,22 @@ class ContactCongressLettersController < ApplicationController
     
     
     if @bill
-      @position = params[:position]
-  
-      case @position
-      when 'support'
-        message_start = "I support #{@bill.typenumber} - #{@bill.title_common}, and am tracking it using OpenCongress.org, the free public resource website for government transparency and accountability."      
-      when 'oppose'
-        message_start = "I oppose #{@bill.typenumber} - #{@bill.title_common}, and am tracking it using OpenCongress.org, the free public resource website for government transparency and accountability."      
+      if @bill.talking_points.where("talking_points.include_in_message_body='t'").any?
+        message_start = ""
+        @bill.talking_points.where("talking_points.include_in_message_body='t'").order("talking_points.created_at ASC").each do |tp|
+          message_start += "#{tp.talking_point}\n\n"
+        end
       else
-        message_start = "I'm tracking #{@bill.typenumber} - #{@bill.title_common} using OpenCongress.org, the free public resource website for government transparency and accountability."
+        @position = params[:position]
+  
+        case @position
+        when 'support'
+          message_start = "I support #{@bill.typenumber} - #{@bill.title_common}, and am tracking it using OpenCongress.org, the free public resource website for government transparency and accountability."      
+        when 'oppose'
+          message_start = "I oppose #{@bill.typenumber} - #{@bill.title_common}, and am tracking it using OpenCongress.org, the free public resource website for government transparency and accountability."      
+        else
+          message_start = "I'm tracking #{@bill.typenumber} - #{@bill.title_common} using OpenCongress.org, the free public resource website for government transparency and accountability."
+        end
       end
       
       @subject = "#{@bill.typenumber} #{@bill.title_common}"
@@ -206,6 +213,7 @@ class ContactCongressLettersController < ApplicationController
             end
           end
         end
+        @contact_congress_letter.is_public = (@contact_congress_letter.formageddon_threads.first.privacy == 'PUBLIC')
         @contact_congress_letter.save
       else
         @new_user_notice = false
@@ -255,6 +263,7 @@ class ContactCongressLettersController < ApplicationController
           
           t.save
         end
+        @contact_congress_letter.is_public = (params[:privacy] == 'PUBLIC')
       end
       
       @contact_congress_letter.save

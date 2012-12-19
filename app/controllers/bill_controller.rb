@@ -4,7 +4,8 @@ class BillController < ApplicationController
   helper :roll_call
 	before_filter :page_view, :only => [:show, :text]
   before_filter :get_params, :only => [:index, :all, :popular, :pending, :hot, :most_commentary, :readthebill]
-  before_filter :bill_profile_shared, :only => [:show, :comments, :money, :votes, :actions, :amendments, :text, :actions_votes, :news_blogs, :videos, :news, :blogs, :news_blogs, :topnews, :topblogs, :letters]
+  #before_filter :bill_profile_shared, :only => [:show, :comments, :money, :votes, :actions, :amendments, :text, :actions_votes, :news_blogs, :videos, :news, :blogs, :news_blogs, :topnews, :topblogs, :letters]
+  before_filter :bill_profile_shared, :only => [:show, :comments, :money, :votes, :actions, :amendments, :text, :actions_votes, :videos, :topnews, :topblogs, :letters]
   before_filter :aavtabs, :only => [:actions, :amendments, :votes, :actions_votes]
   before_filter :get_range, :only => [:hot]
   skip_before_filter :store_location, :only => [:bill_vote, :status_text, :user_stats_ajax, :atom, :atom_blogs, :atom_news, :atom_top20, :atom_top_commentary, :atom_topblogs, :atom_topnews]
@@ -399,14 +400,14 @@ class BillController < ApplicationController
     respond_to do |format|
       format.html {
         comment_redirect(params[:goto_comment]) and return if params[:goto_comment]
-
+        
         @include_vids_styles = true
         
         @tracking_suggestions = @bill.tracking_suggestions
         @supporting_suggestions = @bill.support_suggestions
         @opposing_suggestions = @bill.oppose_suggestions
         
-        @latest_letters = @bill.contact_congress_letters.includes(:formageddon_threads).where("formageddon_threads.privacy='PUBLIC'").order("contact_congress_letters.created_at DESC").limit(3)
+        @latest_letters = @bill.contact_congress_letters.where("contact_congress_letters.is_public='t'").order("contact_congress_letters.created_at DESC").limit(3)
  
         # create roll call variable to include chart JS
         @roll_call = @bill.roll_calls.empty? ? nil : @bill.roll_calls.first
@@ -544,6 +545,10 @@ class BillController < ApplicationController
   end
   
   def news_blogs
+    flash[:notice] = "News and blog archives have been temporarily disabled."
+    redirect_to :action => 'show', :id => params[:id]
+    return
+    
     if params[:sort] == 'toprated'
       @sort = 'toprated'
     elsif params[:sort] == 'oldest'
@@ -567,6 +572,10 @@ class BillController < ApplicationController
   end
 
   def blogs
+    flash[:notice] = "News and blog archives have been temporarily disabled."
+    redirect_to :action => 'show', :id => params[:id]
+    return
+    
     if params[:sort] == 'toprated'
       @sort = 'toprated'
     elsif params[:sort] == 'oldest'
@@ -612,6 +621,10 @@ class BillController < ApplicationController
   end
 
   def news
+    flash[:notice] = "News and blog archives have been temporarily disabled."
+    redirect_to :action => 'show', :id => params[:id]
+    return
+    
     if params[:sort] == 'toprated'
       @sort = 'toprated'
     elsif params[:sort] == 'oldest'
@@ -743,6 +756,7 @@ private
       end
       @meta_keywords = "Congress, #{@bill.sponsor.popular_name unless @bill.sponsor.nil?}, " + @bill.subjects.find(:all, :order => 'bill_count DESC', :limit => 5).collect{|s| s.term}.join(", ")
       @sidebar_stats_object = @user_object = @comments = @topic = @bill
+      @related_articles = @bill.related_articles
       @page = params[:page] || 1   
 
       if @bill.has_wiki_link?

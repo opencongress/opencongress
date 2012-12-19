@@ -351,7 +351,7 @@ class Admin::StatsController < Admin::IndexController
                                           :order => "date DESC")
     @newest_action = Action.find(:first, :include => :bill, :conditions => 'bills.number IS NOT NULL', :order => 'actions.date DESC')
  
-    @latest_roll_call_date_govtrack = RollCall.latest_roll_call_date_on_govtrack
+    @latest_roll_call_date_govtrack = "??" #RollCall.latest_roll_call_date_on_govtrack
     @latest_roll_call_oc = RollCall.find(:first, :order => 'date DESC')
     
     @latest_bill_text = BillTextVersion.find(:first, :conditions => 'file_timestamp IS NOT NULL', :order => 'file_timestamp DESC')

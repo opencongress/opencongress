@@ -35,19 +35,28 @@ class State < ActiveRecord::Base
   end
 
   def user_count
-    User.count_by_solr("my_state:\"#{abbreviation}\"")    
+    User.count_by_sql(['select count(distinct users.id) from users where state_cache like ?;', "%#{abbreviation}%"])
+
+    # User.count_by_solr("my_state:\"#{abbreviation}\"")    
   end
 
   
   def users
-    User.find_by_solr("my_state:\"#{abbreviation}\"", :facets => {:fields => [:public_actions, :public_tracking, :my_bills_supported, :my_bills_opposed, 
-                           :my_committees_tracked, :my_bills_tracked, :my_people_tracked, :my_issues_tracked,
-                           :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens], :limit => 10, :sort => true}, 
-                           #:browse => ["public_tracking:true", "public_actions:true"]}
-                            :order => "last_login desc")
+    User.find_by_sql(['select distinct users.id, users.login from users where state_cache like ?;', "%#{abbreviation}%"])
+    
+    
+    # User.find_by_solr("my_state:\"#{abbreviation}\"", :facets => {:fields => [:public_actions, :public_tracking, :my_bills_supported, :my_bills_opposed, 
+    #                        :my_committees_tracked, :my_bills_tracked, :my_people_tracked, :my_issues_tracked,
+    #                        :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens], :limit => 10, :sort => true}, 
+    #                        #:browse => ["public_tracking:true", "public_actions:true"]}
+    #                         :order => "last_login desc")
   end
   
   def tracking_suggestions
+    # temporarily removing solr for now - June 2012
+    return [0, {}]
+    
+    
     facets = self.users.facets
     my_trackers = 0
     facet_results_hsh = {:my_bills_supported_facet => [], 

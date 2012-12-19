@@ -203,6 +203,10 @@ class CommentsController < ApplicationController
         comment.false_negative!
         
         flash[:notice] = "Comment marked as spam; Defensio notified about false negative."
+      else 
+        comment.update_attribute(:censored, true)
+        
+        flash[:notice] = "Comment censored."        
       end
     end
     

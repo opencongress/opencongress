@@ -3,8 +3,8 @@ class Bill < ActiveRecord::Base
   
   require 'wiki_connection'
   
-  acts_as_solr :fields => [{:billtext_txt => :text},:bill_type,:session,{:title_short=>{:boost=>3}}, {:introduced => :integer}],
-               :facets => [:bill_type, :session], :auto_commit => false
+  # acts_as_solr :fields => [{:billtext_txt => :text},:bill_type,:session,{:title_short=>{:boost=>3}}, {:introduced => :integer}],
+  #              :facets => [:bill_type, :session], :auto_commit => false
 
   belongs_to :sponsor, :class_name => "Person", :foreign_key => :sponsor_id
   has_many :bill_titles  
@@ -243,6 +243,8 @@ class Bill < ActiveRecord::Base
   # Returns the number of people tracking this bill, as well as suggestions of what other people
   # tracking this bill are also tracking.
   def tracking_suggestions
+    # temporarily removing solr for now - June 2012
+    return [0, {}]
 
     facet_results_hsh = {:my_people_tracked_facet => [], :my_issues_tracked_facet => [], :my_bills_tracked_facet => []}
     my_trackers = 0
@@ -299,6 +301,9 @@ class Bill < ActiveRecord::Base
   end
   
   def support_suggestions
+    # temporarily removing solr for now - June 2012
+    return [0, {}]
+    
     begin
       users = User.find_by_solr('placeholder:placeholder',
         :facets => {:fields => [:my_bills_supported, :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens, :my_bills_opposed], 
@@ -316,6 +321,9 @@ class Bill < ActiveRecord::Base
   end
   
   def oppose_suggestions
+    # temporarily removing solr for now - June 2012
+    return [0, {}]
+    
     begin
       users = User.find_by_solr('placeholder:placeholder', :facets => {:fields => [:my_bills_supported, :my_approved_reps, :my_approved_sens, :my_disapproved_reps, :my_disapproved_sens, :my_bills_opposed], 
             :browse => ["my_bills_opposed:#{self.id}"], 

@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'o_c_logger'
+
 if __FILE__ == $0
   require File.dirname(__FILE__) + '/../config/environment'
 end
@@ -76,6 +78,10 @@ class CommitteeScheduleListener
   end
 end
 
-source = File.open(path)
-listener = CommitteeScheduleListener.new
-REXML::Document.parse_stream(source, listener)
+begin
+  source = File.open(path)
+  listener = CommitteeScheduleListener.new
+  REXML::Document.parse_stream(source, listener)
+rescue
+  OCLogger.log "Could not parse committee schedule at #{path}"
+end

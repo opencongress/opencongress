@@ -22,8 +22,13 @@ amendments.each do |amdt|
   filename = "#{PATH}/#{amdt.number}.xml"
   OCLogger.log "Parsing #{filename} (#{a_num} of #{amendments.size})"
   
-  file = File.open(filename)
-  doc = REXML::Document.new file
+  begin
+    file = File.open(filename)
+    doc = REXML::Document.new file
+  rescue
+    OCLogger.log "Error trying to open file: #{filename}"
+    next
+  end
   
   root = doc.root
 

@@ -1,12 +1,12 @@
 GIT
-  remote: http://github.com/mbleigh/acts-as-taggable-on.git
-  revision: 62f5fea1e19e4520a7bc8b65e0207aea11d4927f
+  remote: git://github.com/mbleigh/acts-as-taggable-on.git
+  revision: 9563d799110ee8d798f2b5cfe21d8fdb3ca534fb
   specs:
     acts-as-taggable-on (2.3.3)
       rails (~> 3.0)
 
 GIT
-  remote: http://github.com/opencongress/formageddon.git
+  remote: git://github.com/opencongress/formageddon.git
   revision: 753b862a593b472f47b00af2eef13e460a7eb4c8
   specs:
     formageddon (0.0.0)

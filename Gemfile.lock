@@ -14,6 +14,12 @@ GIT
       haml
       mechanize
 
+GIT
+  remote: https://github.com/galetahub/simple-captcha.git
+  revision: a0c997c109c350b6000a082f6c715bf9c659e4ec
+  specs:
+    galetahub-simple_captcha (0.1.3)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -122,7 +128,6 @@ GEM
       nokogiri (>= 1.4.4)
       ruby-hmac
     formatador (0.1.4)
-    galetahub-simple_captcha (0.1.3)
     gherkin (2.11.1)
       json (>= 1.4.6)
     govkit (0.7.2)
@@ -300,7 +305,7 @@ DEPENDENCIES
   facebooker2
   fog
   formageddon!
-  galetahub-simple_captcha
+  galetahub-simple_captcha!
   govkit
   guard
   guard-livereload

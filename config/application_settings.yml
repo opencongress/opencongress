@@ -1,10 +1,11 @@
 defaults: &defaults
   current_opensecrets_cycle: '2010'
   default_search_page_size: 10
-  default_congress: 112
+  default_congress: 113
   default_count_time: <%= 7.days %>
   default_search_page_size: 10
   available_congresses:
+    - 113
     - 112
     - 111
     - 110

@@ -34,6 +34,6 @@ cd $data
 
 echo "\n\nrsyncing govtrack at `date`"
 rsync -avz govtrack.us::govtrackdata/us/people.xml ./govtrack/
-rsync -avz --exclude '*.pdf' --exclude '*.png' govtrack.us::govtrackdata/us/112 ./govtrack/
-rsync -avz --exclude '*.pdf' govtrack.us::govtrackdata/us/bills.text/112 ./govtrack/bills.text/ 
-rsync -avz govtrack.us::govtrackdata/us/bills.text.cmp/112 ./govtrack/bills.text.cmp/
+rsync -avz --exclude '*.pdf' --exclude '*.png' govtrack.us::govtrackdata/us/113 ./govtrack/
+rsync -avz --exclude '*.pdf' govtrack.us::govtrackdata/us/bills.text/113 ./govtrack/bills.text/ 
+rsync -avz govtrack.us::govtrackdata/us/bills.text.cmp/113 ./govtrack/bills.text.cmp/

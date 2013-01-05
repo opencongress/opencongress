@@ -21,7 +21,8 @@ gem 'delayed_job', '~> 2.1'
 
 # RMagick
 gem 'rmagick', '2.13.1'
-gem 'galetahub-simple_captcha' #, :git => 'https://github.com/galetahub/simple-captcha.git'
+gem "galetahub-simple_captcha", :require => "simple_captcha"
+#gem 'simple_captcha'# , :git => 'git://github.com/galetahub/simple-captcha.git'
 
 # Image uploads
 gem 'carrierwave'
@@ -82,11 +83,11 @@ gem 'will_paginate', '~> 3.0.pre2'
 gem "validates_captcha"
 gem "okkez-open_id_authentication"
 
-gem "acts-as-taggable-on", :git => 'http://github.com/mbleigh/acts-as-taggable-on.git'
+gem "acts-as-taggable-on", :git => 'git://github.com/mbleigh/acts-as-taggable-on.git'
 
 gem 'mechanize'
 #gem 'formageddon', '0.0.0', :require => 'formageddon', :path => '/Users/aross/Sites/formageddon'
-gem 'formageddon', :git => 'http://github.com/opencongress/formageddon.git'
+gem 'formageddon', :git => 'git://github.com/opencongress/formageddon.git'
 
 
 group :test, :development do

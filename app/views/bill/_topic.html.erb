@@ -27,9 +27,11 @@
 
 	</div>    
 	<!-- <div class="box-wrap">
-
-		<span class="first"><strong><%= link_to "Latest Action", :action => 'actions_votes' %></strong> <%= @bill.actions[0].formatted_date_short %></span> - 
-	    <span><strong><%= link_to "Amendments", :action => 'actions_votes' %></strong> <%= @bill.amendments.size %></span> - 
+    
+    <% unless @bill.actions.empty? %>
+      <span class="first"><strong><%= link_to "Latest Action", :action => 'actions_votes' %></strong> <%= @bill.actions[0].formatted_date_short %></span> -
+    <% end %>
+    <span><strong><%= link_to "Amendments", :action => 'actions_votes' %></strong> <%= @bill.amendments.size %></span> - 
 		<span><strong><%= link_to "Votes", :action => 'actions_votes' %></strong> <%= @bill.roll_calls.size %></span>
 
 	</div> -->

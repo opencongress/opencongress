@@ -66,8 +66,8 @@ module OpenCongress
     # following should go in application_settings.yml, but it appears settingslogic
     # does not support hashes
     CONGRESS_START_DATES = {
-      113 => '2013-01-01',
-      112 => '2011-01-01',
+      113 => '2013-01-03',
+      112 => '2011-01-05',
       111 => '2009-01-01',
       110 => '2007-01-01',
       109 => '2005-01-01',

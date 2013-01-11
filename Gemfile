@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.17'
+gem 'rails', '3.0.19'
 gem 'rake', '0.8.7'
 
 # database gems -- need both pg and mysql for app and wiki

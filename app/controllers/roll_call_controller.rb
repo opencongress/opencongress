@@ -176,7 +176,7 @@ class RollCallController < ApplicationController
     if params[:sort] == 'hotbills'
       @sort = 'hotbills'
       @rolls = RollCall.find(:all, :include => [:bill, :amendment], :order => 'roll_calls.date DESC',
-                             :conditions => ['roll_calls.date > ? AND bills.hot_bill_category_id IS NOT NULL', 
+                             :conditions => ['roll_calls.date >= ? AND bills.hot_bill_category_id IS NOT NULL', 
                                             OpenCongress::Application::CONGRESS_START_DATES[Settings.default_congress]]).paginate :page => @page
     
     elsif params[:sort] == 'keyvotes'
@@ -185,12 +185,12 @@ class RollCallController < ApplicationController
     elsif params[:sort] == 'oldest'
       @sort = 'oldest'
       @rolls = RollCall.find(:all, :include => [:bill, :amendment], :order => 'date ASC', 
-                             :conditions => ['date > ?', OpenCongress::Application::CONGRESS_START_DATES[Settings.default_congress]]).paginate :page => @page
+                             :conditions => ['date >= ?', OpenCongress::Application::CONGRESS_START_DATES[Settings.default_congress]]).paginate :page => @page
 
     else
       @sort = 'newest'
       @rolls = RollCall.find(:all, :include => [:bill, :amendment], :order => 'date DESC', 
-                             :conditions => ['date > ?', OpenCongress::Application::CONGRESS_START_DATES[Settings.default_congress]]).paginate :page => @page
+                             :conditions => ['date >= ?', OpenCongress::Application::CONGRESS_START_DATES[Settings.default_congress]]).paginate :page => @page
 
     end
     @carousel = [ObjectAggregate.popular('RollCall', Settings.default_count_time).slice(0..9)] 

@@ -9,9 +9,13 @@ namespace :deploy do
   desc "Hook up staging symlinks"
   task :symlinks do
     run "ln -s #{current_release}/public/robots.txt.staging #{current_release}/public/robots.txt"
-    run "mv #{current_release}/vendor/plugins/acts_as_solr/solr #{current_release}/vendor/plugins/acts_as_solr/solr-notused"
-    run "ln -s #{deploy_to}/#{shared_dir}/solr #{current_release}/vendor/plugins/acts_as_solr/solr"
+    #run "mv #{current_release}/vendor/plugins/acts_as_solr/solr #{current_release}/vendor/plugins/acts_as_solr/solr-notused"
+    #run "ln -s #{deploy_to}/#{shared_dir}/solr #{current_release}/vendor/plugins/acts_as_solr/solr"
   end
+  
+  # NOOP for deploy:start and deploy:stop when using Passenger
+  task :start do ; end
+  task :stop  do ; end
 end
 
 after "deploy:update_code", "deploy:symlinks"

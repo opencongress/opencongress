@@ -38,6 +38,21 @@
      function mycarousel_initCallback(a){a.buttonNext.bind("click",function(){a.startAuto(0)});a.buttonPrev.bind("click",
      function(){a.startAuto(0)});a.clip.hover(function(){a.stopAuto()},function(){a.startAuto()})}$j(document).ready(function(){$j("#why_carousel").jcarousel({auto:5,wrap:"last",initCallback:mycarousel_initCallback})});
     </script>
+    
+    <!-- INTERNET DEFENSE LEAGUE CAT SIGNAL MODAL -->
+    <script type="text/javascript">
+        window._idl = {};
+        _idl.variant = "modal";
+        _idl.campaign = "cispa";
+        (function() {
+            var idl = document.createElement('script');
+            idl.type = 'text/javascript';
+            idl.async = true;
+            idl.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'members.internetdefenseleague.org/include/?url=' + (_idl.url || '') + '&campaign=' + (_idl.campaign || '') + '&variant=' + (_idl.variant || 'banner');
+            document.getElementsByTagName('body')[0].appendChild(idl);
+        })();
+    </script>
+    
   </head>
 
   <body id="home">

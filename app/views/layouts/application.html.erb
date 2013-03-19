@@ -59,6 +59,10 @@
     <link rel="alternate" type="application/atom+xml" title="<%= @atom['title'] %> actions" href="<%= @atom['link'] %>" />
   <% end %>
   
+</head>
+
+<body <%= id_class.html_safe %>>
+
   <!-- INTERNET DEFENSE LEAGUE CAT SIGNAL MODAL -->
   <script type="text/javascript">
       window._idl = {};
@@ -72,10 +76,7 @@
           document.getElementsByTagName('body')[0].appendChild(idl);
       })();
   </script>
-</head>
-
-<body <%= id_class.html_safe %>>
-
+  
   <div style="display:none;" id="loading">
     <div><%= image_tag 'throbber.gif', :border=> '0', :alt => 'Loading' %></div>
   </div>

@@ -1,5 +1,5 @@
 <div class="hideme">
-<h2> OpenCongress - a Ruby on Rails application for displaying information about Congress</h2>
+<h2>OpenCongress - a Ruby on Rails application for displaying information about Congress</h2>
 
 <h4><a href="http://participatorypolitics.lighthouseapp.com/projects/35587-opencongress">Lighthouse Project Page</a></h4>
 <h4><a href="http://www.opencongress.org/about/code">OpenCongress for Developers</a></h4>
